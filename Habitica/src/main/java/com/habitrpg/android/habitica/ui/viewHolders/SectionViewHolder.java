@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.ui.viewHolders;
 
-import com.habitrpg.android.habitica.R;
-
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

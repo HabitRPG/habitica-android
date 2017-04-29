@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,15 +17,35 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+
 import java.util.List;
-import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Sort;
 
 public class InboxFragment extends BaseMainFragment
-        implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, HabitRPGUserCallback.OnUserReceived {
+        implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+
+    @Inject
+    SocialRepository socialRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     @BindView(R.id.inbox_messages)
     LinearLayout inboxMessagesListView;
@@ -43,8 +53,6 @@ public class InboxFragment extends BaseMainFragment
     @BindView(R.id.inbox_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    Map<String, ChatMessage> messages;
-    List<String> roomsAdded;
     private View chooseRecipientDialogView;
 
     @Override
@@ -52,30 +60,41 @@ public class InboxFragment extends BaseMainFragment
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        this.apiClient.markPrivateMessagesRead()
-
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        this.socialRepository.markPrivateMessagesRead(user)
+                .subscribe(aVoid -> {}, throwable -> {});
 
         View v = inflater.inflate(R.layout.fragment_inbox, container, false);
         unbinder = ButterKnife.bind(this, v);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        if (this.user != null) {
-            this.messages = this.user.getInbox().getMessages();
-            if (this.messages != null) {
-                this.setInboxMessages();
-            }
-        }
+        loadMessages();
 
         return v;
     }
 
+    private void loadMessages() {
+        if (user != null && user.isManaged()) {
+            user.getInbox().getMessages().where()
+                    .distinct("uuid")
+                    .sort("timestamp", Sort.DESCENDING)
+                    .asObservable()
+                    .first()
+                    .subscribe(this::setInboxMessages, ReactiveErrorHandler.handleEmptyError());
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        this.activity.getMenuInflater().inflate(R.menu.inbox, menu);
+        if (this.activity != null) {
+            this.activity.getMenuInflater().inflate(R.menu.inbox, menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -92,6 +111,7 @@ public class InboxFragment extends BaseMainFragment
     }
 
     private void openNewMessageDialog() {
+        assert this.activity != null;
         this.chooseRecipientDialogView = this.activity.getLayoutInflater().inflate(R.layout.dialog_choose_message_recipient, null);
 
         Button scaneQRCodeButton = (Button) chooseRecipientDialogView.findViewById(R.id.scanQRCodeButton);
@@ -123,12 +143,12 @@ public class InboxFragment extends BaseMainFragment
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        this.apiClient.retrieveUser(true)
-                .subscribe(new HabitRPGUserCallback(this), throwable -> {
+        this.userRepository.retrieveUser(true)
+                .subscribe(this::onUserReceived, throwable -> {
                 });
     }
 
-    public void setInboxMessages() {
+    public void setInboxMessages(List<ChatMessage> messages) {
         if (this.inboxMessagesListView == null) {
             return;
         }
@@ -136,26 +156,13 @@ public class InboxFragment extends BaseMainFragment
         this.inboxMessagesListView.removeAllViewsInLayout();
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        roomsAdded = new ArrayList<>();
-
-        if (this.messages.size() > 0) {
-            for (Object o : this.messages.entrySet()) {
-                Map.Entry pair = (Map.Entry) o;
-
-                ChatMessage message = (ChatMessage) pair.getValue();
-                if (roomsAdded.contains(message.uuid)) {
-                    TextView entry = (TextView) this.inboxMessagesListView.findViewWithTag(message.uuid);
-                    entry.setText(message.user);
-                } else {
-                    roomsAdded.add(message.uuid);
-
-                    TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.inboxMessagesListView, false);
-                    entry.setText(message.user);
-                    entry.setTag(message.uuid);
-                    entry.setOnClickListener(this);
-                    this.inboxMessagesListView.addView(entry);
-                }
+        if (messages.size() > 0) {
+            for (ChatMessage message : messages) {
+                TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.inboxMessagesListView, false);
+                entry.setText(message.user);
+                entry.setTag(message.uuid);
+                entry.setOnClickListener(this);
+                this.inboxMessagesListView.addView(entry);
             }
         } else {
             TextView tv = new TextView(getContext());
@@ -172,15 +179,14 @@ public class InboxFragment extends BaseMainFragment
 
     private void openInboxMessages(String userID, String username) {
         InboxMessageListFragment inboxMessageListFragment = new InboxMessageListFragment();
-        inboxMessageListFragment.setMessages(this.messages, username, userID);
-        this.activity.displayFragment(inboxMessageListFragment);
+        inboxMessageListFragment.setReceivingUser(username, userID);
+        if (this.activity != null) {
+            this.activity.displayFragment(inboxMessageListFragment);
+        }
     }
 
-    @Override
-    public void onUserReceived(HabitRPGUser user) {
+    public void onUserReceived(User user) {
         this.user = user;
-        this.messages = user.getInbox().getMessages();
-        this.setInboxMessages();
         swipeRefreshLayout.setRefreshing(false);
     }
 

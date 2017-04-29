@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
-import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,19 +9,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 import java.util.Stack;
+
+import javax.inject.Inject;
 
 import rx.subjects.PublishSubject;
 
 public class ChallengesOverviewFragment extends BaseMainFragment {
+
+    @Inject
+    SocialRepository socialRepository;
 
     public ViewPager viewPager;
     public FragmentStatePagerAdapter statePagerAdapter;
     int currentPage;
     private Stack<Integer> pageHistory;
     private boolean saveToHistory;
-    private PublishSubject<ArrayList<Challenge>> getUserChallengesObservable;
+    private PublishSubject<List<Challenge>> getUserChallengesObservable;
     private ChallengeListFragment userChallengesFragment;
     private ChallengeListFragment availableChallengesFragment;
 
@@ -70,9 +75,14 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         return v;
     }
 
-    private void subscribeGetChallenges() {
-        this.apiClient.getUserChallenges()
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
 
+    private void subscribeGetChallenges() {
+        this.socialRepository.getUserChallenges()
                 .subscribe(challenges -> getUserChallengesObservable.onNext(challenges),
                         e -> getUserChallengesObservable.onError(e));
     }
@@ -145,17 +155,17 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(ShowChallengeDetailDialogCommand cmd) {
-        Challenge challenge = new Select().from(Challenge.class).where(Condition.column("id").is(cmd.challengeId)).querySingle();
-
-        ChallengeDetailDialogHolder.showDialog(getActivity(), apiClient, user, challenge, challenge1 ->  {
-            // challenge joined
-            userChallengesFragment.addItem(challenge1);
-            availableChallengesFragment.updateItem(challenge1);
-        }, challenge1 -> {
-            // challenge left
-            userChallengesFragment.onRefresh();
-            availableChallengesFragment.onRefresh();
-        });
+        socialRepository.getChallenge(cmd.challengeId).subscribe(challenge -> {
+            ChallengeDetailDialogHolder.showDialog(getActivity(), apiClient, user, challenge, challenge1 ->  {
+                // challenge joined
+                userChallengesFragment.addItem(challenge1);
+                availableChallengesFragment.updateItem(challenge1);
+            }, challenge1 -> {
+                // challenge left
+                userChallengesFragment.onRefresh();
+                availableChallengesFragment.onRefresh();
+            });
+        }, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Subscribe

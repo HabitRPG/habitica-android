@@ -1,36 +1,19 @@
 package com.habitrpg.android.habitica.models.tasks;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.habitrpg.android.habitica.models.Tag;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 
+import com.habitrpg.android.habitica.models.Tag;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by viirus on 08/08/15.
  */
 
-@Table(databaseName = HabitDatabase.NAME)
-public class TaskTag extends BaseModel {
+public class TaskTag extends RealmObject {
 
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "tag_id",
-            columnType = String.class,
-            foreignColumnName = "id")},
-            saveForeignKeyModel = false)
-    public ForeignKeyContainer<Tag> tag;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "task_id",
-            columnType = String.class,
-            foreignColumnName = "id")},
-            saveForeignKeyModel = false)
-    public ForeignKeyContainer<Task> task;
-    @Column
+    public Tag tag;
+    public Task task;
     @PrimaryKey
     String id;
     private String tagId = "";
@@ -45,26 +28,21 @@ public class TaskTag extends BaseModel {
     }
 
     public Tag getTag() {
-        return tag.toModel();
+        return tag;
     }
 
     public void setTag(Tag tag) {
-        this.tag = new ForeignKeyContainer<>(Tag.class);
-        this.tag.setModel(tag);
-        this.tag.put("id", tag.id);
-
+        this.tag = tag;
         tagId = tag.id;
         updatePrimaryKey();
     }
 
     public Task getTask() {
-        return task.toModel();
+        return task;
     }
 
     public void setTask(Task task) {
-        this.task = new ForeignKeyContainer<>(Task.class);
-        this.task.setModel(task);
-        this.task.put("id", task.id);
+        this.task = task;
 
         taskId = task.id;
         updatePrimaryKey();

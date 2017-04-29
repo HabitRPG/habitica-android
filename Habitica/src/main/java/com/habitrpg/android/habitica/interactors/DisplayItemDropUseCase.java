@@ -7,8 +7,9 @@ import android.view.View;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import javax.inject.Inject;
 
@@ -29,16 +30,15 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
     @Override
     protected Observable<Void> buildUseCaseObservable(RequestValues requestValues) {
         return Observable.from(() -> {
-            TaskDirectionData data = requestValues.data;
+            TaskScoringResult data = requestValues.data;
 
-            if (data.get_tmp() != null) {
-                if (data.get_tmp().getDrop() != null) {
+            if (data != null) {
+                if (data.drop != null) {
                     new Handler().postDelayed(() -> {
                         showSnackbar(requestValues.context, requestValues.snackbarTargetView,
-                                data.get_tmp().getDrop().getDialog(), UiUtils.SnackbarDisplayType.DROP);
+                                data.drop.getDialog(), UiUtils.SnackbarDisplayType.DROP);
                         soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                     }, 3000L);
-
                 }
             }
 
@@ -48,11 +48,11 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
 
     public static final class RequestValues implements UseCase.RequestValues {
 
-        private TaskDirectionData data;
+        private TaskScoringResult data;
         private AppCompatActivity context;
         private View snackbarTargetView;
 
-        public RequestValues(TaskDirectionData data, AppCompatActivity context, View snackbarTargetView) {
+        public RequestValues(TaskScoringResult data, AppCompatActivity context, View snackbarTargetView) {
             this.data = data;
             this.context = context;
             this.snackbarTargetView = snackbarTargetView;

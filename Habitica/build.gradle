@@ -3,6 +3,7 @@ apply plugin: 'com.android.databinding'
 apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.noveogroup.android.check'
+apply plugin: 'realm-android'
 
 buildscript {
     repositories {
@@ -148,6 +149,8 @@ dependencies {
     compile 'org.apmem.tools:layouts:1.10@aar'
 
     compile 'com.roughike:bottom-bar:2.2.0'
+
+    compile 'io.realm:android-adapters:2.0.0'
 
     compile(project(':seeds-sdk')) {
         exclude group: 'com.google.android.gms'

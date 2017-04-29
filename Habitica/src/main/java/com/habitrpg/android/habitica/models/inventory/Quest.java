@@ -1,38 +1,20 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import java.util.HashMap;
 
-/**
- * Created by viirus on 06/07/15.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class Quest extends BaseModel {
-    @Column
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
+public class Quest extends RealmObject {
     @PrimaryKey
     public String key;
-
-    @Column
     public boolean active;
-
-    @Column
     public String leader;
-
-    @Column
     public boolean RSVPNeeded;
 
+    @Ignore
     public HashMap<String, Boolean> members;
-
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "progress_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
     private QuestProgress progress;
 
     private Quest(String key, QuestProgress progress) {

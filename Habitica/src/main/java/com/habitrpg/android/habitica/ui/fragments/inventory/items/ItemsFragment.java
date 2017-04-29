@@ -1,5 +1,14 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
@@ -10,15 +19,6 @@ import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class ItemsFragment extends BaseMainFragment {
 
@@ -113,18 +113,6 @@ public class ItemsFragment extends BaseMainFragment {
     }
 
     @Subscribe
-    public void onEvent(InvitePartyToQuestCommand event) {
-        this.apiClient.inviteToQuest("party", event.questKey)
-
-                .subscribe(group -> {
-                    OpenMenuItemCommand event1 = new OpenMenuItemCommand();
-                    event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
-                    EventBus.getDefault().post(event1);
-                }, throwable -> {
-                });
-    }
-
-    @Subscribe
     public void showHatchingDialog(HatchingCommand event) {
         if (event.usingEgg == null || event.usingHatchingPotion == null) {
             ItemRecyclerFragment fragment = new ItemRecyclerFragment();
@@ -137,7 +125,6 @@ public class ItemsFragment extends BaseMainFragment {
             }
             fragment.isHatching = true;
             fragment.isFeeding = false;
-            fragment.ownedPets = this.user.getItems().getPets();
             fragment.show(getFragmentManager(), "hatchingDialog");
         }
     }

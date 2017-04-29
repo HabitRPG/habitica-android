@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-import com.habitrpg.android.habitica.models.inventory.Customization;
-import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -24,13 +12,29 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.models.inventory.Customization;
+import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -39,6 +43,10 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     public double gemBalance;
     private List<Object> customizationList;
     private String activeCustomization;
+
+    private PublishSubject<Customization> selectCustomizationEvents = PublishSubject.create();
+    private PublishSubject<Customization> unlockCustomizationEvents = PublishSubject.create();
+    private PublishSubject<CustomizationSet> unlockSetEvents = PublishSubject.create();
 
     public void updateOwnership(List<String> ownedCustomizations) {
         int position = 0;
@@ -138,6 +146,18 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         this.notifyDataSetChanged();
     }
 
+    public Observable<Customization> getSelectCustomizationEvents() {
+        return selectCustomizationEvents.asObservable();
+    }
+
+    public Observable<Customization> getUnlockCustomizationEvents() {
+        return unlockCustomizationEvents.asObservable();
+    }
+
+    public Observable<CustomizationSet> getUnlockSetEvents() {
+        return unlockSetEvents.asObservable();
+    }
+
     class CustomizationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.card_view)
@@ -156,7 +176,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
         Context context;
 
-        public CustomizationViewHolder(View itemView) {
+        CustomizationViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -203,16 +223,11 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                                 EventBus.getDefault().post(event);
                                 return;
                             }
-                            UnlockPathCommand event = new UnlockPathCommand();
-                            event.path = customization.getPath();
-                            event.balanceDiff = customization.getPrice() / 4;
-                            EventBus.getDefault().post(event);
+                            unlockCustomizationEvents.onNext(customization);
                         })
                         .setTitle(context.getString(R.string.purchase_customization))
                         .setView(dialogContent)
-                        .setNegativeButton(R.string.reward_dialog_dismiss, (dialog1, which) -> {
-                            dialog1.dismiss();
-                        }).create();
+                        .setNegativeButton(R.string.reward_dialog_dismiss, (dialog1, which) -> dialog1.dismiss()).create();
                 dialog.show();
                 return;
             }
@@ -221,16 +236,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 return;
             }
 
-            UpdateUserCommand command = new UpdateUserCommand();
-            Map<String, Object> updateData = new HashMap<>();
-            String updatePath = "preferences." + customization.getType();
-            if (customization.getCategory() != null) {
-                updatePath = updatePath + "." + customization.getCategory();
-            }
-            updateData.put(updatePath, customization.getIdentifier());
-            command.updateData = updateData;
-
-            EventBus.getDefault().post(command);
+            selectCustomizationEvents.onNext(customization);
         }
     }
 
@@ -243,7 +249,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         Context context;
         private CustomizationSet set;
 
-        public SectionViewHolder(View itemView) {
+        SectionViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
             ButterKnife.bind(this, itemView);
@@ -276,26 +282,20 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                             EventBus.getDefault().post(event);
                             return;
                         }
-                        UnlockPathCommand event = new UnlockPathCommand();
-                        String path = "";
+                        set.customizations = new ArrayList<>();
                         for (Object obj : customizationList) {
-                            if (obj.getClass().equals(Customization.class)) {
+                            if (Customization.class.isAssignableFrom(obj.getClass())) {
                                 Customization customization = (Customization) obj;
                                 if (!customization.isUsable() && customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(set.identifier)) {
-                                    path = path + "," + customization.getPath();
+                                    set.customizations.add(customization);
                                 }
                             }
                         }
-                        path = path.substring(1);
-                        event.path = path;
-                        event.balanceDiff = set.price / 4;
-                        EventBus.getDefault().post(event);
+                        unlockSetEvents.onNext(set);
                     })
                     .setTitle(context.getString(R.string.purchase_set_title, set.text))
                     .setView(dialogContent)
-                    .setNegativeButton(R.string.reward_dialog_dismiss, (dialog1, which) -> {
-                        dialog1.dismiss();
-                    }).create();
+                    .setNegativeButton(R.string.reward_dialog_dismiss, (dialog1, which) -> dialog1.dismiss()).create();
             dialog.show();
         }
     }

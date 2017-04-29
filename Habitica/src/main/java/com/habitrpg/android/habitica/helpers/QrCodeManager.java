@@ -17,12 +17,8 @@ import android.widget.Toast;
 
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import net.glxn.qrgen.android.QRCode;
 
@@ -34,40 +30,23 @@ import java.io.IOException;
  * Created by keithholliday on 8/12/16.
  */
 public class QrCodeManager {
+    private static final String qrProfileUrl = "https://habitica.com/qr-code/user/";
 
+    private final UserRepository userRepository;
     //@TODO: Allow users to set other content
     private String content;
     private String userId;
     private Context context;
-    private String qrProfileUrl = "https://habitica.com/qr-code/user/";
 
     private ImageView qrCodeImageView;
     private Button qrCodeDownloadButton;
-    private AvatarView avatarView;
     private FrameLayout qrCodeWrapper;
 
     private String albumnName;
     private String fileName;
     private String saveMessage;
 
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser user) {
-            QrCodeManager.this.avatarView.setUser(user);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
-            return true;
-        }
-    };
-
-    public QrCodeManager(Context context) {
+    public QrCodeManager(UserRepository userRepository, Context context) {
         this.context = context;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
@@ -77,8 +56,9 @@ public class QrCodeManager {
         this.fileName = this.context.getString(R.string.qr_file_name);
         this.saveMessage = this.context.getString(R.string.qr_save_message);
 
-        this.content = this.qrProfileUrl + userId;
+        this.content = qrProfileUrl + userId;
         this.userId = userId;
+        this.userRepository = userRepository;
     }
 
     public void setUpView(@Nullable LinearLayout qrLayout) {
@@ -87,17 +67,11 @@ public class QrCodeManager {
         }
         this.qrCodeImageView = (ImageView) qrLayout.findViewById(R.id.QRImageView);
         this.qrCodeDownloadButton = (Button) qrLayout.findViewById(R.id.QRDownloadButton);
-        this.avatarView = (AvatarView) qrLayout.findViewById(R.id.avatarView);
-        this.avatarView.configureView(false, false, false);
+        AvatarView avatarView = (AvatarView) qrLayout.findViewById(R.id.avatarView);
+        avatarView.configureView(false, false, false);
         this.qrCodeWrapper = (FrameLayout) qrLayout.findViewById(R.id.qrCodeWrapper);
 
-        //@TODO: Move to user helper/model
-        new Select()
-                .from(HabitRPGUser.class)
-                .where(Condition.column("id")
-                        .eq(userId))
-                .async()
-                .querySingle(userTransactionListener);
+        userRepository.getUser(userId).subscribe(avatarView::setUser, ReactiveErrorHandler.handleEmptyError());
 
         this.displayQrCode();
         this.setDownloadQr();

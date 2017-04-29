@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
-import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.OrderBy;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
 
 import java.util.UUID;
 
@@ -27,15 +26,19 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
 
     private static final int TYPE_CELL = 1;
+    private final TaskRepository taskRepository;
     String taskType;
     TaskClickActivity activity;
     private ObservableArrayList<Task> observableContent;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
+    private String userId;
 
-    public SkillTasksRecyclerViewAdapter(String taskType, TaskClickActivity activity) {
+    public SkillTasksRecyclerViewAdapter(TaskRepository taskRepository, String taskType, TaskClickActivity activity, String userId) {
         this.setHasStableIds(true);
         this.taskType = taskType;
         this.activity = activity;
+        this.taskRepository = taskRepository;
+        this.userId = userId;
 
         this.loadContent();
 
@@ -90,21 +93,20 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
         if (this.observableContent == null || forced) {
 
             this.observableContent = new ObservableArrayList<>();
-
-            this.observableContent.addAll(new Select().from(Task.class)
-                    .where(Condition.column("type").eq(this.taskType))
-                    .and(Condition.CombinedCondition
-                            .begin(Condition.column("completed").eq(false))
-                            .or(Condition.column("type").eq("daily"))
-                    )
-                    .orderBy(OrderBy.columns("position", "dateCreated").descending())
-                    .queryList());
-        }
-
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
+            taskRepository.getTasks(taskType, userId).subscribe(tasks -> {
+                this.observableContent.addAll(tasks);
+                if (parentAdapter != null) {
+                    parentAdapter.notifyDataSetChanged();
+                } else {
+                    notifyDataSetChanged();
+                }
+            }, ReactiveErrorHandler.handleEmptyError());
         } else {
-            notifyDataSetChanged();
+            if (parentAdapter != null) {
+                parentAdapter.notifyDataSetChanged();
+            } else {
+                notifyDataSetChanged();
+            }
         }
     }
 

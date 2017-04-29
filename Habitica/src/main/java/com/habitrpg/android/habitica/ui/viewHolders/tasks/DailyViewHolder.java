@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.view.View;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import butterknife.BindView;
 

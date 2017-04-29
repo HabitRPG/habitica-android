@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.models.tasks.Days;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.SpeechBubbleView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Days;
-import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +41,7 @@ public class TaskSetupFragment extends BaseFragment {
     TaskSetupAdapter adapter;
     private String[][] taskGroups;
     private Object[][] tasks;
-    private HabitRPGUser user;
+    private User user;
 
     @Nullable
     @Override
@@ -73,7 +73,7 @@ public class TaskSetupFragment extends BaseFragment {
         }
     }
 
-    public void setUser(@Nullable HabitRPGUser user) {
+    public void setUser(@Nullable User user) {
         this.user = user;
         if (avatarView != null) {
             updateAvatar();

@@ -5,12 +5,13 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.habitrpg.android.habitica.models.FAQArticle;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.RealmList;
 
 /**
  * Created by viirus on 22/01/16.
@@ -20,7 +21,7 @@ public class FAQArticleListDeserilializer implements JsonDeserializer<List<FAQAr
 
     @Override
     public List<FAQArticle> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<FAQArticle> vals = new ArrayList<>();
+        RealmList<FAQArticle> vals = new RealmList<>();
         int position = 0;
         for (JsonElement e : json.getAsJsonObject().get("questions").getAsJsonArray()) {
             JsonObject obj = e.getAsJsonObject();

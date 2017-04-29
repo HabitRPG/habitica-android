@@ -1,33 +1,33 @@
 package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.models.AchievementResult;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.ContentResult;
-import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
-import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.PurchaseValidationResult;
-import com.habitrpg.android.habitica.models.inventory.Quest;
-import com.habitrpg.android.habitica.models.shops.Shop;
-import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.auth.UserAuth;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.responses.HabitResponse;
+import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.responses.Status;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,16 +57,16 @@ public interface ApiService {
     /* user API */
 
     @GET("user/")
-    Observable<HabitResponse<HabitRPGUser>> getUser();
+    Observable<HabitResponse<User>> getUser();
 
     @PUT("user/")
-    Observable<HabitResponse<HabitRPGUser>> updateUser(@Body Map<String, Object> updateDictionary);
+    Observable<HabitResponse<User>> updateUser(@Body Map<String, Object> updateDictionary);
 
     @PUT("user/")
-    Observable<HabitResponse<HabitRPGUser>> registrationLanguage(@Header("Accept-Language") String registrationLanguage);
+    Observable<HabitResponse<User>> registrationLanguage(@Header("Accept-Language") String registrationLanguage);
 
     @GET("user/inventory/buy")
-    Observable<HabitResponse<List<ItemData>>> getInventoryBuyableGear();
+    Observable<HabitResponse<List<Equipment>>> getInventoryBuyableGear();
 
     @POST("user/equip/{type}/{key}")
     Observable<HabitResponse<Items>> equipItem(@Path("type") String type, @Path("key") String itemKey);
@@ -87,7 +87,7 @@ public interface ApiService {
     Observable<HabitResponse<Void>> purchaseQuest(@Path("key") String key);
 
     @POST("user/sell/{type}/{key}")
-    Observable<HabitResponse<HabitRPGUser>> sellItem(@Path("type") String itemType, @Path("key") String itemKey);
+    Observable<HabitResponse<User>> sellItem(@Path("type") String itemType, @Path("key") String itemKey);
 
     @POST("user/feed/{pet}/{food}")
     Observable<HabitResponse<FeedResponse>> feedPet(@Path("pet") String petKey, @Path("food") String foodKey);
@@ -150,7 +150,7 @@ public interface ApiService {
     Observable<HabitResponse<Boolean>> sleep();
 
     @POST("user/revive")
-    Observable<HabitResponse<HabitRPGUser>> revive();
+    Observable<HabitResponse<User>> revive();
 
     @POST("user/class/cast/{skill}")
     Observable<HabitResponse<SkillResponse>> useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, @Query("targetId") String targetId);
@@ -159,13 +159,13 @@ public interface ApiService {
     Observable<HabitResponse<SkillResponse>> useSkill(@Path("skill") String skillName, @Query("targetType") String targetType);
 
     @POST("user/change-class")
-    Observable<HabitResponse<HabitRPGUser>> changeClass();
+    Observable<HabitResponse<User>> changeClass();
 
     @POST("user/change-class")
-    Observable<HabitResponse<HabitRPGUser>> changeClass(@Query("class") String className);
+    Observable<HabitResponse<User>> changeClass(@Query("class") String className);
 
     @POST("user/disable-classes")
-    Observable<HabitResponse<HabitRPGUser>> disableClasses();
+    Observable<HabitResponse<User>> disableClasses();
 
     @POST("user/mark-pms-read")
     Observable<HabitResponse<Void>> markPrivateMessagesRead();
@@ -199,10 +199,10 @@ public interface ApiService {
     Observable<HabitResponse<Void>> deleteMessage(@Path("gid") String groupId, @Path("messageId") String messageId);
 
     @GET("groups/{gid}/members")
-    Observable<HabitResponse<List<HabitRPGUser>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields);
+    Observable<HabitResponse<List<User>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields);
 
     @GET("groups/{gid}/members")
-    Observable<HabitResponse<List<HabitRPGUser>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields, @Query("lastId") String lastId);
+    Observable<HabitResponse<List<User>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields, @Query("lastId") String lastId);
 
     // Like returns the full chat list
     @POST("groups/{gid}/chat/{mid}/like")
@@ -248,11 +248,11 @@ public interface ApiService {
     Observable<HabitResponse<Void>> validateSubscription(@Body SubscriptionValidationRequest request);
 
     @POST("user/custom-day-start")
-    Observable<HabitResponse<HabitRPGUser>> changeCustomDayStart(@Body Map<String, Object> updateObject);
+    Observable<HabitResponse<User>> changeCustomDayStart(@Body Map<String, Object> updateObject);
 
     //Members URL
     @GET("members/{mid}")
-    Observable<HabitResponse<HabitRPGUser>> getMember(@Path("mid") String memberId);
+    Observable<HabitResponse<User>> getMember(@Path("mid") String memberId);
 
     @GET("members/{mid}/achievements")
     Observable<HabitResponse<AchievementResult>> getMemberAchievements(@Path("mid") String memberId);
@@ -313,5 +313,5 @@ public interface ApiService {
     Observable<HabitResponse<Void>> readNotification(@Path("notificationId") String notificationId);
 
     @POST("user/open-mystery-item")
-    Observable<HabitResponse<ItemData>> openMysteryItem();
+    Observable<HabitResponse<Equipment>> openMysteryItem();
 }

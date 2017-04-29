@@ -1,39 +1,36 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.OrderedRealmCollection;
 import rx.Observable;
 
-public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<RewardViewHolder> {
+public class RewardsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapter<RewardViewHolder> {
 
-    private final ContentCache contentCache;
-    private final HabitRPGUser user;
-    private ApiClient apiClient;
+    private final Context context;
+    private InventoryRepository inventoryRepository;
+    @Nullable
+    private User user;
 
-    public RewardsRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, HabitRPGUser user, ApiClient apiClient) {
-        super(taskType, taskFilterHelper, layoutResource, newContext, user != null ? user.getId() : null);
-        this.user = user;
-        this.apiClient = apiClient;
-        this.contentCache = new ContentCache(apiClient);
+    public RewardsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, Context context) {
+        super(data, autoUpdate, layoutResource, null);
+        this.context = context;
     }
+
 
     @Override
     public RewardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,22 +38,22 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     }
 
     private void loadEquipmentRewards() {
-        if (apiClient != null) {
-            apiClient.getInventoryBuyableGear()
+        if (inventoryRepository != null) {
+            inventoryRepository.getInventoryBuyableGear()
                     .flatMap(items -> {
                         // get itemdata list
                         ArrayList<String> itemKeys = new ArrayList<>();
-                        for (ItemData item : items) {
+                        for (Equipment item : items) {
                             itemKeys.add(item.key);
                         }
                         itemKeys.add("potion");
-                        if (user.getFlags().getArmoireEnabled()) {
+                        if (user != null && user.getFlags().getArmoireEnabled()) {
                             itemKeys.add("armoire");
                         }
-                        return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> contentCache.getItemDataList(itemKeys, obj -> {
+                        return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> inventoryRepository.getItems(itemKeys).subscribe(obj -> {
                             ArrayList<Task> buyableItems = new ArrayList<>();
                             if (obj != null) {
-                                for (ItemData item : obj) {
+                                for (Equipment item : obj) {
                                     Task reward = new Task();
                                     reward.text = item.text;
                                     reward.notes = item.notes;
@@ -66,14 +63,10 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                                     reward.setId(item.key);
 
                                     if ("armoire".equals(item.key)) {
-                                        if (user.getFlags().getArmoireEmpty()) {
+                                        if (user != null && user.getFlags().getArmoireEmpty()) {
                                             reward.notes = context.getResources().getString(R.string.armoireNotesEmpty);
                                         } else {
-                                            long gearCount = new Select().count()
-                                                    .from(ItemData.class)
-                                                    .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
-                                                            .and(Condition.column("owned").isNull())
-                                                    ).count();
+                                            long gearCount = inventoryRepository.getArmoireRemainingCount();
                                             reward.notes = context.getResources().getString(R.string.armoireNotesFull, gearCount);
                                         }
                                     }
@@ -83,24 +76,12 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                             }
                             subscriber.onNext(buyableItems);
                             subscriber.onCompleted();
-                        }));
+                        }, ReactiveErrorHandler.handleEmptyError()));
                     })
                     .subscribe(items -> {
-                        this.filteredContent.addAll(items);
                         notifyDataSetChanged();
                     }, throwable -> {
                     });
         }
-    }
-
-    @Override
-    protected void injectThis(AppComponent component) {
-        HabiticaBaseApplication.getComponent().inject(this);
-    }
-
-    @Override
-    public void setTasks(List<Task> tasks) {
-        super.setTasks(tasks);
-        this.loadEquipmentRewards();
     }
 }

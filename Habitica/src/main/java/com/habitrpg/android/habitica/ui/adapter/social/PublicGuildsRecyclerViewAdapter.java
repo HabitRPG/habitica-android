@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
-import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
-import com.habitrpg.android.habitica.models.social.Group;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +8,14 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;

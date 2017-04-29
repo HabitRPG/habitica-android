@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/brand_200">
+        <ImageButton
+            android:id="@+id/emoji.toggle.btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_emoticon_grey600_24dp"
+            android:scaleType="center"
+            android:backgroundTint="@color/transparent"
+            android:contentDescription="Toogle Emojis"
+            android:layout_gravity="center"/>
+
+            <net.pherth.android.emoji_library.EmojiEditText
+                android:id="@+id/edit.new.message.text"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="@string/write_message"
+                android:textColor="@android:color/white"
+                android:inputType="textCapSentences|textMultiLine"
+                style="@style/LoginEditTextTheme"/>
+        <Button
+            android:id="@+id/btn.send.message"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textColor="@color/white"
+            android:text="@string/post"
+            android:drawableTint="@color/white"
+            android:layout_gravity="center"
+            android:background="@color/transparent"/>
+    </LinearLayout>
+</LinearLayout>

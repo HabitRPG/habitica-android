@@ -19,8 +19,6 @@ import android.widget.Button;
 
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
@@ -28,12 +26,12 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.views.FadingViewPager;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Task;
 import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;
 
@@ -52,7 +50,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 
-public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
+public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     @Inject
     public ApiClient apiClient;
@@ -73,7 +71,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     AvatarSetupFragment avatarSetupFragment;
     TaskSetupFragment taskSetupFragment;
     @Nullable
-    HabitRPGUser user;
+    User user;
     boolean completedSetup = false;
 
     @Override
@@ -140,6 +138,13 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        userRepository.close();
+        taskRepository.close();
+        super.onDestroy();
+    }
+
     private void setupViewpager() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -159,7 +164,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Subscribe
     public void onEvent(EquipCommand event) {
         this.apiClient.equipItem(event.type, event.key)
-                .subscribe(new ItemsCallback(this, this.user), throwable -> {
+                .subscribe(items -> {}, throwable -> {
                 });
     }
 
@@ -176,7 +181,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
             this.taskRepository.createTasks(newTasks)
                     .subscribe(tasks -> onUserReceived(user), throwable -> {
                     });
-            //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
         }
         this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
     }
@@ -222,8 +226,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
     }
 
-    @Override
-    public void onUserReceived(HabitRPGUser user) {
+    public void onUserReceived(User user) {
         if (completedSetup) {
             this.startMainActivity();
             return;

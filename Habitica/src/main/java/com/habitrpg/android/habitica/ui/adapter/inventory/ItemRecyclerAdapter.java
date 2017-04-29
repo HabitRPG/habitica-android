@@ -1,16 +1,19 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ItemItemBinding;
 import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
-import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
-import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
-import com.habitrpg.android.habitica.events.commands.SellItemCommand;
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
@@ -18,36 +21,37 @@ import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 
 import org.greenrobot.eventbus.EventBus;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
-import java.util.HashMap;
-import java.util.List;
-
-public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ItemViewHolder> {
+public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecyclerAdapter.ItemViewHolder> {
 
     public Boolean isHatching;
     public Boolean isFeeding;
-    public Boolean showShopAd;
-    public String shopIdentifier;
     public Item hatchingItem;
     public Pet feedingPet;
     public ItemRecyclerFragment fragment;
-    public HashMap<String, Integer> ownedPets;
+    private RealmResults<Pet> ownedPets;
     public Context context;
-    private List<Item> itemList;
 
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
-        this.notifyDataSetChanged();
+    private PublishSubject<Item> sellItemEvents = PublishSubject.create();
+    private PublishSubject<QuestContent> questInvitationEvents = PublishSubject.create();
+
+    public ItemRecyclerAdapter(@Nullable OrderedRealmCollection<Item> data, boolean autoUpdate) {
+        super(data, autoUpdate);
+    }
+
+    public Observable<Item> getSellItemEvents() {
+        return sellItemEvents.asObservable();
     }
 
     @Override
@@ -61,16 +65,14 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.bind(this.itemList.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return itemList == null ? 0 : itemList.size();
+        if (getData() != null) {
+            holder.bind(getData().get(position));
+        }
     }
 
     public void openedMysteryItem(int numberLeft) {
-        int itemPos = 0;
+        // TODO: Fix this
+        /*int itemPos = 0;
         for (Object obj : itemList) {
             if (obj.getClass().equals(SpecialItem.class)) {
                 SpecialItem item = (SpecialItem) obj;
@@ -81,7 +83,15 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             }
             itemPos++;
         }
-        notifyItemChanged(itemPos);
+        notifyItemChanged(itemPos);*/
+    }
+
+    public void setOwnedPets(RealmResults<Pet> pets) {
+        ownedPets = pets;
+    }
+
+    public Observable<QuestContent> getQuestInvitationEvents() {
+        return questInvitationEvents.asObservable();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -90,7 +100,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         Resources resources;
         ItemItemBinding binding;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
 
             resources = itemView.getResources();
@@ -100,24 +110,19 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             itemView.setOnClickListener(this);
         }
 
-        public Boolean isPetOwned() {
+        Boolean isPetOwned() {
             String petKey;
             if (item instanceof Egg) {
                 petKey = item.getKey() + "-" + hatchingItem.getKey();
             } else {
                 petKey = hatchingItem.getKey() + "-" + item.getKey();
             }
-            return ownedPets != null && ownedPets.containsKey(petKey) && ownedPets.get(petKey) > 0;
+            return ownedPets != null && ownedPets.where().equalTo("key", petKey).count() > 0;
         }
 
         public void bind(Item item) {
             this.item = item;
             binding.setTitle(item.getText());
-
-            if (item.getText() == null) {
-                ReloadContentEvent event = new ReloadContentEvent();
-                EventBus.getDefault().post(event);
-            }
 
             binding.setDisabled(false);
             if (item instanceof QuestContent) {
@@ -163,19 +168,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 }
                 menu.setSelectionRunnable(index -> {
                     if (!((item instanceof QuestContent) || (item instanceof SpecialItem)) && index == 0) {
-                        SellItemCommand event = new SellItemCommand();
-                        event.item = item;
-                        EventBus.getDefault().post(event);
-                        if (item.getOwned() > 1) {
-                            item.setOwned(item.getOwned() - 1);
-                            notifyItemChanged(getAdapterPosition());
-                        } else {
-                            if (getAdapterPosition() >= 0) {
-                                itemList.remove(getAdapterPosition());
-                            }
-                            notifyItemRemoved(getAdapterPosition());
-                        }
-
+                        sellItemEvents.onNext(item);
                         return;
                     }
                     if (item instanceof Egg) {
@@ -191,9 +184,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                         event.usingHatchingPotion = (HatchingPotion) item;
                         EventBus.getDefault().post(event);
                     } else if (item instanceof QuestContent) {
-                        InvitePartyToQuestCommand event = new InvitePartyToQuestCommand();
-                        event.questKey = item.getKey();
-                        EventBus.getDefault().post(event);
+                        questInvitationEvents.onNext((QuestContent) item);
                     } else if (item instanceof SpecialItem) {
                         EventBus.getDefault().post(new OpenMysteryItemEvent());
                     }

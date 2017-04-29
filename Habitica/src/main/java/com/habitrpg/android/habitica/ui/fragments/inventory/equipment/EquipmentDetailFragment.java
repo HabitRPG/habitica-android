@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EquipmentDetailFragment extends BaseMainFragment {
+
+    @Inject
+    InventoryRepository inventoryRepository;
 
     public String type;
     public String equippedGear;
@@ -41,36 +43,32 @@ public class EquipmentDetailFragment extends BaseMainFragment {
 
         unbinder = ButterKnife.bind(this, v);
 
-        this.adapter = new EquipmentRecyclerViewAdapter();
+
+        this.adapter = new EquipmentRecyclerViewAdapter(null, true);
         this.adapter.equippedGear = this.equippedGear;
         this.adapter.isCostume = this.isCostume;
         this.adapter.type = this.type;
+        this.adapter.getEquipEvents()
+                .flatMap(key -> inventoryRepository.equipGear(user, key, isCostume))
+                .subscribe(items -> {}, ReactiveErrorHandler.handleEmptyError());
+
+
+        this.recyclerView.setAdapter(this.adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        this.recyclerView.setAdapter(this.adapter);
-
-        this.loadGear();
-
+        inventoryRepository.getOwnedEquipment(type).first().subscribe(this.adapter::updateData, ReactiveErrorHandler.handleEmptyError());
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        inventoryRepository.close();
+        super.onDestroy();
     }
 
     @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
-    }
-
-    private void loadGear() {
-        if (user == null || adapter == null) {
-            return;
-        }
-
-        List<ItemData> gear = new Select()
-                .from(ItemData.class)
-                .where(Condition.CombinedCondition.begin(Condition.column("type").eq(this.type))
-                        .and(Condition.column("owned").eq(true))
-                ).queryList();
-
-        adapter.setGearList(gear);
     }
 }

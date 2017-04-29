@@ -1,33 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
-import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
-import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
-import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
-import net.pherth.android.emoji_library.EmojiEditText;
-import net.pherth.android.emoji_library.EmojiTextView;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Paint;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -38,11 +12,26 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
+import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
+import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
+import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
+import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
+import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+
+import net.pherth.android.emoji_library.EmojiTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -52,25 +41,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
-    private static final int TYPE_DANIEL = 0;
-    private static final int TYPE_NEW_MESSAGE = 1;
-    private static final int TYPE_MESSAGE = 2;
 
     private List<ChatMessage> messages;
-    private HabitRPGUser user;
+    private User user;
     private String uuid;
     private String groupId;
-    private boolean isTavern;
     private boolean isInboxChat = false;
     private String replyToUserUUID;
-    private HabitRPGUser sendingUser;
+    private User sendingUser;
 
-    public ChatRecyclerViewAdapter(List<ChatMessage> messages, HabitRPGUser user, String groupId, boolean isTavern) {
+    public ChatRecyclerViewAdapter(List<ChatMessage> messages, User user, String groupId) {
         this.messages = messages;
         this.user = user;
         if (user != null) this.uuid = user.getId();
         this.groupId = groupId;
-        this.isTavern = isTavern;
     }
 
     public void setToInboxChat(String replyToUserUUID) {
@@ -78,7 +62,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         this.isInboxChat = true;
     }
 
-    public void setSendingUser(HabitRPGUser user) {
+    public void setSendingUser(@Nullable User user) {
         this.sendingUser = user;
     }
 
@@ -88,105 +72,38 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     }
 
     @Override
-    public int getItemViewType(int position) {
-        switch (position) {
-            case 0: {
-                return isTavern ? TYPE_DANIEL : TYPE_NEW_MESSAGE;
-            }
-            case 1: {
-                return isTavern ? TYPE_NEW_MESSAGE : TYPE_MESSAGE;
-            }
-            default: {
-                return TYPE_MESSAGE;
-            }
-        }
-    }
-
-    @Override
     public ChatRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int rLayout = R.layout.tavern_chat_item;
-
-        switch (viewType) {
-            case TYPE_DANIEL: {
-                rLayout = R.layout.tavern_daniel_item;
-                break;
-            }
-
-            case TYPE_NEW_MESSAGE: {
-                rLayout = R.layout.tavern_chat_new_entry_item;
-                break;
-            }
-        }
-
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(rLayout, parent, false);
-
+                .inflate(R.layout.tavern_chat_item, parent, false);
         return new ChatRecyclerViewHolder(view, viewType, uuid, groupId);
     }
 
     @Override
     public void onBindViewHolder(ChatRecyclerViewHolder holder, int position) {
-        if (!isTavern && position > 0) {
-            holder.bind(messages.get(position - 1));
-            return;
-        }
-
-        if (position > 1) {
-            holder.bind(messages.get(position - 2));
-        }
+        holder.bind(messages.get(position));
     }
 
     @Override
     public int getItemCount() {
-        int messageCount = messages.size();
-
-        if (isTavern) {
-            // if there are no entries, we just show the toggle inn button
-            messageCount += (messageCount == 0) ? 1 : 2;
-        } else {
-            messageCount += 1;
-        }
-
-        return messageCount;
+        return messages != null ? messages.size() : 0;
     }
 
     public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
-        // Toggle Inn State
-        @BindView(R.id.btn_toggle_inn)
-        @Nullable
-        Button btnToggleInn;
-        // New Msg
-        @BindView(R.id.edit_new_message_text)
-        @Nullable
-        EmojiEditText textNewMessage;
-        @BindView(R.id.btn_send_message)
-        @Nullable
-        Button btnSendNewMessage;
         @BindView(R.id.btn_options)
-        @Nullable
         ImageView btnOptions;
         @BindView(R.id.user_background_layout)
-        @Nullable
         LinearLayout userBackground;
         @BindView(R.id.like_background_layout)
-        @Nullable
         LinearLayout likeBackground;
         @BindView(R.id.user_label)
-        @Nullable
         TextView userLabel;
         @BindView(R.id.message_text)
-        @Nullable
         EmojiTextView messageText;
         @BindView(R.id.ago_label)
-        @Nullable
         TextView agoLabel;
         @BindView(R.id.tvLikes)
-        @Nullable
         TextView tvLikes;
-        @BindView(R.id.community_guidelines_view)
-        @Nullable
-        TextView communityGuidelinesView;
 
         Context context;
         Resources res;
@@ -209,102 +126,58 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
             res = context.getResources();
 
-            switch (layoutType) {
-                case TYPE_DANIEL: {
-                    if (btnToggleInn != null) {
-                        btnToggleInn.setOnClickListener(this);
-                    }
-
-                    ViewHelper.SetBackgroundTint(btnToggleInn, ContextCompat.getColor(context, R.color.brand));
-                    if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences().getSleep()) {
-                        btnToggleInn.setText(R.string.tavern_inn_checkOut);
-                    } else {
-                        btnToggleInn.setText(R.string.tavern_inn_rest);
-                    }
-
-                    break;
-                }
-
-                case TYPE_NEW_MESSAGE: {
-                    if (btnSendNewMessage != null) {
-                        btnSendNewMessage.setOnClickListener(this);
-                    }
-                    int color = ContextCompat.getColor(context, R.color.brand);
-
-                    ViewHelper.SetBackgroundTint(btnSendNewMessage, color);
-
-                    // Set up the emoji keyboard
-                    EmojiKeyboard.createKeyboard(itemView, context);
-
-                    break;
-                }
-
-                default: {
-                    if (btnOptions != null) {
-                        btnOptions.setOnClickListener(this);
-                    }
-                    if (tvLikes != null) {
-                        tvLikes.setOnClickListener(this);
-                    }
-                }
+            if (btnOptions != null) {
+                btnOptions.setOnClickListener(this);
             }
-
-            if (communityGuidelinesView != null) {
-                communityGuidelinesView.setPaintFlags(communityGuidelinesView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                communityGuidelinesView.setOnClickListener(v -> {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse("https://habitica.com/static/community-guidelines"));
-                    context.startActivity(i);
-                });
+            if (tvLikes != null) {
+                tvLikes.setOnClickListener(this);
             }
         }
 
         public void bind(final ChatMessage msg) {
             currentMsg = msg;
 
-            if (layoutType != TYPE_DANIEL && layoutType != TYPE_NEW_MESSAGE) {
-                setLikeProperties(msg);
+            setLikeProperties(msg);
 
-                if (userBackground != null) {
-                    if (msg.sent != null && msg.sent.equals("true")) {
-                        DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributor().getContributorColor());
-                    } else {
-                        DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
-                    }
+            if (userBackground != null) {
+                if (msg.sent != null && msg.sent.equals("true")) {
+                    DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributor().getContributorColor());
+                } else {
+                    DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+                }
+            }
+
+            if (msg.user == null || msg.user.equals("")) {
+                msg.user = "system";
+            }
+
+            if (userLabel != null) {
+                if (msg.sent != null && msg.sent.equals("true")) {
+                    userLabel.setText(sendingUser.getProfile().getName());
+                } else {
+                    userLabel.setText(msg.user);
                 }
 
-                if (msg.user == null || msg.user.equals("")) {
-                    msg.user = "system";
+                userLabel.setClickable(true);
+                userLabel.setOnClickListener(view -> {
+                    OpenFullProfileCommand cmd = new OpenFullProfileCommand(msg.uuid);
+
+                    EventBus.getDefault().post(cmd);
+                });
+            }
+
+            DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
+
+            if (messageText != null) {
+                messageText.setText(msg.parsedText);
+                if (msg.parsedText == null) {
+                    messageText.setText(msg.text);
                 }
+                this.messageText.setMovementMethod(LinkMovementMethod.getInstance());
+            }
 
-                if (userLabel != null) {
-                    if (msg.sent != null && msg.sent.equals("true")) {
-                        userLabel.setText(sendingUser.getProfile().getName());
-                    } else {
-                        userLabel.setText(msg.user);
-                    }
-
-                    userLabel.setClickable(true);
-                    userLabel.setOnClickListener(view -> {
-                        OpenFullProfileCommand cmd = new OpenFullProfileCommand(msg.uuid);
-
-                        EventBus.getDefault().post(cmd);
-                    });
-                }
-
-                DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
-
-                if (messageText != null) {
-                    messageText.setText(msg.parsedText);
-                    if (msg.parsedText == null) {
-                        messageText.setText(msg.text);
-                    }
-                    this.messageText.setMovementMethod(LinkMovementMethod.getInstance());
-                }
-
-                if (agoLabel != null) {
-                    agoLabel.setText(msg.getAgoString(res));
-                }
+            if (agoLabel != null) {
+                agoLabel.setText(msg.getAgoString(res));
             }
         }
 
@@ -416,33 +289,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 toggleLike();
 
                 return;
-            }
-
-
-            if (v == btnToggleInn) {
-                EventBus.getDefault().post(new ToggleInnCommand());
-                if (!HabiticaApplication.User.getPreferences().getSleep()) {
-                    if (btnToggleInn != null) {
-                        btnToggleInn.setText(R.string.tavern_inn_checkOut);
-                    }
-                } else {
-                    if (btnToggleInn != null) {
-                        btnToggleInn.setText(R.string.tavern_inn_rest);
-                    }
-                }
-                return;
-            }
-
-            if (textNewMessage != null) {
-                String text = textNewMessage.getText().toString();
-                if (!text.equals("")) {
-                    if (isInboxChat) {
-                        EventBus.getDefault().post(new SendNewInboxMessageCommand(replyToUserUUID, text));
-                    } else {
-                        EventBus.getDefault().post(new SendNewGroupMessageCommand(groupId, text));
-                    }
-                }
-                textNewMessage.setText("");
             }
         }
 

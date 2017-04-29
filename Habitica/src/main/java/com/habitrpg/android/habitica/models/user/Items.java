@@ -1,54 +1,38 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
 
 import java.util.Date;
 import java.util.HashMap;
 
-/**
- * Created by MagicMicky on 16/03/14.
- */
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class Items extends BaseModel {
+public class Items extends RealmObject {
 
-    public HashMap<String, Integer> eggs;
-    public HashMap<String, Integer> food;
-    public HashMap<String, Integer> hatchingPotions;
-    public HashMap<String, Integer> quests;
-    @Column
     @PrimaryKey
-    @NotNull
-    String user_id;
-    HashMap<String, Integer> pets;
-    HashMap<String, Boolean> mounts;
-    @Column
+    private String userId;
+    public RealmList<Egg> eggs;
+    public RealmList<Food> food;
+    public RealmList<HatchingPotion> hatchingPotions;
+    public RealmList<QuestContent> quests;
+    User user;
+    RealmList<Pet> pets;
+    RealmList<Mount> mounts;
     private String currentMount;
-    @Column
     private String currentPet;
-    @Column
     private int lastDrop_count;
-    @Column
     private Date lastDrop_date;
 
     //private QuestContent quest;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "gear_id",
-            columnType = String.class,
-            foreignColumnName = "user_id")})
     private Gear gear;
-
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "special_id",
-            columnType = String.class,
-            foreignColumnName = "user_id")})
     private SpecialItems special;
 
     public Items(String currentMount, String currentPet, int lastDrop_count, Date lastDrop_date) {
@@ -109,67 +93,65 @@ public class Items extends BaseModel {
         this.special = specialItems;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public HashMap<String, Integer> getEggs() {
+    public RealmList<Egg> getEggs() {
         return eggs;
     }
 
-    public void setEggs(HashMap<String, Integer> eggs) {
+    public void setEggs(RealmList<Egg> eggs) {
         this.eggs = eggs;
     }
 
-    public HashMap<String, Integer> getFood() {
+    public RealmList<Food> getFood() {
         return food;
     }
 
-    public void setFood(HashMap<String, Integer> food) {
+    public void setFood(RealmList<Food> food) {
         this.food = food;
     }
 
-    public HashMap<String, Integer> getHatchingPotions() {
+    public RealmList<HatchingPotion> getHatchingPotions() {
         return hatchingPotions;
     }
 
-    public void setHatchingPotions(HashMap<String, Integer> hatchingPotions) {
+    public void setHatchingPotions(RealmList<HatchingPotion> hatchingPotions) {
         this.hatchingPotions = hatchingPotions;
     }
 
-    public HashMap<String, Integer> getQuests() {
+    public RealmList<QuestContent> getQuests() {
         return quests;
     }
 
-    public void setQuests(HashMap<String, Integer> quests) {
+    public void setQuests(RealmList<QuestContent> quests) {
         this.quests = quests;
     }
 
-    public HashMap<String, Integer> getPets() {
+    public RealmList<Pet> getPets() {
         return pets;
     }
 
-    public void setPets(HashMap<String, Integer> pets) {
+    public void setPets(RealmList<Pet> pets) {
         this.pets = pets;
     }
 
-    public HashMap<String, Boolean> getMounts() {
+    public RealmList<Mount> getMounts() {
         return mounts;
     }
 
-    public void setMounts(HashMap<String, Boolean> mounts) {
+    public void setMounts(RealmList<Mount> mounts) {
         this.mounts = mounts;
     }
 
-    @Override
-    public void save() {
-        gear.user_id = user_id;
-        special.user_id = user_id;
+    public String getUserId() {
+        return userId;
+    }
 
-        super.save();
+    public void setUserId(String userId) {
+        this.userId = userId;
+        if (gear != null && !gear.isManaged()) {
+            gear.setUserId(userId);
+        }
+        if (special != null && !special.isManaged()) {
+            special.setUserId(userId);
+        }
     }
 }

@@ -1,25 +1,24 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
+import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.habitrpg.android.habitica.ui.views.ValueBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -30,10 +29,10 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
 
     public Context context;
-    private List<HabitRPGUser> memberList;
+    private List<User> memberList;
     private boolean isMemberSelection;
 
-    public void setMemberList(List<HabitRPGUser> memberList, boolean isMemberSelection) {
+    public void setMemberList(List<User> memberList, boolean isMemberSelection) {
         this.memberList = memberList;
         this.isMemberSelection = isMemberSelection;
         this.notifyDataSetChanged();
@@ -76,7 +75,8 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         @BindView(R.id.class_background_layout)
         View classBackground;
 
-        ValueBarBinding hpBar;
+        @BindView(R.id.hpBar)
+        ValueBar hpBar;
 
         Resources resources;
 
@@ -85,40 +85,35 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             ButterKnife.bind(this, itemView);
 
-            View hpBarView = itemView.findViewById(R.id.hpBar);
-
-            hpBar = DataBindingUtil.bind(hpBarView);
-            hpBar.setPartyMembers(true);
+            hpBar.setLightBackground(true);
 
             resources = itemView.getResources();
         }
 
-        public void bind(HabitRPGUser user) {
-            android.content.Context ctx = itemView.getContext();
-
+        public void bind(User user) {
             avatarView.setUser(user);
 
-            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
+            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats());
 
             lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 
             classLabel.setText(user.getStats().getTranslatedClassName(context));
 
             int colorResourceID;
-            switch (user.getStats()._class) {
-                case healer: {
+            switch (user.getStats().habitClass) {
+                case "healer": {
                     colorResourceID = R.color.class_healer;
                     break;
                 }
-                case warrior: {
+                case "warrior": {
                     colorResourceID = R.color.class_warrior;
                     break;
                 }
-                case rogue: {
+                case "rogue": {
                     colorResourceID = R.color.class_rogue;
                     break;
                 }
-                case wizard: {
+                case "wizard": {
                     colorResourceID = R.color.class_wizard;
                     break;
                 }

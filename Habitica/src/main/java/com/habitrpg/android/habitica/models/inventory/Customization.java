@@ -2,31 +2,18 @@ package com.habitrpg.android.habitica.models.inventory;
 
 import android.support.annotation.Nullable;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import java.util.Date;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class Customization extends BaseModel {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-    @Column
+public class Customization extends RealmObject {
+
     @PrimaryKey
     private String id;
-
-    @Column
     private String identifier, category, type, notes, customizationSet, customizationSetName, text;
-
-    @Column
     private boolean purchased, isBuyable;
-
-    @Column
     private Integer price, setPrice;
-
-    @Column
     private Date availableFrom, availableUntil;
 
     private void updateID() {

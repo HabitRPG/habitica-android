@@ -5,7 +5,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
+import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -14,14 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.Realm;
+import io.realm.RealmList;
+
 public class EggListDeserializer implements JsonDeserializer<List<Egg>> {
     @Override
     public List<Egg> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<Egg> vals = new ArrayList<>();
+        RealmList<Egg> vals = new RealmList<>();
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<Egg> existingItems = new Select().from(Egg.class).queryList();
+            Realm realm = Realm.getDefaultInstance();
+            List<Egg> existingItems = realm.copyFromRealm(realm.where(Egg.class).findAll());
+            realm.close();
 
             for (Egg item : existingItems) {
                 if (object.has(item.getKey())) {
@@ -59,7 +64,7 @@ public class EggListDeserializer implements JsonDeserializer<List<Egg>> {
             }
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((Egg) context.deserialize(item.getAsJsonObject(), Egg.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), Egg.class));
             }
         }
 

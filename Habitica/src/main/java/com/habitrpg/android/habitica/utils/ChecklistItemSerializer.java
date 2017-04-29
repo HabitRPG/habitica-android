@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 
 import java.lang.reflect.Type;

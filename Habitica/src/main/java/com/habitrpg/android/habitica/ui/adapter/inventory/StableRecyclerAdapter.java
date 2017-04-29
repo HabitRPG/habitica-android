@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-import com.habitrpg.android.habitica.models.inventory.Animal;
-
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.inventory.Animal;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
 
 import java.util.List;
 
@@ -105,7 +105,7 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ownedTextView.setVisibility(View.VISIBLE);
             this.imageView.setAlpha(1.0f);
             if (animal.getNumberOwned() > 0) {
-                this.ownedTextView.setText(animal.getNumberOwned().toString());
+                this.ownedTextView.setText(String.valueOf(animal.getNumberOwned()));
                 if (itemType.equals("pets")) {
                     DataBindingUtils.loadImage(this.imageView, "Pet-" + item.getKey());
                 } else {

@@ -8,28 +8,16 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.HashMap;
 
-/**
- * Created by viirus on 06/07/15.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class QuestProgress extends BaseModel {
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
-    @Column
+public class QuestProgress extends RealmObject {
+
+    Quest quest;
     public double hp, rage;
+    @Ignore
     public HashMap<String, Integer> collect;
-    @Column
-    @PrimaryKey(autoincrement = true)
-    long id;
-    @Column
     private float down, up;
-
-    private QuestProgress(float down, float up) {
-        this.down = down;
-        this.up = up;
-    }
-
-    public QuestProgress() {
-    }
 
     public float getDown() {
         return down;

@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +7,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -63,6 +63,8 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
     @BindView(R.id.approvalRequiredTextField)
     TextView approvalRequiredTextView;
 
+    protected boolean openTaskDisabled, taskActionsDisabled;
+
 
     public BaseTaskViewHolder(View itemView) {
         this(itemView, true);
@@ -94,16 +96,20 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
             } else {
                 this.titleTextView.setText(this.task.getText());
                 this.notesTextView.setText(this.task.getNotes());
-                Observable.just(this.task)
-                        .map(task1 -> {
-                            task.parsedText = MarkdownParser.parseMarkdown(task.getText());
-                            task.parsedNotes = MarkdownParser.parseMarkdown(task.getNotes());
-                            return task;
-                        })
+                Observable.just(this.task.getText())
+                        .map(MarkdownParser::parseMarkdown)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(task2 -> {
+                        .subscribe(parsedText -> {
+                            this.task.parsedText = parsedText;
                             this.titleTextView.setText(this.task.parsedText);
+                        }, Throwable::printStackTrace);
+                Observable.just(this.task.getNotes())
+                        .map(MarkdownParser::parseMarkdown)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(parsedNotes -> {
+                            this.task.parsedNotes = parsedNotes;
                             this.notesTextView.setText(this.task.parsedNotes);
                         }, Throwable::printStackTrace);
             }
@@ -186,7 +192,7 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
 
     @Override
     public void onClick(View v) {
-        if (v != itemView || this.openTaskDisabled) {
+        if (!v.equals(itemView) || this.openTaskDisabled) {
             return;
         }
 
@@ -200,11 +206,8 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
         return true;
     }
 
-    protected boolean openTaskDisabled, taskActionsDisabled;
-
     public void setDisabled(boolean openTaskDisabled, boolean taskActionsDisabled) {
         this.openTaskDisabled = openTaskDisabled;
         this.taskActionsDisabled = taskActionsDisabled;
-
     }
 }

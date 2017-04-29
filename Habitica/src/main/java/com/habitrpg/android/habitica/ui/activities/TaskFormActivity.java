@@ -37,9 +37,10 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.data.TagRepository;
+import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.Tag;
@@ -47,20 +48,16 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.Days;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiPopup;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -75,21 +72,22 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.realm.RealmList;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
     public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";
     public static final String SHOW_TAG_SELECTION = "show_tag_selection";
-    public static final String SHOW_CHECKLIST = "show_checklist";
-    public static final String PARCELABLE_TASK = "parcelable_task";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
+    public static final String SHOW_CHECKLIST = "show_checklist";
+
+    public static final String PARCELABLE_TASK = "parcelable_task";
     public static final String SAVE_TO_DB = "saveToDb";
 
     // in order to disable the event handler in MainActivity
@@ -201,13 +199,17 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @Inject
     TaskFilterHelper taskFilterHelper;
+    @Inject
 
-    EmojiPopup popup;
+    TaskRepository taskRepository;
+    @Inject
+    TagRepository tagRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
-    private String taskType;
-    private String taskId;
-    private String userId;
     private boolean showTagSelection;
+
     private boolean showChecklist;
     private boolean setIgnoreFlag;
     private Task task;
@@ -222,7 +224,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     private RemindersManager remindersManager;
     private FirstDayOfTheWeekHelper firstDayOfTheWeekHelper;
+
     private boolean saveToDb;
+    private String taskType;
+    private String taskId;
+    private EmojiPopup popup;
 
     @Override
     protected int getLayoutResId() {
@@ -238,12 +244,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         taskType = bundle.getString(TASK_TYPE_KEY);
         taskId = bundle.getString(TASK_ID_KEY);
-        userId = bundle.getString(USER_ID_KEY);
+        allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
         showChecklist = bundle.getBoolean(SHOW_CHECKLIST, true);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         saveToDb = bundle.getBoolean(SAVE_TO_DB, true);
         setIgnoreFlag = bundle.getBoolean(SET_IGNORE_FLAG, false);
+        tagCheckBoxList = new ArrayList<>();
 
         tagsWrapper.setVisibility(showTagSelection ? View.VISIBLE : View.GONE);
 
@@ -269,22 +276,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 .setTitle(getString(R.string.taskform_delete_title))
                 .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                     if (task != null) {
-                        task.delete();
+                        taskRepository.deleteTask(task.getId());
                     }
 
                     finish();
                     dismissKeyboard();
 
-                    String taskToDelete = this.taskId;
-
-                    if(taskToDelete == null && task != null){
-                        taskToDelete = task.getId();
-                    }
-
-                    EventBus.getDefault().post(new DeleteTaskCommand(taskToDelete, setIgnoreFlag));
-                }).setNegativeButton(getString(R.string.no), (dialog, which) -> {
-                    dialog.dismiss();
-                }).show());
+                    taskRepository.deleteTask(taskId).subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+                }).setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.dismiss()).show());
 
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.task_difficulties, android.R.layout.simple_spinner_item);
@@ -350,23 +349,22 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             attributeWrapper.setVisibility(View.GONE);
         }
 
-        if(!showChecklist){
-            mainWrapper.removeView(checklistWrapper);
-        }
-
         if (taskId != null) {
-            Task task = new Select().from(Task.class).byIds(taskId).querySingle();
-            this.task = task;
-            if (task != null) {
-                populate(task);
-            }
+            taskRepository.getTask(taskId)
+                    .first()
+                    .subscribe(task -> {
+                this.task = task;
+                if (task != null) {
+                    populate(task);
+                    populateChecklistRecyclerView();
 
             setTitle(task);
 
-            btnDelete.setEnabled(true);
-        } else if(task != null) {
-            populate(task);
-            taskText.requestFocus();
+                    populateRemindersRecyclerView();
+                }
+
+                setTitle(task);
+            }, ReactiveErrorHandler.handleEmptyError());
 
             btnDelete.setEnabled(true);
         } else {
@@ -388,6 +386,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         // If it's a to-do, change the emojiToggle2 to the actual emojiToggle2 (prevents NPEs when not a to-do task)
         if (isTodo) {
             emojiToggle2 = (ImageButton) findViewById(R.id.emoji_toggle_btn2);
+        } else {
+            emojiToggle2 = emojiToggle0;
         }
 
         // if showChecklist is inactive the wrapper is wrapper, so the reference can't be found
@@ -446,23 +446,20 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             emojiToggle2.setOnClickListener(new emojiClickListener(newCheckListEditText));
         }
 
-        Observable.defer(() -> Observable.just(new Select().from(Tag.class)
-                .where(Condition.column("user_id").eq(this.userId))
-                .queryList())
-        )
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        loadedTags -> {
+        tagRepository.getTags(userId)
+                .subscribe(loadedTags -> {
                             tags = loadedTags;
                             createTagsCheckBoxes();
-                        },
-                        throwable -> {
-                        }
+                        }, throwable -> {}
                 );
     }
 
-
+    @Override
+    protected void onDestroy() {
+        taskRepository.close();
+        tagRepository.close();
+        super.onDestroy();
+    }
 
     @Override
     protected void injectActivity(AppComponent component) {
@@ -487,11 +484,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void createCheckListRecyclerView() {
-        List<ChecklistItem> checklistItems = new ArrayList<>();
-        if (task != null && task.getChecklist() != null) {
-            checklistItems = task.getChecklist();
-        }
-        checklistAdapter = new CheckListAdapter(checklistItems);
+
+        checklistAdapter = new CheckListAdapter();
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -504,6 +498,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void populateChecklistRecyclerView() {
+        List<ChecklistItem> checklistItems = new ArrayList<>();
+        if (task != null && task.getChecklist() != null) {
+            checklistItems = task.getChecklist();
+        }
+        checklistAdapter.setItems(checklistItems);
     }
 
     @OnClick(R.id.add_checklist_button)
@@ -520,7 +522,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             reminders = task.getReminders();
         }
 
-        remindersAdapter = new RemindersAdapter(reminders, taskType);
+        remindersAdapter = new RemindersAdapter(taskType);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -533,6 +535,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(remindersAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(remindersRecyclerView);
+    }
+
+    private void populateRemindersRecyclerView() {
+        List<RemindersItem> reminders = new ArrayList<>();
+        if (task != null && task.getReminders() != null) {
+            reminders = task.getReminders();
+        }
+
+        remindersAdapter.setReminders(reminders);
     }
 
     private void addNewReminder(RemindersItem remindersItem) {
@@ -687,8 +698,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             fillTagCheckboxes();
         }
 
-        for (TaskTag tt : task.getTags()) {
-            selectedTags.add(tt.getTag());
+        for (Tag tag : task.getTags()) {
+            selectedTags.add(tag);
         }
 
         float priority = task.getPriority();
@@ -768,8 +779,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void fillTagCheckboxes() {
-        for (TaskTag tt : task.getTags()) {
-            int position = tags.indexOf(tt.getTag());
+        for (Tag tag : task.getTags()) {
+            int position = tags.indexOf(tag);
             if (tagCheckBoxList.size() > position && position >= 0) {
                 tagCheckBoxList.get(position).setChecked(true);
             }
@@ -777,113 +788,170 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private boolean saveTask(Task task) {
-        task.text = MarkdownParser.parseCompiled(taskText.getText());
 
-        if (checklistAdapter != null) {
-            if (checklistAdapter.getCheckListItems() != null) {
-                task.setChecklist(checklistAdapter.getCheckListItems());
-            }
-        }
-
-        if (remindersAdapter != null) {
-            if (remindersAdapter.getRemindersItems() != null) {
-                task.setReminders(remindersAdapter.getRemindersItems());
-            }
-        }
-
-        if (task.text.isEmpty()) {
+        String text = MarkdownParser.parseCompiled(taskText.getText());
+        if (text == null || text.isEmpty()) {
             return false;
         }
 
-        task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
+        taskRepository.executeTransaction(realm -> {
+            task.text = text;
 
-        if (this.taskDifficultySpinner.getSelectedItemPosition() == 0) {
-            task.setPriority((float) 0.1);
-        } else if (this.taskDifficultySpinner.getSelectedItemPosition() == 1) {
-            task.setPriority((float) 1.0);
-        } else if (this.taskDifficultySpinner.getSelectedItemPosition() == 2) {
-            task.setPriority((float) 1.5);
-        } else if (this.taskDifficultySpinner.getSelectedItemPosition() == 3) {
-            task.setPriority((float) 2.0);
-        }
-
-        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
-            task.setAttribute(Task.ATTRIBUTE_STRENGTH);
-        } else {
-            switch (this.taskAttributeSpinner.getSelectedItemPosition()) {
-                case 0:
-                    task.setAttribute(Task.ATTRIBUTE_STRENGTH);
-                    break;
-                case 1:
-                    task.setAttribute(Task.ATTRIBUTE_INTELLIGENCE);
-                    break;
-                case 2:
-                    task.setAttribute(Task.ATTRIBUTE_CONSTITUTION);
-                    break;
-                case 3:
-                    task.setAttribute(Task.ATTRIBUTE_PERCEPTION);
-                    break;
+            if (checklistAdapter != null) {
+                if (checklistAdapter.getCheckListItems() != null) {
+                    List<ChecklistItem> newItems = checklistAdapter.getCheckListItems();
+                    if (task.getChecklist() == null) {
+                        task.setChecklist(new RealmList<>());
+                    }
+                    List<ChecklistItem> itemsToRemove = new ArrayList<>();
+                    for (ChecklistItem item : task.getChecklist()) {
+                        if (item.getId() == null) {
+                            itemsToRemove.add(item);
+                            break;
+                        }
+                        ChecklistItem newItem = null;
+                        for (ChecklistItem checkedItem : newItems) {
+                            if (item.getId().equals(checkedItem.getId())) {
+                                newItem = checkedItem;
+                                break;
+                            }
+                        }
+                        if (newItem == null) {
+                            itemsToRemove.add(item);
+                        } else {
+                            item.setText(newItem.getText());
+                            newItems.remove(newItem);
+                        }
+                    }
+                    task.getChecklist().removeAll(itemsToRemove);
+                    task.getChecklist().addAll(newItems);
+                }
             }
-        }
 
-        switch (task.type) {
-            case "habit": {
-                task.setUp(positiveCheckBox.isChecked());
-                task.setDown(negativeCheckBox.isChecked());
+            if (remindersAdapter != null) {
+                if (remindersAdapter.getRemindersItems() != null) {
+                    List<RemindersItem> newItems = remindersAdapter.getRemindersItems();
+                    if (task.getReminders() == null) {
+                        task.setReminders(new RealmList<>());
+                    }
+                    List<RemindersItem> itemsToRemove = new ArrayList<>();
+                    for (RemindersItem item : task.getReminders()) {
+                        if (item.getId() == null) {
+                            itemsToRemove.add(item);
+                            break;
+                        }
+                        RemindersItem newItem = null;
+                        for (RemindersItem checkedItem : newItems) {
+                            if (item.getId().equals(checkedItem.getId())) {
+                                newItem = checkedItem;
+                                break;
+                            }
+                        }
+                        if (newItem == null) {
+                            itemsToRemove.add(item);
+                        } else {
+                            item.setTime(newItem.getTime());
+                            newItems.remove(newItem);
+                        }
+                    }
+                    task.getReminders().removeAll(itemsToRemove);
+                    task.getReminders().addAll(newItems);                }
             }
-            break;
 
-            case "daily": {
-                task.setStartDate(new Date(startDateListener.getCalendar().getTimeInMillis()));
 
-                if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
-                    task.setFrequency("weekly");
-                    Days repeat = task.getRepeat();
-                    if (repeat == null) {
-                        repeat = new Days();
-                        task.setRepeat(repeat);
+            RealmList<Tag> taskTags = new RealmList<>();
+            taskTags.addAll(selectedTags);
+            task.setTags(taskTags);
+
+            task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
+
+            if (taskDifficultySpinner.getSelectedItemPosition() == 0) {
+                task.setPriority((float) 0.1);
+            } else if (taskDifficultySpinner.getSelectedItemPosition() == 1) {
+                task.setPriority((float) 1.0);
+            } else if (taskDifficultySpinner.getSelectedItemPosition() == 2) {
+                task.setPriority((float) 1.5);
+            } else if (taskDifficultySpinner.getSelectedItemPosition() == 3) {
+                task.setPriority((float) 2.0);
+            }
+
+            if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
+                task.setAttribute(Task.ATTRIBUTE_STRENGTH);
+            } else {
+                switch (taskAttributeSpinner.getSelectedItemPosition()) {
+                    case 0:
+                        task.setAttribute(Task.ATTRIBUTE_STRENGTH);
+                        break;
+                    case 1:
+                        task.setAttribute(Task.ATTRIBUTE_INTELLIGENCE);
+                        break;
+                    case 2:
+                        task.setAttribute(Task.ATTRIBUTE_CONSTITUTION);
+                        break;
+                    case 3:
+                        task.setAttribute(Task.ATTRIBUTE_PERCEPTION);
+                        break;
+                }
+            }
+
+            switch (task.type) {
+                case "habit": {
+                    task.setUp(positiveCheckBox.isChecked());
+                    task.setDown(negativeCheckBox.isChecked());
+                }
+                break;
+
+                case "daily": {
+                    task.setStartDate(new Date(startDateListener.getCalendar().getTimeInMillis()));
+
+                    if (dailyFrequencySpinner.getSelectedItemPosition() == 0) {
+                        task.setFrequency("weekly");
+                        Days repeat = task.getRepeat();
+                        if (repeat == null) {
+                            repeat = new Days();
+                            task.setRepeat(repeat);
+                        }
+
+                        int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                        repeat.setM(weekdayCheckboxes.get(offset).isChecked());
+                        repeat.setT(weekdayCheckboxes.get((offset + 1) % 7).isChecked());
+                        repeat.setW(weekdayCheckboxes.get((offset + 2) % 7).isChecked());
+                        repeat.setTh(weekdayCheckboxes.get((offset + 3) % 7).isChecked());
+                        repeat.setF(weekdayCheckboxes.get((offset + 4) % 7).isChecked());
+                        repeat.setS(weekdayCheckboxes.get((offset + 5) % 7).isChecked());
+                        repeat.setSu(weekdayCheckboxes.get((offset + 6) % 7).isChecked());
+                    } else {
+                        task.setFrequency("daily");
+                        task.setEveryX(frequencyPicker.getValue());
+                    }
+                }
+                break;
+
+                case "todo": {
+                    if (dueDateCheckBox.isChecked()) {
+                        task.setDueDate(new Date(dueDateListener.getCalendar().getTimeInMillis()));
+                    } else {
+                        task.setDueDate(null);
+                    }
+                }
+                break;
+
+                case "reward": {
+                    String value = taskValue.getText().toString();
+                    if (!value.isEmpty()) {
+                        NumberFormat localFormat = DecimalFormat.getInstance(Locale.getDefault());
+                        try {
+                            task.setValue(localFormat.parse(value).doubleValue());
+                        } catch (ParseException e) {
+                        }
+                    } else {
+                        task.setValue(0.0d);
                     }
 
-                    int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
-                    repeat.setM(this.weekdayCheckboxes.get(offset).isChecked());
-                    repeat.setT(this.weekdayCheckboxes.get((offset + 1) % 7).isChecked());
-                    repeat.setW(this.weekdayCheckboxes.get((offset + 2) % 7).isChecked());
-                    repeat.setTh(this.weekdayCheckboxes.get((offset + 3) % 7).isChecked());
-                    repeat.setF(this.weekdayCheckboxes.get((offset + 4) % 7).isChecked());
-                    repeat.setS(this.weekdayCheckboxes.get((offset + 5) % 7).isChecked());
-                    repeat.setSu(this.weekdayCheckboxes.get((offset + 6) % 7).isChecked());
-                } else {
-                    task.setFrequency("daily");
-                    task.setEveryX(this.frequencyPicker.getValue());
                 }
+                break;
             }
-            break;
-
-            case "todo": {
-                if (dueDateCheckBox.isChecked()) {
-                    task.setDueDate(new Date(dueDateListener.getCalendar().getTimeInMillis()));
-                } else {
-                    task.setDueDate(null);
-                }
-            }
-            break;
-
-            case "reward": {
-                String value = taskValue.getText().toString();
-                if (!value.isEmpty()) {
-                    NumberFormat localFormat = DecimalFormat.getInstance(Locale.getDefault());
-                    try {
-                        task.setValue(localFormat.parse(value).doubleValue());
-                    } catch (ParseException e) {
-                    }
-                } else {
-                    task.setValue(0.0d);
-                }
-
-            }
-            break;
-        }
-
+        });
         return true;
     }
 
@@ -903,28 +971,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         if (this.saveTask(this.task)) {
-            List<TaskTag> taskTags = new ArrayList<>();
-            for (Tag tag : selectedTags) {
-                TaskTag tt = new TaskTag();
-                tt.setTag(tag);
-                tt.setTask(task);
-                taskTags.add(tt);
-            }
-            //save
-            this.task.setTags(taskTags);
-            if(saveToDb){
-                this.task.save();
-            }
-
             //send back to other elements.
-            TaskSaveEvent event = new TaskSaveEvent();
+            Observable<Task> observable;
             if (TaskFormActivity.this.task.getId() == null) {
-                event.created = true;
+                observable = taskRepository.createTask(task);
+            } else {
+                observable = taskRepository.updateTask(task);
             }
-            event.ignoreEvent = setIgnoreFlag;
 
-            event.task = TaskFormActivity.this.task;
-            EventBus.getDefault().post(event);
+            observable.subscribe(task1 -> {}, ReactiveErrorHandler.handleEmptyError());
         }
     }
 
@@ -968,7 +1023,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         EditText datePickerText;
         DateFormat dateFormatter;
 
-        public DateEditTextListener(EditText dateText) {
+        DateEditTextListener(EditText dateText) {
             calendar = Calendar.getInstance();
 
             this.datePickerText = dateText;
@@ -1028,7 +1083,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         EmojiEditText view;
 
-        public emojiClickListener(EmojiEditText view) {
+        emojiClickListener(EmojiEditText view) {
             this.view = view;
         }
 

@@ -1,16 +1,14 @@
 package com.habitrpg.android.habitica.utils;
 
+import android.annotation.SuppressLint;
+import android.support.annotation.Nullable;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.habitrpg.android.habitica.models.inventory.Customization;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import android.annotation.SuppressLint;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -19,16 +17,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.Realm;
+import io.realm.RealmList;
+
 public class CustomizationDeserializer implements JsonDeserializer<List<Customization>> {
 
     @Override
     public List<Customization> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject object = json.getAsJsonObject();
-        List<Customization> customizations = new ArrayList<Customization>();
-
+        RealmList<Customization> customizations = new RealmList<>();
+        Realm realm = Realm.getDefaultInstance();
 
         if (object.has("shirt")) {
-            List<Customization> existingCustomizations = new Select().from(Customization.class).where(Condition.column("type").isNot("background")).queryList();
+            List<Customization> existingCustomizations = realm.copyFromRealm(realm.where(Customization.class).findAll());
 
             for (Customization customization : existingCustomizations) {
                 if (object.has(customization.getType())) {
@@ -59,8 +60,7 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
                 }
             }
         } else {
-
-            List<Customization> existingCustomizations = new Select().from(Customization.class).where(Condition.column("type").is("background")).queryList();
+            List<Customization> existingCustomizations = realm.copyFromRealm(realm.where(Customization.class).findAll());
 
             for (Customization customization : existingCustomizations) {
                 if (object.has(customization.getCustomizationSet())) {
@@ -79,11 +79,12 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
             }
         }
 
+        realm.close();
+
         return customizations;
     }
 
-    private Customization parseCustomization(Customization existingCustomizaion, String type, String category, String key, JsonObject entry) {
-        JsonObject obj = entry;
+    private Customization parseCustomization(@Nullable Customization existingCustomizaion, String type, @Nullable String category, String key, JsonObject entry) {
         Customization customization = existingCustomizaion;
         if (customization == null) {
             customization = new Customization();
@@ -93,12 +94,12 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
                 customization.setCategory(category);
             }
         }
-        if (obj.has("price")) {
-            customization.setPrice(obj.get("price").getAsInt());
+        if (entry.has("price")) {
+            customization.setPrice(entry.get("price").getAsInt());
         }
 
-        if (obj.has("set")) {
-            JsonObject setInfo = obj.get("set").getAsJsonObject();
+        if (entry.has("set")) {
+            JsonObject setInfo = entry.get("set").getAsJsonObject();
             customization.setCustomizationSet(setInfo.get("key").getAsString());
             if (setInfo.has("setPrice")) {
                 customization.setSetPrice(setInfo.get("setPrice").getAsInt());
@@ -122,7 +123,7 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
         return customization;
     }
 
-    private Customization parseBackground(Customization existingCustomization, String setName, String key, JsonObject entry) {
+    private Customization parseBackground(@Nullable Customization existingCustomization, String setName, String key, JsonObject entry) {
         Customization customization = existingCustomization;
 
         if (customization == null) {

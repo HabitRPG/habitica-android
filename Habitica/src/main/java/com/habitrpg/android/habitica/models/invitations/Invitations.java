@@ -1,36 +1,21 @@
 package com.habitrpg.android.habitica.models.invitations;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.habitrpg.android.habitica.models.user.User;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by keithholliday on 7/2/16.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class Invitations extends BaseModel {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-    @Column
+public class Invitations extends RealmObject {
+
     @PrimaryKey
-    @NotNull
-    public String user_id;
+    private String userId;
 
-    @SerializedName("party")
-    @Expose
+    User user;
     private PartyInvite party;
-
-    @SerializedName("guilds")
-    @Expose
-    private List<GuildInvite> guilds = new ArrayList<GuildInvite>();
+    private RealmList<GuildInvite> guilds;
 
     /**
      * @return The party invite
@@ -56,7 +41,15 @@ public class Invitations extends BaseModel {
     /**
      * @param guilds The guilds
      */
-    public void setGuilds(List<GuildInvite> guilds) {
+    public void setGuilds(RealmList<GuildInvite> guilds) {
         this.guilds = guilds;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

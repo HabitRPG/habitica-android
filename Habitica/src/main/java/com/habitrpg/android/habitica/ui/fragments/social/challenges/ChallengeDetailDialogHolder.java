@@ -12,15 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
+import com.habitrpg.android.habitica.models.LeaveChallengeBody;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.LeaveChallengeBody;
-import com.habitrpg.android.habitica.models.tasks.Task;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -70,7 +70,7 @@ public class ChallengeDetailDialogHolder {
     private AlertDialog dialog;
     private ApiClient apiClient;
     @Nullable
-    private HabitRPGUser user;
+    private User user;
     private Challenge challenge;
     private Action1<Challenge> challengeJoinedAction;
     private Action1<Challenge> challengeLeftAction;
@@ -82,7 +82,7 @@ public class ChallengeDetailDialogHolder {
         ButterKnife.bind(this, view);
     }
 
-    public static void showDialog(Activity activity, ApiClient apiClient, @Nullable HabitRPGUser user, Challenge challenge,
+    public static void showDialog(Activity activity, ApiClient apiClient, @Nullable User user, Challenge challenge,
                                   Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
@@ -94,7 +94,7 @@ public class ChallengeDetailDialogHolder {
         challengeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 
-    public void bind(AlertDialog dialog, ApiClient apiClient, @Nullable HabitRPGUser user, Challenge challenge,
+    public void bind(AlertDialog dialog, ApiClient apiClient, @Nullable User user, Challenge challenge,
                      Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         this.dialog = dialog;
         this.apiClient = apiClient;
@@ -107,7 +107,7 @@ public class ChallengeDetailDialogHolder {
     }
 
     private void changeViewsByChallenge(Challenge challenge) {
-        setJoined(challenge.user_id != null && !challenge.user_id.isEmpty());
+        setJoined(challenge.userId != null && !challenge.userId.isEmpty());
 
         challengeName.setText(EmojiParser.parseEmojis(challenge.name));
         challengeDescription.setText(MarkdownParser.parseMarkdown(challenge.description));
@@ -290,9 +290,8 @@ public class ChallengeDetailDialogHolder {
         this.apiClient.joinChallenge(challenge.id)
                 .subscribe(challenge -> {
                     if (this.user != null) {
-                        challenge.user_id = this.user.getId();
+                        challenge.userId = this.user.getId();
                     }
-                    challenge.async().save();
 
                     if (challengeJoinedAction != null) {
                         challengeJoinedAction.call(challenge);
@@ -312,8 +311,7 @@ public class ChallengeDetailDialogHolder {
 
                         showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
                                 .subscribe(aVoid -> {
-                                    challenge.user_id = null;
-                                    challenge.async().save();
+                                    challenge.userId = null;
 
                                     if (this.user != null) {
                                         this.user.resetChallengeList();

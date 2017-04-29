@@ -1,18 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.habitrpg.android.habitica.models.inventory.Customization;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Preferences;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.OrderBy;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
-
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,17 +7,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.CustomizationRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.inventory.Customization;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.user.Preferences;
+import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by viirus on 12/01/16.
- */
 public class AvatarCustomizationFragment extends BaseMainFragment {
+
+    @Inject
+    CustomizationRepository customizationRepository;
 
     public String type;
     public String category;
@@ -51,6 +50,22 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         unbinder = ButterKnife.bind(this, view);
         adapter = new CustomizationRecyclerViewAdapter();
 
+        compositeSubscription.add(adapter.getSelectCustomizationEvents()
+                .flatMap(customization -> {
+                    String updatePath = "preferences." + customization.getType();
+                    if (customization.getCategory() != null) {
+                        updatePath = updatePath + "." + customization.getCategory();
+                    }
+                    return userRepository.updateUser(user, updatePath, customization.getIdentifier());
+                })
+                .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError()));
+        compositeSubscription.add(adapter.getUnlockCustomizationEvents()
+                .flatMap(customization -> userRepository.unlockPath(user, customization))
+                .subscribe(unlockResponse -> {}, ReactiveErrorHandler.handleEmptyError()));
+        compositeSubscription.add(adapter.getUnlockSetEvents()
+                .flatMap(set -> userRepository.unlockPath(user, set))
+                .subscribe(unlockResponse -> {}, ReactiveErrorHandler.handleEmptyError()));
+
         layoutManager = new GridLayoutManager(activity, 2);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -64,17 +79,25 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         });
         setGridSpanCount(container.getWidth());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new MarginDecoration(activity));
+        recyclerView.addItemDecoration(new MarginDecoration(getContext()));
 
         recyclerView.setAdapter(adapter);
         this.loadCustomizations();
 
         this.updateActiveCustomization();
-        this.adapter.userSize = this.user.getPreferences().getSize();
-        this.adapter.hairColor = this.user.getPreferences().getHair().getColor();
-        this.adapter.gemBalance = user.getGemCount();
+        if (this.user != null) {
+            this.adapter.userSize = this.user.getPreferences().getSize();
+            this.adapter.hairColor = this.user.getPreferences().getHair().getColor();
+            this.adapter.gemBalance = user.getBalance() * 4;
+        }
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        customizationRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -86,34 +109,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         if (user == null || adapter == null) {
             return;
         }
-
-        Where<Customization> select = new Select()
-                .from(Customization.class)
-                .where(Condition.column("type").eq(this.type))
-                .and(Condition.CombinedCondition.begin(Condition.column("purchased").eq(true))
-                        .or(Condition.column("price").eq(0))
-                        .or(Condition.column("price").isNull())
-                        .or(Condition.column("isBuyable").eq(true))
-                        .or(Condition.column("isBuyable").isNull())
-                        .or(Condition.CombinedCondition.begin(
-                                Condition.CombinedCondition.begin(Condition.column("availableUntil").isNull())
-                                        .or(Condition.column("availableUntil").greaterThanOrEq(new Date().getTime())))
-                                .and(Condition.CombinedCondition.begin(Condition.column("availableFrom").isNull())
-                                        .or(Condition.column("availableFrom").lessThanOrEq(new Date().getTime()))
-                                )
-                        )
-                );
-        if (this.category != null) {
-            select = select.and(Condition.column("category").eq(this.category));
-        }
-        if (this.type != null && this.type.equals("background")) {
-            select.orderBy(OrderBy.columns("customizationSetName").descending());
-        } else {
-            select.orderBy(true, "customizationSet");
-        }
-
-        List<Customization> customizations = select.queryList();
-        adapter.setCustomizationList(customizations);
+        customizationRepository.getCustomizations(type, category).subscribe(adapter::setCustomizationList, ReactiveErrorHandler.handleEmptyError());
     }
 
     private void setGridSpanCount(int width) {
@@ -132,9 +128,9 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
     }
 
     @Override
-    public void updateUserData(HabitRPGUser user) {
+    public void updateUserData(User user) {
         super.updateUserData(user);
-        this.adapter.gemBalance = user.getGemCount();
+        this.adapter.gemBalance = user.getBalance() * 4;
         this.updateActiveCustomization();
         if (adapter.getCustomizationList() != null) {
             List<String> ownedCustomizations = new ArrayList<>();
@@ -150,10 +146,10 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
     }
 
     private void updateActiveCustomization() {
-        Preferences prefs = this.user.getPreferences();
-        if (this.type == null) {
+        if (this.type == null || this.user == null || this.user.getPreferences() == null) {
             return;
         }
+        Preferences prefs = this.user.getPreferences();
         switch (this.type) {
             case "skin":
                 this.activeCustomization = prefs.getSkin();

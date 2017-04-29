@@ -1,35 +1,21 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.google.gson.annotations.SerializedName;
-
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import android.text.TextUtils;
 
-/**
- * Created by viirus on 20/07/15.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class Outfit extends BaseModel {
+import com.google.gson.annotations.SerializedName;
 
-    @Column
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class Outfit extends RealmObject {
+
     @PrimaryKey
-    @NotNull
-    String user_id;
+    private String userId;
 
-    @Column
+    Gear gear;
     String armor, back, body, head, shield, weapon;
-
-    @Column
     @SerializedName("eyewear")
     String eyeWear;
-
-    @Column
     String headAccessory;
 
     public String getArmor() {
@@ -98,5 +84,23 @@ public class Outfit extends BaseModel {
 
     public boolean isAvailable(String outfit) {
         return !TextUtils.isEmpty(outfit) && !outfit.endsWith("base_0");
+    }
+
+    public void updateWith(Outfit newOutfit) {
+        this.setArmor(newOutfit.getArmor());
+        this.setBack(newOutfit.getBack());
+        this.setBody(newOutfit.getBody());
+        this.setEyeWear(newOutfit.getEyeWear());
+        this.setHead(newOutfit.getHead());
+        this.setHeadAccessory(newOutfit.getHeadAccessory());
+        this.setShield(newOutfit.getShield());
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

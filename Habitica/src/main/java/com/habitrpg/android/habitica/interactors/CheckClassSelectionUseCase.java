@@ -7,8 +7,8 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import javax.inject.Inject;
 
@@ -26,7 +26,7 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
     protected Observable<Void> buildUseCaseObservable(RequestValues requestValues) {
         return Observable.from(() -> {
 
-            HabitRPGUser user = requestValues.user;
+            User user = requestValues.user;
 
             if(requestValues.selectClassEvent == null) {
                 if (user.getStats().getLvl() > 10 &&
@@ -34,7 +34,7 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
                         !user.getFlags().getClassSelected()) {
                     SelectClassEvent event = new SelectClassEvent();
                     event.isInitialSelection = true;
-                    event.currentClass = user.getStats().get_class().toString();
+                    event.currentClass = user.getStats().getHabitClass().toString();
                     displayClassSelectionActivity(user, event);
                 }
             } else {
@@ -45,7 +45,7 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
         });
     }
 
-    private void displayClassSelectionActivity(HabitRPGUser user, SelectClassEvent event) {
+    private void displayClassSelectionActivity(User user, SelectClassEvent event) {
         Bundle bundle = new Bundle();
         bundle.putString("size", user.getPreferences().getSize());
         bundle.putString("skin", user.getPreferences().getSkin());
@@ -66,10 +66,10 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
     public static final class RequestValues implements UseCase.RequestValues {
 
 
-        private HabitRPGUser user;
+        private User user;
         private SelectClassEvent selectClassEvent;
 
-        public RequestValues(HabitRPGUser user, SelectClassEvent selectClassEvent) {
+        public RequestValues(User user, SelectClassEvent selectClassEvent) {
 
             this.user = user;
             this.selectClassEvent = selectClassEvent;

@@ -5,13 +5,14 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.habitrpg.android.habitica.models.Skill;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import io.realm.RealmList;
 
 /**
  * Created by viirus on 25/11/15.

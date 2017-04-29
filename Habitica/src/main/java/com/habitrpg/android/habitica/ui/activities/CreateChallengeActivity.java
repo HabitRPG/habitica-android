@@ -35,10 +35,10 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -116,6 +116,7 @@ public class CreateChallengeActivity extends BaseActivity {
     Task addDaily;
     Task addTodo;
     Task addReward;
+    private User user;
 
     @Override
     protected int getLayoutResId() {
@@ -238,24 +239,6 @@ public class CreateChallengeActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEvent(DeleteTaskCommand deleteTask) {
-        String taskIdToDelete = deleteTask.TaskIdToDelete;
-        challengeTasks.removeTask(taskIdToDelete);
-
-        if (editMode) {
-            if (addedTasks.containsKey(taskIdToDelete)) {
-                addedTasks.remove(taskIdToDelete);
-            } else {
-                removedTasks.put(taskIdToDelete, null);
-
-                if (updatedTasks.containsKey(taskIdToDelete)) {
-                    updatedTasks.remove(taskIdToDelete);
-                }
-            }
-        }
-    }
-
-    @Subscribe
     public void onEvent(TaskTappedEvent tappedEvent) {
         openNewTaskActivity(null, tappedEvent.Task);
     }
@@ -305,7 +288,7 @@ public class CreateChallengeActivity extends BaseActivity {
         // 0 is Tavern
         int selectedLocation = challengeLocationSpinner.getSelectedItemPosition();
 
-        double gemCount = HabiticaApplication.User.getGemCount();
+        double gemCount = user.getGemCount();
 
         if (selectedLocation == 0 && currentVal == 0) {
             createChallengeGemError.setVisibility(View.VISIBLE);
@@ -463,10 +446,10 @@ public class CreateChallengeActivity extends BaseActivity {
         bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
         bundle.putBoolean(TaskFormActivity.SHOW_CHECKLIST, false);
 
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
-            String allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        if (user != null && user.getPreferences() != null) {
+            String allocationMode = user.getPreferences().getAllocationMode();
 
-            bundle.putString(TaskFormActivity.USER_ID_KEY, HabiticaApplication.User.getId());
+            bundle.putString(TaskFormActivity.USER_ID_KEY, user.getId());
             bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
         }
 

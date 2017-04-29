@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.models.Skill;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
+import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -90,7 +90,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             skillNameTextView.setText(skill.text);
             skillNotesTextView.setText(skill.notes);
 
-            if (skill.isSpecialItem) {
+            if ("special".equals(skill.habitClass)) {
                 priceButton.setText(R.string.skill_transformation_use);
 
                 priceButton.setCompoundDrawables(null, null, null, null);

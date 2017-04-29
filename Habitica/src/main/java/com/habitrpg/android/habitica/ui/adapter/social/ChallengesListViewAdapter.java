@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
 
 import net.pherth.android.emoji_library.EmojiParser;
@@ -37,9 +37,9 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
 
     private boolean viewUserChallengesOnly;
     @Nullable
-    private HabitRPGUser user;
+    private User user;
 
-    public ChallengesListViewAdapter(boolean viewUserChallengesOnly, @Nullable HabitRPGUser user) {
+    public ChallengesListViewAdapter(boolean viewUserChallengesOnly, @Nullable User user) {
         this.viewUserChallengesOnly = viewUserChallengesOnly;
         this.user = user;
     }
@@ -177,7 +177,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             challengeDescription.setText(challenge.groupName);
 
             officialChallengeLayout.setVisibility(challenge.official ? View.VISIBLE : View.GONE);
-            boolean userIdExists = challenge.user_id != null && !challenge.user_id.isEmpty();
+            boolean userIdExists = challenge.userId != null && !challenge.userId.isEmpty();
 
             if (viewUserChallengesOnly) {
                 leaderParticipantLayout.setVisibility(View.GONE);

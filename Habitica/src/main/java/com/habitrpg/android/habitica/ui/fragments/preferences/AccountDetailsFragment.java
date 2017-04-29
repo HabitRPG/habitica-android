@@ -1,18 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
-import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -21,42 +8,51 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.widget.Toast;
 
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
+import com.habitrpg.android.habitica.helpers.QrCodeManager;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
+import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class AccountDetailsFragment extends BasePreferencesFragment {
 
+    @Inject
+    UserRepository userRepository;
+
     private QrCodeManager qrCodeManager;
-    private HabitRPGUser user;
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser user) {
-            AccountDetailsFragment.this.setUser(user);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
-            return true;
-        }
-    };
+    private User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        HabiticaBaseApplication.getComponent().inject(this);
+
         String userID = getPreferenceManager().getSharedPreferences().getString(getContext().getString(R.string.SP_userID), null);
         if (userID != null) {
-            new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).async().querySingle(userTransactionListener);
+            userRepository.getUser(userID).subscribe(this::setUser, ReactiveErrorHandler.handleEmptyError());
         }
     }
 
-    public void setUser(HabitRPGUser user) {
+    @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -69,7 +65,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
             }
         }
 
-        qrCodeManager = new QrCodeManager(this.getContext());
+        qrCodeManager = new QrCodeManager(userRepository, this.getContext());
     }
 
     protected List<String> getAccountDetailsPreferences() {
@@ -104,9 +100,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
         final AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setView(view)
                 .setTitle(R.string.subscription_status)
-                .setPositiveButton(R.string.close, (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                }).create();
+                .setPositiveButton(R.string.close, (dialogInterface, i) -> dialogInterface.dismiss()).create();
         dialog.show();
     }
 }

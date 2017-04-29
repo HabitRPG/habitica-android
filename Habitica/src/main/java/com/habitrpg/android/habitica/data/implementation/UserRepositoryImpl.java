@@ -1,63 +1,93 @@
 package com.habitrpg.android.habitica.data.implementation;
 
-import android.support.annotation.Nullable;
-
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.TutorialStep;
+import com.habitrpg.android.habitica.models.inventory.Customization;
+import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
+import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.responses.UnlockResponse;
+import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> implements UserRepository {
 
-    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient) {
+    private Date lastSync;
+
+    private TaskRepository taskRepository;
+
+    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, TaskRepository taskRepository) {
         super(localRepository, apiClient);
+        this.taskRepository = taskRepository;
     }
 
     @Override
-    public Observable<HabitRPGUser> getUser(String userID) {
-        return localRepository.getUser(userID)
-                .flatMap(habitRPGUser -> {
-                    if (habitRPGUser == null) {
-                        return retrieveUser(true);
-                    } else {
-                        return Observable.just(habitRPGUser);
-                    }
-                });
+    public Observable<User> getUser(String userID) {
+        return localRepository.getUser(userID);
     }
 
     @Override
-    public Observable<HabitRPGUser> updateUser(HabitRPGUser user, Map<String, Object> updateData) {
+    public Observable<User> updateUser(User user, Map<String, Object> updateData) {
         return apiClient.updateUser(updateData)
                 .map(newUser -> mergeUser(user, newUser));
     }
 
     @Override
-    public Observable<HabitRPGUser> updateUser(HabitRPGUser user, String key, Object value) {
+    public Observable<User> updateUser(User user, String key, Object value) {
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(key, value);
         return updateUser(user, updateData);
     }
 
     @Override
-    public Observable<HabitRPGUser> retrieveUser(Boolean withTasks) {
-        return apiClient.retrieveUser(withTasks)
-                .doOnNext(localRepository::saveUser);
+    public Observable<User> retrieveUser(Boolean withTasks) {
+        return retrieveUser(withTasks, false);
     }
 
     @Override
-    public Observable<HabitRPGUser> revive(HabitRPGUser user) {
+    public Observable<User> retrieveUser(Boolean withTasks, Boolean forced) {
+        if (forced || this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
+            lastSync = new Date();
+            return apiClient.retrieveUser(withTasks)
+                    .doOnNext(localRepository::saveUser)
+                    .doOnNext(user -> taskRepository.saveTasks(user.getId(), user.getTasksOrder(), user.tasks))
+                    .flatMap(user -> {
+                        Calendar calendar = new GregorianCalendar();
+                        TimeZone timeZone = calendar.getTimeZone();
+                        long offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
+                        if (offset != user.getPreferences().getTimezoneOffset()) {
+                            return updateUser(user, "preferences.timezoneOffset", String.valueOf(offset));
+                        } else {
+                            return Observable.just(user);
+                        }
+                    });
+        } else {
+            return Observable.empty();
+        }
+    }
+
+    @Override
+    public Observable<User> revive(User user) {
         return apiClient.revive().map(newUser -> mergeUser(user, newUser));
     }
 
     @Override
-    public void resetTutorial(HabitRPGUser user) {
+    public void resetTutorial(User user) {
         localRepository.getTutorialSteps()
                 .map(tutorialSteps -> {
                     Map<String, Object> updateData = new HashMap<>();
@@ -67,28 +97,119 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                     return updateData;
                 })
                 .flatMap(updateData -> updateUser(user, updateData))
-                .subscribe(tutorialSteps -> {}, throwable -> {});
+                .subscribe(tutorialSteps -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
-    @Nullable
-    private HabitRPGUser mergeUser(@Nullable HabitRPGUser oldUser, HabitRPGUser newUser) {
-        if (oldUser == null) {
-            return null;
+    @Override
+    public Observable<User> sleep(User user) {
+        return apiClient.sleep()
+                .map(isSleeping -> {
+                    user.getPreferences().setSleep(isSleeping);
+                    localRepository.saveUser(user);
+                    return user;
+                });
+    }
+
+    @Override
+    public Observable<RealmResults<Skill>> getSkills(User user) {
+        return localRepository.getSkills(user);
+    }
+
+    @Override
+    public Observable<RealmResults<Skill>> getSpecialItems(User user) {
+        return localRepository.getSpecialItems(user);
+    }
+
+    @Override
+    public Observable<SkillResponse> useSkill(User user, String key, String target, String taskId) {
+        return apiClient.useSkill(key, target, taskId).doOnNext(skillResponse -> {
+            if (user != null) {
+                mergeUser(user, skillResponse.user);
+            }
+        });
+    }
+
+    @Override
+    public Observable<SkillResponse> useSkill(User user, String key, String target) {
+        return apiClient.useSkill(key, target)
+                .map(response -> {
+                    response.hpDiff = response.user.getStats().getHp() - user.getStats().getHp();
+                    response.expDiff = response.user.getStats().getExp() - user.getStats().getExp();
+                    response.goldDiff = response.user.getStats().getGp() - user.getStats().getGp();
+                    return response;
+                })
+                .doOnNext(skillResponse -> {
+            if (user != null) {
+                mergeUser(user, skillResponse.user);
+            }
+        });
+    }
+
+    @Override
+    public Observable<User> changeClass() {
+        return apiClient.changeClass();
+    }
+
+    @Override
+    public Observable<User> disableClasses() {
+        return apiClient.disableClasses();
+    }
+
+    @Override
+    public Observable<User> changeClass(String selectedClass) {
+        return changeClass(selectedClass);
+    }
+
+    @Override
+    public Observable<UnlockResponse> unlockPath(User user, Customization customization) {
+        return apiClient.unlockPath(customization.getPath())
+                .doOnNext(unlockResponse -> {
+                    User copiedUser = localRepository.getUnmanagedCopy(user);
+                    copiedUser.setPreferences(unlockResponse.preferences);
+                    copiedUser.setPurchased(unlockResponse.purchased);
+                    copiedUser.setItems(unlockResponse.items);
+                    copiedUser.setBalance(copiedUser.getBalance()-customization.getPrice()/4.0);
+                    localRepository.saveUser(copiedUser);
+                });
+    }
+
+    @Override
+    public Observable<UnlockResponse> unlockPath(User user, CustomizationSet set) {
+        String path = "";
+        for (Customization customization : set.customizations) {
+            path = path + "," + customization.getPath();
         }
+        if (path.length() == 0) {
+            return Observable.empty();
+        }
+        path = path.substring(1);
+        return apiClient.unlockPath(path)
+                .doOnNext(unlockResponse -> {
+                    User copiedUser = localRepository.getUnmanagedCopy(user);
+                    copiedUser.setPreferences(unlockResponse.preferences);
+                    copiedUser.setPurchased(unlockResponse.purchased);
+                    copiedUser.setItems(unlockResponse.items);
+                    copiedUser.setBalance(copiedUser.getBalance()-set.price/4.0);
+                    localRepository.saveUser(copiedUser);
+                });
+    }
+
+    private User mergeUser(User oldUser, User newUser) {
+        User copiedUser = localRepository.getUnmanagedCopy(oldUser);
         if (newUser.getItems() != null) {
-            oldUser.setItems(newUser.getItems());
+            copiedUser.setItems(newUser.getItems());
         }
         if (newUser.getPreferences() != null) {
-            oldUser.setPreferences(newUser.getPreferences());
+            copiedUser.setPreferences(newUser.getPreferences());
         }
         if (newUser.getFlags() != null) {
-            oldUser.setFlags(newUser.getFlags());
+            copiedUser.setFlags(newUser.getFlags());
         }
         if (newUser.getStats() != null) {
-            oldUser.getStats().merge(newUser.getStats());
+            copiedUser.getStats().merge(newUser.getStats());
         }
 
-        localRepository.saveUser(oldUser);
+        localRepository.saveUser(copiedUser);
         return oldUser;
     }
 }

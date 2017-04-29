@@ -22,11 +22,11 @@ import com.amplitude.api.Identify;
 import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -42,11 +42,12 @@ import java.lang.reflect.Field;
 import javax.inject.Inject;
 
 import dagger.Lazy;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
 public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
-    public static HabitRPGUser User;
     public static Activity currentActivity = null;
     private static AppComponent component;
     public RefWatcher refWatcher;
@@ -130,6 +131,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
             // You should not init your app in this process.
             return;
         }
+        setupRealm();
         setupDagger();
         crashlyticsProxy.init(this);
         setupLeakCanary();
@@ -144,12 +146,22 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
                 Identify identify = new Identify().setOnce("androidStore", BuildConfig.STORE);
                 Amplitude.getInstance().identify(identify);
             } catch (Resources.NotFoundException e) {
-                //pass
             }
+        }
+        Fresco.initialize(this);
+        checkIfNewVersion();
+    }
+
+    protected void setupRealm() {
+        Realm.init(this);
+        RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
+                .schemaVersion(1);
+        if (BuildConfig.DEBUG) {
+            builder = builder.deleteRealmIfMigrationNeeded();
         }
 
         Fresco.initialize(this);
-        checkIfNewVersion();
+        Realm.setDefaultConfiguration(builder.build());
     }
 
     private void checkIfNewVersion() {
@@ -170,7 +182,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
             ApiClient apiClient = this.lazyApiHelper.get();
 
             apiClient.getContent()
-                    .subscribe(contentResult -> { }, throwable -> {});
+                    .subscribe(contentResult -> { }, ReactiveErrorHandler.handleEmptyError());
         }
     }
 

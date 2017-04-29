@@ -4,60 +4,19 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-public abstract class Item extends BaseModel {
+import io.realm.RealmModel;
 
-    @Column
-    @PrimaryKey
-    String key;
+public interface Item extends RealmModel {
 
-    @Column
-    String text, notes;
+    String getType();
 
-    @Column
-    Integer value, owned;
+    String getKey();
 
-    public String getKey() {
-        return key;
-    }
+    void setOwned(int size);
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+    String getText();
 
-    public String getText() {
-        return text;
-    }
+    Integer getOwned();
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-
-    public Integer getOwned() {
-        if (owned == null) {
-            return 0;
-        }
-        return owned;
-    }
-
-    public void setOwned(Integer owned) {
-        this.owned = owned;
-    }
-
-    public abstract String getType();
+    Integer getValue();
 }

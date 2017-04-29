@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.HabitDatabase;
+import com.habitrpg.android.habitica.models.user.Flags;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -8,21 +9,15 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class TutorialStep extends BaseModel {
+import io.realm.RealmObject;
 
-    @Column
-    public String user_id;
+public class TutorialStep extends RealmObject {
+
+    public Flags flags;
     @PrimaryKey
-    @Column
     private String key;
-    @Column
     private String tutorialGroup, identifier;
-
-    @Column
     private boolean wasCompleted;
-
-    @Column
     private Date displayedOn;
 
     public String getKey() {
@@ -31,14 +26,6 @@ public class TutorialStep extends BaseModel {
 
     public void setKey(String key) {
         this.key = key;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 
     public String getTutorialGroup() {

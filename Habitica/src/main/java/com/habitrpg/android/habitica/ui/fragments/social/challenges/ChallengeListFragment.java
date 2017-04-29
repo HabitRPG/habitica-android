@@ -16,25 +16,29 @@ import android.widget.LinearLayout;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
-import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
 
 public class ChallengeListFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject
+    SocialRepository socialRepository;
 
     @BindView(R.id.challenge_filter_layout)
     LinearLayout challengeFilterLayout;
@@ -56,7 +60,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     private Action0 refreshCallback;
     private boolean withFilter;
 
-    public void setWithFilter(boolean withFilter) {
+    public void setWithFilter(boolean withFilter){
         this.withFilter = withFilter;
     }
 
@@ -72,7 +76,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     private ChallengeFilterOptions lastFilterOptions;
 
-    public void setObservable(Observable<ArrayList<Challenge>> listObservable) {
+    public void setObservable(Observable<List<Challenge>> listObservable) {
         listObservable
                 .subscribe(challenges -> {
 
@@ -88,13 +92,11 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
                     for (Challenge challenge : challenges) {
                         if (userChallengesHash.contains(challenge.id) && challenge.name != null && !challenge.name.isEmpty()) {
-                            challenge.user_id = this.user.getId();
+                            challenge.userId = this.user.getId();
                             userChallenges.add(challenge);
                         } else {
-                            challenge.user_id = null;
+                            challenge.userId = null;
                         }
-
-                        challenge.async().save();
                     }
 
                     setRefreshingIfVisible(swipeRefreshLayout, false);
@@ -116,6 +118,12 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     }
 
     @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -127,12 +135,12 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshEmptyLayout.setOnRefreshListener(this);
 
-        challengeFilterLayout.setVisibility(withFilter ? View.VISIBLE : View.GONE);
+        challengeFilterLayout.setVisibility(withFilter?View.VISIBLE:View.GONE);
         challengeFilterLayout.setClickable(true);
         challengeFilterLayout.setOnClickListener(view -> ChallengeFilterDialogHolder.showDialog(getActivity(), currentChallengesInView, lastFilterOptions, filterOptions -> {
-            challengeAdapter.setFilterByGroups(filterOptions);
-            this.lastFilterOptions = filterOptions;
-        }));
+                    challengeAdapter.setFilterByGroups(filterOptions);
+                    this.lastFilterOptions = filterOptions;
+                }));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
         recyclerView.setAdapter(challengeAdapter);
@@ -166,22 +174,24 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     private void fetchLocalChallenges() {
         setRefreshingIfVisible(swipeRefreshLayout, true);
 
-        Where<Challenge> query = new Select().from(Challenge.class).where(Condition.column("name").isNotNull());
+        Observable<RealmResults<Challenge>> observable;
 
         if (viewUserChallengesOnly && user != null) {
-            query = query.and(Condition.column("user_id").is(user.getId()));
+            observable = socialRepository.getUserChallenges(user.getId());
+        } else {
+            observable = socialRepository.getChallenges();
         }
 
-        List<Challenge> challenges = query.queryList();
+        observable.subscribe(challenges -> {
+            if (challenges.size() != 0) {
+                setChallengeEntries(challenges);
+            }
 
-        if (challenges.size() != 0) {
-            setChallengeEntries(challenges);
-        }
+            setRefreshingIfVisible(swipeRefreshLayout, false);
 
-        setRefreshingIfVisible(swipeRefreshLayout, false);
-
-        // load online challenges & save to database
-        onRefresh();
+            // load online challenges & save to database
+            onRefresh();
+        }, ReactiveErrorHandler.handleEmptyError());
     }
 
     private void setChallengeEntries(List<Challenge> challenges) {
@@ -225,7 +235,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_list_challenges, menu);
-    }
+}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

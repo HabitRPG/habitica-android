@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-
-import net.pherth.android.emoji_library.EmojiTextView;
-
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
@@ -22,6 +16,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+
+import net.pherth.android.emoji_library.EmojiTextView;
 
 public class DataBindingUtils {
 
