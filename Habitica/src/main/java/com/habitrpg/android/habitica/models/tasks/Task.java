@@ -616,7 +616,7 @@ public class Task extends BaseModel {
     }
 
     public Boolean isDisplayedActive(int offset) {
-        if (this.isDue != null) {
+        if (this.isDue != null && !this.completed) {
             return this.isDue;
         }
         return this.checkIfDue(offset) && !this.completed;
