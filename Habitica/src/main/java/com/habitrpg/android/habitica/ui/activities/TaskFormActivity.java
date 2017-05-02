@@ -686,7 +686,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         }
 
-        String summary = "Repeats " + frequency + " every " + everyX + " " + frequencyQualifier + weekdays;
+        String summary = getResources().getString(R.string.repeat_summary, frequency, everyX, frequencyQualifier, weekdays);
         summaryTextView.setText(summary);
     }
 
