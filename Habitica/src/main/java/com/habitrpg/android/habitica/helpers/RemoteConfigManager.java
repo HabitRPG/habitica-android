@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.helpers;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -30,9 +31,11 @@ public class RemoteConfigManager {
     private static RemoteConfigManager instance;
     private Context context;
     private static Boolean enableRepeatbles = false;
+    private String REMOTE_STRING_KEY = "remote-string";
 
     private RemoteConfigManager(Context context) {
         this.context = context;
+        loadFromPreferences();
         new DownloadFileFromURL().execute("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/config-ios.json");
     }
 
@@ -45,6 +48,22 @@ public class RemoteConfigManager {
 
     public static Boolean repeatablesAreEnabled () {
         return enableRepeatbles;
+    }
+
+    private void loadFromPreferences () {
+        String storedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(REMOTE_STRING_KEY, "");
+
+        if (storedPreferences.isEmpty()) {
+            return;
+        }
+
+        try {
+            JSONObject obj = new JSONObject(storedPreferences);
+            enableRepeatbles = obj.getBoolean("enableRepeatbles");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     class DownloadFileFromURL extends AsyncTask<String, String, String> {
@@ -109,6 +128,9 @@ public class RemoteConfigManager {
             catch (IOException e) {
                 e.printStackTrace();
             }
+
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit().putString(REMOTE_STRING_KEY, text.toString()).apply();
 
             try {
                 JSONObject obj = new JSONObject(text.toString());
