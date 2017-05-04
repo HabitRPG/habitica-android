@@ -20,8 +20,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
@@ -76,9 +75,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     Toolbar toolbar;
 
     @Inject
-    public ApiClient apiClient;
-    @Inject
-    SocialRepository socialRepository;
+    ChallengeRepository challengeRepository;
     @Inject
     @Named(AppModule.NAMED_USER_ID)
     String userId;
@@ -154,8 +151,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         userRepository.getUser(userId).first().subscribe(user -> ChallengeDetailActivity.this.user = user, ReactiveErrorHandler.handleEmptyError());
 
         if (challengeId != null) {
-
-            apiClient.getChallengeTasks(challengeId)
+            challengeRepository.getChallengeTasks(challengeId)
                     .subscribe(taskList -> {
                         ArrayList<Task> resultList = new ArrayList<>();
 
@@ -243,7 +239,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         }
 
         if (challengeId != null) {
-            socialRepository.getChallenge(challengeId).subscribe(challenge -> {
+            challengeRepository.getChallenge(challengeId).subscribe(challenge -> {
                 ChallengeDetailActivity.this.challenge = challenge;
                 ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
                 challengeViewHolder.bind(challenge);
@@ -253,13 +249,13 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        socialRepository.close();
+        challengeRepository.close();
         userRepository.close();
         super.onDestroy();
     }
 
     protected void injectActivity(AppComponent component) {
-                openChallengeEditActivity();
+        component.inject(this);
     }
 
     @Override
@@ -292,15 +288,8 @@ public class ChallengeDetailActivity extends BaseActivity {
                 .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
                     dialog.dismiss();
 
-                    showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
-                            .subscribe(aVoid -> {
-                                challenge.userId = null;
-
-                                user.resetChallengeList();
-                                finish();
-
-                            }, throwable -> {
-                            }));
+                    showRemoveTasksDialog(keepTasks -> this.challengeRepository.leaveChallenge(challenge, new LeaveChallengeBody(keepTasks))
+                            .subscribe(aVoid -> finish(), throwable -> {}));
                 })
                 .setNegativeButton(this.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
@@ -375,12 +364,9 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         @OnClick(R.id.btn_show_more)
         void onShowMore() {
-
-            ChallengeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
-                    user, challenge,
-                    challenge1 -> {
-
-                    },
+            ChallengeDetailDialogHolder.showDialog(ChallengeDetailActivity.this,
+                    ChallengeDetailActivity.this.challengeRepository,
+                    challenge,
                     challenge1 -> ChallengeDetailActivity.this.onBackPressed());
         }
     }

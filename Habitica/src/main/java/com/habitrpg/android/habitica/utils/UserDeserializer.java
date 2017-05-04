@@ -8,6 +8,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.invitations.Invitations;
+import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.Authentication;
@@ -72,7 +73,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
             user.setTasksOrder(context.deserialize(obj.get("tasksOrder"), TasksOrder.class));
         }
         if (obj.has("challenges")) {
-            user.setChallenges(context.deserialize(obj.get("challenges"), new TypeToken<List<String>>() {
+            user.setChallenges(context.deserialize(obj.get("challenges"), new TypeToken<List<Challenge>>() {
             }.getType()));
         }
         if (obj.has("purchased")) {

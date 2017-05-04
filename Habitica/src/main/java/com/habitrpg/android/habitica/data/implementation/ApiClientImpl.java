@@ -66,6 +66,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
 import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
+import com.habitrpg.android.habitica.utils.ChallengeListDeserializer;
 import com.habitrpg.android.habitica.utils.ChatMessageDeserializer;
 import com.habitrpg.android.habitica.utils.ChatMessageListDeserializer;
 import com.habitrpg.android.habitica.utils.ChecklistItemSerializer;
@@ -208,38 +209,23 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     public static GsonConverterFactory createGsonFactory() {
-        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {
-        }.getType();
-        Type skillListType = new TypeToken<List<Skill>>() {
-        }.getType();
-        Type customizationListType = new TypeToken<RealmList<Customization>>() {
-        }.getType();
-        Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {
-        }.getType();
-        Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {
-        }.getType();
-        Type itemDataListType = new TypeToken<RealmList<Equipment>>() {
-        }.getType();
-        Type eggListType = new TypeToken<RealmList<Egg>>() {
-        }.getType();
-        Type foodListType = new TypeToken<RealmList<Food>>() {
-        }.getType();
-        Type hatchingPotionListType = new TypeToken<RealmList<HatchingPotion>>() {
-        }.getType();
-        Type questContentListType = new TypeToken<RealmList<QuestContent>>() {
-        }.getType();
-        Type petMapType = new TypeToken<Map<String, Pet>>() {
-        }.getType();
-        Type mountMapType = new TypeToken<Map<String, Mount>>() {
-        }.getType();
-        Type petListType = new TypeToken<RealmList<Pet>>() {
-        }.getType();
-        Type mountListType = new TypeToken<RealmList<Mount>>() {
-        }.getType();
-        Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {
-        }.getType();
-        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {
-        }.getType();
+        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {}.getType();
+        Type skillListType = new TypeToken<List<Skill>>() {}.getType();
+        Type customizationListType = new TypeToken<RealmList<Customization>>() {}.getType();
+        Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {}.getType();
+        Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {}.getType();
+        Type itemDataListType = new TypeToken<RealmList<Equipment>>() {}.getType();
+        Type eggListType = new TypeToken<RealmList<Egg>>() {}.getType();
+        Type foodListType = new TypeToken<RealmList<Food>>() {}.getType();
+        Type hatchingPotionListType = new TypeToken<RealmList<HatchingPotion>>() {}.getType();
+        Type questContentListType = new TypeToken<RealmList<QuestContent>>() {}.getType();
+        Type petMapType = new TypeToken<Map<String, Pet>>() {}.getType();
+        Type mountMapType = new TypeToken<Map<String, Mount>>() {}.getType();
+        Type petListType = new TypeToken<RealmList<Pet>>() {}.getType();
+        Type mountListType = new TypeToken<RealmList<Mount>>() {}.getType();
+        Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {}.getType();
+        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {}.getType();
+        Type challengeListType = new TypeToken<List<Challenge>>() {}.getType();
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -274,6 +260,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(User.class, new UserDeserializer())
                 .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
                 .registerTypeAdapter(chatMessageListType, new ChatMessageListDeserializer())
+                .registerTypeAdapter(challengeListType, new ChallengeListDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

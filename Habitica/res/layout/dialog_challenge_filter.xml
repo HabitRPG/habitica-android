@@ -18,41 +18,9 @@
         android:layout_marginLeft="@dimen/dialog_marginLeftRight"
         android:layout_marginRight="@dimen/dialog_marginLeftRight"
         android:layout_marginStart="@dimen/dialog_marginLeftRight"
+        android:layout_marginTop="16dp"
+
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/Title1_WideLetterSpacing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:text="@string/filters"
-                android:textColor="#000" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_weight="1"
-                android:gravity="right">
-
-                <Button
-                    android:id="@+id/challenge_filter_button_done"
-                    style="@style/Body1_Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="@string/done"
-                    android:textColor="#6133b4"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -60,16 +28,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <TextView
                 style="@style/Caption3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
                 android:layout_weight="2"
-                android:height="20dp"
-                android:gravity="center_vertical"
                 android:text="@string/groups"
                 android:textAllCaps="true" />
 
@@ -78,22 +44,23 @@
                 style="@style/Body1_Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:gravity="right|center_vertical"
                 android:text="@string/all"
                 android:textColor="#6133b4"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:padding="0dp" />
 
             <Button
                 android:id="@+id/challenge_filter_button_none"
                 style="@style/Body1_Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:gravity="right|center_vertical"
                 android:text="@string/none"
                 android:textColor="#6133b4"
-                android:textSize="16sp" />
-
-        </LinearLayout>
+                android:textSize="16sp"
+                android:padding="0dp"/>
+            </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/challenge_filter_recycler_view"
@@ -101,63 +68,32 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/dialog_challenge_filter_group_item"
             tools:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <TextView
                 style="@style/Caption3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:layout_weight="2"
                 android:height="20dp"
                 android:gravity="center_vertical"
-                android:text="Ownerchip"
+                android:text="@string/ownership"
                 android:textAllCaps="true" />
 
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <CheckBox
+                style="@style/Subheader2"
                 android:id="@+id/challenge_filter_owned"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="" />
-
-            <TextView
-                style="@style/Subheader2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/owned" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:text="@string/owned"
+                android:textColor="@color/textColorLight"/>
 
             <CheckBox
+                style="@style/Subheader2"
                 android:id="@+id/challenge_filter_not_owned"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="" />
-
-            <TextView
-                style="@style/Subheader2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/not_owned" />
-
-        </LinearLayout>
-
+                android:text="@string/not_owned"
+                android:textColor="@color/textColorLight"/>
     </LinearLayout>
 </com.habitrpg.android.habitica.ui.MaxHeightLinearLayout>

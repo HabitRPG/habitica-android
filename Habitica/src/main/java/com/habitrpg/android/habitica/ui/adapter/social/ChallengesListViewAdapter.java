@@ -10,60 +10,28 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.underscore.$;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
-public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesListViewAdapter.ChallengeViewHolder> {
-    private List<Challenge> challenges = new ArrayList<>();
-    private List<Challenge> challengesSource = new ArrayList<>();
+public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder> {
 
     private boolean viewUserChallengesOnly;
-    @Nullable
-    private User user;
 
-    public ChallengesListViewAdapter(boolean viewUserChallengesOnly, @Nullable User user) {
+    public ChallengesListViewAdapter(@Nullable OrderedRealmCollection<Challenge> data, boolean autoUpdate, boolean viewUserChallengesOnly) {
+        super(data, autoUpdate);
         this.viewUserChallengesOnly = viewUserChallengesOnly;
-        this.user = user;
-    }
-
-    public void setChallenges(List<Challenge> challenges) {
-        this.challengesSource = challenges;
-        this.challenges = new ArrayList<>(challengesSource);
-        this.notifyDataSetChanged();
-    }
-
-    public void setFilterByGroups(ChallengeFilterOptions filterOptions){
-        this.challenges = $.filter(challengesSource, arg -> {
-            boolean showChallenge = $.find(filterOptions.showByGroups, g -> g.id.contains(arg.groupId)).isPresent();
-
-            boolean showByOwnership = true;
-            if(filterOptions.showOwned == filterOptions.notOwned && this.user != null){
-                if (filterOptions.showOwned) {
-                    showByOwnership = arg.leaderId.equals(this.user.getId());
-                } else {
-                    showByOwnership = !arg.leaderId.equals(this.user.getId());
-                }
-            }
-
-            return showChallenge && showByOwnership;
-        });
-        this.notifyDataSetChanged();
     }
 
     @Override
@@ -76,36 +44,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
 
     @Override
     public void onBindViewHolder(ChallengeViewHolder holder, int position) {
-        holder.bind(challenges.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return challenges.size();
-    }
-
-    public void addChallenge(Challenge challenge) {
-        challenges.add(challenge);
-        notifyDataSetChanged();
-    }
-
-    public void replaceChallenge(Challenge challenge) {
-        int index = challenges.indexOf(challenge);
-
-        if (index == -1) {
-            for (int i = 0; i < challenges.size(); i++) {
-                if (challenges.get(i).id.equals(challenge.id)) {
-                    index = i;
-
-                    break;
-                }
-            }
-        }
-
-        if (index != -1) {
-            challenges.set(index, challenge);
-            notifyItemChanged(index);
-        }
+        holder.bind(getData().get(position));
     }
 
     public static class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -175,14 +114,13 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             challengeDescription.setText(challenge.groupName);
 
             officialChallengeLayout.setVisibility(challenge.official ? View.VISIBLE : View.GONE);
-            boolean userIdExists = challenge.userId != null && !challenge.userId.isEmpty();
 
             if (viewUserChallengesOnly) {
                 leaderParticipantLayout.setVisibility(View.GONE);
                 challengeParticipatingTextView.setVisibility(View.GONE);
                 arrowImage.setVisibility(View.VISIBLE);
             } else {
-                challengeParticipatingTextView.setVisibility(userIdExists ? View.VISIBLE : View.GONE);
+                challengeParticipatingTextView.setVisibility(challenge.isParticipating ? View.VISIBLE : View.GONE);
 
                 leaderName.setText(itemView.getContext().getString(R.string.byLeader, challenge.leaderName));
                 participantCount.setText(String.valueOf(challenge.memberCount));

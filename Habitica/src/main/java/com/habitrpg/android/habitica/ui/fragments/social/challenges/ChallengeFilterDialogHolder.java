@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,9 +29,6 @@ class ChallengeFilterDialogHolder {
 
     @BindView(R.id.challenge_filter_recycler_view)
     RecyclerView groupRecyclerView;
-
-    @BindView(R.id.challenge_filter_button_done)
-    Button doneButton;
 
     @BindView(R.id.challenge_filter_button_all)
     Button allButton;
@@ -74,6 +72,7 @@ class ChallengeFilterDialogHolder {
                      ChallengeFilterOptions currentFilter,
                      Action1<ChallengeFilterOptions> selectedGroupsCallback) {
         this.dialog = dialog;
+        this.dialog.setButton(Dialog.BUTTON_POSITIVE, context.getString(R.string.done), (dialog1, which) -> doneClicked());
         this.challengesViewed = challengesViewed;
         this.currentFilter = currentFilter;
         this.selectedGroupsCallback = selectedGroupsCallback;
@@ -116,8 +115,7 @@ class ChallengeFilterDialogHolder {
         return groupMap.values();
     }
 
-    @OnClick(R.id.challenge_filter_button_done)
-    void doneClicked() {
+    private void doneClicked() {
         ChallengeFilterOptions options = new ChallengeFilterOptions();
         options.showByGroups = this.adapter.getCheckedEntries();
         options.showOwned = checkboxOwned.isChecked();

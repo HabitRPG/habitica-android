@@ -71,6 +71,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
@@ -262,4 +263,6 @@ public interface AppComponent {
     void inject(NotificationPublisher notificationPublisher);
 
     void inject(CreateChallengeActivity createChallengeActivity);
+
+    void inject(ChallengeDetailDialogHolder challengeDetailDialogHolder);
 }

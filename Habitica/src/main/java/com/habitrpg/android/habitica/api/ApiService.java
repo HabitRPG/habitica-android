@@ -29,7 +29,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -109,7 +108,7 @@ public interface ApiService {
     Observable<HabitResponse<TaskDirectionData>> postTaskDirection(@Path("id") String id, @Path("direction") String direction);
 
     @POST("tasks/{id}/move/to/{position}")
-    Observable<HabitResponse<ArrayList<String>>> postTaskNewPosition(@Path("id") String id, @Path("position") String position);
+    Observable<HabitResponse<List<String>>> postTaskNewPosition(@Path("id") String id, @Path("position") String position);
 
     @POST("tasks/{taskId}/checklist/{itemId}/score")
     Observable<HabitResponse<Task>> scoreChecklistItem(@Path("taskId") String taskId, @Path("itemId") String itemId);
@@ -273,7 +272,7 @@ public interface ApiService {
     /* challenges api */
 
     @GET("challenges/user")
-    Observable<HabitResponse<ArrayList<Challenge>>> getUserChallenges();
+    Observable<HabitResponse<List<Challenge>>> getUserChallenges();
 
     @GET("tasks/challenge/{challengeId}")
     Observable<HabitResponse<TaskList>> getChallengeTasks(@Path("challengeId") String challengeId);

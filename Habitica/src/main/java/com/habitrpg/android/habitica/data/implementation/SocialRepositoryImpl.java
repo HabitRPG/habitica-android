@@ -106,8 +106,8 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<List<Group>> getGroups(String type) {
-        return retrieveGroups(type);
+    public Observable<RealmResults<Group>> getGroups(String type) {
+        return localRepository.getGroups(type);
     }
 
     @Override
@@ -141,21 +141,6 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     @Override
     public Observable<User> getMember(String userId) {
         return apiClient.getMember(userId);
-    }
-
-    @Override
-    public Observable<Challenge> getChallenge(String challengeId) {
-        return localRepository.getChallenge(challengeId);
-    }
-
-    @Override
-    public Observable<RealmResults<Challenge>> getChallenges() {
-        return localRepository.getChallenges();
-    }
-
-    @Override
-    public Observable<RealmResults<Challenge>> getUserChallenges(String userId) {
-        return localRepository.getUserChallenges(userId);
     }
 
     @Override

@@ -93,10 +93,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
                         if (swipeRefreshLayout != null) {
                             swipeRefreshLayout.setRefreshing(false);
                         }
-
-                        challengeRepository.setUsersGroups(groups);
-                    }, throwable -> {
-                    });
+                    }, throwable -> {});
         }
     }
 

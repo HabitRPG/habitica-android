@@ -11,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.social.Challenge;
@@ -30,12 +32,15 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
 public class ChallengeDetailDialogHolder {
+
 
     @BindView(R.id.challenge_not_joined_header)
     LinearLayout notJoinedHeader;
@@ -68,11 +73,9 @@ public class ChallengeDetailDialogHolder {
     LinearLayout task_group_layout;
 
     private AlertDialog dialog;
-    private ApiClient apiClient;
+    private ChallengeRepository challengeRepository;
     @Nullable
-    private User user;
     private Challenge challenge;
-    private Action1<Challenge> challengeJoinedAction;
     private Action1<Challenge> challengeLeftAction;
     private Activity context;
 
@@ -82,8 +85,7 @@ public class ChallengeDetailDialogHolder {
         ButterKnife.bind(this, view);
     }
 
-    public static void showDialog(Activity activity, ApiClient apiClient, @Nullable User user, Challenge challenge,
-                                  Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
+    public static void showDialog(Activity activity, ChallengeRepository challengeRepository, Challenge challenge, Action1<Challenge> challengeLeftAction) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
         ChallengeDetailDialogHolder challengeDetailDialogHolder = new ChallengeDetailDialogHolder(dialogLayout, activity);
@@ -91,23 +93,21 @@ public class ChallengeDetailDialogHolder {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setView(dialogLayout);
 
-        challengeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
+        challengeDetailDialogHolder.bind(builder.show(), challengeRepository, challenge, challengeLeftAction);
     }
 
-    public void bind(AlertDialog dialog, ApiClient apiClient, @Nullable User user, Challenge challenge,
-                     Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
+    public void bind(AlertDialog dialog, ChallengeRepository challengeRepository, Challenge challenge,
+                     Action1<Challenge> challengeLeftAction) {
         this.dialog = dialog;
-        this.apiClient = apiClient;
-        this.user = user;
+        this.challengeRepository = challengeRepository;
         this.challenge = challenge;
-        this.challengeJoinedAction = challengeJoinedAction;
         this.challengeLeftAction = challengeLeftAction;
 
         changeViewsByChallenge(challenge);
     }
 
     private void changeViewsByChallenge(Challenge challenge) {
-        setJoined(challenge.userId != null && !challenge.userId.isEmpty());
+        setJoined(challenge.isParticipating);
 
         challengeName.setText(EmojiParser.parseEmojis(challenge.name));
         challengeDescription.setText(MarkdownParser.parseMarkdown(challenge.description));
@@ -116,7 +116,7 @@ public class ChallengeDetailDialogHolder {
         gem_amount.setText(String.valueOf(challenge.prize));
         member_count.setText(String.valueOf(challenge.memberCount));
 
-        apiClient.getChallengeTasks(challenge.id)
+        challengeRepository.getChallengeTasks(challenge.id)
                 .subscribe(taskList -> {
                             ArrayList<Task> todos = new ArrayList<>();
                             ArrayList<Task> habits = new ArrayList<>();
@@ -287,19 +287,7 @@ public class ChallengeDetailDialogHolder {
 
     @OnClick(R.id.challenge_join_btn)
     void joinChallenge() {
-        this.apiClient.joinChallenge(challenge.id)
-                .subscribe(challenge -> {
-                    if (this.user != null) {
-                        challenge.userId = this.user.getId();
-                    }
-
-                    if (challengeJoinedAction != null) {
-                        challengeJoinedAction.call(challenge);
-                    }
-
-                    changeViewsByChallenge(challenge);
-                }, throwable -> {
-                });
+        this.challengeRepository.joinChallenge(challenge).subscribe(this::changeViewsByChallenge, throwable -> {});
     }
 
     @OnClick(R.id.challenge_leave_btn)
@@ -308,19 +296,11 @@ public class ChallengeDetailDialogHolder {
                 .setTitle(context.getString(R.string.challenge_leave_title))
                 .setMessage(context.getString(R.string.challenge_leave_text, challenge.name))
                 .setPositiveButton(context.getString(R.string.yes), (dialog, which) ->
-
-                        showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
+                        showRemoveTasksDialog(keepTasks -> this.challengeRepository.leaveChallenge(challenge, new LeaveChallengeBody(keepTasks))
                                 .subscribe(aVoid -> {
-                                    challenge.userId = null;
-
-                                    if (this.user != null) {
-                                        this.user.resetChallengeList();
-                                    }
-
                                     if (challengeLeftAction != null) {
                                         challengeLeftAction.call(challenge);
                                     }
-
                                     this.dialog.dismiss();
                                 }, throwable -> {
                                 }))).setNegativeButton(context.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();

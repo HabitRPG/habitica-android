@@ -11,34 +11,24 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
-import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.List;
-import java.util.Stack;
-
 import javax.inject.Inject;
-
-import rx.subjects.PublishSubject;
 
 public class ChallengesOverviewFragment extends BaseMainFragment {
 
     @Inject
-    SocialRepository socialRepository;
+    ChallengeRepository challengeRepository;
 
     public ViewPager viewPager;
     public FragmentStatePagerAdapter statePagerAdapter;
-    int currentPage;
-    private Stack<Integer> pageHistory;
-    private boolean saveToHistory;
-    private PublishSubject<List<Challenge>> getUserChallengesObservable;
     private ChallengeListFragment userChallengesFragment;
     private ChallengeListFragment availableChallengesFragment;
 
@@ -53,38 +43,21 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
         setViewPagerAdapter();
 
-        getUserChallengesObservable = PublishSubject.create();
-
-        subscribeGetChallenges();
-
         userChallengesFragment = new ChallengeListFragment();
         userChallengesFragment.setUser(this.user);
-        userChallengesFragment.setRefreshingCallback(this::subscribeGetChallenges);
-        userChallengesFragment.setObservable(getUserChallengesObservable);
         userChallengesFragment.setViewUserChallengesOnly(true);
         userChallengesFragment.setWithFilter(true);
 
         availableChallengesFragment = new ChallengeListFragment();
         availableChallengesFragment.setUser(this.user);
-        availableChallengesFragment.setRefreshingCallback(this::subscribeGetChallenges);
-        availableChallengesFragment.setObservable(getUserChallengesObservable);
         availableChallengesFragment.setViewUserChallengesOnly(false);
-
-        pageHistory = new Stack<>();
-
         return v;
     }
 
     @Override
     public void onDestroy() {
-        socialRepository.close();
+        challengeRepository.close();
         super.onDestroy();
-    }
-
-    private void subscribeGetChallenges() {
-        this.socialRepository.getUserChallenges()
-                .subscribe(challenges -> getUserChallengesObservable.onNext(challenges),
-                        e -> getUserChallengesObservable.onError(e));
     }
 
     @Override
@@ -128,25 +101,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             }
         };
         viewPager.setAdapter(statePagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int newPageId) {
-                if (saveToHistory)
-                    pageHistory.push(currentPage);
-
-                currentPage = newPageId;
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-        saveToHistory = true;
 
         if (tabLayout != null && viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
@@ -155,17 +109,10 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(ShowChallengeDetailDialogCommand cmd) {
-        socialRepository.getChallenge(cmd.challengeId).subscribe(challenge -> {
-            ChallengeDetailDialogHolder.showDialog(getActivity(), apiClient, user, challenge, challenge1 ->  {
-                // challenge joined
-                userChallengesFragment.addItem(challenge1);
-                availableChallengesFragment.updateItem(challenge1);
-            }, challenge1 -> {
-                // challenge left
-                userChallengesFragment.onRefresh();
-                availableChallengesFragment.onRefresh();
-            });
-        }, ReactiveErrorHandler.handleEmptyError());
+        challengeRepository.getChallenge(cmd.challengeId).first().subscribe(challenge -> ChallengeDetailDialogHolder.showDialog(getActivity(), challengeRepository, challenge,
+        challenge1 -> {
+            // challenge left
+        }), ReactiveErrorHandler.handleEmptyError());
     }
 
     @Subscribe
@@ -177,18 +124,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         intent.putExtras(bundle);
         //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         getActivity().startActivity(intent);
-    }
-
-    public boolean onHandleBackPressed() {
-        if (!pageHistory.empty()) {
-            saveToHistory = false;
-            viewPager.setCurrentItem(pageHistory.pop());
-            saveToHistory = true;
-
-            return true;
-        }
-
-        return false;
     }
 
     @Override

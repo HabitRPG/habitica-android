@@ -4,16 +4,18 @@ import com.github.underscore.$;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
+import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -110,12 +112,30 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
     }
 
     @Override
-    public void setUsersGroups(List<Group> groups) {
-        localRepository.setUsersGroups(groups);
+    public Observable<RealmResults<Challenge>> getChallenges() {
+        return localRepository.getChallenges();
     }
 
     @Override
-    public Observable<List<Group>> getLocalGroups() {
-        return localRepository.getGroups();
+    public Observable<RealmResults<Challenge>> getUserChallenges(String userId) {
+        return localRepository.getUserChallenges(userId);
+    }
+
+    @Override
+    public Observable<List<Challenge>> retrieveChallenges(User user) {
+        return apiClient.getUserChallenges()
+                .doOnNext(challenges -> localRepository.saveChallenges(user, challenges));
+    }
+
+    @Override
+    public Observable<Void> leaveChallenge(Challenge challenge, LeaveChallengeBody leaveChallengeBody) {
+        return apiClient.leaveChallenge(challenge.id, leaveChallengeBody)
+                .doOnNext(aVoid -> localRepository.setParticipating(challenge, false));
+    }
+
+    @Override
+    public Observable<Challenge> joinChallenge(Challenge challenge) {
+        return apiClient.joinChallenge(challenge.id)
+                .doOnNext(aVoid -> localRepository.setParticipating(challenge, true));
     }
 }

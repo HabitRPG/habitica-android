@@ -38,7 +38,7 @@ public interface SocialRepository extends BaseRepository {
     Observable<Void> updateGroup(Group group);
 
     Observable<List<Group>> retrieveGroups(String type);
-    Observable<List<Group>> getGroups(String type);
+    Observable<RealmResults<Group>> getGroups(String type);
 
     Observable<PostChatMessageResult> postPrivateMessage(HashMap<String, String> messageObject);
     Observable<PostChatMessageResult> postPrivateMessage(String recipientId, String message);
@@ -51,11 +51,6 @@ public interface SocialRepository extends BaseRepository {
     Observable<List<Challenge>> getUserChallenges();
 
     Observable<User> getMember(String userId);
-
-    Observable<Challenge> getChallenge(String challengeId);
-
-    Observable<RealmResults<Challenge>> getChallenges();
-    Observable<RealmResults<Challenge>> getUserChallenges(String id);
 
     Observable<Void> markPrivateMessagesRead(User user);
 }

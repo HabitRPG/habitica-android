@@ -24,8 +24,6 @@ import io.realm.annotations.PrimaryKey;
 public class User extends RealmObject {
 
     @Ignore
-    List<Challenge> challengeList;
-    @Ignore
     public TaskList tasks;
 
     @PrimaryKey
@@ -54,21 +52,7 @@ public class User extends RealmObject {
     @Ignore
     private TasksOrder tasksOrder;
 
-    @Ignore
-    private List<String> challenges;
-
-
-    public List<Challenge> getChallengeList() {
-        return challengeList;
-    }
-
-    public void setChallengeList(List<Challenge> challenges) {
-        this.challengeList = challenges;
-    }
-
-    public void resetChallengeList() {
-        challengeList = null;
-    }
+    private RealmList<Challenge> challenges;
 
     public Preferences getPreferences() {
         return preferences;
@@ -246,14 +230,6 @@ public class User extends RealmObject {
 
     public void setPushDevices(List<PushDevice> pushDevices) {
         this.pushDevices = pushDevices;
-    }
-
-    public List<String> getChallenges() {
-        return challenges;
-    }
-
-    public void setChallenges(List<String> challenges) {
-        this.challenges = challenges;
     }
 
     public List<String> getAvatarLayerNames() {
@@ -466,5 +442,13 @@ public class User extends RealmObject {
 
     public void setTags(RealmList<Tag> tags) {
         this.tags = tags;
+    }
+
+    public RealmList<Challenge> getChallenges() {
+        return challenges;
+    }
+
+    public void setChallenges(RealmList<Challenge> challenges) {
+        this.challenges = challenges;
     }
 }

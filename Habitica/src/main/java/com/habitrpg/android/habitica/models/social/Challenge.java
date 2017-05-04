@@ -29,8 +29,6 @@ public class Challenge extends RealmObject {
     public int prize;
     public boolean official;
     public int memberCount;
-    @SerializedName("user_id")
-    public String userId;
     public String todoList;
     public String habitList;
     public String dailyList;
@@ -41,6 +39,7 @@ public class Challenge extends RealmObject {
     public User leader;
     @Ignore
     public TasksOrder tasksOrder;
+    public boolean isParticipating;
 
     public HashMap<String, String[]> getTasksOrder() {
         HashMap<String, String[]> map = new HashMap();
