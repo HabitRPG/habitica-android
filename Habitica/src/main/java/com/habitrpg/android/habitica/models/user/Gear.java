@@ -2,11 +2,8 @@ package com.habitrpg.android.habitica.models.user;
 
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 
-import java.util.HashMap;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Gear extends RealmObject {

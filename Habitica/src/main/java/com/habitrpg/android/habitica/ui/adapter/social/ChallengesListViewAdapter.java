@@ -29,8 +29,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
-
 public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesListViewAdapter.ChallengeViewHolder> {
     private List<Challenge> challenges = new ArrayList<>();
     private List<Challenge> challengesSource = new ArrayList<>();
@@ -154,7 +152,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             itemView.setOnClickListener(this);
 
             if (!viewUserChallengesOnly) {
-                challengeName.setTextColor(ContextCompat.getColor(getContext(), R.color.brand_200));
+                challengeName.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.brand_200));
             }
         }
 
@@ -186,7 +184,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             } else {
                 challengeParticipatingTextView.setVisibility(userIdExists ? View.VISIBLE : View.GONE);
 
-                leaderName.setText(getContext().getString(R.string.byLeader, challenge.leaderName));
+                leaderName.setText(itemView.getContext().getString(R.string.byLeader, challenge.leaderName));
                 participantCount.setText(String.valueOf(challenge.memberCount));
                 leaderParticipantLayout.setVisibility(View.VISIBLE);
                 arrowImage.setVisibility(View.GONE);

@@ -7,7 +7,6 @@ import com.google.gson.JsonParseException;
 import com.habitrpg.android.habitica.models.TutorialStep;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

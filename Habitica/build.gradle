@@ -92,11 +92,6 @@ dependencies {
     // a better fab alternative
     compile 'com.github.clans:fab:1.6.4'
 
-    // ORM
-    apt 'com.raizlabs.android:DBFlow-Compiler:2.2.1'
-    compile "com.raizlabs.android:DBFlow-Core:2.2.1"
-    compile "com.raizlabs.android:DBFlow:2.2.1"
-
     //Eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
 

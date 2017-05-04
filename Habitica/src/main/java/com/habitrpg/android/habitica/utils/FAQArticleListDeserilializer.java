@@ -8,7 +8,6 @@ import com.google.gson.JsonParseException;
 import com.habitrpg.android.habitica.models.FAQArticle;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;

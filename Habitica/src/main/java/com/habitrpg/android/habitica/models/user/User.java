@@ -1,17 +1,13 @@
 package com.habitrpg.android.habitica.models.user;
 
-import android.database.sqlite.SQLiteException;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.models.PushDevice;
 import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.invitations.Invitations;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.UserParty;
-import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -19,7 +15,6 @@ import com.habitrpg.android.habitica.ui.AvatarView;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;

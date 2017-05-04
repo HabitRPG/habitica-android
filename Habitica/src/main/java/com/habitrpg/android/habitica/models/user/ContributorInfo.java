@@ -1,8 +1,7 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
+
 import java.util.HashMap;
 
 import io.realm.RealmObject;

@@ -2,12 +2,8 @@ package com.habitrpg.android.habitica.models.inventory;
 
 import android.support.annotation.Nullable;
 
-import java.util.Collection;
-import java.util.HashMap;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class QuestContent extends RealmObject implements Item {

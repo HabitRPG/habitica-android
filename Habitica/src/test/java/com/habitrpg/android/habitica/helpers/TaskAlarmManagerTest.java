@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.models.tasks.Days;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.config.FlowManager;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -24,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
+
+import io.realm.RealmList;
+
 /**
  * Created by keithholliday on 7/16/16.
  */
@@ -43,7 +44,6 @@ public class TaskAlarmManagerTest {
 
     @After
     public void tearDown() {
-        FlowManager.getDatabase(HabitDatabase.NAME).reset(context);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class TaskAlarmManagerTest {
         Task task = new Task();
         task.setType(Task.TYPE_TODO);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -63,7 +63,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -82,7 +81,7 @@ public class TaskAlarmManagerTest {
         Task task = new Task();
         task.setType(Task.TYPE_TODO);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -94,7 +93,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -108,13 +106,11 @@ public class TaskAlarmManagerTest {
         Assert.assertEquals(true, alarmUp);
 
 
-        reminders = new ArrayList<RemindersItem>();
+        reminders = new RealmList<>();
         cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) + 1);
         remindersItem1.setTime(cal.getTime());
-        remindersItem1.save();
         reminders.add(remindersItem1);
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
         int newAlarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
@@ -132,14 +128,13 @@ public class TaskAlarmManagerTest {
         Task task = new Task();
         task.setType(Task.TYPE_TODO);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) + 1);
         remindersItem1.setTime(cal.getTime());
         reminders.add(remindersItem1);
         task.setReminders(reminders);
-        task.save();
 
 //        taskAlarmManager.setAlarmsForTask(task);
 //
@@ -180,7 +175,7 @@ public class TaskAlarmManagerTest {
         taskRepeatDays.setSu(false);
         task.setRepeat(taskRepeatDays);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -194,7 +189,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -230,7 +224,7 @@ public class TaskAlarmManagerTest {
         taskRepeatDays.setSu(false);
         task.setRepeat(taskRepeatDays);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -242,7 +236,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -270,7 +263,7 @@ public class TaskAlarmManagerTest {
         int everyXDay = 2;
         task.setEveryX(everyXDay);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -289,7 +282,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -322,7 +314,7 @@ public class TaskAlarmManagerTest {
         int everyXDay = 2;
         task.setEveryX(everyXDay);
 
-        List<RemindersItem> reminders = new ArrayList<>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -335,7 +327,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 

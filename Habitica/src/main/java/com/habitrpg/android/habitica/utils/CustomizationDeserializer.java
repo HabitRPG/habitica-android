@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.models.inventory.Customization;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

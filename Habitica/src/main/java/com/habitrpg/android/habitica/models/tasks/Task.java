@@ -6,11 +6,8 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.TaskDeleteEvent;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;

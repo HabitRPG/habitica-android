@@ -5,8 +5,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

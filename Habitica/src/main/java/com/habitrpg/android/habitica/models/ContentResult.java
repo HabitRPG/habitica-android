@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 
-import java.util.HashMap;
 import java.util.List;
 
 import io.realm.RealmList;

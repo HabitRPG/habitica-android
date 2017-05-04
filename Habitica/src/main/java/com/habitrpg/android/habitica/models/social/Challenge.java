@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models.social;
 
 import com.google.gson.annotations.SerializedName;
-
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.User;
 

@@ -1,15 +1,11 @@
 package com.habitrpg.android.habitica.models;
 
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.models.user.Flags;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class TutorialStep extends RealmObject {
 

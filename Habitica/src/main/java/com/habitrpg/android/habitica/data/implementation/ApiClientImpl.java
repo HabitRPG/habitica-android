@@ -65,6 +65,7 @@ import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
+import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
 import com.habitrpg.android.habitica.utils.ChatMessageDeserializer;
 import com.habitrpg.android.habitica.utils.ChatMessageListDeserializer;
 import com.habitrpg.android.habitica.utils.ChecklistItemSerializer;
@@ -92,7 +93,6 @@ import com.habitrpg.android.habitica.utils.TaskSerializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
 import com.habitrpg.android.habitica.utils.UserDeserializer;
-import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -244,17 +244,6 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new CheckListItemExcludeStrategy())
-                .setExclusionStrategies(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes field) {
-                        return field.getDeclaredClass().equals(ModelAdapter.class);
-                    }
-
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        return false;
-                    }
-                })
                 .registerTypeAdapter(taskTagClassListType, new TaskTagDeserializer())
                 .registerTypeAdapter(Boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(boolean.class, new BooleanAsIntAdapter())
@@ -281,7 +270,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(Task.class, new TaskSerializer())
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
-                .registerTypeAdapter(Challenge.class, new Challenge())
+                .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
                 .registerTypeAdapter(User.class, new UserDeserializer())
                 .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
                 .registerTypeAdapter(chatMessageListType, new ChatMessageListDeserializer())
