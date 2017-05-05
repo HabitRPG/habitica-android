@@ -18,4 +18,6 @@ public interface SocialLocalRepository extends BaseLocalRepository {
     void saveGroup(Group group);
 
     void saveGroups(List<Group> groups);
+
+    Observable<RealmResults<Group>> getUserGroups();
 }

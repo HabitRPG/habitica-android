@@ -219,31 +219,13 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         switch (requestCode) {
             case (GroupFormActivity.GROUP_FORM_ACTIVITY): {
                 if (resultCode == Activity.RESULT_OK) {
-                    boolean needsSaving = false;
                     Bundle bundle = data.getExtras();
-                    if (this.guild.name != null && !this.guild.name.equals(bundle.getString("name"))) {
-                        this.guild.name = bundle.getString("name");
-                        needsSaving = true;
-                    }
-                    if (this.guild.description != null && !this.guild.description.equals(bundle.getString("description"))) {
-                        this.guild.description = bundle.getString("description");
-                        needsSaving = true;
-                    }
-                    if (this.guild.leaderID != null && !this.guild.leaderID.equals(bundle.getString("leader"))) {
-                        this.guild.leaderID = bundle.getString("leader");
-                        needsSaving = true;
-                    }
-                    if (this.guild.privacy != null && !this.guild.privacy.equals(bundle.getString("privacy"))) {
-                        this.guild.privacy = bundle.getString("privacy");
-                        needsSaving = true;
-                    }
-                    if (needsSaving) {
-                        this.socialRepository.updateGroup(this.guild)
-                                .subscribe(aVoid -> {
-                                }, throwable -> {
-                                });
-                        this.guildInformationFragment.setGroup(guild);
-                    }
+                    this.socialRepository.updateGroup(this.guild,
+                            bundle.getString("name"),
+                            bundle.getString("description"),
+                            bundle.getString("leader"),
+                            bundle.getString("privacy"))
+                            .subscribe(aVoid -> {}, throwable -> {});
                 }
                 break;
             }

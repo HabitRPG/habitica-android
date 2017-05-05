@@ -97,14 +97,27 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<Void> updateGroup(Group group) {
+    public Observable<Void> updateGroup(Group group, String name, String description, String leader, String privacy) {
+        Group copiedGroup = localRepository.getUnmanagedCopy(group);
+        copiedGroup.name = name;
+        copiedGroup.description = description;
+        copiedGroup.leaderID = leader;
+        copiedGroup.privacy = privacy;
+        localRepository.saveGroup(copiedGroup);
         return apiClient.updateGroup(group.id, group);
     }
 
     @Override
     public Observable<List<Group>> retrieveGroups(String type) {
         return apiClient.listGroups(type)
-                .doOnNext(localRepository::saveGroups);
+                .doOnNext(groups -> {
+                    if ("guilds".equals(type)) {
+                        for (Group guild : groups) {
+                            guild.isMember = true;
+                        }
+                    }
+                    localRepository.saveGroups(groups);
+                });
     }
 
     @Override
@@ -154,5 +167,10 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     public Observable<Void> markPrivateMessagesRead(User user) {
         return apiClient.markPrivateMessagesRead()
                 .doOnNext(aVoid -> localRepository.executeTransaction(realm -> user.getInbox().setNewMessages(0)));
+    }
+
+    @Override
+    public Observable<RealmResults<Group>> getUserGroups() {
+        return localRepository.getUserGroups();
     }
 }

@@ -220,7 +220,7 @@ public class PartyFragment extends BaseMainFragment {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.socialRepository.updateGroup(this.group)
+                        this.socialRepository.updateGroup(this.group, bundle.getString("name"), bundle.getString("description"), bundle.getString("leader"), bundle.getString("privacy"))
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });

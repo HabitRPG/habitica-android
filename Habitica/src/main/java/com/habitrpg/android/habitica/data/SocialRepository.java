@@ -35,7 +35,7 @@ public interface SocialRepository extends BaseRepository {
 
     Observable<Group> joinGroup(String id);
 
-    Observable<Void> updateGroup(Group group);
+    Observable<Void> updateGroup(Group group, String name, String description, String leader, String privacy);
 
     Observable<List<Group>> retrieveGroups(String type);
     Observable<RealmResults<Group>> getGroups(String type);
@@ -54,4 +54,6 @@ public interface SocialRepository extends BaseRepository {
     Observable<User> getMember(String userId);
 
     Observable<Void> markPrivateMessagesRead(User user);
+
+    Observable<RealmResults<Group>> getUserGroups();
 }

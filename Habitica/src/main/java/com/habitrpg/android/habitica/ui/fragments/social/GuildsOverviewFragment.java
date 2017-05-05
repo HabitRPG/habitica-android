@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
@@ -24,6 +25,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 
 public class GuildsOverviewFragment extends BaseMainFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -56,9 +58,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
         unbinder = ButterKnife.bind(this, v);
         swipeRefreshLayout.setOnRefreshListener(this);
         this.publicGuildsButton.setOnClickListener(this);
-        if (this.guilds != null) {
-            this.setGuildsOnListView();
-        }
+        compositeSubscription.add(socialRepository.getUserGroups().subscribe(this::setGuilds, RxErrorHandler.handleEmptyError()));
         return v;
     }
 
@@ -77,7 +77,6 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-
         fetchGuilds();
     }
 
@@ -85,8 +84,6 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
         if (this.socialRepository != null) {
             this.socialRepository.retrieveGroups("guilds")
                     .subscribe(groups -> {
-                        GuildsOverviewFragment.this.guilds = groups;
-                        GuildsOverviewFragment.this.setGuildsOnListView();
                         if (swipeRefreshLayout != null) {
                             swipeRefreshLayout.setRefreshing(false);
                         }
@@ -94,7 +91,8 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
         }
     }
 
-    private void setGuildsOnListView() {
+    private void setGuilds(RealmResults<Group> guilds) {
+        this.guilds = guilds;
         if (this.guildsListView == null) {
             return;
         }
