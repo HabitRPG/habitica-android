@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,18 +24,18 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Case;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
 
-public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable {
+public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Group, PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable {
 
     public ApiClient apiClient;
-    private List<Group> publicGuildList;
-    private List<Group> fullPublicGuildList;
     private List<String> memberGuildIDs;
 
-    public void setPublicGuildList(List<Group> publicGuildList) {
-        this.publicGuildList = publicGuildList;
-        this.fullPublicGuildList = new ArrayList<>(publicGuildList);
-        this.notifyDataSetChanged();
+    public PublicGuildsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Group> data, boolean autoUpdate) {
+        super(data, autoUpdate);
     }
 
     public void setMemberGuildIDs(List<String> memberGuildIDs) {
@@ -49,7 +50,7 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         guildViewHolder.itemView.setOnClickListener(v -> {
             Group guild = (Group) v.getTag();
             GuildFragment guildFragment = new GuildFragment();
-            guildFragment.setGuild(guild);
+            guildFragment.setGuildId(guild.id);
             guildFragment.isMember = isInGroup(guild);
             DisplayFragmentEvent event = new DisplayFragmentEvent();
             event.fragment = guildFragment;
@@ -60,19 +61,17 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
             boolean isMember = this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
             if (isMember) {
                 PublicGuildsRecyclerViewAdapter.this.apiClient.leaveGroup(guild.id)
-
                         .subscribe(aVoid -> {
                             memberGuildIDs.remove(guild.id);
-                            int indexOfGroup = publicGuildList.indexOf(guild);
+                            int indexOfGroup = getData().indexOf(guild);
                             notifyItemChanged(indexOfGroup);
                         }, throwable -> {
                         });
             } else {
                 PublicGuildsRecyclerViewAdapter.this.apiClient.joinGroup(guild.id)
-
                         .subscribe(group -> {
                             memberGuildIDs.add(group.id);
-                            int indexOfGroup = publicGuildList.indexOf(group);
+                            int indexOfGroup = getData().indexOf(group);
                             notifyItemChanged(indexOfGroup);
                         }, throwable -> {
                         });
@@ -84,16 +83,11 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
 
     @Override
     public void onBindViewHolder(GuildViewHolder holder, int position) {
-        Group guild = publicGuildList.get(position);
+        Group guild = getData().get(position);
         boolean isInGroup = isInGroup(guild);
         holder.bind(guild, isInGroup);
         holder.itemView.setTag(guild);
         holder.joinLeaveButton.setTag(guild);
-    }
-
-    @Override
-    public int getItemCount() {
-        return this.publicGuildList == null ? 0 : this.publicGuildList.size();
     }
 
     private boolean isInGroup(Group guild) {
@@ -105,38 +99,22 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                List<Group> filteredGuilds;
-
-                if (constraint.length() == 0) {
-                    filteredGuilds = fullPublicGuildList;
-                } else {
-                    filteredGuilds = getFilteredResults(constraint.toString().toLowerCase(Locale.US));
-                }
-
                 FilterResults results = new FilterResults();
-                results.values = filteredGuilds;
-                return results;
+                results.values = constraint;
+                return new FilterResults();
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                publicGuildList = (List<Group>) results.values;
-                PublicGuildsRecyclerViewAdapter.this.notifyDataSetChanged();
+                if (getData() != null && constraint.length() > 0) {
+                    updateData(getData().where()
+                            .contains("name", String.valueOf(constraint), Case.INSENSITIVE)
+                            .findAll());
+                }
             }
         };
     }
 
-    protected List<Group> getFilteredResults(String query) {
-        List<Group> filteredGuilds = new ArrayList<>();
-
-        for (Group guild : fullPublicGuildList) {
-            if (guild.name.toLowerCase().contains(query)) {
-                filteredGuilds.add(guild);
-            }
-        }
-
-        return filteredGuilds;
-    }
 
     static class GuildViewHolder extends RecyclerView.ViewHolder {
 
@@ -152,7 +130,7 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         @BindView(R.id.joinleaveButton)
         Button joinLeaveButton;
 
-        public GuildViewHolder(View itemView) {
+        GuildViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

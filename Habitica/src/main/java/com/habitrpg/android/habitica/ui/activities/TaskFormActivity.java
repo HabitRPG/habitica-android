@@ -40,7 +40,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.Tag;
@@ -282,7 +282,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     finish();
                     dismissKeyboard();
 
-                    taskRepository.deleteTask(taskId).subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+                    taskRepository.deleteTask(taskId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
                 }).setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.dismiss()).show());
 
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this,
@@ -364,7 +364,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 }
 
                 setTitle(task);
-            }, ReactiveErrorHandler.handleEmptyError());
+            }, RxErrorHandler.handleEmptyError());
 
             btnDelete.setEnabled(true);
         } else {
@@ -979,7 +979,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 observable = taskRepository.updateTask(task);
             }
 
-            observable.subscribe(task1 -> {}, ReactiveErrorHandler.handleEmptyError());
+            observable.subscribe(task1 -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 

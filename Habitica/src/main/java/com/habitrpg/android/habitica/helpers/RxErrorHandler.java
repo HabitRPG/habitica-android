@@ -5,7 +5,7 @@ import android.util.Log;
 import rx.android.BuildConfig;
 import rx.functions.Action1;
 
-public class ReactiveErrorHandler {
+public class RxErrorHandler {
 
     public static Action1<Throwable> handleEmptyError() {
         //Can't be turned into a lambda, because it then doesn't work for some reason.

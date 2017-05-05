@@ -13,7 +13,7 @@ import android.widget.RemoteViews;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.modules.AppModule;
@@ -50,7 +50,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         this.appWidgetManager = appWidgetManager;
         this.context = context;
 
-        userRepository.getUser(userId).subscribe(this::updateData, ReactiveErrorHandler.handleEmptyError());
+        userRepository.getUser(userId).subscribe(this::updateData, RxErrorHandler.handleEmptyError());
     }
 
     @Override

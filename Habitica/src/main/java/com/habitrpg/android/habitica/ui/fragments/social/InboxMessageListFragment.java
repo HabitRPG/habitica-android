@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -75,7 +75,7 @@ public class InboxMessageListFragment extends BaseMainFragment
                     .findAllSortedAsync("timestamp", Sort.DESCENDING)
                     .asObservable()
                     .filter(RealmResults::isLoaded)
-                    .subscribe(chatMessages -> this.chatAdapter.setMessages(chatMessages), ReactiveErrorHandler.handleEmptyError());
+                    .subscribe(chatMessages -> this.chatAdapter.setMessages(chatMessages), RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -94,7 +94,7 @@ public class InboxMessageListFragment extends BaseMainFragment
     private void refreshUserInbox () {
         this.swipeRefreshLayout.setRefreshing(true);
         this.userRepository.retrieveUser(true)
-                .subscribe(this::onUserReceived, ReactiveErrorHandler.handleEmptyError());
+                .subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError());
     }
 
     @Override

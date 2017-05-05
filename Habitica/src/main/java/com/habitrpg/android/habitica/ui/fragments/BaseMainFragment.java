@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -86,7 +86,7 @@ public abstract class BaseMainFragment extends BaseFragment {
         if (savedInstanceState != null && savedInstanceState.containsKey("userId")) {
             String userId = savedInstanceState.getString("userId");
             if (userId != null) {
-                userRepository.getUser(userId).subscribe(habitRPGUser -> user = habitRPGUser, ReactiveErrorHandler.handleEmptyError());
+                userRepository.getUser(userId).subscribe(habitRPGUser -> user = habitRPGUser, RxErrorHandler.handleEmptyError());
             }
         }
 

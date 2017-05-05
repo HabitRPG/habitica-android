@@ -29,19 +29,15 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
 
     @Inject
     SocialRepository socialRepository;
+    @Inject
+    ChallengeRepository challengeRepository;
 
     @BindView(R.id.my_guilds_listview)
     LinearLayout guildsListView;
-
     @BindView(R.id.publicGuildsButton)
     Button publicGuildsButton;
-
     @BindView(R.id.chat_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
-
-    @Inject
-    ChallengeRepository challengeRepository;
 
     private List<Group> guilds;
     private ArrayList<String> guildIDs;
@@ -69,6 +65,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
     @Override
     public void onDestroy() {
         socialRepository.close();
+        challengeRepository.close();
         super.onDestroy();
     }
 
@@ -123,7 +120,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
         } else {
             Integer guildIndex = ((ViewGroup) v.getParent()).indexOfChild(v);
             GuildFragment guildFragment = new GuildFragment();
-            guildFragment.setGuild(this.guilds.get(guildIndex));
+            guildFragment.setGuildId(this.guilds.get(guildIndex).id);
             guildFragment.isMember = true;
             fragment = guildFragment;
         }

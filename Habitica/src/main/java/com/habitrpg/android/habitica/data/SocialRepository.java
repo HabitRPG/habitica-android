@@ -39,6 +39,7 @@ public interface SocialRepository extends BaseRepository {
 
     Observable<List<Group>> retrieveGroups(String type);
     Observable<RealmResults<Group>> getGroups(String type);
+    Observable<RealmResults<Group>> getPublicGuilds();
 
     Observable<PostChatMessageResult> postPrivateMessage(HashMap<String, String> messageObject);
     Observable<PostChatMessageResult> postPrivateMessage(String recipientId, String message);

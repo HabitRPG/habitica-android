@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.PushDevice;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -75,13 +75,13 @@ public class PushNotificationManager {
         pushDeviceData.put("type", "android");
         apiClient.addPushDevice(pushDeviceData)
 
-            .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     public void removePushDeviceUsingStoredToken() {
         apiClient.deletePushDevice(this.refreshedToken)
 
-            .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     private Boolean userHasPushDevice() {

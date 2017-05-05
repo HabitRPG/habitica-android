@@ -62,7 +62,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
@@ -264,7 +264,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 .subscribe(newUser -> {
                     MainActivity.this.user = newUser;
                     MainActivity.this.setUserData(true);
-                }, ReactiveErrorHandler.handleEmptyError());
+                }, RxErrorHandler.handleEmptyError());
 
         EventBus.getDefault().register(this);
     }
@@ -293,7 +293,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             this.checkMaintenance();
         }
 
-        inventoryRepository.retrieveContent().subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
+        inventoryRepository.retrieveContent().subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
             try {
@@ -750,11 +750,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         if (user != null) {
             notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
                     user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.hasLeveledUp))
-                    .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+                    .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
         }
 
         displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
-                .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+                .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
 
@@ -808,7 +808,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     protected void retrieveUser() {
         if (this.userRepository != null) {
             this.userRepository.retrieveUser(true)
-                    .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError());
+                    .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 

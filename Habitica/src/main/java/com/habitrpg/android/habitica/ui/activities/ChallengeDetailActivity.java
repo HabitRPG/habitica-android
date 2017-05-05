@@ -27,7 +27,7 @@ import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.interactors.BuyRewardUseCase;
 import com.habitrpg.android.habitica.interactors.ChecklistCheckUseCase;
 import com.habitrpg.android.habitica.interactors.DailyCheckUseCase;
@@ -148,10 +148,14 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         ObservableList<Task> fullList = new ObservableArrayList<>();
 
-        userRepository.getUser(userId).first().subscribe(user -> ChallengeDetailActivity.this.user = user, ReactiveErrorHandler.handleEmptyError());
+        userRepository.getUser(userId).first().subscribe(user -> {
+            ChallengeDetailActivity.this.user = user;
+            createTaskRecyclerFragment(fullList);
+        }, RxErrorHandler.handleEmptyError());
 
         if (challengeId != null) {
             challengeRepository.getChallengeTasks(challengeId)
+                    .first()
                     .subscribe(taskList -> {
                         ArrayList<Task> resultList = new ArrayList<>();
 
@@ -228,6 +232,16 @@ public class ChallengeDetailActivity extends BaseActivity {
                     }, Throwable::printStackTrace);
         }
 
+        if (challengeId != null) {
+            challengeRepository.getChallenge(challengeId).subscribe(challenge -> {
+                ChallengeDetailActivity.this.challenge = challenge;
+                ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
+                challengeViewHolder.bind(challenge);
+            });
+        }
+    }
+
+    private void createTaskRecyclerFragment(ObservableList<Task> fullList) {
         ChallengeTasksRecyclerViewFragment fragment = ChallengeTasksRecyclerViewFragment.newInstance(user, fullList);
 
         if (getSupportFragmentManager().getFragments() == null) {
@@ -236,14 +250,6 @@ public class ChallengeDetailActivity extends BaseActivity {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
             transaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commitAllowingStateLoss();
-        }
-
-        if (challengeId != null) {
-            challengeRepository.getChallenge(challengeId).subscribe(challenge -> {
-                ChallengeDetailActivity.this.challenge = challenge;
-                ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
-                challengeViewHolder.bind(challenge);
-            });
         }
     }
 
@@ -426,6 +432,6 @@ public class ChallengeDetailActivity extends BaseActivity {
         }
 
         displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
-                .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+                .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 }

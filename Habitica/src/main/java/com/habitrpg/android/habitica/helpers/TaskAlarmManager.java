@@ -12,8 +12,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
-import com.habitrpg.android.habitica.events.TaskDeleteEvent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
@@ -146,7 +144,7 @@ public class TaskAlarmManager {
     public void addAlarmForTaskId(String taskId) {
         taskRepository.getTask(taskId)
                 .filter(task -> Task.TYPE_DAILY.equals(task.type))
-                .subscribe(this::setAlarmsForTask, ReactiveErrorHandler.handleEmptyError());
+                .subscribe(this::setAlarmsForTask, RxErrorHandler.handleEmptyError());
     }
 
     public void scheduleAllSavedAlarms() {

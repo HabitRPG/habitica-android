@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
@@ -42,7 +42,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
 
         String userID = getPreferenceManager().getSharedPreferences().getString(getContext().getString(R.string.SP_userID), null);
         if (userID != null) {
-            userRepository.getUser(userID).subscribe(this::setUser, ReactiveErrorHandler.handleEmptyError());
+            userRepository.getUser(userID).subscribe(this::setUser, RxErrorHandler.handleEmptyError());
         }
     }
 

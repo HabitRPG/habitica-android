@@ -22,9 +22,12 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public Observable<User> getUser(String userID) {
-        return realm.where(User.class).equalTo("id", userID).findFirstAsync().asObservable()
-                .filter(realmObject -> realmObject.isLoaded() && realmObject.isValid())
-                .cast(User.class);
+        return realm.where(User.class)
+                .equalTo("id", userID)
+                .findAllAsync()
+                .asObservable()
+                .filter(realmObject -> realmObject.isLoaded() && realmObject.isValid() && !realm.isEmpty())
+                .map(users -> users.first());
     }
 
     @Override

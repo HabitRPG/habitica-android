@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.CustomizationRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Preferences;
@@ -58,13 +58,13 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
                     }
                     return userRepository.updateUser(user, updatePath, customization.getIdentifier());
                 })
-                .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError()));
+                .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError()));
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
                 .flatMap(customization -> userRepository.unlockPath(user, customization))
-                .subscribe(unlockResponse -> {}, ReactiveErrorHandler.handleEmptyError()));
+                .subscribe(unlockResponse -> {}, RxErrorHandler.handleEmptyError()));
         compositeSubscription.add(adapter.getUnlockSetEvents()
                 .flatMap(set -> userRepository.unlockPath(user, set))
-                .subscribe(unlockResponse -> {}, ReactiveErrorHandler.handleEmptyError()));
+                .subscribe(unlockResponse -> {}, RxErrorHandler.handleEmptyError()));
 
         layoutManager = new GridLayoutManager(activity, 2);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -109,7 +109,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         if (user == null || adapter == null) {
             return;
         }
-        customizationRepository.getCustomizations(type, category).subscribe(adapter::setCustomizationList, ReactiveErrorHandler.handleEmptyError());
+        customizationRepository.getCustomizations(type, category).subscribe(adapter::setCustomizationList, RxErrorHandler.handleEmptyError());
     }
 
     private void setGridSpanCount(int width) {

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
@@ -76,7 +76,7 @@ public class RewardsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapte
                             }
                             subscriber.onNext(buyableItems);
                             subscriber.onCompleted();
-                        }, ReactiveErrorHandler.handleEmptyError()));
+                        }, RxErrorHandler.handleEmptyError()));
                     })
                     .subscribe(items -> {
                         notifyDataSetChanged();

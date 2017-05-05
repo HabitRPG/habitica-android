@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.FAQRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
@@ -37,7 +37,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
 
         unbinder = ButterKnife.bind(this, view);
         adapter = new FAQOverviewRecyclerAdapter();
-        adapter.getResetWalkthroughEvents().subscribe(aVoid -> this.userRepository.resetTutorial(user), ReactiveErrorHandler.handleEmptyError());
+        adapter.getResetWalkthroughEvents().subscribe(aVoid -> this.userRepository.resetTutorial(user), RxErrorHandler.handleEmptyError());
         adapter.activity = activity;
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
@@ -62,7 +62,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
         if (user == null || adapter == null) {
             return;
         }
-        faqRepository.getArticles().subscribe(adapter::setArticles, ReactiveErrorHandler.handleEmptyError());
+        faqRepository.getArticles().subscribe(adapter::setArticles, RxErrorHandler.handleEmptyError());
     }
 
     @Override

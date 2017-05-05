@@ -13,10 +13,9 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
@@ -32,15 +31,12 @@ import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.HashMap;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.OrderedRealmCollection;
-import io.realm.RealmList;
 
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
@@ -113,7 +109,7 @@ public class ItemRecyclerFragment extends BaseFragment {
 
             compositeSubscription.add(adapter.getSellItemEvents()
                     .flatMap(item -> inventoryRepository.sellItem(user, item))
-                    .subscribe(item -> {}, ReactiveErrorHandler.handleEmptyError()));
+                    .subscribe(item -> {}, RxErrorHandler.handleEmptyError()));
 
             compositeSubscription.add(adapter.getQuestInvitationEvents()
                     .flatMap(quest -> inventoryRepository.inviteToQuest(quest))
@@ -199,9 +195,9 @@ public class ItemRecyclerFragment extends BaseFragment {
             if (items.size() > 0) {
                 adapter.updateData((OrderedRealmCollection<Item>) items);
             }
-        }, ReactiveErrorHandler.handleEmptyError());
+        }, RxErrorHandler.handleEmptyError());
 
-        compositeSubscription.add(inventoryRepository.getOwnedPets().subscribe(adapter::setOwnedPets, ReactiveErrorHandler.handleEmptyError()));
+        compositeSubscription.add(inventoryRepository.getOwnedPets().subscribe(adapter::setOwnedPets, RxErrorHandler.handleEmptyError()));
     }
 
     @OnClick(R.id.openMarketButton)

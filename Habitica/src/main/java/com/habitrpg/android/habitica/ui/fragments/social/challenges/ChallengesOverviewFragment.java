@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
@@ -112,7 +112,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         challengeRepository.getChallenge(cmd.challengeId).first().subscribe(challenge -> ChallengeDetailDialogHolder.showDialog(getActivity(), challengeRepository, challenge,
         challenge1 -> {
             // challenge left
-        }), ReactiveErrorHandler.handleEmptyError());
+        }), RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
@@ -122,7 +122,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
         Intent intent = new Intent(getActivity(), ChallengeDetailActivity.class);
         intent.putExtras(bundle);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         getActivity().startActivity(intent);
     }
 

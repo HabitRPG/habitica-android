@@ -118,6 +118,6 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void saveReminder(RemindersItem remindersItem) {
-        realm.executeTransaction(realm1 -> realm1.copyToRealm(remindersItem));
+        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(remindersItem));
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -34,17 +36,10 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     private Group guild;
     private GroupInformationFragment guildInformationFragment;
     private ChatListFragment chatListFragment;
+    private String guildId;
 
-    public void setGuild(Group guild) {
-        this.guild = guild;
-        if (this.guildInformationFragment != null) {
-            this.guildInformationFragment.setGroup(guild);
-        }
-        if (this.guild.chat == null && this.socialRepository != null) {
-            socialRepository.retrieveGroup(this.guild.id)
-                    .subscribe(this, throwable -> {
-                    });
-        }
+    public void setGuildId(String guildId) {
+        this.guildId = guildId;
     }
 
     @Override
@@ -59,6 +54,11 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         viewPager.setCurrentItem(0);
 
         setViewPagerAdapter();
+
+        if (guildId != null && this.socialRepository != null) {
+            compositeSubscription.add(socialRepository.getGroup(this.guildId).subscribe(this, throwable -> {}, () -> Log.e("Party", "Completed")));
+            socialRepository.retrieveGroup(this.guildId).subscribe(group -> {}, RxErrorHandler.handleEmptyError());
+        }
 
         return v;
     }
@@ -86,7 +86,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (this.activity != null) {
+        if (this.activity != null && this.guild != null) {
             if (this.isMember) {
                 if (this.user != null && this.user.getId().equals(this.guild.leaderID)) {
                     this.activity.getMenuInflater().inflate(R.menu.guild_admin, menu);
@@ -145,7 +145,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
                     }
                     case 1: {
                         chatListFragment = new ChatListFragment();
-                        chatListFragment.configure(GuildFragment.this.guild.id, user, false);
+                        chatListFragment.configure(GuildFragment.this.guildId, user, false);
                         fragment = chatListFragment;
                         break;
                     }

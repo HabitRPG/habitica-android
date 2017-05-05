@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
@@ -66,7 +66,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
         if (apiClient != null) {
             apiClient.getContent()
-                    .subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
+                    .subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 

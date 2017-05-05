@@ -55,7 +55,7 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
 
     @Override
     public void saveChallenges(User user, List<Challenge> challenges) {
-        realm.executeTransactionAsync(realm1 -> realm1.copyToRealmOrUpdate(challenges));
+        realm.executeTransactionAsync(realm1 -> realm1.insertOrUpdate(challenges));
     }
 
     @Override

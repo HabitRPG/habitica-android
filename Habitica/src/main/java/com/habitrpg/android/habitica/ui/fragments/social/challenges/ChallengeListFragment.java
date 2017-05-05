@@ -11,14 +11,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
@@ -121,7 +120,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
             }
             this.challenges = challenges;
             challengeAdapter.updateData(challenges);
-        }, ReactiveErrorHandler.handleEmptyError());
+        }, RxErrorHandler.handleEmptyError());
     }
 
     private void fetchOnlineChallenges() {

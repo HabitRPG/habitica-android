@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -60,7 +60,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
 
                 compositeSubscription.add(adapter.getEquipEvents()
                         .flatMap(key -> inventoryRepository.equip(user, "pet", key))
-                        .subscribe(items -> {}, ReactiveErrorHandler.handleEmptyError()));
+                        .subscribe(items -> {}, RxErrorHandler.handleEmptyError()));
             }
         }
 
@@ -108,8 +108,8 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     }
 
     private void loadItems() {
-        inventoryRepository.getPets(animalType, animalGroup).first().subscribe(adapter::updateData, ReactiveErrorHandler.handleEmptyError());
-        inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(adapter::setOwnedMounts, ReactiveErrorHandler.handleEmptyError());
+        inventoryRepository.getPets(animalType, animalGroup).first().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
+        inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(adapter::setOwnedMounts, RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe

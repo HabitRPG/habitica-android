@@ -19,10 +19,9 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.social.UserParty;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -52,7 +51,6 @@ public class PartyFragment extends BaseMainFragment {
     private GroupInformationFragment groupInformationFragment;
     private ChatListFragment chatListFragment;
     private FragmentPagerAdapter viewPagerAdapter;
-    private List<User> members;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,28 +64,14 @@ public class PartyFragment extends BaseMainFragment {
         viewPager.setCurrentItem(0);
 
         // Get the full group data
-        if (this.user != null && this.user.getParty() != null && this.user.getParty().id != null) {
-            socialRepository.getGroup("party")
-                    .filter(group1 -> group1 != null)
+        if (userHasParty()) {
+            compositeSubscription.add(socialRepository.getGroup(user.getParty().getId())
                     .subscribe(group -> {
-                        if (group == null) {
-                            return;
-                        }
                         PartyFragment.this.group = group;
-
                         updateGroupUI();
-
-                        socialRepository.getGroupMembers(group.id, true)
-                                .subscribe(members -> {
-                                            PartyFragment.this.members = members;
-                                            updateGroupUI();
-                                        },
-                                        throwable -> {
-                                        });
-                    }, throwable -> {
-                    });
+                    }, RxErrorHandler.handleEmptyError()));
+            socialRepository.retrieveGroup("party").subscribe(group1 -> {}, RxErrorHandler.handleEmptyError());
         }
-
 
         setViewPagerAdapter();
         this.tutorialStepIdentifier = "party";
@@ -96,6 +80,10 @@ public class PartyFragment extends BaseMainFragment {
         updateGroupUI();
 
         return v;
+    }
+
+    private boolean userHasParty() {
+        return this.user != null && this.user.getParty() != null && this.user.getParty().id != null;
     }
 
     @Override
@@ -144,7 +132,7 @@ public class PartyFragment extends BaseMainFragment {
                 if (groupInformationFragment != null) {
                     groupInformationFragment.setQuestContent(content);
                 }
-            }, ReactiveErrorHandler.handleEmptyError());
+            }, RxErrorHandler.handleEmptyError());
         }
 
     }
@@ -162,9 +150,6 @@ public class PartyFragment extends BaseMainFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {

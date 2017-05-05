@@ -24,7 +24,7 @@ import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -91,7 +91,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             if (savedInstanceState.containsKey("userId")) {
                 this.userId = savedInstanceState.getString("userId");
                 if (this.userId != null) {
-                    userRepository.getUser(userId).subscribe(habitRPGUser -> this.user = habitRPGUser, ReactiveErrorHandler.handleEmptyError());
+                    userRepository.getUser(userId).subscribe(habitRPGUser -> this.user = habitRPGUser, RxErrorHandler.handleEmptyError());
                 }
             }
 

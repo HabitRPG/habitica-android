@@ -17,6 +17,8 @@ import com.habitrpg.android.habitica.models.user.User;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import io.realm.RealmList;
+
 public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializer<Group> {
     @Override
     public Group deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -46,7 +48,7 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
             group.type = obj.get("type").getAsString();
         }
         if (obj.has("chat")) {
-            group.chat = context.deserialize(obj.get("chat"), new TypeToken<List<ChatMessage>>() {
+            group.chat = context.deserialize(obj.get("chat"), new TypeToken<RealmList<ChatMessage>>() {
             }.getType());
         }
         if (obj.has("members")) {

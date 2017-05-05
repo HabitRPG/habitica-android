@@ -11,17 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
-import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import net.pherth.android.emoji_library.EmojiParser;
@@ -31,8 +27,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -163,43 +157,44 @@ public class ChallengeDetailDialogHolder {
     }
 
     private void addHabits(ArrayList<Task> habits) {
-        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout);
+        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout, false);
         TextView groupName = (TextView) taskGroup.findViewById(R.id.task_group_name);
 
         LinearLayout tasks_layout = (LinearLayout) taskGroup.findViewById(R.id.tasks_layout);
 
-        groupName.setText(habits.size() + " " + ChallengesListViewAdapter.ChallengeViewHolder.getLabelByTypeAndCount(context, Challenge.TASK_ORDER_HABITS, habits.size()));
+        groupName.setText(habits.size() + " " + getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, habits.size()));
 
         int size = habits.size();
         for (int i = 0; i < size; i++) {
             Task task = habits.get(i);
 
-            View habitEntry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_habit, tasks_layout);
-            TextView habitTitle = (TextView) habitEntry.findViewById(R.id.habit_title);
-            ImageView plusImg = (ImageView) habitEntry.findViewById(task.up ? R.id.plus_img_tinted : R.id.plus_img);
-            ImageView minusImg = (ImageView) habitEntry.findViewById(task.down ? R.id.minus_img_tinted : R.id.minus_img);
+            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_habit, tasks_layout, false);
+            TextView habitTitle = (TextView) entry.findViewById(R.id.habit_title);
+            ImageView plusImg = (ImageView) entry.findViewById(task.up ? R.id.plus_img_tinted : R.id.plus_img);
+            ImageView minusImg = (ImageView) entry.findViewById(task.down ? R.id.minus_img_tinted : R.id.minus_img);
 
             plusImg.setVisibility(View.VISIBLE);
             minusImg.setVisibility(View.VISIBLE);
 
             habitTitle.setText(EmojiParser.parseEmojis(task.text));
-
+            tasks_layout.addView(entry);
         }
+        task_group_layout.addView(taskGroup);
     }
 
     private void addDailys(ArrayList<Task> dailies) {
-        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout);
+        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout, false);
         TextView groupName = (TextView) taskGroup.findViewById(R.id.task_group_name);
 
         LinearLayout tasks_layout = (LinearLayout) taskGroup.findViewById(R.id.tasks_layout);
 
         int size = dailies.size();
-        groupName.setText(dailies.size() + " " + ChallengesListViewAdapter.ChallengeViewHolder.getLabelByTypeAndCount(context, Challenge.TASK_ORDER_DAILYS, size));
+        groupName.setText(dailies.size() + " " + getLabelByTypeAndCount(Challenge.TASK_ORDER_DAILYS, size));
 
         for (int i = 0; i < size; i++) {
             Task task = dailies.get(i);
 
-            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_daily, tasks_layout);
+            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_daily, tasks_layout, false);
             TextView title = (TextView) entry.findViewById(R.id.daily_title);
             title.setText(EmojiParser.parseEmojis(task.text));
 
@@ -211,23 +206,24 @@ public class ChallengeDetailDialogHolder {
                 TextView checkListAllTextView = (TextView) entry.findViewById(R.id.checkListAllTextView);
                 checkListAllTextView.setText(String.valueOf(task.checklist.size()));
             }
-
+            tasks_layout.addView(entry);
         }
+        task_group_layout.addView(taskGroup);
     }
 
     private void addTodos(ArrayList<Task> todos) {
-        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout);
+        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout, false);
         TextView groupName = (TextView) taskGroup.findViewById(R.id.task_group_name);
 
         LinearLayout tasks_layout = (LinearLayout) taskGroup.findViewById(R.id.tasks_layout);
 
         int size = todos.size();
-        groupName.setText(todos.size() + " " + ChallengesListViewAdapter.ChallengeViewHolder.getLabelByTypeAndCount(context, Challenge.TASK_ORDER_TODOS, size));
+        groupName.setText(todos.size() + " " + getLabelByTypeAndCount(Challenge.TASK_ORDER_TODOS, size));
 
         for (int i = 0; i < size; i++) {
             Task task = todos.get(i);
 
-            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_todo, tasks_layout);
+            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_todo, tasks_layout, false);
             TextView title = (TextView) entry.findViewById(R.id.todo_title);
             title.setText(EmojiParser.parseEmojis(task.text));
 
@@ -239,24 +235,40 @@ public class ChallengeDetailDialogHolder {
                 TextView checkListAllTextView = (TextView) entry.findViewById(R.id.checkListAllTextView);
                 checkListAllTextView.setText(String.valueOf(task.checklist.size()));
             }
+            tasks_layout.addView(entry);
         }
+        task_group_layout.addView(taskGroup);
     }
 
     private void addRewards(ArrayList<Task> rewards) {
-        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout);
+        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout, false);
         TextView groupName = (TextView) taskGroup.findViewById(R.id.task_group_name);
 
         LinearLayout tasks_layout = (LinearLayout) taskGroup.findViewById(R.id.tasks_layout);
 
         int size = rewards.size();
-        groupName.setText(rewards.size() + " " + ChallengesListViewAdapter.ChallengeViewHolder.getLabelByTypeAndCount(context, Challenge.TASK_ORDER_REWARDS, size));
+        groupName.setText(rewards.size() + " " + getLabelByTypeAndCount(Challenge.TASK_ORDER_REWARDS, size));
 
         for (int i = 0; i < size; i++) {
             Task task = rewards.get(i);
 
-            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_reward, tasks_layout);
+            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_reward, tasks_layout, false);
             TextView title = (TextView) entry.findViewById(R.id.reward_title);
             title.setText(EmojiParser.parseEmojis(task.text));
+            tasks_layout.addView(entry);
+        }
+        task_group_layout.addView(taskGroup);
+    }
+
+    private String getLabelByTypeAndCount(String type, int count) {
+        if (Challenge.TASK_ORDER_DAILYS.equals(type)) {
+            return context.getString(count == 1 ? R.string.daily : R.string.dailies);
+        } else if (Challenge.TASK_ORDER_HABITS.equals(type)) {
+            return context.getString(count == 1 ? R.string.habit : R.string.habits);
+        } else if (Challenge.TASK_ORDER_REWARDS.equals(type)) {
+            return context.getString(count == 1 ? R.string.reward : R.string.rewards);
+        } else {
+            return context.getString(count == 1 ? R.string.todo : R.string.todos);
         }
     }
 
@@ -280,7 +292,6 @@ public class ChallengeDetailDialogHolder {
 
         Intent intent = new Intent(context, ChallengeDetailActivity.class);
         intent.putExtras(bundle);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         context.startActivity(intent);
         this.dialog.dismiss();
     }
@@ -302,8 +313,8 @@ public class ChallengeDetailDialogHolder {
                                         challengeLeftAction.call(challenge);
                                     }
                                     this.dialog.dismiss();
-                                }, throwable -> {
-                                }))).setNegativeButton(context.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+                                }, throwable -> {})))
+                .setNegativeButton(context.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
 
     // refactor as an UseCase later - see ChallengeDetailActivity

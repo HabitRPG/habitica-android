@@ -24,7 +24,6 @@ class RealmContentLocalRepository extends RealmBaseLocalRepository implements Co
             realm1.insertOrUpdate(result.food);
             realm1.insertOrUpdate(result.hatchingPotions);
 
-
             realm1.insertOrUpdate(result.pets);
             realm1.insertOrUpdate(result.mounts);
 

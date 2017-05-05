@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -35,7 +36,6 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     SocialRepository socialRepository;
 
     List<String> memberGuildIDs;
-    List<Group> guilds;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -53,13 +53,11 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
             unbinder = ButterKnife.bind(this, view);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-            viewAdapter = new PublicGuildsRecyclerViewAdapter();
+            viewAdapter = new PublicGuildsRecyclerViewAdapter(null, true);
             viewAdapter.setMemberGuildIDs(this.memberGuildIDs);
             viewAdapter.apiClient = this.apiClient;
             recyclerView.setAdapter(viewAdapter);
-            if (this.guilds != null) {
-                this.viewAdapter.setPublicGuildList(this.guilds);
-            }
+            this.fetchGuilds();
         }
         return view;
     }
@@ -72,7 +70,6 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        this.fetchGuilds();
     }
 
     @Override
@@ -83,14 +80,15 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
 
     private void fetchGuilds() {
         if (this.socialRepository != null) {
-            this.socialRepository.getGroups("publicGuilds")
+            this.socialRepository.getPublicGuilds()
+                    .first()
                     .subscribe(groups -> {
-                        PublicGuildsFragment.this.guilds = groups;
                         if (PublicGuildsFragment.this.viewAdapter != null) {
-                            PublicGuildsFragment.this.viewAdapter.setPublicGuildList(groups);
+                            PublicGuildsFragment.this.viewAdapter.updateData(groups);
                         }
                     }, throwable -> {
                     });
+            this.socialRepository.retrieveGroups("publicGuilds").subscribe(groups -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -104,7 +102,6 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
         theTextArea.setHintTextColor(ContextCompat.getColor(getContext(), R.color.white));
         guildSearchView.setQueryHint(getString(R.string.guild_search_hint));
         guildSearchView.setOnQueryTextListener(this);
-
     }
 
     @Override

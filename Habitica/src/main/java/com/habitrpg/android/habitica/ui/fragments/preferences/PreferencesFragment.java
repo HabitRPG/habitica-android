@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
@@ -58,7 +58,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
         String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
         if (userID != null) {
-            userRepository.getUser(userID).subscribe(PreferencesFragment.this::setUser, ReactiveErrorHandler.handleEmptyError());
+            userRepository.getUser(userID).subscribe(PreferencesFragment.this::setUser, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -133,7 +133,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             }
             return true;
         } else if (preference.getKey().equals("reload_content")) {
-            apiClient.getContent().subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
+            apiClient.getContent().subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
         }
         return super.onPreferenceTreeClick(preference);
     }

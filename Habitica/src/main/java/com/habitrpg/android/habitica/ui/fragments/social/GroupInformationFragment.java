@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.User;
@@ -87,8 +87,9 @@ public class GroupInformationFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_group_info, container, false);
+        }
         questCollectViewAdapter = new QuestCollectRecyclerViewAdapter();
 
         viewBinding = DataBindingUtil.bind(view);
@@ -370,7 +371,7 @@ public class GroupInformationFragment extends BaseFragment {
     public void onPartyInviteRejected() {
         if (user != null) {
             apiClient.rejectGroupInvite(user.getInvitations().getParty().getId())
-                    .subscribe(aVoid -> viewBinding.setInvitation(null), ReactiveErrorHandler.handleEmptyError());
+                    .subscribe(aVoid -> viewBinding.setInvitation(null), RxErrorHandler.handleEmptyError());
         }
     }
 }

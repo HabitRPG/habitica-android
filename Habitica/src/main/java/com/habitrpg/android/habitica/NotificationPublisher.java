@@ -11,7 +11,7 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
 import com.habitrpg.android.habitica.data.TaskRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
@@ -58,7 +58,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                     int id = intent.getIntExtra(NOTIFICATION_ID, 0);
                     notificationManager.notify(id, notification);
                 }
-            }, ReactiveErrorHandler.handleEmptyError());
+            }, RxErrorHandler.handleEmptyError());
 
         } else {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

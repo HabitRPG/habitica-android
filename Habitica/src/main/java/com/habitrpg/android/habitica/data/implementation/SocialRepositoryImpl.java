@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.data.implementation;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
@@ -45,7 +45,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public void markMessagesSeen(String seenGroupId) {
-        apiClient.seenMessages(seenGroupId).subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+        apiClient.seenMessages(seenGroupId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -77,12 +77,13 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Group> retrieveGroup(String id) {
-        return apiClient.getGroup(id);
+        return apiClient.getGroup(id)
+                .doOnNext(localRepository::saveGroup);
     }
 
     @Override
     public Observable<Group> getGroup(String id) {
-        return retrieveGroup(id);
+        return localRepository.getGroup(id);
     }
 
     @Override
@@ -102,12 +103,18 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<List<Group>> retrieveGroups(String type) {
-        return apiClient.listGroups(type);
+        return apiClient.listGroups(type)
+                .doOnNext(localRepository::saveGroups);
     }
 
     @Override
     public Observable<RealmResults<Group>> getGroups(String type) {
         return localRepository.getGroups(type);
+    }
+
+    @Override
+    public Observable<RealmResults<Group>> getPublicGuilds() {
+        return localRepository.getPublicGuilds();
     }
 
     @Override

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
@@ -80,7 +80,7 @@ public class InboxFragment extends BaseMainFragment
                     .sort("timestamp", Sort.DESCENDING)
                     .asObservable()
                     .first()
-                    .subscribe(this::setInboxMessages, ReactiveErrorHandler.handleEmptyError());
+                    .subscribe(this::setInboxMessages, RxErrorHandler.handleEmptyError());
         }
     }
 

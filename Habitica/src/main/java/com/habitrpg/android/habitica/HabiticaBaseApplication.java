@@ -23,7 +23,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
@@ -171,7 +171,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
             ApiClient apiClient = this.lazyApiHelper.get();
 
             apiClient.getContent()
-                    .subscribe(contentResult -> { }, ReactiveErrorHandler.handleEmptyError());
+                    .subscribe(contentResult -> { }, RxErrorHandler.handleEmptyError());
         }
     }
 

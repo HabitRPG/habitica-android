@@ -30,7 +30,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.UserStatComputer;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.AchievementGroup;
@@ -344,10 +344,10 @@ public class FullProfileActivity extends BaseActivity {
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
 
-        loadItemDataByOutfit(user.getItems().getGear().getEquipped()).subscribe(gear -> this.gotGear(gear, user), ReactiveErrorHandler.handleEmptyError());
+        loadItemDataByOutfit(user.getItems().getGear().getEquipped()).subscribe(gear -> this.gotGear(gear, user), RxErrorHandler.handleEmptyError());
 
         if (user.getPreferences().getCostume()) {
-            loadItemDataByOutfit(user.getItems().getGear().getCostume()).subscribe(this::gotCostume, ReactiveErrorHandler.handleEmptyError());
+            loadItemDataByOutfit(user.getItems().getGear().getCostume()).subscribe(this::gotCostume, RxErrorHandler.handleEmptyError());
         } else {
             costumeCard.setVisibility(View.GONE);
         }

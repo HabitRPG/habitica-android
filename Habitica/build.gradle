@@ -79,7 +79,7 @@ dependencies {
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
 
     // Emojis
-    compile 'com.github.viirus:emoji-lib:0.0.3.4'
+    compile 'com.github.viirus:emoji-lib:0.0.4'
 
     // Markdown
     compile 'com.commonsware.cwac:anddown:0.3.0'

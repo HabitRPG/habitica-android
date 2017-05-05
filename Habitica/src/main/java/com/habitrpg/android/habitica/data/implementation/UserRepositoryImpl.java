@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.inventory.Customization;
@@ -97,7 +97,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                     return updateData;
                 })
                 .flatMap(updateData -> updateUser(user, updateData))
-                .subscribe(tutorialSteps -> {}, ReactiveErrorHandler.handleEmptyError());
+                .subscribe(tutorialSteps -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @Override

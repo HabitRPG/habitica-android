@@ -11,13 +11,10 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
-import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -58,7 +55,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
 
                 compositeSubscription.add(adapter.getEquipEvents()
                         .flatMap(key -> inventoryRepository.equip(user, "mount", key))
-                        .subscribe(items -> {}, ReactiveErrorHandler.handleEmptyError()));
+                        .subscribe(items -> {}, RxErrorHandler.handleEmptyError()));
             }
         }
 
@@ -107,7 +104,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
     }
 
     private void loadItems() {
-        inventoryRepository.getMounts(animalType, animalGroup).first().subscribe(adapter::updateData, ReactiveErrorHandler.handleEmptyError());
+        inventoryRepository.getMounts(animalType, animalGroup).first().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
     }
 
     @Override

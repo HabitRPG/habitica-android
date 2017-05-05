@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TagRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
@@ -213,9 +213,9 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         if (this.getWindow() != null) {
             this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
-        repository.updateTags(editedTags.values()).subscribe(tag -> editedTags.remove(tag.getId()), ReactiveErrorHandler.handleEmptyError());
-        repository.createTags(createdTags.values()).subscribe(tag -> createdTags.remove(tag.getId()), ReactiveErrorHandler.handleEmptyError());
-        repository.deleteTags(deletedTags).subscribe(tags1 -> deletedTags.clear(), ReactiveErrorHandler.handleEmptyError());
+        repository.updateTags(editedTags.values()).subscribe(tag -> editedTags.remove(tag.getId()), RxErrorHandler.handleEmptyError());
+        repository.createTags(createdTags.values()).subscribe(tag -> createdTags.remove(tag.getId()), RxErrorHandler.handleEmptyError());
+        repository.deleteTags(deletedTags).subscribe(tags1 -> deletedTags.clear(), RxErrorHandler.handleEmptyError());
     }
 
     private void createTagEditViews() {

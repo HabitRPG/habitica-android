@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Animal;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
@@ -183,6 +183,6 @@ public class StableRecyclerFragment extends BaseFragment {
                 }
             }
             return Observable.just(items);
-        }).subscribe(items -> adapter.setItemList(items), ReactiveErrorHandler.handleEmptyError());
+        }).subscribe(items -> adapter.setItemList(items), RxErrorHandler.handleEmptyError());
     }
 }

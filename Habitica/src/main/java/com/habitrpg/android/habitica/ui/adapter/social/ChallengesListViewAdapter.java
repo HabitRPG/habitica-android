@@ -95,18 +95,6 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
             }
         }
 
-        public static String getLabelByTypeAndCount(Context context, String type, int count) {
-            if (Challenge.TASK_ORDER_DAILYS.equals(type)) {
-                return context.getString(count == 1 ? R.string.daily : R.string.dailies);
-            } else if (Challenge.TASK_ORDER_HABITS.equals(type)) {
-                return context.getString(count == 1 ? R.string.habit : R.string.habits);
-            } else if (Challenge.TASK_ORDER_REWARDS.equals(type)) {
-                return context.getString(count == 1 ? R.string.reward : R.string.rewards);
-            } else {
-                return context.getString(count == 1 ? R.string.todo : R.string.todos);
-            }
-        }
-
         public void bind(Challenge challenge) {
             this.challenge = challenge;
 

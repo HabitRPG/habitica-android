@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TutorialRepository;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.squareup.leakcanary.RefWatcher;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,7 +61,7 @@ public abstract class BaseFragment extends DialogFragment {
                         event.canBeDeferred = tutorialCanBeDeferred;
                         EventBus.getDefault().post(event);
                     }
-                }, ReactiveErrorHandler.handleEmptyError());
+                }, RxErrorHandler.handleEmptyError());
             }
 
             String displayedClassName = this.getDisplayedClassName();

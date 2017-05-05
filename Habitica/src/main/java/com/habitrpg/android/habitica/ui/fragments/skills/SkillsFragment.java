@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.user.User;
@@ -98,7 +98,7 @@ public class SkillsFragment extends BaseMainFragment {
 
         Observable.concat(userRepository.getSkills(user).first().flatMap(Observable::from), userRepository.getSpecialItems(user).first().flatMap(Observable::from))
                 .toList()
-                .subscribe(skills -> adapter.setSkillList(skills), ReactiveErrorHandler.handleEmptyError());
+                .subscribe(skills -> adapter.setSkillList(skills), RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -147,7 +147,7 @@ public class SkillsFragment extends BaseMainFragment {
         if (activity != null) {
             UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
         }
-        userRepository.retrieveUser(false).subscribe(habitRPGUser -> {}, ReactiveErrorHandler.handleEmptyError());
+        userRepository.retrieveUser(false).subscribe(habitRPGUser -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @Override

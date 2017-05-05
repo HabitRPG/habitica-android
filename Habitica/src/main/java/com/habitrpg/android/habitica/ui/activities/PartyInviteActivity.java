@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
@@ -164,7 +164,7 @@ public class PartyInviteActivity extends BaseActivity {
             }
             userIdToInvite = uri.getPathSegments().get(2);
 
-            userRepository.getUser(userId).subscribe(this::handleUserRecieved, ReactiveErrorHandler.handleEmptyError());
+            userRepository.getUser(userId).subscribe(this::handleUserRecieved, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -184,6 +184,6 @@ public class PartyInviteActivity extends BaseActivity {
         inviteData.put("uuids", invites);
 
         this.socialRepository.inviteToGroup(user.getParty().getId(), inviteData)
-                .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
+                .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 }

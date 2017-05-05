@@ -11,4 +11,11 @@ import rx.Observable;
 
 public interface SocialLocalRepository extends BaseLocalRepository {
     Observable<RealmResults<Group>> getGroups(String type);
+    Observable<RealmResults<Group>> getPublicGuilds();
+
+    Observable<Group> getGroup(String id);
+
+    void saveGroup(Group group);
+
+    void saveGroups(List<Group> groups);
 }

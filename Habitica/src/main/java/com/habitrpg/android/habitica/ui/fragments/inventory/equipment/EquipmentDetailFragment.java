@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
@@ -50,14 +50,14 @@ public class EquipmentDetailFragment extends BaseMainFragment {
         this.adapter.type = this.type;
         this.adapter.getEquipEvents()
                 .flatMap(key -> inventoryRepository.equipGear(user, key, isCostume))
-                .subscribe(items -> {}, ReactiveErrorHandler.handleEmptyError());
+                .subscribe(items -> {}, RxErrorHandler.handleEmptyError());
 
 
         this.recyclerView.setAdapter(this.adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        inventoryRepository.getOwnedEquipment(type).first().subscribe(this.adapter::updateData, ReactiveErrorHandler.handleEmptyError());
+        inventoryRepository.getOwnedEquipment(type).first().subscribe(this.adapter::updateData, RxErrorHandler.handleEmptyError());
         return v;
     }
 

@@ -11,15 +11,11 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding;
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -117,7 +113,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
         costumeShieldView.setOnClickListener(v1 -> displayEquipmentDetailList("shield", user.getItems().getGear().getCostume().getShield(), true));
 
         this.costumeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError());
+            userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         });
 
         if (this.nameMapping == null) {
@@ -129,7 +125,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
                 }
 
                 this.viewBinding.setEquipmentNames(this.nameMapping);
-            }, ReactiveErrorHandler.handleEmptyError());
+            }, RxErrorHandler.handleEmptyError());
         } else {
             this.viewBinding.setEquipmentNames(this.nameMapping);
         }

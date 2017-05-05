@@ -30,7 +30,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.underscore.$;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
@@ -38,7 +37,7 @@ import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
@@ -52,7 +51,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -136,7 +134,7 @@ public class CreateChallengeActivity extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        userRepository.getUser(userId).subscribe(user1 -> this.user = user1, ReactiveErrorHandler.handleEmptyError());
+        userRepository.getUser(userId).subscribe(user1 -> this.user = user1, RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -358,7 +356,7 @@ public class CreateChallengeActivity extends BaseActivity {
             locationAdapter.add(tavern);
 
             groups.forEach(group -> locationAdapter.add(group));
-        }, ReactiveErrorHandler.handleEmptyError());
+        }, RxErrorHandler.handleEmptyError());
 
         challengeLocationSpinner.setAdapter(locationAdapter);
         challengeLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

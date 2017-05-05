@@ -18,7 +18,9 @@
     fab:menu_animationDelayPerItem="50"
     fab:menu_icon="@drawable/fab_add"
     fab:menu_buttonSpacing="2dp"
-    fab:menu_labels_margin="4dp">
+    fab:menu_labels_margin="4dp"
+    fab:menu_fab_show_animation="@anim/fab_slide_in"
+    fab:menu_fab_hide_animation="@anim/fab_slide_out">
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab.new.habit"

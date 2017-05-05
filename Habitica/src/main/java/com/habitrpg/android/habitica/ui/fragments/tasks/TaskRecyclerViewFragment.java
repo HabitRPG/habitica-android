@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
@@ -349,7 +349,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         swipeRefreshLayout.setRefreshing(true);
         userRepository.retrieveUser(true, true)
                 .doOnTerminate(() -> swipeRefreshLayout.setRefreshing(false))
-                .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError());
+                .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
     }
 
     public void setActiveFilter(String activeFilter) {
