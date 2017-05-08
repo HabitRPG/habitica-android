@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
+import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
@@ -33,6 +34,7 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
+import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
@@ -231,7 +233,7 @@ public interface AppComponent {
 
     void inject(SubscriptionFragment subscriptionFragment);
 
-    void inject(ChallengeTasksRecyclerViewFragment.ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter);
+    void inject(ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter);
 
     void inject(ChallengeTasksRecyclerViewFragment challengeTasksRecyclerViewFragment);
 
@@ -248,4 +250,6 @@ public interface AppComponent {
     void inject(HabiticaFirebaseInstanceIDService habiticaFirebaseInstanceIDService);
 
     void inject(HabiticaFirebaseMessagingService habiticaFirebaseMessagingService);
+
+    void inject(CreateChallengeActivity createChallengeActivity);
 }

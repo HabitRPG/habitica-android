@@ -220,6 +220,10 @@ public class HabitRPGUser extends BaseModel {
         return this.balance;
     }
 
+    public int getGemCount(){
+        return (int)(this.balance * 4);
+    }
+
     public void setBalance(double balance) {
         this.balance = balance;
     }

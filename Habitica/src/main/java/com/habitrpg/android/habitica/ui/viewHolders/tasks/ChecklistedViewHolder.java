@@ -167,9 +167,9 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
     }
 
     @Override
-    public void setDisabled(boolean disabled) {
-        super.setDisabled(disabled);
+    public void setDisabled(boolean openTaskDisabled, boolean taskActionsDisabled) {
+        super.setDisabled(openTaskDisabled, taskActionsDisabled);
 
-        this.checkbox.setEnabled(!disabled);
+        this.checkbox.setEnabled(!taskActionsDisabled);
     }
 }

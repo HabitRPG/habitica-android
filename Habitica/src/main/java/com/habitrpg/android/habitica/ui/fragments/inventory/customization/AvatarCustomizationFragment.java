@@ -72,7 +72,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         this.updateActiveCustomization();
         this.adapter.userSize = this.user.getPreferences().getSize();
         this.adapter.hairColor = this.user.getPreferences().getHair().getColor();
-        this.adapter.gemBalance = user.getBalance() * 4;
+        this.adapter.gemBalance = user.getGemCount();
 
         return view;
     }
@@ -134,7 +134,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
     @Override
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
-        this.adapter.gemBalance = user.getBalance() * 4;
+        this.adapter.gemBalance = user.getGemCount();
         this.updateActiveCustomization();
         if (adapter.getCustomizationList() != null) {
             List<String> ownedCustomizations = new ArrayList<>();

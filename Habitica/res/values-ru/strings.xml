@@ -186,6 +186,8 @@
   <string name="intro_1_description">Пришло время веселиться, пока вы делаете свою работу. Присоединитесь к %s участникам, уже улучшающих свою жизнь.</string>
   <string name="intro_2_subtitle">Прогресс в игре</string>
   <string name="intro_2_title">Прогресс в жизни</string>
+  <string name="intro_3_subtitle">Битва с монстрами</string>
+  <string name="intro_3_title">Общайтесь</string>
   <string name="intro_3_description">Добивайтесь поставленнх целей с помощью друзей. Поддерживайте друг друга в реальной жизни и в сражении, делая свою жизнь лучше!</string>
   <string name="intro_finish_button">Давайте начнем!</string>
   <string name="previous_button">Назад</string>
@@ -237,6 +239,7 @@
   <string name="delete">Удалить</string>
   <string name="name">Имя</string>
   <string name="description">Описание</string>
+  <string name="add_tag">Добавить новый Тег</string>
   <string name="privacy">Приватность</string>
   <string name="write_message">Написать сообщение</string>
   <string name="post">Отправить</string>
@@ -393,6 +396,7 @@
   <string name="all_dailies_completed">Вы справились со всеми ежедневными заданиями. Так держать!</string>
   <string name="widget_habit_button">Привычки Habitica</string>
   <string name="widget_dailies">Ежедневные задания Habitica</string>
+  <string name="widget_todo_list">Список задач Habitica</string>
   <string name="widget_add_task">Добавить задачу Habitica</string>
   <string name="google_services_missing">Сервис Google play не найден.</string>
   <string name="gem.purchase.toolbartitle">Купить</string>
@@ -497,6 +501,7 @@
   <string name="login_btn_fb">Зарегистрироваться с Facebook</string>
   <string name="login_btn_google">Зарегистрироваться с Google</string>
   <string name="action_back">Назад</string>
+  <string name="welcome_text">О,  должно быть ,вы новичок. Я Джастин, я буду твоим проводником в Habitica. \ N \ nЧтобы начать, вам нужно создать аватар.</string>
   <string name="avatar_extras">Дополнительно</string>
   <string name="avatar_skin_color">Цвет кожи</string>
   <string name="avatar_hair_color">Цвет волос</string>
@@ -506,11 +511,13 @@
   <string name="avatar_wheelchair">Кресло-каталка</string>
   <string name="weak">Стройное</string>
   <string name="strong">Тучное</string>
+  <string name="gray">Серый</string>
   <string name="completed">Завершить</string>
   <string name="setuP_group_other">Другое</string>
   <string name="clear">Очистить</string>
   <string name="empty_title_habits">У вас нет привычек</string>
   <string name="empty_title_todos">У вас нет задач</string>
   <string name="empty_title_rewards">У вас нет вознаграждений</string>
+  <string name="maintenance">Cодержание</string>
   <string name="reload_content">Обновить содержимое</string>
 </resources>

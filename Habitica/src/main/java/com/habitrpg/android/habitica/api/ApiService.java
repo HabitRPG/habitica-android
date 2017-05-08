@@ -287,6 +287,22 @@ public interface ApiService {
     @POST("challenges/{challengeId}/leave")
     Observable<HabitResponse<Void>> leaveChallenge(@Path("challengeId") String challengeId, @Body LeaveChallengeBody body);
 
+    @POST("challenges")
+    Observable<HabitResponse<Challenge>> createChallenge(@Body Challenge challenge);
+
+    @POST("tasks/challenge/{challengeId}")
+    Observable<HabitResponse<Task>> createChallengeTask(@Path("challengeId") String challengeId, @Body Task task);
+
+    @POST("tasks/challenge/{challengeId}")
+    Observable<HabitResponse<List<Task>>> createChallengeTasks(@Path("challengeId") String challengeId, @Body List<Task> tasks);
+
+    @PUT("challenges/{challengeId}")
+    Observable<HabitResponse<Challenge>> updateChallenge(@Path("challengeId") String challengeId, @Body Challenge challenge);
+
+    @DELETE("challenges/{challengeId}")
+    Observable<HabitResponse<Void>> deleteChallenge(@Path("challengeId") String challengeId);
+
+
     //DEBUG: These calls only work on a local development server
 
     @POST("debug/add-ten-gems")

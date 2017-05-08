@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="179"
+    android:versionCode="181"
     android:versionName="1.0.1"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
@@ -133,6 +133,17 @@
         </activity>
         <activity
             android:name=".ui.activities.ChallengeDetailActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.activities.CreateChallengeActivity"
+            android:theme="@style/AppTheme.ActionBar"
             android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"

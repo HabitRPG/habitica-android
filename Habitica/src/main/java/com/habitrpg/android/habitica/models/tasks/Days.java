@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.models.tasks;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ModelContainer;
@@ -13,7 +16,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  */
 @ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
-public class Days extends BaseModel {
+public class Days extends BaseModel implements Parcelable {
 
     @Column
     @PrimaryKey
@@ -108,4 +111,44 @@ public class Days extends BaseModel {
         }
         return false;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.task_id);
+        dest.writeByte(this.m ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.t ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.w ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.th ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.f ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.s ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.su ? (byte) 1 : (byte) 0);
+    }
+
+    protected Days(Parcel in) {
+        this.task_id = in.readString();
+        this.m = in.readByte() != 0;
+        this.t = in.readByte() != 0;
+        this.w = in.readByte() != 0;
+        this.th = in.readByte() != 0;
+        this.f = in.readByte() != 0;
+        this.s = in.readByte() != 0;
+        this.su = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<Days> CREATOR = new Parcelable.Creator<Days>() {
+        @Override
+        public Days createFromParcel(Parcel source) {
+            return new Days(source);
+        }
+
+        @Override
+        public Days[] newArray(int size) {
+            return new Days[size];
+        }
+    };
 }

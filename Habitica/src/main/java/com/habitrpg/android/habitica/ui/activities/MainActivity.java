@@ -853,6 +853,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(final DeleteTaskCommand cmd) {
+        if(cmd.ignoreEvent) {
+            return;
+        }
+
         taskRepository.deleteTask(cmd.TaskIdToDelete)
                 .subscribe(aVoid -> EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete)), throwable -> {});
     }
@@ -1213,6 +1217,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(final TaskSaveEvent event) {
+        if(event.ignoreEvent)
+            return;
+
         Task task = event.task;
         if (event.created) {
             this.taskRepository.createTask(task).subscribe(task1 -> {}, throwable -> {});

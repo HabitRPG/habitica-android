@@ -138,17 +138,10 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
     }
 
     private void slideFabOffScreen(FloatingActionMenu view) {
-        Animation slideOff = AnimationUtils.loadAnimation(context, R.anim.fab_slide_out);
-        slideOff.setDuration(FAB_ANIMATION_DURATION);
-        slideOff.setFillAfter(true);
-        view.startAnimation(slideOff);
+        view.hideMenu(true);
     }
 
     private void slideFabOnScreen(FloatingActionMenu view) {
-        Animation slideIn = AnimationUtils.loadAnimation(context, R.anim.fab_slide_in);
-        slideIn.setDuration(FAB_ANIMATION_DURATION);
-        slideIn.setFillAfter(true);
-        view.startAnimation(slideIn);
-        view.showMenu(false);
+        view.showMenu(true);
     }
 }

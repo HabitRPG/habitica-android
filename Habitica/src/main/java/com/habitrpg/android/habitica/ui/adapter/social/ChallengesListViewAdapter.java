@@ -1,18 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.github.underscore.$;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
-import net.pherth.android.emoji_library.EmojiParser;
-import net.pherth.android.emoji_library.EmojiTextView;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -23,19 +10,28 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.underscore.$;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
+
+import net.pherth.android.emoji_library.EmojiParser;
+import net.pherth.android.emoji_library.EmojiTextView;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
-
 public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesListViewAdapter.ChallengeViewHolder> {
-
-
     private List<Challenge> challenges = new ArrayList<>();
     private List<Challenge> challengesSource = new ArrayList<>();
 

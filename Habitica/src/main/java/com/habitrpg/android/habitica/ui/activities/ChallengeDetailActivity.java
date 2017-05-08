@@ -34,11 +34,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -103,6 +105,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     private Challenge challenge;
 
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_challenge_detail;
@@ -112,6 +115,11 @@ public class ChallengeDetailActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_challenge_details, menu);
+
+        if(!challenge.leaderId.equals(HabiticaApplication.User.getId())){
+            menu.setGroupVisible(R.id.challenge_edit_action_group, false);
+        }
+
         return true;
     }
 
@@ -225,6 +233,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
         challengeViewHolder.bind(challenge);
+
     }
 
     @Override
@@ -240,9 +249,21 @@ public class ChallengeDetailActivity extends BaseActivity {
 
                 return true;
 
+            case R.id.action_edit:
+                openChallengeEditActivity();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void openChallengeEditActivity(){
+        Intent intent = new Intent(this, CreateChallengeActivity.class);
+        intent.putExtra(CreateChallengeActivity.CHALLENGE_ID_KEY, challenge.id);
+
+        startActivity(intent);
+
     }
 
     private void showChallengeLeaveDialog(){
