@@ -74,6 +74,16 @@ public class Task extends RealmObject implements Parcelable {
     @SerializedName("_id")
     String id;
 
+    public Boolean isDue;
+
+    // These do need to be local columns because all logic is stored in
+    // is due for now
+    @Ignore
+    public List<Integer> daysOfMonth  = new ArrayList<>();
+    @Ignore
+    public List<Integer> weeksOfMonth  = new ArrayList<>();
+
+
     /**
      * @return the id
      */
@@ -430,7 +440,7 @@ public class Task extends RealmObject implements Parcelable {
         return R.color.best_10;
     }
 
-    public Boolean isDue(int offset) {
+    public Boolean checkIfDue(int offset) {
         if (this.getCompleted()) {
             return true;
         }
@@ -470,7 +480,10 @@ public class Task extends RealmObject implements Parcelable {
     }
 
     public Boolean isDisplayedActive(int offset) {
-        return this.isDue(offset) && !this.completed;
+        if (this.isDue != null && !this.completed) {
+            return this.isDue;
+        }
+        return this.checkIfDue(offset) && !this.completed;
     }
 
     public Boolean isChecklistDisplayActive(int offset) {

@@ -62,6 +62,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
@@ -198,6 +199,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Inject
     TaskAlarmManager taskAlarmManager;
+    @Inject
+    RemoteConfigManager remoteConfigManager;
 
     // endregion
 

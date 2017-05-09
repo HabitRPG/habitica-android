@@ -46,7 +46,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             taskRepository.getTasks(Task.TYPE_DAILY, userId).subscribe(dailies -> {
                 boolean showNotifications = false;
                 for (Task task : dailies) {
-                    if (task.isDue(0)) {
+                    if (task.checkIfDue(0)) {
                         showNotifications = true;
                         break;
                     }
