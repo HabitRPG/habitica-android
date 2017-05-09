@@ -36,7 +36,7 @@ public class RemoteConfigManager {
     private RemoteConfigManager(Context context) {
         this.context = context;
         loadFromPreferences();
-        new DownloadFileFromURL().execute("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/config-ios.json");
+        new DownloadFileFromURL().execute("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/config-android.json");
     }
 
     public static RemoteConfigManager getInstance(Context context) {
@@ -60,7 +60,7 @@ public class RemoteConfigManager {
 
         try {
             JSONObject obj = new JSONObject(storedPreferences);
-            enableRepeatbles = obj.getBoolean("enableRepeatbles");
+            enableRepeatbles = obj.getBoolean("enableRepeatables");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -134,7 +134,7 @@ public class RemoteConfigManager {
 
             try {
                 JSONObject obj = new JSONObject(text.toString());
-                enableRepeatbles = obj.getBoolean("enableRepeatbles");
+                enableRepeatbles = obj.getBoolean("enableRepeatables");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

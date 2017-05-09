@@ -525,11 +525,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     // @TODO: abstract business logic to Presenter and only modify view?
     private void enableRepeatables()
     {
-        if (!RemoteConfigManager.repeatablesAreEnabled()){
-            return;
-        }
-
-        if (!taskType.equals("daily")) {
+        if (!RemoteConfigManager.repeatablesAreEnabled() || !taskType.equals("daily")){
             repeatablesLayout.setVisibility(View.INVISIBLE);
             ViewGroup.LayoutParams repeatablesLayoutParams = repeatablesLayout.getLayoutParams();
             repeatablesLayoutParams.height = 0;
