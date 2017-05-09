@@ -78,6 +78,8 @@
     <string name="about.bugreport">Report a Bug</string>
     <string name="about.source_code">Source Code</string>
 
+    <string name="repeatEvery">Repeat Every</string>
+
     <!-- Network Errors -->
     <string name="network_error_title">Connection Error</string>
     <string name="network_error_no_network_body">You are not connected to the internet.</string>
@@ -115,6 +117,16 @@
     <string name="frequency">Frequency</string>
     <string name="frequency_weekly">On Certain Days of the Week</string>
     <string name="frequency_daily">Every X Days</string>
+
+    <string name="repeatables_summary_title">Summary</string>
+    <string name="repeatables_title">Repeats</string>
+    <string name="repeatables_on_title">Repeats On</string>
+    <string name="repeatables_frequency_daily">Daily</string>
+    <string name="repeatables_frequency_weekly">Weekly</string>
+    <string name="repeatables_frequency_monthly">Monthly</string>
+    <string name="repeatables_frequency_yearly">Yearly</string>
+    <string name="repeatables_frequency_day_of_month">Day of Month</string>
+    <string name="repeatables_frequency_day_of_week">Day of Week</string>
 
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
@@ -569,6 +581,8 @@
     <string name="reload_content">Reload Content</string>
     <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
     <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
+    <string name="repeat_summary">"Repeats %1$s every %2$s %3$s %4$s"</string>
+
     <string name="no_billing_gems">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase gems.</string>
     <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase a subscription.</string>
     <string name="save">Save</string>

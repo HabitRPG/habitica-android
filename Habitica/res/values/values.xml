@@ -19,6 +19,18 @@
         <item>@string/frequency_daily</item>
     </string-array>
 
+    <string-array name="repeatables_frequencies">
+        <item>@string/repeatables_frequency_daily</item>
+        <item>@string/repeatables_frequency_weekly</item>
+        <item>@string/repeatables_frequency_monthly</item>
+        <item>@string/repeatables_frequency_yearly</item>
+    </string-array>
+
+    <string-array name="repeatables_on">
+        <item>@string/repeatables_frequency_day_of_month</item>
+        <item>@string/repeatables_frequency_day_of_week</item>
+    </string-array>
+
     <string-array name="weekdays">
         <item>@string/monday</item>
         <item>@string/tuesday</item>
