@@ -312,7 +312,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
     @Override
     public File getDatabasePath(String name) {
-        return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
+        return new File(this.getFilesDir().getAbsolutePath(), name);
     }
 
     private void createBillingAndCheckout() {
