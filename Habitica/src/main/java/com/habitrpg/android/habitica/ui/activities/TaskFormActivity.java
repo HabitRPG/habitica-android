@@ -1112,9 +1112,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
                 if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                     task.setFrequency("weekly");
-                    String frequency = this.repeatablesFrequencySpinner.getSelectedItem().toString();
+                    Object frequency = this.repeatablesFrequencySpinner.getSelectedItem();
                     if (frequency != null && RemoteConfigManager.repeatablesAreEnabled()) {
-                        task.setFrequency(frequency.toLowerCase());
+                        task.setFrequency(frequency.toString().toLowerCase());
                     }
 
                     Days repeat = task.getRepeat();
