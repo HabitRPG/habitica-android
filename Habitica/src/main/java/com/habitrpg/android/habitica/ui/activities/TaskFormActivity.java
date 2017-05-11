@@ -507,17 +507,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     // @TODO: abstract business logic to Presenter and only modify view?
     private void enableRepeatables()
     {
-        if (!remoteConfigManager.repeatablesAreEnabled()){
-            return;
-        }
-
-        if (!taskType.equals("daily")) {
+        if (!remoteConfigManager.repeatablesAreEnabled() || !taskType.equals("daily")) {
             repeatablesLayout.setVisibility(View.INVISIBLE);
             ViewGroup.LayoutParams repeatablesLayoutParams = repeatablesLayout.getLayoutParams();
             repeatablesLayoutParams.height = 0;
             repeatablesLayout.setLayoutParams(repeatablesLayoutParams);
             return;
-        };
+        }
 
         startDateLayout.setVisibility(View.INVISIBLE);
 
@@ -572,7 +568,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
                     repeatablesFrequencyContainerParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 220, r.getDisplayMetrics());
                     repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
-                    return;
                 } else {
                     ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
                     repeatablesOnSpinnerParams.height = 0;
@@ -611,12 +606,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         });
 
         setEveryXSpinner(repeatablesEveryXSpinner);
-        repeatablesEveryXSpinner.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                generateSummary();
-            }
-        });
+        repeatablesEveryXSpinner.setOnValueChangedListener((picker, oldVal, newVal) -> generateSummary());
 
         this.repeatablesFrequencyContainer.removeAllViews();
         String[] weekdays = getResources().getStringArray(R.array.weekdays);
@@ -634,12 +624,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
             checkbox.setText(weekdays[i]);
             checkbox.setChecked(true);
-            checkbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    generateSummary();
-                }
-            });
+            checkbox.setOnClickListener(v -> generateSummary());
             repeatablesWeekDayCheckboxes.add(checkbox);
             repeatablesFrequencyContainer.addView(weekdayRow);
         }
@@ -667,7 +652,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 break;
         }
 
-        String weekdays = "";
+        String weekdays;
         List<String> weekdayStrings = new ArrayList<>();
         int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
         if (this.repeatablesWeekDayCheckboxes.get(offset).isChecked()) {
@@ -1164,9 +1149,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
                     if (dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                         task.setFrequency("weekly");
-                        String frequency = this.repeatablesFrequencySpinner.getSelectedItem().toString();
+                        Object frequency = this.repeatablesFrequencySpinner.getSelectedItem();
                         if (frequency != null && remoteConfigManager.repeatablesAreEnabled()) {
-                            task.setFrequency(frequency.toLowerCase());
+                            task.setFrequency(frequency.toString().toLowerCase());
                         }
 
                         Days repeat = task.getRepeat();
@@ -1231,7 +1216,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         NumberFormat localFormat = DecimalFormat.getInstance(Locale.getDefault());
                         try {
                             task.setValue(localFormat.parse(value).doubleValue());
-                        } catch (ParseException e) {
+                        } catch (ParseException ignored) {
                         }
                     } else {
                         task.setValue(0.0d);
