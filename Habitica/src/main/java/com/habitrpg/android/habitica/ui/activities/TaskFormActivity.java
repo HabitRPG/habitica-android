@@ -1065,7 +1065,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         }
 
-        if (task.text.isEmpty()) {
+        if (task.text == null || task.text.isEmpty()) {
             return false;
         }
 
@@ -1142,7 +1142,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         repeat.setSu(this.repeatablesWeekDayCheckboxes.get((offset + 6) % 7).isChecked());
                     }
 
-                    if (frequency.equals("monthly")) {
+                    if ("monthly".equals(frequency)) {
                         Calendar calendar = startDateListener.getCalendar();
                         String monthlyFreq = repeatablesOnSpinner.getSelectedItem().toString();
                         if (monthlyFreq.equals("Day of Month")) {
