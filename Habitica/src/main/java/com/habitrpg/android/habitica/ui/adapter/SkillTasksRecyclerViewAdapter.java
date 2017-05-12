@@ -1,7 +1,11 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
+import com.habitrpg.android.habitica.models.tasks.Task;
+
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,61 +13,35 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.data.TaskRepository;
-import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
-import com.habitrpg.android.habitica.helpers.RxErrorHandler;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
-
 import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 
-public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTasksRecyclerViewAdapter.ViewHolder> {
+public class SkillTasksRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.ViewHolder> {
 
 
     private static final int TYPE_CELL = 1;
-    private final TaskRepository taskRepository;
-    String taskType;
-    TaskClickActivity activity;
-    private ObservableArrayList<Task> observableContent;
-    private RecyclerView.Adapter<ViewHolder> parentAdapter;
-    private String userId;
+    private PublishSubject<Task> taskSelectionEvents = PublishSubject.create();
 
-    public SkillTasksRecyclerViewAdapter(TaskRepository taskRepository, String taskType, TaskClickActivity activity, String userId) {
-        this.setHasStableIds(true);
-        this.taskType = taskType;
-        this.activity = activity;
-        this.taskRepository = taskRepository;
-        this.userId = userId;
-
-        this.loadContent();
-
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        switch (position) {
-            default:
-                return TYPE_CELL;
-        }
+    public SkillTasksRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate) {
+        super(data, autoUpdate);
     }
 
     @Override
     public long getItemId(int position) {
-        Task task = observableContent.get(position);
-        if (task.getId() != null && task.getId().length() == 36) {
-            return UUID.fromString(task.getId()).getMostSignificantBits();
+        if (getData() != null) {
+            Task task = getData().get(position);
+            if (task.getId() != null && task.getId().length() == 36) {
+                return UUID.fromString(task.getId()).getMostSignificantBits();
+            }
         }
         return UUID.randomUUID().getMostSignificantBits();
-    }
-
-    @Override
-    public int getItemCount() {
-        return observableContent.size();
     }
 
     @Override
@@ -75,40 +53,15 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Task item = observableContent.get(position);
-
-        holder.bindHolder(item, position);
-    }
-
-    // region ViewHolders
-
-    public void loadContent() {
-        this.loadContent(false);
-    }
-
-    // endregion
-
-    public void loadContent(boolean forced) {
-
-        if (this.observableContent == null || forced) {
-
-            this.observableContent = new ObservableArrayList<>();
-            taskRepository.getTasks(taskType, userId).subscribe(tasks -> {
-                this.observableContent.addAll(tasks);
-                if (parentAdapter != null) {
-                    parentAdapter.notifyDataSetChanged();
-                } else {
-                    notifyDataSetChanged();
-                }
-            }, RxErrorHandler.handleEmptyError());
-        } else {
-            if (parentAdapter != null) {
-                parentAdapter.notifyDataSetChanged();
-            } else {
-                notifyDataSetChanged();
-            }
+        if (getData() != null) {
+            holder.bindHolder(getData().get(position));
         }
     }
+
+    public Observable<Task> getTaskSelectionEvents() {
+        return taskSelectionEvents.asObservable();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -131,7 +84,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
             resources = itemView.getResources();
         }
 
-        void bindHolder(Task habitItem, int position) {
+        void bindHolder(Task habitItem) {
             task = habitItem;
             if (habitItem.notes == null || habitItem.notes.length() == 0) {
                 notesTextView.setHeight(0);
@@ -143,10 +96,9 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
         @Override
         public void onClick(View v) {
-            if (v != itemView)
-                return;
-            activity.taskSelected(task.getId());
+            if (v.equals(itemView)) {
+                taskSelectionEvents.onNext(task);
+            }
         }
-
     }
 }

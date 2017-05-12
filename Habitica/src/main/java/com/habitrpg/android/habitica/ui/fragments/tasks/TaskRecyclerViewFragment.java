@@ -330,7 +330,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Override
     public void onClick(View v) {
         AddNewTaskCommand event = new AddNewTaskCommand();
-        event.ClassType = this.classType;
+        event.taskType = this.classType;
 
         EventBus.getDefault().post(event);
     }

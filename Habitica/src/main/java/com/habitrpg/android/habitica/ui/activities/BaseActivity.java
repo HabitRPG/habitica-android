@@ -3,7 +3,9 @@ package com.habitrpg.android.habitica.ui.activities;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +15,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
 
 import butterknife.ButterKnife;
+import rx.subscriptions.CompositeSubscription;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -24,6 +27,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         return destroyed;
     }
 
+    protected CompositeSubscription compositeSubscription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         injectActivity(HabiticaBaseApplication.getComponent());
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
+        compositeSubscription = new CompositeSubscription();
     }
 
     protected abstract void injectActivity(AppComponent component);
@@ -53,6 +59,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         destroyed = true;
+        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
+            compositeSubscription.unsubscribe();
+        }
         super.onDestroy();
     }
 

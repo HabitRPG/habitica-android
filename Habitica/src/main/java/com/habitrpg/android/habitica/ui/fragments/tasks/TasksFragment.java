@@ -216,9 +216,7 @@ public class TasksFragment extends BaseMainFragment {
                         (task, from, to) -> {
                             if (apiClient != null){
                                 apiClient.postTaskNewPosition(task.getId(), String.valueOf(to))
-                                        .subscribe(aVoid -> {
-                                        }, e -> {
-                                        });
+                                        .subscribe(aVoid -> {}, e -> {});
                             }
                         };
 
@@ -425,7 +423,7 @@ public class TasksFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(AddNewTaskCommand event) {
-        openNewTaskActivity(event.ClassType.toLowerCase(Locale.US));
+        openNewTaskActivity(event.taskType.toLowerCase(Locale.US));
     }
 
     @Subscribe

@@ -21,7 +21,7 @@ import javax.inject.Named;
 
 import butterknife.BindView;
 
-public class HabitButtonWidgetActivity extends BaseActivity implements TaskClickActivity {
+public class HabitButtonWidgetActivity extends BaseActivity {
 
     @Inject
     TaskRepository taskRepository;
@@ -67,7 +67,7 @@ public class HabitButtonWidgetActivity extends BaseActivity implements TaskClick
             recyclerView.setLayoutManager(layoutManager);
         }
 
-        recyclerView.setAdapter(new SkillTasksRecyclerViewAdapter(taskRepository, Task.TYPE_HABIT, this, userId));
+        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(tasks -> recyclerView.setAdapter(new SkillTasksRecyclerViewAdapter(tasks, true)));
     }
 
     @Override
@@ -76,7 +76,6 @@ public class HabitButtonWidgetActivity extends BaseActivity implements TaskClick
         super.onDestroy();
     }
 
-    @Override
     public void taskSelected(String taskId) {
         finishWithSelection(taskId);
     }

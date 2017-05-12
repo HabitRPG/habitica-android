@@ -26,7 +26,7 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
                 .equalTo("id", userID)
                 .findAllAsync()
                 .asObservable()
-                .filter(realmObject -> realmObject.isLoaded() && realmObject.isValid() && !realm.isEmpty())
+                .filter(realmObject -> realmObject.isLoaded() && realmObject.isValid() && !realmObject.isEmpty())
                 .map(users -> users.first());
     }
 
