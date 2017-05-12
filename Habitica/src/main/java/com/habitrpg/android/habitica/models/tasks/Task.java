@@ -111,6 +111,8 @@ public class Task extends BaseModel implements Parcelable {
 
     @Column
     public Boolean isDue;
+    @Column
+    public Date nextDue;
 
     // These do need to be local columns because all logic is stored in
     // is due for now
@@ -636,6 +638,13 @@ public class Task extends BaseModel implements Parcelable {
         newTime.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
         if (today.before(newTime)) {
             today.add(Calendar.DAY_OF_MONTH, -1);
+        }
+
+        if (nextDue != null) {
+            Calendar nextDueCalendar = new GregorianCalendar();
+            nextDueCalendar.setTime(nextDue);
+            newTime.set(nextDueCalendar.get(Calendar.YEAR), nextDueCalendar.get(Calendar.MONTH), nextDueCalendar.get(Calendar.DAY_OF_MONTH));
+            return newTime.getTime();
         }
 
         if (this.getFrequency().equals(FREQUENCY_DAILY)) {
