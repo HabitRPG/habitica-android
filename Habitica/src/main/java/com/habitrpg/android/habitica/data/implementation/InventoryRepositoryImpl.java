@@ -209,28 +209,32 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<BuyResponse> buyItem(User user, String id) {
-        return apiClient.buyItem(id)
+    public Observable<BuyResponse> buyItem(User user, String key, double value) {
+        return apiClient.buyItem(key)
                 .doOnNext(buyResponse -> localRepository.executeTransaction(realm -> {
                     buyResponse.items.setUserId(user.getId());
+                    User copiedUser = localRepository.getUnmanagedCopy(user);
                     if (buyResponse.items != null) {
-                        user.setItems(buyResponse.items);
+                        copiedUser.setItems(buyResponse.items);
                     }
                     if (buyResponse.hp != null) {
-                        user.getStats().setHp(buyResponse.hp);
+                        copiedUser.getStats().setHp(buyResponse.hp);
                     }
                     if (buyResponse.exp != null) {
-                        user.getStats().setExp(buyResponse.exp);
+                        copiedUser.getStats().setExp(buyResponse.exp);
                     }
                     if (buyResponse.mp != null) {
-                        user.getStats().setMp(buyResponse.mp);
+                        copiedUser.getStats().setMp(buyResponse.mp);
                     }
                     if (buyResponse.gp != null) {
-                        user.getStats().setGp(buyResponse.gp);
+                        copiedUser.getStats().setGp(buyResponse.gp);
+                    } else {
+                        copiedUser.getStats().setGp(copiedUser.getStats().getGp()-value);
                     }
                     if (buyResponse.lvl != null) {
-                        user.getStats().setLvl(buyResponse.lvl);
+                        copiedUser.getStats().setLvl(buyResponse.lvl);
                     }
+                    localRepository.save(copiedUser);
                 }));
     }
 }

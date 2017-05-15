@@ -70,5 +70,5 @@ public interface InventoryRepository extends ContentRepository {
 
     Observable<Quest> inviteToQuest(QuestContent quest);
 
-    Observable<BuyResponse> buyItem(User user, String id);
+    Observable<BuyResponse> buyItem(User user, String id, double value);
 }

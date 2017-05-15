@@ -79,23 +79,20 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
                     if (res.get_tmp() != null) {
                         result.drop = res.get_tmp().getDrop();
                     }
-
-                    if (task.type != null && !task.type.equals("reward")) {
-                        this.localRepository.executeTransaction(realm -> {
+                    this.localRepository.executeTransaction(realm -> {
+                        if (task.type != null && !task.type.equals("reward")) {
                             task.value = task.value + res.getDelta();
                             if (Task.TYPE_DAILY.equals(task.type) || Task.TYPE_TODO.equals(task.type)) {
                                 task.completed = up;
                             }
-
-                            stats.setHp(res.hp);
-                            stats.setExp(res.exp);
-                            stats.setMp(res.mp);
-                            stats.setGp(res.gp);
-                            stats.setLvl(res.lvl);
-                            user.setStats(stats);
-                        });
-                    }
-
+                        }
+                        stats.setHp(res.hp);
+                        stats.setExp(res.exp);
+                        stats.setMp(res.mp);
+                        stats.setGp(res.gp);
+                        stats.setLvl(res.lvl);
+                        user.setStats(stats);
+                    });
                     return result;
                 });
     }

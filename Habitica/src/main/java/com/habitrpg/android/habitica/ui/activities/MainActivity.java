@@ -622,7 +622,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         }
 
         if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
-            inventoryRepository.buyItem(user, event.Reward.getId())
+            inventoryRepository.buyItem(user, event.Reward.getId(), event.Reward.value)
                     .subscribe(buyResponse -> {
                                 String snackbarMessage = getString(R.string.successful_purchase, event.Reward.getText());
                                 if (event.Reward.getId().equals("armoire")) {
@@ -636,9 +636,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                                     soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                                 }
                                 showSnackbar(MainActivity.this, floatingMenuWrapper, snackbarMessage, SnackbarDisplayType.NORMAL);
-                            }, throwable -> {
-                            }
-                    );
+                            }, RxErrorHandler.handleEmptyError());
         } else {
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
                     .subscribe(res -> showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), SnackbarDisplayType.NORMAL), error -> {});

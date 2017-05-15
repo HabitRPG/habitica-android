@@ -37,6 +37,7 @@ import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RealmBaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.roughike.bottombar.BottomBarTab;
@@ -356,7 +357,7 @@ public class TasksFragment extends BaseMainFragment {
             for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
                 TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(index);
                 if (fragment != null) {
-                    RealmBaseTasksRecyclerViewAdapter adapter = fragment.recyclerAdapter;
+                    TaskRecyclerViewAdapter adapter = fragment.recyclerAdapter;
                     if (adapter.getClass().equals(DailiesRecyclerViewHolder.class)) {
                         final DailiesRecyclerViewHolder dailyAdapter = (DailiesRecyclerViewHolder) fragment.recyclerAdapter;
                         dailyAdapter.dailyResetOffset = this.user.getPreferences().getDayStart();

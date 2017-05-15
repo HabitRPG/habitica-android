@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RealmBaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
@@ -58,7 +59,7 @@ import butterknife.ButterKnife;
  */
 public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
-    public RealmBaseTasksRecyclerViewAdapter recyclerAdapter;
+    public TaskRecyclerViewAdapter recyclerAdapter;
     @Inject
     @Named(AppModule.NAMED_USER_ID)
     String userID;
@@ -169,7 +170,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                         return;
                     case Task.TYPE_REWARD:
                         layoutOfType = R.layout.reward_item_card;
-                        this.recyclerAdapter = new RewardsRecyclerViewAdapter(tasks, true, layoutOfType, getContext());
+                        this.recyclerAdapter = new RewardsRecyclerViewAdapter(tasks, getContext(), layoutOfType, inventoryRepository, user);
                         break;
                 }
             });
@@ -317,8 +318,13 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setAdapter((RecyclerView.Adapter) recyclerAdapter);
         recyclerAdapter.filter();
+
+        if (Task.TYPE_REWARD.equals(classType)) {
+            compositeSubscription.add(taskRepository.getTasks(this.classType, userID)
+                    .subscribe(recyclerAdapter::updateData, RxErrorHandler.handleEmptyError()));
+        }
     }
 
     @Override

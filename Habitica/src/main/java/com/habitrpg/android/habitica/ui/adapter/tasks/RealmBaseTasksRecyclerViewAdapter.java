@@ -15,7 +15,7 @@ import io.realm.OrderedRealmCollection;
 import io.realm.RealmQuery;
 import io.realm.RealmRecyclerViewAdapter;
 
-public abstract class RealmBaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder> extends RealmRecyclerViewAdapter<Task, VH> {
+public abstract class RealmBaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder> extends RealmRecyclerViewAdapter<Task, VH> implements TaskRecyclerViewAdapter {
 
     private final int layoutResource;
     private final TaskFilterHelper taskFilterHelper;
@@ -44,6 +44,7 @@ public abstract class RealmBaseTasksRecyclerViewAdapter<VH extends BaseTaskViewH
         return LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
     }
 
+    @Override
     public void filter() {
         if (unfilteredData == null) {
             return;
