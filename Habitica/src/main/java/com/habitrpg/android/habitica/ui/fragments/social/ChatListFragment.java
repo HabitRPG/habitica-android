@@ -3,15 +3,22 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -35,16 +42,16 @@ import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import butterknife.OnTextChanged;
+import io.realm.RealmResults;
 
-public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Action1<List<ChatMessage>> {
+public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public String seenGroupId;
     @Inject
@@ -53,16 +60,21 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     UserRepository userRepository;
     public boolean isTavern;
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.emoji_button)
+    ImageButton emojiButton;
+    @BindView(R.id.chat_edit_text)
+    EditText chatEditText;
+    @BindView(R.id.send_button)
+    ImageButton sendButton;
     LinearLayoutManager layoutManager;
     private String groupId;
     private User user;
     private String userId;
     private ChatRecyclerViewAdapter chatAdapter;
     private View view;
-    private List<ChatMessage> currentChatMessages;
     private boolean navigatedOnceToFragment = false;
     private boolean gotNewMessages = false;
 
@@ -98,7 +110,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         if (view == null)
-            view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
+            view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         return view;
     }
@@ -123,18 +135,21 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext());
+            layoutManager.setReverseLayout(true);
+            layoutManager.setStackFromEnd(false);
 
-            mRecyclerView.setLayoutManager(layoutManager);
+            recyclerView.setLayoutManager(layoutManager);
         }
 
-        chatAdapter = new ChatRecyclerViewAdapter(new ArrayList<>(), user, groupId);
+        chatAdapter = new ChatRecyclerViewAdapter(null, true, user, groupId);
 
-        mRecyclerView.setAdapter(chatAdapter);
+        recyclerView.setAdapter(chatAdapter);
 
+        socialRepository.getGroupChat(groupId).first().subscribe(this::setChatMessages, throwable -> {});
         onRefresh();
     }
 
@@ -142,9 +157,15 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
 
-        socialRepository.getGroupChat(groupId)
-                .subscribe(this, throwable -> {
-                });
+        socialRepository.retrieveGroupChat(groupId).subscribe(chatMessages -> {
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, throwable -> {
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     public void setNavigatedToFragment(String groupId) {
@@ -199,25 +220,13 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     @Subscribe
     public void onEvent(final DeleteChatMessageCommand cmd) {
         socialRepository.deleteMessage(cmd.groupId, cmd.chatMessage.id)
-                .subscribe(aVoid -> {
-                    if (currentChatMessages != null) {
-                        currentChatMessages.remove(cmd.chatMessage);
-                        ChatListFragment.this.call(currentChatMessages);
-                    }
-                }, throwable -> {
-                });
+                .subscribe(aVoid -> {}, throwable -> {});
     }
 
     @Subscribe
     public void onEvent(SendNewGroupMessageCommand cmd) {
         socialRepository.postGroupChat(cmd.targetGroupId, cmd.message)
-                .subscribe(postChatMessageResult -> {
-                    if (currentChatMessages != null) {
-                        currentChatMessages.add(0, postChatMessageResult.message);
-                        ChatListFragment.this.call(currentChatMessages);
-                    }
-                }, throwable -> {
-                });
+                .subscribe(postChatMessageResult -> {}, throwable -> {});
 
         UiUtils.dismissKeyboard(getActivity());
     }
@@ -242,19 +251,47 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void call(List<ChatMessage> chatMessages) {
-        currentChatMessages = chatMessages;
-
+    public void setChatMessages(RealmResults<ChatMessage> chatMessages) {
         if (chatAdapter != null) {
-            chatAdapter.setMessages(chatMessages);
+            chatAdapter.updateData(chatMessages);
+            recyclerView.scrollToPosition(0);
         }
 
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
         gotNewMessages = true;
 
         markMessagesAsSeen();
+    }
+
+    @OnTextChanged(R.id.chat_edit_text)
+    public void onChatMessageTextChanged() {
+        Editable chatText = chatEditText.getText();
+        setSendButtonEnabled(chatText.length() > 0);
+    }
+
+    private void setSendButtonEnabled(boolean enabled) {
+        int tintColor;
+        if (enabled) {
+            tintColor = ContextCompat.getColor(getContext(), R.color.brand_400);
+        } else {
+            tintColor = ContextCompat.getColor(getContext(), R.color.md_grey_400);
+        }
+        sendButton.setEnabled(enabled);
+        sendButton.setColorFilter(tintColor);
+    }
+
+    @OnClick(R.id.send_button)
+    public void sendChatMessage() {
+        String chatText = chatEditText.getText().toString();
+        if (chatText.length() > 0) {
+            chatEditText.setText(null);
+            socialRepository.postGroupChat(groupId, chatText).subscribe(postChatMessageResult -> {
+                recyclerView.scrollToPosition(0);
+            }, RxErrorHandler.handleEmptyError());
+        }
+    }
+
+    @OnClick(R.id.emoji_button)
+    public void openEmojiView() {
+
     }
 }

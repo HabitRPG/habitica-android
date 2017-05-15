@@ -46,6 +46,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
+        hideToolbar();
+        disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
@@ -61,6 +63,13 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         }
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        showToolbar();
+        enableToolbarScrolling();
+        super.onDestroyView();
     }
 
     @Override

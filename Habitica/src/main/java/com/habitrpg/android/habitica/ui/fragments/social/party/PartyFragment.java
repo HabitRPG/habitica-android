@@ -56,6 +56,8 @@ public class PartyFragment extends BaseMainFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
+        hideToolbar();
+        disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
@@ -77,13 +79,18 @@ public class PartyFragment extends BaseMainFragment {
         this.tutorialStepIdentifier = "party";
         this.tutorialText = getString(R.string.tutorial_party);
 
-        updateGroupUI();
-
         return v;
     }
 
     private boolean userHasParty() {
         return this.user != null && this.user.getParty() != null && this.user.getParty().id != null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        showToolbar();
+        enableToolbarScrolling();
+        super.onDestroyView();
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.QuestProgress;
+import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect;
 
 import java.util.ArrayList;
 
@@ -20,15 +21,11 @@ import butterknife.ButterKnife;
 
 public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestCollectRecyclerViewAdapter.QuestCollectViewHolder> {
 
-    private ArrayList<String> collect = new ArrayList<>();
-
     private QuestProgress progress;
     private QuestContent quest;
 
     public void setQuestProgress(QuestProgress progress) {
         this.progress = progress;
-        collect.clear();
-        collect.addAll(progress.collect.keySet());
         this.notifyDataSetChanged();
     }
 
@@ -48,12 +45,12 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
 
     @Override
     public void onBindViewHolder(QuestCollectViewHolder holder, int position) {
-        holder.bind(collect.get(position));
+        holder.bind(progress.collect.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return collect == null ? 0 : collect.size();
+        return progress != null && progress.collect != null ? progress.collect.size() : 0;
     }
 
     class QuestCollectViewHolder extends RecyclerView.ViewHolder {
@@ -74,13 +71,13 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
             this.view = itemView;
         }
 
-        public void bind(String key) {
-            image.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + "quest_" + quest.getKey() + "_" + key + ".png"));
+        public void bind(QuestProgressCollect collectProgress) {
+            image.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + "quest_" + quest.getKey() + "_" + collectProgress.key + ".png"));
             if (quest != null) {
-                QuestCollect collect = quest.getCollectWithKey(key);
+                QuestCollect collect = quest.getCollectWithKey(collectProgress.key);
                 if (collect != null) {
                     name.setText(collect.text);
-                    count.setText(progress.collect.get(key) + " / " + collect.count);
+                    count.setText(collectProgress.count + " / " + collect.count);
                 }
             }
         }

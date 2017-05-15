@@ -1,63 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="8dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/chat"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/material_drawer_primary_text" />
-
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="match_parent">
-
-        <ImageButton
-            android:id="@+id/emoji.toggle.btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_emoticon_grey600_24dp"
-            android:scaleType="center"
-            android:backgroundTint="@color/transparent"
-            android:contentDescription="Toogle Emojis"
-            android:layout_gravity="center"/>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:hintTextAppearance="@style/TextAppearance.AppCompat">
-
-            <net.pherth.android.emoji_library.EmojiEditText
-                android:id="@+id/edit.new.message.text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="@string/write_message"
-                android:textColor="@android:color/black"
-                android:inputType="textCapSentences|textMultiLine" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/btn.send.message"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:textColor="@color/white"
-            android:text="@string/post"
-            android:drawableTint="@color/white"
-            android:layout_gravity="center"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/community_guidelines_view"
+        android:id="@+id/chat_bar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/read_community_guidelines"
-        style="@style/Caption3" />
-</LinearLayout>
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/emoji_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_emoticon_grey600_24dp"
+                android:scaleType="center"
+                android:backgroundTint="@color/transparent"
+                android:contentDescription="Toogle Emojis"
+                android:tint="@color/brand_400"
+                android:layout_gravity="center"/>
+
+                <net.pherth.android.emoji_library.EmojiEditText
+                    android:id="@+id/chat_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:hint="@string/write_message"
+                    android:textColor="@android:color/black"
+                    android:inputType="textCapSentences|textMultiLine" />
+
+
+            <ImageButton
+                android:id="@+id/send_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@color/transparent"
+                android:tint="@color/md_grey_400"
+                android:src="@drawable/ic_send_grey_600_24dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/community_guidelines_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/read_community_guidelines"
+            style="@style/Caption3" />
+    </LinearLayout>
+</merge>

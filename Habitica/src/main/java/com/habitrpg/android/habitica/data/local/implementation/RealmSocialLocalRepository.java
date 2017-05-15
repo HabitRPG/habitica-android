@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
     @Override
     public void saveGroup(Group group) {
         Group existingGroup = realm.where(Group.class).equalTo("id", group.id).findFirst();
-        boolean isMember = existingGroup.isValid()&& existingGroup.isMember;
+        boolean isMember = existingGroup != null && existingGroup.isValid()&& existingGroup.isMember;
         realm.executeTransactionAsync(realm1 -> {
             group.isMember = isMember;
             realm1.insertOrUpdate(group);
@@ -69,5 +69,28 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
                 .equalTo("isMember", true)
                 .findAllSorted("memberCount", Sort.DESCENDING)
                 .asObservable()
-                .filter(RealmResults::isLoaded);    }
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getGroupChat(String groupId) {
+        return realm.where(ChatMessage.class)
+                .equalTo("groupId", groupId)
+                .findAllSorted("timestamp", Sort.DESCENDING)
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public void deleteMessage(String id) {
+        getMessage(id).first().subscribe(chatMessage -> realm.executeTransaction(realm1 -> chatMessage.deleteFromRealm()), throwable -> {});
+    }
+
+    private Observable<ChatMessage> getMessage(String id) {
+        return realm.where(ChatMessage.class).equalTo("id", id)
+                .findAllAsync()
+                .asObservable()
+                .filter(messages -> messages.isLoaded() && messages.isValid() && !messages.isEmpty())
+                .map(messages -> messages.first());
+    }
 }

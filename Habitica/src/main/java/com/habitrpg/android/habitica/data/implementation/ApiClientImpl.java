@@ -86,6 +86,7 @@ import com.habitrpg.android.habitica.utils.PetListDeserializer;
 import com.habitrpg.android.habitica.utils.PetMapDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
 import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;
+import com.habitrpg.android.habitica.utils.QuestDeserializer;
 import com.habitrpg.android.habitica.utils.QuestListDeserializer;
 import com.habitrpg.android.habitica.utils.RemindersItemSerializer;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
@@ -261,6 +262,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
                 .registerTypeAdapter(chatMessageListType, new ChatMessageListDeserializer())
                 .registerTypeAdapter(challengeListType, new ChallengeListDeserializer())
+                .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

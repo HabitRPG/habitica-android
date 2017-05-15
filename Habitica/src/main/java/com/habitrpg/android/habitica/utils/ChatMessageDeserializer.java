@@ -46,9 +46,9 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
                 } else {
                     ContributorInfo contributor = new ContributorInfo();
                     contributor.setText(obj.get("contributor").getAsString());
-                    contributor.setUserId(message.id);
                     message.contributor = contributor;
                 }
+                message.contributor.setUserId(message.id);
             }
         }
 

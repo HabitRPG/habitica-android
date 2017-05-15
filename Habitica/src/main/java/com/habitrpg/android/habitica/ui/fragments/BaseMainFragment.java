@@ -3,7 +3,10 @@ package com.habitrpg.android.habitica.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,8 @@ public abstract class BaseMainFragment extends BaseFragment {
     public MainActivity activity;
     @Nullable
     public TabLayout tabLayout;
+    @Nullable
+    private CollapsingToolbarLayout collapsingToolbar;
     @Nullable
     public BottomBar bottomNavigation;
     public ViewGroup floatingMenuWrapper;
@@ -144,5 +149,29 @@ public abstract class BaseMainFragment extends BaseFragment {
         return "";
     }
 
+    public void hideToolbar() {
+        activity.avatar_with_bars.setVisibility(View.GONE);
+    }
 
+    public void showToolbar() {
+        activity.avatar_with_bars.setVisibility(View.VISIBLE);
+    }
+
+    public void disableToolbarScrolling() {
+        if (collapsingToolbar != null) {
+            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbar.getLayoutParams();
+            params.setScrollFlags(0);
+        }
+    }
+
+    public  void enableToolbarScrolling() {
+        if (collapsingToolbar != null) {
+            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbar.getLayoutParams();
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+        }
+    }
+
+    public void setCollapsingToolbar(@Nullable CollapsingToolbarLayout collapsingToolbar) {
+        this.collapsingToolbar = collapsingToolbar;
+    }
 }

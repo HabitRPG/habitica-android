@@ -39,10 +39,12 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmList;
+import io.realm.RealmRecyclerViewAdapter;
 
-public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
+public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessage, ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
 
-    private List<ChatMessage> messages;
     private User user;
     private String uuid;
     private String groupId;
@@ -50,12 +52,13 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     private String replyToUserUUID;
     private User sendingUser;
 
-    public ChatRecyclerViewAdapter(List<ChatMessage> messages, User user, String groupId) {
-        this.messages = messages;
+    public ChatRecyclerViewAdapter(@Nullable OrderedRealmCollection<ChatMessage> data, boolean autoUpdate, User user, String groupId) {
+        super(data, autoUpdate);
         this.user = user;
         if (user != null) this.uuid = user.getId();
         this.groupId = groupId;
     }
+
 
     public void setToInboxChat(String replyToUserUUID) {
         this.replyToUserUUID = replyToUserUUID;
@@ -66,29 +69,21 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         this.sendingUser = user;
     }
 
-    public void setMessages(List<ChatMessage> messages) {
-        this.messages = messages;
-        this.notifyDataSetChanged();
-    }
-
     @Override
     public ChatRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tavern_chat_item, parent, false);
-        return new ChatRecyclerViewHolder(view, viewType, uuid, groupId);
+        return new ChatRecyclerViewHolder(view, uuid, groupId);
     }
 
     @Override
     public void onBindViewHolder(ChatRecyclerViewHolder holder, int position) {
-        holder.bind(messages.get(position));
+        if (getData() != null) {
+            holder.bind(getData().get(position));
+        }
     }
 
-    @Override
-    public int getItemCount() {
-        return messages != null ? messages.size() : 0;
-    }
-
-    public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+    class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
         @BindView(R.id.btn_options)
         ImageView btnOptions;
@@ -109,14 +104,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         Resources res;
         int likeCount = 0;
         boolean currentUserLikedPost = false;
-        private int layoutType;
         private String uuid;
         private String groupId;
         private ChatMessage currentMsg;
 
-        public ChatRecyclerViewHolder(View itemView, int layoutType, String currentUserId, String groupId) {
+        ChatRecyclerViewHolder(View itemView, String currentUserId, String groupId) {
             super(itemView);
-            this.layoutType = layoutType;
             this.uuid = currentUserId;
             this.groupId = groupId;
 
@@ -145,10 +138,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 } else {
                     DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
                 }
-            }
-
-            if (msg.user == null || msg.user.equals("")) {
-                msg.user = "system";
             }
 
             if (userLabel != null) {
@@ -245,7 +234,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                         menuHelper = fMenuHelper.get(popupMenu);
                         argTypes = new Class[]{boolean.class};
                         menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
 
                     ChatMessage chatMsg = currentMsg;

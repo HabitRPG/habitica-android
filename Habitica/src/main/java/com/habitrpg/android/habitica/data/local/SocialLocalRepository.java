@@ -8,6 +8,7 @@ import java.util.List;
 
 import io.realm.RealmResults;
 import rx.Observable;
+import rx.functions.Action1;
 
 public interface SocialLocalRepository extends BaseLocalRepository {
     Observable<RealmResults<Group>> getGroups(String type);
@@ -20,4 +21,8 @@ public interface SocialLocalRepository extends BaseLocalRepository {
     void saveGroups(List<Group> groups);
 
     Observable<RealmResults<Group>> getUserGroups();
+
+    Observable<RealmResults<ChatMessage>> getGroupChat(String groupId);
+
+    void deleteMessage(String id);
 }

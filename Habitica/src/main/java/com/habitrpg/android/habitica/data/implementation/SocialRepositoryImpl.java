@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.Map;
 
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 
 public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalRepository> implements SocialRepository {
@@ -31,16 +29,16 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
         return apiClient.listGroupChat(groupId)
                 .flatMap(Observable::from)
                 .map(chatMessage -> {
-                    chatMessage.parsedText = MarkdownParser.parseMarkdown(chatMessage.text);
+                    chatMessage.groupId = groupId;
                     return chatMessage;
                 })
                 .toList()
-                .subscribeOn(Schedulers.io());
+                .doOnNext(localRepository::save);
     }
 
     @Override
-    public Observable<List<ChatMessage>> getGroupChat(String groupId) {
-        return retrieveGroupChat(groupId);
+    public Observable<RealmResults<ChatMessage>> getGroupChat(String groupId) {
+        return localRepository.getGroupChat(groupId);
     }
 
     @Override
@@ -60,12 +58,18 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Void> deleteMessage(String groupId, String id) {
-        return apiClient.deleteMessage(groupId, id);
+        return apiClient.deleteMessage(groupId, id)
+                .doOnNext(aVoid -> localRepository.deleteMessage(id));
     }
 
     @Override
     public Observable<PostChatMessageResult> postGroupChat(String groupId, HashMap<String, String> messageObject) {
-        return apiClient.postGroupChat(groupId, messageObject);
+        return apiClient.postGroupChat(groupId, messageObject)
+                .map(postChatMessageResult -> {
+                    postChatMessageResult.message.groupId = groupId;
+                    return postChatMessageResult;
+                })
+                .doOnNext(postChatMessageResult -> localRepository.save(postChatMessageResult.message));
     }
 
     @Override
@@ -78,6 +82,12 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     @Override
     public Observable<Group> retrieveGroup(String id) {
         return apiClient.getGroup(id)
+                .map(group -> {
+                    for (ChatMessage message : group.chat) {
+                        message.groupId = group.id;
+                    }
+                    return group;
+                })
                 .doOnNext(localRepository::saveGroup);
     }
 

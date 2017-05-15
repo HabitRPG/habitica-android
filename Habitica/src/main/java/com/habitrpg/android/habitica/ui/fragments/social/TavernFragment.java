@@ -35,6 +35,8 @@ public class TavernFragment extends BaseMainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        hideToolbar();
+        disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
@@ -48,6 +50,13 @@ public class TavernFragment extends BaseMainFragment {
         this.tutorialText = getString(R.string.tutorial_tavern);
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        showToolbar();
+        enableToolbarScrolling();
+        super.onDestroyView();
     }
 
     @Override

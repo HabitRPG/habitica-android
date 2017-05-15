@@ -39,6 +39,8 @@ public class ChatMessage extends RealmObject {
 
     public String sent;
 
+    public String groupId;
+
     public int getContributorColor() {
         int rColor = android.R.color.black;
 

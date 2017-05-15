@@ -15,7 +15,7 @@ import rx.Observable;
 
 public interface SocialRepository extends BaseRepository {
     Observable<List<ChatMessage>> retrieveGroupChat(String groupId);
-    Observable<List<ChatMessage>> getGroupChat(String groupId);
+    Observable<RealmResults<ChatMessage>> getGroupChat(String groupId);
 
     void markMessagesSeen(String seenGroupId);
 

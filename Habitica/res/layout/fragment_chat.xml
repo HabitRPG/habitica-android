@@ -4,44 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
     <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-    <LinearLayout
+        android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <com.habitrpg.android.habitica.ui.views.social.ChatBarView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/brand_200">
-        <ImageButton
-            android:id="@+id/emoji.toggle.btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_emoticon_grey600_24dp"
-            android:scaleType="center"
-            android:backgroundTint="@color/transparent"
-            android:contentDescription="Toogle Emojis"
-            android:layout_gravity="center"/>
-
-            <net.pherth.android.emoji_library.EmojiEditText
-                android:id="@+id/edit.new.message.text"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="@string/write_message"
-                android:textColor="@android:color/white"
-                android:inputType="textCapSentences|textMultiLine"
-                style="@style/LoginEditTextTheme"/>
-        <Button
-            android:id="@+id/btn.send.message"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:textColor="@color/white"
-            android:text="@string/post"
-            android:drawableTint="@color/white"
-            android:layout_gravity="center"
-            android:background="@color/transparent"/>
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 </LinearLayout>

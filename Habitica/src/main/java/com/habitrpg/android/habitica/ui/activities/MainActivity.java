@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -153,9 +154,12 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     AppBarLayout appBar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.detail_tabs)
     TabLayout detail_tabs;
     @BindView(R.id.avatar_with_bars)
+    public
     View avatar_with_bars;
     @BindView(R.id.overlayFrameLayout)
     ViewGroup overlayLayout;
@@ -361,6 +365,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         fragment.setUser(user);
         fragment.setActivity(this);
         fragment.setTabLayout(detail_tabs);
+        fragment.setCollapsingToolbar(collapsingToolbar);
         fragment.setBottomNavigation(bottomNavigation);
         fragment.setFloatingMenuWrapper(floatingMenuWrapper);
 

@@ -49,6 +49,8 @@ public class InboxMessageListFragment extends BaseMainFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        hideToolbar();
+        disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
@@ -58,7 +60,7 @@ public class InboxMessageListFragment extends BaseMainFragment
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         chatRecyclerView.setLayoutManager(layoutManager);
 
-        chatAdapter = new ChatRecyclerViewAdapter(null, user, null);
+        chatAdapter = new ChatRecyclerViewAdapter(null, true, user, null);
         chatAdapter.setToInboxChat(this.replyToUserUUID);
         chatAdapter.setSendingUser(this.user);
         chatRecyclerView.setAdapter(chatAdapter);
@@ -75,8 +77,16 @@ public class InboxMessageListFragment extends BaseMainFragment
                     .findAllSortedAsync("timestamp", Sort.DESCENDING)
                     .asObservable()
                     .filter(RealmResults::isLoaded)
-                    .subscribe(chatMessages -> this.chatAdapter.setMessages(chatMessages), RxErrorHandler.handleEmptyError());
+                    .first()
+                    .subscribe(chatMessages -> this.chatAdapter.updateData(chatMessages), RxErrorHandler.handleEmptyError());
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        showToolbar();
+        enableToolbarScrolling();
+        super.onDestroyView();
     }
 
     @Override
