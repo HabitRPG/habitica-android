@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
 import android.databinding.DataBindingUtil;
@@ -25,8 +24,6 @@ import rx.subjects.PublishSubject;
 
 public class SkillTasksRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.ViewHolder> {
 
-
-    private static final int TYPE_CELL = 1;
     private PublishSubject<Task> taskSelectionEvents = PublishSubject.create();
 
     public SkillTasksRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate) {
@@ -67,10 +64,13 @@ public class SkillTasksRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task
 
         public Task task;
         protected android.content.res.Resources resources;
-        SkillTaskItemCardBinding binding;
 
+        @BindView(R.id.titleTextView)
+        TextView titleTextView;
         @BindView(R.id.notesTextView)
         TextView notesTextView;
+        @BindView(R.id.rightBorderView)
+        View rightBorderView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -79,19 +79,20 @@ public class SkillTasksRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task
             itemView.setClickable(true);
 
             ButterKnife.bind(this, itemView);
-            binding = DataBindingUtil.bind(itemView);
 
             resources = itemView.getResources();
         }
 
-        void bindHolder(Task habitItem) {
-            task = habitItem;
-            if (habitItem.notes == null || habitItem.notes.length() == 0) {
-                notesTextView.setHeight(0);
+        void bindHolder(Task task) {
+            this.task = task;
+            titleTextView.setText(task.text);
+            if (task.notes == null || task.notes.length() == 0) {
+                notesTextView.setVisibility(View.GONE);
             } else {
-                notesTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                notesTextView.setVisibility(View.VISIBLE);
+                notesTextView.setText(task.notes);
             }
-            binding.setTask(task);
+            rightBorderView.setBackgroundResource(task.getLightTaskColor());
         }
 
         @Override

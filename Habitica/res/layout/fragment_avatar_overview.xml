@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="com.habitrpg.android.habitica.models.user.Preferences" />
+        <import type="android.view.View" />
+
+        <variable
+            name="preferences"
+            type="Preferences" />
+    </data>
+
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/md_grey_500"
+
         android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="?attr/actionBarSize">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -142,3 +154,4 @@
         </android.support.v7.widget.CardView>
     </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+</layout>

@@ -50,7 +50,7 @@ public class SkillTasksRecyclerViewFragment extends BaseFragment {
 
         return view;
     }
-`
+
     @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);

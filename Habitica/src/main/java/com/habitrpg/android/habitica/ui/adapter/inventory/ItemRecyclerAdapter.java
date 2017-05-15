@@ -2,15 +2,15 @@ package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ItemItemBinding;
 import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
@@ -22,11 +22,13 @@ import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 
 import org.greenrobot.eventbus.EventBus;
 
+import butterknife.BindView;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
@@ -97,15 +99,19 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Item item;
 
+        @BindView(R.id.titleTextView)
+        TextView titleTextView;
+        @BindView(R.id.ownedTextView)
+                TextView ownedTextView;
+        @BindView(R.id.imageView)
+        SimpleDraweeView imageView;
+
         Resources resources;
-        ItemItemBinding binding;
 
         ItemViewHolder(View itemView) {
             super(itemView);
 
             resources = itemView.getResources();
-
-            binding = DataBindingUtil.bind(itemView);
 
             itemView.setOnClickListener(this);
         }
@@ -122,13 +128,15 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
 
         public void bind(Item item) {
             this.item = item;
-            binding.setTitle(item.getText());
+            titleTextView.setText(item.getText());
+            ownedTextView.setText(String.valueOf(item.getOwned()));
 
-            binding.setDisabled(false);
+            boolean disabled = false;
+            String imageName;
             if (item instanceof QuestContent) {
-                binding.setImageNamed("inventory_quest_scroll_" + item.getKey());
+                imageName = "inventory_quest_scroll_" + item.getKey();
             } else if (item instanceof SpecialItem) {
-                binding.setImageNamed(item.getKey());
+                imageName = item.getKey();
             } else {
                 String type = "";
                 if (item instanceof Egg) {
@@ -138,13 +146,21 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
                 } else if (item instanceof HatchingPotion) {
                     type = "HatchingPotion";
                 }
-                binding.setImageNamed("Pet_" + type + "_" + item.getKey());
+                imageName = "Pet_" + type + "_" + item.getKey();
 
                 if (isHatching != null && isHatching) {
-                    this.binding.setDisabled(this.isPetOwned());
+                    disabled = this.isPetOwned();
                 }
             }
-            binding.setValue(item.getOwned().toString());
+            DataBindingUtils.loadImage(imageView, imageName != null ? imageName : "head_0");
+
+            float alpha = 1.0f;
+            if (disabled) {
+                alpha = 0.3f;
+            }
+            imageView.setAlpha(alpha);
+            titleTextView.setAlpha(alpha);
+            ownedTextView.setAlpha(alpha);
         }
 
         @Override
