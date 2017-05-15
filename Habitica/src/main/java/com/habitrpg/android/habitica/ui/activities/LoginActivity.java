@@ -50,7 +50,7 @@ import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;

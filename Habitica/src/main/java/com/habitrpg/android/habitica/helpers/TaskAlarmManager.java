@@ -9,13 +9,13 @@ import android.os.Build;
 import android.support.v7.preference.PreferenceManager;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.NotificationPublisher;
+import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 
 import org.greenrobot.eventbus.EventBus;

@@ -2,9 +2,7 @@ package com.habitrpg.android.habitica.helpers;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,15 +10,12 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import bolts.Bolts;
 
 /**
  * Created by keith holliday on 4/7/2017.
@@ -58,7 +53,7 @@ public class RemoteConfigManager {
         }
     }
 
-    class DownloadFileFromURL extends AsyncTask<String, String, String> {
+    private class DownloadFileFromURL extends AsyncTask<String, String, String> {
         private String filename = "config.json";
 
         @Override

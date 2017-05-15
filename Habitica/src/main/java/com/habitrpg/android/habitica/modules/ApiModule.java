@@ -3,12 +3,12 @@ package com.habitrpg.android.habitica.modules;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.api.MaintenanceApiService;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
 import javax.inject.Singleton;
 

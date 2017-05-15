@@ -3,10 +3,9 @@ package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
-import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 

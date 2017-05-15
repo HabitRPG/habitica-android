@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Transaction;
+import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.playseeds.android.sdk.Seeds;
 
 import org.greenrobot.eventbus.EventBus;

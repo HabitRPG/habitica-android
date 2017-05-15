@@ -1,9 +1,9 @@
-package com.habitrpg.android.habitica.proxy.impl;
+package com.habitrpg.android.habitica.proxy.implementation;
 
 
 import android.content.Context;
 
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
 public class EmptyCrashlyticsProxy implements CrashlyticsProxy {
     @Override

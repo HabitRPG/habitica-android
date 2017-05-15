@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.modules;
 
 
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
 
 import javax.inject.Singleton;
 

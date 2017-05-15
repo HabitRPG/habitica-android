@@ -27,8 +27,6 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     @Inject
     UserRepository userRepository;
 
-    FragmentAvatarOverviewBinding viewBinding;
-
     @BindView(R.id.avatar_size_spinner)
     Spinner avatarSizeSpinner;
 

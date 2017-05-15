@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.data;
 
 import android.support.annotation.Nullable;
 
-import com.habitrpg.android.habitica.ErrorResponse;
+import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.habitrpg.android.habitica.models.AchievementResult;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;

@@ -162,7 +162,7 @@
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activities.GemPurchaseActivity"
                   android:screenOrientation="portrait" />
-        <receiver  android:process=":remote" android:name=".NotificationPublisher" />
+        <receiver  android:process=":remote" android:name=".receivers.NotificationPublisher" />
 
         <receiver
                 android:process=":remote"

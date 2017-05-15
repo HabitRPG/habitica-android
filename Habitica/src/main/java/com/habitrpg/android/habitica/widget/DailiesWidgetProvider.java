@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 

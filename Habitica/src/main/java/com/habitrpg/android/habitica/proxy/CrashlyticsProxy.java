@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.proxy.ifce;
+package com.habitrpg.android.habitica.proxy;
 
 
 import android.content.Context;

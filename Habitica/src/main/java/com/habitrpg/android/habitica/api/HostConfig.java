@@ -1,8 +1,11 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.api;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.R;
 
 /**
  * The configuration of the host<br />

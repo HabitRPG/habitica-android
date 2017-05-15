@@ -36,7 +36,7 @@ import android.widget.FrameLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.api.MaintenanceApiService;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -85,7 +85,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
 import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;

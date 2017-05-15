@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;

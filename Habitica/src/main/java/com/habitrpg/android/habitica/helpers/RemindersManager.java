@@ -14,7 +14,7 @@ import android.widget.TimePicker;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
 import java.text.DateFormat;
 import java.text.ParseException;

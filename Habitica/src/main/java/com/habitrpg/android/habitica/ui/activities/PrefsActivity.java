@@ -9,7 +9,7 @@ import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
