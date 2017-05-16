@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
+import com.playseeds.android.sdk.inappmessaging.Log;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +21,14 @@ import java.security.InvalidParameterException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
+import rx.plugins.RxJavaPlugins;
+import rx.plugins.RxJavaSchedulersHook;
+import rx.plugins.RxJavaTestPlugins;
+import rx.schedulers.Schedulers;
 
 public class BaseAPITests {
 
@@ -35,6 +43,15 @@ public class BaseAPITests {
         if (BuildConfig.BASE_URL.contains("habitica.com")) {
             throw new InvalidParameterException("Can't test against production server.");
         }
+
+        RxJavaTestPlugins.resetPlugins();
+        RxJavaPlugins.getInstance().registerSchedulersHook(new RxJavaSchedulersHook() {
+            @Override
+            public Scheduler getIOScheduler() {
+                return AndroidSchedulers.mainThread();
+            }
+        });
+
         Context context = ShadowApplication.getInstance().getApplicationContext();
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
                 BuildConfig.PORT,
@@ -49,7 +66,7 @@ public class BaseAPITests {
         username = UUID.randomUUID().toString();
         apiClient.registerUser(username, username+"@example.com", password, password)
                 .subscribe(testSubscriber);
-        testSubscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
+        testSubscriber.awaitTerminalEvent(6, TimeUnit.SECONDS);
         testSubscriber.assertCompleted();
         UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
         hostConfig.setUser(response.getId());
@@ -64,12 +81,12 @@ public class BaseAPITests {
         userSubscriber.awaitTerminalEvent();
         userSubscriber.assertNoErrors();
         userSubscriber.assertCompleted();
-        HabitRPGUser user = userSubscriber.getOnNextEvents().get(0);
 
-        return user;
+        return userSubscriber.getOnNextEvents().get(0);
     }
 
     @After
     public void tearDown() {
+        RxAndroidPlugins.getInstance().reset();
     }
 }

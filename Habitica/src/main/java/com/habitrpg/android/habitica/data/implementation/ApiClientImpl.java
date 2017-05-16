@@ -159,7 +159,6 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         this.popupNotificationsManager = popupNotificationsManager;
         this.popupNotificationsManager.setApiClient(this);
 
-        HabiticaBaseApplication.getComponent().inject(this);
         crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
         crashlyticsProxy.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());

@@ -109,6 +109,16 @@ public class Task extends BaseModel implements Parcelable {
     @SerializedName("_id")
     String id;
 
+    @Column
+    public Boolean isDue;
+    @Column
+    public Date nextDue;
+
+    // These do need to be local columns because all logic is stored in
+    // is due for now
+    public List<Integer> daysOfMonth  = new ArrayList<>();
+    public List<Integer> weeksOfMonth  = new ArrayList<>();
+
     /**
      * @return the id
      */
@@ -570,7 +580,7 @@ public class Task extends BaseModel implements Parcelable {
         return R.color.best_10;
     }
 
-    public Boolean isDue(int offset) {
+    public Boolean checkIfDue(int offset) {
         if (this.getCompleted()) {
             return true;
         }
@@ -610,7 +620,10 @@ public class Task extends BaseModel implements Parcelable {
     }
 
     public Boolean isDisplayedActive(int offset) {
-        return this.isDue(offset) && !this.completed;
+        if (this.isDue != null && !this.completed) {
+            return this.isDue;
+        }
+        return this.checkIfDue(offset) && !this.completed;
     }
 
     public Boolean isChecklistDisplayActive(int offset) {
@@ -625,6 +638,13 @@ public class Task extends BaseModel implements Parcelable {
         newTime.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
         if (today.before(newTime)) {
             today.add(Calendar.DAY_OF_MONTH, -1);
+        }
+
+        if (nextDue != null) {
+            Calendar nextDueCalendar = new GregorianCalendar();
+            nextDueCalendar.setTime(nextDue);
+            newTime.set(nextDueCalendar.get(Calendar.YEAR), nextDueCalendar.get(Calendar.MONTH), nextDueCalendar.get(Calendar.DAY_OF_MONTH));
+            return newTime.getTime();
         }
 
         if (this.getFrequency().equals(FREQUENCY_DAILY)) {

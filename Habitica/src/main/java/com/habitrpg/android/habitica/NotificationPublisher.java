@@ -42,7 +42,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                     .queryList();
             show_notification = false;
             for (Task task : dailies) {
-                if (task.isDue(0)) {
+                if (task.checkIfDue(0)) {
                     show_notification = true;
                     break;
                 }
