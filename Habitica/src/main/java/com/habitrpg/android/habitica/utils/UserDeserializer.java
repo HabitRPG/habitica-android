@@ -78,9 +78,16 @@ public class UserDeserializer implements JsonDeserializer<User> {
         }
         if (obj.has("purchased")) {
             user.setPurchased(context.deserialize(obj.get("purchased"), Purchases.class));
+            if (obj.get("purchased").getAsJsonObject().has("plan")) {
+                if (obj.get("purchased").getAsJsonObject().get("plan").getAsJsonObject().has("mysteryItems")) {
+                    user.getPurchased().getPlan().mysteryItemCount = obj.get("purchased").getAsJsonObject().get("plan").getAsJsonObject().get("mysteryItems").getAsJsonArray().size();
+                }
+            }
         }
 
-        user.setId(obj.get("_id").getAsString());
+        if (obj.has("_id")) {
+            user.setId(obj.get("_id").getAsString());
+        }
 
         return user;
     }

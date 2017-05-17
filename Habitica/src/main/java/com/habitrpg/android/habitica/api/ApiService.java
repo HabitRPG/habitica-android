@@ -108,7 +108,7 @@ public interface ApiService {
     Observable<HabitResponse<TaskDirectionData>> postTaskDirection(@Path("id") String id, @Path("direction") String direction);
 
     @POST("tasks/{id}/move/to/{position}")
-    Observable<HabitResponse<List<String>>> postTaskNewPosition(@Path("id") String id, @Path("position") String position);
+    Observable<HabitResponse<List<String>>> postTaskNewPosition(@Path("id") String id, @Path("position") int position);
 
     @POST("tasks/{taskId}/checklist/{itemId}/score")
     Observable<HabitResponse<Task>> scoreChecklistItem(@Path("taskId") String taskId, @Path("itemId") String itemId);

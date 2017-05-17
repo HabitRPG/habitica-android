@@ -83,7 +83,7 @@ public interface ApiClient {
 
     Observable<TaskDirectionData> postTaskDirection(String id, String direction);
 
-    Observable<List<String>> postTaskNewPosition(String id, String position);
+    Observable<List<String>> postTaskNewPosition(String id, int position);
 
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 

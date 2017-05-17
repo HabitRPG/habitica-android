@@ -33,8 +33,7 @@ public class SubscriptionPlan extends RealmObject {
     public Integer quantity;
     public SubscriptionPlanConsecutive consecutive;
 
-    @Ignore
-    public List<String> mysteryItems;
+    public int mysteryItemCount;
 
     public boolean isActive() {
         Date today = new Date();

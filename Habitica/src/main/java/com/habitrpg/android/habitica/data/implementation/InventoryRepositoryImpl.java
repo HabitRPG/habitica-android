@@ -61,8 +61,8 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType) {
-        return localRepository.getOwnedItems(itemType);
+    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType, User user) {
+        return localRepository.getOwnedItems(itemType, user);
     }
 
     @Override
@@ -71,16 +71,17 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<Equipment> openMysteryItem(String key) {
+    public Observable<Equipment> openMysteryItem(User user) {
         return apiClient.openMysteryItem().doOnNext(itemData -> {
             itemData.setOwned(true);
-            localRepository.saveEquipment(itemData);
+            localRepository.save(itemData);
+            localRepository.decrementMysteryItemCount(user);
         });
     }
 
     @Override
     public void saveEquipment(Equipment equipment) {
-        localRepository.saveEquipment(equipment);
+        localRepository.save(equipment);
     }
 
     @Override
@@ -151,7 +152,6 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                             Stats stats = realm.copyToRealmOrUpdate(user1.getStats());
                             user.setItems(items);
                             user.setStats(stats);
-                            item.setOwned(item.getOwned()-1);
                         }
                     });
                     return user;

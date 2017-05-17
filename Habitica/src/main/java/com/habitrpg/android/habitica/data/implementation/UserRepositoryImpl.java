@@ -195,6 +195,9 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     private User mergeUser(User oldUser, User newUser) {
+        if (oldUser.isValid()) {
+            return oldUser;
+        }
         User copiedUser = localRepository.getUnmanagedCopy(oldUser);
         if (newUser.getItems() != null) {
             copiedUser.setItems(newUser.getItems());

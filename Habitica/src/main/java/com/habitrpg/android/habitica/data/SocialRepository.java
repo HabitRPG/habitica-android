@@ -31,7 +31,7 @@ public interface SocialRepository extends BaseRepository {
     Observable<Group> retrieveGroup(String id);
     Observable<Group> getGroup(String id);
 
-    Observable<Void> leaveGroup(String id);
+    Observable<Group> leaveGroup(String id);
 
     Observable<Group> joinGroup(String id);
 

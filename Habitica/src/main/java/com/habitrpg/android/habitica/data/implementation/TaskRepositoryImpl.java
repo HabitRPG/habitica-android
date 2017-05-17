@@ -180,4 +180,14 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public void executeTransaction(Realm.Transaction transaction) {
         localRepository.executeTransaction(transaction);
     }
+
+    @Override
+    public void swapTaskPosition(int firstPosition, int secondPosition) {
+        localRepository.swapTaskPosition(firstPosition, secondPosition);
+    }
+
+    public Observable<List<String>> updateTaskPosition(int currentPosition) {
+        return localRepository.getTaskAtPosition(currentPosition)
+                .flatMap(task -> apiClient.postTaskNewPosition(task.getId(), currentPosition));
+    }
 }

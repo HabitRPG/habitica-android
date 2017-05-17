@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
@@ -102,7 +103,7 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
         @BindView(R.id.titleTextView)
         TextView titleTextView;
         @BindView(R.id.ownedTextView)
-                TextView ownedTextView;
+        TextView ownedTextView;
         @BindView(R.id.imageView)
         SimpleDraweeView imageView;
 
@@ -110,6 +111,8 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
 
         ItemViewHolder(View itemView) {
             super(itemView);
+
+            ButterKnife.bind(this, itemView);
 
             resources = itemView.getResources();
 

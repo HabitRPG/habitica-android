@@ -41,4 +41,8 @@ public interface TaskRepository extends BaseRepository  {
     void saveReminder(RemindersItem remindersItem);
 
     void executeTransaction(Realm.Transaction transaction);
+
+    void swapTaskPosition(int firstPosition, int secondPosition);
+
+    Observable<List<String>> updateTaskPosition(int currentPosition);
 }

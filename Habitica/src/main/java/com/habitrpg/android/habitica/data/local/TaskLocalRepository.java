@@ -29,4 +29,8 @@ public interface TaskLocalRepository extends BaseLocalRepository {
     void markTaskCompleted(String taskId, boolean isCompleted);
 
     void saveReminder(RemindersItem remindersItem);
+
+    void swapTaskPosition(int firstPosition, int secondPosition);
+
+    Observable<Task> getTaskAtPosition(int currentPosition);
 }

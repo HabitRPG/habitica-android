@@ -88,7 +88,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
                     }
                     return group;
                 })
-                .doOnNext(localRepository::saveGroup);
+                .doOnNext(localRepository::save);
     }
 
     @Override
@@ -97,13 +97,19 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<Void> leaveGroup(String id) {
-        return apiClient.leaveGroup(id);
+    public Observable<Group> leaveGroup(String id) {
+        return apiClient.leaveGroup(id)
+                .flatMap(aVoid -> localRepository.getGroup(id))
+                .doOnNext(group -> localRepository.executeTransaction(realm -> group.isMember = false));
     }
 
     @Override
     public Observable<Group> joinGroup(String id) {
-        return apiClient.joinGroup(id);
+        return apiClient.joinGroup(id)
+                .doOnNext(group -> {
+                    group.isMember = true;
+                    localRepository.save(group);
+                });
     }
 
     @Override
@@ -113,7 +119,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
         copiedGroup.description = description;
         copiedGroup.leaderID = leader;
         copiedGroup.privacy = privacy;
-        localRepository.saveGroup(copiedGroup);
+        localRepository.save(copiedGroup);
         return apiClient.updateGroup(group.id, group);
     }
 
@@ -126,7 +132,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
                             guild.isMember = true;
                         }
                     }
-                    localRepository.saveGroups(groups);
+                    localRepository.save(groups);
                 });
     }
 

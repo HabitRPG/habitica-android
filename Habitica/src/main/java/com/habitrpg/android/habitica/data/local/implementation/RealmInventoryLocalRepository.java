@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
+import android.content.Context;
+
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
@@ -9,20 +11,25 @@ import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import rx.Observable;
 
 
 public class RealmInventoryLocalRepository extends RealmContentLocalRepository implements InventoryLocalRepository {
-    public RealmInventoryLocalRepository(Realm realm) {
+    private final Context context;
+
+    public RealmInventoryLocalRepository(Realm realm, Context context) {
         super(realm);
+        this.context = context;
     }
 
     @Override
@@ -67,7 +74,7 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     }
 
     @Override
-    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType) {
+    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType, User user) {
         Class<? extends Item> itemClass = null;
         switch (itemType) {
             case "eggs":
@@ -81,12 +88,31 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
                 break;
             case "quests":
                 itemClass = QuestContent.class;
+                break;
+            case "special":
+                itemClass = SpecialItem.class;
+                break;
         }
         if (itemClass == null) {
             return Observable.empty();
         }
-        return realm.where(itemClass).greaterThan("owned", 0).findAllAsync().asObservable()
-                .filter(RealmResults::isLoaded);
+
+        RealmQuery<? extends Item> query = realm.where(itemClass);
+        if ("special".equals(itemType)) {
+            if (user != null && user.getPurchased() != null && user.getPurchased().getPlan() != null) {
+                SpecialItem mysticItem;
+                if (query.count() == 0) {
+                    mysticItem = SpecialItem.makeMysteryItem(context);
+                } else {
+                    mysticItem = getUnmanagedCopy((SpecialItem) query.findFirst());
+                }
+                mysticItem.setOwned(user.getPurchased().getPlan().mysteryItemCount);
+                this.save(mysticItem);
+            }
+        } else {
+            query = query.greaterThan("owned", 0);
+        }
+        return query.findAllAsync().asObservable().filter(RealmResults::isLoaded);
     }
 
     @Override
@@ -96,11 +122,7 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
                 .findFirstAsync()
                 .asObservable()
                 .filter(realmObject -> realmObject.isLoaded())
-                .cast(Equipment.class);    }
-
-    @Override
-    public void saveEquipment(Equipment equipment) {
-        realm.executeTransaction(realm1 -> realm1.copyToRealm(equipment));
+                .cast(Equipment.class);
     }
 
     @Override
@@ -213,5 +235,18 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
         return realm.where(itemClass).equalTo("key", key).findFirstAsync().asObservable()
                 .filter(realmObject -> realmObject.isLoaded())
                 .cast(Item.class);
+    }
+
+    @Override
+    public void decrementMysteryItemCount(User user) {
+        SpecialItem item = realm.where(SpecialItem.class).equalTo("isMysteryItem", true).findFirst();
+        if (item.isValid()) {
+            realm.executeTransactionAsync(realm1 -> {
+                item.setOwned(item.getOwned()-1);
+                if (user.getPurchased() != null && user.getPurchased().getPlan() != null) {
+                    user.getPurchased().getPlan().mysteryItemCount -= 1;
+                }
+            });
+        }
     }
 }

@@ -184,14 +184,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        inventoryRepository.getOwnedItems(itemType).first().subscribe(items -> {
-            if (this.itemType.equals("special")) {
-                if (user != null && user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
-                    Item mysterItem = SpecialItem.makeMysteryItem(getContext());
-                    mysterItem.setOwned(user.getPurchased().getPlan().mysteryItems.size());
-                }
-            }
-
+        inventoryRepository.getOwnedItems(itemType, user).first().subscribe(items -> {
             if (items.size() > 0) {
                 adapter.updateData((OrderedRealmCollection<Item>) items);
             }

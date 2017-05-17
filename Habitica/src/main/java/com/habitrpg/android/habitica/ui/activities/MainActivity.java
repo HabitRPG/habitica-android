@@ -645,11 +645,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void openMysteryItem(OpenMysteryItemEvent event) {
-        apiClient.openMysteryItem()
+        inventoryRepository.openMysteryItem(user)
                 .subscribe(mysteryItem -> userRepository.retrieveUser(false)
                         .subscribe(user1 -> {
                             OpenedMysteryItemEvent openedEvent = new OpenedMysteryItemEvent();
-                            openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItems.size();
+                            openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItemCount;
                             openedEvent.mysteryItem = mysteryItem;
                             EventBus.getDefault().post(openedEvent);
                         }, throwable -> {

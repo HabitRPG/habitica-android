@@ -29,13 +29,10 @@ import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.RealmBaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 
@@ -94,16 +91,13 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     private User user;
     private View view;
     @Nullable
-    private SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback;
     private ItemTouchHelper.Callback mItemTouchCallback;
 
-    public static TaskRecyclerViewFragment newInstance(Context context, @Nullable User user, String classType,
-                                                       @Nullable SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
+    public static TaskRecyclerViewFragment newInstance(Context context, @Nullable User user, String classType) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
         fragment.classType = classType;
-        fragment.sortCallback = sortCallback;
         List<String> tutorialTexts = null;
         switch (fragment.classType) {
             case Task.TYPE_HABIT: {
@@ -207,8 +201,10 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             }
 
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
-                ((ItemTouchHelperAdapter) recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                if (mFromPosition == null) {
+                    mFromPosition = viewHolder.getAdapterPosition();
+                }
+                taskRepository.swapTaskPosition(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
 
@@ -232,7 +228,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 
                 viewHolder.itemView.setBackgroundColor(Color.WHITE);
                 if (mFromPosition != null) {
-                    ((ItemTouchHelperDropCallback) recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
+                    taskRepository.updateTaskPosition(viewHolder.getAdapterPosition())
+                            .subscribe(taskPositions -> {
+                            }, RxErrorHandler.handleEmptyError());
                 }
             }
         };

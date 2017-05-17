@@ -34,10 +34,10 @@ import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.TutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmChallengeLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.RealmSocialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmCustomizationLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmFAQLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmInventoryLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmSocialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmTagLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmTaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLocalRepository;
@@ -58,7 +58,7 @@ public class RepositoryModule {
     }
 
     @Provides
-    Realm providesRealm(Context context) {
+    Realm providesRealm() {
         return Realm.getDefaultInstance();
     }
 
@@ -114,8 +114,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    InventoryLocalRepository providesInventoryLocalRepository(Realm realm) {
-        return new RealmInventoryLocalRepository(realm);
+    InventoryLocalRepository providesInventoryLocalRepository(Realm realm, Context context) {
+        return new RealmInventoryLocalRepository(realm, context);
     }
 
     @Provides

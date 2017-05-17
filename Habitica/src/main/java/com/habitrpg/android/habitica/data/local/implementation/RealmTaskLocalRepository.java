@@ -120,4 +120,23 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     public void saveReminder(RemindersItem remindersItem) {
         realm.executeTransaction(realm1 -> realm1.insertOrUpdate(remindersItem));
     }
+
+    @Override
+    public void swapTaskPosition(int firstPosition, int secondPosition) {
+        Task firstTask = realm.where(Task.class).equalTo("position", firstPosition).findFirst();
+        Task secondTask = realm.where(Task.class).equalTo("position", secondPosition).findFirst();
+        if (firstTask != null && secondTask != null && firstTask.isValid() && secondTask.isValid()) {
+            realm.executeTransaction(realm1 -> {
+                firstTask.position = secondPosition;
+                secondTask.position = firstPosition;
+            });
+        }
+    }
+
+    @Override
+    public Observable<Task> getTaskAtPosition(int currentPosition) {
+        return realm.where(Task.class).equalTo("position", currentPosition).findFirstAsync().asObservable()
+                .filter(realmObject -> realmObject.isLoaded())
+                .cast(Task.class);
+    }
 }

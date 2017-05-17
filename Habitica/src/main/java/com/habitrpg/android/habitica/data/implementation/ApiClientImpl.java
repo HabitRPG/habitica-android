@@ -517,7 +517,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<List<String>> postTaskNewPosition(String id, String position) {
+    public Observable<List<String>> postTaskNewPosition(String id, int position) {
         return apiService.postTaskNewPosition(id, position).compose(configureApiCallObserver());
     }
 

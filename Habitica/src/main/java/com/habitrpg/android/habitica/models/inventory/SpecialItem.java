@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -23,7 +24,7 @@ public class SpecialItem extends RealmObject implements Item {
         SpecialItem item = new SpecialItem();
         item.text = context.getString(R.string.mystery_item);
         item.notes = context.getString(R.string.myster_item_notes);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM", Locale.getDefault());
         String month = sdf.format(new Date());
         item.key = "inventory_present_" + month;
         item.isMysteryItem = true;

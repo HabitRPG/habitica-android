@@ -213,26 +213,19 @@ public class TasksFragment extends BaseMainFragment {
             @Override
             public Fragment getItem(int position) {
                 TaskRecyclerViewFragment fragment;
-                SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback =
-                        (task, from, to) -> {
-                            if (apiClient != null){
-                                apiClient.postTaskNewPosition(task.getId(), String.valueOf(to))
-                                        .subscribe(aVoid -> {}, e -> {});
-                            }
-                        };
 
                 switch (position) {
                     case 0:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_HABIT, sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_HABIT);
                         break;
                     case 1:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_DAILY, sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_DAILY);
                         break;
                     case 3:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_REWARD, null);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_REWARD);
                         break;
                     default:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_TODO,sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_TODO);
                 }
 
                 viewFragmentsDictionary.put(position, fragment);

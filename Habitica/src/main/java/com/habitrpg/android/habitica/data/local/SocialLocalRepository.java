@@ -16,10 +16,6 @@ public interface SocialLocalRepository extends BaseLocalRepository {
 
     Observable<Group> getGroup(String id);
 
-    void saveGroup(Group group);
-
-    void saveGroups(List<Group> groups);
-
     Observable<RealmResults<Group>> getUserGroups();
 
     Observable<RealmResults<ChatMessage>> getGroupChat(String groupId);

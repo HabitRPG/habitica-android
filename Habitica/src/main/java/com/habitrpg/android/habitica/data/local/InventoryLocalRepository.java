@@ -22,11 +22,9 @@ public interface InventoryLocalRepository extends ContentLocalRepository {
     Observable<RealmResults<Equipment>> getOwnedEquipment(String type);
     Observable<RealmResults<Equipment>> getOwnedEquipment();
 
-    Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType);
+    Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType, User user);
 
     Observable<Equipment> getEquipment(String key);
-
-    void saveEquipment(Equipment equipment);
 
     Observable<RealmResults<Mount>> getMounts();
     Observable<RealmResults<Mount>> getMounts(String type, String group);
@@ -47,4 +45,5 @@ public interface InventoryLocalRepository extends ContentLocalRepository {
 
     Observable<Item> getItem(String type, String key);
 
+    void decrementMysteryItemCount(User user);
 }

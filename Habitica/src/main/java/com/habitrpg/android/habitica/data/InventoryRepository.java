@@ -34,11 +34,11 @@ public interface InventoryRepository extends ContentRepository {
     Observable<RealmResults<Equipment>> getOwnedEquipment(String type);
     Observable<RealmResults<Equipment>> getOwnedEquipment();
 
-    Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType);
+    Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType, User user);
 
     Observable<Equipment> getEquipment(String key);
 
-    Observable<Equipment> openMysteryItem(String key);
+    Observable<Equipment> openMysteryItem(User user);
 
     void saveEquipment(Equipment equipment);
 

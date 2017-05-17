@@ -48,21 +48,6 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
     }
 
     @Override
-    public void saveGroup(Group group) {
-        Group existingGroup = realm.where(Group.class).equalTo("id", group.id).findFirst();
-        boolean isMember = existingGroup != null && existingGroup.isValid()&& existingGroup.isMember;
-        realm.executeTransactionAsync(realm1 -> {
-            group.isMember = isMember;
-            realm1.insertOrUpdate(group);
-        });
-    }
-
-    @Override
-    public void saveGroups(List<Group> groups) {
-        realm.executeTransactionAsync(realm1 -> realm1.insertOrUpdate(groups));
-    }
-
-    @Override
     public Observable<RealmResults<Group>> getUserGroups() {
         return realm.where(Group.class)
                 .equalTo("type", "guild")

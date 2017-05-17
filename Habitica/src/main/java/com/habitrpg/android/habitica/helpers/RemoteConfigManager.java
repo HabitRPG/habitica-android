@@ -47,7 +47,7 @@ public class RemoteConfigManager {
 
         try {
             JSONObject obj = new JSONObject(storedPreferences);
-            enableRepeatbles = obj.getBoolean("enableRepeatbles");
+            enableRepeatbles = obj.getBoolean("enableRepeatables");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -121,7 +121,7 @@ public class RemoteConfigManager {
 
             try {
                 JSONObject obj = new JSONObject(text.toString());
-                enableRepeatbles = obj.getBoolean("enableRepeatbles");
+                enableRepeatbles = obj.getBoolean("enableRepeatables");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
