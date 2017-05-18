@@ -3,11 +3,9 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +14,6 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -24,12 +21,9 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
@@ -39,7 +33,6 @@ import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
@@ -47,7 +40,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import io.realm.RealmResults;
 
@@ -221,26 +213,6 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public void onEvent(final DeleteChatMessageCommand cmd) {
         socialRepository.deleteMessage(cmd.groupId, cmd.chatMessage.id)
                 .subscribe(aVoid -> {}, throwable -> {});
-    }
-
-    @Subscribe
-    public void onEvent(SendNewGroupMessageCommand cmd) {
-        socialRepository.postGroupChat(cmd.targetGroupId, cmd.message)
-                .subscribe(postChatMessageResult -> {}, throwable -> {});
-
-        UiUtils.dismissKeyboard(getActivity());
-    }
-
-    // If the ChatList is Tavern, we're able to toggle the sleep-mode
-    @Subscribe
-    public void onEvent(ToggleInnCommand event) {
-        userRepository.sleep(user)
-                .subscribe(habitRPGUser -> {
-                    ToggledInnStateEvent innState = new ToggledInnStateEvent();
-                    innState.Inn = habitRPGUser.getPreferences().getSleep();
-                    EventBus.getDefault().post(innState);
-                }, throwable -> {
-                });
     }
 
     @Override
