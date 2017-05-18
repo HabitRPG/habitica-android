@@ -35,6 +35,7 @@ public class TavernFragment extends BaseMainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.usesTabLayout = true;
         hideToolbar();
         disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
@@ -110,12 +111,16 @@ public class TavernFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
+                        fragment = new TavernDetailFragment();
+                        break;
+                    }
+                    case 1: {
                         chatListFragment = new ChatListFragment();
                         chatListFragment.configure("habitrpg", user, true);
                         fragment = chatListFragment;
                         break;
                     }
-                    case 1: {
+                    case 2: {
                         fragment = questInfoFragment = GroupInformationFragment.newInstance(tavern, user);
                         break;
                     }
@@ -129,17 +134,19 @@ public class TavernFragment extends BaseMainFragment {
             @Override
             public int getCount() {
                 if (tavern != null && tavern.quest != null && tavern.quest.key != null) {
-                    return 2;
+                    return 3;
                 }
-                return 1;
+                return 2;
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return getContext().getString(R.string.chat);
+                        return getContext().getString(R.string.inn);
                     case 1:
+                        return getContext().getString(R.string.chat);
+                    case 2:
                         return getContext().getString(R.string.world_quest);
                 }
                 return "";

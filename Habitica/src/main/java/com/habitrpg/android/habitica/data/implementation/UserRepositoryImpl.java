@@ -104,8 +104,9 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     public Observable<User> sleep(User user) {
         return apiClient.sleep()
                 .map(isSleeping -> {
-                    user.getPreferences().setSleep(isSleeping);
-                    localRepository.saveUser(user);
+                    localRepository.executeTransaction(realm -> {
+                        user.getPreferences().setSleep(isSleeping);
+                    });
                     return user;
                 });
     }

@@ -602,4 +602,5 @@
     <string name="description_optional">Description (optional)</string>
     <string name="new_challenge_title">New challenge title</string>
     <string name="ownership">Ownership</string>
+    <string name="inn">Inn</string>
 </resources>
