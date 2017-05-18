@@ -317,7 +317,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setAdapter((RecyclerView.Adapter) recyclerAdapter);
-        recyclerAdapter.filter();
+        if (recyclerAdapter != null) {
+            recyclerAdapter.filter();
+        }
 
         if (Task.TYPE_REWARD.equals(classType)) {
             compositeSubscription.add(taskRepository.getTasks(this.classType, userID)

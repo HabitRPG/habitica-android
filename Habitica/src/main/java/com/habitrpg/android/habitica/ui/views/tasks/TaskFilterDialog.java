@@ -220,9 +220,11 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
     private void createTagEditViews() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        for (int index = 0; index < tags.size(); index++) {
-            Tag tag = tags.get(index);
-            createTagEditView(inflater, index, tag);
+        if (tags != null) {
+            for (int index = 0; index < tags.size(); index++) {
+                Tag tag = tags.get(index);
+                createTagEditView(inflater, index, tag);
+            }
         }
         createAddTagButton();
     }
