@@ -42,7 +42,7 @@ public class Challenge extends RealmObject {
     public boolean isParticipating;
 
     public HashMap<String, String[]> getTasksOrder() {
-        HashMap<String, String[]> map = new HashMap();
+        HashMap<String, String[]> map = new HashMap<>();
 
         if (!dailyList.isEmpty()) {
             map.put(TASK_ORDER_DAILYS, dailyList.split(","));

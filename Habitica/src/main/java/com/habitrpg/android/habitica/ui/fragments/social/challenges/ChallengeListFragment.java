@@ -19,12 +19,14 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +37,9 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     @Inject
     ChallengeRepository challengeRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -45,11 +50,6 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     private ChallengesListViewAdapter challengeAdapter;
     private boolean viewUserChallengesOnly;
-    private boolean withFilter;
-
-    public void setWithFilter(boolean withFilter){
-        this.withFilter = withFilter;
-    }
 
     public void setViewUserChallengesOnly(boolean only) {
         this.viewUserChallengesOnly = only;
@@ -58,7 +58,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     private RealmResults<Challenge> challenges;
 
-    private ChallengeFilterOptions lastFilterOptions;
+    private ChallengeFilterOptions filterOptions;
 
     @Override
     public void onDestroy() {
@@ -73,7 +73,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         View v = inflater.inflate(R.layout.fragment_challengeslist, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        challengeAdapter = new ChallengesListViewAdapter(null, true, viewUserChallengesOnly);
+        challengeAdapter = new ChallengesListViewAdapter(null, true, viewUserChallengesOnly, userId);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -119,7 +119,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
                 fetchOnlineChallenges();
             }
             this.challenges = challenges;
-            challengeAdapter.updateData(challenges);
+            challengeAdapter.updateUnfilteredData(challenges);
         }, RxErrorHandler.handleEmptyError());
     }
 
@@ -148,8 +148,14 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     private void showFilterDialog() {
         ChallengeFilterDialogHolder.showDialog(getActivity(),
                 challenges,
-                lastFilterOptions,
-                filterOptions -> this.lastFilterOptions = filterOptions);
+                filterOptions, this::changeFilter);
+    }
+
+    private void changeFilter(ChallengeFilterOptions challengeFilterOptions) {
+        filterOptions = challengeFilterOptions;
+        if (challengeAdapter != null) {
+            challengeAdapter.filter(filterOptions);
+        }
     }
 
     @Override

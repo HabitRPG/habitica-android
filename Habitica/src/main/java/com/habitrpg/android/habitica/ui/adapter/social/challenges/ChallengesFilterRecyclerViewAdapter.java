@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.models.social.Group;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +66,7 @@ public class ChallengesFilterRecyclerViewAdapter extends RecyclerView.Adapter<Ch
 
     public void selectAll(List<Group> groupsToCheck){
         for (ChallengeViewHolder h : holderList) {
-            h.checkbox.setChecked($.find(groupsToCheck, g -> h.group.id == g.id).isPresent());
+            h.checkbox.setChecked($.find(groupsToCheck, g -> h.group.id.equals(g.id)).isPresent());
         }
     }
     public List<Group> getCheckedEntries(){
@@ -84,9 +85,6 @@ public class ChallengesFilterRecyclerViewAdapter extends RecyclerView.Adapter<Ch
         @BindView(R.id.challenge_filter_group_checkbox)
         CheckBox checkbox;
 
-        @BindView(R.id.challenge_filter_group_label)
-        TextView label;
-
         public Group group;
 
         public ChallengeViewHolder(View itemView) {
@@ -98,8 +96,7 @@ public class ChallengesFilterRecyclerViewAdapter extends RecyclerView.Adapter<Ch
         public void bind(Group group) {
             this.group = group;
 
-            label.setText(group.name);
+            checkbox.setText(group.name);
         }
-
     }
 }

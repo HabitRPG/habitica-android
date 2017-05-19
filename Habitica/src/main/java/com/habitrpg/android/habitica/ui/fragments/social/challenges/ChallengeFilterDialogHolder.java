@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,20 +64,21 @@ class ChallengeFilterDialogHolder {
         ChallengeFilterDialogHolder challengeFilterDialogHolder = new ChallengeFilterDialogHolder(dialogLayout, activity);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                .setTitle(R.string.filter)
                 .setView(dialogLayout);
 
-        challengeFilterDialogHolder.bind(builder.show(), challengesViewed, currentFilter, selectedGroupsCallback);
+        challengeFilterDialogHolder.bind(builder, challengesViewed, currentFilter, selectedGroupsCallback);
     }
 
-    public void bind(AlertDialog dialog, List<Challenge> challengesViewed,
+    public void bind(AlertDialog.Builder builder, List<Challenge> challengesViewed,
                      ChallengeFilterOptions currentFilter,
                      Action1<ChallengeFilterOptions> selectedGroupsCallback) {
-        this.dialog = dialog;
-        this.dialog.setButton(Dialog.BUTTON_POSITIVE, context.getString(R.string.done), (dialog1, which) -> doneClicked());
+        builder = builder
+                .setPositiveButton(context.getString(R.string.done), (dialog1, which) -> doneClicked());
+        this.dialog = builder.show();
         this.challengesViewed = challengesViewed;
         this.currentFilter = currentFilter;
         this.selectedGroupsCallback = selectedGroupsCallback;
-
         fillChallengeGroups();
 
         if(currentFilter != null ){

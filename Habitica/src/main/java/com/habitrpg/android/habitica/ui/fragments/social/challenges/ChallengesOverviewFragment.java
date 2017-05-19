@@ -46,7 +46,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         userChallengesFragment = new ChallengeListFragment();
         userChallengesFragment.setUser(this.user);
         userChallengesFragment.setViewUserChallengesOnly(true);
-        userChallengesFragment.setWithFilter(true);
 
         availableChallengesFragment = new ChallengeListFragment();
         availableChallengesFragment.setUser(this.user);

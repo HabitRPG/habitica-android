@@ -14,6 +14,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -23,15 +25,19 @@ import org.greenrobot.eventbus.EventBus;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
+import io.realm.RealmQuery;
 import io.realm.RealmRecyclerViewAdapter;
 
 public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder> {
 
     private boolean viewUserChallengesOnly;
+    private OrderedRealmCollection<Challenge> unfilteredData;
+    private final String userId;
 
-    public ChallengesListViewAdapter(@Nullable OrderedRealmCollection<Challenge> data, boolean autoUpdate, boolean viewUserChallengesOnly) {
+    public ChallengesListViewAdapter(@Nullable OrderedRealmCollection<Challenge> data, boolean autoUpdate, boolean viewUserChallengesOnly, String userId) {
         super(data, autoUpdate);
         this.viewUserChallengesOnly = viewUserChallengesOnly;
+        this.userId = userId;
     }
 
     @Override
@@ -44,7 +50,42 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
 
     @Override
     public void onBindViewHolder(ChallengeViewHolder holder, int position) {
-        holder.bind(getData().get(position));
+        if (getData() != null) {
+            holder.bind(getData().get(position));
+        }
+    }
+
+    public void updateUnfilteredData(@Nullable OrderedRealmCollection<Challenge> data) {
+        super.updateData(data);
+        unfilteredData = data;
+    }
+
+    public void filter(ChallengeFilterOptions filterOptions) {
+        if (unfilteredData == null) {
+            return;
+        }
+
+        RealmQuery<Challenge> query = unfilteredData.where();
+
+        if (filterOptions.showByGroups != null && filterOptions.showByGroups.size() > 0) {
+            String[] groupIds = new String[filterOptions.showByGroups.size()];
+            int index = 0;
+            for (Group group : filterOptions.showByGroups) {
+                groupIds[index] = group.id;
+                index += 1;
+            }
+            query = query.in("groupId", groupIds);
+        }
+
+        if (filterOptions.showOwned != filterOptions.notOwned) {
+            if (filterOptions.showOwned) {
+                query = query.equalTo("leaderId", userId);
+            } else {
+                query = query.notEqualTo("leaderId", userId);
+            }
+        }
+
+        this.updateData(query.findAll());
     }
 
     public static class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

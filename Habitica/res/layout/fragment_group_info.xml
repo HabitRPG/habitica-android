@@ -282,7 +282,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         style="?android:buttonBarStyle"
-                        android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}">
+                        android:visibility="@{group.quest.active ? View.VISIBLE : View.GONE}">
 
                         <com.habitrpg.android.habitica.ui.views.ValueBar
                             android:layout_height="wrap_content"

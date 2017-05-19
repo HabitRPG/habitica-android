@@ -135,7 +135,7 @@ public class PartyFragment extends BaseMainFragment {
         }
 
         if (group != null && group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
-            inventoryRepository.getQuestContent(group.quest.key).subscribe(content -> {
+            inventoryRepository.getQuestContent(group.quest.key).first().subscribe(content -> {
                 if (groupInformationFragment != null) {
                     groupInformationFragment.setQuestContent(content);
                 }
