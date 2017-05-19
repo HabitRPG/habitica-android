@@ -19,7 +19,7 @@ public class Tag extends RealmObject {
     @PrimaryKey
     public String id;
 
-    public User user;
+    public String userId;
     public RealmList<Task> tasks;
     String name;
     boolean challenge;

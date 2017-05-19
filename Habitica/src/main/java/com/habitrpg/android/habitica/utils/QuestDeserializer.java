@@ -20,7 +20,11 @@ public class QuestDeserializer implements JsonDeserializer<Quest> {
         JsonObject obj = json.getAsJsonObject();
         Quest quest = new Quest();
 
-        quest.key = obj.get("key").getAsString();
+        if (obj.has("key") && !obj.get("key").isJsonNull()) {
+            quest.key = obj.get("key").getAsString();
+        } else {
+            return quest;
+        }
         if (obj.has("active")) {
             quest.active = obj.get("active").getAsBoolean();
         }
@@ -32,7 +36,7 @@ public class QuestDeserializer implements JsonDeserializer<Quest> {
         }
         if (obj.has("progress")) {
             QuestProgress progress = new QuestProgress();
-            progress.key = obj.get("key").getAsString();
+            progress.key = quest.getKey();
             JsonObject progressObj = obj.get("progress").getAsJsonObject();
             if (progressObj.has("hp")) {
                 progress.hp = progressObj.get("hp").getAsInt();

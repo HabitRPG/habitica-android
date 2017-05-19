@@ -78,4 +78,12 @@ public class ChecklistItem extends RealmObject {
     public void setTask(Task task) {
         this.task = task;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass().equals(ChecklistItem.class)) {
+            return this.id.equals(((ChecklistItem)obj).id);
+        }
+        return super.equals(obj);
+    }
 }

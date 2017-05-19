@@ -51,6 +51,22 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
             }
             if (userId != null) {
                 removeOldTasks(realm1, userId, sortedTasks);
+
+                List<ChecklistItem> allChecklistItems = new ArrayList<>();
+                for (Task t : sortedTasks) {
+                    if (t.checklist != null) {
+                        allChecklistItems.addAll(t.checklist);
+                    }
+                }
+                removeOldChecklists(realm1, allChecklistItems);
+
+                List<RemindersItem> allReminders = new ArrayList<>();
+                for (Task t : sortedTasks) {
+                    if (t.getReminders() != null) {
+                        allReminders.addAll(t.getReminders());
+                    }
+                }
+                removeOldReminders(realm1, allReminders);
             }
 
             realm1.insertOrUpdate(sortedTasks);
@@ -77,8 +93,8 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         realm.executeTransaction(realm1 -> realm1.insertOrUpdate(task));
     }
 
-    private void removeOldTasks(Realm realm1, String userID, List<Task> onlineTaskList) {
-        RealmResults<Task> localTasks = realm1.where(Task.class).equalTo("userId", userID).findAll();
+    private void removeOldTasks(Realm realm, String userID, List<Task> onlineTaskList) {
+        RealmResults<Task> localTasks = realm.where(Task.class).equalTo("userId", userID).findAll();
         for (Task localTask : localTasks) {
             if (!onlineTaskList.contains(localTask)) {
                 for (ChecklistItem item : localTask.checklist) {
@@ -92,7 +108,23 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         }
     }
 
+    private void removeOldChecklists(Realm realm, List<ChecklistItem> onlineItems) {
+        RealmResults<ChecklistItem> localItems = realm.where(ChecklistItem.class).findAll();
+        for (ChecklistItem localItem : localItems) {
+            if (!onlineItems.contains(localItem)) {
+                localItem.deleteFromRealm();
+            }
+        }
+    }
 
+    private void removeOldReminders(Realm realm, List<RemindersItem> onlineReminders) {
+        RealmResults<RemindersItem> localReminders = realm.where(RemindersItem.class).findAll();
+        for (RemindersItem localItem : localReminders) {
+            if (!onlineReminders.contains(localItem)) {
+                localItem.deleteFromRealm();
+            }
+        }
+    }
     @Override
     public void deleteTask(String taskID) {
         Task task = realm.where(Task.class).equalTo("id", taskID).findFirstAsync();
@@ -100,7 +132,6 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     }
 
     @Override
-
     public Observable<Task> getTask(String taskId) {
         return realm.where(Task.class).equalTo("id", taskId).findFirstAsync().asObservable()
                 .filter(realmObject -> realmObject.isLoaded())

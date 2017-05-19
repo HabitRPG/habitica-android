@@ -32,6 +32,10 @@ public class UserDeserializer implements JsonDeserializer<User> {
     public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         User user = new User();
         JsonObject obj = json.getAsJsonObject();
+        if (obj.has("_id")) {
+            user.setId(obj.get("_id").getAsString());
+        }
+
         if (obj.has("balance")) {
             user.setBalance(obj.get("balance").getAsDouble());
         }
@@ -68,6 +72,9 @@ public class UserDeserializer implements JsonDeserializer<User> {
         if (obj.has("tags")) {
             user.setTags(context.deserialize(obj.get("tags"), new TypeToken<RealmList<Tag>>() {
             }.getType()));
+            for (Tag tag : user.getTags()) {
+                tag.userId = user.getId();
+            }
         }
         if (obj.has("tasksOrder")) {
             user.setTasksOrder(context.deserialize(obj.get("tasksOrder"), TasksOrder.class));
@@ -83,10 +90,6 @@ public class UserDeserializer implements JsonDeserializer<User> {
                     user.getPurchased().getPlan().mysteryItemCount = obj.get("purchased").getAsJsonObject().get("plan").getAsJsonObject().get("mysteryItems").getAsJsonArray().size();
                 }
             }
-        }
-
-        if (obj.has("_id")) {
-            user.setId(obj.get("_id").getAsString());
         }
 
         return user;

@@ -141,7 +141,6 @@ public class PartyFragment extends BaseMainFragment {
                 }
             }, RxErrorHandler.handleEmptyError());
         }
-
     }
 
     @Override

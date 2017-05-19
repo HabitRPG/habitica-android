@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
 import com.habitrpg.android.habitica.models.user.User;
@@ -32,7 +33,23 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void saveUser(User user) {
-        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(user));
+        realm.executeTransaction(realm1 -> {
+            realm1.insertOrUpdate(user);
+
+            if (user.getTags() != null) {
+                removeOldTags(user.getId(), user.getTags());
+            }
+        });
+    }
+
+    private void removeOldTags(String userId, List<Tag> onlineTags) {
+        RealmResults<Tag> tags = realm.where(Tag.class).equalTo("userId", userId).findAll();
+
+        for (Tag tag : tags) {
+            if (!onlineTags.contains(tag)) {
+                tag.deleteFromRealm();
+            }
+        }
     }
 
     @Override

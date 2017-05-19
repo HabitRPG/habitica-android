@@ -66,4 +66,12 @@ public class RemindersItem extends RealmObject {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass().equals(RemindersItem.class)) {
+            return this.id.equals(((RemindersItem)obj).id);
+        }
+        return super.equals(obj);
+    }
 }
