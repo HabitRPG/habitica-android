@@ -263,8 +263,10 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     @Override
     public boolean deleteDatabase(String name) {
         Realm realm = Realm.getDefaultInstance();
-        realm.deleteAll();
-        realm.close();
+        realm.executeTransaction(realm1 -> {
+            realm1.deleteAll();
+            realm1.close();
+        });
         return true;
     }
 
