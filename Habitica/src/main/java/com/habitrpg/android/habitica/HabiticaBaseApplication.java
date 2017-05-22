@@ -108,8 +108,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         context.startActivity(intent);
     }
 
-    // region SQLite overrides
-
     public static AppComponent getComponent() {
         return component;
     }
@@ -135,7 +133,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
                 Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
                 Identify identify = new Identify().setOnce("androidStore", BuildConfig.STORE);
                 Amplitude.getInstance().identify(identify);
-            } catch (Resources.NotFoundException e) {
+            } catch (Resources.NotFoundException ignored) {
             }
         }
         Fresco.initialize(this);

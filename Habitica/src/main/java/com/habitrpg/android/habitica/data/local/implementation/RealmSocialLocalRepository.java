@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.local.implementation;
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
@@ -69,6 +70,15 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
     @Override
     public void deleteMessage(String id) {
         getMessage(id).first().subscribe(chatMessage -> realm.executeTransaction(realm1 -> chatMessage.deleteFromRealm()), throwable -> {});
+    }
+
+    @Override
+    public Observable<RealmResults<User>> getGroupMembers(String partyId) {
+        return realm.where(User.class)
+                .equalTo("party.id", partyId)
+                .findAllAsync()
+                .asObservable()
+                .filter(RealmResults::isLoaded);
     }
 
     private Observable<ChatMessage> getMessage(String id) {

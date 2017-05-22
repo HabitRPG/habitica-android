@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 
@@ -25,7 +26,7 @@ public class SkillMemberActivity extends BaseActivity {
     private PartyMemberRecyclerViewAdapter viewAdapter;
 
     @Inject
-    public ApiClient apiClient;
+    public SocialRepository socialRepository;
 
     @Override
     protected int getLayoutResId() {
@@ -47,25 +48,19 @@ public class SkillMemberActivity extends BaseActivity {
 
     private void loadMemberList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        viewAdapter = new PartyMemberRecyclerViewAdapter();
-        viewAdapter.context = this;
+        viewAdapter = new PartyMemberRecyclerViewAdapter(null, true, this, true);
         recyclerView.setAdapter(viewAdapter);
 
-        apiClient.getGroup("party")
+        socialRepository.getGroup("party")
                 .subscribe(group -> {
                             if (group == null) {
                                 return;
                             }
 
-                            apiClient.getGroupMembers(group.id, true)
-                                    .subscribe(members -> {
-                                                viewAdapter.setMemberList(members, true);
-                                            },
-                                            throwable -> {
-                                            });
-                        },
-                        throwable -> {
-                        });
+                            socialRepository.getGroupMembers(group.id)
+                                    .subscribe(members -> viewAdapter.updateData(members),
+                                            throwable -> {});
+                        }, throwable -> {});
     }
 
     @Subscribe

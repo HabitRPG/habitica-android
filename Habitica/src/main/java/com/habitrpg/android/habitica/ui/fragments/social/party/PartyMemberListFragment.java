@@ -11,11 +11,12 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
-import java.util.List;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -24,25 +25,21 @@ import butterknife.BindView;
  */
 public class PartyMemberListFragment extends BaseFragment {
 
+    @Inject
+    SocialRepository socialRepository;
+
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    private Context ctx;
-    private List<User> members;
-    private PartyMemberRecyclerViewAdapter viewAdapter;
+    RecyclerView recyclerView;
+    private PartyMemberRecyclerViewAdapter adapter;
     private View view;
-
-    public void configure(@Nullable Context ctx, @Nullable List<User> members) {
-        this.ctx = ctx;
-        this.members = members;
-
-    }
+    private String partyId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null)
-            view = inflater.inflate(R.layout.fragment_party_memberlist, container, false);
-
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        }
         return view;
     }
 
@@ -55,19 +52,26 @@ public class PartyMemberListFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
-        viewAdapter = new PartyMemberRecyclerViewAdapter();
-        viewAdapter.context = this.ctx;
-        mRecyclerView.setAdapter(viewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new PartyMemberRecyclerViewAdapter(null, true, getContext(), true);
+        recyclerView.setAdapter(adapter);
 
-        if (members != null) {
-            setMemberList(members);
+        getUsers();
+    }
+
+    public void setPartyId(String id) {
+        this.partyId = id;
+        getUsers();
+    }
+
+    private void getUsers() {
+        if (partyId == null) {
+            return;
         }
+        socialRepository.getGroupMembers(partyId).first().subscribe(users -> {
+            if (adapter != null) {
+                adapter.updateData(users);
+            }
+        }, RxErrorHandler.handleEmptyError());
     }
-
-    public void setMemberList(List<User> members) {
-        this.members = members;
-        viewAdapter.setMemberList(members, false);
-    }
-
 }

@@ -160,8 +160,14 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<List<User>> getGroupMembers(String id, boolean includeAllPublicFields) {
-        return apiClient.getGroupMembers(id, includeAllPublicFields);
+    public Observable<RealmResults<User>> getGroupMembers(String id) {
+        return localRepository.getGroupMembers(id);
+    }
+
+    @Override
+    public Observable<List<User>> retrieveGroupMembers(String id, boolean includeAllPublicFields) {
+        return apiClient.getGroupMembers(id, includeAllPublicFields)
+                .doOnNext(localRepository::save);
     }
 
     @Override

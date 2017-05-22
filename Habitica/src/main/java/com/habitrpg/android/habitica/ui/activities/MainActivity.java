@@ -339,19 +339,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         sendBroadcast(intent);
     }
 
-
-    private void saveLoginInformation() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        boolean ans = editor.putString(getString(R.string.SP_username), user.getAuthentication().getLocalAuthentication().getUsername())
-                .putString(getString(R.string.SP_email), user.getAuthentication().getLocalAuthentication().getEmail())
-                .commit();
-
-        if (!ans) {
-            Log.e("SHARED PREFERENCES", "Shared Preferences Username and Email error");
-        }
-    }
-
     @SuppressLint("ObsoleteSdkInt")
     public void displayFragment(BaseMainFragment fragment) {
         if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
@@ -391,7 +378,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             runOnUiThread(() -> {
                 updateHeader();
                 updateSidebar();
-                saveLoginInformation();
                 if (activeFragment != null) {
                     activeFragment.updateUserData(user);
                 } else {

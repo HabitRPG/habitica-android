@@ -67,12 +67,18 @@ public class PartyFragment extends BaseMainFragment {
 
         // Get the full group data
         if (userHasParty()) {
-            compositeSubscription.add(socialRepository.getGroup(user.getParty().getId())
-                    .subscribe(group -> {
-                        PartyFragment.this.group = group;
-                        updateGroupUI();
-                    }, RxErrorHandler.handleEmptyError()));
-            socialRepository.retrieveGroup("party").subscribe(group1 -> {}, RxErrorHandler.handleEmptyError());
+            if (user != null) {
+                compositeSubscription.add(socialRepository.getGroup(user.getParty().getId())
+                        .subscribe(group -> {
+                            PartyFragment.this.group = group;
+                            updateGroupUI();
+                        }, RxErrorHandler.handleEmptyError()));
+            }
+            socialRepository.retrieveGroup("party")
+                    .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.id, true))
+                    .subscribe(members -> {
+                        members.size();
+                    }, RxErrorHandler.handleEmptyError());
         }
 
         setViewPagerAdapter();
@@ -119,7 +125,7 @@ public class PartyFragment extends BaseMainFragment {
         }
 
         if (partyMemberListFragment != null && group != null) {
-            partyMemberListFragment.setMemberList(group.members);
+            partyMemberListFragment.setPartyId(group.id);
         }
 
         if (groupInformationFragment != null) {
@@ -298,12 +304,6 @@ public class PartyFragment extends BaseMainFragment {
                     }
                     case 2: {
                         partyMemberListFragment = new PartyMemberListFragment();
-                        if (group != null) {
-                            partyMemberListFragment.configure(activity, group.members);
-
-                        } else {
-                            partyMemberListFragment.configure(activity, null);
-                        }
                         fragment = partyMemberListFragment;
                         break;
                     }

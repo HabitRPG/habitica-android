@@ -191,14 +191,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                         .subscribe(habitRPGUser -> {
                         }, throwable -> {
                         });
-
-                Preferences preferences = user.getPreferences();
-                preferences.setLanguage(languageHelper.getLanguageCode());
-                apiClient.setLanguageCode(preferences.getLanguage());
-                apiClient.getContent()
-                        .subscribe(contentResult -> {
-                        }, throwable -> {
-                        });
+                apiClient.setLanguageCode(languageHelper.getLanguageCode());
+                apiClient.getContent().subscribe(contentResult -> {}, throwable -> {});
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                     Intent intent = new Intent(getActivity(), MainActivity.class);

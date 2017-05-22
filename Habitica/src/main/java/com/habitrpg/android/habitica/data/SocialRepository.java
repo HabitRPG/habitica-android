@@ -45,7 +45,8 @@ public interface SocialRepository extends BaseRepository {
     Observable<PostChatMessageResult> postPrivateMessage(String recipientId, String message);
 
 
-    Observable<List<User>> getGroupMembers(String id, boolean includeAllPublicFields);
+    Observable<RealmResults<User>> getGroupMembers(String id);
+    Observable<List<User>> retrieveGroupMembers(String id, boolean includeAllPublicFields);
 
     Observable<Void> inviteToGroup(String id, Map<String, Object> inviteData);
 
