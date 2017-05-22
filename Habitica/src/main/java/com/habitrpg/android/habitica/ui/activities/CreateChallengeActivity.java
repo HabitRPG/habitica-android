@@ -355,7 +355,9 @@ public class CreateChallengeActivity extends BaseActivity {
 
             locationAdapter.add(tavern);
 
-            groups.forEach(group -> locationAdapter.add(group));
+            for (Group group : groups) {
+                locationAdapter.add(group);
+            }
         }, RxErrorHandler.handleEmptyError());
 
         challengeLocationSpinner.setAdapter(locationAdapter);

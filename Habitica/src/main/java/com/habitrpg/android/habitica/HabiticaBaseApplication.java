@@ -145,12 +145,8 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     protected void setupRealm() {
         Realm.init(this);
         RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
-                .schemaVersion(1);
-        if (BuildConfig.DEBUG) {
-            builder = builder.deleteRealmIfMigrationNeeded();
-        }
-
-        Fresco.initialize(this);
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded();
         Realm.setDefaultConfiguration(builder.build());
     }
 

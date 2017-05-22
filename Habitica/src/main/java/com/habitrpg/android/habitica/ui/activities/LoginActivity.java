@@ -47,6 +47,8 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
 import com.habitrpg.android.habitica.BuildConfig;
@@ -91,7 +93,7 @@ public class LoginActivity extends BaseActivity
     private final static String TAG_USERID = "user";
     private final static String TAG_APIKEY = "key";
     private static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001;
-
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Inject
     public ApiClient apiClient;
@@ -461,6 +463,9 @@ public class LoginActivity extends BaseActivity
 
     @OnClick(R.id.google_login_button)
     public void handleGoogleLogin() {
+        if (!checkPlayServices()) {
+            return;
+        }
         String[] accountTypes = new String[]{"com.google"};
         Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                 accountTypes, false, null, null, null, null);
@@ -504,6 +509,7 @@ public class LoginActivity extends BaseActivity
             // the user to update the APK
             int statusCode = ((GooglePlayServicesAvailabilityException) e)
                     .getConnectionStatusCode();
+            GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(statusCode,
                     LoginActivity.this,
                     REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
@@ -513,9 +519,21 @@ public class LoginActivity extends BaseActivity
             // the app access to the account, but the user can fix this.
             // Forward the user to an activity in Google Play services.
             Intent intent = ((UserRecoverableAuthException) e).getIntent();
-            startActivityForResult(intent,
-                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+            startActivityForResult(intent, REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
         }
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            }
+            return false;
+        }
+
+        return true;
     }
 
     @OnClick(R.id.new_game_button)

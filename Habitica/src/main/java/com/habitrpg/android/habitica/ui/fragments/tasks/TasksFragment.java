@@ -172,7 +172,7 @@ public class TasksFragment extends BaseMainFragment {
     private void showFilterDialog() {
         TaskFilterDialog dialog = new TaskFilterDialog(getContext(), HabiticaBaseApplication.getComponent());
         if (user != null) {
-            dialog.setTags(user.getTags());
+            dialog.setTags(user.getTags().createSnapshot());
         }
         dialog.setActiveTags(taskFilterHelper.getTags());
         if (getActiveFragment() != null) {
