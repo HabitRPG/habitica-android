@@ -76,9 +76,7 @@ public class PartyFragment extends BaseMainFragment {
             }
             socialRepository.retrieveGroup("party")
                     .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.id, true))
-                    .subscribe(members -> {
-                        members.size();
-                    }, RxErrorHandler.handleEmptyError());
+                    .subscribe(members -> {}, RxErrorHandler.handleEmptyError());
         }
 
         setViewPagerAdapter();

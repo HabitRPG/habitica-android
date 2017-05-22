@@ -144,7 +144,11 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 if (msg.sent != null && msg.sent.equals("true")) {
                     userLabel.setText(sendingUser.getProfile().getName());
                 } else {
-                    userLabel.setText(msg.user);
+                    if (msg.user != null && msg.user.length() > 0) {
+                        userLabel.setText(msg.user);
+                    } else {
+                        userLabel.setText(R.string.system);
+                    }
                 }
 
                 userLabel.setClickable(true);

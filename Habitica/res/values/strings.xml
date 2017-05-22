@@ -603,4 +603,5 @@
     <string name="new_challenge_title">New challenge title</string>
     <string name="ownership">Ownership</string>
     <string name="inn">Inn</string>
+    <string name="system">System</string>
 </resources>

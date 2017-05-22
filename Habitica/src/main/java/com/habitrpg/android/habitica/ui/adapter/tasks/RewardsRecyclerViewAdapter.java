@@ -81,7 +81,7 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RewardViewH
                             itemKeys.add(item.key);
                         }
                         itemKeys.add("potion");
-                        if (user != null && user.getFlags().getArmoireEnabled()) {
+                        if (user != null && user.getFlags() != null && user.getFlags().getArmoireEnabled()) {
                             itemKeys.add("armoire");
                         }
                         return itemKeys;

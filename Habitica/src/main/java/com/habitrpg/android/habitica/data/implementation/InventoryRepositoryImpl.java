@@ -212,9 +212,9 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     public Observable<BuyResponse> buyItem(User user, String key, double value) {
         return apiClient.buyItem(key)
                 .doOnNext(buyResponse -> localRepository.executeTransaction(realm -> {
-                    buyResponse.items.setUserId(user.getId());
                     User copiedUser = localRepository.getUnmanagedCopy(user);
                     if (buyResponse.items != null) {
+                        buyResponse.items.setUserId(user.getId());
                         copiedUser.setItems(buyResponse.items);
                     }
                     if (buyResponse.hp != null) {
