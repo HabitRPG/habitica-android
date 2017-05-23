@@ -60,6 +60,9 @@ public class User extends RealmObject {
 
     public void setPreferences(Preferences preferences) {
         this.preferences = preferences;
+        if (preferences != null && id != null && !preferences.isManaged()) {
+            preferences.setUserId(id);
+        }
     }
 
     public String getId() {
