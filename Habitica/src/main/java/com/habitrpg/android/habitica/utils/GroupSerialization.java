@@ -73,6 +73,7 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
         if (obj.has("quest")) {
             group.quest = context.deserialize(obj.get("quest"), new TypeToken<Quest>() {
             }.getType());
+            group.quest.id = group.id;
         }
 
         return group;

@@ -38,7 +38,7 @@
     <dimen name="btn_height_reward">50dp</dimen>
 
     <dimen name="quest_image_width">128dp</dimen>
-    <dimen name="quest_image_height">128dp</dimen>
+    <dimen name="quest_image_height">200dp</dimen>
 
     <!-- Widget -->
     <dimen name="widget_bar_horizontal_margin">20dp</dimen>
@@ -105,4 +105,6 @@
     <dimen name="login_intro_button_size">126dp</dimen>
 	<dimen name="diamond_button_height">40dp</dimen>
     <dimen name="setup_customization_size">56dp</dimen>
+    <dimen name="outer_inset">16dp</dimen>
+	<dimen name="rounded_button_radius">6dp</dimen>
 </resources>

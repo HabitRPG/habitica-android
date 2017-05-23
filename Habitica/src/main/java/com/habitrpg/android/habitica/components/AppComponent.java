@@ -76,6 +76,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDet
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
@@ -268,4 +269,6 @@ public interface AppComponent {
     void inject(ChallengeDetailDialogHolder challengeDetailDialogHolder);
 
     void inject(TavernDetailFragment tavernDetailFragment);
+
+    void inject(PartyDetailFragment partyDetailFragment);
 }

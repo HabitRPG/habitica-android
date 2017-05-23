@@ -8,6 +8,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class UserParty extends RealmObject {
     @PrimaryKey
+    private String userId;
     @SerializedName("_id")
     public String id; //id
     private Quest quest;
@@ -56,5 +57,13 @@ public class UserParty extends RealmObject {
 
     public void setQuest(Quest quest) {
         this.quest = quest;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

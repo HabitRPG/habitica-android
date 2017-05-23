@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data;
 
+import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
@@ -57,4 +58,17 @@ public interface SocialRepository extends BaseRepository {
     Observable<Void> markPrivateMessagesRead(User user);
 
     Observable<RealmResults<Group>> getUserGroups();
+
+    Observable<Void> acceptQuest(User user, String partyId);
+    Observable<Void> rejectQuest(User user, String partyId);
+
+    Observable<Void> leaveQuest(String partyId);
+
+    Observable<Void> cancelQuest(String partyId);
+
+    Observable<Quest> abortQuest(String partyId);
+
+    Observable<Void> rejectGroupInvite(String groupId);
+
+    Observable<Quest> forceStartQuest(Group party);
 }

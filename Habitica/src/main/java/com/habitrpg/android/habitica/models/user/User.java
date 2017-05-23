@@ -158,6 +158,9 @@ public class User extends RealmObject {
 
     public void setParty(UserParty party) {
         this.party = party;
+        if (party != null && id != null && !party.isManaged()) {
+            party.setUserId(id);
+        }
     }
 
     public Items getItems() {
@@ -450,5 +453,9 @@ public class User extends RealmObject {
 
     public void setChallenges(RealmList<Challenge> challenges) {
         this.challenges = challenges;
+    }
+
+    public boolean hasParty() {
+        return party != null && party.id != null && party.id.length() > 0;
     }
 }

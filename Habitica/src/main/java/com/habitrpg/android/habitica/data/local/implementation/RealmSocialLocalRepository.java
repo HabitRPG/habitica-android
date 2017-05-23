@@ -81,6 +81,13 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
                 .filter(RealmResults::isLoaded);
     }
 
+    @Override
+    public void updateRSVPNeeded(User user, boolean newValue) {
+        if (user != null && user.getParty() != null && user.getParty().getQuest() != null) {
+            realm.executeTransaction(realm1 -> user.getParty().getQuest().RSVPNeeded = newValue);
+        }
+    }
+
     private Observable<ChatMessage> getMessage(String id) {
         return realm.where(ChatMessage.class).equalTo("id", id)
                 .findAllAsync()

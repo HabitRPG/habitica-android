@@ -126,6 +126,9 @@ public class TasksFragment extends BaseMainFragment {
     @Override
     public void onDestroy() {
         tagRepository.close();
+        if (bottomNavigation != null) {
+            bottomNavigation.removeOnTabSelectListener();
+        }
         super.onDestroy();
     }
 

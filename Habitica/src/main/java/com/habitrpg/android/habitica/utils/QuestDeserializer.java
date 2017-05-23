@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.inventory.QuestMember;
 import com.habitrpg.android.habitica.models.inventory.QuestProgress;
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect;
 
@@ -59,6 +60,22 @@ public class QuestDeserializer implements JsonDeserializer<Quest> {
                     progress.collect.add(collect);
                 }
             }
+            quest.setProgress(progress);
+        }
+
+        if (obj.has("members")) {
+            RealmList<QuestMember> members = new RealmList<>();
+            for (Map.Entry<String, JsonElement> entry : obj.get("members").getAsJsonObject().entrySet()) {
+                QuestMember member = new QuestMember();
+                member.key = entry.getKey();
+                if (entry.getValue().isJsonNull()) {
+                    member.isParticipating = null;
+                } else {
+                    member.isParticipating = entry.getValue().getAsBoolean();
+                }
+                members.add(member);
+            }
+            quest.members = members;
         }
         return quest;
     }

@@ -348,34 +348,6 @@
                         android:divider="?android:listDivider"
                         android:showDividers="middle"
                         style="@style/CardContent"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        style="?android:buttonBarStyle"
-                        android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}"
-                        android:layout_gravity="right">
-
-                        <Button
-                            android:id="@+id/btnQuestAbort"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quest.abort"
-                            android:textColor="@color/btn_danger"
-                            style="?android:buttonBarButtonStyle"
-                            android:visibility="@{(group.quest != null &amp;&amp; user.getId().equals(group.quest.leader))? View.VISIBLE : View.GONE}" />
-
-                        <Button
-                            android:id="@+id/btnQuestLeave"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quest.leave"
-                            android:textColor="@color/btn_warning"
-                            style="?android:buttonBarButtonStyle"
-                            android:visibility="@{(!user.getId().equals(group.quest.leader) &amp;&amp; group.quest.members.containsKey(user.getId()))? View.VISIBLE : View.GONE}" />
-
-                    </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

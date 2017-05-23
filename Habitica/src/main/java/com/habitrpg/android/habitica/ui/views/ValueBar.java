@@ -54,6 +54,7 @@ public class ValueBar extends FrameLayout {
         Drawable iconRes = attributes.getDrawable(R.styleable.ValueBar_barIconDrawable);
         if (iconRes != null) {
             iconView.setImageDrawable(iconRes);
+            iconView.setVisibility(View.VISIBLE);
         }
 
         descriptionTextView.setText(attributes.getString(R.styleable.ValueBar_description));
@@ -71,7 +72,7 @@ public class ValueBar extends FrameLayout {
     public void setLightBackground(boolean lightBackground) {
         int textColor;
         if (lightBackground) {
-            textColor = ContextCompat.getColor(getContext(), R.color.md_black_1000);
+            textColor = ContextCompat.getColor(getContext(), R.color.gray_10);
             barBackground.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray);
         } else {
             textColor = ContextCompat.getColor(getContext(), R.color.brand_500);

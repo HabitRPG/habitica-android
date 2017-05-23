@@ -15,7 +15,8 @@
         android:layout_alignTop="@+id/bar_full"
         android:layout_alignBottom="@id/bar_full"
         android:scaleType="center"
-        android:contentDescription="Bar Icon" />
+        android:contentDescription="Bar Icon"
+        android:visibility="gone"/>
     <LinearLayout
         android:id="@id/bar_full"
         android:layout_toRightOf="@id/ic_header"

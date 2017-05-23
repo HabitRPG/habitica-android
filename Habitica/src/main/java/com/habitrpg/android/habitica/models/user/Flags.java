@@ -15,7 +15,17 @@ public class Flags extends RealmObject {
 
     User user;
     RealmList<TutorialStep> tutorial;
-    private boolean showTour, dropsEnabled, itemsEnabled, newStuff, classSelected, rebirthEnabled, welcomed, armoireEnabled, armoireOpened, armoireEmpty;
+    private boolean showTour;
+    private boolean dropsEnabled;
+    private boolean itemsEnabled;
+    private boolean newStuff;
+    private boolean classSelected;
+    private boolean rebirthEnabled;
+    private boolean welcomed;
+    private boolean armoireEnabled;
+    private boolean armoireOpened;
+    private boolean armoireEmpty;
+    private boolean communityGuidelinesAccepted;
 
     public List<TutorialStep> getTutorial() {
         return tutorial;
@@ -111,5 +121,13 @@ public class Flags extends RealmObject {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public boolean isCommunityGuidelinesAccepted() {
+        return communityGuidelinesAccepted;
+    }
+
+    public void setCommunityGuidelinesAccepted(boolean communityGuidelinesAccepted) {
+        this.communityGuidelinesAccepted = communityGuidelinesAccepted;
     }
 }

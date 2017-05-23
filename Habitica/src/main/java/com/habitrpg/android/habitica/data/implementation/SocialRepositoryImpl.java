@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
@@ -194,5 +195,42 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     @Override
     public Observable<RealmResults<Group>> getUserGroups() {
         return localRepository.getUserGroups();
+    }
+
+    @Override
+    public Observable<Void> acceptQuest(User user, String partyId) {
+        return apiClient.acceptQuest(partyId)
+                .doOnNext(aVoid -> localRepository.updateRSVPNeeded(user, false));
+    }
+
+    @Override
+    public Observable<Void> rejectQuest(User user, String partyId) {
+        return apiClient.rejectQuest(partyId)
+                .doOnNext(aVoid -> localRepository.updateRSVPNeeded(user, false));
+    }
+
+    @Override
+    public Observable<Void> leaveQuest(String partyId) {
+        return apiClient.leaveQuest(partyId);
+    }
+
+    @Override
+    public Observable<Void> cancelQuest(String partyId) {
+        return apiClient.cancelQuest(partyId);
+    }
+
+    @Override
+    public Observable<Quest> abortQuest(String partyId) {
+        return apiClient.abortQuest(partyId);
+    }
+
+    @Override
+    public Observable<Void> rejectGroupInvite(String groupId) {
+        return apiClient.rejectQuest(groupId);
+    }
+
+    @Override
+    public Observable<Quest> forceStartQuest(Group party) {
+        return apiClient.forceStartQuest(party.id, party);
     }
 }

@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/read_community_guidelines"
-            style="@style/Caption3" />
+            style="@style/Caption3"
+            android:textColor="@color/brand_300" />
     </LinearLayout>
 </merge>

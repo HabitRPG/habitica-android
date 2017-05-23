@@ -2,19 +2,20 @@ package com.habitrpg.android.habitica.models.inventory;
 
 import java.util.HashMap;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Quest extends RealmObject {
     @PrimaryKey
+    public String id;
     public String key;
     public boolean active;
     public String leader;
     public boolean RSVPNeeded;
 
-    @Ignore
-    public HashMap<String, Boolean> members;
+    public RealmList<QuestMember> members;
     private QuestProgress progress;
 
     private Quest(String key, QuestProgress progress) {

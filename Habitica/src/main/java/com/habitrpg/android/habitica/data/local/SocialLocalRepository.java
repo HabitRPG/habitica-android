@@ -24,4 +24,6 @@ public interface SocialLocalRepository extends BaseLocalRepository {
     void deleteMessage(String id);
 
     Observable<RealmResults<User>> getGroupMembers(String partyId);
+
+    void updateRSVPNeeded(User user, boolean newValue);
 }

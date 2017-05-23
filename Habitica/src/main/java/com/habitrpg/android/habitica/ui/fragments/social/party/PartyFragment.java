@@ -48,7 +48,6 @@ public class PartyFragment extends BaseMainFragment {
     @Nullable
     private Group group;
     private PartyMemberListFragment partyMemberListFragment;
-    private GroupInformationFragment groupInformationFragment;
     private ChatListFragment chatListFragment;
     private FragmentPagerAdapter viewPagerAdapter;
 
@@ -126,24 +125,12 @@ public class PartyFragment extends BaseMainFragment {
             partyMemberListFragment.setPartyId(group.id);
         }
 
-        if (groupInformationFragment != null) {
-            groupInformationFragment.setGroup(group);
-        }
-
         if (chatListFragment != null && group != null) {
             chatListFragment.seenGroupId = group.id;
         }
 
         if (this.activity != null) {
             this.activity.supportInvalidateOptionsMenu();
-        }
-
-        if (group != null && group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
-            inventoryRepository.getQuestContent(group.quest.key).first().subscribe(content -> {
-                if (groupInformationFragment != null) {
-                    groupInformationFragment.setQuestContent(content);
-                }
-            }, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -231,10 +218,7 @@ public class PartyFragment extends BaseMainFragment {
                     }
                     if (needsSaving) {
                         this.socialRepository.updateGroup(this.group, bundle.getString("name"), bundle.getString("description"), bundle.getString("leader"), bundle.getString("privacy"))
-                                .subscribe(aVoid -> {
-                                }, throwable -> {
-                                });
-                        this.groupInformationFragment.setGroup(group);
+                                .subscribe(aVoid -> {}, throwable -> {});
                     }
                 }
                 break;
@@ -291,7 +275,13 @@ public class PartyFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
-                        fragment = groupInformationFragment = GroupInformationFragment.newInstance(group, user);
+                        if (user.hasParty()) {
+                            PartyDetailFragment detailFragment = new PartyDetailFragment();
+                            detailFragment.partyId = user.getParty().id;
+                            fragment = detailFragment;
+                        } else {
+                            fragment = GroupInformationFragment.newInstance(null, user);
+                        }
                         break;
                     }
                     case 1: {

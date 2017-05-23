@@ -32,6 +32,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import rx.Subscription;
+
 public class PreferencesFragment extends BasePreferencesFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -48,6 +50,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     private User user;
     @Inject
     PushNotificationManager pushNotificationManager;
+    private Subscription subscription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,13 +61,14 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
         String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
         if (userID != null) {
-            userRepository.getUser(userID).subscribe(PreferencesFragment.this::setUser, RxErrorHandler.handleEmptyError());
+            subscription = userRepository.getUser(userID).subscribe(PreferencesFragment.this::setUser, RxErrorHandler.handleEmptyError());
         }
     }
 
     @Override
     public void onDestroy() {
         userRepository.close();
+        subscription.unsubscribe();
         super.onDestroy();
     }
 
@@ -209,9 +213,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             case "audioTheme": {
                 String newAudioTheme = sharedPreferences.getString(key, "off");
                 userRepository.updateUser(user, "preferences.sound", newAudioTheme)
-                        .subscribe(habitRPGUser -> {
-                        }, throwable -> {
-                        });
+                        .subscribe(habitRPGUser -> {}, throwable -> {});
 
                 Preferences preferences = user.getPreferences();
                 preferences.setSound(newAudioTheme);
@@ -223,9 +225,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             }
             case "dailyDueDefaultView":
                 userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
-                        .subscribe(habitRPGUser -> {
-                        }, throwable -> {
-                        });
+                        .subscribe(habitRPGUser -> {}, throwable -> {});
                 break;
         }
     }

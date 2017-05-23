@@ -73,22 +73,6 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
         }
     }
 
-    public void openedMysteryItem(int numberLeft) {
-        // TODO: Fix this
-        /*int itemPos = 0;
-        for (Object obj : itemList) {
-            if (obj.getClass().equals(SpecialItem.class)) {
-                SpecialItem item = (SpecialItem) obj;
-                if (item.isMysteryItem) {
-                    item.setOwned(numberLeft);
-                    break;
-                }
-            }
-            itemPos++;
-        }
-        notifyItemChanged(itemPos);*/
-    }
-
     public void setOwnedPets(RealmResults<Pet> pets) {
         ownedPets = pets;
     }

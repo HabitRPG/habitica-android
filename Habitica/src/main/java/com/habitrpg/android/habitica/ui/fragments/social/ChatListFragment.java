@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -61,6 +64,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     EditText chatEditText;
     @BindView(R.id.send_button)
     ImageButton sendButton;
+    @BindView(R.id.community_guidelines_view)
+    TextView communityGuidelinesView;
     LinearLayoutManager layoutManager;
     private String groupId;
     private User user;
@@ -101,8 +106,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
         }
 
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_chat, container, false);
+        }
 
         return view;
     }
@@ -142,6 +148,18 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         recyclerView.setAdapter(chatAdapter);
 
         socialRepository.getGroupChat(groupId).first().subscribe(this::setChatMessages, throwable -> {});
+
+        if (user != null && user.getFlags() != null && user.getFlags().isCommunityGuidelinesAccepted()) {
+            communityGuidelinesView.setVisibility(View.GONE);
+        } else {
+            communityGuidelinesView.setOnClickListener(v -> {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://habitica.com/static/community-guidelines"));
+                getContext().startActivity(i);
+
+                userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
+            });
+        }
         onRefresh();
     }
 

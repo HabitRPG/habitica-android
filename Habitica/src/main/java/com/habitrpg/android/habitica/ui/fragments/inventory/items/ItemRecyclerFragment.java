@@ -209,13 +209,4 @@ public class ItemRecyclerFragment extends BaseFragment {
         command.identifier = MainDrawerBuilder.SIDEBAR_SHOPS;
         EventBus.getDefault().post(command);
     }
-
-    @Subscribe
-    public void openedMysteryItem(OpenedMysteryItemEvent event) {
-        this.adapter.openedMysteryItem(event.numberLeft);
-        inventoryRepository.getEquipment(event.mysteryItem.getKey()).subscribe(itemData -> {
-            MainActivity activity = (MainActivity) getActivity();
-            showSnackbar(activity, activity.floatingMenuWrapper, getString(R.string.notification_mystery_item, itemData.getText()), UiUtils.SnackbarDisplayType.NORMAL);
-        });
-    }
 }

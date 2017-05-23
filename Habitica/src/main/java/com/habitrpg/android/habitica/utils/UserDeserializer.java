@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.invitations.Invitations;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.UserParty;
@@ -25,6 +26,7 @@ import com.habitrpg.android.habitica.models.user.User;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 
 public class UserDeserializer implements JsonDeserializer<User> {
@@ -53,6 +55,16 @@ public class UserDeserializer implements JsonDeserializer<User> {
         }
         if (obj.has("party")) {
             user.setParty(context.deserialize(obj.get("party"), UserParty.class));
+            if (user.getParty() != null && user.getParty().getQuest() != null) {
+                user.getParty().getQuest().id = user.getId();
+                if (!obj.get("party").getAsJsonObject().get("quest").getAsJsonObject().has("RSVPNeeded")) {
+                    Realm realm = Realm.getDefaultInstance();
+                    Quest quest = realm.where(Quest.class).equalTo("id", user.getId()).findFirst();
+                    if (quest != null && quest.isValid()) {
+                        user.getParty().getQuest().RSVPNeeded = quest.RSVPNeeded;
+                    }
+                }
+            }
         }
         if (obj.has("items")) {
             user.setItems(context.deserialize(obj.get("items"), Items.class));
