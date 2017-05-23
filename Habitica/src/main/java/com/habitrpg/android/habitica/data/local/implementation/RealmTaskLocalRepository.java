@@ -41,13 +41,15 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         realm.executeTransactionAsync(realm1 -> {
 
             List<Task> sortedTasks = new ArrayList<>();
-            if (tasksOrder != null) {
-                sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getHabits()));
-                sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getDailys()));
-                sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getTodos()));
-                sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getRewards()));
-            } else {
-                sortedTasks.addAll(tasks.tasks.values());
+            if (tasks != null) {
+                if (tasksOrder != null) {
+                    sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getHabits()));
+                    sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getDailys()));
+                    sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getTodos()));
+                    sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getRewards()));
+                } else {
+                    sortedTasks.addAll(tasks.tasks.values());
+                }
             }
             if (userId != null) {
                 removeOldTasks(realm1, userId, sortedTasks);
