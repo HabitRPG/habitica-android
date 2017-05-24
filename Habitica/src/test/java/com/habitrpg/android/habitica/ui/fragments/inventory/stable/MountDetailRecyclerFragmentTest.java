@@ -6,6 +6,8 @@ import com.habitrpg.android.habitica.models.user.Items;
 
 import java.util.HashMap;
 
+import io.realm.RealmList;
+
 public class MountDetailRecyclerFragmentTest extends BaseFragmentTests<MountDetailRecyclerFragment> {
 
     @Override
@@ -14,7 +16,7 @@ public class MountDetailRecyclerFragmentTest extends BaseFragmentTests<MountDeta
         this.fragment = new MountDetailRecyclerFragment();
         User user = new User();
         user.setItems(new Items());
-        user.getItems().setMounts(new HashMap<>());
+        user.getItems().setMounts(new RealmList<>());
         this.fragment.setUser(user);
     }
 }

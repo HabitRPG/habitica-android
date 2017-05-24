@@ -6,6 +6,8 @@ import com.habitrpg.android.habitica.models.user.Items;
 
 import java.util.HashMap;
 
+import io.realm.RealmList;
+
 public class PetDetailRecyclerFragmentTest extends BaseFragmentTests<PetDetailRecyclerFragment> {
 
     @Override
@@ -14,7 +16,7 @@ public class PetDetailRecyclerFragmentTest extends BaseFragmentTests<PetDetailRe
         this.fragment = new PetDetailRecyclerFragment();
         User user = new User();
         user.setItems(new Items());
-        user.getItems().setPets(new HashMap<>());
+        user.getItems().setPets(new RealmList<>());
         this.fragment.setUser(user);
     }
 }

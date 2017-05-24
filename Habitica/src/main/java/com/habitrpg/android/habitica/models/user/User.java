@@ -425,21 +425,11 @@ public class User extends RealmObject {
     }
 
     public int getPetsFoundCount() {
-        return getNullableMapSize(items.getPets());
+        return items == null || items.getPets() == null ? 0 : items.getPets().size();
     }
 
     public int getMountsTamedCount() {
-        return getNullableMapSize(items.getMounts());
-    }
-
-    private int getNullableMapSize(RealmList map) {
-        int mapSize = 0;
-
-        if (map != null) {
-            mapSize = map.size();
-        }
-
-        return mapSize;
+        return items == null || items.getMounts() == null ? 0 : items.getMounts().size();
     }
 
     public RealmList<Tag> getTags() {

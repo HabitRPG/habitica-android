@@ -1,8 +1,10 @@
 package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.User;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.util.HashMap;
+import io.realm.RealmList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,12 +31,12 @@ public class UserTest {
 
     @Test
     public void getPetsFoundCount_shouldReturnSumOfAllPetEntries() {
-        HashMap<String, Integer> pets = new HashMap<>();
-        pets.put("BearCub-Base", 0);
-        pets.put("Sheep-Base", 5);
-        pets.put("Cheetah-Shade", 35);
-        pets.put("Slime-Base", -1);
-        pets.put("Axolotl-Red", 5);
+        RealmList<Pet> pets = new RealmList<>();
+        pets.add(new Pet());
+        pets.add(new Pet());
+        pets.add(new Pet());
+        pets.add(new Pet());
+        pets.add(new Pet());
 
         user.getItems().setPets(pets);
         assertEquals(5, user.getPetsFoundCount());
@@ -47,12 +49,12 @@ public class UserTest {
 
     @Test
     public void getMountsTamedCount_shouldReturnSumOfAllMountEntries() {
-        HashMap<String, Boolean> mounts = new HashMap<>();
-        mounts.put("BearCub-White", null);
-        mounts.put("BearCub-CottonCandyPink", true);
-        mounts.put("Seahorse-Base", true);
-        mounts.put("Owl-Zombie", true);
-        mounts.put("Cactus-White", null);
+        RealmList<Mount> mounts = new RealmList<>();
+        mounts.add(new Mount());
+        mounts.add(new Mount());
+        mounts.add(new Mount());
+        mounts.add(new Mount());
+        mounts.add(new Mount());
 
         user.getItems().setMounts(mounts);
         assertEquals(5, user.getMountsTamedCount());

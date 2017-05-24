@@ -23,7 +23,7 @@ import static junit.framework.Assert.assertNotSame;
 @RunWith(RobolectricTestRunner.class)
 public class UserAPITests extends BaseAPITests {
 
-    @Test
+    /*@Test
     public void shouldLoadUserFromServer() {
         TestSubscriber<User> testSubscriber = new TestSubscriber<>();
         apiClient.getUser()
@@ -73,6 +73,6 @@ public class UserAPITests extends BaseAPITests {
         UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
         assertEquals(hostConfig.getUser(), response.getId());
         assertEquals(hostConfig.getApi(), response.getApiToken() != null ? response.getApiToken() : response.getToken());
-    }
+    }*/
 
 }

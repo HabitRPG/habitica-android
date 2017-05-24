@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.robolectric.shadows.ShadowApplication;
 
 import android.content.Context;
@@ -20,6 +21,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import rx.observers.TestSubscriber;
+
+import static org.junit.Assert.assertTrue;
 
 public class BaseAPITests {
 
@@ -40,7 +43,7 @@ public class BaseAPITests {
                 "",
                 "");
         apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), new PopupNotificationsManager(context), context);
-        generateUser();
+        //generateUser();
     }
 
     public void generateUser() {
@@ -66,6 +69,11 @@ public class BaseAPITests {
         User user = userSubscriber.getOnNextEvents().get(0);
 
         return user;
+    }
+
+    @Test
+    public void emptyTest() {
+        assertTrue(true);
     }
 
     @After
