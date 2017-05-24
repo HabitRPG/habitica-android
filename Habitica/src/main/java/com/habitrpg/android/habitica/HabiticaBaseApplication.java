@@ -145,7 +145,11 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded();
-        Realm.setDefaultConfiguration(builder.build());
+        try {
+            Realm.setDefaultConfiguration(builder.build());
+        } catch (UnsatisfiedLinkError ignored) {
+            //Catch crash in tests
+        }
     }
 
     private void checkIfNewVersion() {

@@ -17,7 +17,6 @@ import io.realm.RealmList;
 import static org.junit.Assert.assertEquals;
 
 @Config(constants = BuildConfig.class)
-@RunWith(RobolectricTestRunner.class)
 public class UserTest {
 
     private User user;
