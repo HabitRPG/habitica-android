@@ -26,7 +26,12 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public Observable<RealmResults<Task>> getTasks(String taskType, String userID) {
-        return realm.where(Task.class).equalTo("type", taskType).equalTo("userId", userID).findAllSorted("position").sort("dateCreated", Sort.DESCENDING).asObservable()
+        return realm.where(Task.class)
+                .equalTo("type", taskType)
+                .equalTo("userId", userID)
+                .findAllSorted("position")
+                .sort("dateCreated", Sort.DESCENDING)
+                .asObservable()
                 .filter(RealmResults::isLoaded);
     }
 
