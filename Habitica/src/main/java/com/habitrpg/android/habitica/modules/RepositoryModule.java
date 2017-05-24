@@ -58,7 +58,7 @@ public class RepositoryModule {
     }
 
     @Provides
-    Realm providesRealm() {
+    public Realm providesRealm() {
         return Realm.getDefaultInstance();
     }
 
