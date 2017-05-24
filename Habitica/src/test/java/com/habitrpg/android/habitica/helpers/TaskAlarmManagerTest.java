@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers;
 
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.models.tasks.Days;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
@@ -11,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
@@ -29,7 +31,7 @@ import io.realm.RealmList;
  * Created by keithholliday on 7/16/16.
  */
 
-@Config(manifest = "AndroidManifestTesting.xml")
+@Config(constants = BuildConfig.class)
 @RunWith(value = RobolectricTestRunner.class)
 public class TaskAlarmManagerTest {
     private TaskAlarmManager taskAlarmManager;
@@ -38,7 +40,7 @@ public class TaskAlarmManagerTest {
 
     @Before
     public void setUp() {
-        context = ShadowApplication.getInstance().getApplicationContext();
+        context = RuntimeEnvironment.application;
         taskAlarmManager = new TaskAlarmManager(context);
     }
 

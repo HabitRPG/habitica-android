@@ -23,7 +23,7 @@ public class HostConfig {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.port = BuildConfig.PORT;
         this.address = BuildConfig.DEBUG ? BuildConfig.BASE_URL : context.getString(R.string.base_url);
-        this.api = prefs.getString(context.getString(R.string.SP_APIToken), null);
+        this.api = prefs.getString("APIToken", null);
         this.user = prefs.getString(context.getString(R.string.SP_userID), null);
     }
 

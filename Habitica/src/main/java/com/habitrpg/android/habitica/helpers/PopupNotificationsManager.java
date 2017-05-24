@@ -35,7 +35,7 @@ public class PopupNotificationsManager {
 
     public PopupNotificationsManager(Context context) {
         this.seenNotifications = new HashMap<>();
-        this.context = context.getApplicationContext();
+        this.context = context;
     }
 
     public void setApiClient(@Nullable ApiClient apiClient) {

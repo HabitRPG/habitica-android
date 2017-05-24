@@ -268,6 +268,9 @@ public class Task extends RealmObject implements Parcelable {
     }
 
     public void setReminders(RealmList<RemindersItem> reminders) {
+        for (RemindersItem reminder : reminders) {
+            reminder.setTask(this);
+        }
         this.reminders = reminders;
     }
 

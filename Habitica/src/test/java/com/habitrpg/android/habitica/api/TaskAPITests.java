@@ -35,7 +35,7 @@ public class TaskAPITests extends BaseAPITests {
     @Override
     public void setUp() {
         super.setUp();
-        TestSubscriber<TaskList> oldTaskSubscriber = new TestSubscriber<>();
+        /*TestSubscriber<TaskList> oldTaskSubscriber = new TestSubscriber<>();
         apiClient.getTasks()
                 .subscribe(oldTaskSubscriber);
         oldTaskSubscriber.awaitTerminalEvent();
@@ -62,7 +62,7 @@ public class TaskAPITests extends BaseAPITests {
                 .subscribe(testSubscriber);
         testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
-        testSubscriber.assertCompleted();
+        testSubscriber.assertCompleted();*/
     }
 
     private Task createRandomTask(String number, String type) {

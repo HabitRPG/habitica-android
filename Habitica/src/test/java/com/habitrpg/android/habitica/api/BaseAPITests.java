@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.shadows.ShadowApplication;
 
 import android.content.Context;
@@ -37,12 +38,12 @@ public class BaseAPITests {
         if (BuildConfig.BASE_URL.contains("habitica.com")) {
             throw new InvalidParameterException("Can't test against production server.");
         }
-        Context context = ShadowApplication.getInstance().getApplicationContext();
+        Context context = RuntimeEnvironment.application;
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
                 BuildConfig.PORT,
                 "",
                 "");
-        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), new PopupNotificationsManager(context), context);
+        //apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), new PopupNotificationsManager(context), context);
         //generateUser();
     }
 

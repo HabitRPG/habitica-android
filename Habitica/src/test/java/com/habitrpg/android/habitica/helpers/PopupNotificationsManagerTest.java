@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
@@ -39,24 +40,18 @@ import static org.mockito.Mockito.verify;
 @RunWith(RobolectricTestRunner.class)
 public class PopupNotificationsManagerTest {
 
-    public ApiClient apiClient;
     public HostConfig hostConfig;
-
-    public String username;
-    public final String password = "password";
     private Context context;
     private PopupNotificationsManager popupNotificationsManager;
 
     @Before
     public void setUp() {
-        context = ShadowApplication.getInstance().getApplicationContext();
+        context = RuntimeEnvironment.application;
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
                 BuildConfig.PORT,
                 "",
                 "");
         popupNotificationsManager =new PopupNotificationsManager(context);
-
-        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), popupNotificationsManager, context);
     }
 
     @Test
