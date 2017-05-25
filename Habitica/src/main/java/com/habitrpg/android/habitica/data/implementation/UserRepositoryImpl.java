@@ -70,7 +70,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                         Calendar calendar = new GregorianCalendar();
                         TimeZone timeZone = calendar.getTimeZone();
                         long offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
-                        if (offset != user.getPreferences().getTimezoneOffset()) {
+                        if (user != null && user.getPreferences() != null && offset != user.getPreferences().getTimezoneOffset()) {
                             return updateUser(user, "preferences.timezoneOffset", String.valueOf(offset));
                         } else {
                             return Observable.just(user);
@@ -104,9 +104,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     public Observable<User> sleep(User user) {
         return apiClient.sleep()
                 .map(isSleeping -> {
-                    localRepository.executeTransaction(realm -> {
-                        user.getPreferences().setSleep(isSleeping);
-                    });
+                    localRepository.executeTransaction(realm -> user.getPreferences().setSleep(isSleeping));
                     return user;
                 });
     }
@@ -140,10 +138,10 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                     return response;
                 })
                 .doOnNext(skillResponse -> {
-            if (user != null) {
-                mergeUser(user, skillResponse.user);
-            }
-        });
+                    if (user != null) {
+                        mergeUser(user, skillResponse.user);
+                    }
+                });
     }
 
     @Override
@@ -158,7 +156,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     @Override
     public Observable<User> changeClass(String selectedClass) {
-        return changeClass(selectedClass);
+        return apiClient.changeClass(selectedClass);
     }
 
     @Override
@@ -196,7 +194,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     private User mergeUser(User oldUser, User newUser) {
-        if (oldUser.isValid()) {
+        if (!oldUser.isValid()) {
             return oldUser;
         }
         User copiedUser = localRepository.getUnmanagedCopy(oldUser);

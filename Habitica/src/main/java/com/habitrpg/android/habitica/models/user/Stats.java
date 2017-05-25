@@ -81,8 +81,12 @@ public class Stats extends RealmObject {
         this.str = stats.str != null ? stats.str : this.str;
         this.per = stats.per != null ? stats.per : this.per;
         this._int = stats._int != null ? stats._int : this._int;
-        this.training.merge(stats.training);
-        this.buffs.merge(stats.buffs);
+        if (training != null) {
+            this.training.merge(stats.training);
+        }
+        if (buffs != null) {
+            this.buffs.merge(stats.buffs);
+        }
         this.points = stats.points != null ? stats.points : this.points;
         this.lvl = stats.lvl != null ? stats.lvl : this.lvl;
         this.habitClass = stats.habitClass != null ? stats.habitClass : this.habitClass;
