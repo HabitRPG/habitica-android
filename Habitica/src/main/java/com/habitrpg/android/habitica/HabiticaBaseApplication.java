@@ -120,7 +120,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         }
         setupRealm();
         setupDagger();
-        crashlyticsProxy.init(this);
         setupLeakCanary();
         setupFacebookSdk();
         createBillingAndCheckout();
