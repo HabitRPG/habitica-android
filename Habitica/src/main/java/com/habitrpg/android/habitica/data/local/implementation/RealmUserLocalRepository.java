@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
@@ -43,7 +44,7 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
     }
 
     private void removeOldTags(String userId, List<Tag> onlineTags) {
-        RealmResults<Tag> tags = realm.where(Tag.class).equalTo("userId", userId).findAll();
+        OrderedRealmCollectionSnapshot<Tag> tags = realm.where(Tag.class).equalTo("userId", userId).findAll().createSnapshot();
 
         for (Tag tag : tags) {
             if (!onlineTags.contains(tag)) {

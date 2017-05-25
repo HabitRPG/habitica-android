@@ -215,9 +215,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 userRepository.updateUser(user, "preferences.sound", newAudioTheme)
                         .subscribe(habitRPGUser -> {}, throwable -> {});
 
-                Preferences preferences = user.getPreferences();
-                preferences.setSound(newAudioTheme);
-
                 soundManager.setSoundTheme(newAudioTheme);
 
                 soundManager.preloadAllFiles();

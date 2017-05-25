@@ -81,7 +81,7 @@ public class ChecklistItem extends RealmObject {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass().equals(ChecklistItem.class)) {
+        if (obj.getClass().equals(ChecklistItem.class) && this.id != null) {
             return this.id.equals(((ChecklistItem)obj).id);
         }
         return super.equals(obj);

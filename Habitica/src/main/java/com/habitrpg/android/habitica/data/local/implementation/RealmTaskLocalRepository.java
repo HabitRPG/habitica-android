@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -101,7 +102,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     }
 
     private void removeOldTasks(Realm realm, String userID, List<Task> onlineTaskList) {
-        RealmResults<Task> localTasks = realm.where(Task.class).equalTo("userId", userID).findAll();
+        OrderedRealmCollectionSnapshot<Task> localTasks = realm.where(Task.class).equalTo("userId", userID).findAll().createSnapshot();
         for (Task localTask : localTasks) {
             if (!onlineTaskList.contains(localTask)) {
                 for (ChecklistItem item : localTask.checklist) {
@@ -116,7 +117,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     }
 
     private void removeOldChecklists(Realm realm, List<ChecklistItem> onlineItems) {
-        RealmResults<ChecklistItem> localItems = realm.where(ChecklistItem.class).findAll();
+        OrderedRealmCollectionSnapshot<ChecklistItem> localItems = realm.where(ChecklistItem.class).findAll().createSnapshot();
         for (ChecklistItem localItem : localItems) {
             if (!onlineItems.contains(localItem)) {
                 localItem.deleteFromRealm();
@@ -125,7 +126,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     }
 
     private void removeOldReminders(Realm realm, List<RemindersItem> onlineReminders) {
-        RealmResults<RemindersItem> localReminders = realm.where(RemindersItem.class).findAll();
+        OrderedRealmCollectionSnapshot<RemindersItem> localReminders = realm.where(RemindersItem.class).findAll().createSnapshot();
         for (RemindersItem localItem : localReminders) {
             if (!onlineReminders.contains(localItem)) {
                 localItem.deleteFromRealm();

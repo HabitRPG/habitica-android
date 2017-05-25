@@ -71,11 +71,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         return (HabiticaBaseApplication) context.getApplicationContext();
     }
 
-    private static void setFinalStatic(Field field, @Nullable Object newValue) throws NoSuchFieldException, IllegalAccessException {
-        field.setAccessible(true);
-        field.set(null, newValue);
-    }
-
     public static void logout(Context context) {
         Realm realm = Realm.getDefaultInstance();
         getInstance(context).deleteDatabase(realm.getPath());
@@ -235,7 +230,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                if (currentActivity.equals(activity)) {
+                if (currentActivity != null && currentActivity.equals(activity)) {
                     currentActivity = null;
                 }
             }
