@@ -285,13 +285,22 @@ public class PartyFragment extends BaseMainFragment {
                         break;
                     }
                     case 1: {
-                        chatListFragment = new ChatListFragment();
-                        chatListFragment.configure("party", user, false);
+                        if (chatListFragment == null) {
+                            chatListFragment = new ChatListFragment();
+                            if (user.hasParty()) {
+                                chatListFragment.configure(user.getParty().id, user, false);
+                            }
+                        }
                         fragment = chatListFragment;
                         break;
                     }
                     case 2: {
-                        partyMemberListFragment = new PartyMemberListFragment();
+                        if (partyMemberListFragment == null) {
+                            partyMemberListFragment = new PartyMemberListFragment();
+                            if (user.hasParty()) {
+                                partyMemberListFragment.setPartyId(user.getParty().id);
+                            }
+                        }
                         fragment = partyMemberListFragment;
                         break;
                     }

@@ -61,7 +61,6 @@ public class PartyMemberListFragment extends BaseFragment {
 
     public void setPartyId(String id) {
         this.partyId = id;
-        getUsers();
     }
 
     private void getUsers() {
