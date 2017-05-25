@@ -24,6 +24,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
@@ -51,7 +52,9 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     private static AppComponent component;
     public RefWatcher refWatcher;
     @Inject
-    Lazy<ApiClient> lazyApiHelper;
+    ApiClient lazyApiHelper;
+    @Inject
+    InventoryRepository inventoryRepository;
     @Inject
     SharedPreferences sharedPrefs;
     @Inject
@@ -83,7 +86,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         editor.putBoolean("use_reminder", use_reminder);
         editor.putString("reminder_time", reminder_time);
         editor.apply();
-        getInstance(context).lazyApiHelper.get().updateAuthenticationCredentials(null, null);
+        getInstance(context).lazyApiHelper.updateAuthenticationCredentials(null, null);
         startActivity(LoginActivity.class, context);
     }
 
@@ -165,10 +168,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         int lastInstalledVersion = sharedPrefs.getInt("last_installed_version", 0);
         if (lastInstalledVersion < info.versionCode) {
             sharedPrefs.edit().putInt("last_installed_version", info.versionCode).apply();
-            ApiClient apiClient = this.lazyApiHelper.get();
-
-            apiClient.getContent()
-                    .subscribe(contentResult -> { }, RxErrorHandler.handleEmptyError());
+            inventoryRepository.retrieveContent().subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -283,7 +283,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
             @NonNull
             @Override
             public PurchaseVerifier getPurchaseVerifier() {
-                return new HabiticaPurchaseVerifier(HabiticaBaseApplication.this, lazyApiHelper.get());
+                return new HabiticaPurchaseVerifier(HabiticaBaseApplication.this, lazyApiHelper);
             }
         });
 
