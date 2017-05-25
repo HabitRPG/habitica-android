@@ -132,6 +132,9 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
             }
         }
         Fresco.initialize(this);
+
+        RxErrorHandler.init(crashlyticsProxy);
+
         checkIfNewVersion();
     }
 
