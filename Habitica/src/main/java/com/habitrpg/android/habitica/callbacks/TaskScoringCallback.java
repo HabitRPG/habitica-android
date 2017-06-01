@@ -1,16 +1,18 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.Item;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import java.util.Locale;
 
 import rx.functions.Action1;
 
@@ -57,7 +59,7 @@ public class TaskScoringCallback implements Action1<TaskDirectionData> {
                 String type = taskDirectionData.get_tmp().getDrop().getType();
                 From from = null;
 
-                switch (type.toLowerCase()) {
+                switch (type.toLowerCase(Locale.US)) {
                     case "hatchingpotion":
                         from = new Select().from(HatchingPotion.class);
                         break;

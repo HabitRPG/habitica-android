@@ -11,11 +11,11 @@ import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Skill;
-import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.user.SpecialItems;
+import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -43,11 +43,15 @@ public class SkillsFragment extends BaseMainFragment {
     private final int MEMBER_SELECTION_ACTIVITY = 11;
 
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     SkillsRecyclerViewAdapter adapter;
     private View view;
     private Skill selectedSkill;
     private ProgressDialog progressDialog;
+
+    static public Double round(Double value, int n) {
+        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
+    }
 
     @Nullable
     @Override
@@ -74,8 +78,10 @@ public class SkillsFragment extends BaseMainFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        mRecyclerView.setAdapter(adapter);
+        recyclerView.invalidateItemDecorations();
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setAdapter(adapter);
     }
 
     private void checkUserLoadSkills() {
@@ -175,8 +181,8 @@ public class SkillsFragment extends BaseMainFragment {
             message.append(" + ").append(round(event.gold, 2)).append(" GP");
         }
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
-        apiHelper.apiService.getUser()
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.getUser()
+
                 .subscribe(new MergeUserCallback(activity, user), throwable -> {
                 });
     }
@@ -206,13 +212,13 @@ public class SkillsFragment extends BaseMainFragment {
 
     private void useSkill(Skill skill, String taskId) {
         displayProgressDialog();
-        Observable<HabitResponse<SkillResponse>> observable;
+        Observable<SkillResponse> observable;
         if (taskId != null) {
-            observable = apiHelper.apiService.useSkill(skill.key, skill.target, taskId);
+            observable = apiClient.useSkill(skill.key, skill.target, taskId);
         } else {
-            observable = apiHelper.apiService.useSkill(skill.key, skill.target);
+            observable = apiClient.useSkill(skill.key, skill.target);
         }
-        observable.compose(apiHelper.configureApiCallObserver())
+        observable
                 .subscribe(new SkillCallback(activity, user, skill), throwable -> {
                     removeProgressDialog();
                 });
@@ -231,8 +237,7 @@ public class SkillsFragment extends BaseMainFragment {
         }
     }
 
-    static public Double round(Double value, int n) {
-        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
-    }
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_skills);	}
 
 }

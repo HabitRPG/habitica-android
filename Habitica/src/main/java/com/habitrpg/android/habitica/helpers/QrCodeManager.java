@@ -1,38 +1,31 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v7.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.AvatarView;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.mikepenz.materialize.color.Material;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import net.glxn.qrgen.android.QRCode;
-import net.glxn.qrgen.core.image.ImageType;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -59,8 +52,8 @@ public class QrCodeManager {
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            QrCodeManager.this.avatarView.setUser(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            QrCodeManager.this.avatarView.setUser(user);
         }
 
         @Override
@@ -69,7 +62,7 @@ public class QrCodeManager {
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };
@@ -88,7 +81,10 @@ public class QrCodeManager {
         this.userId = userId;
     }
 
-    public void setUpView(LinearLayout qrLayout) {
+    public void setUpView(@Nullable LinearLayout qrLayout) {
+        if (qrLayout == null) {
+            return;
+        }
         this.qrCodeImageView = (ImageView) qrLayout.findViewById(R.id.QRImageView);
         this.qrCodeDownloadButton = (Button) qrLayout.findViewById(R.id.QRDownloadButton);
         this.avatarView = (AvatarView) qrLayout.findViewById(R.id.avatarView);
@@ -107,12 +103,12 @@ public class QrCodeManager {
         this.setDownloadQr();
     }
 
-    public void displayQrCode() {
+    private void displayQrCode() {
         if (qrCodeImageView == null) {
             return;
         }
 
-        int qrCodeSize = (int)dipToPixels(400.0f);
+        int qrCodeSize = (int) dipToPixels(400.0f);
 
         Bitmap myBitmap = QRCode.from(this.content)
                 .withErrorCorrection(ErrorCorrectionLevel.H)
@@ -122,42 +118,39 @@ public class QrCodeManager {
         qrCodeImageView.setImageBitmap(myBitmap);
     }
 
-    public float dipToPixels(float dipValue) {
+    private float dipToPixels(float dipValue) {
         DisplayMetrics metrics = this.context.getResources().getDisplayMetrics();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 
-    public void setDownloadQr() {
+    private void setDownloadQr() {
         if (qrCodeDownloadButton == null) {
             return;
         }
 
-        qrCodeDownloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                File dir = getAlbumStorageDir(context, albumnName);
-                dir.mkdirs();
+        qrCodeDownloadButton.setOnClickListener(view -> {
+            File dir = getAlbumStorageDir(context, albumnName);
+            dir.mkdirs();
 
-                File pathToQRCode = new File(dir, fileName);
-                try {
-                    pathToQRCode.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            File pathToQRCode = new File(dir, fileName);
+            try {
+                pathToQRCode.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-                try {
-                    FileOutputStream outputStream = new FileOutputStream(pathToQRCode);
-                    qrCodeWrapper.setDrawingCacheEnabled(true);
-                    Bitmap b = qrCodeWrapper.getDrawingCache();
-                    b.compress(Bitmap.CompressFormat.JPEG, 95, outputStream);
+            try {
+                FileOutputStream outputStream = new FileOutputStream(pathToQRCode);
+                qrCodeWrapper.setDrawingCacheEnabled(true);
+                Bitmap b = qrCodeWrapper.getDrawingCache();
+                b.compress(Bitmap.CompressFormat.JPEG, 95, outputStream);
 
-                    outputStream.close();
+                outputStream.close();
 
-                    Toast.makeText(context, saveMessage + pathToQRCode.getPath(),
-                            Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Toast.makeText(context, saveMessage + pathToQRCode.getPath(),
+                        Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -179,12 +172,7 @@ public class QrCodeManager {
         this.setUpView(qrLayout);
         Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
 
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        dialogButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }

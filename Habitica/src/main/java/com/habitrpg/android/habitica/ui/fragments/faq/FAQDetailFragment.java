@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
+import com.habitrpg.android.habitica.models.FAQArticle;
 
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;

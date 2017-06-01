@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_margin="8dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="7dp"
-        android:text="Chat"
+        android:text="@string/chat"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/material_drawer_primary_text" />
 
@@ -20,17 +20,17 @@
 
         <ImageButton
             android:id="@+id/emoji.toggle.btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_emoticon_grey600_24dp"
             android:scaleType="center"
             android:backgroundTint="@color/transparent"
-            android:contentDescription="Toogle Emojis" />
+            android:contentDescription="Toogle Emojis"
+            android:layout_gravity="center"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="72dp"
             android:layout_weight="1"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
@@ -51,7 +51,13 @@
             android:layout_height="50dp"
             android:textColor="@color/white"
             android:text="@string/post"
-            android:drawableTint="@color/white"/>
+            android:drawableTint="@color/white"
+            android:layout_gravity="center"/>
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/community_guidelines_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/read_community_guidelines"
+        style="@style/Caption3" />
 </LinearLayout>

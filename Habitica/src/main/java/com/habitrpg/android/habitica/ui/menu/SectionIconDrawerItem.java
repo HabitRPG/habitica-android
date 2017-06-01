@@ -16,6 +16,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by mikepenz on 03.02.15.
  */
@@ -75,29 +77,30 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
     }
 
     @Override
-    public void bindView(ViewHolder viewHolder) {
-        Context ctx = viewHolder.itemView.getContext();
+    public void bindView(ViewHolder holder, List<Object> payloads) {
+        super.bindView(holder, payloads);
+        Context ctx = holder.itemView.getContext();
 
         //set the identifier from the drawerItem here. It can be used to run tests
-        viewHolder.itemView.setId(hashCode());
+        holder.itemView.setId(hashCode());
 
         //define this item to be not clickable nor enabled
-        viewHolder.view.setClickable(false);
-        viewHolder.view.setEnabled(false);
+        holder.view.setClickable(false);
+        holder.view.setEnabled(false);
 
         //define the text color
-        viewHolder.name.setTextColor(ContextCompat.getColor(ctx, R.color.white));
+        holder.name.setTextColor(ContextCompat.getColor(ctx, R.color.white));
 
         //set the text for the name
-        StringHolder.applyTo(this.getName(), viewHolder.name);
+        StringHolder.applyTo(this.getName(), holder.name);
 
         //define the typeface for our textViews
         if (getTypeface() != null) {
-            viewHolder.name.setTypeface(getTypeface());
+            holder.name.setTypeface(getTypeface());
         }
 
         //call the onPostBindView method to trigger post bind view actions (like the listener to modify the item if required)
-        onPostBindView(this, viewHolder.itemView);
+        onPostBindView(this, holder.itemView);
     }
 
     @Override

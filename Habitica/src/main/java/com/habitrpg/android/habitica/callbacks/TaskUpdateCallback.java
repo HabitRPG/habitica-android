@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.callbacks;
 
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 

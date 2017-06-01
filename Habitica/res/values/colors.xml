@@ -11,9 +11,9 @@
     <color name="brand">@color/brand_100</color>
 
     <!--  HabitRPG task color -->
-    <color name="worst_100">#a13f44</color>
-    <color name="worst_50">#a1334d</color>
-    <color name="worst_10">#a10013</color>
+    <color name="worst_100">#DE3F3F</color>
+    <color name="worst_50">#C92B2B</color>
+    <color name="worst_10">#B01515</color>
 
     <color name="worse_100">#FF6165</color>
     <color name="worse_50">#F74E52</color>
@@ -27,13 +27,13 @@
     <color name="neutral_50">#FFB445</color>
     <color name="neutral_10">#FFA624</color>
 
-    <color name="good_100">#69D59A</color>
-    <color name="good_50">#50C987</color>
-    <color name="good_10">#36B971</color>
+    <color name="good_100">#24CC8F</color>
+    <color name="good_50">#20B780</color>
+    <color name="good_10">#1CA372</color>
 
-    <color name="better_100">#5AE4B2</color>
-    <color name="better_50">#3FDAA2</color>
-    <color name="better_10">#23CC8F</color>
+    <color name="better_100">#3BCAD7</color>
+    <color name="better_50">#34B5C1</color>
+    <color name="better_10">#26A0AB</color>
 
     <color name="best_100">#50B5E9</color>
     <color name="best_50">#46A7D9</color>
@@ -54,7 +54,8 @@
 
     <color name="changelog.note">#ffcf42</color>
 
-
+    <color name="colorPrimary">@color/brand_300</color>
+    <color name="colorPrimaryDark">@color/brand_50</color>
     <!-- text -->
     <color name="textColorDark">#FFFFFF</color>
     <color name="textColorSecondaryDark">@color/brand_500</color>
@@ -91,7 +92,9 @@
     <color name="task_gray">#b7b7b7</color>
     <color name="checkbox_fill">#50ffffff</color>
     <color name="checkbox_checked_fill">#c8ffffff</color>
-    <color name="checkbox_stroke">#32000000</color>
+    <color name="checkbox_checklist_fill">#23000000</color>
+
+    <color name="habit_inactive_gray">#F9F9F9</color>
 
     <!-- Preferences -->
     <color name="preference_fallback_accent_color">@color/colorAccent</color>
@@ -102,6 +105,33 @@
 
     <color name="widget_background">#c8432874</color>
 
-    <color name="gem_view_background">#10bda8ff</color>
+    <color name="gem_view_background">@color/habit_inactive_gray</color>
+    <color name="task_border_gray">#1a000000</color>
+    <color name="task_secondary_text">#B2B2B2</color>
+    <color name="header_class_name">#CCBEED</color>
+    <color name="gem_icon_color">#24cc8f</color>
+    <color name="subscription_description_text">#b1000000</color>
+    <color name="pill_gray">#efefef</color>
+    <color name="white_75_alpha">#bfffffff</color>
+    <color name="white_50_alpha">#7fffffff</color>
+    <color name="white_15_alpha">#26ffffff</color>
+    <color name="black_5_alpha">#0b000000</color>
+    <color name="black_10_alpha">#16000000</color>
+    <color name="black_20_alpha">#33000000</color>
+    <color name="light_gray_bg">#F6F4F8</color>
 
+    <color name="skin_ddc994">#ddc994</color>
+    <color name="skin_f5a76e">#f5a76e</color>
+    <color name="skin_ea8349">#ea8349</color>
+    <color name="skin_c06534">#c06534</color>
+    <color name="skin_98461a">#98461a</color>
+    <color name="skin_915533">#915533</color>
+    <color name="skin_c3e1dc">#c3e1dc</color>
+    <color name="skin_6bd049">#6bd049</color>
+    
+    <color name="hair_white">#DEDEDE</color>
+    <color name="hair_brown">#903A00</color>
+    <color name="hair_blond">#CFA925</color>
+    <color name="hair_red">#EC720E</color>
+    <color name="hair_black">#313131</color>
 </resources>

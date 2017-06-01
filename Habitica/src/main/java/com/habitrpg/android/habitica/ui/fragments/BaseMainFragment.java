@@ -1,38 +1,43 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.roughike.bottombar.BottomBar;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import javax.inject.Inject;
 
 public abstract class BaseMainFragment extends BaseFragment {
 
     @Inject
-    public APIHelper apiHelper;
-
+    public ApiClient apiClient;
+    @Nullable
+    public MainActivity activity;
+    @Nullable
+    public TabLayout tabLayout;
+    @Nullable
+    public BottomBar bottomNavigation;
+    public ViewGroup floatingMenuWrapper;
+    public boolean usesTabLayout;
+    public boolean usesBottomNavigation = false;
+    public int fragmentSidebarPosition;
     @Inject
     protected SoundManager soundManager;
-
-    public MainActivity activity;
-    public TabLayout tabLayout;
-    public FrameLayout floatingMenuWrapper;
-    public boolean usesTabLayout;
-    public int fragmentSidebarPosition;
+    @Nullable
     protected HabitRPGUser user;
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(@Nullable HabitRPGUser user) {
         this.user = user;
     }
 
@@ -40,15 +45,19 @@ public abstract class BaseMainFragment extends BaseFragment {
         this.user = user;
     }
 
-    public void setTabLayout(TabLayout tabLayout) {
+    public void setTabLayout(@Nullable TabLayout tabLayout) {
         this.tabLayout = tabLayout;
     }
 
-    public void setFloatingMenuWrapper(FrameLayout view) {
+    public void setBottomNavigation(@Nullable BottomBar bottomNavigation) {
+        this.bottomNavigation = bottomNavigation;
+    }
+
+    public void setFloatingMenuWrapper(ViewGroup view) {
         this.floatingMenuWrapper = view;
     }
 
-    public void setActivity(MainActivity activity) {
+    public void setActivity(@Nullable MainActivity activity) {
         this.activity = activity;
     }
 
@@ -60,8 +69,12 @@ public abstract class BaseMainFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.activity = (MainActivity) getActivity();
+
+        if (getActivity().getClass().equals(MainActivity.class)) {
+            this.activity = (MainActivity) getActivity();
+        }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,8 +89,19 @@ public abstract class BaseMainFragment extends BaseFragment {
             if (this.usesTabLayout) {
                 tabLayout.removeAllTabs();
                 tabLayout.setVisibility(View.VISIBLE);
+                tabLayout.setTabMode(TabLayout.MODE_FIXED);
             } else {
                 tabLayout.setVisibility(View.GONE);
+            }
+        }
+
+        if (bottomNavigation != null) {
+            if (this.usesBottomNavigation) {
+                bottomNavigation.removeOnTabSelectListener();
+                bottomNavigation.removeOnTabReselectListener();
+                bottomNavigation.setVisibility(View.VISIBLE);
+            } else {
+                bottomNavigation.setVisibility(View.GONE);
             }
         }
 
@@ -87,7 +111,9 @@ public abstract class BaseMainFragment extends BaseFragment {
 
         setHasOptionsMenu(true);
 
-        activity.setActiveFragment(this);
+        if (activity != null) {
+            activity.setActiveFragment(this);
+        }
 
         return null;
     }
@@ -100,4 +126,10 @@ public abstract class BaseMainFragment extends BaseFragment {
 
         super.onSaveInstanceState(outState);
     }
+
+    public String customTitle() {
+        return null;
+    }
+
+
 }

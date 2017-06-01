@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRe
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
+import com.habitrpg.android.habitica.models.inventory.Animal;
 
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;

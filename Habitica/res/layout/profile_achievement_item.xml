@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/achievement_item_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="vertical">
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/achievement_item_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dp"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -24,11 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:text="2"
+            tools:text="2"
             android:background="@drawable/layout_rounded_bg_brand"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:textSize="10dp"
+            android:textSize="12sp"
             android:textColor="#ffffff" />
     </FrameLayout>
 

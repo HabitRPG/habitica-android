@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
@@ -16,8 +15,8 @@ import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -37,7 +36,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,11 +51,11 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
     public String seenGroupId;
     @Inject
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     public boolean isTavern;
-    @BindView(R.id.chat_list)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.chat_refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutManager layoutManager;
     private String groupId;
@@ -101,7 +99,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         if (view == null)
-            view = inflater.inflate(R.layout.fragment_chatlist, container, false);
+            view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
 
         return view;
     }
@@ -127,7 +125,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             mRecyclerView.setLayoutManager(layoutManager);
         }
 
-        chatAdapter = new ChatRecyclerViewAdapter(new ArrayList<>(), userId, groupId, isTavern);
+        chatAdapter = new ChatRecyclerViewAdapter(new ArrayList<>(), user, groupId, isTavern);
 
         mRecyclerView.setAdapter(chatAdapter);
 
@@ -138,7 +136,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
 
-        apiHelper.apiService.listGroupChat(groupId).compose(apiHelper.configureApiCallObserver())
+        apiClient.listGroupChat(groupId)
                 .subscribe(this, throwable -> {
                 });
     }
@@ -156,8 +154,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
             gotNewMessages = false;
 
-            apiHelper.apiService.seenMessages(seenGroupId)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.seenMessages(seenGroupId)
                     .subscribe(s -> {
                     }, throwable -> {
                     });
@@ -165,10 +162,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     @Subscribe
-    public void onEvent(CopyChatMessageCommand cmd)
-    {
-        ClipboardManager clipMan = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData chatMessage = ClipData.newPlainText("Chat Message",cmd.chatMessage.text);
+    public void onEvent(CopyChatMessageCommand cmd) {
+        ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData chatMessage = ClipData.newPlainText("Chat Message", cmd.chatMessage.text);
         clipMan.setPrimaryClip(chatMessage);
         MainActivity activity = (MainActivity) getActivity();
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), UiUtils.SnackbarDisplayType.NORMAL);
@@ -179,8 +175,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.chat_flag_confirmation)
                 .setPositiveButton(R.string.flag_confirm, (dialog, id) -> {
-                    apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiClient.flagMessage(cmd.groupId, cmd.chatMessage.id)
+
                             .subscribe(aVoid -> {
                                 MainActivity activity = (MainActivity) getActivity();
                                 UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
@@ -194,7 +190,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Subscribe
     public void onEvent(final ToggleLikeMessageCommand cmd) {
-        apiHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id).compose(apiHelper.configureApiCallObserver())
+        apiClient.likeMessage(cmd.groupId, cmd.chatMessage.id)
                 .subscribe(voids -> {
                 }, throwable -> {
                 });
@@ -202,8 +198,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Subscribe
     public void onEvent(final DeleteChatMessageCommand cmd) {
-        apiHelper.apiService.deleteMessage(cmd.groupId, cmd.chatMessage.id)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.deleteMessage(cmd.groupId, cmd.chatMessage.id)
+
                 .subscribe(aVoid -> {
                     if (currentChatMessages != null) {
                         currentChatMessages.remove(cmd.chatMessage);
@@ -218,8 +214,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public void onEvent(SendNewGroupMessageCommand cmd) {
         HashMap<String, String> messageObject = new HashMap<>();
         messageObject.put("message", cmd.Message);
-        apiHelper.apiService.postGroupChat(cmd.TargetGroupId, messageObject)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.postGroupChat(cmd.TargetGroupId, messageObject)
+
                 .subscribe(postChatMessageResult -> {
                     if (currentChatMessages != null) {
                         currentChatMessages.add(0, postChatMessageResult.message);
@@ -229,13 +225,13 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                 }, throwable -> {
                 });
 
-        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+        UiUtils.dismissKeyboard(getActivity());
     }
 
     // If the ChatList is Tavern, we're able to toggle the sleep-mode
     @Subscribe
     public void onEvent(ToggleInnCommand event) {
-        apiHelper.apiService.sleep().compose(apiHelper.configureApiCallObserver())
+        apiClient.sleep()
                 .subscribe(aVoid -> {
                     ToggledInnStateEvent innState = new ToggledInnStateEvent();
                     innState.Inn = !user.getPreferences().getSleep();

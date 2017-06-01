@@ -16,17 +16,17 @@
             android:layout_height="@dimen/checkbox_size"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:button="@drawable/daily_checkbox"
+            android:button="@drawable/checklist_checkbox"
             android:layout_gravity="center_horizontal" />
         </RelativeLayout>
         <net.pherth.android.emoji_library.EmojiTextView
             android:id="@+id/checkedTextView"
-            style="@style/CardTitle"
+            style="@style/Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:paddingLeft="16dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <View
         android:id="@+id/bottomBorderView"

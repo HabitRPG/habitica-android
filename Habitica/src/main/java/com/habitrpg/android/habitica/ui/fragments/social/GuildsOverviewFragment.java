@@ -2,8 +2,10 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
+import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,6 +35,9 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
 
     @BindView(R.id.chat_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @Inject
+    ChallengeRepository challengeRepository;
 
     private List<Group> guilds;
     private ArrayList<String> guildIDs;
@@ -68,15 +75,17 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
     }
 
     private void fetchGuilds() {
-        if (this.apiHelper != null && this.apiHelper.apiService != null) {
-            this.apiHelper.apiService.listGroups("guilds")
-                    .compose(apiHelper.configureApiCallObserver())
+        if (this.apiClient != null && this.apiClient != null) {
+            this.apiClient.listGroups("guilds")
+
                     .subscribe(groups -> {
                         GuildsOverviewFragment.this.guilds = groups;
                         GuildsOverviewFragment.this.setGuildsOnListView();
                         if (swipeRefreshLayout != null) {
                             swipeRefreshLayout.setRefreshing(false);
                         }
+
+                        challengeRepository.setUsersGroups(groups);
                     }, throwable -> {
                     });
         }
@@ -111,5 +120,11 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
             guildFragment.isMember = true;
             this.activity.displayFragment(guildFragment);
         }
+    }
+
+
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_guilds);
     }
 }

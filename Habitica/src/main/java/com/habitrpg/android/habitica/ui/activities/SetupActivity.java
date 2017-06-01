@@ -2,64 +2,79 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
-import com.amplitude.api.Amplitude;
-import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
+import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
+import com.habitrpg.android.habitica.ui.views.FadingViewPager;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.viewpagerindicator.IconPageIndicator;
+import com.viewpagerindicator.IconPagerAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import rx.Observable;
 
-public class SetupActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
+public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
     @Inject
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     @Inject
     protected HostConfig hostConfig;
+    @Inject
+    protected UserRepository userRepository;
+    @Inject
+    protected TaskRepository taskRepository;
     @BindView(R.id.view_pager)
-    ViewPager pager;
-    @BindView(R.id.skipButton)
-    Button skipButton;
+    FadingViewPager pager;
     @BindView(R.id.nextButton)
     Button nextButton;
     @BindView(R.id.previousButton)
     Button previousButton;
+    @BindView(R.id.view_pager_indicator)
+    IconPageIndicator indicator;
     AvatarSetupFragment avatarSetupFragment;
     TaskSetupFragment taskSetupFragment;
+    @Nullable
     HabitRPGUser user;
-    Boolean completedSetup;
+    boolean completedSetup = false;
 
     @Override
     protected int getLayoutResId() {
@@ -69,12 +84,17 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
+        userRepository.getUser(hostConfig.getUser())
+                .flatMap(user -> {
+                    if (user == null) {
+                        return userRepository.retrieveUser(true);
+                    } else {
+                        return Observable.just(user);
+                    }
+                })
+                .subscribe(this::onUserReceived, throwable -> {
 
-        this.skipButton.setOnClickListener(this);
-        this.nextButton.setOnClickListener(this);
-        this.previousButton.setOnClickListener(this);
-        this.completedSetup = false;
+        });
 
         Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("status", "displayed");
@@ -83,12 +103,24 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         String currentDeviceLanguage = Locale.getDefault().getLanguage();
         for (String language : getResources().getStringArray(R.array.LanguageValues)) {
             if (language.equals(currentDeviceLanguage)) {
-                apiHelper.apiService.registrationLanguage(currentDeviceLanguage)
-                        .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(new MergeUserCallback(this, user), throwable -> {
+                apiClient.registrationLanguage(currentDeviceLanguage)
+                        .subscribe(habitRPGUser -> {}, throwable -> {
                         });
             }
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                View decor = getWindow().getDecorView();
+                    decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.light_gray_bg));
+            } else {
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.days_gray));
+            }
+        }
+
+        pager.disableFading = true;
     }
 
     @Override
@@ -100,17 +132,6 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-
-        if (this.pager.getAdapter() == null) {
-            if (this.user != null) {
-                setupViewpager();
-            } else {
-                this.apiHelper.apiService.getUser()
-                        .compose(this.apiHelper.configureApiCallObserver())
-                        .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                        });
-            }
-        }
     }
 
     @Override
@@ -122,70 +143,59 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     private void setupViewpager() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
-        pager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
-            @Override
-            public Fragment getItem(int position) {
-                Fragment fragment;
-
-                if (position == 0) {
-                    avatarSetupFragment = new AvatarSetupFragment();
-                    avatarSetupFragment.activity = SetupActivity.this;
-                    avatarSetupFragment.setUser(user);
-                    avatarSetupFragment.width = pager.getWidth();
-                    fragment = avatarSetupFragment;
-                } else {
-                    taskSetupFragment = new TaskSetupFragment();
-                    fragment = taskSetupFragment;
-                }
-
-                return fragment;
-            }
-
-            @Override
-            public int getCount() {
-                return 2;
-            }
-        });
+        pager.setAdapter(new ViewPageAdapter(fragmentManager));
 
         pager.addOnPageChangeListener(this);
+        indicator.setViewPager(pager);
     }
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        this.apiHelper.apiService.updateUser(event.updateData)
-                .compose(this.apiHelper.configureApiCallObserver())
-                .subscribe(new MergeUserCallback(this, user), throwable -> {
+        this.userRepository.updateUser(user, event.updateData)
+                .subscribe(this::onUserReceived, throwable -> {
                 });
     }
 
-    @Override
-    public void onClick(View v) {
+    @Subscribe
+    public void onEvent(EquipCommand event) {
+        this.apiClient.equipItem(event.type, event.key)
+                .subscribe(new ItemsCallback(this, this.user), throwable -> {
+                });
+    }
+
+    @OnClick(R.id.nextButton)
+    public void nextClicked(View v) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("FirstDayOfTheWeek",
                 Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
-        editor.commit();
-        if (v == this.nextButton) {
-            if (this.pager.getCurrentItem() == 1) {
-                List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
-                this.completedSetup = true;
-                this.apiHelper.apiService.createTasks(newTasks)
-                        .compose(this.apiHelper.configureApiCallObserver())
-                        .subscribe(tasks -> {
-                            onUserReceived(user);
-                        }, throwable -> {
-                        });
-                //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
-            }
-            this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
-        } else if (v == this.previousButton) {
-            this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
-        } else if (v == this.skipButton) {
-            Map<String, Object> additionalData = new HashMap<>();
-            additionalData.put("status", "skipped");
-            AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
-            this.startMainActivity();
+        editor.apply();
+        if (isLastPage()) {
+            List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
+            this.completedSetup = true;
+            this.taskRepository.createTasks(newTasks)
+                    .subscribe(tasks -> onUserReceived(user), throwable -> {
+                    });
+            //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
         }
+        this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
+    }
+
+    @OnClick(R.id.previousButton)
+    public void previousClicked() {
+        this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
+    }
+
+    private void setPreviousButtonEnabled(boolean enabled) {
+        Drawable leftDrawable;
+        if (enabled) {
+            previousButton.setText(R.string.action_back);
+            leftDrawable = AppCompatResources.getDrawable(this, R.drawable.back_arrow_enabled);
+        } else {
+            previousButton.setText(null);
+            leftDrawable = AppCompatResources.getDrawable(this, R.drawable.back_arrow_disabled);
+        }
+        previousButton.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null);
     }
 
     @Override
@@ -196,11 +206,14 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onPageSelected(int position) {
         if (position == 0) {
-            this.previousButton.setVisibility(View.GONE);
+            this.setPreviousButtonEnabled(false);
             this.nextButton.setText(this.getString(R.string.next_button));
-        } else if (position == 1) {
-            this.previousButton.setVisibility(View.VISIBLE);
+        } else if (isLastPage()) {
+            this.setPreviousButtonEnabled(true);
             this.nextButton.setText(this.getString(R.string.intro_finish_button));
+        } else {
+            this.setPreviousButtonEnabled(true);
+            this.nextButton.setText(this.getString(R.string.next_button));
         }
     }
 
@@ -222,6 +235,9 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             if (this.avatarSetupFragment != null) {
                 this.avatarSetupFragment.setUser(user);
             }
+            if (this.taskSetupFragment != null) {
+                this.taskSetupFragment.setUser(user);
+            }
         }
 
         Map<String, Object> additionalData = new HashMap<>();
@@ -234,5 +250,54 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
+    }
+
+    private class ViewPageAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
+
+        public ViewPageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment;
+
+            switch (position) {
+                case 1: {
+                    avatarSetupFragment = new AvatarSetupFragment();
+                    avatarSetupFragment.activity = SetupActivity.this;
+                    avatarSetupFragment.setUser(user);
+                    avatarSetupFragment.width = pager.getWidth();
+                    fragment = avatarSetupFragment;
+                    break;
+                }
+                case 2: {
+                    taskSetupFragment = new TaskSetupFragment();
+                    taskSetupFragment.setUser(user);
+                    fragment = taskSetupFragment;
+                    break;
+                }
+                default: {
+                    fragment = new WelcomeFragment();
+                    break;
+                }
+            }
+
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public int getIconResId(int index) {
+            return R.drawable.indicator_diamond;
+        }
+    }
+
+    private boolean isLastPage() {
+        return this.pager == null || this.pager.getCurrentItem() == this.pager.getAdapter().getCount() - 1;
     }
 }

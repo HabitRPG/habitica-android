@@ -1,5 +1,20 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
+import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+
+import org.greenrobot.eventbus.Subscribe;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -11,26 +26,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-
-import org.greenrobot.eventbus.Subscribe;
-
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +45,12 @@ public class InboxMessageListFragment extends BaseMainFragment
     SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.chat_list)
+
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.recyclerView)
+    
     RecyclerView chatRecyclerView;
 
     List<ChatMessage> messages;
@@ -57,7 +61,7 @@ public class InboxMessageListFragment extends BaseMainFragment
     public InboxMessageListFragment() {
         messages = new ArrayList<ChatMessage>();
     }
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

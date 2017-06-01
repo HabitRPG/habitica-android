@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui;
 
+import com.habitrpg.android.habitica.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -11,27 +13,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.R;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class GemPurchaseOptionsView extends FrameLayout {
 
-    @BindView(R.id.gem_image)
-    ImageView gemImageView;
-
-    @BindView(R.id.gem_amount)
-    TextView gemAmountTextView;
-
-    @BindView(R.id.purchase_button)
-    Button purchaseButton;
-
     @BindView(R.id.seedsImageButton)
     public
     ImageButton seedsImageButton;
-
+    @BindView(R.id.gem_image)
+    ImageView gemImageView;
+    @BindView(R.id.gem_amount)
+    TextView gemAmountTextView;
+    @BindView(R.id.purchase_button)
+    Button purchaseButton;
     private String sku;
 
     public GemPurchaseOptionsView(Context context, AttributeSet attrs) {
@@ -66,11 +62,11 @@ public class GemPurchaseOptionsView extends FrameLayout {
         purchaseButton.setText(price);
     }
 
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
     public String getSku() {
         return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }

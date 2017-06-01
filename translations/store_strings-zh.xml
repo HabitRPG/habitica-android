@@ -1,8 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="store_short_description">将你的生活视作一场游戏，让生活充满动力，并且井井有条！</string>
-  <string name="store_description">这是源自 HabitRPG的全新应用！ 全新应用给你带来更流畅的体验和更多的特性。
-将你的生活视作一场游戏，让生活充满动力，并且井井有条！Habitica令你在实现目标的过程中获得更多乐趣。
-导入你的习惯，日常目标与你的待办事项，在游戏中创造自己的角色。检查自己的任务来使自己的角色提升等级并解锁新的奖励，比如获得装备、宠物、新技能，甚至解锁任务！与朋友一同大战怪兽，承担每个人的责任。你的金币可以用于游戏中，比如购买装备，或者是购买养成习惯后的奖励，例如观看一集电视剧。灵活性，社会性，趣味性，Habitica是激励自己完成事项的最佳方案。
-我们目前仍在测试，因此不要吝惜你的意见，请将它们发送至mobile@habitica.com！另外，如果你真的喜欢我们的应用，欢迎你来评论。</string>
+  <string name="store_short_description">像对待游戏一样对待生活，让它保持动力，并且井井有条！</string>
 </resources>

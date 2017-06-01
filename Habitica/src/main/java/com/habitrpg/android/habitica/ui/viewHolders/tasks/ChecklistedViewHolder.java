@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import net.pherth.android.emoji_library.EmojiTextView;
 
@@ -36,8 +36,6 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
     CheckBox checkbox;
     @BindView(R.id.checklistView)
     LinearLayout checklistView;
-    @BindView(R.id.checklistSeparator)
-    View checklistSeparator;
     @BindView(R.id.checklistBottomSpace)
     View checklistBottomSpace;
     @BindView(R.id.checklistIndicatorWrapper)
@@ -58,8 +56,13 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
     @Override
     public void bindHolder(Task newTask, int position) {
         super.bindHolder(newTask, position);
-        this.checkbox.setChecked(this.task.completed);
-        if (this.shouldDisplayAsActive()) {
+
+        boolean completed = this.task.completed;
+        if (task.isPendingApproval()) {
+            completed = false;
+        }
+        this.checkbox.setChecked(completed);
+        if (this.shouldDisplayAsActive() && !task.isPendingApproval()) {
             this.checkboxHolder.setBackgroundResource(this.task.getLightTaskColor());
         } else {
             this.checkboxHolder.setBackgroundColor(this.taskGray);
@@ -79,6 +82,7 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                 this.rightBorderView.setBackgroundColor(this.taskGray);
             }
         }
+
     }
 
     abstract public Boolean shouldDisplayAsActive();
@@ -101,12 +105,10 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                     expandCheckboxTouchArea(checkboxHolder, checkbox);
                     this.checklistView.addView(itemView);
                 }
-                this.checklistSeparator.setVisibility(View.VISIBLE);
                 this.checklistView.setVisibility(View.VISIBLE);
                 this.checklistBottomSpace.setVisibility(View.VISIBLE);
             } else {
                 this.checklistView.removeAllViewsInLayout();
-                this.checklistSeparator.setVisibility(View.GONE);
                 this.checklistView.setVisibility(View.GONE);
                 this.checklistBottomSpace.setVisibility(View.GONE);
             }
@@ -162,5 +164,12 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                 EventBus.getDefault().post(event);
             }
         }
+    }
+
+    @Override
+    public void setDisabled(boolean openTaskDisabled, boolean taskActionsDisabled) {
+        super.setDisabled(openTaskDisabled, taskActionsDisabled);
+
+        this.checkbox.setEnabled(!taskActionsDisabled);
     }
 }

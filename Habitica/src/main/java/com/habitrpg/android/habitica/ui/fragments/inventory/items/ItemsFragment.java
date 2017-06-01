@@ -12,6 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -71,17 +72,21 @@ public class ItemsFragment extends BaseMainFragment {
                         fragment.itemType = "quests";
                         break;
                     }
+                    case 4: {
+                        fragment.itemType = "special";
+                    }
                 }
                 fragment.isHatching = false;
                 fragment.isFeeding = false;
                 fragment.itemTypeText = this.getPageTitle(position).toString();
+                fragment.user = ItemsFragment.this.user;
 
                 return fragment;
             }
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
 
             @Override
@@ -95,19 +100,22 @@ public class ItemsFragment extends BaseMainFragment {
                         return activity.getString(R.string.food);
                     case 3:
                         return activity.getString(R.string.quests);
+                    case 4:
+                        return getString(R.string.special);
                 }
                 return "";
             }
         });
         if (tabLayout != null && viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
     }
 
     @Subscribe
     public void onEvent(InvitePartyToQuestCommand event) {
-        this.apiHelper.apiService.inviteToQuest("party", event.questKey)
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.inviteToQuest("party", event.questKey)
+
                 .subscribe(group -> {
                     OpenMenuItemCommand event1 = new OpenMenuItemCommand();
                     event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
@@ -132,5 +140,11 @@ public class ItemsFragment extends BaseMainFragment {
             fragment.ownedPets = this.user.getItems().getPets();
             fragment.show(getFragmentManager(), "hatchingDialog");
         }
+    }
+
+
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_items);
     }
 }

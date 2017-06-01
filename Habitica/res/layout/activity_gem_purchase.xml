@@ -19,10 +19,11 @@
                 android:elevation="0dp"
                 tools:context=".ui.activities.MainActivity">
 
-            <FrameLayout
-                    android:id="@+id/fragment_container"
+            <android.support.v4.view.ViewPager
+                    android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/white"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <android.support.design.widget.AppBarLayout
@@ -63,7 +64,7 @@
                 </android.support.design.widget.CollapsingToolbarLayout>
 
                 <android.support.design.widget.TabLayout
-                        android:id="@+id/detail_tabs"
+                        android:id="@+id/tab_layout"
                         android:layout_width="match_parent"
                         android:layout_height="54dp"
                         android:layout_gravity="bottom"
@@ -78,8 +79,7 @@
                         app:layout_collapseMode="pin"
                         app:tabGravity="fill"
                         app:tabIndicatorColor="@android:color/white"
-                        app:tabMode="fixed"
-                        android:visibility="gone"/>
+                        app:tabMode="fixed" />
             </android.support.design.widget.AppBarLayout>
 
         </android.support.design.widget.CoordinatorLayout>

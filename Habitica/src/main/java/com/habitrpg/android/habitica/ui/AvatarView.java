@@ -9,7 +9,7 @@ import com.facebook.drawee.view.DraweeHolder;
 import com.facebook.drawee.view.MultiDraweeHolder;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -54,6 +54,7 @@ public class AvatarView extends View {
     private boolean showBackground = true;
     private boolean showMount = true;
     private boolean showPet = true;
+    private boolean showSleeping = true;
     private boolean hasBackground;
     private boolean hasMount;
     private boolean hasPet;
@@ -66,6 +67,7 @@ public class AvatarView extends View {
     private Consumer<Bitmap> avatarImageConsumer;
     private Bitmap avatarBitmap;
     private Canvas avatarCanvas;
+    private Map<LayerType, String> currentLayers;
 
     public AvatarView(Context context) {
         super(context);
@@ -106,12 +108,11 @@ public class AvatarView extends View {
             showBackground = a.getBoolean(R.styleable.AvatarView_showBackground, true);
             showMount = a.getBoolean(R.styleable.AvatarView_showMount, true);
             showPet = a.getBoolean(R.styleable.AvatarView_showPet, true);
+            showSleeping = a.getBoolean(R.styleable.AvatarView_showSleeping, true);
         } finally {
             a.recycle();
         }
     }
-
-    private Map<LayerType, String> currentLayers;
 
     private void showLayers(@NonNull Map<LayerType, String> layerMap) {
         if (multiDraweeHolder.size() > 0) return;
@@ -192,6 +193,11 @@ public class AvatarView extends View {
             layerMap.put(LayerType.BACKGROUND, "background_" + backgroundName);
             if (resetHasAttributes) hasBackground = true;
         }
+
+        if (showSleeping && user.getPreferences().getSleep()) {
+            layerMap.put(AvatarView.LayerType.ZZZ, "zzz");
+        }
+
         return layerMap;
     }
 
@@ -324,7 +330,7 @@ public class AvatarView extends View {
             Map<LayerType, String> newLayerMap = getLayerMap(user, false);
 
             boolean equals = currentLayers != null && currentLayers.equals(newLayerMap);
-            
+
             if (!equals) {
                 multiDraweeHolder.clear();
                 numberLayersInProcess.set(0);

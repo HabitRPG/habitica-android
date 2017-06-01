@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,8 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -55,9 +53,8 @@ public class TavernFragment extends BaseMainFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.apiHelper != null) {
-            apiHelper.apiService.getGroup("habitrpg")
-                    .compose(apiHelper.configureApiCallObserver())
+        if (this.apiClient != null) {
+            apiClient.getGroup("habitrpg")
                     .subscribe(group -> {
                         TavernFragment.this.tavern = group;
                         if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {
@@ -67,7 +64,7 @@ public class TavernFragment extends BaseMainFragment {
                                 TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
                             }
 
-                            contentCache.GetQuestContent(group.quest.key, content -> {
+                            contentCache.getQuestContent(group.quest.key, content -> {
                                 if (questInfoFragment != null) {
                                     questInfoFragment.setQuestContent(content);
                                 }
@@ -132,5 +129,10 @@ public class TavernFragment extends BaseMainFragment {
         if (tabLayout != null) {
             tabLayout.setupWithViewPager(viewPager);
         }
+    }
+
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_tavern);
     }
 }

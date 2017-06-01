@@ -7,13 +7,13 @@
         android:id="@+id/action_reload"
         android:icon="@drawable/ic_refresh_white"
         android:title="@string/action_refresh"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:actionViewClass="android.widget.ImageButton"/>
 
     <!-- Search, should appear as action button -->
     <item android:id="@+id/action_search"
           android:icon="@drawable/ic_action_filter_list"
+          app:actionLayout="@layout/filter_menu_item"
           android:title="@string/filter"
           app:showAsAction="ifRoom" />
-
 </menu>

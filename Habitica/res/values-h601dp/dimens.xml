@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="setup_vertical_spacing">28dp</dimen>
+    <dimen name="customization_drawer_subcategory_height">130dp</dimen>
+    <dimen name="customization_drawer_category_height">100dp</dimen>
+    <dimen name="customization_drawer_caret_margin">91dp</dimen>
+</resources>

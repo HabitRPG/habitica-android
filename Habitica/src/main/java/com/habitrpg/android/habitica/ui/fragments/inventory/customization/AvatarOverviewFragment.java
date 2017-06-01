@@ -5,10 +5,11 @@ import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,14 +61,10 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (this.apiHelper != null) {
-            this.apiHelper.apiService.getContent(apiHelper.languageCode)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(contentResult -> {
-                    }, throwable -> {
-                    });
+        if (apiClient != null) {
+            apiClient.getContent()
+                    .subscribe(contentResult -> {}, throwable -> {});
         }
-
     }
 
     @Override
@@ -108,18 +105,22 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         component.inject(this);
     }
 
-    private void displayCustomizationFragment(String type, String category) {
+    private void displayCustomizationFragment(String type, @Nullable String category) {
         AvatarCustomizationFragment fragment = new AvatarCustomizationFragment();
         fragment.type = type;
         fragment.category = category;
-        activity.displayFragment(fragment);
+        if (activity != null) {
+            activity.displayFragment(fragment);
+        }
     }
 
     @Override
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
-        viewBinding.setPreferences(user.getPreferences());
-        this.setSize(user.getPreferences().getSize());
+        if (user != null && viewBinding != null) {
+            viewBinding.setPreferences(user.getPreferences());
+            this.setSize(user.getPreferences().getSize());
+        }
     }
 
     private void setSize(String size) {
@@ -139,11 +140,10 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
             newSize = "broad";
         }
 
-        if (!this.user.getPreferences().getSize().equals(newSize)) {
+        if (this.user != null && !this.user.getPreferences().getSize().equals(newSize)) {
             Map<String, Object> updateData = new HashMap<>();
             updateData.put("preferences.size", newSize);
-            apiHelper.apiService.updateUser(updateData)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.updateUser(updateData)
                     .subscribe(new MergeUserCallback(activity, user), throwable -> {
                     });
         }
@@ -151,5 +151,11 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_avatar);
     }
 }

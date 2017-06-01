@@ -1,5 +1,32 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.UserStatComputer;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.models.Achievement;
+import com.habitrpg.android.habitica.models.AchievementGroup;
+import com.habitrpg.android.habitica.models.AchievementResult;
+import com.habitrpg.android.habitica.models.user.Buffs;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Profile;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.tasks.ItemData;
+
+import net.pherth.android.emoji_library.EmojiEditText;
+
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,32 +46,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
-import com.magicmicky.habitrpgwrapper.lib.models.AchievementGroup;
-import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
-import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
-import com.magicmicky.habitrpgwrapper.lib.models.Profile;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
-
-import net.pherth.android.emoji_library.EmojiEditText;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,78 +56,63 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 public class FullProfileActivity extends BaseActivity {
-    private String userId;
-    private String userName;
-
     @Inject
     ContentCache contentCache;
-
     @Inject
-    APIHelper apiHelper;
-
+    ApiClient apiClient;
     @BindView(R.id.profile_image)
     SimpleDraweeView profile_image;
-
     @BindView(R.id.profile_blurb)
     TextView blurbTextView;
-
     @BindView(R.id.avatarView)
     AvatarView avatarView;
-
     @BindView(R.id.copy_userid)
     Button copyUserIdButton;
-
     @BindView(R.id.userid)
     TextView userIdText;
-
     @BindView(R.id.profile_attributes_card)
     CardView attributesCardView;
-
     @BindView(R.id.attributes_table)
     TableLayout attributesTableLayout;
-
     @BindView(R.id.attributes_collapse_icon)
     ImageView attributesCollapseIcon;
-
     @BindView(R.id.equipment_table)
     TableLayout equipmentTableLayout;
-
     @BindView(R.id.costume_table)
     TableLayout costumeTableLayout;
-
     @BindView(R.id.avatar_attributes_progress)
     ProgressBar attributesProgress;
-
     @BindView(R.id.avatar_equip_progress)
     ProgressBar equipmentProgress;
-
     @BindView(R.id.avatar_costume_progress)
     ProgressBar costumeProgress;
-
     @BindView(R.id.profile_costume_card)
     CardView costumeCard;
-
     @BindView(R.id.avatar_with_bars)
     View avatar_with_bars;
-    private AvatarWithBarsViewModel avatarWithBars;
-
     @BindView(R.id.fullprofile_scrollview)
     ScrollView fullprofile_scrollview;
-
     @BindView(R.id.profile_pets_found_count)
     TextView petsFoundCount;
-
     @BindView(R.id.profile_mounts_tamed_count)
     TextView mountsTamedCount;
-
     @BindView(R.id.profile_achievements_card)
     CardView achievementCard;
-
     @BindView(R.id.avatar_achievements_progress)
     ProgressBar achievementProgress;
-
     @BindView(R.id.recyclerView)
     RecyclerView achievementGroupList;
+    private String userId;
+    private String userName;
+    private AvatarWithBarsViewModel avatarWithBars;
+    private float attributeStrSum = 0;
+    private float attributeIntSum = 0;
+    private float attributeConSum = 0;
+    private float attributePerSum = 0;
+    private boolean attributeDetailsHidden = true;
+    private ArrayList<TableRow> attributeRows = new ArrayList<>();
+
+    // region Utils
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,8 +124,8 @@ public class FullProfileActivity extends BaseActivity {
 
         setTitle(R.string.profile_loading_data);
 
-        apiHelper.apiService.GetMember(this.userId)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.getMember(this.userId)
+
                 .subscribe(this::updateView,
                         throwable -> {
                         });
@@ -189,8 +175,8 @@ public class FullProfileActivity extends BaseActivity {
                     messageObject.put("message", emojiEditText.getText().toString());
                     messageObject.put("toUserId", userId);
 
-                    apiHelper.apiService.postPrivateMessage(messageObject)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiClient.postPrivateMessage(messageObject)
+
                             .subscribe(postChatMessageResult -> {
                                 UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
                                         String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL);
@@ -243,12 +229,12 @@ public class FullProfileActivity extends BaseActivity {
         copyUserIdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
-                            .getSystemService(view.getContext().CLIPBOARD_SERVICE);
-                    android.content.ClipData clip = android.content.ClipData
-                            .newPlainText(
-                                    userId, userId);
-                    clipboard.setPrimaryClip(clip);
+                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
+                        .getSystemService(view.getContext().CLIPBOARD_SERVICE);
+                android.content.ClipData clip = android.content.ClipData
+                        .newPlainText(
+                                userId, userId);
+                clipboard.setPrimaryClip(clip);
             }
         });
 
@@ -262,12 +248,16 @@ public class FullProfileActivity extends BaseActivity {
         mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiHelper.apiService.GetMemberAchievements(this.userId)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.getMemberAchievements(this.userId)
+
                 .subscribe(this::fillAchievements,
                         throwable -> {
                         });
     }
+
+    // endregion
+
+    // region Attributes
 
     private void fillAchievements(AchievementResult achievements) {
         List<Object> items = new ArrayList<>();
@@ -296,7 +286,7 @@ public class FullProfileActivity extends BaseActivity {
         stopAndHideProgress(achievementProgress);
     }
 
-    private void fillAchievements(AchievementGroup achievementGroup, List<Object> targetList){
+    private void fillAchievements(AchievementGroup achievementGroup, List<Object> targetList) {
         // Order by ID first
         ArrayList<Achievement> achievementList = new ArrayList<>(achievementGroup.achievements.values());
         Collections.sort(achievementList, (achievement, t1) -> Double.compare(achievement.index, t1.index));
@@ -304,8 +294,6 @@ public class FullProfileActivity extends BaseActivity {
         targetList.add(achievementGroup.label);
         targetList.addAll(achievementList);
     }
-
-    // region Utils
 
     private void stopAndHideProgress(ProgressBar bar) {
         bar.setIndeterminate(false);
@@ -355,15 +343,6 @@ public class FullProfileActivity extends BaseActivity {
         return gearRow;
     }
 
-    // endregion
-
-    // region Attributes
-
-    private float attributeStrSum = 0;
-    private float attributeIntSum = 0;
-    private float attributeConSum = 0;
-    private float attributePerSum = 0;
-
     private void addLevelAttributes(Stats stats, HabitRPGUser user) {
         float byLevelStat = Math.min(stats.getLvl() / 2.0f, 50f);
 
@@ -396,82 +375,28 @@ public class FullProfileActivity extends BaseActivity {
         outfitList.add(outfit.getShield());
         outfitList.add(outfit.getWeapon());
 
-        contentCache.GetItemDataList(outfitList, gotEntries);
+        contentCache.getItemDataList(outfitList, gotEntries);
     }
 
-    public void gotGear(List<ItemData> obj, HabitRPGUser user) {
-        float strAttributes = 0;
-        float intAttributes = 0;
-        float conAttributes = 0;
-        float perAttributes = 0;
+    public void gotGear(List<ItemData> itemDataList, HabitRPGUser user) {
+        UserStatComputer userStatComputer = new UserStatComputer();
+        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(itemDataList, user);
 
-        // Summarize stats and fill equipment table
-        for (ItemData i : obj) {
-            int str_ = (int) i.getStr();
-            int int_ = (int) i.get_int();
-            int con_ = (int) i.getCon();
-            int per_ = (int) i.getPer();
-
-            strAttributes += str_;
-            intAttributes += int_;
-            conAttributes += con_;
-            perAttributes += per_;
-
-            StringBuilder sb = new StringBuilder();
-
-            if (str_ != 0) {
-                sb.append("STR " + str_ + ", ");
+        for (UserStatComputer.StatsRow row : statsRows) {
+            if (row.getClass().equals(UserStatComputer.EquipmentRow.class)) {
+                UserStatComputer.EquipmentRow equipmentRow = (UserStatComputer.EquipmentRow) row;
+                addEquipmentRow(equipmentTableLayout, equipmentRow.gearKey, equipmentRow.text, equipmentRow.stats);
+            } else if (row.getClass().equals(UserStatComputer.AttributeRow.class)) {
+                UserStatComputer.AttributeRow attributeRow2 = (UserStatComputer.AttributeRow) row;
+                addAttributeRow(getString(attributeRow2.labelId), attributeRow2.strVal, attributeRow2.intVal, attributeRow2.conVal, attributeRow2.perVal, attributeRow2.roundDown, attributeRow2.isSummary);
             }
-            if (int_ != 0) {
-                sb.append("INT " + int_ + ", ");
-            }
-            if (con_ != 0) {
-                sb.append("CON " + con_ + ", ");
-            }
-            if (per_ != 0) {
-                sb.append("PER " + per_ + ", ");
-            }
-
-            // remove the last comma
-            if (sb.length() > 2) {
-                sb.delete(sb.length() - 2, sb.length());
-            }
-
-            addEquipmentRow(equipmentTableLayout, i.getKey(), i.getText(), sb.toString());
         }
 
         stopAndHideProgress(equipmentProgress);
         equipmentTableLayout.setVisibility(View.VISIBLE);
 
-        addAttributeRow(getString(R.string.battle_gear) + ": ", strAttributes, intAttributes, conAttributes, perAttributes, true, false);
-
-        if (!user.getPreferences().isDisableClasses()) {
-            float strClassBonus = 0;
-            float intClassBonus = 0;
-            float conClassBonus = 0;
-            float perClassBonus = 0;
-
-            switch (user.getStats().get_class()) {
-                case rogue:
-                    strClassBonus = strAttributes * 0.5f;
-                    perClassBonus = perAttributes * 0.5f;
-                    break;
-                case healer:
-                    conClassBonus = conAttributes * 0.5f;
-                    intClassBonus = intClassBonus * 0.5f;
-                    break;
-                case warrior:
-                    strClassBonus = strAttributes * 0.5f;
-                    conClassBonus = conAttributes * 0.5f;
-                    break;
-                case wizard:
-                    intClassBonus = intClassBonus * 0.5f;
-                    perClassBonus = perAttributes * 0.5f;
-                    break;
-            }
-
-            addAttributeRow(getString(R.string.profile_class_bonus), strClassBonus, intClassBonus, conClassBonus, perClassBonus, false, false);
-        }
+        stopAndHideProgress(attributesProgress);
+        attributesTableLayout.setVisibility(View.VISIBLE);
     }
 
     public void gotCostume(List<ItemData> obj) {
@@ -530,10 +455,6 @@ public class FullProfileActivity extends BaseActivity {
 
         return tableRow;
     }
-
-    private boolean attributeDetailsHidden = true;
-
-    private ArrayList<TableRow> attributeRows = new ArrayList<>();
 
     private void toggleAttributeDetails() {
         attributeDetailsHidden = !attributeDetailsHidden;

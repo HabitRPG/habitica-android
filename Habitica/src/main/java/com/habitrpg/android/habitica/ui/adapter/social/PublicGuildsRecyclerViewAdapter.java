@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,13 +19,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable{
+public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable {
 
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     private List<Group> publicGuildList;
     private List<Group> fullPublicGuildList;
     private List<String> memberGuildIDs;
@@ -58,8 +59,8 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
             Group guild = (Group) v.getTag();
             boolean isMember = this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
             if (isMember) {
-                PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.leaveGroup(guild.id)
-                        .compose(apiHelper.configureApiCallObserver())
+                PublicGuildsRecyclerViewAdapter.this.apiClient.leaveGroup(guild.id)
+
                         .subscribe(aVoid -> {
                             memberGuildIDs.remove(guild.id);
                             int indexOfGroup = publicGuildList.indexOf(guild);
@@ -67,8 +68,8 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
                         }, throwable -> {
                         });
             } else {
-                PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.joinGroup(guild.id)
-                        .compose(apiHelper.configureApiCallObserver())
+                PublicGuildsRecyclerViewAdapter.this.apiClient.joinGroup(guild.id)
+
                         .subscribe(group -> {
                             memberGuildIDs.add(group.id);
                             int indexOfGroup = publicGuildList.indexOf(group);
@@ -104,12 +105,12 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                List<Group> filteredGuilds = null;
+                List<Group> filteredGuilds;
 
-                if(constraint.length() == 0) {
+                if (constraint.length() == 0) {
                     filteredGuilds = fullPublicGuildList;
                 } else {
-                    filteredGuilds = getFilteredResults(constraint.toString().toLowerCase());
+                    filteredGuilds = getFilteredResults(constraint.toString().toLowerCase(Locale.US));
                 }
 
                 FilterResults results = new FilterResults();
@@ -128,8 +129,8 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
     protected List<Group> getFilteredResults(String query) {
         List<Group> filteredGuilds = new ArrayList<>();
 
-        for(Group guild : fullPublicGuildList) {
-            if(guild.name.toLowerCase().contains(query)) {
+        for (Group guild : fullPublicGuildList) {
+            if (guild.name.toLowerCase().contains(query)) {
                 filteredGuilds.add(guild);
             }
         }

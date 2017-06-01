@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.widget;
 
 import com.habitrpg.android.habitica.R;
 
-public class TodoListWidgetProvider extends TaskListWidgetProvider{
+public class TodoListWidgetProvider extends TaskListWidgetProvider {
 
     @Override
     protected Class getServiceClass() {

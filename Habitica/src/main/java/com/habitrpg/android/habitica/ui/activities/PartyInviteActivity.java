@@ -1,14 +1,13 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -22,13 +21,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,28 +40,21 @@ public class PartyInviteActivity extends BaseActivity {
     public static final String USER_IDS_KEY = "userIDs";
     public static final String IS_EMAIL_KEY = "isEmail";
     public static final String EMAILS_KEY = "emails";
-
-    private HabitRPGUser user;
-    private String userIdToInvite;
-
-    @Inject
-    APIHelper apiHelper;
-
     @Inject
     protected HostConfig hostConfig;
-
+    @Inject
+    ApiClient apiClient;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
     List<PartyInviteFragment> fragments = new ArrayList<>();
-
+    private HabitRPGUser user;
+    private String userIdToInvite;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            handleUserRecieved(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            handleUserRecieved(user);
         }
 
         @Override
@@ -73,7 +63,7 @@ public class PartyInviteActivity extends BaseActivity {
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };
@@ -210,10 +200,7 @@ public class PartyInviteActivity extends BaseActivity {
         invites.add(userIdToInvite);
         inviteData.put("uuids", invites);
 
-        this.apiHelper.apiService.inviteToGroup(this.user.getParty().getId(), inviteData)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        this.apiClient.inviteToGroup(this.user.getParty().getId(), inviteData)
+                .subscribe(aVoid -> {}, throwable -> {});
     }
 }

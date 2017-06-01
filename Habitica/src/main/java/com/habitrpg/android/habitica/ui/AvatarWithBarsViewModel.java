@@ -4,8 +4,10 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Stats;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -20,6 +22,8 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 /**
  * Created by Negue on 14.06.2015.
@@ -67,6 +71,9 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         gemsText.setClickable(true);
         gemsText.setOnClickListener(this);
+
+        avatarView.setClickable(true);
+        avatarView.setOnClickListener(this);
     }
 
     public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
@@ -103,7 +110,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         avatarView.setUser(user);
 
         if (stats.get_class() != null) {
-            userClass += stats.getCleanedClassName();
+            userClass = stats.getTranslatedClassName(context);
         }
 
         mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
@@ -112,7 +119,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             lvlText.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
             lvlText.setCompoundDrawables(null, null, null, null);
         } else {
-            lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass));
+            lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1)));
             Drawable drawable;
             switch (stats.get_class()) {
                 case warrior:
@@ -146,8 +153,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         goldText.setText(String.valueOf(gp));
         silverText.setText(String.valueOf(sp));
 
-        Double gems = user.getBalance() * 4;
-        gemsText.setText(String.valueOf(gems.intValue()));
+        int gems = user.getGemCount();
+        gemsText.setText(String.valueOf(gems));
     }
 
     public void setHpBarData(float value, int valueMax) {
@@ -179,16 +186,23 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     @Subscribe
     public void onEvent(BoughtGemsEvent gemsEvent) {
-        Double gems = userObject.getBalance() * 4;
+        int gems = userObject.getGemCount();
         gems += gemsEvent.NewGemsToAdd;
-        gemsText.setText(String.valueOf(gems.intValue()));
+        gemsText.setText(String.valueOf(gems));
     }
 
     @Override
     public void onClick(View view) {
-        // Gems Clicked
+        if (view == gemsText) {
+            // Gems Clicked
 
-        EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+            EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+        } else {
+            // Avatar overview
+            OpenMenuItemCommand event = new OpenMenuItemCommand();
+            event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;
+            EventBus.getDefault().post(event);
+        }
     }
 
     public void hideGems() {

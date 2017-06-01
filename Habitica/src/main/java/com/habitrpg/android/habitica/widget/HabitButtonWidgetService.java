@@ -1,5 +1,15 @@
 package com.habitrpg.android.habitica.widget;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -8,20 +18,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.RemoteViews;
-
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +40,22 @@ public class HabitButtonWidgetService extends Service {
 
     private Map<String, Integer> taskMapping;
     private int[] allWidgetIds;
+    private TransactionListener<Task> userTransactionListener = new TransactionListener<Task>() {
+        @Override
+        public void onResultReceived(Task task) {
+            updateData(task);
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<Task> task) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<Task> baseTransaction, Task task) {
+            return true;
+        }
+    };
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
@@ -59,23 +74,6 @@ public class HabitButtonWidgetService extends Service {
 
         return START_STICKY;
     }
-
-    private TransactionListener<Task> userTransactionListener = new TransactionListener<Task>() {
-        @Override
-        public void onResultReceived(Task task) {
-            updateData(task);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<Task> task) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<Task> baseTransaction, Task task) {
-            return true;
-        }
-    };
 
     private void updateData(Task task) {
         RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.widget_habit_button);
@@ -96,7 +94,7 @@ public class HabitButtonWidgetService extends Service {
             } else {
                 remoteViews.setViewVisibility(R.id.btnMinusWrapper, View.VISIBLE);
                 remoteViews.setInt(R.id.btnMinus, "setBackgroundColor", resources.getColor(task.getMediumTaskColor()));
-                remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, getPendingIntent(task.getId(), TaskDirection.down.toString() , taskMapping.get(task.getId())));
+                remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, getPendingIntent(task.getId(), TaskDirection.down.toString(), taskMapping.get(task.getId())));
             }
             appWidgetManager.updateAppWidget(taskMapping.get(task.getId()), remoteViews);
         }
@@ -118,7 +116,7 @@ public class HabitButtonWidgetService extends Service {
     }
 
     private String getTaskId(int widgetId) {
-        return sharedPreferences.getString("habit_button_widget_"+widgetId, "");
+        return sharedPreferences.getString("habit_button_widget_" + widgetId, "");
     }
 
     private PendingIntent getPendingIntent(String taskId, String direction, int widgetId) {
@@ -127,7 +125,7 @@ public class HabitButtonWidgetService extends Service {
         taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         taskIntent.putExtra(HabitButtonWidgetProvider.TASK_ID, taskId);
         taskIntent.putExtra(HabitButtonWidgetProvider.TASK_DIRECTION, direction);
-        return PendingIntent.getBroadcast(context, widgetId+direction.hashCode(), taskIntent,
+        return PendingIntent.getBroadcast(context, widgetId + direction.hashCode(), taskIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

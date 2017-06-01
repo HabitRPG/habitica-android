@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.helpers.notifications;
 
+import com.habitrpg.android.habitica.R;
+
 import android.content.Context;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.annotation.CallSuper;
 import android.support.v4.app.NotificationCompat;
-
-import com.habitrpg.android.habitica.R;
 
 import java.util.Map;
 
@@ -32,7 +32,7 @@ public abstract class HabiticaLocalNotification {
 
         this.notificationBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_gryphon)
+                        .setSmallIcon(R.drawable.ic_gryphon_white)
                         .setContentTitle(title)
                         .setContentText(message)
                         .setAutoCancel(true)

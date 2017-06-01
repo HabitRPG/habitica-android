@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ItemItemBinding;
+import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
@@ -10,12 +11,13 @@ import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.Item;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -67,6 +69,21 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         return itemList == null ? 0 : itemList.size();
     }
 
+    public void openedMysteryItem(int numberLeft) {
+        int itemPos = 0;
+        for (Object obj : itemList) {
+            if (obj.getClass().equals(SpecialItem.class)) {
+                SpecialItem item = (SpecialItem) obj;
+                if (item.isMysteryItem) {
+                    item.setOwned(numberLeft);
+                    break;
+                }
+            }
+            itemPos++;
+        }
+        notifyItemChanged(itemPos);
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Item item;
 
@@ -105,6 +122,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             binding.setDisabled(false);
             if (item instanceof QuestContent) {
                 binding.setImageNamed("inventory_quest_scroll_" + item.getKey());
+            } else if (item instanceof SpecialItem) {
+                binding.setImageNamed(item.getKey());
             } else {
                 String type = "";
                 if (item instanceof Egg) {
@@ -127,7 +146,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         public void onClick(View v) {
             if (!isHatching && !isFeeding) {
                 BottomSheetMenu menu = new BottomSheetMenu(context);
-                if (!(item instanceof QuestContent)) {
+                if (!(item instanceof QuestContent) && !(item instanceof SpecialItem)) {
                     menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.sell, item.getValue()), true));
                 }
                 if (item instanceof Egg) {
@@ -136,9 +155,14 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.hatch_egg)));
                 } else if (item instanceof QuestContent) {
                     menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.invite_party)));
+                } else if (item instanceof SpecialItem) {
+                    SpecialItem specialItem = (SpecialItem) item;
+                    if (specialItem.isMysteryItem && specialItem.getOwned() > 0) {
+                        menu.addMenuItem(new BottomSheetMenuItem(context.getString(R.string.open)));
+                    }
                 }
                 menu.setSelectionRunnable(index -> {
-                    if (!(item instanceof QuestContent) && index == 0) {
+                    if (!((item instanceof QuestContent) || (item instanceof SpecialItem)) && index == 0) {
                         SellItemCommand event = new SellItemCommand();
                         event.item = item;
                         EventBus.getDefault().post(event);
@@ -170,6 +194,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                         InvitePartyToQuestCommand event = new InvitePartyToQuestCommand();
                         event.questKey = item.getKey();
                         EventBus.getDefault().post(event);
+                    } else if (item instanceof SpecialItem) {
+                        EventBus.getDefault().post(new OpenMysteryItemEvent());
                     }
                 });
                 menu.show();

@@ -6,9 +6,9 @@ import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.Shop;
-import com.magicmicky.habitrpgwrapper.lib.models.ShopCategory;
-import com.magicmicky.habitrpgwrapper.lib.models.ShopItem;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopCategory;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -76,7 +76,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Object obj = this.items.get(position);
         if (obj.getClass().equals(Shop.class)) {
             ShopHeaderViewHolder viewHolder = (ShopHeaderViewHolder) holder;
-            Shop shop = (Shop)obj;
+            Shop shop = (Shop) obj;
             DataBindingUtils.loadImage(viewHolder.imageView, shop.imageName);
             viewHolder.descriptionView.setText(Html.fromHtml(shop.getNotes()));
         } else if (obj.getClass().equals(ShopCategory.class)) {
@@ -103,6 +103,21 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return items != null ? items.size() : 0;
     }
 
+    public void updateGoldGemCount(int numberLeft) {
+        int itemPos = 0;
+        for (Object obj : items) {
+            if (obj.getClass().equals(ShopItem.class)) {
+                ShopItem item = (ShopItem) obj;
+                if (item.key.equals(ShopItem.GEM_FOR_GOLD)) {
+                    item.limitedNumberLeft = numberLeft;
+                    break;
+                }
+            }
+            itemPos++;
+        }
+        notifyItemChanged(itemPos);
+    }
+
     static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.imageView)
@@ -115,6 +130,8 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Button buyButton;
         @BindView(R.id.unlockView)
         TextView unlockView;
+        @BindView(R.id.limitedCountText)
+        TextView limitedCountText;
 
         String shopIdentifier;
         ShopItem item;
@@ -195,6 +212,13 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (item.getLocked()) {
                 buyButton.setVisibility(View.GONE);
             }
+
+            if (item.limitedNumberLeft != null) {
+                limitedCountText.setText(context.getString(R.string.limited_count, item.limitedNumberLeft));
+                limitedCountText.setVisibility(View.VISIBLE);
+            } else {
+                limitedCountText.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -225,6 +249,6 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ButterKnife.bind(this, itemView);
             descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         }
-        
+
     }
 }

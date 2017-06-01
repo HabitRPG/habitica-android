@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/border_1f000000"
+              android:orientation="horizontal"
+              android:weightSum="3"
+              android:baselineAligned="false">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginEnd="15.5dp"
+            android:layout_marginLeft="14.5dp"
+            android:layout_marginRight="15.5dp"
+            android:layout_marginStart="14.5dp"
+            android:layout_marginTop="18dp"
+            android:src="@drawable/daily_checkbox" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="3">
+
+        <net.pherth.android.emoji_library.EmojiTextView
+            android:id="@+id/daily_title"
+            style="@style/Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            android:layout_marginTop="15dp"
+            android:maxLines="1"
+            tools:text="Long text to see" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/checklist_wrapper_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:id="@+id/checklistIndicatorWrapper"
+            android:layout_width="@dimen/checklist_wrapper_width"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:gravity="center"
+            tools:visibility="visible">
+
+            <TextView
+                style="@style/Caption4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0" />
+
+            <View
+                android:id="@+id/checklistDivider"
+                android:layout_width="@dimen/checklist_divider_width"
+                android:layout_height="2dp"
+                android:background="#8a000000" />
+
+            <TextView
+                android:id="@+id/checkListAllTextView"
+                style="@style/Caption4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:text="4" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,16 +1,15 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
-import com.magicmicky.habitrpgwrapper.lib.models.Gear;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Hair;
-import com.magicmicky.habitrpgwrapper.lib.models.Items;
-import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
-import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
+import com.habitrpg.android.habitica.models.user.Gear;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Hair;
+import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Preferences;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,6 +24,7 @@ import rx.functions.Action1;
 
 public class ClassSelectionActivity extends BaseActivity implements Action1<HabitRPGUser> {
 
+    String currentClass;
     Boolean isInitialSelection;
     Boolean classWasUnset = false;
     Boolean shouldFinish = false;
@@ -39,7 +39,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     AvatarView warriorAvatarView;
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
 
     ProgressDialog progressDialog;
 
@@ -55,6 +55,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         isInitialSelection = bundle.getBoolean("isInitialSelection");
+        currentClass = bundle.getString("currentClass");
 
         Preferences preferences = new Preferences();
         preferences.setHair(new Hair());
@@ -101,8 +102,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         warriorAvatarView.setUser(warrior);
 
         if (!isInitialSelection) {
-            apiHelper.apiService.changeClass()
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.changeClass()
                     .subscribe(user -> {
                         classWasUnset = true;
                     }, throwable -> {
@@ -161,26 +161,50 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     }
 
     private void displayConfirmationDialogForClass(String className, String classIdentifier) {
+
         if (!this.isInitialSelection && !this.classWasUnset) {
-            return;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.change_class_confirmation))
+                    .setMessage(getString(R.string.change_class_equipment_warning, currentClass))
+                    .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .setPositiveButton(getString(R.string.choose_class), (dialog, which) -> {
+                        selectClass(classIdentifier);
+                        displayClassChanged(className);
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.class_confirmation, className))
+                    .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .setPositiveButton(getString(R.string.choose_class), (dialog, which) -> {
+                        selectClass(classIdentifier);
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.class_confirmation, className))
-                .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
+    }
+
+    private void displayClassChanged(String newClassName) {
+        AlertDialog.Builder changeConfirmedBuilder = new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.class_changed, newClassName))
+                .setMessage(getString(R.string.class_changed_description))
+                .setPositiveButton(getString(R.string.complete_tutorial), (dialog, which) -> {
                     dialog.dismiss();
-                })
-                .setPositiveButton(getString(R.string.choose_class), (dialog, which) -> {
-                    selectClass(classIdentifier);
                 });
-        AlertDialog alert = builder.create();
-        alert.show();
+        AlertDialog changeDoneAlert = changeConfirmedBuilder.create();
+        changeDoneAlert.show();
     }
 
     private void optOutOfClasses() {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiHelper.apiService.disableClasses()
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.disableClasses()
+
                 .subscribe(this, throwable -> {
                 });
     }
@@ -188,8 +212,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     private void selectClass(String selectedClass) {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiHelper.apiService.changeClass(selectedClass)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.changeClass(selectedClass)
+
                 .subscribe(this, throwable -> {
                 });
     }

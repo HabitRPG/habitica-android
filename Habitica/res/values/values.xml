@@ -19,6 +19,18 @@
         <item>@string/frequency_daily</item>
     </string-array>
 
+    <string-array name="repeatables_frequencies">
+        <item>@string/repeatables_frequency_daily</item>
+        <item>@string/repeatables_frequency_weekly</item>
+        <item>@string/repeatables_frequency_monthly</item>
+        <item>@string/repeatables_frequency_yearly</item>
+    </string-array>
+
+    <string-array name="repeatables_on">
+        <item>@string/repeatables_frequency_day_of_month</item>
+        <item>@string/repeatables_frequency_day_of_week</item>
+    </string-array>
+
     <string-array name="weekdays">
         <item>@string/monday</item>
         <item>@string/tuesday</item>
@@ -61,6 +73,7 @@
         <item>Português</item>
         <item>Português Brasileiro</item>
         <item>Русский</item>
+        <item>Türk</item>
         <item>中文（简体）</item>
         <item>中文（正體）</item>
     </string-array>
@@ -82,6 +95,7 @@
         <item>pt</item>
         <item>pt_BR</item>
         <item>ru</item>
+        <item>tr</item>
         <item>zh</item>
         <item>zh_TW</item>
     </string-array>
@@ -95,6 +109,7 @@
         <item>LuneFox\'s Theme</item>
         <item>Rosstavo\'s Theme</item>
         <item>Dewin\'s Theme</item>
+        <item>Airu\'s Theme</item>
     </string-array>
 
     <string-array name="AudioValues">
@@ -105,5 +120,6 @@
         <item>luneFoxTheme</item>
         <item>rosstavoTheme</item>
         <item>dewinTheme</item>
+        <item>airuTheme</item>
     </string-array>
 </resources>

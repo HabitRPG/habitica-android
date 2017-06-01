@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica;
 
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -42,7 +42,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                     .queryList();
             show_notification = false;
             for (Task task : dailies) {
-                if (task.isDue(0)) {
+                if (task.checkIfDue(0)) {
                     show_notification = true;
                     break;
                 }
@@ -65,7 +65,7 @@ public class NotificationPublisher extends BroadcastReceiver {
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText(context.getString(R.string.reminder_title));
-        builder.setSmallIcon(R.drawable.ic_gryphon);
+        builder.setSmallIcon(R.drawable.ic_gryphon_white);
         Intent notificationIntent = new Intent(context, MainActivity.class);
 
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP

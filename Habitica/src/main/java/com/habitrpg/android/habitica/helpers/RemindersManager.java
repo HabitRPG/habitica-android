@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.helpers;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -20,22 +20,23 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
 public class RemindersManager {
 
-    private DateFormat dateFormater;
     @Inject
     CrashlyticsProxy crashlyticsProxy;
+    private DateFormat dateFormater;
 
     public RemindersManager(String taskType) {
         HabiticaBaseApplication.getComponent().inject(this);
         if (taskType.equals("todo")) {
-            dateFormater = DateFormat.getDateTimeInstance();
+            dateFormater = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
         } else {
-            dateFormater = DateFormat.getTimeInstance();
+            dateFormater = DateFormat.getTimeInstance(DateFormat.SHORT);
         }
     }
 
@@ -56,7 +57,7 @@ public class RemindersManager {
         }
     }
 
-    public String reminderTimeToString (Date time) {
+    public String reminderTimeToString(Date time) {
         return dateFormater.format(time);
     }
 
@@ -92,9 +93,16 @@ public class RemindersManager {
             dialogConfirmButton.setOnClickListener(view -> {
                 int day = dialogDatePicker.getDayOfMonth();
                 int month = dialogDatePicker.getMonth();
-                int year =  dialogDatePicker.getYear();
-                int hour1 = dialogTimePicker.getCurrentHour();
-                int minute1 = dialogTimePicker.getCurrentMinute();
+                int year = dialogDatePicker.getYear();
+                int hour1 = 0;
+                int minute1 = 0;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    hour1 = dialogTimePicker.getHour();
+                    minute1 = dialogTimePicker.getMinute();
+                } else {
+                    hour1 = dialogTimePicker.getCurrentHour();
+                    minute1 = dialogTimePicker.getCurrentMinute();
+                }
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day, hour1, minute1, 0);
@@ -106,7 +114,7 @@ public class RemindersManager {
         } else {
             TimePickerDialog timePickerDialog;
             timePickerDialog = new TimePickerDialog(context, (timePicker, selectedHour, selectedMinute) -> {
-                Calendar calendar = Calendar.getInstance();
+                Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), selectedHour, selectedMinute, 0);
 
                 onReminderTimeSelected(callback, reminder, calendar);

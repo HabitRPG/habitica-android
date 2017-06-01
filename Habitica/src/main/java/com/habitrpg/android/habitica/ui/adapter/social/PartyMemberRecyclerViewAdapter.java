@@ -7,7 +7,9 @@ import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+
+import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -18,8 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -102,7 +102,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 
-            classLabel.setText(user.getStats().getCleanedClassName());
+            classLabel.setText(user.getStats().getTranslatedClassName(context));
 
             int colorResourceID;
             switch (user.getStats()._class) {

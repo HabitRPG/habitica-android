@@ -18,5 +18,6 @@
 
     <string name="qr_album_name" translatable="false">habitica</string>
     <string name="qr_file_name" translatable="false"> habitrpg-qr-code.jpg</string>
-    <string name="habitica_user_count">1,750,000</string>
+    <string name="habitica_user_count" translatable="false">2,000,000</string>
+    <string name="brand_name" translatable="false">Habitica</string>
 </resources>

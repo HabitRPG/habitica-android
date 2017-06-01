@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.inventory;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.tasks.ItemData;
 
 import org.greenrobot.eventbus.EventBus;
 

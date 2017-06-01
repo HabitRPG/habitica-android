@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -165,4 +165,10 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
     public boolean hasResult(BaseTransaction<List<ItemData>> transaction, List<ItemData> result) {
         return true;
     }
+
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_equipment);
+    }
+
 }

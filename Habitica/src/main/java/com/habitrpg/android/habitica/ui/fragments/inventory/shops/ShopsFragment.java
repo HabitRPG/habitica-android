@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Shop;
+import com.habitrpg.android.habitica.models.shops.Shop;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -96,4 +96,11 @@ public class ShopsFragment extends BaseMainFragment {
             tabLayout.setupWithViewPager(viewPager);
         }
     }
+
+
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_shops);
+    }
+
 }

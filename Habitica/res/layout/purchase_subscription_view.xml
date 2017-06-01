@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal" android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/gem_view_background"
+              android:gravity="center"
+        android:minHeight="80dp"
+        android:layout_marginBottom="12dp">
+
+    <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@color/brand_700"
+            android:id="@+id/subscriptionSelectedFrameView">
+        <View
+                android:id="@+id/subscriptionSelectedView"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@drawable/subscription_unselected"
+                android:layout_gravity="center"/>
+            </FrameLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/priceLabel"
+                android:textColor="@color/brand_100"
+                android:textSize="24sp"
+                tools:text="$ 21"
+                />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/descriptionTextView"
+                android:textColor="@color/brand_100"
+                tools:text="recurring every month"
+                />
+        <org.apmem.tools.layouts.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            <TextView
+                    android:id="@+id/gemCapTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/subscribe1month.gemcap"
+                    style="@style/Pill"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"/>
+            <TextView
+                    android:id="@+id/hourglassTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="+1 Mystic Hourglass"
+                    style="@style/Pill"
+                    android:layout_marginTop="4dp"/>
+        </org.apmem.tools.layouts.FlowLayout>
+    </LinearLayout>
+
+</LinearLayout>

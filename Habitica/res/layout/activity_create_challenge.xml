@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create_challenge"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+
+    tools:context="com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/brand_200"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="22dp">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/brand_500"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat"
+                android:id="@+id/create_challenge_title_input_layout">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill_horizontal"
+                    android:hint="@string/new_challenge_title"
+                    android:id="@+id/create_challenge_title"
+                    android:textColor="@color/white"
+                    android:textColorHighlight="@color/brand_500"
+                    android:textColorHint="@color/brand_500"
+
+                    tools:text="Get in shape" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/brand_500"
+
+                android:id="@+id/create_challenge_description_input_layout"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description_optional"
+                    android:inputType="textMultiLine"
+
+                    android:id="@+id/create_challenge_description"
+                    android:maxLines="5"
+                    android:minLines="3"
+                    android:textColor="@color/white"
+                    android:textColorHighlight="@color/brand_500"
+                    android:textColorHint="@color/brand_500" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/brand_700" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <TextView
+                style="@style/Subheader2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="@string/gem_reward"
+                android:textColor="#cc000000" />
+
+            <TextView
+                style="@style/Caption3"
+                android:id="@+id/create_challenge_gem_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="@string/gem_reward"
+                android:textColor="#f74e52"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp">
+
+                <Button
+                    android:id="@+id/challenge_add_gem_btn"
+                    style="@style/Body1_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:drawableLeft="@drawable/challenge_gem_add_button"/>
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_header_gem" />
+
+                <EditText
+                    style="@style/Subheader2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:textColor="#8a000000"
+                    android:text="0"
+                    android:id="@+id/create_challenge_prize"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/challenge_remove_gem_btn"
+                    style="@style/Body1_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:drawableRight="@drawable/challenge_gem_remove_button"/>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/Subheader2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="@string/location"
+                android:textColor="#cc000000" />
+
+            <Spinner
+                android:id="@+id/challenge_location_spinner"
+                style="@android:style/Widget.Material.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8a000000"
+                android:layout_marginTop="17dp" />
+
+            <TextView
+                style="@style/Subheader2"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="39dp"
+                android:drawablePadding="12dp"
+                android:drawableEnd="@drawable/ic_info_outline_black_24dp"
+                android:drawableTint="@color/brand_300"
+                android:gravity="center"
+                android:text="Tag"
+                android:textColor="#cc000000" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/create_challenge_tag_input_layout"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                <EditText
+                    android:id="@+id/create_challenge_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:hint="@string/identify_your_challenge_with_a_tag"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="#61000000" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                style="@style/Subheader2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tasks" />
+
+            <TextView
+                style="@style/Caption3"
+                android:id="@+id/create_challenge_task_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:textColor="#f74e52"
+                android:text="@string/challenge_create_error_no_tasks"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:nestedScrollingEnabled="false"
+            android:id="@+id/create_challenge_task_list">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

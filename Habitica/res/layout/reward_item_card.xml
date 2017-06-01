@@ -1,57 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
         android:id="@+id/gearElementsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:clickable="false">
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/rewardImageView"
-                        android:layout_width="60dp"
-                        android:padding="5dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical" />
+        android:clickable="false"
+        android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/textReward"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingBottom="@dimen/task_top_bottom_padding"
-                        android:paddingTop="@dimen/task_top_bottom_padding"
-                        android:paddingLeft="@dimen/task_text_padding"
-                        android:paddingStart="@dimen/task_text_padding"
-                        android:paddingEnd="@dimen/reward_spacing"
-                        android:paddingRight="@dimen/reward_spacing"
-                        android:layout_gravity="center_vertical">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/rewardImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="12dp"
+            android:scaleType="center"
+            tools:src="@drawable/custom_reward"/>
 
-                        <net.pherth.android.emoji_library.EmojiTextView
-                            android:id="@+id/checkedTextView"
-                            style="@style/CardTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/textReward"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/task_top_bottom_padding"
+            android:paddingEnd="@dimen/reward_spacing"
+            android:paddingRight="@dimen/reward_spacing"
+            android:paddingTop="@dimen/task_top_bottom_padding">
 
-                        <net.pherth.android.emoji_library.EmojiTextView
-                            android:id="@+id/notesTextView"
-                            style="@style/CardText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+            <net.pherth.android.emoji_library.EmojiTextView
+                android:id="@+id/checkedTextView"
+                style="@style/Subheader3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                tools:text="Title" />
 
-                    </LinearLayout>
+            <net.pherth.android.emoji_library.EmojiTextView
+                android:id="@+id/notesTextView"
+                style="@style/Caption2.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Notes"/>
 
-                    <Button
-                        android:id="@+id/btnReward"
-                        android:layout_width="80dp"
-                        android:layout_height="45dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:textColor="@color/white"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="15sp"
-                        android:drawableLeft="@drawable/ic_header_gold"
-                        android:drawableStart="@drawable/ic_header_gold"
-                        android:background="@drawable/rounded_purple_square"
-                        android:paddingLeft="6dp"
-                        android:paddingStart="6dp" />
-</LinearLayout>
+            <TextView
+                    android:id="@+id/approvalRequiredTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Caption4"
+                    android:text="@string/pending_approval"
+                    />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnReward"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:minWidth="64dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="left|center_vertical"
+            android:drawablePadding="5dp"
+            android:background="@drawable/rounded_purple_square"
+            android:drawableLeft="@drawable/ic_header_gold"
+            android:drawableStart="@drawable/ic_header_gold"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp"
+            android:paddingRight="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/white"
+            tools:text="150"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/task_border_gray" />
+</FrameLayout>

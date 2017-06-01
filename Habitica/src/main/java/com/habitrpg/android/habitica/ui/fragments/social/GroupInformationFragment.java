@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -27,6 +15,18 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.helpers.QrCodeManager;
+import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -39,7 +39,7 @@ public class GroupInformationFragment extends BaseFragment {
     FragmentGroupInfoBinding viewBinding;
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
 
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
@@ -56,7 +56,9 @@ public class GroupInformationFragment extends BaseFragment {
     CardView qrWrapper;
 
     private View view;
+    @Nullable
     private Group group;
+    @Nullable
     private HabitRPGUser user;
     private QuestContent quest;
     private ValueBarBinding bossHpBar;
@@ -68,7 +70,7 @@ public class GroupInformationFragment extends BaseFragment {
 
     }
 
-    public static GroupInformationFragment newInstance(Group group, HabitRPGUser user) {
+    public static GroupInformationFragment newInstance(@Nullable Group group, HabitRPGUser user) {
         Bundle args = new Bundle();
 
         GroupInformationFragment fragment = new GroupInformationFragment();
@@ -125,7 +127,11 @@ public class GroupInformationFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(@Nullable Group group) {
+        if (group == null) {
+            this.group = null;
+            return;
+        }
         if (viewBinding != null) {
             viewBinding.setGroup(group);
         }
@@ -141,7 +147,10 @@ public class GroupInformationFragment extends BaseFragment {
         }
     }
 
-    public void setQuestContent(QuestContent quest) {
+    public void setQuestContent(@Nullable QuestContent quest) {
+        if (quest == null) {
+            return;
+        }
         if (viewBinding != null) {
             viewBinding.setQuest(quest);
         }
@@ -151,7 +160,7 @@ public class GroupInformationFragment extends BaseFragment {
         this.quest = quest;
     }
 
-    private void updateQuestProgress(Group group, QuestContent quest) {
+    private void updateQuestProgress(@Nullable Group group, QuestContent quest) {
         if (group == null || quest == null) {
             return;
         }
@@ -215,29 +224,35 @@ public class GroupInformationFragment extends BaseFragment {
 
     @OnClick(R.id.btnQuestAccept)
     public void onQuestAccept() {
-        apiHelper.apiService.acceptQuest(group.id)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                    user.getParty().getQuest().RSVPNeeded = false;
-                    group.quest.members.put(user.getId(), true);
-                    setGroup(group);
-                    viewBinding.setUser(user);
-                }, throwable -> {
-                });
+        if (group != null) {
+            apiClient.acceptQuest(group.id)
+                    .subscribe(aVoid -> {
+                        if (user != null) {
+                            user.getParty().getQuest().RSVPNeeded = false;
+                            group.quest.members.put(user.getId(), true);
+                        }
+                        setGroup(group);
+                        viewBinding.setUser(user);
+                    }, throwable -> {
+                    });
+        }
     }
 
 
     @OnClick(R.id.btnQuestReject)
     public void onQuestReject() {
-        apiHelper.apiService.rejectQuest(group.id)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                    user.getParty().getQuest().RSVPNeeded = false;
-                    group.quest.members.put(user.getId(), false);
-                    setGroup(group);
-                    viewBinding.setUser(user);
-                }, throwable -> {
-                });
+        if (group != null) {
+            apiClient.rejectQuest(group.id)
+                    .subscribe(aVoid -> {
+                        if (user != null) {
+                            user.getParty().getQuest().RSVPNeeded = false;
+                            group.quest.members.put(user.getId(), false);
+                        }
+                        setGroup(group);
+                        viewBinding.setUser(user);
+                    }, throwable -> {
+                    });
+        }
     }
 
 
@@ -246,13 +261,16 @@ public class GroupInformationFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage("Are you sure you want to leave the active quest? All your quest progress will be lost.")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    apiHelper.apiService.leaveQuest(group.id)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(aVoid -> {
-                                group.quest.members.remove(user.getId());
-                                setGroup(group);
-                            }, throwable -> {
-                            });
+                    if (group != null) {
+                        apiClient.leaveQuest(group.id)
+                                .subscribe(aVoid -> {
+                                    if (user != null) {
+                                        group.quest.members.remove(user.getId());
+                                    }
+                                    setGroup(group);
+                                }, throwable -> {
+                                });
+                    }
                 }).setNegativeButton("No", (dialog, which) -> {
 
                 });
@@ -265,13 +283,14 @@ public class GroupInformationFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_begin_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    apiHelper.apiService.forceStartQuest(group.id, group)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(quest -> {
-                                group.quest = quest;
-                                setGroup(group);
-                            }, throwable -> {
-                            });
+                    if (group != null) {
+                        apiClient.forceStartQuest(group.id, group)
+                                .subscribe(quest -> {
+                                    group.quest = quest;
+                                    setGroup(group);
+                                }, throwable -> {
+                                });
+                    }
                 }).setNegativeButton(R.string.no, (dialog, which) -> {
 
                 });
@@ -283,13 +302,14 @@ public class GroupInformationFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_cancel_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    apiHelper.apiService.cancelQuest(group.id)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(aVoid -> {
-                                setGroup(group);
-                                setQuestContent(null);
-                            }, throwable -> {
-                            });
+                    if (group != null) {
+                        apiClient.cancelQuest(group.id)
+                                .subscribe(aVoid -> {
+                                    setGroup(group);
+                                    setQuestContent(null);
+                                }, throwable -> {
+                                });
+                    }
                 }).setNegativeButton(R.string.no, (dialog, which) -> {
 
                 });
@@ -301,14 +321,15 @@ public class GroupInformationFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage("Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    apiHelper.apiService.abortQuest(group.id)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(quest -> {
-                                group.quest = quest;
-                                setGroup(group);
-                                setQuestContent(null);
-                            }, throwable -> {
-                            });
+                    if (group != null) {
+                        apiClient.abortQuest(group.id)
+                                .subscribe(quest -> {
+                                    group.quest = quest;
+                                    setGroup(group);
+                                    setQuestContent(null);
+                                }, throwable -> {
+                                });
+                    }
                 }).setNegativeButton("No", (dialog, which) -> {
 
                 });
@@ -317,20 +338,21 @@ public class GroupInformationFragment extends BaseFragment {
 
     @OnClick(R.id.btnPartyInviteAccept)
     public void onPartyInviteAccepted() {
-        apiHelper.apiService.joinGroup(user.getInvitations().getParty().getId())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(group -> {
-                    setGroup(group);
-                    viewBinding.setInvitation(null);
-                }, throwable -> {});
+        if (user != null) {
+            apiClient.joinGroup(user.getInvitations().getParty().getId())
+                    .subscribe(group -> {
+                        setGroup(group);
+                        viewBinding.setInvitation(null);
+                    }, throwable -> {
+                    });
+        }
     }
 
     @OnClick(R.id.btnPartyInviteReject)
     public void onPartyInviteRejected() {
-        apiHelper.apiService.rejectGroupInvite(user.getInvitations().getParty().getId())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                    viewBinding.setInvitation(null);
-                }, throwable -> {});
+        if (user != null) {
+            apiClient.rejectGroupInvite(user.getInvitations().getParty().getId())
+                    .subscribe(aVoid -> viewBinding.setInvitation(null), throwable -> {});
+        }
     }
 }

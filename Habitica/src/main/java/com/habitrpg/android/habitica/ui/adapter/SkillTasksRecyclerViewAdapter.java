@@ -2,9 +2,8 @@ package com.habitrpg.android.habitica.ui.adapter;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
-import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;

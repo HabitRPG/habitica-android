@@ -1,12 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.util.Log;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,22 +27,20 @@ public class SoundManager {
     SoundFileLoader soundFileLoader;
     private String soundTheme;
 
-    private MediaPlayer mp = new MediaPlayer();
-
     private HashMap<String, SoundFile> loadedSoundFiles;
 
-    public SoundManager(){
-        HabiticaApplication.getInstance(HabiticaApplication.currentActivity).getComponent().inject(this);
+    public SoundManager() {
+        HabiticaBaseApplication.getComponent().inject(this);
 
         loadedSoundFiles = new HashMap<>();
     }
 
-    public void setSoundTheme(String soundTheme){
+    public void setSoundTheme(String soundTheme) {
         this.soundTheme = soundTheme;
     }
 
     public Observable<List<SoundFile>> preloadAllFiles() {
-        if(soundTheme == "off") {
+        if (soundTheme.equals("off")) {
             return Observable.empty();
         }
 
@@ -66,17 +59,16 @@ public class SoundManager {
         return soundFileLoader.download(soundFiles);
     }
 
-    public void clearLoadedFiles(){
+    public void clearLoadedFiles() {
         loadedSoundFiles.clear();
     }
 
-    public void loadAndPlayAudio(String type){
-        if(soundTheme == "off")
-        {
+    public void loadAndPlayAudio(String type) {
+        if (soundTheme.equals("off")) {
             return;
         }
 
-        if(loadedSoundFiles.containsKey(type)){
+        if (loadedSoundFiles.containsKey(type)) {
             loadedSoundFiles.get(type).play();
         } else {
             ArrayList<SoundFile> soundFiles = new ArrayList<>();
@@ -88,7 +80,7 @@ public class SoundManager {
                 loadedSoundFiles.put(type, file);
                 file.play();
 
-            }, throwable -> throwable.printStackTrace());
+            }, Throwable::printStackTrace);
         }
     }
 

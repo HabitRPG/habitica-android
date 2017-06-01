@@ -15,8 +15,8 @@ import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -24,13 +24,16 @@ import net.pherth.android.emoji_library.EmojiTextView;
 import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +42,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -53,6 +57,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     private static final int TYPE_MESSAGE = 2;
 
     private List<ChatMessage> messages;
+    private HabitRPGUser user;
     private String uuid;
     private String groupId;
     private boolean isTavern;
@@ -60,9 +65,10 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     private String replyToUserUUID;
     private HabitRPGUser sendingUser;
 
-    public ChatRecyclerViewAdapter(List<ChatMessage> messages, String uuid, String groupId, boolean isTavern) {
+    public ChatRecyclerViewAdapter(List<ChatMessage> messages, HabitRPGUser user, String groupId, boolean isTavern) {
         this.messages = messages;
-        this.uuid = uuid;
+        this.user = user;
+        if (user != null) this.uuid = user.getId();
         this.groupId = groupId;
         this.isTavern = isTavern;
     }
@@ -178,6 +184,10 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         @BindView(R.id.tvLikes)
         @Nullable
         TextView tvLikes;
+        @BindView(R.id.community_guidelines_view)
+        @Nullable
+        TextView communityGuidelinesView;
+
         Context context;
         Resources res;
         int likeCount = 0;
@@ -238,6 +248,15 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     }
                 }
             }
+
+            if (communityGuidelinesView != null) {
+                communityGuidelinesView.setPaintFlags(communityGuidelinesView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                communityGuidelinesView.setOnClickListener(v -> {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse("https://habitica.com/static/community-guidelines"));
+                    context.startActivity(i);
+                });
+            }
         }
 
         public void bind(final ChatMessage msg) {
@@ -246,10 +265,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             if (layoutType != TYPE_DANIEL && layoutType != TYPE_NEW_MESSAGE) {
                 setLikeProperties(msg);
 
-                if (msg.sent != null && msg.sent.equals("true")) {
-                    DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributor().getContributorColor());
-                } else {
-                    DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+                if (userBackground != null) {
+                    if (msg.sent != null && msg.sent.equals("true")) {
+                        DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributor().getContributorColor());
+                    } else {
+                        DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+                    }
                 }
 
                 if (msg.user == null || msg.user.equals("")) {
@@ -311,8 +332,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 tvLikes.setText("+" + likeCount);
             }
 
-            int backgroundColorRes = 0;
-            int foregroundColorRes = 0;
+            int backgroundColorRes;
+            int foregroundColorRes;
 
             if (likeCount != 0) {
                 if (currentUserLikedPost) {
@@ -355,10 +376,13 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     }
 
                     ChatMessage chatMsg = currentMsg;
+
                     if (!chatMsg.uuid.equals(uuid)) {
                         popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
                     }
-
+                    if (user.getContributor().getAdmin()) {
+                        popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(true);
+                    }
                     popupMenu.getMenu().findItem(R.id.menu_chat_copy_as_todo).setVisible(false);
                     popupMenu.getMenu().findItem(R.id.menu_chat_send_pm).setVisible(false);
 
@@ -435,8 +459,15 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_chat_delete: {
-                    EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, currentMsg));
-
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.confirm_delete_tag_title)
+                            .setMessage(R.string.confirm_delete_tag_message)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                                Toast.makeText(context, R.string.edit_tag_btn_done, Toast.LENGTH_SHORT).show();
+                                EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, currentMsg));
+                            })
+                            .setNegativeButton(android.R.string.no, null).show();
                     break;
                 }
                 case R.id.menu_chat_flag: {

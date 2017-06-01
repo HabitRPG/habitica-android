@@ -1,34 +1,24 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+
+import android.support.annotation.Nullable;
 
 
 public class MergeUserCallback extends HabitRPGUserCallback {
 
     private HabitRPGUser user;
 
-    public MergeUserCallback(HabitRPGUserCallback.OnUserReceived callback, HabitRPGUser user) {
+    public MergeUserCallback(@Nullable HabitRPGUserCallback.OnUserReceived callback, HabitRPGUser user) {
         super(callback);
         this.user = user;
     }
 
     @Override
     public void call(HabitRPGUser user) {
-        if (user.getItems() != null) {
-            this.user.setItems(user.getItems());
-        }
-        if (user.getPreferences() != null) {
-            this.user.setPreferences(user.getPreferences());
-        }
-        if (user.getFlags() != null) {
-            this.user.setFlags(user.getFlags());
-        }
-        if (user.getStats() != null) {
-            this.user.getStats().merge(user.getStats());
-        }
 
-        this.user.async().save();
-
-        callBack.onUserReceived(this.user);
+        if (callBack != null) {
+            callBack.onUserReceived(this.user);
+        }
     }
 }

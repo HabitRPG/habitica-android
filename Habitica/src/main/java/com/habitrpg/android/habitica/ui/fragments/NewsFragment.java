@@ -38,4 +38,9 @@ public class NewsFragment extends BaseMainFragment {
         component.inject(this);
     }
 
+
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_news);
+    }
 }

@@ -1,15 +1,16 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import com.habitrpg.android.habitica.APIHelper;
+
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -25,13 +26,13 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
 
     private final ContentCache contentCache;
     private final HabitRPGUser user;
-    private APIHelper apiHelper;
+    private ApiClient apiClient;
 
-    public RewardsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, HabitRPGUser user, APIHelper apiHelper) {
-        super(taskType, tagsHelper, layoutResource, newContext, user.getId());
+    public RewardsRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, HabitRPGUser user, ApiClient apiClient) {
+        super(taskType, taskFilterHelper, layoutResource, newContext, user != null ? user.getId() : null);
         this.user = user;
-        this.apiHelper = apiHelper;
-        this.contentCache = new ContentCache(apiHelper);
+        this.apiClient = apiClient;
+        this.contentCache = new ContentCache(apiClient);
     }
 
     @Override
@@ -39,10 +40,9 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
         return new RewardViewHolder(getContentView(parent));
     }
 
-    public void loadEquipmentRewards() {
-        if (apiHelper != null) {
-            apiHelper.apiService.getInventoryBuyableGear()
-                    .compose(apiHelper.configureApiCallObserver())
+    private void loadEquipmentRewards() {
+        if (apiClient != null) {
+            apiClient.getInventoryBuyableGear()
                     .flatMap(items -> {
                         // get itemdata list
                         ArrayList<String> itemKeys = new ArrayList<>();
@@ -53,9 +53,9 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                         if (user.getFlags().getArmoireEnabled()) {
                             itemKeys.add("armoire");
                         }
-                        return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> {
-                            contentCache.GetItemDataList(itemKeys, obj -> {
-                                ArrayList<Task> buyableItems = new ArrayList<>();
+                        return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> contentCache.getItemDataList(itemKeys, obj -> {
+                            ArrayList<Task> buyableItems = new ArrayList<>();
+                            if (obj != null) {
                                 for (ItemData item : obj) {
                                     Task reward = new Task();
                                     reward.text = item.text;
@@ -65,7 +65,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                                     reward.specialTag = "item";
                                     reward.setId(item.key);
 
-                                    if (item.key.equals("armoire")) {
+                                    if ("armoire".equals(item.key)) {
                                         if (user.getFlags().getArmoireEmpty()) {
                                             reward.notes = context.getResources().getString(R.string.armoireNotesEmpty);
                                         } else {
@@ -80,10 +80,10 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
 
                                     buyableItems.add(reward);
                                 }
-                                subscriber.onNext(buyableItems);
-                                subscriber.onCompleted();
-                            });
-                        });
+                            }
+                            subscriber.onNext(buyableItems);
+                            subscriber.onCompleted();
+                        }));
                     })
                     .subscribe(items -> {
                         this.filteredContent.addAll(items);

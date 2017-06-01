@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Mount;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -87,7 +87,7 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
             itemView.setOnClickListener(this);
         }
 
-        public Boolean isOwned() {
+        Boolean isOwned() {
             if (ownedMapping != null && animal != null) {
                 if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey())) {
                     return true;

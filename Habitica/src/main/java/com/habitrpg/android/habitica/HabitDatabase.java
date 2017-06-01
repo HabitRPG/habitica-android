@@ -7,5 +7,9 @@ public class HabitDatabase {
 
     public static final String NAME = "Habitica";
 
-    public static final int VERSION = 29;
+    public static final int VERSION = 38;
+
+    public HabitDatabase() {
+        super();
+    }
 }

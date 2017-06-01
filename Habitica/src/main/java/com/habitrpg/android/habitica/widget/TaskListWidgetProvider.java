@@ -1,5 +1,16 @@
 package com.habitrpg.android.habitica.widget;
 
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -10,17 +21,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import javax.inject.Inject;
 
 public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
@@ -28,19 +28,21 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     public static final String TASK_ID_ITEM = "com.habitrpg.android.habitica.TASK_ID_ITEM";
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
     @Inject
     HostConfig hostConfig;
 
     private void setUp(Context context) {
-        if (apiHelper == null) {
+        if (apiClient == null) {
             HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
             application.getComponent().inject(this);
         }
     }
 
     protected abstract Class getServiceClass();
+
     protected abstract Class getProviderClass();
+
     protected abstract int getTitleResId();
 
 
@@ -54,8 +56,8 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
             String taskId = intent.getStringExtra(TASK_ID_ITEM);
 
             if (taskId != null) {
-                apiHelper.apiService.postTaskDirection(taskId, TaskDirection.up.toString())
-                        .compose(apiHelper.configureApiCallObserver())
+                apiClient.postTaskDirection(taskId, TaskDirection.up.toString())
+
                         .subscribe(taskDirectionData -> {
                             Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
                             task.completed = true;

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_gravity="right|end"
+        tools:background="@color/brand_100"
+                android:clickable="true">
+
+    <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_action_filter_list"
+            android:scaleType="center"/>
+
+    <TextView
+            android:id="@+id/badge_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="4dp"
+            tools:text="99"
+            android:textColor="@color/white"
+            android:background="@drawable/badge_bg"/>
+
+</RelativeLayout>

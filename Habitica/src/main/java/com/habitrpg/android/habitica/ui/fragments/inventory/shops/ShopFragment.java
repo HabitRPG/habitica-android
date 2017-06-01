@@ -1,14 +1,19 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.UpdateGoldGemsPurchasedevent;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Shop;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopCategory;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -30,17 +37,13 @@ public class ShopFragment extends BaseFragment {
     public RecyclerViewEmptySupport recyclerView;
     @BindView(R.id.empty_view)
     public TextView emptyView;
-
-    private View view;
     public ShopRecyclerAdapter adapter;
-
     public String shopIdentifier;
     public HabitRPGUser user;
-
     public Shop shop;
-
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
+    private View view;
 
     @Nullable
     @Override
@@ -100,12 +103,26 @@ public class ShopFragment extends BaseFragment {
                 shopUrl = "seasonal";
                 break;
         }
-        this.apiHelper.apiService.fetchShopInventory(shopUrl)
-                .compose(this.apiHelper.configureApiCallObserver())
+        this.apiClient.fetchShopInventory(shopUrl)
+                .map(shop1 -> {
+                    if (shop1.identifier.equals(Shop.MARKET)) {
+                        if (user.getPurchased().getPlan().isActive()) {
+                            ShopCategory specialCategory = new ShopCategory();
+                            specialCategory.text = getString(R.string.special);
+                            specialCategory.items = new ArrayList<>();
+                            ShopItem item = ShopItem.makeGemItem(getContext().getResources());
+                            item.limitedNumberLeft = user.getPurchased().getPlan().numberOfGemsLeft();
+                            specialCategory.items.add(item);
+                            shop1.categories.add(specialCategory);
+                        }
+                    }
+                    return shop1;
+                })
                 .subscribe(shop -> {
                     this.shop = shop;
                     this.adapter.setShop(shop);
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     @Override
@@ -117,5 +134,10 @@ public class ShopFragment extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(SHOP_IDENTIFIER_KEY, this.shopIdentifier);
+    }
+
+    @Subscribe
+    public void updateGoldGemCount(UpdateGoldGemsPurchasedevent event) {
+        this.adapter.updateGoldGemCount(event.numberLeft);
     }
 }

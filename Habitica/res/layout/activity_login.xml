@@ -1,218 +1,244 @@
-<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent">
+    <com.habitrpg.android.habitica.ui.views.login.LockableScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/background_container"
+        android:scrollIndicators="none"
+        android:scrollbars="none"
+        >
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login.linear.layout"
-        android:gravity="center"
-        android:paddingTop="40dp"
-        android:paddingBottom="40dp"
-        android:orientation="vertical"
-        android:shrinkColumns="0"
-        android:layout_gravity="center_horizontal">
-
-        <TableRow
+        <com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
+            android:id="@+id/background_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_gravity="center">
-
+            android:background="@drawable/login_gradient"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:layout_marginRight="-2dp"
+            >
+            <ImageView
+                android:id="@+id/city_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:srcCompat="@drawable/login_background"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop" />
+            <Space android:id="@+id/cloud_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible"
+                android:layout_above="@id/city_view" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_gryphon"
-                android:layout_span="2" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
+                app:srcCompat="@drawable/cloud_1"
+                android:id="@+id/left_cloud_view"
+                android:layout_toLeftOf="@id/cloud_anchor"
+                android:layout_marginRight="150dp"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                android:paddingBottom="460dp"
+                />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:src="@drawable/ic_habitica"
-                android:layout_span="2" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/username_row"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-                style="@style/LoginRow">
-
-            <ImageView
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:id="@+id/imageView4"
-                android:src="@drawable/ic_username"
-                android:layout_gravity="center"
-                android:layout_marginRight="4dp" />
-
-            <EditText
-        android:id="@+id/username"
-                android:layout_width="@dimen/login_field_width"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:imeOptions="actionNext"
-        android:hint="@string/username"
+                app:srcCompat="@drawable/cloud_2"
+                android:id="@+id/right_cloud_view"
+                android:layout_toRightOf="@id/cloud_anchor"
+                android:layout_marginLeft="170dp"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                android:paddingBottom="400dp"
                 />
 
-        </TableRow>
 
-        <TableRow
-            android:id="@+id/email_row"
+        </com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView>
+
+    </com.habitrpg.android.habitica.ui.views.login.LockableScrollView>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/LoginRow">
+            android:paddingTop="@dimen/spacing_large"
+            android:paddingLeft="@dimen/spacing_large"
+            android:paddingRight="@dimen/spacing_large"
+            android:id="@+id/login_intro_view"
+            android:orientation="vertical"
+            android:background="@color/transparent"
+            android:fitsSystemWindows="true"
+            >
 
             <ImageView
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:id="@+id/imageView5"
-                android:src="@drawable/ic_email"
-                android:layout_gravity="center"
-                android:layout_marginRight="4dp" />
-
-            <EditText
-        android:id="@+id/email"
-                android:layout_width="@dimen/login_field_width"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:singleLine="true"
-        android:imeOptions="actionNext"
-        android:hint="@string/emailAddress" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/password_row"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/LoginRow">
-
-            <ImageView
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:id="@+id/imageView6"
-                android:src="@drawable/ic_password"
-                android:layout_gravity="center"
-                android:layout_marginRight="4dp" />
-
-            <EditText
-            android:id="@+id/password"
-                android:layout_width="@dimen/login_field_width"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:hint="@string/password"
-            />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/confirm_password_row"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/LoginRow">
-
-            <ImageView
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:id="@+id/imageView7"
-                android:src="@drawable/ic_password"
-                android:layout_gravity="center"
-                android:layout_marginRight="4dp" />
-
-            <EditText
-        android:id="@+id/confirm_password"
-                android:layout_width="@dimen/login_field_width"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-        android:singleLine="true"
-        android:imeOptions="actionDone"
-        android:hint="@string/confirmpassword" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp">
-
-                <Button
-                    android:id="@+id/login_btn"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_btn"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/white"
-                    android:background="@drawable/rounded_purple_square"
-                    android:layout_span="2"
-                    android:layout_marginBottom="8dp"
-                    />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-                <ProgressBar
-                    android:id="@+id/PB_AsyncTask"
-                    android:indeterminate="true"
-                    android:visibility="gone"
-                    android:layout_span="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_button"
+                android:id="@+id/logo_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:src="@drawable/login_logo"
+                android:layout_margin="24dp"
+                android:contentDescription="@string/brand_name" />
 
-                android:layout_span="2"/>
-        </TableRow>
-        <TableRow
+            <Button
+                android:id="@+id/new_game_button"
+                android:layout_width="@dimen/login_intro_button_size"
+                android:layout_height="@dimen/login_intro_button_size"
+                android:text="@string/register_btn"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/login_begin_button"/>
+
+            <Button
+                android:id="@+id/show_login_button"
+                android:layout_width="@dimen/login_intro_button_size"
+                android:layout_height="@dimen/login_intro_button_size"
+                android:text="@string/login_btn"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/login_begin_button"/>
+
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
-            <com.google.android.gms.common.SignInButton
-                    android:id="@+id/google_login_button"
-                    android:layout_width="wrap_content"
+                android:background="@color/transparent"
+                android:visibility="invisible"
+                android:id="@+id/login_scrollview"
+                android:scrollIndicators="none"
+                tools:visibility="visible"
+                android:padding="0dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:padding="@dimen/spacing_large"
+                    android:id="@+id/login.linear.layout"
+                    android:orientation="vertical"
+                    android:background="@color/transparent">
 
-                    android:layout_span="2"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+                    <EditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_username"
+                        android:drawableRight="@drawable/ic_username"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:nextFocusDown="@+id/email"
+                        android:hint="@string/username"
+                        android:theme="@style/LoginEditTextTheme"
+                        android:textColor="@color/white_75_alpha"
+                        android:textColorHighlight="@color/white"/>
 
-            <TextView
-                android:id="@+id/forgot_pw_tv"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="@string/forgot_pw_tv"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/best_10"
-                android:layout_span="2"
-                />
-        </TableRow>
-    </TableLayout>
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:imeOptions="actionNext"
+                        android:drawableRight="@drawable/ic_email"
+                        android:nextFocusDown="@+id/password"
+                        android:drawableEnd="@drawable/ic_email"
+                        android:hint="@string/emailAddress"
+                        android:textColor="@color/white_75_alpha"
+                        android:theme="@style/LoginEditTextTheme"
+                        />
 
-</ScrollView>
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:imeOptions="actionNext"
+                        android:nextFocusDown="@+id/confirm_password"
+                        android:drawableRight="@drawable/ic_password"
+                        android:drawableEnd="@drawable/ic_password"
+                        android:hint="@string/password"
+                        android:textColor="@color/white_75_alpha"
+                        android:theme="@style/LoginEditTextTheme"/>
+
+                    <EditText
+                        android:id="@+id/confirm_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:drawableRight="@drawable/ic_password"
+                        android:drawableEnd="@drawable/ic_password"
+                        android:imeOptions="actionDone"
+                        android:hint="@string/confirmpassword"
+                        android:textColor="@color/white_75_alpha"
+                        android:theme="@style/LoginEditTextTheme"/>
+
+                    <ProgressBar
+                        android:id="@+id/PB_AsyncTask"
+                        android:indeterminate="true"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
+
+                    <Button
+                        android:id="@+id/login_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:text="@string/register_btn"
+                        android:layout_marginTop="@dimen/spacing_xlarge"
+                        style="@style/LoginButton"/>
+
+                    <Button
+                        android:id="@+id/fb_login_button"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/spacing_xlarge"
+                        android:layout_height="@dimen/diamond_button_height"
+                        android:text="@string/login_btn_fb"
+                        android:drawableLeft="@drawable/facebook_icon"
+                        style="@style/LoginButton"/>
+
+                    <Button
+                        android:id="@+id/google_login_button"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:layout_height="@dimen/diamond_button_height"
+                        android:text="@string/login_btn_google"
+                        android:drawableLeft="@drawable/google_icon"
+                        style="@style/LoginButton"/>
+
+                    <TextView
+                        android:id="@+id/forgot_pw_tv"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/spacing_xlarge"
+                        android:gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:text="@string/forgot_pw_tv"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white_50_alpha"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_arrow_back_white_36dp"
+            android:background="@color/transparent"
+            android:paddingLeft="12dp"
+            android:alpha="0" />
+    </FrameLayout>
+
+</FrameLayout>

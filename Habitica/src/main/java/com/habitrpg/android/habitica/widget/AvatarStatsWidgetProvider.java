@@ -1,14 +1,14 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -28,7 +28,24 @@ import javax.inject.Inject;
 
 public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     private static final String LOG = AvatarStatsWidgetProvider.class.getName();
+
     private AppWidgetManager appWidgetManager;
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser user) {
+            updateData(user);
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
+            return true;
+        }
+    };
 
     @Override
     public int layoutResourceId() {
@@ -36,12 +53,12 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     }
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
     @Inject
     HostConfig hostConfig;
 
     private void setUp(Context context) {
-        if (apiHelper == null) {
+        if (apiClient == null) {
             HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
             application.getComponent().inject(this);
         }
@@ -58,7 +75,6 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
     }
-
 
     @Override
     public RemoteViews configureRemoteViews(RemoteViews remoteViews, int widgetId, int columns, int rows) {
@@ -78,23 +94,6 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
         return remoteViews;
     }
-
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            updateData(habitRPGUser);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
 
     private void updateData(HabitRPGUser user) {
         if (user == null || user.getStats() == null) {
@@ -123,8 +122,8 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             int sp = (int) ((stats.getGp() - gp) * 100);
             remoteViews.setTextViewText(R.id.gold_tv, String.valueOf(gp));
             remoteViews.setTextViewText(R.id.silver_tv, String.valueOf(sp));
-            remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
-            remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl().toString()));
+            remoteViews.setTextViewText(R.id.gems_tv, String.valueOf(user.getGemCount()));
+            remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl()));
 
             AvatarView avatarView = new AvatarView(context, true, true, true);
             ;

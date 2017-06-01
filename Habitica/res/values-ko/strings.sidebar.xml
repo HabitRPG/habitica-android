@@ -4,9 +4,9 @@
   <string name="sidebar.skills">스킬</string>
   <string name="sidebar.section.social">소셜</string>
   <string name="sidebar.inbox">받은 편지함</string>
-  <string name="sidebar.tavern">여관</string>
+  <string name="sidebar.tavern">주막</string>
   <string name="sidebar.party">파티</string>
-  <string name="sidebar.purchaseGems">보석 구매</string>
+  <string name="sidebar.purchaseGems">보석 &amp; 구독</string>
   <string name="sidebar.guilds">길드</string>
   <string name="sidebar.challenges">도전</string>
   <string name="sidebar.section.inventory">인벤토리</string>
@@ -16,5 +16,5 @@
   <string name="sidebar.news">뉴스</string>
   <string name="sidebar.settings">설정</string>
   <string name="sidebar.about">소개</string>
-  <string name="sidebar_shops">가게</string>
+  <string name="sidebar_shops">상점</string>
 </resources>

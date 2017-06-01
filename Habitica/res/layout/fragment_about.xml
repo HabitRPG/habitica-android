@@ -60,7 +60,6 @@
 
                 android:layout_marginTop="35sp"
                 android:background="@drawable/rounded_purple_square"
-                android:capitalize="none"
                 android:text="@string/about.rate_our_app"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

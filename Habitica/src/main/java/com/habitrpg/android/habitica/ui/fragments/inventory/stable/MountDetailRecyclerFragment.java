@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -105,5 +105,10 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
         };
         itemsRunnable.run();
 
+    }
+
+    @Override
+    public String customTitle() {
+        return getString(R.string.mounts);
     }
 }

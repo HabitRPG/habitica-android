@@ -41,13 +41,23 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
-    <style name="AppThemeWithActionBar" parent="AppTheme">
+    <style name="AppTheme.ActionBar" parent="AppTheme">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-
     </style>
 
-    <style name="AppThemeWithActionBarBlackText" parent="AppThemeWithActionBar">
+    <style name="AppTheme.ActionBar.Transparent">
+    </style>
+    
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Transparent">
+    </style>
+
+    <style name="AppThemeWithActionBarBlackText" parent="AppTheme.ActionBar">
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 
@@ -171,10 +181,13 @@
     </style>
 
     <style name="EmptyView">
-        <item name="android:textSize">@dimen/card_medium_text</item>
         <item name="android:padding">@dimen/section_top_padding</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="LoginRow">
@@ -187,9 +200,15 @@
         <item name="android:textColor">@color/brand_100</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:drawableLeft">@drawable/ic_check_purple</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:paddingTop">12dp</item>
+        <item name="android:drawableLeft">@drawable/ic_check_purple_24dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:drawablePadding">4dp</item>
+    </style>
+
+    <style name="SubscriptionListTitle" parent="GemPurchaseListItem">
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_medium</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="FragmentDialogTitle">
@@ -199,5 +218,143 @@
         <item name="android:paddingRight">@dimen/section_leftright_padding</item>
         <item name="android:paddingTop">@dimen/section_top_padding</item>
         <item name="android:paddingBottom">@dimen/section_top_padding</item>
+    </style>
+
+    <style name="GemPurchaseListItemDescription">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:textColor">@color/subscription_description_text</item>
+    </style>
+
+    <style name="Pill">
+        <item name="android:textSize">11sp</item>
+        <item name="android:background">@drawable/pill_bg</item>
+        <item name="android:paddingRight">@dimen/pill_horizontal_padding</item>
+        <item name="android:paddingLeft">@dimen/pill_horizontal_padding</item>
+        <item name="android:paddingTop">@dimen/pill_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/pill_vertical_padding</item>
+    </style>
+
+    <style name="Pill.Selected">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/pill_bg_purple</item>
+    </style>
+
+    <style name="Pill.Selected.Green">
+        <item name="android:background">@drawable/pill_bg_green</item>
+    </style>
+
+    <style name="Pill.Selected.Red">
+        <item name="android:background">@drawable/pill_bg_red</item>
+    </style>
+
+    <style name="subscriptionBox">
+        <item name="android:background">@color/habit_inactive_gray</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="subscriptionBoxText">
+        <item name="android:textColor">@color/brand_100</item>
+    </style>
+
+    <style name="subscriptionBoxText.Title">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="subscriptionBoxText.Subtitle">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="subscriptionBoxText.Title.Red">
+        <item name="android:textColor">@color/worse_50</item>
+    </style>
+
+    <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_condensed
+        </item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.035</item>
+        <item name="android:lineSpacingExtra">2.0dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:paddingLeft">@dimen/button_padding</item>
+        <item name="android:paddingRight">@dimen/button_padding</item>
+    </style>
+
+    <style name="Button.Purple">
+        <item name="android:background">@drawable/rounded_purple_square</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Button.Purple.Small">
+        <item name="android:paddingLeft">@dimen/button_padding_small</item>
+        <item name="android:paddingRight">@dimen/button_padding_small</item>
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
+    </style>
+
+    <style name="LoginEditTextTheme">
+        <item name="colorAccent">@color/white_50_alpha</item>
+        <item name="colorControlNormal">@color/white_15_alpha</item>
+        <item name="colorControlActivated">@color/white_75_alpha</item>
+        <item name="android:drawablePadding">@dimen/spacing_large</item>
+        <item name="android:textColor">@color/white_75_alpha</item>
+        <item name="android:textColorHint">@color/white_50_alpha</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingBottom">20dp</item>
+    </style>
+
+    <style name="LoginButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:shadowColor">@color/transparent</item>
+        <item name="android:background">@drawable/login_button</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">32dp</item>
+        <item name="android:paddingRight">32dp</item>
+    </style>
+
+    <style name="welcome_floating_icon">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/welcome_diamond_background</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="DiamondButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_height">36dp</item>
+        <item name="android:background">@drawable/diamond_button</item>
+        <item name="android:paddingLeft">36dp</item>
+        <item name="android:paddingRight">36dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:shadowColor">@color/transparent</item>
+    </style>
+
+    <style name="TaskFilterRadioButton">
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@color/transparent</item>
+        <item name="android:background">@drawable/pill_radio_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@drawable/radio_button_text_color</item>
+    </style>
+
+    <style name="TagEditTextTheme">
+        <item name="colorAccent">@color/black_20_alpha</item>
+        <item name="colorControlNormal">@color/black_20_alpha</item>
+        <item name="android:drawablePadding">@dimen/spacing_large</item>
     </style>
 </resources>

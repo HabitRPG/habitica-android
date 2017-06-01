@@ -1,12 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
@@ -15,19 +9,23 @@ import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAd
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class SkillMemberActivity extends BaseActivity {
-
-    private PartyMemberRecyclerViewAdapter viewAdapter;
-
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    private PartyMemberRecyclerViewAdapter viewAdapter;
 
     @Inject
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
 
     @Override
     protected int getLayoutResId() {
@@ -48,21 +46,18 @@ public class SkillMemberActivity extends BaseActivity {
     }
 
     private void loadMemberList() {
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         viewAdapter = new PartyMemberRecyclerViewAdapter();
         viewAdapter.context = this;
         recyclerView.setAdapter(viewAdapter);
 
-        apiHelper.apiService.getGroup("party")
-                .compose(this.apiHelper.configureApiCallObserver())
+        apiClient.getGroup("party")
                 .subscribe(group -> {
                             if (group == null) {
                                 return;
                             }
 
-                            apiHelper.apiService.getGroupMembers(group.id, true)
-                                    .compose(apiHelper.configureApiCallObserver())
+                            apiClient.getGroupMembers(group.id, true)
                                     .subscribe(members -> {
                                                 viewAdapter.setMemberList(members, true);
                                             },
@@ -74,7 +69,7 @@ public class SkillMemberActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEvent(SelectMemberCommand evt){
+    public void onEvent(SelectMemberCommand evt) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("member_id", evt.MemberId);
         setResult(Activity.RESULT_OK, resultIntent);

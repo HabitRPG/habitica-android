@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">刷新</string>
   <string name="XP_default">经验值</string>
   <string name="HP_default">生命值</string>
@@ -16,7 +16,7 @@
   <string name="Language_summary">更改 Habitica的语言</string>
   <string name="SP_user_qr_code">你的二维码</string>
   <string name="PS_contact_title">联系我</string>
-  <string name="unknown_error">发生了一个错误……</string>
+  <string name="unknown_error">发生错误……</string>
   <string name="pref_account_header">账号</string>
   <string name="pref_first_day_of_the_week_title">每周的第一天</string>
   <string name="pref_first_day_of_the_week_summary">在所有的日程表中，每周的第一天</string>
@@ -27,12 +27,13 @@
   <string name="pref_cds_picker">设置每天的起始时间（用于任务结算）</string>
   <string name="pref_push_notifications_checkbox">用户推送通知</string>
   <string name="push_notifications">推送通知</string>
+  <string name="push_notifications_sum">设置用户推送通知</string>
   <string name="preference_push_you_won_challenge">你赢得了一项挑战！</string>
   <string name="preference_push_received_a_private_message">收到一条私信</string>
   <string name="preference_push_gifted_gems">赠送的钻石</string>
   <string name="preference_push_gifted_subscription">赠送的订阅</string>
   <string name="preference_push_invited_to_party">被邀请加入队伍</string>
-  <string name="preference_push_invited_to_guild">已邀请至工会</string>
+  <string name="preference_push_invited_to_guild">已邀请至公会</string>
   <string name="preference_push_your_quest_has_begun">你的冒险开始了</string>
   <string name="preference_push_invited_to_quest">被邀请加入冒险</string>
   <!--Adding tasks-->
@@ -52,7 +53,8 @@
   <string name="emailAddress">电子邮件地址</string>
   <string name="confirmpassword">确认密码</string>
   <string name="logout">注销</string>
-  <string name="logout_description">從你的帳號登出</string>
+  <string name="logout_description">从你的账号登出</string>
+  <string name="account_details_sum">账号信息</string>
   <string name="account_details">账号信息</string>
   <string name="LoginActivityName">欢迎</string>
   <string name="string_revive">重生</string>
@@ -85,8 +87,8 @@
   <string name="hard">困难</string>
   <string name="start_date">开始日期</string>
   <string name="positive_habit_form">正面的(+)</string>
-  <string name="negative_habit_form">负面的 (-)</string>
-  <string name="checklist">检查蛋</string>
+  <string name="negative_habit_form">负面的(-)</string>
+  <string name="checklist">检查单</string>
   <string name="reminders">提醒</string>
   <string name="actions">动作</string>
   <string name="attributes">属性</string>
@@ -114,9 +116,9 @@
   <string name="faint_button">补满生命值 &amp; 再次尝试</string>
   <string name="filter">过滤器</string>
   <string name="profile_image">头像</string>
-  <string name="mana_price_button" formatted="false">%d MP</string>
-  <string name="used_skill" formatted="false">你在 %1$s 用了 %2$d 魔法值。</string>
-  <string name="used_skill_without_mana" formatted="false">你使用了 %1$s.</string>
+  <string name="mana_price_button">%d MP</string>
+  <string name="used_skill">你在 %1$s 用了 %2$d 魔法值。</string>
+  <string name="used_skill_without_mana">你使用了 %1$s.</string>
   <string name="new_checklist_item">新增清单内容</string>
   <string name="add_checklist_item">添加</string>
   <string name="reminder_title">记得完成你的每日任务！</string>
@@ -161,9 +163,9 @@
   <string name="avatar_size_broad">强壮</string>
   <string name="avatar_background">背景</string>
   <string name="purchase_customization">用户支付</string>
-  <string name="purchase_set_button" formatted="false">解锁%d宝石</string>
+  <string name="purchase_set_button">解锁%d宝石</string>
   <string name="purchase_button">支付</string>
-  <string name="purchase_set_title" formatted="false">购买礼包 %s</string>
+  <string name="purchase_set_title">购买礼包 %s</string>
   <string name="due_date">截止日期</string>
   <string name="quest.accept">接受</string>
   <string name="quest.reject">拒绝</string>
@@ -175,29 +177,24 @@
   <string name="quest.accepted">接受了</string>
   <string name="quest.rejected">拒绝的</string>
   <string name="quest.participants">参与者</string>
-  <string name="version_info" formatted="false">版本%s (%d)</string>
+  <string name="version_info">版本%1$s (%2$d)</string>
   <string name="sidebar_help">帮助 &amp; FAQ</string>
   <string name="complete_tutorial">成功！</string>
   <string name="dismiss_tutorial">再次提醒我</string>
-  <string name="intro_1_title">欢迎来到Habitica</string>
-  <string name="intro_1_description" formatted="false">和 %s 玩家一起，用游戏战胜拖延症！你可以创建一个账户，用它来跟踪你生活中的点滴琐事。</string>
-  <string name="intro_2_title">生活即游戏！</string>
+  <string name="intro_1_subtitle">欢迎来到</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_2_subtitle">游戏进度</string>
+  <string name="intro_2_title">生活进度</string>
   <string name="intro_2_description">通过完成现实生活中的任务来解锁游戏内容。得到装备、宠物和更多的奖励来促使你完成你的目标吧！</string>
-  <string name="intro_3_title">与小伙伴一起，并肩击退怪兽</string>
   <string name="intro_3_description">和朋友们一起为目标努力吧。在生活和战斗中互相支持，共同进步！</string>
-  <string name="intro_finish_button">开始探险之旅</string>
+  <string name="intro_finish_button">让我们开始吧！</string>
   <string name="previous_button">上一页</string>
   <string name="next_button">下一页</string>
   <string name="skip_button">跳过</string>
   <string name="setup_welcome_description">欢迎来到Habitica，在游戏中打怪升级的同时改善自己的真实生活。完成现实生活中的目标，解锁大量装备、宠物、任务卷轴，更多特色等你探索。</string>
   <string name="setup_welcome_title">欢迎你</string>
-  <string name="avatar_setup_description">首先，你需要创建一个角色来代表你自己。你在现实生活中的行动会影响到你的角色的生命值、经验值以及金钱。</string>
-  <string name="task_setup_description">太棒了！现在开始设定你的任务，开始赚取经验和金币吧。
-
-首先，你想改善生活中的哪一部分呢？</string>
   <string name="setup_group_work">工作</string>
   <string name="setup_group_exercise">运动</string>
-  <string name="setup_group_heathWellness">健康</string>
   <string name="setup_group_school">学校</string>
   <string name="setup_group_teams">团队</string>
   <string name="setup_group_chores">杂务</string>
@@ -224,26 +221,24 @@
   <string name="setup_task_creativity_2">进行创新项目</string>
   <string name="setup_task_creativity_3">完成创新项目</string>
   <string name="gem.purchase.support">想要帮助我们维持Habitica？通过买宝石的方式来支持开发者吧！\n\n 宝石能用来购买额外的乐趣，包括：\n\n - 角色的酷酷的服装\n - 好看的背景\n - 能获得宠物蛋的有趣的任务\n - 1001级之前改变职业的能力\n\n非常感谢您帮助我们使Habitica变的更好。您的支持非常重要！</string>
-  <string name="my_guilds">我的工会</string>
+  <string name="my_guilds">我的公会</string>
   <string name="public_guilds">公共公会</string>
   <string name="guild">公会</string>
   <string name="leave">离开</string>
   <string name="join">加入</string>
   <string name="leader">会长</string>
   <string name="gems">宝石</string>
-  <string name="copy_as_todo">复制为待办事项</string>
   <string name="send_pm">发送私人信息</string>
   <string name="flag">标志</string>
   <string name="delete">删除</string>
   <string name="name">名称</string>
   <string name="description">描述</string>
-  <string name="add_tag">添加标签</string>
   <string name="privacy">隐私</string>
   <string name="write_message">写消息</string>
   <string name="post">公告</string>
-  <string name="guild_search_hint">寻找工会</string>
-  <string name="todo_due" formatted="false">到期：%s</string>
-  <string name="daily_streak" formatted="false">目前连击数：%d</string>
+  <string name="guild_search_hint">查找公会</string>
+  <string name="todo_due">到期：%s</string>
+  <string name="daily_streak">目前连击数：%d</string>
   <string name="todo_has_duedate">任务有截止日</string>
   <string name="battle_gear">战斗装备</string>
   <string name="costume">服装</string>
@@ -262,10 +257,10 @@
   <string name="quest_begin_message">你是否确定要直接开始这个探索任务？一旦开始，其他队伍成员就不能加入这个探索任务。</string>
   <string name="quest.invitation.text">你被邀请参加一个探索任务！</string>
   <string name="ago_1day">1天前</string>
-  <string name="ago_days" formatted="false">%d天前</string>
+  <string name="ago_days">%d天前</string>
   <string name="ago_1Minute">1分钟前</string>
-  <string name="ago_minutes" formatted="false">%d分钟前</string>
-  <string name="ago_hours" formatted="false">%d小时前</string>
+  <string name="ago_minutes">%d分钟前</string>
+  <string name="ago_hours">%d小时前</string>
   <string name="ago_1hour">1小时前</string>
   <string name="today">今天</string>
   <string name="sidebar_items">物品</string>
@@ -275,26 +270,26 @@
   <string name="quests">任务</string>
   <string name="pets">宠物</string>
   <string name="mounts">坐骑</string>
-  <string name="armoireEquipment" formatted="false">您在魔法衣橱里找到了一件稀有装备：%s！恭喜你！</string>
-  <string name="armoireFood" formatted="false">你在魔法衣橱里找到了%1$s %2$s。它是用来做什么的？</string>
+  <string name="armoireEquipment">你在魔法衣橱里找到了一件稀有装备：%s！恭喜你！</string>
+  <string name="armoireFood">你在魔法衣橱里找到了%1$s %2$s。它是用来做什么的？</string>
   <string name="armoireExp">你和大衣柜展开了殊死搏斗，并赢得了经验，尝尝这个吧！</string>
-  <string name="armoireNotesFull" formatted="false">拉开 魔法衣橱 来获得随机的特殊装备，经验或者食物！剩余的装备：%d</string>
-  <string name="armoireLastItem">您在魔法衣橱里找到了最后一件稀有装备。</string>
+  <string name="armoireNotesFull">拉开 魔法衣橱 来获得随机的特殊装备，经验或者食物！剩余的装备：%d</string>
+  <string name="armoireLastItem">你在魔法衣橱里找到了最后一件稀有装备。</string>
   <string name="armoireNotesEmpty">每个月的第一个星期这里都会有新的装备，到时记得常点进来获得经验和食物！</string>
-  <string name="sell" formatted="false">出售 (%s金币)</string>
+  <string name="sell">出售 (%d金币)</string>
   <string name="hatch_with_potion">用孵化药水孵化</string>
   <string name="feed_to_pet">喂养宠物</string>
   <string name="hatch_egg">孵化宠物蛋</string>
   <string name="invite_party">邀请队伍</string>
-  <string name="dialog_feeding" formatted="false">喂养%1$s %2$s用：</string>
+  <string name="dialog_feeding">喂养%1$s %2$s用：</string>
   <string name="use_animal">使用</string>
   <string name="feed">喂食</string>
-  <string name="hatch_with" formatted="false">用%s孵化宠物</string>
-  <string name="hatched_pet_title" formatted="false">你孵化了一个 %1$s %2$s！</string>
+  <string name="hatch_with">用%s孵化宠物</string>
+  <string name="hatched_pet_title">你孵化了一个 %1$s %2$s！</string>
   <string name="close">关闭</string>
   <string name="share">分享</string>
-  <string name="notification_pet_fed" formatted="false">你喂食了你的%1$s %2$s！</string>
-  <string name="notification_purchase" formatted="false">已购买 %s</string>
+  <string name="notification_pet_fed">你喂食了你的%1$s %2$s！</string>
+  <string name="notification_purchase">已购买 %s</string>
   <string name="sectionpets">基本宠物</string>
   <string name="sectionpremiumPets">神奇药水宠物</string>
   <string name="sectionquestPets">剧情任务宠物</string>
@@ -305,13 +300,13 @@
   <string name="sectionspecialMounts">稀有坐骑</string>
   <string name="world_quest">世界任务</string>
   <string name="inn_description">在客栈休息让你未完成的每日任务不会伤害你！(注意：它不能阻止来自任务怪物的伤害。)</string>
-  <string name="empty_items" formatted="false">你没有拥有任何的%s</string>
-  <string name="user_level" formatted="false">等级 %s</string>
-  <string name="user_level_with_class" formatted="false">等级 %1$s - %2$s</string>
-  <string name="warrior">戰士</string>
-  <string name="rogue">盜賊</string>
-  <string name="mage">法師</string>
-  <string name="healer">醫師</string>
+  <string name="empty_items">你没有拥有任何的%s</string>
+  <string name="user_level">Lvl %d</string>
+  <string name="user_level_with_class">Lvl %1$d %2$s</string>
+  <string name="warrior">战士</string>
+  <string name="rogue">盗贼</string>
+  <string name="mage">法师</string>
+  <string name="healer">医师</string>
   <string name="warrior_description">战士们会有更大的机率触发暴击并在完成任务时随机获得额外的金币，经验和掉率。他们还能对boss造成严重的伤害。如果你希望获得随机性的奖励，或者在boss任务中重创boss，来玩战士吧！</string>
   <string name="mage_description">法师非常善于学习，获得经验值和升级比其他职业快。他们也会获得大量的魔力值来使用一些特殊的法术。如果你喜欢玩得有策略性，或者你强烈地希望升级解锁更多的游戏内容，来玩法师吧！</string>
   <string name="rogue_description">盗贼热衷于积累财富，比其他人获得更多的金币，还擅长寻找随机物品。他们标志性的潜行技能使得他们能够躲避未完成的日常带来的伤害。如果你希望获得更多的奖励，成就，掉落以及徽章，来玩盗贼吧！</string>
@@ -319,12 +314,14 @@
   <string name="select_class">选择职业</string>
   <string name="opt_out_class">退出</string>
   <string name="opt_out_description">不知道选什么职业？想以后再选？没问题 - 你现在可以先做一个没有特殊技能的战士。我们的维基页面上有关于职业系统的介绍，之后随时可以定你的职业。</string>
-  <string name="class_confirmation" formatted="false">你确定想要成为%s吗？</string>
+  <string name="class_confirmation">你确定想要成为%s吗？</string>
+  <string name="class_changed">你现在是 %s级了！</string>
+  <string name="class_changed_description">你有新的默认战斗装备，你可以改变下了！</string>
   <string name="choose_class">选择职业</string>
   <string name="dialog_go_back">返回</string>
   <string name="opt_out_confirmation">你确定要退出吗？</string>
   <string name="change_class">更换你的职业</string>
-  <string name="change_class_description">转换你的职业病重置属性点需要3颗宝石。你能通过网页分配属性点</string>
+  <string name="change_class_description">更换你的职业并重置属性点需要3颗宝石。你能通过网页分配属性点</string>
   <string name="enable_class">开启职业系统</string>
   <string name="changing_class_progress">更换职业</string>
   <string name="by_email">通过电子邮件</string>
@@ -338,12 +335,14 @@
   <string name="email">电子邮件</string>
   <string name="invite_users">邀请加入队伍</string>
   <string name="share_using">分享使用</string>
-  <string name="share_levelup" formatted="false">我在Habitica中通过改善我现实生活中的习惯到达了%s级！</string>
-  <string name="share_hatched" formatted="false">我刚刚在Habitica中通完成我现实生活中的任务孵化了一只宠物%1$s %2$s！</string>
-  <string name="share_raised" formatted="false">我刚刚在Habitica中通完成我现实生活中的任务得到了一匹坐骑%1$s %2$s！</string>
+  <string name="share_levelup">我在Habitica中通过改善我现实生活中的习惯到达了%d级！</string>
+  <string name="share_hatched">我刚刚在Habitica中通完成我现实生活中的任务孵化了一只宠物%1$s %2$s！</string>
+  <string name="share_raised">我刚刚在Habitica中通完成我现实生活中的任务得到了一匹坐骑%1$s %2$s！</string>
   <string name="open_in_store">在应用商店开放</string>
   <string name="change_class_confirmation">你确定想要转变职业吗？这将花费3颗宝石。</string>
-  <string name="leaderMessage" formatted="false">从%1$s来的消息</string>
+  <string name="change_class_equipment_warning">提示：你无法再购买%s职业的装备了（已顶级╮(╯_╰)╭）。</string>
+  <string name="leaderMessage">从%1$s来的消息</string>
+  <string name="leaderName">%1$s的会长</string>
   <string name="confirm">确认</string>
   <string name="market">市场</string>
   <string name="timeTravelers">时光旅行</string>
@@ -352,9 +351,9 @@
   <string name="party_invite">通过邀请朋友来解锁</string>
   <string name="no_gold">没有足够的金币</string>
   <string name="no_potion">你不需要购买生命药水</string>
-  <string name="successful_purchase" formatted="false">已购买 %1$s</string>
+  <string name="successful_purchase">已购买 %1$s</string>
   <string name="purchase_confirmation_title">确认购买</string>
-  <string name="confirm_purchase_text" formatted="false">为 %2$s %3$s 购买 %1$s</string>
+  <string name="confirm_purchase_text">为 %2$s %3$s 购买 %1$s</string>
   <string name="gem">宝石</string>
   <string name="hourglass">沙漏</string>
   <string name="hourglasses">沙漏</string>
@@ -404,7 +403,115 @@
   <string name="hatching_market_info">没有得到想要的掉落物品？来市场瞧瞧！</string>
   <string name="feeding_market_info">需要不同的食物？在市场可以买到更多！</string>
   <string name="open_market">打开市场</string>
-  <string name="cds_description" formatted="false">你的每日任务将会在 %1$s 后第一次打开 Habitica 时进行结算并被重置。请确保在此之前完成所有的每日任务！</string>
+  <string name="cds_description">你的每日任务将会在 %1$s 后第一次打开 Habitica 时进行结算并被重置。请确保在此之前完成所有的每日任务！</string>
   <string name="AudioTheme_title">声音主题</string>
-  <string name="AudioTheme_summary">更高 Habitica 的声音主题</string>
+  <string name="AudioTheme_summary">更改 Habitica 的声音主题</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">明天再见！</string>
+  <string name="belongs_to_challenge">来自挑战</string>
+  <string name="has_reminder">有任务提示</string>
+  <string name="has_tag">有标签</string>
+  <string name="subscribe.title">捐助支持开发者以帮助维持Habitica运行</string>
+  <string name="subscribe_prompt">成为捐助者你会得到这些好处：</string>
+  <string name="subscribe.listitem1">用金币购买宝石</string>
+  <string name="subscribe.listitem2">高档的季度物品</string>
+  <string name="subscribe.listitem3">保留额外的历史条目</string>
+  <string name="subscribe.listitem4">每日掉落上限翻倍</string>
+  <string name="subscriptions">捐助</string>
+  <string name="subscription_duration">每 %s 重复出现</string>
+  <string name="subscribe">捐助</string>
+  <string name="subscribe.listitem1.description">商人亚历山大可以按每个宝石20金币的价格向你出售宝石！\n\n他每个月的初始进货量是25个宝石，进货量会随着您的捐助长度增长！\n\n 每三个月宝石上限就会增加5，直到最大值1个月50颗宝石！</string>
+  <string name="subscribe.listitem2.description">每个月你将会收到一件独特的角色饰品！另外，每连续捐助三个月，神秘的时间旅行者将授予你得到过去(和将来)的饰品的资格。</string>
+  <string name="subscribe.listitem3.description">使完成的待办事项和任务的历史记录保留更长时间</string>
+  <string name="subscribe.listitem4.description">双倍掉落让你每天能够从完成的任务中得到更多的物品，帮助你更快地驯服坐骑！</string>
+  <string name="subscribe1month.gemcap">宝石上限起始为25</string>
+  <string name="subscribe3month.gemcap">宝石上限增加到30</string>
+  <string name="subscribe6month.gemcap">宝石上限增加到35</string>
+  <string name="subscribe12month.gemcap">宝石上限增加到45</string>
+  <string name="subscription_hourglasses">+%d 神秘沙漏</string>
+  <string name="payment_method">付款方式</string>
+  <string name="subscription">捐助</string>
+  <string name="active">活跃的</string>
+  <string name="cancel_subscription">取消订阅</string>
+  <string name="cancel_subscription_google.description">不想再继续捐助了？你可以在Google应用商店里找到“我的应用程序”部分里找到退订选项。</string>
+  <string name="cancel_subscription_notgoogle.description">不想再继续捐助了？由于您的付款方式，您只能通过这个网站停止捐助。点击下面的按钮，在您的浏览器中打开站点。</string>
+  <string name="visit_habitica_website">访问Habitica的网站</string>
+  <string name="current_bonuses">当前奖励</string>
+  <string name="months_subscribed">捐助的月数</string>
+  <string name="current_hourclasses">当前神秘沙漏</string>
+  <string name="monthly_gem_cap">每月宝石上限</string>
+  <string name="inactive">不活跃的</string>
+  <string name="one_month">1个月</string>
+  <string name="months">%d个月</string>
+  <string name="month">月</string>
+  <string name="three_months">3个月</string>
+  <string name="six_months">6个月</string>
+  <string name="twelve_months">12个月</string>
+  <string name="subscribe_prompt_thanks">通过捐助你会获得这些好处：</string>
+  <string name="subscription_status">捐助状态</string>
+  <string name="byLeader">由 %s</string>
+  <string name="challenge_details">挑战细节</string>
+  <string name="challenge_leave_title">退出挑战</string>
+  <string name="challenge_leave_text">你是否确定想放弃这个挑战“%s”？</string>
+  <string name="challenge_remove_tasks_title">删除任务</string>
+  <string name="challenge_remove_tasks_text">你确定要删除这个任务吗？</string>
+  <string name="remove_tasks">删除</string>
+  <string name="keep_tasks">保持</string>
+  <string name="my_challenges">我的挑战</string>
+  <string name="public_challenges">公共挑战</string>
+  <string name="challenges">挑战</string>
+  <string name="daily">每日任务</string>
+  <string name="habit">习惯</string>
+  <string name="reward">奖励</string>
+  <string name="todo">待办事项</string>
+  <string name="official">官方的</string>
+  <string name="participating">参加</string>
+  <string name="challenge">挑战</string>
+  <string name="go_to_challenge">参加挑战</string>
+  <string name="not_part_of_a_challenge">你还没有加入任何挑战呢！</string>
+  <string name="join_a_challenge">加入一个挑战会将它的任务加入你的任务列表，然后去完成任务战胜其他habitican赢得成就甚至钻石吧！</string>
+  <string name="check_the_public_challenge_tab">点击“公会挑战”按钮来寻找其他勇士创建的挑战吧！也许会有适合你的哟！</string>
+  <string name="add_reminder">增加提醒</string>
+  <string name="warning">警告</string>
+  <string name="open_settings">打开设置</string>
+  <string name="dont_keep_activities_warning">看来您将开发者选项 \"不要保留活动” 英语: \Don\'t keep Activities\ 打开了。启用这个选项将会对应用造成不必要的影响。我们建议您将其关闭。</string>
+  <string name="inbox">收件箱</string>
+  <string name="FAQ">常见问题</string>
+  <string name="special">特殊的</string>
+  <string name="gem_for_gold_description">由于你捐助了Habitica，你每月可以用一定数量的金币购买宝石。</string>
+  <string name="limited_count">还剩%d</string>
+  <string name="gem_shop">宝石</string>
+  <string name="mystery_item">神秘物品</string>
+  <string name="myster_item_notes">每月捐助者将收到一个神秘物品，通常在月末一周前推出。</string>
+  <string name="open">打开</string>
+  <string name="notification_mystery_item">你打开了盒子并发现了%s!</string>
+  <string name="checkInRewardEarned">由于你投入改善你的生活，你得到%1$s。</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">你的下一次奖赏在签到%1$d后解锁</string>
+  <string name="pending_approval">等待审批的任务</string>
+  <string name="filters">过滤器</string>
+  <string name="done">完成</string>
+  <string name="group_tasks_edit_description">团队任务无法被编辑。</string>
+  <string name="group_tasks_edit_title">无法编辑此任务</string>
+  <string name="groups">团队</string>
+  <string name="all">所有</string>
+  <string name="none">无</string>
+  <string name="owned">已拥有的</string>
+  <string name="not_owned">未拥有的</string>
+  <string name="login_btn_fb">Facebook登录</string>
+  <string name="login_btn_google">Google登录</string>
+  <string name="action_back">返回</string>
+  <string name="avatar_skin_color">肤色</string>
+  <string name="avatar_hair_color">发色</string>
+  <string name="avatar_hair_bangs">刘海</string>
+  <string name="avatar_hair_ponytail">辫子</string>
+  <string name="avatar_glasses">眼镜</string>
+  <string name="avatar_wheelchair">轮椅</string>
+  <string name="weak">瘦小</string>
+  <string name="strong">强壮</string>
+  <string name="completed">完成</string>
+  <string name="setuP_group_other">其他</string>
+  <string name="empty_title_habits">你还没有任何习惯</string>
+  <string name="empty_title_dailies">你还没有任何每日任务</string>
+  <string name="empty_title_todos">你还没有任何待办事项</string>
+  <string name="empty_title_rewards">你还没有任何奖励项目</string>
 </resources>

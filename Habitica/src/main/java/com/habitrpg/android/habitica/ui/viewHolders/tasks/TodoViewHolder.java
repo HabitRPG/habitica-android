@@ -1,20 +1,18 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import android.view.View;
-import android.widget.TextView;
 
-import butterknife.BindView;
+import java.text.DateFormat;
 
 public class TodoViewHolder extends ChecklistedViewHolder {
 
-    @BindView(R.id.duedateTextView)
-    TextView duedateTextView;
+    private DateFormat dateFormatter;
 
     public TodoViewHolder(View itemView) {
         super(itemView);
+        dateFormatter = android.text.format.DateFormat.getDateFormat(context);
     }
 
     @Override
@@ -25,11 +23,18 @@ public class TodoViewHolder extends ChecklistedViewHolder {
         } else {
             this.checklistIndicatorWrapper.setBackgroundResource(this.task.getLightTaskColor());
         }
-        if (task.duedate != null) {
-            this.duedateTextView.setText(itemView.getContext().getString(R.string.todo_due, task.duedate));
-            this.duedateTextView.setVisibility(View.VISIBLE);
-        } else {
-            this.duedateTextView.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    protected void configureSpecialTaskTextView(Task task) {
+        if (this.specialTaskTextView != null) {
+            if (task.duedate != null) {
+                this.specialTaskTextView.setText(dateFormatter.format(task.duedate));
+                this.specialTaskTextView.setVisibility(View.VISIBLE);
+            } else {
+                this.specialTaskTextView.setVisibility(View.INVISIBLE);
+            }
         }
     }
 

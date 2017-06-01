@@ -1,77 +1,67 @@
 package com.habitrpg.android.habitica.helpers;
 
+import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.Notification;
+import com.habitrpg.android.habitica.models.notifications.NotificationData;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowAlertDialog;
+import org.robolectric.shadows.ShadowApplication;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.ui.activities.AboutActivity;
-import com.habitrpg.android.habitica.ui.activities.BaseActivity;
-import com.habitrpg.android.habitica.ui.activities.IntroActivity;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.Notification;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.notifications.NotificationData;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.Shadows;
-import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowAlertDialog;
-
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.observers.TestSubscriber;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by krh12 on 12/9/2016.
  */
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class PopupNotificationsManagerTest {
 
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     public HostConfig hostConfig;
 
     public String username;
     public final String password = "password";
+    private Context context;
+    private PopupNotificationsManager popupNotificationsManager;
 
     @Before
     public void setUp() {
+        context = ShadowApplication.getInstance().getApplicationContext();
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
                 BuildConfig.PORT,
                 "",
                 "");
+        popupNotificationsManager =new PopupNotificationsManager(context);
 
-        apiHelper = new APIHelper(APIHelper.createGsonFactory(), hostConfig);
+        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), popupNotificationsManager, context);
     }
 
     @Test
     public void itDoesNothingWhenNotificationsListIsEmpty() {
         List<Notification> notifications = new ArrayList<>();
-        PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(apiHelper);
         popupNotificationsManager.showNotificationDialog(notifications);
 
         AlertDialog alert =

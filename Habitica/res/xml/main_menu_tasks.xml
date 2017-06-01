@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+            id="@+id/tab_habits"
+            icon="@drawable/icon_habits"
+            title="@string/habits" />
+    <tab
+            id="@+id/tab_dailies"
+            icon="@drawable/icon_dailies"
+            title="@string/dailies" />
+    <tab
+            id="@+id/tab_todos"
+            icon="@drawable/icon_todos"
+            title="@string/todos" />
+    <tab
+            id="@+id/tab_rewards"
+            icon="@drawable/icon_rewards"
+            title="@string/rewards" />
+</tabs>

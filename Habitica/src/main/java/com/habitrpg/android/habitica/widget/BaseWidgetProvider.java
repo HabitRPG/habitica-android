@@ -1,24 +1,23 @@
 package com.habitrpg.android.habitica.widget;
 
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v4.util.Pair;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
+import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
-import static com.habitrpg.android.habitica.ui.activities.MainActivity.MIN_LEVEL_FOR_SKILLS;
-import static com.habitrpg.android.habitica.ui.activities.MainActivity.round;
 
 public abstract class BaseWidgetProvider extends AppWidgetProvider {
 
@@ -69,31 +68,13 @@ public abstract class BaseWidgetProvider extends AppWidgetProvider {
         return configureRemoteViews(remoteViews, widgetId, columns, rows);
     }
 
-    protected void showToastForTaskDirection(Context context, TaskDirectionData taskDirectionData, String userID) {
+    protected void showToastForTaskDirection(Context context, TaskDirectionData data, String userID) {
         HabitRPGUser user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).querySingle();
-        Stats stats = user.getStats();
-        StringBuilder message = new StringBuilder();
-        if (taskDirectionData.exp > stats.getExp()) {
-            message.append(" + ").append(round(taskDirectionData.exp - stats.getExp(), 2)).append(" XP");
-            user.getStats().setExp(taskDirectionData.exp);
-        }
-        if (taskDirectionData.hp < stats.getHp()) {
-            message.append(" - ").append(round(stats.getHp() - taskDirectionData.hp, 2)).append(" HP");
-            user.getStats().setHp(taskDirectionData.hp);
-        }
-        if (taskDirectionData.gp > stats.getGp()) {
-            message.append(" + ").append(round(taskDirectionData.gp - stats.getGp(), 2)).append(" GP");
-            user.getStats().setGp(taskDirectionData.gp);
-        } else if (taskDirectionData.gp < stats.getGp()) {
-            message.append(" - ").append(round(stats.getGp() - taskDirectionData.gp, 2)).append(" GP");
-            stats.setGp(taskDirectionData.gp);
-        }
-        if (taskDirectionData.mp > stats.getMp() && stats.getLvl() >= MIN_LEVEL_FOR_SKILLS) {
-            message.append(" + ").append(round(taskDirectionData.mp - stats.getMp(), 2)).append(" MP");
-            user.getStats().setMp(taskDirectionData.mp);
-        }
+
+        Pair<String, UiUtils.SnackbarDisplayType> pair = NotifyUserUseCase.getNotificationAndAddStatsToUser(user, data.exp, data.hp, data.getGp(), data.mp);
+
         user.save();
-        Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG);
         toast.show();
     }
 

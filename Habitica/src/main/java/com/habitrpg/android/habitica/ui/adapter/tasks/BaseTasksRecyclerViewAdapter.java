@@ -1,31 +1,20 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.TaskCreatedEvent;
-import com.habitrpg.android.habitica.events.TaskRemovedEvent;
-import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
-import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.OrderBy;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import android.app.Activity;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,28 +27,31 @@ import rx.schedulers.Schedulers;
 
 public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder>
         extends RecyclerView.Adapter<VH> {
+    private final String userID;
+    public String taskType;
     @Inject
     protected CrashlyticsProxy crashlyticsProxy;
-
-    private final String userID;
-    int layoutResource;
-    String taskType;
+    @Inject
+    protected TaskRepository taskRepository;
+    protected List<Task> content;
+    protected List<Task> filteredContent;
+    private int layoutResource;
     Context context;
-    List<Task> content;
-    List<Task> filteredContent;
-    private TagsHelper tagsHelper;
+    private TaskFilterHelper taskFilterHelper;
 
-    public BaseTasksRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
-                                        Context newContext, String userID) {
+    public BaseTasksRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource,
+                                        Context newContext, @Nullable String userID) {
         this.setHasStableIds(true);
         this.taskType = taskType;
-        this.context = newContext;
-        this.tagsHelper = tagsHelper;
+        this.context = newContext.getApplicationContext();
+        this.taskFilterHelper = taskFilterHelper;
         this.userID = userID;
         this.filteredContent = new ArrayList<>();
         injectThis(HabiticaBaseApplication.getComponent());
 
-        this.loadContent(true);
+        if (loadFromDatabase()) {
+            this.loadContent(true);
+        }
 
         this.layoutResource = layoutResource;
     }
@@ -89,64 +81,90 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         return filteredContent != null ? filteredContent.size() : 0;
     }
 
-    public View getContentView(ViewGroup parent) {
+    View getContentView(ViewGroup parent) {
+        return getContentView(parent, layoutResource);
+    }
+
+    protected View getContentView(ViewGroup parent, int layoutResource) {
         return LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        EventBus.getDefault().unregister(this);
-
-    }
-
-    @Subscribe
-    public void onEvent(FilterTasksByTagsCommand cmd) {
-        filter();
-    }
-
-    @Subscribe
-    public void onEvent(TaskCheckedCommand evnt) {
-        if (!taskType.equals(evnt.Task.getType()))
+    public void updateTask(Task task) {
+        if (!taskType.equals(task.getType()))
             return;
-
-        if (evnt.completed && evnt.Task.getType().equals("todo")) {
-            // remove from the list
-            content.remove(evnt.Task);
+        int i;
+        for (i = 0; i < this.content.size(); ++i) {
+            if (content.get(i).getId().equals(task.getId())) {
+                break;
+            }
         }
-        this.updateTask(evnt.Task);
+        if (i < content.size()) {
+            content.set(i, task);
+        }
         filter();
     }
 
-    @Subscribe
-    public void onEvent(TaskUpdatedEvent evnt) {
-        if (!taskType.equals(evnt.task.getType()))
+    public void filter() {
+        if (this.taskFilterHelper == null || this.taskFilterHelper.howMany(taskType) == 0) {
+            filteredContent = content;
+        } else {
+            filteredContent = new ObservableArrayList<>();
+            filteredContent.addAll(this.taskFilterHelper.filter(content));
+        }
+
+        this.notifyDataSetChanged();
+    }
+
+    public void loadContent(boolean forced) {
+        if (this.content == null || forced) {
+            taskRepository.getTasks(this.taskType, this.userID)
+                    .flatMap(Observable::from)
+                    .map(task -> {
+                        task.parseMarkdown();
+                        return task;
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .toList()
+                    .subscribe(this::setTasks, crashlyticsProxy::logException);
+        }
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.content = new ObservableArrayList<>();
+        this.content.addAll(tasks);
+        filter();
+    }
+
+    public boolean loadFromDatabase() {
+        return true;
+    }
+
+    public void checkTask(Task task, Boolean completed) {
+        if (!taskType.equals(task.getType()))
             return;
-        this.updateTask(evnt.task);
+
+        if (completed && task.getType().equals("todo")) {
+            // remove from the list
+            content.remove(task);
+        }
+        this.updateTask(task);
         filter();
     }
 
-    @Subscribe
-    public void onEvent(TaskCreatedEvent evnt) {
-        if (!taskType.equals(evnt.task.getType()))
+    public void addTask(Task task) {
+        if (!taskType.equals(task.getType()))
             return;
 
-        content.add(0, evnt.task);
+        content.add(0, task);
         filter();
     }
 
-    @Subscribe
-    public void onEvent(TaskRemovedEvent evnt) {
+    public void removeTask(String deletedTaskId) {
         Task taskToDelete = null;
 
         for (Task t : content) {
-            if (t.getId().equals(evnt.deletedTaskId)) {
+            if (t.getId().equals(deletedTaskId)) {
                 taskToDelete = t;
                 break;
             }
@@ -157,66 +175,4 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
             filter();
         }
     }
-
-    private void updateTask(Task task) {
-        int i;
-        for (i = 0; i < this.content.size(); ++i) {
-            if (content.get(i).getId().equals(task.getId())) {
-                break;
-            }
-        }
-        if (i < content.size()) {
-            content.set(i, task);
-        }
-    }
-
-    private void filter() {
-        if (this.tagsHelper.howMany() == 0) {
-            filteredContent = content;
-        } else {
-            filteredContent = new ObservableArrayList<>();
-            filteredContent.addAll(this.tagsHelper.filter(content));
-        }
-
-        ((Activity) context).runOnUiThread(this::notifyDataSetChanged);
-    }
-
-    public void loadContent(boolean forced) {
-        if (this.content == null || forced) {
-            List<Task> tasks = new ArrayList<>();
-            Observable.defer(() -> Observable.just(new Select().from(Task.class)
-                    .where(Condition.column("type").eq(this.taskType))
-                    .and(Condition.CombinedCondition
-                            .begin(Condition.column("completed").eq(false))
-                            .or(Condition.column("type").eq("daily"))
-                    )
-                    .and(Condition.column("user_id").eq(this.userID))
-                    .orderBy(OrderBy.columns("position", "dateCreated").descending())
-                    .queryList()))
-                    .flatMap(Observable::from)
-                    .map(task -> {
-                        try {
-                            task.parsedText = MarkdownParser.parseMarkdown(task.getText());
-                        } catch (NullPointerException e) {
-                            task.parsedText = task.getText();
-                        }
-                        try {
-                            task.parsedNotes = MarkdownParser.parseMarkdown(task.getNotes());
-                        } catch (NullPointerException e) {
-                            task.parsedNotes = task.getNotes();
-                        }
-                        return task;
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(tasks::add, crashlyticsProxy::logException, () -> setTasks(tasks));
-        }
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.content = new ObservableArrayList<>();
-        this.content.addAll(tasks);
-        filter();
-    }
-
 }

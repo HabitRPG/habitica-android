@@ -23,28 +23,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Title"
-                style="@style/RowTitle" />
+                style="@style/Subheader1" />
+        <TextView
+                android:id="@+id/limitedCountText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:text="2 Left"
+                style="@style/Caption3" />
         <TextView
                 android:id="@+id/descriptionView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Description"
                 android:maxLines="5"
-                style="@style/RowText" />
+                style="@style/Caption2.Regular" />
     </LinearLayout>
 
     <Button
             android:id="@+id/buyButton"
-            android:layout_width="60dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:minWidth="64dp"
             android:layout_gravity="center_vertical"
-            android:textSize="15sp"
+            android:gravity="left|center_vertical"
+            android:drawablePadding="5dp"
             android:background="@drawable/rounded_purple_square"
-            android:paddingLeft="6dp"
-            android:paddingStart="6dp" />
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp"
+            android:paddingRight="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/white"
+            tools:text="150"
+            android:textSize="15sp" />
     <TextView
             android:id="@+id/unlockView"
             android:layout_marginLeft="8dp"
