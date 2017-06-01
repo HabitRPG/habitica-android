@@ -91,6 +91,9 @@ import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiPopup;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -998,14 +1001,33 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         // Repeats On
-        Log.v("test", String.valueOf(task.daysOfMonth));
-        Log.v("test", String.valueOf(task.weeksOfMonth));
+        if (task.daysOfMonth != null) {
+            try {
+                JSONArray obj = new JSONArray(task.daysOfMonth);
+                for (int i = 0; i < obj.length(); i += 1) {
+                    task.daysOfMonthLocal.add(obj.getInt(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
-//        if (task.daysOfMonth.size() > 0) {
-//            this.repeatablesOnSpinner.setSelection(0);
-//        } else if (task.weeksOfMonth.size() > 0) {
-//            this.repeatablesOnSpinner.setSelection(1);
-//        }
+        if (task.weeksOfMonth != null) {
+            try {
+                JSONArray obj = new JSONArray(task.weeksOfMonth);
+                for (int i = 0; i < obj.length(); i += 1) {
+                    task.weeksOfMonthLocal.add(obj.getInt(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (task.daysOfMonthLocal.size() > 0) {
+            this.repeatablesOnSpinner.setSelection(0);
+        } else if (task.weeksOfMonthLocal.size() > 0) {
+            this.repeatablesOnSpinner.setSelection(1);
+        }
 
     }
 
@@ -1225,15 +1247,18 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
                         if (monthlyFreq.equals("Day of Month")) {
                             Integer date = calendar.get(Calendar.DATE);
-//                            task.daysOfMonth = new ArrayList<>();
-//                            task.daysOfMonth.add(date);
-//                            task.weeksOfMonth = new ArrayList<>();
+                            task.daysOfMonthLocal = new ArrayList<>();
+                            task.daysOfMonthLocal.add(date);
+                            task.weeksOfMonthLocal = new ArrayList<>();
                         } else {
                             Integer week = calendar.get(Calendar.WEEK_OF_MONTH);
-//                            task.weeksOfMonth = new ArrayList<>();
-//                            task.weeksOfMonth.add(week);
-//                            task.daysOfMonth = new ArrayList<>();
+                            task.weeksOfMonthLocal = new ArrayList<>();
+                            task.weeksOfMonthLocal.add(week);
+                            task.daysOfMonthLocal = new ArrayList<>();
                         }
+
+                        task.daysOfMonth = new JSONArray(task.daysOfMonthLocal).toString();
+                        task.weeksOfMonth = new JSONArray(task.weeksOfMonthLocal).toString();
                     }
                 }
             }

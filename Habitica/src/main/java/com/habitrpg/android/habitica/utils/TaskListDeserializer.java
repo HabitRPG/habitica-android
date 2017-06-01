@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.utils;
 
+import android.util.Log;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -22,6 +25,17 @@ public class TaskListDeserializer implements JsonDeserializer<TaskList> {
 
         for (JsonElement e : json.getAsJsonArray()) {
             Task task = ctx.deserialize(e, Task.class);
+
+            JsonArray weeksOfMonth = e.getAsJsonObject().getAsJsonArray("weeksOfMonth");
+            if (weeksOfMonth != null) {
+                task.weeksOfMonth = weeksOfMonth.toString();
+            }
+
+            JsonArray daysOfMonth = e.getAsJsonObject().getAsJsonArray("daysOfMonth");
+            if (weeksOfMonth != null) {
+                task.daysOfMonth = daysOfMonth.toString();
+            }
+
             taskMap.put(task.getId(), task);
         }
 

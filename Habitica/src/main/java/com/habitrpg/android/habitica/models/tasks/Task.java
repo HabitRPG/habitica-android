@@ -115,11 +115,13 @@ public class Task extends BaseModel implements Parcelable {
     @Column
     public Date nextDue;
 
-    @Column(typeConverter = TaskIntegerListConverter.class)
+    @Column
     public String daysOfMonth;
-
-    @Column()
+    @Column
     public String weeksOfMonth;
+
+    public List<Integer> daysOfMonthLocal = new ArrayList<>();
+    public List<Integer> weeksOfMonthLocal = new ArrayList<>();
 
     /**
      * @return the id
