@@ -67,7 +67,7 @@ public class TasksFragment extends BaseMainFragment {
 
     private boolean displayingTaskForm;
     @Nullable
-    private TextView filterCountTextView;
+    private MenuItem filterMenuItem;
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
@@ -149,9 +149,7 @@ public class TasksFragment extends BaseMainFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_activity, menu);
 
-        RelativeLayout badgeLayout = (RelativeLayout) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        filterCountTextView = (TextView) badgeLayout.findViewById(R.id.badge_textview);
-        badgeLayout.setOnClickListener(view -> showFilterDialog());
+        filterMenuItem = menu.findItem(R.id.action_search);
         updateFilterIcon();
     }
 
@@ -281,7 +279,7 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private void updateFilterIcon() {
-        if (filterCountTextView == null) {
+        if (filterMenuItem == null) {
             return;
         }
         int filterCount = 0;
@@ -289,13 +287,10 @@ public class TasksFragment extends BaseMainFragment {
             filterCount = taskFilterHelper.howMany(getActiveFragment().classType);
         }
         if (filterCount == 0) {
-            filterCountTextView.setText(null);
-            filterCountTextView.setVisibility(View.GONE);
+            filterMenuItem.setIcon(R.drawable.ic_action_filter_list);
         } else {
-            filterCountTextView.setText(String.valueOf(filterCount));
-            filterCountTextView.setVisibility(View.VISIBLE);
+            filterMenuItem.setIcon(R.drawable.ic_filters_active);
         }
-
     }
 
     private void updateBottomBarBadges() {
