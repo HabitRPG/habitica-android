@@ -121,6 +121,10 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
 
     @Override
     public String customTitle() {
-        return getString(R.string.public_guilds);
+        if (isAdded()) {
+            return getString(R.string.public_guilds);
+        } else {
+            return "";
+        }
     }
 }

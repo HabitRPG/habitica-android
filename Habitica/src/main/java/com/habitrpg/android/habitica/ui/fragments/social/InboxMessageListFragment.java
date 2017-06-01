@@ -72,13 +72,13 @@ public class InboxMessageListFragment extends BaseMainFragment
 
     private void loadMessages() {
         if (user != null && user.isManaged()) {
-            user.getInbox().getMessages().where()
+            compositeSubscription.add(user.getInbox().getMessages().where()
                     .equalTo("uuid", replyToUserUUID)
                     .findAllSortedAsync("timestamp", Sort.DESCENDING)
                     .asObservable()
                     .filter(RealmResults::isLoaded)
                     .first()
-                    .subscribe(chatMessages -> this.chatAdapter.updateData(chatMessages), RxErrorHandler.handleEmptyError());
+                    .subscribe(chatMessages -> this.chatAdapter.updateData(chatMessages), RxErrorHandler.handleEmptyError()));
         }
     }
 
@@ -114,7 +114,9 @@ public class InboxMessageListFragment extends BaseMainFragment
 
     public void onUserReceived(User user) {
         this.user = user;
-        swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Subscribe

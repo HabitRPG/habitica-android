@@ -84,6 +84,9 @@ public class HabitButtonWidgetService extends Service {
             }
             appWidgetManager.updateAppWidget(taskMapping.get(task.getId()), remoteViews);
         }
+        if (taskRepository != null) {
+            taskRepository.close();
+        }
     }
 
     @Override

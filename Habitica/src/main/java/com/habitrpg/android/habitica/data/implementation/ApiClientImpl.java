@@ -365,20 +365,22 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString) {
-        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-            if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
-                        .setTitle(resourceTitleString)
-                        .setMessage(resourceMessageString)
-                        .setNeutralButton(android.R.string.ok, (dialog, which) -> displayedAlert = null);
+        if (HabiticaApplication.currentActivity != null) {
+            HabiticaApplication.currentActivity.runOnUiThread(() -> {
+                if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
+                            .setTitle(resourceTitleString)
+                            .setMessage(resourceMessageString)
+                            .setNeutralButton(android.R.string.ok, (dialog, which) -> displayedAlert = null);
 
-                if (!resourceTitleString.isEmpty()) {
-                    builder.setIcon(R.drawable.ic_warning_black);
+                    if (!resourceTitleString.isEmpty()) {
+                        builder.setIcon(R.drawable.ic_warning_black);
+                    }
+
+                    displayedAlert = builder.show();
                 }
-
-                displayedAlert = builder.show();
-            }
-        });
+            });
+        }
     }
 
     /*

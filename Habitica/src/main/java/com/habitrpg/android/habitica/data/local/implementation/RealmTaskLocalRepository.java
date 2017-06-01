@@ -105,11 +105,15 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         OrderedRealmCollectionSnapshot<Task> localTasks = realm.where(Task.class).equalTo("userId", userID).findAll().createSnapshot();
         for (Task localTask : localTasks) {
             if (!onlineTaskList.contains(localTask)) {
-                for (ChecklistItem item : localTask.checklist) {
-                    item.deleteFromRealm();
+                if (localTask.checklist != null) {
+                    for (ChecklistItem item : localTask.checklist) {
+                        item.deleteFromRealm();
+                    }
                 }
-                for (RemindersItem item : localTask.reminders) {
-                    item.deleteFromRealm();
+                if (localTask.reminders != null) {
+                    for (RemindersItem item : localTask.reminders) {
+                        item.deleteFromRealm();
+                    }
                 }
                 localTask.deleteFromRealm();
             }

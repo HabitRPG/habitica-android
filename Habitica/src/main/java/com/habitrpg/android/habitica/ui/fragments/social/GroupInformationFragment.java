@@ -96,10 +96,6 @@ public class GroupInformationFragment extends BaseFragment {
         if (this.group == null) {
             QrCodeManager qrCodeManager = new QrCodeManager(userRepository, this.getContext());
             qrCodeManager.setUpView(qrLayout);
-
-            if (user != null && user.getInvitations().getParty() != null && user.getInvitations().getParty().getId() != null) {
-                viewBinding.setInvitation(user.getInvitations().getParty());
-            }
         }
 
         return view;

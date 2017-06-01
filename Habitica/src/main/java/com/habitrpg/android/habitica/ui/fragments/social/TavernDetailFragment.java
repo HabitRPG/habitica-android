@@ -52,6 +52,9 @@ public class TavernDetailFragment extends BaseFragment {
     }
 
     private void updatePausedState() {
+        if (dailiesButton == null) {
+            return;
+        }
         if (user.getPreferences().getSleep()) {
             dailiesButton.setText(R.string.tavern_inn_checkOut);
         } else {

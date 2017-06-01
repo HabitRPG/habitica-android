@@ -88,6 +88,10 @@ public class StableFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_stable);
+        if (isAdded()) {
+            return getString(R.string.sidebar_stable);
+        } else {
+            return "";
+        }
     }
 }

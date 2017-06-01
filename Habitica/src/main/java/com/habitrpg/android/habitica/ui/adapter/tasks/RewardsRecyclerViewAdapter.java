@@ -99,7 +99,7 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RewardViewH
                                 reward.setId(item.key);
 
                                 if ("armoire".equals(item.key)) {
-                                    if (user != null && user.getFlags().getArmoireEmpty()) {
+                                    if (user != null && user.getFlags() != null && user.getFlags().getArmoireEmpty()) {
                                         reward.notes = context.getResources().getString(R.string.armoireNotesEmpty);
                                     } else {
                                         long gearCount = inventoryRepository.getArmoireRemainingCount();

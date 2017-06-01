@@ -385,29 +385,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             attributeWrapper.setVisibility(View.GONE);
         }
 
-        if (taskId != null) {
-            taskRepository.getTask(taskId)
-                    .first()
-                    .subscribe(task -> {
-                        this.task = task;
-                        if (task != null) {
-                            populate(task);
-                            populateChecklistRecyclerView();
-
-                            setTitle(task);
-
-                            populateRemindersRecyclerView();
-                        }
-
-                        setTitle(task);
-                    }, RxErrorHandler.handleEmptyError());
-
-            btnDelete.setEnabled(true);
-        } else {
-            setTitle((Task) null);
-            taskText.requestFocus();
-        }
-
         if (taskType.equals("todo") || taskType.equals("daily")) {
             createCheckListRecyclerView();
             createRemindersRecyclerView();
@@ -490,6 +467,29 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                             createTagsCheckBoxes();
                         }, throwable -> {}
                 );
+
+        if (taskId != null) {
+            taskRepository.getTask(taskId)
+                    .first()
+                    .subscribe(task -> {
+                        this.task = task;
+                        if (task != null) {
+                            populate(task);
+                            populateChecklistRecyclerView();
+
+                            setTitle(task);
+
+                            populateRemindersRecyclerView();
+                        }
+
+                        setTitle(task);
+                    }, RxErrorHandler.handleEmptyError());
+
+            btnDelete.setEnabled(true);
+        } else {
+            setTitle((Task) null);
+            taskText.requestFocus();
+        }
     }
 
     @Override

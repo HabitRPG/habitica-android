@@ -246,7 +246,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                     if (!chatMsg.uuid.equals(uuid)) {
                         popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
                     }
-                    if (user.getContributor().getAdmin()) {
+                    if (user.getContributor() != null && user.getContributor().getAdmin()) {
                         popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(true);
                     }
                     popupMenu.getMenu().findItem(R.id.menu_chat_copy_as_todo).setVisible(false);

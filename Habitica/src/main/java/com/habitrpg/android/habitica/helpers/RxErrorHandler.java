@@ -5,6 +5,11 @@ import android.util.Log;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import cz.msebera.android.httpclient.HttpException;
 import rx.functions.Action1;
 
 public class RxErrorHandler {
@@ -31,6 +36,7 @@ public class RxErrorHandler {
         if (BuildConfig.DEBUG) {
             Log.e("ObservableError", Log.getStackTraceString(throwable));
         } else {
+            if (!IOException.class.isAssignableFrom(throwable.getClass()) && !HttpException.class.isAssignableFrom(throwable.getClass()))
             instance.crashlyticsProxy.logException(throwable);
         }
     }

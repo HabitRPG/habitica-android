@@ -163,6 +163,10 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_avatar);
+        if (isAdded()) {
+            return getString(R.string.sidebar_avatar);
+        } else {
+            return "";
+        }
     }
 }

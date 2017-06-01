@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.models.inventory;
 
+import android.support.annotation.Nullable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Mount extends RealmObject implements Animal {
 
-    boolean owned;
+    Boolean owned;
     @PrimaryKey
     String key;
     String animal, color, animalGroup, animalText, colorText;
@@ -109,7 +111,7 @@ public class Mount extends RealmObject implements Animal {
         return owned;
     }
 
-    public void setOwned(boolean owned) {
+    public void setOwned(@Nullable Boolean owned) {
         this.owned = owned;
     }
 }

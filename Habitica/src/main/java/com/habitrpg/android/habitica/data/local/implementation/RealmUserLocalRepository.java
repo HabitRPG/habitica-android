@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 
@@ -66,8 +67,7 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
                 .lessThanOrEqualTo("lvl", user.getStats().lvl)
                 .findAll()
                 .asObservable()
-                .filter(RealmResults::isLoaded)
-                .map(skills -> skills);
+                .filter(RealmResults::isLoaded);
     }
 
     @Override
@@ -92,13 +92,12 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
             }
         }
         if (ownedItems.size() == 0) {
-            return Observable.empty();
+            ownedItems.add("");
         }
         return realm.where(Skill.class)
                 .in("key", ownedItems.toArray(new String[0]))
                 .findAll()
                 .asObservable()
-                .filter(RealmResults::isLoaded)
-                .map(skills -> skills);
+                .filter(RealmResults::isLoaded);
     }
 }

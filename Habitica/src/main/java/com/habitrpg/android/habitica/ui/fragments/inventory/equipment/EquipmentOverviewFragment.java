@@ -156,7 +156,11 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_equipment);
+        if (isAdded()) {
+            return getString(R.string.sidebar_equipment);
+        } else {
+            return "";
+        }
     }
 
 }

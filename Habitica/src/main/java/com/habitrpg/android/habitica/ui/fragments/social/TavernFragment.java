@@ -160,6 +160,10 @@ public class TavernFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_tavern);
+        if (isAdded()) {
+            return getString(R.string.sidebar_tavern);
+        } else {
+            return "";
+        }
     }
 }

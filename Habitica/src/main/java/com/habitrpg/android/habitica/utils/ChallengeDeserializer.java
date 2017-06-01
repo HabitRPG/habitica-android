@@ -23,7 +23,9 @@ public class ChallengeDeserializer implements JsonDeserializer<Challenge>, JsonS
 
         challenge.id = jsonObject.get("id").getAsString();
         challenge.name = jsonObject.get("name").getAsString();
-        challenge.shortName = jsonObject.get("shortName").getAsString();
+        if (jsonObject.has("sortName")) {
+            challenge.shortName = jsonObject.get("shortName").getAsString();
+        }
         challenge.description = jsonObject.get("description").getAsString();
         challenge.memberCount = jsonObject.get("memberCount").getAsInt();
 

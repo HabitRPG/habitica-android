@@ -41,6 +41,10 @@ public class NewsFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_news);
+        if (isAdded()) {
+            return getString(R.string.sidebar_news);
+        } else {
+            return "";
+        }
     }
 }

@@ -134,9 +134,11 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         this.updateActiveCustomization();
         if (adapter.getCustomizationList() != null) {
             List<String> ownedCustomizations = new ArrayList<>();
-            for (Customization customization : user.getPurchased().customizations) {
-                if (customization.getType().equals(this.type)) {
-                    ownedCustomizations.add(customization.getId());
+            if (user.getPurchased() != null && user.getPurchased().customizations != null) {
+                for (Customization customization : user.getPurchased().customizations) {
+                    if (customization.getType().equals(this.type)) {
+                        ownedCustomizations.add(customization.getId());
+                    }
                 }
             }
             adapter.updateOwnership(ownedCustomizations);

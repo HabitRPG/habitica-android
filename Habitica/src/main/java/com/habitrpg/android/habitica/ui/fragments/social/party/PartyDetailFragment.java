@@ -124,7 +124,11 @@ public class PartyDetailFragment extends BaseFragment {
     private void refreshParty() {
         socialRepository.retrieveGroup("party")
                 .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.id, true))
-                .subscribe(members -> refreshLayout.setRefreshing(false), throwable -> refreshLayout.setRefreshing(false));
+                .subscribe(members -> {
+                    if (refreshLayout != null) {
+                        refreshLayout.setRefreshing(false);
+                    }
+                }, throwable -> refreshLayout.setRefreshing(false));
     }
 
     private void updateParty(Group party) {
@@ -164,10 +168,13 @@ public class PartyDetailFragment extends BaseFragment {
         }
         this.user = user;
 
+        int invitationVisibility = View.GONE;
         if (user.getInvitations() != null && user.getInvitations().getParty() != null && user.getInvitations().getParty().getId() != null) {
-            partyInvitationWrapper.setVisibility(View.VISIBLE);
-        } else {
-            partyInvitationWrapper.setVisibility(View.GONE);
+            invitationVisibility = View.VISIBLE;
+        }
+
+        if (partyInvitationWrapper != null) {
+            partyInvitationWrapper.setVisibility(invitationVisibility);
         }
 
         if (isQuestActive() || !user.getParty().getQuest().RSVPNeeded) {
@@ -180,7 +187,9 @@ public class PartyDetailFragment extends BaseFragment {
     }
 
     private void updateQuestContent(QuestContent questContent) {
-        questTitleView.setText(questContent.getText());
+        if (questTitleView != null) {
+            questTitleView.setText(questContent.getText());
+        }
         DataBindingUtils.loadImage(questScrollImageView, "inventory_quest_scroll_"+questContent.getKey());
         DataBindingUtils.loadImage(questImageView, "quest_"+questContent.getKey());
         if (isQuestActive()) {

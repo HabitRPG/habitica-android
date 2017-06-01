@@ -261,6 +261,10 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
     @Override
     public String customTitle() {
-        return getString(R.string.guild);
+        if (isAdded()) {
+            return getString(R.string.guild);
+        } else {
+            return "";
+        }
     }
 }

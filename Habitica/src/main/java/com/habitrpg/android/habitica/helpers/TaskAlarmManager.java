@@ -143,16 +143,16 @@ public class TaskAlarmManager {
     //We may be able to use repeating alarms instead of this in the future
     public void addAlarmForTaskId(String taskId) {
         taskRepository.getTask(taskId)
-                .filter(task -> Task.TYPE_DAILY.equals(task.type))
+                .filter(task -> task.isManaged() && Task.TYPE_DAILY.equals(task.type))
+                .first()
                 .subscribe(this::setAlarmsForTask, RxErrorHandler.handleEmptyError());
     }
 
     public void scheduleAllSavedAlarms() {
-        taskRepository.getTasks(userId).flatMap(Observable::from)
-                .doOnNext(this::setAlarmsForTask)
-                .subscribeOn(Schedulers.io())
-                .subscribe(task -> {
-                }, crashlyticsProxy::logException);
+        taskRepository.getTasks(userId)
+                .first()
+                .flatMap(Observable::from)
+                .subscribe(this::setAlarmsForTask, crashlyticsProxy::logException);
 
         scheduleDailyReminder(context);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();

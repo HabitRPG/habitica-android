@@ -100,7 +100,11 @@ public class ShopsFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_shops);
+        if (isAdded()) {
+            return getString(R.string.sidebar_shops);
+        } else {
+            return "";
+        }
     }
 
 }

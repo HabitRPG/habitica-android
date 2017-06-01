@@ -200,26 +200,8 @@ public class PartyFragment extends BaseMainFragment {
                     if (this.group == null) {
                         break;
                     }
-                    if (this.group.name != null && !this.group.name.equals(bundle.getString("name"))) {
-                        this.group.name = bundle.getString("name");
-                        needsSaving = true;
-                    }
-                    if (this.group.description != null && !this.group.description.equals(bundle.getString("description"))) {
-                        this.group.description = bundle.getString("description");
-                        needsSaving = true;
-                    }
-                    if (this.group.leaderID != null && !this.group.leaderID.equals(bundle.getString("leader"))) {
-                        this.group.leaderID = bundle.getString("leader");
-                        needsSaving = true;
-                    }
-                    if (this.group.privacy != null && !this.group.privacy.equals(bundle.getString("privacy"))) {
-                        this.group.privacy = bundle.getString("privacy");
-                        needsSaving = true;
-                    }
-                    if (needsSaving) {
-                        this.socialRepository.updateGroup(this.group, bundle.getString("name"), bundle.getString("description"), bundle.getString("leader"), bundle.getString("privacy"))
-                                .subscribe(aVoid -> {}, throwable -> {});
-                    }
+                    this.socialRepository.updateGroup(this.group, bundle.getString("name"), bundle.getString("description"), bundle.getString("leader"), bundle.getString("privacy"))
+                            .subscribe(aVoid -> {}, throwable -> {});
                 }
                 break;
             }
@@ -368,7 +350,11 @@ public class PartyFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_party);
+        if (isAdded()) {
+            return getString(R.string.sidebar_party);
+        } else {
+            return "";
+        }
     }
 
 }

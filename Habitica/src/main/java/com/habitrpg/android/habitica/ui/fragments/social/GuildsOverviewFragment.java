@@ -130,6 +130,10 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_guilds);
+        if (isAdded()) {
+            return getString(R.string.sidebar_guilds);
+        } else {
+            return "";
+        }
     }
 }

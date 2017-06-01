@@ -29,7 +29,11 @@ public class MountListDeserializer implements JsonDeserializer<RealmList<Mount>>
             for (Mount item : existingItems) {
                 if (object.has(item.getKey())) {
                     JsonElement itemObject = object.get(item.getKey());
-                    item.setOwned(itemObject.getAsBoolean());
+                    if (itemObject.isJsonNull()) {
+                        item.setOwned(null);
+                    } else {
+                        item.setOwned(itemObject.getAsBoolean());
+                    }
                     vals.add(item);
                     object.remove(item.getKey());
                 }

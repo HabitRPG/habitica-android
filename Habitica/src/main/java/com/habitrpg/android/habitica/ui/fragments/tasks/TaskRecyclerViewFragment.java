@@ -321,8 +321,8 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             recyclerAdapter.filter();
         }
 
-        if (Task.TYPE_REWARD.equals(classType)) {
-            compositeSubscription.add(taskRepository.getTasks(this.classType, userID)
+        if (Task.TYPE_REWARD.equals(getClassName())) {
+            compositeSubscription.add(taskRepository.getTasks(this.getClassName(), userID)
                     .subscribe(recyclerAdapter::updateData, RxErrorHandler.handleEmptyError()));
         }
     }
@@ -354,7 +354,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
         userRepository.retrieveUser(true, true)
-                .doOnTerminate(() -> swipeRefreshLayout.setRefreshing(false))
+                .doOnTerminate(() -> {
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                })
                 .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
     }
 

@@ -90,8 +90,8 @@ public abstract class BaseMainFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.containsKey("userId")) {
             String userId = savedInstanceState.getString("userId");
-            if (userId != null) {
-                userRepository.getUser(userId).subscribe(habitRPGUser -> user = habitRPGUser, RxErrorHandler.handleEmptyError());
+            if (userId != null && userRepository != null) {
+                compositeSubscription.add(userRepository.getUser(userId).subscribe(habitRPGUser -> user = habitRPGUser, RxErrorHandler.handleEmptyError()));
             }
         }
 

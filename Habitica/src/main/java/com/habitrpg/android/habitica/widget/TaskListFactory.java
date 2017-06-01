@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.widget;
 
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
-import android.content.Intent;
-import android.text.SpannableStringBuilder;
-import android.text.style.DynamicDrawableSpan;
-import android.widget.RemoteViews;
-import android.widget.RemoteViewsService;
-
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.TaskRepository;
@@ -17,6 +9,14 @@ import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import net.pherth.android.emoji_library.EmojiHandler;
+
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
+import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,10 +74,14 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                 .flatMap(Observable::from)
                 .filter(task -> task.type.equals(Task.TYPE_TODO) || task.isDisplayedActive(customDayStart))
                 .toList()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .first()
                 .subscribe(tasks -> {
                     taskList = tasks;
                     this.reloadData = false;
                     AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
+                    taskRepository.close();
                 }, throwable -> this.reloadData = false);
     }
 
