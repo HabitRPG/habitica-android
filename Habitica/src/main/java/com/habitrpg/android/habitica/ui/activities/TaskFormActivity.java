@@ -1001,31 +1001,31 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         // Repeats On
-        if (task.daysOfMonth != null) {
+        if (task.daysOfMonthString != null) {
             try {
-                JSONArray obj = new JSONArray(task.daysOfMonth);
+                JSONArray obj = new JSONArray(task.daysOfMonthString);
                 for (int i = 0; i < obj.length(); i += 1) {
-                    task.daysOfMonthLocal.add(obj.getInt(i));
+                    task.daysOfMonth.add(obj.getInt(i));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        if (task.weeksOfMonth != null) {
+        if (task.weeksOfMonthString != null) {
             try {
-                JSONArray obj = new JSONArray(task.weeksOfMonth);
+                JSONArray obj = new JSONArray(task.weeksOfMonthString);
                 for (int i = 0; i < obj.length(); i += 1) {
-                    task.weeksOfMonthLocal.add(obj.getInt(i));
+                    task.weeksOfMonth.add(obj.getInt(i));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        if (task.daysOfMonthLocal.size() > 0) {
+        if (task.daysOfMonth != null && task.daysOfMonth.size() > 0) {
             this.repeatablesOnSpinner.setSelection(0);
-        } else if (task.weeksOfMonthLocal.size() > 0) {
+        } else if (task.weeksOfMonth != null && task.weeksOfMonth.size() > 0) {
             this.repeatablesOnSpinner.setSelection(1);
         }
 
@@ -1247,18 +1247,18 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
                         if (monthlyFreq.equals("Day of Month")) {
                             Integer date = calendar.get(Calendar.DATE);
-                            task.daysOfMonthLocal = new ArrayList<>();
-                            task.daysOfMonthLocal.add(date);
-                            task.weeksOfMonthLocal = new ArrayList<>();
+                            task.daysOfMonth = new ArrayList<>();
+                            task.daysOfMonth.add(date);
+                            task.weeksOfMonth = new ArrayList<>();
                         } else {
                             Integer week = calendar.get(Calendar.WEEK_OF_MONTH);
-                            task.weeksOfMonthLocal = new ArrayList<>();
-                            task.weeksOfMonthLocal.add(week);
-                            task.daysOfMonthLocal = new ArrayList<>();
+                            task.weeksOfMonth = new ArrayList<>();
+                            task.weeksOfMonth.add(week);
+                            task.daysOfMonth = new ArrayList<>();
                         }
 
-                        task.daysOfMonth = new JSONArray(task.daysOfMonthLocal).toString();
-                        task.weeksOfMonth = new JSONArray(task.weeksOfMonthLocal).toString();
+                        task.daysOfMonthString = new JSONArray(task.daysOfMonth).toString();
+                        task.weeksOfMonthString = new JSONArray(task.weeksOfMonth).toString();
                     }
                 }
             }

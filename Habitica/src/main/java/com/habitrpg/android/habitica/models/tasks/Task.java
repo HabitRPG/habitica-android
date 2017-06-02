@@ -116,12 +116,12 @@ public class Task extends BaseModel implements Parcelable {
     public Date nextDue;
 
     @Column
-    public String daysOfMonth;
+    public String daysOfMonthString;
     @Column
-    public String weeksOfMonth;
+    public String weeksOfMonthString;
 
-    public List<Integer> daysOfMonthLocal = new ArrayList<>();
-    public List<Integer> weeksOfMonthLocal = new ArrayList<>();
+    public List<Integer> daysOfMonth;
+    public List<Integer> weeksOfMonth;
 
     /**
      * @return the id
@@ -499,6 +499,13 @@ public class Task extends BaseModel implements Parcelable {
                 item.async().save();
                 position++;
             }
+        }
+
+        if (daysOfMonth != null) {
+            daysOfMonthString = daysOfMonth.toString();
+        }
+        if (weeksOfMonth != null) {
+            weeksOfMonthString = weeksOfMonth.toString();
         }
 
         int index = 0;
