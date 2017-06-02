@@ -17,6 +17,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.converter.TypeConverter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -114,10 +115,13 @@ public class Task extends BaseModel implements Parcelable {
     @Column
     public Date nextDue;
 
-    // These do need to be local columns because all logic is stored in
-    // is due for now
-    public List<Integer> daysOfMonth  = new ArrayList<>();
-    public List<Integer> weeksOfMonth  = new ArrayList<>();
+    @Column
+    public String daysOfMonth;
+    @Column
+    public String weeksOfMonth;
+
+    public List<Integer> daysOfMonthLocal = new ArrayList<>();
+    public List<Integer> weeksOfMonthLocal = new ArrayList<>();
 
     /**
      * @return the id
