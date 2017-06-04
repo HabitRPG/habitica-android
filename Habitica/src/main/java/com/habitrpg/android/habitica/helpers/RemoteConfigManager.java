@@ -28,29 +28,27 @@ import bolts.Bolts;
 
 public class RemoteConfigManager {
 
-    private static RemoteConfigManager instance;
-    private Context context;
+  //  private static RemoteConfigManager instance; //This reports a leak in leak canary, it is possible that we don't need a singleton as this class loads settings on construction into preferences. It is the only use it is never used after this again as the only other public method is static
     private static Boolean enableRepeatbles = false;
-    private String REMOTE_STRING_KEY = "remote-string";
+    private static String REMOTE_STRING_KEY = "remote-string";
 
-    private RemoteConfigManager(Context context) {
-        this.context = context;
-        loadFromPreferences();
-        new DownloadFileFromURL().execute("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/config-android.json");
+    public static void loadConfig(Context context) {
+        loadFromPreferences(context);
+        new DownloadFileFromURL().execute(context, "https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/config-android.json");
     }
 
-    public static RemoteConfigManager getInstance(Context context) {
-        if (instance == null) {
-            instance = new RemoteConfigManager(context);
-        }
-        return instance;
-    }
+//    public static RemoteConfigManager getInstance(Context context) {
+//        if (instance == null) {
+//            instance = new RemoteConfigManager(context);
+//        }
+//        return instance;
+//    }
 
     public static Boolean repeatablesAreEnabled () {
         return enableRepeatbles;
     }
 
-    private void loadFromPreferences () {
+    private static void loadFromPreferences(Context context) {
         String storedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(REMOTE_STRING_KEY, "");
 
@@ -66,8 +64,10 @@ public class RemoteConfigManager {
         }
     }
 
-    class DownloadFileFromURL extends AsyncTask<String, String, String> {
+    static class DownloadFileFromURL extends AsyncTask<Object, String, String> {
         private String filename = "config.json";
+        private Context context;
+
 
         @Override
         protected void onPreExecute() {
@@ -75,14 +75,17 @@ public class RemoteConfigManager {
         }
 
         @Override
-        protected String doInBackground(String ...fileUrl) {
+        protected String doInBackground(Object... params) {
+            context = (Context) params[0];
+            String fileUrl = (String) params[1];
+
             int count;
             try {
-                URL url = new URL(fileUrl[0]);
-                URLConnection conection = url.openConnection();
-                conection.connect();
+                URL url = new URL(fileUrl);
+                URLConnection connection = url.openConnection();
+                connection.connect();
 
-                int lenghtOfFile = conection.getContentLength();
+                int lenghtOfFile = connection.getContentLength();
 
                 InputStream input = new BufferedInputStream(url.openStream(),
                         8192);
@@ -138,6 +141,7 @@ public class RemoteConfigManager {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            context = null;
         }
 
     }

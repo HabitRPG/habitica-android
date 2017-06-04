@@ -82,7 +82,7 @@ public class PopupNotificationsManager {
         Button confirmButton = (Button) view.findViewById(R.id.confirm_button);
         confirmButton.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity, R.style.AlertDialogTheme)
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme)
                 .setTitle(title)
                 .setView(view)
                 .setMessage("");
@@ -108,14 +108,6 @@ public class PopupNotificationsManager {
             return false;
         }
 
-        if (HabiticaApplication.currentActivity == null || HabiticaApplication.currentActivity.isFinishing()) {
-            return false;
-        }
-
-        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-            if (HabiticaApplication.currentActivity == null) return;
-            if ((HabiticaApplication.currentActivity).isFinishing()) return;
-
             if (this.seenNotifications == null) {
                 this.seenNotifications = new HashMap<>();
             }
@@ -132,7 +124,6 @@ public class PopupNotificationsManager {
                 this.displayNotification(notification);
                 this.seenNotifications.put(notification.getId(), true);
             }
-        });
 
         return true;
     }

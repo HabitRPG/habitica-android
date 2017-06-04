@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.interactors;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
@@ -35,17 +35,17 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
                     SelectClassEvent event = new SelectClassEvent();
                     event.isInitialSelection = true;
                     event.currentClass = user.getStats().get_class().toString();
-                    displayClassSelectionActivity(user, event);
+                    displayClassSelectionActivity(requestValues.hostActivity, user, event);
                 }
             } else {
-                displayClassSelectionActivity(user, requestValues.selectClassEvent);
+                displayClassSelectionActivity(requestValues.hostActivity, user, requestValues.selectClassEvent);
             }
 
             return null;
         });
     }
 
-    private void displayClassSelectionActivity(HabitRPGUser user, SelectClassEvent event) {
+    private void displayClassSelectionActivity(AppCompatActivity hostActivity, HabitRPGUser user, SelectClassEvent event) {
         Bundle bundle = new Bundle();
         bundle.putString("size", user.getPreferences().getSize());
         bundle.putString("skin", user.getPreferences().getSkin());
@@ -58,19 +58,20 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
         bundle.putBoolean("isInitialSelection", event.isInitialSelection);
         bundle.putString("currentClass", event.currentClass);
 
-        Intent intent = new Intent(HabiticaApplication.currentActivity, ClassSelectionActivity.class);
+        Intent intent = new Intent(hostActivity, ClassSelectionActivity.class);
         intent.putExtras(bundle);
-        HabiticaApplication.currentActivity.startActivityForResult(intent, SELECT_CLASS_RESULT);
+        hostActivity.startActivityForResult(intent, SELECT_CLASS_RESULT);
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
 
 
+        private final AppCompatActivity hostActivity;
         private HabitRPGUser user;
         private SelectClassEvent selectClassEvent;
 
-        public RequestValues(HabitRPGUser user, SelectClassEvent selectClassEvent) {
-
+        public RequestValues(AppCompatActivity hostActivity, HabitRPGUser user, SelectClassEvent selectClassEvent) {
+            this.hostActivity = hostActivity;
             this.user = user;
             this.selectClassEvent = selectClassEvent;
         }

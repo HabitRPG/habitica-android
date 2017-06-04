@@ -43,7 +43,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
             SuppressedModals suppressedModals = requestValues.user.getPreferences().getSuppressModals();
             if (suppressedModals != null) {
                 if (suppressedModals.getLevelUp()) {
-                    checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null))
+                    checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.compatActivity, requestValues.user, null))
                             .subscribe(aVoid -> {
                             }, throwable -> {
                             });
@@ -70,7 +70,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
                     .setTitle(R.string.levelup_header)
                     .setView(customView)
                     .setPositiveButton(R.string.levelup_button, (dialog, which) -> {
-                        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null))
+                        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.compatActivity, requestValues.user, null))
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });

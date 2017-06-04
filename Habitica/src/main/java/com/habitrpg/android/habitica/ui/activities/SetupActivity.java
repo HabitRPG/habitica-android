@@ -128,18 +128,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         component.inject(this);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
     private void setupViewpager() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
