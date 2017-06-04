@@ -3,11 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'com.android.databinding:dataBinder:1.0-rc4'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
         classpath 'com.google.gms:google-services:3.0.0'
     }
 }
@@ -15,5 +14,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
