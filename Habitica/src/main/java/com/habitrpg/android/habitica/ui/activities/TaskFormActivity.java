@@ -91,6 +91,9 @@ import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiPopup;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -412,6 +415,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             mainWrapper.removeView(checklistWrapper);
         }
 
+        enableRepeatables();
+
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
             this.task = task;
@@ -504,8 +509,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             emojiToggle2.setOnClickListener(new emojiClickListener(newCheckListEditText));
         }
 
-        enableRepeatables();
-
         Observable.defer(() -> Observable.just(new Select().from(Tag.class)
                 .where(Condition.column("user_id").eq(this.userId))
                 .queryList())
@@ -522,6 +525,22 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 );
     }
 
+    public void hideMonthOptions () {
+        ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
+        repeatablesOnSpinnerParams.height = 0;
+        repeatablesOnSpinner.setLayoutParams(repeatablesOnSpinnerParams);
+
+        ViewGroup.LayoutParams repeatablesOnTitleParams = reapeatablesOnTextView.getLayoutParams();
+        repeatablesOnTitleParams.height =  0;
+        reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
+    }
+
+    public void hideWeekOptions () {
+        ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
+        repeatablesFrequencyContainerParams.height = 0;
+        repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
+    }
+
     // @TODO: abstract business logic to Presenter and only modify view?
     private void enableRepeatables()
     {
@@ -535,6 +554,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         startDateLayout.setVisibility(View.INVISIBLE);
 
+        // Hide old stuff
         ViewGroup.LayoutParams startDateLayoutParams = startDateLayout.getLayoutParams();
         startDateLayoutParams.height = 0;
         startDateLayout.setLayoutParams(startDateLayoutParams);
@@ -560,8 +580,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         dailyFrequencySpinnerParams.height = 0;
         dailyFrequencySpinner.setLayoutParams(dailyFrequencySpinnerParams);
 
+        // Start Date
         startDateListener = new DateEditTextListener(repeatablesStartDatePickerText);
 
+        // Frequency
         ArrayAdapter<CharSequence> frequencyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.repeatables_frequencies, android.R.layout.simple_spinner_item);
         frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -575,6 +597,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 // @TODO: remove magic numbers
 
                 if (position == 2) {
+                    hideWeekOptions();
+
                     ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
                     repeatablesOnSpinnerParams.height =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72, r.getDisplayMetrics());
                     repeatablesOnSpinner.setLayoutParams(repeatablesOnSpinnerParams);
@@ -583,22 +607,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     repeatablesOnTitleParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
                     reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
                 }else if (position == 1) {
+                    hideMonthOptions();
+
                     ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
                     repeatablesFrequencyContainerParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 220, r.getDisplayMetrics());
                     repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
-                    return;
                 } else {
-                    ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
-                    repeatablesOnSpinnerParams.height = 0;
-                    repeatablesOnSpinner.setLayoutParams(repeatablesOnSpinnerParams);
-
-                    ViewGroup.LayoutParams repeatablesOnTitleParams = reapeatablesOnTextView.getLayoutParams();
-                    repeatablesOnTitleParams.height =  0;
-                    reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
-
-                    ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
-                    repeatablesFrequencyContainerParams.height = 0;
-                    repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
+                    hideWeekOptions();
+                    hideMonthOptions();
                 }
             }
 
@@ -608,6 +624,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
 
+        // Repeat On
         ArrayAdapter<CharSequence> repeatablesOnAdapter = ArrayAdapter.createFromResource(this,
                 R.array.repeatables_on, android.R.layout.simple_spinner_item);
         repeatablesOnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -624,6 +641,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
 
+        // Every X
         setEveryXSpinner(repeatablesEveryXSpinner);
         repeatablesEveryXSpinner.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -632,6 +650,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
 
+        // WeekDays
         this.repeatablesFrequencyContainer.removeAllViews();
         String[] weekdays = getResources().getStringArray(R.array.weekdays);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -952,6 +971,66 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         return super.onOptionsItemSelected(item);
     }
 
+    private void populateRepeatables(Task task) {
+        // Frequency
+        int frequencySelection = 0;
+        if (task.getFrequency().equals("weekly")) {
+            frequencySelection = 1;
+        } else if (task.getFrequency().equals("monthly")) {
+            frequencySelection = 2;
+        } else if (task.getFrequency().equals("yearly")) {
+            frequencySelection = 3;
+        }
+        this.repeatablesFrequencySpinner.setSelection(frequencySelection);
+
+        // Every X
+        this.repeatablesEveryXSpinner.setValue(task.getEveryX());
+
+        // Weekdays
+        if (task.getFrequency().equals("weekly")) {
+            if (repeatablesWeekDayCheckboxes.size() == 7) {
+                int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                this.repeatablesWeekDayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
+                this.repeatablesWeekDayCheckboxes.get((offset + 1) % 7).setChecked(this.task.getRepeat().getT());
+                this.repeatablesWeekDayCheckboxes.get((offset + 2) % 7).setChecked(this.task.getRepeat().getW());
+                this.repeatablesWeekDayCheckboxes.get((offset + 3) % 7).setChecked(this.task.getRepeat().getTh());
+                this.repeatablesWeekDayCheckboxes.get((offset + 4) % 7).setChecked(this.task.getRepeat().getF());
+                this.repeatablesWeekDayCheckboxes.get((offset + 5) % 7).setChecked(this.task.getRepeat().getS());
+                this.repeatablesWeekDayCheckboxes.get((offset + 6) % 7).setChecked(this.task.getRepeat().getSu());
+            }
+        }
+
+        // Repeats On
+        if (task.daysOfMonthString != null) {
+            try {
+                JSONArray obj = new JSONArray(task.daysOfMonthString);
+                for (int i = 0; i < obj.length(); i += 1) {
+                    task.daysOfMonth.add(obj.getInt(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (task.weeksOfMonthString != null) {
+            try {
+                JSONArray obj = new JSONArray(task.weeksOfMonthString);
+                for (int i = 0; i < obj.length(); i += 1) {
+                    task.weeksOfMonth.add(obj.getInt(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (task.daysOfMonth != null && task.daysOfMonth.size() > 0) {
+            this.repeatablesOnSpinner.setSelection(0);
+        } else if (task.weeksOfMonth != null && task.weeksOfMonth.size() > 0) {
+            this.repeatablesOnSpinner.setSelection(1);
+        }
+
+    }
+
     private void populate(Task task) {
         taskText.setText(task.text);
         taskNotes.setText(task.notes);
@@ -1023,6 +1102,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     this.frequencyPicker.setValue(task.getEveryX());
                 }
             }
+
+            populateRepeatables(task);
+
         }
 
         if (task.type.equals("todo")) {
@@ -1112,10 +1194,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
                 if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                     task.setFrequency("weekly");
-                    Object frequency = this.repeatablesFrequencySpinner.getSelectedItem();
-                    if (frequency != null && RemoteConfigManager.repeatablesAreEnabled()) {
-                        task.setFrequency(frequency.toString().toLowerCase());
-                    }
 
                     Days repeat = task.getRepeat();
                     if (repeat == null) {
@@ -1131,8 +1209,29 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     repeat.setF(this.weekdayCheckboxes.get((offset + 4) % 7).isChecked());
                     repeat.setS(this.weekdayCheckboxes.get((offset + 5) % 7).isChecked());
                     repeat.setSu(this.weekdayCheckboxes.get((offset + 6) % 7).isChecked());
+                } else {
+                    task.setFrequency("daily");
+                    task.setEveryX(this.frequencyPicker.getValue());
+                }
 
-                    if (RemoteConfigManager.repeatablesAreEnabled()) {
+                if (RemoteConfigManager.repeatablesAreEnabled()) {
+                    Object frequency = this.repeatablesFrequencySpinner.getSelectedItem();
+                    String frequencyString = "";
+                    if (frequency != null) {
+                        frequencyString = frequency.toString().toLowerCase();
+                        task.setFrequency(frequencyString);
+                    }
+
+                    task.setEveryX(this.repeatablesEveryXSpinner.getValue());
+
+                    Days repeat = task.getRepeat();
+                    if (repeat == null) {
+                        repeat = new Days();
+                        task.setRepeat(repeat);
+                    }
+
+                    if ("weekly".equals(frequencyString)) {
+                        int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
                         repeat.setM(this.repeatablesWeekDayCheckboxes.get(offset).isChecked());
                         repeat.setT(this.repeatablesWeekDayCheckboxes.get((offset + 1) % 7).isChecked());
                         repeat.setW(this.repeatablesWeekDayCheckboxes.get((offset + 2) % 7).isChecked());
@@ -1142,9 +1241,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         repeat.setSu(this.repeatablesWeekDayCheckboxes.get((offset + 6) % 7).isChecked());
                     }
 
-                    if ("monthly".equals(frequency)) {
+                    if ("monthly".equals(frequencyString)) {
                         Calendar calendar = startDateListener.getCalendar();
                         String monthlyFreq = repeatablesOnSpinner.getSelectedItem().toString();
+
                         if (monthlyFreq.equals("Day of Month")) {
                             Integer date = calendar.get(Calendar.DATE);
                             task.daysOfMonth = new ArrayList<>();
@@ -1156,10 +1256,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                             task.weeksOfMonth.add(week);
                             task.daysOfMonth = new ArrayList<>();
                         }
+
+                        task.daysOfMonthString = new JSONArray(task.daysOfMonth).toString();
+                        task.weeksOfMonthString = new JSONArray(task.weeksOfMonth).toString();
                     }
-                } else {
-                    task.setFrequency("daily");
-                    task.setEveryX(this.frequencyPicker.getValue());
                 }
             }
             break;
