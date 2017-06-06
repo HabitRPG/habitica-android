@@ -106,14 +106,10 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         for (Task localTask : localTasks) {
             if (!onlineTaskList.contains(localTask)) {
                 if (localTask.checklist != null) {
-                    for (ChecklistItem item : localTask.checklist) {
-                        item.deleteFromRealm();
-                    }
+                    localTask.checklist.deleteAllFromRealm();
                 }
                 if (localTask.reminders != null) {
-                    for (RemindersItem item : localTask.reminders) {
-                        item.deleteFromRealm();
-                    }
+                    localTask.reminders.deleteAllFromRealm();
                 }
                 localTask.deleteFromRealm();
             }
@@ -153,6 +149,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     @Override
     public Observable<Task> getTaskCopy(String taskId) {
         return getTask(taskId)
+                .filter(task -> task.isManaged())
                 .map(realm::copyFromRealm);
     }
 

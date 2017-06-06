@@ -77,7 +77,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                         }
                     });
         } else {
-            return Observable.empty();
+            return Observable.just(null);
         }
     }
 

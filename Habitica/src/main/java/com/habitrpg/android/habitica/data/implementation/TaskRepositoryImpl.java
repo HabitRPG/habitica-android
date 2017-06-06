@@ -190,4 +190,10 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         return localRepository.getTaskAtPosition(currentPosition)
                 .flatMap(task -> apiClient.postTaskNewPosition(task.getId(), currentPosition));
     }
+
+    @Override
+    public Observable<Task> getUnmanagedTask(String taskid) {
+        return getTask(taskid)
+                .map(localRepository::getUnmanagedCopy);
+    }
 }

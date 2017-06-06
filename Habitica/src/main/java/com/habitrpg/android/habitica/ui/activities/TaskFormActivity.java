@@ -475,11 +475,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         this.task = task;
                         if (task != null) {
                             populate(task);
-                            populateChecklistRecyclerView();
 
                             setTitle(task);
-
-                            populateRemindersRecyclerView();
+                            if (taskType.equals("todo") || taskType.equals("daily")) {
+                                populateChecklistRecyclerView();
+                                populateRemindersRecyclerView();
+                            }
                         }
 
                         setTitle(task);
