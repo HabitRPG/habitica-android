@@ -51,4 +51,6 @@ public interface TaskRepository extends BaseRepository  {
     void updateTaskInBackground(Task task);
 
     void createTaskInBackground(Task task);
+
+    Observable<List<Task>> getTaskCopies(String userId);
 }

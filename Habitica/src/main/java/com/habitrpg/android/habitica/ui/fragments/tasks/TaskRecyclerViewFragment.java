@@ -323,7 +323,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
         if (Task.TYPE_REWARD.equals(getClassName())) {
             compositeSubscription.add(taskRepository.getTasks(this.getClassName(), userID)
-                    .subscribe(recyclerAdapter::updateData, RxErrorHandler.handleEmptyError()));
+                    .subscribe(tasks -> {
+                        if (recyclerAdapter != null) {
+                            recyclerAdapter.updateData(tasks);
+                        }
+                    }, RxErrorHandler.handleEmptyError()));
         }
     }
 

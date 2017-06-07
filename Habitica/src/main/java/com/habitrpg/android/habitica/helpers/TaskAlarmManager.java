@@ -142,14 +142,14 @@ public class TaskAlarmManager {
     //We currently only use this function to schedule the next reminder for dailies
     //We may be able to use repeating alarms instead of this in the future
     public void addAlarmForTaskId(String taskId) {
-        taskRepository.getTask(taskId)
-                .filter(task -> task.isManaged() && Task.TYPE_DAILY.equals(task.type))
+        taskRepository.getTaskCopy(taskId)
+                .filter(task -> task.isValid() && task.isManaged() && Task.TYPE_DAILY.equals(task.type))
                 .first()
                 .subscribe(this::setAlarmsForTask, RxErrorHandler.handleEmptyError());
     }
 
     public void scheduleAllSavedAlarms() {
-        taskRepository.getTasks(userId)
+        taskRepository.getTaskCopies(userId)
                 .first()
                 .flatMap(Observable::from)
                 .subscribe(this::setAlarmsForTask, crashlyticsProxy::logException);

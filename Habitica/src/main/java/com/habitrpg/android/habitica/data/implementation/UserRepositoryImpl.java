@@ -179,7 +179,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
             path = path + "," + customization.getPath();
         }
         if (path.length() == 0) {
-            return Observable.empty();
+            return Observable.just(null);
         }
         path = path.substring(1);
         return apiClient.unlockPath(path)

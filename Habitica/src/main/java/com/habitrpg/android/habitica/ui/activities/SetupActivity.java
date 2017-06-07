@@ -176,6 +176,9 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
                 Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
         editor.apply();
         if (isLastPage()) {
+            if (this.taskSetupFragment == null) {
+                return;
+            }
             List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
             this.completedSetup = true;
             this.taskRepository.createTasks(newTasks)

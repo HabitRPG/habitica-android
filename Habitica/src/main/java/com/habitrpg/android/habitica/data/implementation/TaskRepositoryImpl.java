@@ -62,7 +62,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public Observable<TaskScoringResult> taskChecked(User user, Task task, boolean up) {
         long now = new Date().getTime();
         if (lastTaskAction > now-500) {
-            return Observable.empty();
+            return Observable.just(null);
         }
         lastTaskAction = now;
         return this.apiClient.postTaskDirection(task.getId(), (up ? TaskDirection.up : TaskDirection.down).toString())
@@ -127,7 +127,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public Observable<Task> createTask(Task task) {
         long now = new Date().getTime();
         if (lastTaskAction > now-500) {
-            return Observable.empty();
+            return Observable.just(task);
         }
         lastTaskAction = now;
         return localRepository.getTaskCopy(task.getId()).first()
@@ -139,7 +139,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public Observable<Task> updateTask(Task task) {
         long now = new Date().getTime();
         if (lastTaskAction > now-500) {
-            return Observable.empty();
+            return Observable.just(task);
         }
         lastTaskAction = now;
         return localRepository.getTaskCopy(task.getId()).first()
@@ -206,5 +206,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     @Override
     public void createTaskInBackground(Task task) {
         createTask(task).subscribe(task1 -> {}, RxErrorHandler.handleEmptyError());
+    }
+
+    @Override
+    public Observable<List<Task>> getTaskCopies(String userId) {
+        return getTasks(userId)
+                .map(localRepository::getUnmanagedCopy);
     }
 }

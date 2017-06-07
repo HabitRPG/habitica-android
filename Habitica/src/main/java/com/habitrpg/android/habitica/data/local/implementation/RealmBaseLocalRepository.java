@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.local.BaseLocalRepository;
 
 import java.util.List;
 
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmObject;
 
@@ -28,6 +29,11 @@ abstract class RealmBaseLocalRepository implements BaseLocalRepository {
     @Override
     public <T extends RealmObject> T getUnmanagedCopy(T object) {
         return realm.copyFromRealm(object);
+    }
+
+    @Override
+    public <T extends RealmObject> List<T> getUnmanagedCopy(OrderedRealmCollection<T> list) {
+        return realm.copyFromRealm(list);
     }
 
     @Override
