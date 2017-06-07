@@ -47,4 +47,8 @@ public interface TaskRepository extends BaseRepository  {
     Observable<List<String>> updateTaskPosition(int currentPosition);
 
     Observable<Task> getUnmanagedTask(String taskid);
+
+    void updateTaskInBackground(Task task);
+
+    void createTaskInBackground(Task task);
 }

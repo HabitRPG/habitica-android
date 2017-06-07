@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
@@ -195,5 +196,15 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public Observable<Task> getUnmanagedTask(String taskid) {
         return getTask(taskid)
                 .map(localRepository::getUnmanagedCopy);
+    }
+
+    @Override
+    public void updateTaskInBackground(Task task) {
+        updateTask(task).subscribe(task1 -> {}, RxErrorHandler.handleEmptyError());
+    }
+
+    @Override
+    public void createTaskInBackground(Task task) {
+        createTask(task).subscribe(task1 -> {}, RxErrorHandler.handleEmptyError());
     }
 }

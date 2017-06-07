@@ -1247,14 +1247,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         if (this.saveTask(this.task)) {
             //send back to other elements.
-            Observable<Task> observable;
             if (TaskFormActivity.this.task.getId() == null) {
-                observable = taskRepository.createTask(task);
+                taskRepository.createTaskInBackground(task);
             } else {
-                observable = taskRepository.updateTask(task);
+                taskRepository.updateTaskInBackground(task);
             }
 
-            observable.subscribe(task1 -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 

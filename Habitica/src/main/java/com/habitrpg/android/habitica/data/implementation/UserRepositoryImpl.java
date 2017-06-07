@@ -197,7 +197,12 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
         if (!oldUser.isValid()) {
             return oldUser;
         }
-        User copiedUser = localRepository.getUnmanagedCopy(oldUser);
+        User copiedUser;
+        if (oldUser.isManaged()) {
+            copiedUser = localRepository.getUnmanagedCopy(oldUser);
+        } else {
+            copiedUser = oldUser;
+        }
         if (newUser.getItems() != null) {
             copiedUser.setItems(newUser.getItems());
         }

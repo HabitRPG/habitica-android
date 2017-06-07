@@ -13,6 +13,7 @@ import net.pherth.android.emoji_library.EmojiHandler;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.widget.RemoteViews;
@@ -70,7 +71,8 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
     }
 
     private void loadData() {
-        taskRepository.getTasks(taskType, userID)
+        Handler mainHandler = new Handler(context.getMainLooper());
+        mainHandler.post(() -> taskRepository.getTasks(taskType, userID)
                 .flatMap(Observable::from)
                 .filter(task -> task.type.equals(Task.TYPE_TODO) || task.isDisplayedActive(customDayStart))
                 .toList()
@@ -79,10 +81,11 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                 .first()
                 .subscribe(tasks -> {
                     taskList = tasks;
-                    this.reloadData = false;
+                    reloadData = false;
                     AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
                     taskRepository.close();
-                }, throwable -> this.reloadData = false);
+                }, throwable -> reloadData = false));
+
     }
 
 
