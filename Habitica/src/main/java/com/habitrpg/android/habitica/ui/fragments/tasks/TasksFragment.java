@@ -438,6 +438,9 @@ public class TasksFragment extends BaseMainFragment {
 
     @Override
     public void onDestroyView() {
+        if (bottomNavigation != null) {
+            bottomNavigation.removeOnTabSelectListener();
+        }
         super.onDestroyView();
     }
 
