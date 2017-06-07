@@ -814,7 +814,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> readNotificaiton(String notificationId) {
+    public Observable<List> readNotificaiton(String notificationId) {
         return apiService.readNotification(notificationId).compose(configureApiCallObserver());
     }
 

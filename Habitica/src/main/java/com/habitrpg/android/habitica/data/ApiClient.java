@@ -213,7 +213,7 @@ public interface ApiClient {
     Observable<Void> debugAddTenGems();
 
     // Notifications
-    Observable<Void> readNotificaiton(String notificationId);
+    Observable<List> readNotificaiton(String notificationId);
 
     ErrorResponse getErrorResponse(HttpException throwable);
 
