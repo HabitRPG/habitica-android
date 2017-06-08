@@ -258,7 +258,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RemoteConfigManager remoteConfigManager = RemoteConfigManager.getInstance(this);
+        RemoteConfigManager.loadConfig(this);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString("language", "en"));
@@ -302,8 +302,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
             avatar_with_bars.setPadding((int)px, getStatusBarHeight(), (int)px, 0);
         }
-
-        EventBus.getDefault().register(this);
     }
 
     public int getStatusBarHeight() {
@@ -705,12 +703,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     // region Events
 
-    @Override
-    public void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
-
     @Subscribe
     public void onEvent(ToggledInnStateEvent evt) {
         avatarInHeader.updateData(user);
@@ -1090,7 +1082,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void displayClassSelectionActivity(SelectClassEvent event) {
-        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(user, event))
+        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(this, user, event))
                 .subscribe(aVoid -> {
                 }, throwable -> {
                 });

@@ -130,9 +130,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public void onClick(View view) {
-            AlertDialog.Builder b = new AlertDialog.Builder(HabiticaApplication.currentActivity);
+            AlertDialog.Builder b = new AlertDialog.Builder(view.getContext());
 
-            View customView = LayoutInflater.from(itemView.getContext())
+            View customView = LayoutInflater.from(view.getContext())
                     .inflate(R.layout.dialog_achievement_details, null);
             ImageView achievementImage = (ImageView) customView.findViewById(R.id.achievement_image);
             achievementImage.setImageDrawable(draweeView.getDrawable());

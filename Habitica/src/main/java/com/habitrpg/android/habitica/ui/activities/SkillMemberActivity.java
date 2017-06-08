@@ -39,9 +39,6 @@ public class SkillMemberActivity extends BaseActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        EventBus.getDefault().register(this);
-
         loadMemberList();
     }
 

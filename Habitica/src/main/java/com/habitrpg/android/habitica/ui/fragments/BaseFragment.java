@@ -36,32 +36,7 @@ public abstract class BaseFragment extends DialogFragment {
     public String tutorialText;
     public Unbinder unbinder;
     protected boolean tutorialCanBeDeferred = true;
-    private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
-        @Override
-        public void onResultReceived(TutorialStep step) {
-            if (step != null && step.shouldDisplay()) {
-                DisplayTutorialEvent event = new DisplayTutorialEvent();
-                event.step = step;
-                if (tutorialText != null) {
-                    event.tutorialText = tutorialText;
-                } else {
-                    event.tutorialTexts = tutorialTexts;
-                }
-                event.canBeDeferred = tutorialCanBeDeferred;
-                EventBus.getDefault().post(event);
-            }
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<TutorialStep> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<TutorialStep> baseTransaction, TutorialStep step) {
-            return true;
-        }
-    };
+    private TutorialStepTransactionListener tutorialStepTransactionListener;
     public List<String> tutorialTexts;
 
     @Override
@@ -91,7 +66,7 @@ public abstract class BaseFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        tutorialStepTransactionListener = new TutorialStepTransactionListener();
         // Receive Events
         try {
             EventBus.getDefault().register(this);
@@ -123,7 +98,7 @@ public abstract class BaseFragment extends DialogFragment {
             unbinder.unbind();
             unbinder = null;
         }
-
+        tutorialStepTransactionListener = null;
         super.onDestroyView();
         RefWatcher refWatcher = HabiticaApplication.getInstance(getContext()).refWatcher;
         refWatcher.watch(this);
@@ -131,6 +106,33 @@ public abstract class BaseFragment extends DialogFragment {
 
     public String getDisplayedClassName() {
         return this.getClass().getSimpleName();
+    }
+
+    private class TutorialStepTransactionListener implements TransactionListener<TutorialStep> {
+        @Override
+        public void onResultReceived(TutorialStep step) {
+            if (step != null && step.shouldDisplay()) {
+                DisplayTutorialEvent event = new DisplayTutorialEvent();
+                event.step = step;
+                if (tutorialText != null) {
+                    event.tutorialText = tutorialText;
+                } else {
+                    event.tutorialTexts = tutorialTexts;
+                }
+                event.canBeDeferred = tutorialCanBeDeferred;
+                EventBus.getDefault().post(event);
+            }
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<TutorialStep> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<TutorialStep> baseTransaction, TutorialStep step) {
+            return true;
+        }
     }
 
 

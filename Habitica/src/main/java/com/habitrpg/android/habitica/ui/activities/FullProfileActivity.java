@@ -183,11 +183,11 @@ public class FullProfileActivity extends BaseActivity {
                             }, throwable -> {
                             });
 
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    UiUtils.dismissKeyboard(this);
                 })
                 .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
 
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    UiUtils.dismissKeyboard(this);
                 })
 
                 .create();

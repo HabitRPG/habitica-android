@@ -306,6 +306,5 @@ tasks.whenTaskAdded { task ->
 
 check { findbugs { skip true } }
 
-apply plugin: 'com.android.application' //or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.google.gms.google-services'
