@@ -11,13 +11,10 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TutorialRepository;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
-import com.habitrpg.android.habitica.models.TutorialStep;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.squareup.leakcanary.RefWatcher;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,49 +24,44 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.subscriptions.CompositeSubscription;
 
 public abstract class BaseFragment extends DialogFragment {
+
+    @Inject
+    protected
+    TutorialRepository tutorialRepository;
 
     public String tutorialStepIdentifier;
     public String tutorialText;
     public Unbinder unbinder;
     protected boolean tutorialCanBeDeferred = true;
-    private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
-        @Override
-        public void onResultReceived(TutorialStep step) {
-            if (step != null && step.shouldDisplay()) {
-                DisplayTutorialEvent event = new DisplayTutorialEvent();
-                event.step = step;
-                if (tutorialText != null) {
-                    event.tutorialText = tutorialText;
-                } else {
-                    event.tutorialTexts = tutorialTexts;
-                }
-                event.canBeDeferred = tutorialCanBeDeferred;
-                EventBus.getDefault().post(event);
-            }
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<TutorialStep> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<TutorialStep> baseTransaction, TutorialStep step) {
-            return true;
-        }
-    };
     public List<String> tutorialTexts;
+
+    protected CompositeSubscription compositeSubscription;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            if (this.tutorialStepIdentifier != null) {
-                new Select().from(TutorialStep.class).where(Condition.column("identifier").eq(tutorialStepIdentifier)).async().querySingle(tutorialStepTransactionListener);
+            if (this.tutorialStepIdentifier != null && tutorialRepository != null) {
+                tutorialRepository.getTutorialStep(this.tutorialStepIdentifier).first().subscribe(step -> {
+                    if (step != null && step.isValid() && step.isManaged() && step.shouldDisplay()) {
+                        DisplayTutorialEvent event = new DisplayTutorialEvent();
+                        event.step = step;
+                        if (tutorialText != null) {
+                            event.tutorialText = tutorialText;
+                        } else {
+                            event.tutorialTexts = tutorialTexts;
+                        }
+                        event.canBeDeferred = tutorialCanBeDeferred;
+                        EventBus.getDefault().post(event);
+                    }
+                }, RxErrorHandler.handleEmptyError());
             }
 
             String displayedClassName = this.getDisplayedClassName();
@@ -84,8 +76,9 @@ public abstract class BaseFragment extends DialogFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         injectFragment(HabiticaBaseApplication.getComponent());
+        compositeSubscription = new CompositeSubscription();
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -129,9 +122,15 @@ public abstract class BaseFragment extends DialogFragment {
         refWatcher.watch(this);
     }
 
+    @Override
+    public void onDestroy() {
+        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
+            compositeSubscription.unsubscribe();
+        }
+        super.onDestroy();
+    }
+
     public String getDisplayedClassName() {
         return this.getClass().getSimpleName();
     }
-
-
 }

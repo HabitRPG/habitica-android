@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="?attr/actionBarSize">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CardView.Default"
+                android:id="@+id/party_invitation_wrapper"
+                >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/CardContent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/invited_to_party" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="right">
+
+                        <Button
+                            android:id="@+id/party_invite_accept_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.accept"
+                            android:textColor="@color/btn_success"
+                            style="?android:buttonBarButtonStyle" />
+
+                        <Button
+                            android:id="@+id/party_invite_reject_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.reject"
+                            android:textColor="@color/btn_danger"
+                            style="?android:buttonBarButtonStyle" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/title_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Title1"
+                tools:text="Awesome Party"
+                android:gravity="center"
+                android:layout_margin="@dimen/spacing_large" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:showDividers="beginning|end|middle"
+                android:divider="@drawable/vertical_divider">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/SegmentView">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quest"
+                        style="@style/SegmentTitle"/>
+                    <Button
+                        android:id="@+id/new_quest_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/start_quest"
+                        style="@style/HabiticaButton.Gray"/>
+                    <LinearLayout
+                        android:id="@+id/quest_detail_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/layout_rounded_bg_gray_700"
+                        android:padding="@dimen/spacing_medium"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/spacing_medium">
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/quest_scroll_image_view"
+                            android:layout_width="@dimen/gear_image_size"
+                            android:layout_height="@dimen/gear_image_size" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/spacing_medium">
+                            <TextView
+                                android:id="@+id/quest_title_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="The Wail of the Whale"
+                                />
+                            <TextView
+                                android:id="@+id/quest_participation_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="3 Participants"
+                                android:textColor="@color/gray_300"/>
+                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_keyboard_arrow_right_gray_24dp"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/quest_image_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/layout_rounded_bg_gray_700"
+                        android:padding="@dimen/spacing_medium"
+                        android:layout_marginBottom="@dimen/spacing_medium">
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/quest_image_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/quest_image_height"
+                            android:scaleType="fitCenter"/>
+                    </LinearLayout>
+                    <com.habitrpg.android.habitica.ui.views.social.QuestProgressView
+                        android:id="@+id/quest_progress_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:id="@+id/quest_participant_response_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/quest_accept_button"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.accept"
+                            style="@style/HabiticaButton.Green"
+                            android:layout_marginRight="16dp" />
+
+                        <Button
+                            android:id="@+id/quest_reject_button"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.reject"
+                            style="@style/HabiticaButton.Red"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/quest_leader_response_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/quest_begin_button"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.begin"
+                            style="@style/HabiticaButton.Yellow"
+                            android:layout_marginRight="16dp" />
+
+                        <Button
+                            android:id="@+id/quest_cancel_button"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.cancel"
+                            style="@style/HabiticaButton.Red" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/SegmentView">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/party_description"
+                        style="@style/SegmentTitle"/>
+                    <TextView
+                        android:id="@+id/description_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="This is our super awesome party!"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/leave_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_large"
+                style="@style/HabiticaButton.Red"
+                android:text="@string/leave_party"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

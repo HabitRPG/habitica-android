@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,13 +9,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AvatarOverviewFragment extends BaseMainFragment implements AdapterView.OnItemSelectedListener {
+
+    @Inject
+    UserRepository userRepository;
 
     FragmentAvatarOverviewBinding viewBinding;
 
@@ -63,7 +66,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
         if (apiClient != null) {
             apiClient.getContent()
-                    .subscribe(contentResult -> {}, throwable -> {});
+                    .subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -101,6 +104,12 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     }
 
     @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
@@ -115,7 +124,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     }
 
     @Override
-    public void updateUserData(HabitRPGUser user) {
+    public void updateUserData(User user) {
         super.updateUserData(user);
         if (user != null && viewBinding != null) {
             viewBinding.setPreferences(user.getPreferences());
@@ -141,10 +150,8 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         }
 
         if (this.user != null && !this.user.getPreferences().getSize().equals(newSize)) {
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.size", newSize);
-            apiClient.updateUser(updateData)
-                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
+            userRepository.updateUser(user, "preferences.size", newSize)
+                    .subscribe(user1 -> {}, throwable -> {
                     });
         }
     }
@@ -156,6 +163,10 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_avatar);
+        if (isAdded()) {
+            return getString(R.string.sidebar_avatar);
+        } else {
+            return "";
+        }
     }
 }

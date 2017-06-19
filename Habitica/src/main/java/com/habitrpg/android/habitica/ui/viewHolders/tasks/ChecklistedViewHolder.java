@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
-import net.pherth.android.emoji_library.EmojiTextView;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +13,16 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+
+import net.pherth.android.emoji_library.EmojiTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -139,7 +139,7 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (buttonView == checkbox) {
+        if (buttonView.equals(checkbox)) {
             if (isChecked != task.getCompleted()) {
                 TaskCheckedCommand event = new TaskCheckedCommand();
                 event.Task = task;
@@ -148,12 +148,10 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                 // it needs to be changed after the event is send -> to the server
                 // maybe a refactor is needed here
                 EventBus.getDefault().post(event);
-                task.completed = event.completed;
-                task.save();
             }
         } else {
             View v = (View) buttonView.getParent();
-            while (v.getParent() != this.checklistView) {
+            while (v.getParent().equals(this.checklistView)) {
                 v = (View) v.getParent();
             }
             Integer position = ((ViewGroup) v.getParent()).indexOfChild(v);

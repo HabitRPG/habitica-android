@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -29,16 +30,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.underscore.$;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,6 +54,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -100,6 +105,13 @@ public class CreateChallengeActivity extends BaseActivity {
 
     @Inject
     ChallengeRepository challengeRepository;
+    @Inject
+    SocialRepository socialRepository;
+    @Inject
+    UserRepository userRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     private ChallengeTasksRecyclerViewAdapter challengeTasks;
 
@@ -116,6 +128,14 @@ public class CreateChallengeActivity extends BaseActivity {
     Task addDaily;
     Task addTodo;
     Task addReward;
+    @Nullable
+    private User user;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        userRepository.getUser(userId).subscribe(user1 -> this.user = user1, RxErrorHandler.handleEmptyError());
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -233,26 +253,10 @@ public class CreateChallengeActivity extends BaseActivity {
 
     @Override
     public void onDestroy() {
+        socialRepository.close();
+        challengeRepository.close();
         EventBus.getDefault().unregister(this);
         super.onDestroy();
-    }
-
-    @Subscribe
-    public void onEvent(DeleteTaskCommand deleteTask) {
-        String taskIdToDelete = deleteTask.TaskIdToDelete;
-        challengeTasks.removeTask(taskIdToDelete);
-
-        if (editMode) {
-            if (addedTasks.containsKey(taskIdToDelete)) {
-                addedTasks.remove(taskIdToDelete);
-            } else {
-                removedTasks.put(taskIdToDelete, null);
-
-                if (updatedTasks.containsKey(taskIdToDelete)) {
-                    updatedTasks.remove(taskIdToDelete);
-                }
-            }
-        }
     }
 
     @Subscribe
@@ -305,7 +309,10 @@ public class CreateChallengeActivity extends BaseActivity {
         // 0 is Tavern
         int selectedLocation = challengeLocationSpinner.getSelectedItemPosition();
 
-        double gemCount = HabiticaApplication.User.getGemCount();
+        double gemCount = 0;
+        if (user != null) {
+            gemCount = user.getGemCount();
+        }
 
         if (selectedLocation == 0 && currentVal == 0) {
             createChallengeGemError.setVisibility(View.VISIBLE);
@@ -341,15 +348,17 @@ public class CreateChallengeActivity extends BaseActivity {
 
         locationAdapter = new GroupArrayAdapter(this);
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        challengeRepository.getLocalGroups().subscribe(groups -> {
+        socialRepository.getGroups("guild").subscribe(groups -> {
             Group tavern = new Group();
             tavern.id = "00000000-0000-4000-A000-000000000000";
             tavern.name = getString(R.string.sidebar_tavern);
 
             locationAdapter.add(tavern);
 
-            groups.forEach(group -> locationAdapter.add(group));
-        }, Throwable::printStackTrace);
+            for (Group group : groups) {
+                locationAdapter.add(group);
+            }
+        }, RxErrorHandler.handleEmptyError());
 
         challengeLocationSpinner.setAdapter(locationAdapter);
         challengeLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -427,12 +436,12 @@ public class CreateChallengeActivity extends BaseActivity {
             createChallengeTitle.setText(challenge.name);
             createChallengeDescription.setText(challenge.description);
             createChallengeTag.setText(challenge.shortName);
-            createChallengePrize.setText(challenge.prize + "");
+            createChallengePrize.setText(String.valueOf(challenge.prize));
 
             for (int i = 0; i < locationAdapter.getCount(); i++) {
                 Group group = locationAdapter.getItem(i);
 
-                if (group.id == challenge.groupId) {
+                if (group != null && challenge.groupId.equals(group.id)) {
                     challengeLocationSpinner.setSelection(i);
                     break;
                 }
@@ -463,10 +472,10 @@ public class CreateChallengeActivity extends BaseActivity {
         bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
         bundle.putBoolean(TaskFormActivity.SHOW_CHECKLIST, false);
 
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
-            String allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        if (user != null && user.getPreferences() != null) {
+            String allocationMode = user.getPreferences().getAllocationMode();
 
-            bundle.putString(TaskFormActivity.USER_ID_KEY, HabiticaApplication.User.getId());
+            bundle.putString(TaskFormActivity.USER_ID_KEY, user.getId());
             bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
         }
 
@@ -559,7 +568,7 @@ public class CreateChallengeActivity extends BaseActivity {
     }
 
     private class GroupArrayAdapter extends ArrayAdapter<Group> {
-        public GroupArrayAdapter(@NonNull Context context) {
+        GroupArrayAdapter(@NonNull Context context) {
             super(context, android.R.layout.simple_spinner_item);
         }
 

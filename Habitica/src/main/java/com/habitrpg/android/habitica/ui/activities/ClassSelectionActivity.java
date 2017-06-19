@@ -1,20 +1,21 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.models.user.Gear;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Hair;
-import com.habitrpg.android.habitica.models.user.Items;
-import com.habitrpg.android.habitica.models.user.Outfit;
-import com.habitrpg.android.habitica.models.user.Preferences;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.models.user.Gear;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.user.Hair;
+import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Preferences;
+import com.habitrpg.android.habitica.ui.AvatarView;
 
 import javax.inject.Inject;
 
@@ -22,7 +23,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-public class ClassSelectionActivity extends BaseActivity implements Action1<HabitRPGUser> {
+public class ClassSelectionActivity extends BaseActivity implements Action1<User> {
 
     String currentClass;
     Boolean isInitialSelection;
@@ -39,7 +40,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     AvatarView warriorAvatarView;
 
     @Inject
-    ApiClient apiClient;
+    UserRepository userRepository;
 
     ProgressDialog progressDialog;
 
@@ -75,14 +76,14 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         healerOutfit.setHead("head_healer_5");
         healerOutfit.setShield("shield_healer_5");
         healerOutfit.setWeapon("weapon_healer_6");
-        HabitRPGUser healer = this.makeUser(preferences, healerOutfit);
+        User healer = this.makeUser(preferences, healerOutfit);
         healerAvatarView.setUser(healer);
 
         Outfit mageOutfit = new Outfit();
         mageOutfit.setArmor("armor_wizard_5");
         mageOutfit.setHead("head_wizard_5");
         mageOutfit.setWeapon("weapon_wizard_6");
-        HabitRPGUser mage = this.makeUser(preferences, mageOutfit);
+        User mage = this.makeUser(preferences, mageOutfit);
         mageAvatarView.setUser(mage);
 
         Outfit rogueOutfit = new Outfit();
@@ -90,7 +91,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         rogueOutfit.setHead("head_rogue_5");
         rogueOutfit.setShield("shield_rogue_6");
         rogueOutfit.setWeapon("weapon_rogue_6");
-        HabitRPGUser rogue = this.makeUser(preferences, rogueOutfit);
+        User rogue = this.makeUser(preferences, rogueOutfit);
         rogueAvatarView.setUser(rogue);
 
         Outfit warriorOutfit = new Outfit();
@@ -98,14 +99,12 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         warriorOutfit.setHead("head_warrior_5");
         warriorOutfit.setShield("shield_warrior_5");
         warriorOutfit.setWeapon("weapon_warrior_6");
-        HabitRPGUser warrior = this.makeUser(preferences, warriorOutfit);
+        User warrior = this.makeUser(preferences, warriorOutfit);
         warriorAvatarView.setUser(warrior);
 
         if (!isInitialSelection) {
-            apiClient.changeClass()
-                    .subscribe(user -> {
-                        classWasUnset = true;
-                    }, throwable -> {
+            userRepository.changeClass()
+                    .subscribe(user -> classWasUnset = true, throwable -> {
                     });
         }
     }
@@ -115,8 +114,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         component.inject(this);
     }
 
-    public HabitRPGUser makeUser(Preferences preferences, Outfit outfit) {
-        HabitRPGUser user = new HabitRPGUser();
+    public User makeUser(Preferences preferences, Outfit outfit) {
+        User user = new User();
         user.setPreferences(preferences);
         user.setItems(new Items());
         user.getItems().setGear(new Gear());
@@ -203,19 +202,13 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     private void optOutOfClasses() {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiClient.disableClasses()
-
-                .subscribe(this, throwable -> {
-                });
+        userRepository.disableClasses().subscribe(this, throwable -> {});
     }
 
     private void selectClass(String selectedClass) {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiClient.changeClass(selectedClass)
-
-                .subscribe(this, throwable -> {
-                });
+        userRepository.changeClass(selectedClass).subscribe(this, throwable -> {});
     }
 
     private void displayProgressDialog() {
@@ -223,7 +216,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     }
 
     @Override
-    public void call(HabitRPGUser user) {
+    public void call(User user) {
         if (shouldFinish) {
             if (progressDialog != null) {
                 progressDialog.dismiss();

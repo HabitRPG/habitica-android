@@ -10,10 +10,10 @@ import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.helpers.SoundManager;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.user.SuppressedModals;
+import com.habitrpg.android.habitica.ui.AvatarView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -69,12 +69,10 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
             AlertDialog alert = new AlertDialog.Builder(requestValues.compatActivity)
                     .setTitle(R.string.levelup_header)
                     .setView(customView)
-                    .setPositiveButton(R.string.levelup_button, (dialog, which) -> {
-                        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null))
-                                .subscribe(aVoid -> {
-                                }, throwable -> {
-                                });
-                    })
+                    .setPositiveButton(R.string.levelup_button, (dialog, which) -> checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null))
+                            .subscribe(aVoid -> {
+                            }, throwable -> {
+                            }))
                     .setNeutralButton(R.string.share, (dialog, which) -> {
                         EventBus.getDefault().post(event);
                         dialog.dismiss();
@@ -91,14 +89,13 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
-        private HabitRPGUser user;
+        private User user;
         private int newLevel;
         private AppCompatActivity compatActivity;
 
-        public RequestValues(HabitRPGUser user, int newLevel, AppCompatActivity compatActivity) {
-
+        public RequestValues(User user, AppCompatActivity compatActivity) {
             this.user = user;
-            this.newLevel = newLevel;
+            this.newLevel = user.getStats().getLvl();
             this.compatActivity = compatActivity;
         }
     }

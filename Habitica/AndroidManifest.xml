@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="1892"
-    android:versionName="1.0.4"
+    android:versionCode="1894"
+    android:versionName="1.1"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
@@ -162,7 +162,7 @@
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activities.GemPurchaseActivity"
                   android:screenOrientation="portrait" />
-        <receiver  android:process=":remote" android:name=".NotificationPublisher" />
+        <receiver  android:process=":remote" android:name=".receivers.NotificationPublisher" />
 
         <receiver
                 android:process=":remote"

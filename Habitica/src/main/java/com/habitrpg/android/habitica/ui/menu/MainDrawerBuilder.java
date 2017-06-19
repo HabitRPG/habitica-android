@@ -1,5 +1,10 @@
 package com.habitrpg.android.habitica.ui.menu;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.widget.Toolbar;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
@@ -25,11 +30,6 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.widget.Toolbar;
 
 import java.util.Locale;
 

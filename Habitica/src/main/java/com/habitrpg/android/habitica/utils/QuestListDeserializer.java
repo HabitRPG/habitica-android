@@ -5,26 +5,25 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
-import com.raizlabs.android.dbflow.runtime.TransactionManager;
-import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
-import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import io.realm.Realm;
+import io.realm.RealmList;
 
 public class QuestListDeserializer implements JsonDeserializer<List<QuestContent>> {
     @Override
     public List<QuestContent> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<QuestContent> vals = new ArrayList<>();
+        RealmList<QuestContent> vals = new RealmList<>();
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<QuestContent> existingItems = new Select().from(QuestContent.class).queryList();
+            Realm realm = Realm.getDefaultInstance();
+            List<QuestContent> existingItems = realm.copyFromRealm(realm.where(QuestContent.class).findAll());
+            realm.close();
 
             for (QuestContent item : existingItems) {
                 if (object.has(item.getKey())) {
@@ -38,6 +37,9 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
                         item.setPrevious(parsedItem.getPrevious());
                         item.setCanBuy(parsedItem.isCanBuy());
                         item.setBoss(parsedItem.getBoss());
+                        if (item.getBoss() != null) {
+                            item.getBoss().key = item.getKey();
+                        }
                         item.setCategory(parsedItem.getCategory());
                         item.setCollect(parsedItem.getCollect());
                         item.setLvl(parsedItem.getLvl());
@@ -64,10 +66,9 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
                 }
                 vals.add(item);
             }
-            TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((QuestContent) context.deserialize(item.getAsJsonObject(), QuestContent.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), QuestContent.class));
             }
         }
 

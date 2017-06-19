@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
-import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,19 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
-import rx.subjects.PublishSubject;
+import org.greenrobot.eventbus.Subscribe;
+
+import javax.inject.Inject;
 
 public class ChallengesOverviewFragment extends BaseMainFragment {
 
+    @Inject
+    ChallengeRepository challengeRepository;
+
     public ViewPager viewPager;
     public FragmentStatePagerAdapter statePagerAdapter;
-    int currentPage;
-    private Stack<Integer> pageHistory;
-    private boolean saveToHistory;
-    private PublishSubject<ArrayList<Challenge>> getUserChallengesObservable;
     private ChallengeListFragment userChallengesFragment;
     private ChallengeListFragment availableChallengesFragment;
 
@@ -48,33 +43,20 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
         setViewPagerAdapter();
 
-        getUserChallengesObservable = PublishSubject.create();
-
-        subscribeGetChallenges();
-
         userChallengesFragment = new ChallengeListFragment();
         userChallengesFragment.setUser(this.user);
-        userChallengesFragment.setRefreshingCallback(this::subscribeGetChallenges);
-        userChallengesFragment.setObservable(getUserChallengesObservable);
         userChallengesFragment.setViewUserChallengesOnly(true);
-        userChallengesFragment.setWithFilter(true);
 
         availableChallengesFragment = new ChallengeListFragment();
         availableChallengesFragment.setUser(this.user);
-        availableChallengesFragment.setRefreshingCallback(this::subscribeGetChallenges);
-        availableChallengesFragment.setObservable(getUserChallengesObservable);
         availableChallengesFragment.setViewUserChallengesOnly(false);
-
-        pageHistory = new Stack<>();
-
         return v;
     }
 
-    private void subscribeGetChallenges() {
-        this.apiClient.getUserChallenges()
-
-                .subscribe(challenges -> getUserChallengesObservable.onNext(challenges),
-                        e -> getUserChallengesObservable.onError(e));
+    @Override
+    public void onDestroy() {
+        challengeRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -118,25 +100,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             }
         };
         viewPager.setAdapter(statePagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int newPageId) {
-                if (saveToHistory)
-                    pageHistory.push(currentPage);
-
-                currentPage = newPageId;
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-        saveToHistory = true;
 
         if (tabLayout != null && viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
@@ -145,17 +108,10 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(ShowChallengeDetailDialogCommand cmd) {
-        Challenge challenge = new Select().from(Challenge.class).where(Condition.column("id").is(cmd.challengeId)).querySingle();
-
-        ChallengeDetailDialogHolder.showDialog(getActivity(), apiClient, user, challenge, challenge1 ->  {
-            // challenge joined
-            userChallengesFragment.addItem(challenge1);
-            availableChallengesFragment.updateItem(challenge1);
-        }, challenge1 -> {
+        challengeRepository.getChallenge(cmd.challengeId).first().subscribe(challenge -> ChallengeDetailDialogHolder.showDialog(getActivity(), challengeRepository, challenge,
+        challenge1 -> {
             // challenge left
-            userChallengesFragment.onRefresh();
-            availableChallengesFragment.onRefresh();
-        });
+        }), RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
@@ -165,20 +121,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
         Intent intent = new Intent(getActivity(), ChallengeDetailActivity.class);
         intent.putExtras(bundle);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         getActivity().startActivity(intent);
-    }
-
-    public boolean onHandleBackPressed() {
-        if (!pageHistory.empty()) {
-            saveToHistory = false;
-            viewPager.setCurrentItem(pageHistory.pop());
-            saveToHistory = true;
-
-            return true;
-        }
-
-        return false;
     }
 
     @Override

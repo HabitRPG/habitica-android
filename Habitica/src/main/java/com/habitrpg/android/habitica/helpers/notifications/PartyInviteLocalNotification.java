@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.helpers.notifications;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 
 /**
  * Created by keithholliday on 6/28/16.

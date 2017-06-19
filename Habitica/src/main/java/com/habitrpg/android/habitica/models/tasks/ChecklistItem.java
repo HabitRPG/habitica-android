@@ -1,37 +1,18 @@
 package com.habitrpg.android.habitica.models.tasks;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.habitrpg.android.habitica.database.ExcludeCheckListItem;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by viirus on 06/07/15.
  */
-@Table(databaseName = HabitDatabase.NAME)
-public class ChecklistItem extends BaseModel {
+public class ChecklistItem extends RealmObject {
 
-    @Column
-    @ForeignKey(
-            references = {@ForeignKeyReference(columnName = "task_id",
-                    columnType = String.class,
-                    foreignColumnName = "id")},
-            saveForeignKeyModel = false)
-    @ExcludeCheckListItem
-    ForeignKeyContainer<Task> task;
-    @Column
+    Task task;
     @PrimaryKey
     private String id;
-    @Column
     private String text;
-    @Column
     private boolean completed;
-    @Column
     private int position;
 
     public ChecklistItem() {
@@ -91,24 +72,18 @@ public class ChecklistItem extends BaseModel {
     }
 
     public Task getTask() {
-        if (task != null) {
-            return task.toModel();
-        } else {
-            return null;
-        }
+        return task;
     }
 
     public void setTask(Task task) {
-        this.task = new ForeignKeyContainer<>(Task.class);
-        this.task.setModel(task);
-        this.task.put("id", task.id);
+        this.task = task;
     }
 
     @Override
-    public void save() {
-        if (this.getId() == null || this.getId().isEmpty()) {
-            return;
+    public boolean equals(Object obj) {
+        if (obj.getClass().equals(ChecklistItem.class) && this.id != null) {
+            return this.id.equals(((ChecklistItem)obj).id);
         }
-        super.save();
+        return super.equals(obj);
     }
 }

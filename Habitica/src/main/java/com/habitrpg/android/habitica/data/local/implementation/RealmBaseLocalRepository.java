@@ -1,0 +1,48 @@
+package com.habitrpg.android.habitica.data.local.implementation;
+
+import com.habitrpg.android.habitica.data.local.BaseLocalRepository;
+
+import java.util.List;
+
+import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
+import io.realm.RealmObject;
+
+abstract class RealmBaseLocalRepository implements BaseLocalRepository {
+
+    Realm realm;
+
+    RealmBaseLocalRepository(Realm realm) {
+        this.realm = realm;
+    }
+
+    @Override
+    public void close() {
+        realm.close();
+    }
+
+    @Override
+    public void executeTransaction(Realm.Transaction transaction) {
+        realm.executeTransaction(transaction);
+    }
+
+    @Override
+    public <T extends RealmObject> T getUnmanagedCopy(T object) {
+        return realm.copyFromRealm(object);
+    }
+
+    @Override
+    public <T extends RealmObject> List<T> getUnmanagedCopy(OrderedRealmCollection<T> list) {
+        return realm.copyFromRealm(list);
+    }
+
+    @Override
+    public <T extends RealmObject> void save(T object) {
+        realm.executeTransactionAsync(realm1 -> realm1.insertOrUpdate(object));
+    }
+
+    @Override
+    public <T extends RealmObject> void save(List<T> objects) {
+        realm.executeTransactionAsync(realm1 -> realm1.insertOrUpdate(objects));
+    }
+}

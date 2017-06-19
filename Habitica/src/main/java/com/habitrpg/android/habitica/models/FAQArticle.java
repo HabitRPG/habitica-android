@@ -1,22 +1,13 @@
 package com.habitrpg.android.habitica.models;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by viirus on 22/01/16.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class FAQArticle extends BaseModel {
+public class FAQArticle extends RealmObject {
 
     @PrimaryKey
-    @Column
     private Integer position;
 
-    @Column
     private String question, answer;
 
     public Integer getPosition() {

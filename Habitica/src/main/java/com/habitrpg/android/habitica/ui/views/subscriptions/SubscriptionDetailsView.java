@@ -1,10 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.subscriptions;
 
 
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

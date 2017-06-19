@@ -2,9 +2,7 @@ package com.habitrpg.android.habitica.helpers;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +10,6 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,33 +17,23 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import bolts.Bolts;
-
 /**
  * Created by keith holliday on 4/7/2017.
  */
 
 public class RemoteConfigManager {
 
-    private static RemoteConfigManager instance;
     private Context context;
-    private static Boolean enableRepeatbles = false;
+    private Boolean enableRepeatbles = false;
     private String REMOTE_STRING_KEY = "remote-string";
 
-    private RemoteConfigManager(Context context) {
+    public RemoteConfigManager(Context context) {
         this.context = context;
         loadFromPreferences();
         new DownloadFileFromURL().execute("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/config-android.json");
     }
 
-    public static RemoteConfigManager getInstance(Context context) {
-        if (instance == null) {
-            instance = new RemoteConfigManager(context);
-        }
-        return instance;
-    }
-
-    public static Boolean repeatablesAreEnabled () {
+    public Boolean repeatablesAreEnabled () {
         return enableRepeatbles;
     }
 
@@ -66,7 +53,7 @@ public class RemoteConfigManager {
         }
     }
 
-    class DownloadFileFromURL extends AsyncTask<String, String, String> {
+    private class DownloadFileFromURL extends AsyncTask<String, String, String> {
         private String filename = "config.json";
 
         @Override

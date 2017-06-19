@@ -1,20 +1,5 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.NotificationPublisher;
-import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
-import com.habitrpg.android.habitica.events.TaskDeleteEvent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.receivers.TaskReceiver;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -23,11 +8,25 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.preference.PreferenceManager;
 
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.receivers.NotificationPublisher;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
+import com.habitrpg.android.habitica.receivers.TaskReceiver;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -42,6 +41,11 @@ public class TaskAlarmManager {
     public static final String TASK_NAME_INTENT_KEY = "TASK_NAME";
     @Inject
     CrashlyticsProxy crashlyticsProxy;
+    @Inject
+    TaskRepository taskRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
     private Context context;
     private AlarmManager am;
 
@@ -111,24 +115,12 @@ public class TaskAlarmManager {
     }
 
     @Subscribe
-    public void onEvent(TaskSaveEvent event) {
-        Task task = event.task;
-        this.setAlarmsForTask(task);
-    }
-
-    @Subscribe
-    public void onEvent(TaskDeleteEvent event) {
-        Task task = event.task;
-        this.removeAlarmsForTask(task);
-    }
-
-    @Subscribe
     public void onEvent(ReminderDeleteEvent event) {
         RemindersItem remindersItem = event.reminder;
         this.removeAlarmForRemindersItem(remindersItem);
     }
 
-    public void setAlarmsForTask(Task task) {
+    void setAlarmsForTask(Task task) {
         List<RemindersItem> reminders = task.getReminders();
         for (RemindersItem reminder : reminders) {
             if (task.getType().equals(Task.TYPE_DAILY)) {
@@ -139,7 +131,7 @@ public class TaskAlarmManager {
         }
     }
 
-    public void removeAlarmsForTask(Task task) {
+    private void removeAlarmsForTask(Task task) {
         List<RemindersItem> reminders = task.getReminders();
         for (RemindersItem reminder : reminders) {
             this.removeAlarmForRemindersItem(reminder);
@@ -150,29 +142,17 @@ public class TaskAlarmManager {
     //We currently only use this function to schedule the next reminder for dailies
     //We may be able to use repeating alarms instead of this in the future
     public void addAlarmForTaskId(String taskId) {
-        List<Task> tasks = new Select()
-                .from(Task.class)
-                .where(Condition.column("id").eq(taskId))
-                .queryList();
-
-        if (tasks.size() == 0) return;
-        Task task = tasks.get(0);
-
-        if (!task.getType().equals(Task.TYPE_DAILY)) {
-            return;
-        }
-
-        this.setAlarmsForTask(task);
+        taskRepository.getTaskCopy(taskId)
+                .filter(task -> task.isValid() && task.isManaged() && Task.TYPE_DAILY.equals(task.type))
+                .first()
+                .subscribe(this::setAlarmsForTask, RxErrorHandler.handleEmptyError());
     }
 
     public void scheduleAllSavedAlarms() {
-        Observable.defer(() -> Observable.from(new Select()
-                .from(Task.class)
-                .queryList()))
-                .doOnNext(this::setAlarmsForTask)
-                .subscribeOn(Schedulers.io())
-                .subscribe(task -> {
-                }, crashlyticsProxy::logException);
+        taskRepository.getTaskCopies(userId)
+                .first()
+                .flatMap(Observable::from)
+                .subscribe(this::setAlarmsForTask, crashlyticsProxy::logException);
 
         scheduleDailyReminder(context);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -218,7 +198,7 @@ public class TaskAlarmManager {
 
         setAlarm(context, cal.getTimeInMillis(), sender);
 
-        remindersItem.save();
+        taskRepository.saveReminder(remindersItem);
     }
 
     private void removeAlarmForRemindersItem(RemindersItem remindersItem) {

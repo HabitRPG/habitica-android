@@ -9,14 +9,15 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
-
+import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.lang.reflect.Type;
 import java.util.List;
+
+import io.realm.RealmList;
 
 public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializer<Group> {
     @Override
@@ -47,13 +48,13 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
             group.type = obj.get("type").getAsString();
         }
         if (obj.has("chat")) {
-            group.chat = context.deserialize(obj.get("chat"), new TypeToken<List<ChatMessage>>() {
+            group.chat = context.deserialize(obj.get("chat"), new TypeToken<RealmList<ChatMessage>>() {
             }.getType());
         }
         if (obj.has("members")) {
             JsonArray memberList = obj.get("members").getAsJsonArray();
             if (memberList.size() > 0 && memberList.get(0).isJsonObject()) {
-                group.members = context.deserialize(memberList, new TypeToken<List<HabitRPGUser>>() {
+                group.members = context.deserialize(memberList, new TypeToken<List<User>>() {
                 }.getType());
             }
         }
@@ -72,6 +73,7 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
         if (obj.has("quest")) {
             group.quest = context.deserialize(obj.get("quest"), new TypeToken<Quest>() {
             }.getType());
+            group.quest.id = group.id;
         }
 
         return group;

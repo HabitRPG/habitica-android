@@ -1,34 +1,37 @@
 package com.habitrpg.android.habitica.models.social;
 
+import android.content.res.Resources;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
-
-import android.content.res.Resources;
 
 import java.util.Date;
 import java.util.HashMap;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by Negue on 22.08.2015.
- */
-public class ChatMessage {
+public class ChatMessage extends RealmObject {
 
+    @PrimaryKey
     public String id;
 
     public String text;
 
+    @Ignore
     public CharSequence parsedText;
 
     public Long timestamp;
 
+    @Ignore
     public HashMap<String, Boolean> likes;
 
     public int flagCount;
 
     public String uuid;
 
-    public Contributor contributor;
+    public ContributorInfo contributor;
 
     public Backer backer;
 
@@ -36,13 +39,15 @@ public class ChatMessage {
 
     public String sent;
 
+    public String groupId;
+
     public int getContributorColor() {
         int rColor = android.R.color.black;
 
 
         if (contributor != null) {
-            if (ContributorInfo.CONTRIBUTOR_COLOR_DICT.containsKey(contributor.level)) {
-                rColor = ContributorInfo.CONTRIBUTOR_COLOR_DICT.get(contributor.level);
+            if (ContributorInfo.CONTRIBUTOR_COLOR_DICT.containsKey(contributor.getLevel())) {
+                rColor = ContributorInfo.CONTRIBUTOR_COLOR_DICT.get(contributor.getLevel());
             }
         }
 

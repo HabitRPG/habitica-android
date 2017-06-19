@@ -1,53 +1,38 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.models.TutorialStep;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.OneToMany;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.List;
 
-/**
- * Created by viirus on 22/01/16.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class Flags extends BaseModel {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-    @Column
+public class Flags extends RealmObject {
+
     @PrimaryKey
-    @NotNull
-    String user_id;
-    List<TutorialStep> tutorial;
-    @Column
-    private boolean showTour, dropsEnabled, itemsEnabled, newStuff, classSelected, rebirthEnabled, welcomed, armoireEnabled, armoireOpened, armoireEmpty;
+    private String userId;
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tutorial")
+    User user;
+    RealmList<TutorialStep> tutorial;
+    private boolean showTour;
+    private boolean dropsEnabled;
+    private boolean itemsEnabled;
+    private boolean newStuff;
+    private boolean classSelected;
+    private boolean rebirthEnabled;
+    private boolean welcomed;
+    private boolean armoireEnabled;
+    private boolean armoireOpened;
+    private boolean armoireEmpty;
+    private boolean communityGuidelinesAccepted;
+
     public List<TutorialStep> getTutorial() {
-        if (tutorial == null) {
-            tutorial = new Select()
-                    .from(TutorialStep.class)
-                    .where(Condition.column("user_id").eq(this.user_id))
-                    .queryList();
-        }
         return tutorial;
     }
 
-    public void setTutorial(List<TutorialStep> tutorial) {
+    public void setTutorial(RealmList<TutorialStep> tutorial) {
         this.tutorial = tutorial;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 
     public boolean getShowTour() {
@@ -130,18 +115,19 @@ public class Flags extends BaseModel {
         this.armoireEmpty = armoireEmpty;
     }
 
-    @Override
-    public void save() {
-
-        if (user_id == null) {
-            return;
-        }
-
-        for (TutorialStep step : this.getTutorial()) {
-            step.user_id = user_id;
-        }
-
-        super.save();
+    public String getUserId() {
+        return userId;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public boolean isCommunityGuidelinesAccepted() {
+        return communityGuidelinesAccepted;
+    }
+
+    public void setCommunityGuidelinesAccepted(boolean communityGuidelinesAccepted) {
+        this.communityGuidelinesAccepted = communityGuidelinesAccepted;
+    }
 }

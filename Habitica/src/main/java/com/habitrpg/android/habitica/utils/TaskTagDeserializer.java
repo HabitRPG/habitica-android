@@ -4,53 +4,55 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-
 import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskTagDeserializer implements JsonDeserializer<List<TaskTag>> {
+import io.realm.Realm;
+import io.realm.RealmList;
+
+public class TaskTagDeserializer implements JsonDeserializer<List<Tag>> {
     @Override
-    public List<TaskTag> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<TaskTag> taskTags = new ArrayList<>();
-        List<Tag> allTags;
+    public List<Tag> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        RealmList<Tag> tags = new RealmList<>();
+        List<Tag> databaseTags;
         try {
-            allTags = new Select()
-                    .from(Tag.class)
-                    .queryList();
+            Realm realm = Realm.getDefaultInstance();
+            databaseTags = realm.copyFromRealm(realm.where(Tag.class).findAll());
+            realm.close();
         } catch (RuntimeException e) {
             //Tests don't have a database
-            allTags = new ArrayList<>();
+            databaseTags = new ArrayList<>();
         }
 
         if (json.isJsonArray()) {
             for (JsonElement tagElement : json.getAsJsonArray()) {
-                String tagId = tagElement.getAsString();
-                TaskTag taskTag = new TaskTag();
-                for (Tag tag : allTags) {
-                    if (tag.getId().equals(tagId)) {
-                        taskTag.setTag(tag);
+                if (tagElement.isJsonObject()) {
+                    tags.add(context.deserialize(tagElement, Tag.class));
+                } else {
+                    String tagId = tagElement.getAsString();
+                    for (Tag tag : databaseTags) {
+                        if (tag.getId().equals(tagId)) {
+                            if (!alreadyContainsTag(tags, tagId)) {
+                                tags.add(tag);
+                            }
 
-                        if (!alreadyContainsTag(taskTags, tagId)) {
-                            taskTags.add(taskTag);
+                            break;
                         }
-
-                        break;
                     }
                 }
+
             }
         }
 
-        return taskTags;
+        return tags;
     }
 
-    private boolean alreadyContainsTag(List<TaskTag> list, String idToCheck) {
-        for (TaskTag t : list) {
-            if (t.getTag().getId().equals(idToCheck)) {
+    private boolean alreadyContainsTag(List<Tag> list, String idToCheck) {
+        for (Tag t : list) {
+            if (t.getId().equals(idToCheck)) {
                 return true;
             }
         }

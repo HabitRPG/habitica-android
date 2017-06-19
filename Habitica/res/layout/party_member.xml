@@ -80,9 +80,14 @@
             </LinearLayout>
 
 
-            <include
+            <com.habitrpg.android.habitica.ui.views.ValueBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/hpBar"
-                layout="@layout/value_bar" />
+                app:barForegroundColor="@color/hpColor"
+                app:description="@string/HP_default"
+                app:barIconDrawable="@drawable/ic_header_heart"
+                app:lightBackground="true"/>
         </LinearLayout>
 
     </LinearLayout>

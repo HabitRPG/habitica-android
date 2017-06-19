@@ -5,10 +5,12 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.android.databinding:dataBinder:1.0-rc4'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.google.gms:google-services:3.0.0'
+
+        classpath "io.realm:realm-gradle-plugin:3.2.1"
     }
 }
 

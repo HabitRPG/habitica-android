@@ -1,11 +1,8 @@
 package com.habitrpg.android.habitica.ui.views.login;
 
 
-import com.habitrpg.android.habitica.R;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -13,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.habitrpg.android.habitica.R;
 
 import java.util.List;
 

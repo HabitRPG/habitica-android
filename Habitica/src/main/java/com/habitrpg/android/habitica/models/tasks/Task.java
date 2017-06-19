@@ -1,29 +1,13 @@
 package com.habitrpg.android.habitica.models.tasks;
 
-import com.google.gson.annotations.SerializedName;
-
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.TaskDeleteEvent;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.ModelContainer;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.OneToMany;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.raizlabs.android.dbflow.converter.TypeConverter;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+
+import com.google.gson.annotations.SerializedName;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,12 +16,12 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by viirus on 10/08/15.
- */
-@ModelContainer
-@Table(databaseName = HabitDatabase.NAME)
-public class Task extends BaseModel implements Parcelable {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
+public class Task extends RealmObject implements Parcelable {
     public static final String TYPE_HABIT = "habit";
     public static final String TYPE_TODO = "todo";
     public static final String TYPE_DAILY = "daily";
@@ -55,73 +39,54 @@ public class Task extends BaseModel implements Parcelable {
     public static final String ATTRIBUTE_CONSTITUTION = "con";
     public static final String ATTRIBUTE_INTELLIGENCE = "int";
     public static final String ATTRIBUTE_PERCEPTION = "per";
-    @Column
-    @SerializedName("userId")
-    public String user_id;
-    @Column
-    public Float priority;
-    @Column
+
+
+    public String userId;
+    public float priority;
     public String text, notes, attribute, type;
-    @Column
     public double value;
-    public List<TaskTag> tags;
-    @Column
+    public RealmList<Tag> tags;
     public Date dateCreated;
-    @Column
     public int position;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "group_id",
-            columnType = String.class,
-            foreignColumnName = "task_id")})
     public TaskGroupPlan group;
     //Habits
-    @Column
     public Boolean up, down;
     //todos/dailies
-    @Column
     public boolean completed;
-    public List<ChecklistItem> checklist;
-    public List<RemindersItem> reminders;
+    public RealmList<ChecklistItem> checklist;
+    public RealmList<RemindersItem> reminders;
     //dailies
-    @Column
     public String frequency;
-    @Column
     public Integer everyX, streak;
-    @Column
-    public
-    Date startDate;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "days_id",
-            columnType = String.class,
-            foreignColumnName = "task_id")})
+    public Date startDate;
     public Days repeat;
     //todos
-    @Column
     @SerializedName("date")
     public Date duedate;
     //TODO: private String lastCompleted;
     // used for buyable items
     public String specialTag;
+    @Ignore
     public CharSequence parsedText;
+    @Ignore
     public CharSequence parsedNotes;
-    @Column
     @PrimaryKey
-    @NotNull
     @SerializedName("_id")
     String id;
 
-    @Column
     public Boolean isDue;
-    @Column
+
+    // These do need to be local columns because all logic is stored in
     public Date nextDue;
 
     @Column
     public String daysOfMonthString;
-    @Column
-    public String weeksOfMonthString;
+    // is due for now
+    @Ignore
+    public List<Integer> daysOfMonth  = new ArrayList<>();
+    @Ignore
+    public List<Integer> weeksOfMonth  = new ArrayList<>();
 
-    public List<Integer> daysOfMonth;
-    public List<Integer> weeksOfMonth;
 
     /**
      * @return the id
@@ -215,29 +180,19 @@ public class Task extends BaseModel implements Parcelable {
         this.type = type;
     }
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
-    public List<TaskTag> getTags() {
-        if (tags == null) {
-            tags = new Select()
-                    .from(TaskTag.class)
-                    .where(Condition.column("task_id").eq(this.id))
-                    .queryList();
-        }
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<TaskTag> tags) {
-        for (TaskTag tag : tags) {
-            tag.setTask(this);
-        }
+    public void setTags(RealmList<Tag> tags) {
         this.tags = tags;
     }
 
-    public boolean containsAnyTagId(ArrayList<String> tagIdList) {
+    public boolean containsAnyTagId(List<String> tagIdList) {
         getTags();
 
-        for (TaskTag t : tags) {
-            if (tagIdList.contains(t.getTag().getId())) {
+        for (Tag t : tags) {
+            if (tagIdList.contains(t.getId())) {
                 return true;
             }
         }
@@ -248,10 +203,10 @@ public class Task extends BaseModel implements Parcelable {
     public boolean containsAllTagIds(List<String> tagIdList) {
         getTags();
 
-        ArrayList<String> allTagIds = new ArrayList<String>();
+        List<String> allTagIds = new ArrayList<>();
 
-        for (TaskTag t : tags) {
-            allTagIds.add(t.getTag().getId());
+        for (Tag t : tags) {
+            allTagIds.add(t.getId());
         }
 
         return allTagIds.containsAll(tagIdList);
@@ -304,40 +259,21 @@ public class Task extends BaseModel implements Parcelable {
     }
 
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "checklist")
     public List<ChecklistItem> getChecklist() {
-        if (this.checklist == null) {
-            this.checklist = new Select()
-                    .from(ChecklistItem.class)
-                    .where(Condition.column("task_id").eq(this.id))
-                    .orderBy(true, "position")
-                    .queryList();
-        }
         return this.checklist;
     }
 
-    public void setChecklist(List<ChecklistItem> checklist) {
-        for (ChecklistItem checklistItem : checklist) {
-            checklistItem.setTask(this);
-        }
+    public void setChecklist(RealmList<ChecklistItem> checklist) {
         this.checklist = checklist;
     }
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "reminders")
     public List<RemindersItem> getReminders() {
-        if (this.reminders == null) {
-            this.reminders = new Select()
-                    .from(RemindersItem.class)
-                    .where(Condition.column("task_id").eq(this.id))
-                    .orderBy(true, "time")
-                    .queryList();
-        }
         return this.reminders;
     }
 
-    public void setReminders(List<RemindersItem> reminders) {
-        for (RemindersItem remindersItem : reminders) {
-            remindersItem.setTask(this);
+    public void setReminders(RealmList<RemindersItem> reminders) {
+        for (RemindersItem reminder : reminders) {
+            reminder.setTask(this);
         }
         this.reminders = reminders;
     }
@@ -681,14 +617,6 @@ public class Task extends BaseModel implements Parcelable {
         return newTime.getTime();
     }
 
-    @Override
-    public void delete() {
-        TaskDeleteEvent event = new TaskDeleteEvent();
-        event.task = this;
-        EventBus.getDefault().post(event);
-        super.delete();
-    }
-
     public boolean isGroupTask() {
         if (group != null) {
             if (group.approvalRequired) {
@@ -721,13 +649,22 @@ public class Task extends BaseModel implements Parcelable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (Task.class.isAssignableFrom(obj.getClass())) {
+            Task otherTask = (Task) obj;
+            return this.id.equals(otherTask.getId());
+        }
+        return super.equals(obj);
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.user_id);
+        dest.writeString(this.userId);
         dest.writeValue(this.priority);
         dest.writeString(this.text);
         dest.writeString(this.notes);
@@ -756,14 +693,14 @@ public class Task extends BaseModel implements Parcelable {
     }
 
     protected Task(Parcel in) {
-        this.user_id = in.readString();
+        this.userId = in.readString();
         this.priority = (Float) in.readValue(Float.class.getClassLoader());
         this.text = in.readString();
         this.notes = in.readString();
         this.attribute = in.readString();
         this.type = in.readString();
         this.value = in.readDouble();
-        this.tags = new ArrayList<TaskTag>();
+        this.tags = new RealmList<Tag>();
         in.readList(this.tags, TaskTag.class.getClassLoader());
         long tmpDateCreated = in.readLong();
         this.dateCreated = tmpDateCreated == -1 ? null : new Date(tmpDateCreated);
@@ -771,9 +708,9 @@ public class Task extends BaseModel implements Parcelable {
         this.up = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.down = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.completed = in.readByte() != 0;
-        this.checklist = new ArrayList<ChecklistItem>();
+        this.checklist = new RealmList<>();
         in.readList(this.checklist, ChecklistItem.class.getClassLoader());
-        this.reminders = new ArrayList<RemindersItem>();
+        this.reminders = new RealmList<>();
         in.readList(this.reminders, RemindersItem.class.getClassLoader());
         this.frequency = in.readString();
         this.everyX = (Integer) in.readValue(Integer.class.getClassLoader());

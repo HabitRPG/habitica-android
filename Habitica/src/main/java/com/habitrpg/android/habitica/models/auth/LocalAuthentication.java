@@ -1,26 +1,17 @@
 package com.habitrpg.android.habitica.models.auth;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by admin on 18/11/15.
  */
-@Table(databaseName = HabitDatabase.NAME)
-public class LocalAuthentication extends BaseModel {
+public class LocalAuthentication extends RealmObject {
 
-    @Column
     @PrimaryKey
-    @NotNull
-    public
-    String user_id;
-
-    @Column
-    String email, username;
+    String username;
+    String email;
 
     public String getEmail() {
         return email;

@@ -1,11 +1,21 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
 import com.playseeds.android.sdk.Seeds;
@@ -18,16 +28,6 @@ import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;

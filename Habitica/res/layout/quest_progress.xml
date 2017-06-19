@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/boss_name_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Quest Boss"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/spacing_small"/>
+    <com.habitrpg.android.habitica.ui.views.ValueBar
+        android:id="@+id/boss_health_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barForegroundColor="@color/worse_100"
+        app:lightBackground="true" />
+    <LinearLayout
+        android:id="@+id/collection_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+</LinearLayout>

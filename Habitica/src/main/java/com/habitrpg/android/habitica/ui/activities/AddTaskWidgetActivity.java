@@ -1,15 +1,15 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

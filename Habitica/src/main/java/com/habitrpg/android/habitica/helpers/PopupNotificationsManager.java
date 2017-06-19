@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -11,12 +12,10 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.notifications.Reward;
-
-import android.content.Context;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +35,7 @@ public class PopupNotificationsManager {
 
     public PopupNotificationsManager(Context context) {
         this.seenNotifications = new HashMap<>();
-        this.context = context.getApplicationContext();
+        this.context = context;
     }
 
     public void setApiClient(@Nullable ApiClient apiClient) {
@@ -94,7 +93,7 @@ public class PopupNotificationsManager {
             if (apiClient != null) {
                 // @TODO: This should be handled somewhere else? MAybe we notifiy via event
                 apiClient.readNotificaiton(notification.getId())
-                        .subscribe(next -> {}, throwable -> {});
+                        .subscribe(next -> {}, RxErrorHandler.handleEmptyError());
             }
 
             dialog.hide();

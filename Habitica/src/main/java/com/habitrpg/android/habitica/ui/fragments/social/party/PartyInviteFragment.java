@@ -1,10 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
@@ -14,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;

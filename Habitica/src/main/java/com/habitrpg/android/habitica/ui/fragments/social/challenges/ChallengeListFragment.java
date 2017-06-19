@@ -2,117 +2,68 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
-import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 import rx.Observable;
-import rx.functions.Action0;
 
 public class ChallengeListFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.challenge_filter_layout)
-    LinearLayout challengeFilterLayout;
+    @Inject
+    ChallengeRepository challengeRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
-    @BindView(R.id.action_filter_icon)
-    View actionFilterIcon;
-
-    @BindView(R.id.challenges_refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
-    @BindView(R.id.challenges_refresh_empty)
-    SwipeRefreshLayout swipeRefreshEmptyLayout;
-
-    @BindView(R.id.challenges_list)
-    RecyclerView recyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerViewEmptySupport recyclerView;
+    @BindView(R.id.empty_view)
+    public View emptyView;
 
     private ChallengesListViewAdapter challengeAdapter;
     private boolean viewUserChallengesOnly;
-    private Action0 refreshCallback;
-    private boolean withFilter;
-
-    public void setWithFilter(boolean withFilter) {
-        this.withFilter = withFilter;
-    }
 
     public void setViewUserChallengesOnly(boolean only) {
         this.viewUserChallengesOnly = only;
     }
 
-    public void setRefreshingCallback(Action0 refreshCallback) {
-        this.refreshCallback = refreshCallback;
-    }
 
-    private List<Challenge> currentChallengesInView;
+    private RealmResults<Challenge> challenges;
 
-    private ChallengeFilterOptions lastFilterOptions;
+    private ChallengeFilterOptions filterOptions;
 
-    public void setObservable(Observable<ArrayList<Challenge>> listObservable) {
-        listObservable
-                .subscribe(challenges -> {
-
-                    List<Challenge> userChallenges = this.user != null ? this.user.getChallengeList() : new ArrayList<>();
-
-                    HashSet<String> userChallengesHash = new HashSet<>();
-
-                    for (Challenge userChallenge : userChallenges) {
-                        userChallengesHash.add(userChallenge.id);
-                    }
-
-                    userChallenges.clear();
-
-                    for (Challenge challenge : challenges) {
-                        if (userChallengesHash.contains(challenge.id) && challenge.name != null && !challenge.name.isEmpty()) {
-                            challenge.user_id = this.user.getId();
-                            userChallenges.add(challenge);
-                        } else {
-                            challenge.user_id = null;
-                        }
-
-                        challenge.async().save();
-                    }
-
-                    setRefreshingIfVisible(swipeRefreshLayout, false);
-                    setRefreshingIfVisible(swipeRefreshEmptyLayout, false);
-
-                    if (viewUserChallengesOnly) {
-                        setChallengeEntries(userChallenges);
-                    } else {
-                        setChallengeEntries(challenges);
-                    }
-
-
-                }, throwable -> {
-                    Log.e("ChallengeListFragment", "", throwable);
-
-                    setRefreshingIfVisible(swipeRefreshLayout, false);
-                    setRefreshingIfVisible(swipeRefreshEmptyLayout, false);
-                });
+    @Override
+    public void onDestroy() {
+        challengeRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -122,17 +73,9 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         View v = inflater.inflate(R.layout.fragment_challengeslist, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        challengeAdapter = new ChallengesListViewAdapter(viewUserChallengesOnly, user);
+        challengeAdapter = new ChallengesListViewAdapter(null, true, viewUserChallengesOnly, userId);
 
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshEmptyLayout.setOnRefreshListener(this);
-
-        challengeFilterLayout.setVisibility(withFilter ? View.VISIBLE : View.GONE);
-        challengeFilterLayout.setClickable(true);
-        challengeFilterLayout.setOnClickListener(view -> ChallengeFilterDialogHolder.showDialog(getActivity(), currentChallengesInView, lastFilterOptions, filterOptions -> {
-            challengeAdapter.setFilterByGroups(filterOptions);
-            this.lastFilterOptions = filterOptions;
-        }));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
         recyclerView.setAdapter(challengeAdapter);
@@ -140,7 +83,9 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
             this.recyclerView.setBackgroundResource(R.color.white);
         }
 
-        fetchLocalChallenges();
+        recyclerView.setEmptyView(emptyView);
+
+        loadLocalChallenges();
         return v;
     }
 
@@ -151,70 +96,36 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     @Override
     public void onRefresh() {
-        setRefreshingIfVisible(swipeRefreshEmptyLayout, true);
-        setRefreshingIfVisible(swipeRefreshLayout, true);
-
         fetchOnlineChallenges();
     }
 
-    private void setRefreshingIfVisible(SwipeRefreshLayout refreshLayout, boolean state) {
-        if (refreshLayout != null && refreshLayout.getVisibility() == View.VISIBLE) {
-            refreshLayout.setRefreshing(state);
+    private void setRefreshing(boolean state) {
+        if (swipeRefreshLayout != null && swipeRefreshLayout.getVisibility() == View.VISIBLE) {
+            swipeRefreshLayout.setRefreshing(state);
         }
     }
 
-    private void fetchLocalChallenges() {
-        setRefreshingIfVisible(swipeRefreshLayout, true);
-
-        Where<Challenge> query = new Select().from(Challenge.class).where(Condition.column("name").isNotNull());
+    private void loadLocalChallenges() {
+        Observable<RealmResults<Challenge>> observable;
 
         if (viewUserChallengesOnly && user != null) {
-            query = query.and(Condition.column("user_id").is(user.getId()));
-        }
-
-        List<Challenge> challenges = query.queryList();
-
-        if (challenges.size() != 0) {
-            setChallengeEntries(challenges);
-        }
-
-        setRefreshingIfVisible(swipeRefreshLayout, false);
-
-        // load online challenges & save to database
-        onRefresh();
-    }
-
-    private void setChallengeEntries(List<Challenge> challenges) {
-        if (swipeRefreshEmptyLayout == null || swipeRefreshLayout == null) {
-            return;
-        }
-        currentChallengesInView = challenges;
-
-        if (viewUserChallengesOnly && challenges.size() == 0) {
-            swipeRefreshEmptyLayout.setVisibility(View.VISIBLE);
-            swipeRefreshLayout.setRefreshing(false);
-            swipeRefreshLayout.setVisibility(View.GONE);
+            observable = challengeRepository.getUserChallenges(user.getId());
         } else {
-            swipeRefreshEmptyLayout.setRefreshing(false);
-            swipeRefreshEmptyLayout.setVisibility(View.GONE);
-            swipeRefreshLayout.setVisibility(View.VISIBLE);
+            observable = challengeRepository.getChallenges();
         }
 
-        challengeAdapter.setChallenges(challenges);
+        observable.first().subscribe(challenges -> {
+            if (challenges.size() == 0) {
+                fetchOnlineChallenges();
+            }
+            this.challenges = challenges;
+            challengeAdapter.updateUnfilteredData(challenges);
+        }, RxErrorHandler.handleEmptyError());
     }
 
     private void fetchOnlineChallenges() {
-        if (refreshCallback != null) {
-            refreshCallback.call();
-        }
-    }
-
-    public void addItem(Challenge challenge) {
-        challengeAdapter.addChallenge(challenge);
-    }
-
-    public void updateItem(Challenge challenge) {
-        challengeAdapter.replaceChallenge(challenge);
+        setRefreshing(true);
+        challengeRepository.retrieveChallenges(user).subscribe(challenges -> setRefreshing(false), throwable -> setRefreshing(false));
     }
 
     @Override
@@ -225,6 +136,26 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_list_challenges, menu);
+
+
+        RelativeLayout badgeLayout = (RelativeLayout) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        TextView filterCountTextView = (TextView) badgeLayout.findViewById(R.id.badge_textview);
+        filterCountTextView.setText(null);
+        filterCountTextView.setVisibility(View.GONE);
+        badgeLayout.setOnClickListener(view -> showFilterDialog());
+    }
+
+    private void showFilterDialog() {
+        ChallengeFilterDialogHolder.showDialog(getActivity(),
+                challenges,
+                filterOptions, this::changeFilter);
+    }
+
+    private void changeFilter(ChallengeFilterOptions challengeFilterOptions) {
+        filterOptions = challengeFilterOptions;
+        if (challengeAdapter != null) {
+            challengeAdapter.filter(filterOptions);
+        }
     }
 
     @Override
@@ -238,7 +169,12 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
             case R.id.action_create_challenge:
                 Intent intent = new Intent(getActivity(), CreateChallengeActivity.class);
                 startActivity(intent);
-
+                return true;
+            case R.id.action_reload:
+                fetchOnlineChallenges();
+                return true;
+            case R.id.action_search:
+                showFilterDialog();
                 return true;
         }
 

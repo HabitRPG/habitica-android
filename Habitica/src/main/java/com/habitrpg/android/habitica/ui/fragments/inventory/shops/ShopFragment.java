@@ -1,20 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.UpdateGoldGemsPurchasedevent;
-import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.shops.Shop;
-import com.habitrpg.android.habitica.models.shops.ShopCategory;
-import com.habitrpg.android.habitica.models.shops.ShopItem;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopCategory;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -39,7 +37,7 @@ public class ShopFragment extends BaseFragment {
     public TextView emptyView;
     public ShopRecyclerAdapter adapter;
     public String shopIdentifier;
-    public HabitRPGUser user;
+    public User user;
     public Shop shop;
     @Inject
     ApiClient apiClient;
@@ -121,8 +119,7 @@ public class ShopFragment extends BaseFragment {
                 .subscribe(shop -> {
                     this.shop = shop;
                     this.adapter.setShop(shop);
-                }, throwable -> {
-                });
+                }, RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -134,10 +131,5 @@ public class ShopFragment extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(SHOP_IDENTIFIER_KEY, this.shopIdentifier);
-    }
-
-    @Subscribe
-    public void updateGoldGemCount(UpdateGoldGemsPurchasedevent event) {
-        this.adapter.updateGoldGemCount(event.numberLeft);
     }
 }

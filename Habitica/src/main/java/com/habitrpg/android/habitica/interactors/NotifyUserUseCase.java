@@ -7,9 +7,9 @@ import android.view.View;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import javax.inject.Inject;
 
@@ -38,44 +38,38 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         return Observable.defer(() -> {
             Stats stats = requestValues.user.getStats();
 
-            if (requestValues.lvl > stats.getLvl()) {
-                return levelUpUseCase.observable(new LevelUpUseCase.RequestValues(requestValues.user, requestValues.lvl, requestValues.context))
+            if (requestValues.hasLeveledUp) {
+                return levelUpUseCase.observable(new LevelUpUseCase.RequestValues(requestValues.user, requestValues.context))
                         .flatMap(aVoid -> userRepository.retrieveUser(false))
-                        .map(HabitRPGUser::getStats);
+                        .map(User::getStats);
             } else {
-                Pair<String, UiUtils.SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.user, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp);
+                Pair<String, UiUtils.SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp);
                 showSnackbar(requestValues.context, requestValues.snackbarTargetView, pair.first, pair.second);
                 return Observable.just(stats);
             }
         });
     }
 
-    public static Pair<String, UiUtils.SnackbarDisplayType> getNotificationAndAddStatsToUser(HabitRPGUser user, double xp, double hp, double gold, double mp){
+    public static Pair<String, UiUtils.SnackbarDisplayType> getNotificationAndAddStatsToUser(double xp, double hp, double gold, double mp){
 
         StringBuilder message = new StringBuilder();
-        Stats stats = user.getStats();
         UiUtils.SnackbarDisplayType displayType = UiUtils.SnackbarDisplayType.NORMAL;
 
-        if (xp > stats.getExp()) {
-            message.append(" + ").append(round(xp - stats.getExp(), 2)).append(" XP");
-            stats.setExp(xp);
+        if (xp > 0) {
+            message.append(" + ").append(round(xp, 2)).append(" XP");
         }
-        if (hp != stats.getHp()) {
+        if (hp != 0) {
             displayType = UiUtils.SnackbarDisplayType.FAILURE;
-            message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
-            stats.setHp(hp);
+            message.append(" - ").append(round(hp, 2)).append(" HP");
         }
-        if (gold > stats.getGp()) {
-            message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
-            stats.setGp(gold);
-        } else if (gold < stats.getGp()) {
+        if (gold > 0) {
+            message.append(" + ").append(round(gold, 2)).append(" GP");
+        } else if (gold < 0) {
             displayType = UiUtils.SnackbarDisplayType.FAILURE;
-            message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
-            stats.setGp(gold);
+            message.append(" - ").append(round(gold, 2)).append(" GP");
         }
-        if (mp > stats.getMp() && stats.getLvl() >= MIN_LEVEL_FOR_SKILLS) {
-            message.append(" + ").append(round(mp - stats.getMp(), 2)).append(" MP");
-            stats.setMp(mp);
+        if (mp > 0) {
+            message.append(" + ").append(round(mp, 2)).append(" MP");
         }
 
         return new Pair<>(message.toString(), displayType);
@@ -85,25 +79,22 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
 
         private AppCompatActivity context;
         private View snackbarTargetView;
-        private Action0 retrieveUser;
-        private HabitRPGUser user;
+        private User user;
         private double xp;
         private double hp;
         private double gold;
         private double mp;
-        private int lvl;
+        private boolean hasLeveledUp;
 
-        public RequestValues(AppCompatActivity context, View snackbarTargetView, Action0 retrieveUser,
-                             HabitRPGUser user, double xp, double hp, double gold, double mp, int lvl) {
+        public RequestValues(AppCompatActivity context, View snackbarTargetView, User user, double xp, double hp, double gold, double mp, boolean hasLeveledUp) {
             this.context = context;
             this.snackbarTargetView = snackbarTargetView;
-            this.retrieveUser = retrieveUser;
             this.user = user;
             this.xp = xp;
             this.hp = hp;
             this.gold = gold;
             this.mp = mp;
-            this.lvl = lvl;
+            this.hasLeveledUp = hasLeveledUp;
         }
     }
 }

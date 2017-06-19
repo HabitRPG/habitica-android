@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
-import com.habitrpg.android.habitica.ui.ItemDetailDialog;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-import com.habitrpg.android.habitica.models.shops.Shop;
-import com.habitrpg.android.habitica.models.shops.ShopCategory;
-import com.habitrpg.android.habitica.models.shops.ShopItem;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopCategory;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
+import com.habitrpg.android.habitica.ui.ItemDetailDialog;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,17 +1,23 @@
 package com.habitrpg.android.habitica.data.local;
 
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.TutorialStep;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 public interface UserLocalRepository extends BaseLocalRepository {
 
-    Observable<HabitRPGUser> getUser(String userID);
+    Observable<User> getUser(String userID);
 
-    void saveUser(HabitRPGUser user);
+    void saveUser(User user);
 
-    Observable<List<TutorialStep>> getTutorialSteps();
+    Observable<RealmResults<TutorialStep>> getTutorialSteps();
+
+    Observable<RealmResults<Skill>> getSkills(User user);
+
+    Observable<RealmResults<Skill>> getSpecialItems(User user);
 }

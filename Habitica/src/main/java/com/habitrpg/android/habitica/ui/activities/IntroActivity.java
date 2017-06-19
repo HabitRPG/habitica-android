@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
-import com.viewpagerindicator.IconPageIndicator;
-import com.viewpagerindicator.IconPagerAdapter;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +13,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
+import com.viewpagerindicator.IconPageIndicator;
+import com.viewpagerindicator.IconPagerAdapter;
 
 import javax.inject.Inject;
 
@@ -57,7 +58,7 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
         this.finishButton.setOnClickListener(this);
 
         apiClient.getContent()
-                .subscribe(contentResult -> {}, throwable -> {});
+                .subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();

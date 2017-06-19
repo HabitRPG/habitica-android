@@ -1,14 +1,14 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +41,10 @@ public class NewsFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        return getString(R.string.sidebar_news);
+        if (isAdded()) {
+            return getString(R.string.sidebar_news);
+        } else {
+            return "";
+        }
     }
 }

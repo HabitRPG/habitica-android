@@ -1,19 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,24 +10,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
+import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.habitrpg.android.habitica.ui.views.ValueBar;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
-public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMemberRecyclerViewAdapter.MemberViewHolder> {
+public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<User, PartyMemberRecyclerViewAdapter.MemberViewHolder> {
 
 
-    public Context context;
-    private List<HabitRPGUser> memberList;
+    private Context context;
     private boolean isMemberSelection;
 
-    public void setMemberList(List<HabitRPGUser> memberList, boolean isMemberSelection) {
-        this.memberList = memberList;
+    public PartyMemberRecyclerViewAdapter(@Nullable OrderedRealmCollection<User> data, boolean autoUpdate, Context context, boolean isMemberSelection) {
+        super(data, autoUpdate);
+        this.context = context;
         this.isMemberSelection = isMemberSelection;
-        this.notifyDataSetChanged();
     }
-
 
     @Override
     public MemberViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,12 +51,9 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
     @Override
     public void onBindViewHolder(MemberViewHolder holder, int position) {
-        holder.bind(memberList.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return memberList == null ? 0 : memberList.size();
+        if (getData() != null) {
+            holder.bind(getData().get(position));
+        }
     }
 
     class MemberViewHolder extends RecyclerView.ViewHolder {
@@ -76,49 +73,45 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         @BindView(R.id.class_background_layout)
         View classBackground;
 
-        ValueBarBinding hpBar;
+        @BindView(R.id.hpBar)
+        ValueBar hpBar;
 
         Resources resources;
 
-        public MemberViewHolder(View itemView) {
+        MemberViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
 
-            View hpBarView = itemView.findViewById(R.id.hpBar);
-
-            hpBar = DataBindingUtil.bind(hpBarView);
-            hpBar.setPartyMembers(true);
+            hpBar.setLightBackground(true);
 
             resources = itemView.getResources();
         }
 
-        public void bind(HabitRPGUser user) {
-            android.content.Context ctx = itemView.getContext();
-
+        public void bind(User user) {
             avatarView.setUser(user);
 
-            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
+            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats());
 
             lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 
             classLabel.setText(user.getStats().getTranslatedClassName(context));
 
             int colorResourceID;
-            switch (user.getStats()._class) {
-                case healer: {
+            switch (user.getStats().habitClass) {
+                case "healer": {
                     colorResourceID = R.color.class_healer;
                     break;
                 }
-                case warrior: {
+                case "warrior": {
                     colorResourceID = R.color.class_warrior;
                     break;
                 }
-                case rogue: {
+                case "rogue": {
                     colorResourceID = R.color.class_rogue;
                     break;
                 }
-                case wizard: {
+                case "wizard": {
                     colorResourceID = R.color.class_wizard;
                     break;
                 }

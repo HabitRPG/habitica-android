@@ -69,6 +69,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/bottom_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

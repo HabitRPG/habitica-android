@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.receivers;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 
 import javax.inject.Inject;
 

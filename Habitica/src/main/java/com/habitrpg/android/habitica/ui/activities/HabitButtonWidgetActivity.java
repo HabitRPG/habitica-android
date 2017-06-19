@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,9 +8,26 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import butterknife.BindView;
 
-public class HabitButtonWidgetActivity extends BaseActivity implements TaskClickActivity {
+public class HabitButtonWidgetActivity extends BaseActivity {
+
+    @Inject
+    TaskRepository taskRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -56,10 +67,15 @@ public class HabitButtonWidgetActivity extends BaseActivity implements TaskClick
             recyclerView.setLayoutManager(layoutManager);
         }
 
-        recyclerView.setAdapter(new SkillTasksRecyclerViewAdapter(Task.TYPE_HABIT, this));
+        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(tasks -> recyclerView.setAdapter(new SkillTasksRecyclerViewAdapter(tasks, true)));
     }
 
     @Override
+    protected void onDestroy() {
+        taskRepository.close();
+        super.onDestroy();
+    }
+
     public void taskSelected(String taskId) {
         finishWithSelection(taskId);
     }

@@ -1,19 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.FeedCommand;
-import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,21 +8,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import javax.inject.Inject;
 
 public class PetDetailRecyclerFragment extends BaseMainFragment {
     private static final String ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY";
+
+    @Inject
+    InventoryRepository inventoryRepository;
+
     public RecyclerView recyclerView;
     public PetDetailRecyclerAdapter adapter;
     public String animalType;
     public String animalGroup;
-    public List<Pet> animals;
     GridLayoutManager layoutManager = null;
 
     private View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.usesTabLayout = false;
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
@@ -44,20 +46,21 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
 
             recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-            android.support.v4.app.FragmentActivity context = getActivity();
-
             layoutManager = new GridLayoutManager(getActivity(), 2);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
 
             adapter = (PetDetailRecyclerAdapter) recyclerView.getAdapter();
             if (adapter == null) {
-                adapter = new PetDetailRecyclerAdapter();
+                adapter = new PetDetailRecyclerAdapter(null, true);
                 adapter.context = this.getActivity();
                 adapter.itemType = this.animalType;
                 recyclerView.setAdapter(adapter);
                 this.loadItems();
 
+                compositeSubscription.add(adapter.getEquipEvents()
+                        .flatMap(key -> inventoryRepository.equip(user, "pet", key))
+                        .subscribe(items -> {}, RxErrorHandler.handleEmptyError()));
             }
         }
 
@@ -66,6 +69,12 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        inventoryRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -99,16 +108,8 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     }
 
     private void loadItems() {
-        Runnable itemsRunnable = () -> {
-            List<Pet> items = new Select().from(Pet.class).where(Condition.CombinedCondition
-                    .begin(Condition.column("animal").eq(animalType))
-                    .and(Condition.column("animalGroup").eq(animalGroup))).orderBy(true, "color").queryList();
-            adapter.setItemList(items);
-            animals = items;
-            adapter.setOwnedMapping(user.getItems().getPets());
-            adapter.setOwnedMountsMapping(user.getItems().getMounts());
-        };
-        itemsRunnable.run();
+        inventoryRepository.getPets(animalType, animalGroup).first().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
+        inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(adapter::setOwnedMounts, RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
@@ -125,14 +126,16 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     }
 
     @Override
-    public void updateUserData(HabitRPGUser user) {
+    public void updateUserData(User user) {
         super.updateUserData(user);
-        adapter.setOwnedMapping(user.getItems().getPets());
-        adapter.setOwnedMountsMapping(user.getItems().getMounts());
     }
 
     @Override
     public String customTitle() {
-        return getString(R.string.pets);
+        if (isAdded()) {
+            return getString(R.string.pets);
+        } else {
+            return "";
+        }
     }
 }
