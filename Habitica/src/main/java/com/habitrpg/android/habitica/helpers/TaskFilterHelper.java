@@ -125,7 +125,7 @@ public class TaskFilterHelper {
             switch (activeFilter) {
                 case Task.FILTER_ACTIVE:
                     if (Task.TYPE_DAILY.equals(taskType)) {
-                        query = query.equalTo("completed", false);
+                        query = query.equalTo("completed", false).equalTo("isDue", true);
                     } else {
                         query = query.equalTo("completed", false);
                     }

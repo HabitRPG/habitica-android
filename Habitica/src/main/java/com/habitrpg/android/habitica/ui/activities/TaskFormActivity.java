@@ -1214,63 +1214,78 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 break;
 
                 case "daily": {
-                    task.setStartDate(new Date(startDateListener.getCalendar().getTimeInMillis()));
+                task.setStartDate(new Date(startDateListener.getCalendar().getTimeInMillis()));
 
-                    if (dailyFrequencySpinner.getSelectedItemPosition() == 0) {
-                        task.setFrequency("weekly");
-                        Object frequency = this.repeatablesFrequencySpinner.getSelectedItem();
-                        if (frequency != null && remoteConfigManager.repeatablesAreEnabled()) {
-                            task.setFrequency(frequency.toString().toLowerCase());
-                        }
+                if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
+                    task.setFrequency("weekly");
 
-                        Days repeat = task.getRepeat();
-                        if (repeat == null) {
-                            repeat = new Days();
-                            task.setRepeat(repeat);
-                        }
+                    Days repeat = task.getRepeat();
+                    if (repeat == null) {
+                        repeat = new Days();
+                        task.setRepeat(repeat);
+                    }
 
+                    int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                    repeat.setM(this.weekdayCheckboxes.get(offset).isChecked());
+                    repeat.setT(this.weekdayCheckboxes.get((offset + 1) % 7).isChecked());
+                    repeat.setW(this.weekdayCheckboxes.get((offset + 2) % 7).isChecked());
+                    repeat.setTh(this.weekdayCheckboxes.get((offset + 3) % 7).isChecked());
+                    repeat.setF(this.weekdayCheckboxes.get((offset + 4) % 7).isChecked());
+                    repeat.setS(this.weekdayCheckboxes.get((offset + 5) % 7).isChecked());
+                    repeat.setSu(this.weekdayCheckboxes.get((offset + 6) % 7).isChecked());
+                } else {
+                    task.setFrequency("daily");
+                    task.setEveryX(this.frequencyPicker.getValue());
+                }
+
+                if (remoteConfigManager.repeatablesAreEnabled()) {
+                    Object frequency = this.repeatablesFrequencySpinner.getSelectedItem();
+                    String frequencyString = "";
+                    if (frequency != null) {
+                        frequencyString = frequency.toString().toLowerCase();
+                        task.setFrequency(frequencyString);
+                    }
+
+                    task.setEveryX(this.repeatablesEveryXSpinner.getValue());
+
+                    Days repeat = task.getRepeat();
+                    if (repeat == null) {
+                        repeat = new Days();
+                        task.setRepeat(repeat);
+                    }
+
+                    if ("weekly".equals(frequencyString)) {
                         int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
-                        repeat.setM(weekdayCheckboxes.get(offset).isChecked());
-                        repeat.setT(weekdayCheckboxes.get((offset + 1) % 7).isChecked());
-                        repeat.setW(weekdayCheckboxes.get((offset + 2) % 7).isChecked());
-                        repeat.setTh(weekdayCheckboxes.get((offset + 3) % 7).isChecked());
-                        repeat.setF(weekdayCheckboxes.get((offset + 4) % 7).isChecked());
-                        repeat.setS(weekdayCheckboxes.get((offset + 5) % 7).isChecked());
-                        repeat.setSu(weekdayCheckboxes.get((offset + 6) % 7).isChecked());
+                        repeat.setM(this.repeatablesWeekDayCheckboxes.get(offset).isChecked());
+                        repeat.setT(this.repeatablesWeekDayCheckboxes.get((offset + 1) % 7).isChecked());
+                        repeat.setW(this.repeatablesWeekDayCheckboxes.get((offset + 2) % 7).isChecked());
+                        repeat.setTh(this.repeatablesWeekDayCheckboxes.get((offset + 3) % 7).isChecked());
+                        repeat.setF(this.repeatablesWeekDayCheckboxes.get((offset + 4) % 7).isChecked());
+                        repeat.setS(this.repeatablesWeekDayCheckboxes.get((offset + 5) % 7).isChecked());
+                        repeat.setSu(this.repeatablesWeekDayCheckboxes.get((offset + 6) % 7).isChecked());
+                    }
 
-                        if (remoteConfigManager.repeatablesAreEnabled()) {
-                            repeat.setM(this.repeatablesWeekDayCheckboxes.get(offset).isChecked());
-                            repeat.setT(this.repeatablesWeekDayCheckboxes.get((offset + 1) % 7).isChecked());
-                            repeat.setW(this.repeatablesWeekDayCheckboxes.get((offset + 2) % 7).isChecked());
-                            repeat.setTh(this.repeatablesWeekDayCheckboxes.get((offset + 3) % 7).isChecked());
-                            repeat.setF(this.repeatablesWeekDayCheckboxes.get((offset + 4) % 7).isChecked());
-                            repeat.setS(this.repeatablesWeekDayCheckboxes.get((offset + 5) % 7).isChecked());
-                            repeat.setSu(this.repeatablesWeekDayCheckboxes.get((offset + 6) % 7).isChecked());
-                        }
+                    if ("monthly".equals(frequencyString)) {
+                        Calendar calendar = startDateListener.getCalendar();
+                        String monthlyFreq = repeatablesOnSpinner.getSelectedItem().toString();
 
-                        if ("monthly".equals(frequency)) {
-                            Calendar calendar = startDateListener.getCalendar();
-                            String monthlyFreq = repeatablesOnSpinner.getSelectedItem().toString();
-                            if (monthlyFreq.equals("Day of Month")) {
-                                Integer date = calendar.get(Calendar.DATE);
-                                List<Integer> daysOfMonth = new ArrayList<>();
-                                daysOfMonth.add(date);
-                                task.setDaysOfMonth(daysOfMonth);
-                                task.setWeeksOfMonth(new ArrayList<>());
-                            } else {
-                                Integer week = calendar.get(Calendar.WEEK_OF_MONTH);
-                                List<Integer> weeksOfMonth = new ArrayList<>();
-                                weeksOfMonth.add(week);
-                                task.setWeeksOfMonth(weeksOfMonth);
-                                task.setDaysOfMonth(new ArrayList<>());
-                            }
+                        if (monthlyFreq.equals("Day of Month")) {
+                            Integer date = calendar.get(Calendar.DATE);
+                            List<Integer> daysOfMonth = new ArrayList<>();
+                            daysOfMonth.add(date);
+                            task.setDaysOfMonth(daysOfMonth);
+                            task.setWeeksOfMonth(new ArrayList<>());
+                        } else {
+                            Integer week = calendar.get(Calendar.WEEK_OF_MONTH);
+                            List<Integer> weeksOfMonth = new ArrayList<>();
+                            weeksOfMonth.add(week);
+                            task.setWeeksOfMonth(weeksOfMonth);
+                            task.setDaysOfMonth(new ArrayList<>());
                         }
-                    } else {
-                        task.setFrequency("daily");
-                        task.setEveryX(frequencyPicker.getValue());
                     }
                 }
-                break;
+            }
+            break;
 
                 case "todo": {
                     if (dueDateCheckBox.isChecked()) {
