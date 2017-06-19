@@ -9,6 +9,9 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -76,16 +79,16 @@ public class Task extends RealmObject implements Parcelable {
 
     public Boolean isDue;
 
-    // These do need to be local columns because all logic is stored in
     public Date nextDue;
+    public Boolean yesterDaily;
 
-    @Column
-    public String daysOfMonthString;
-    // is due for now
+    private String daysOfMonthString;
+    private String weeksOfMonthString;
+
     @Ignore
-    public List<Integer> daysOfMonth  = new ArrayList<>();
+    private List<Integer> daysOfMonth;
     @Ignore
-    public List<Integer> weeksOfMonth  = new ArrayList<>();
+    private List<Integer> weeksOfMonth;
 
 
     /**
@@ -387,86 +390,6 @@ public class Task extends RealmObject implements Parcelable {
         this.attribute = attribute;
     }
 
-
-    @Override
-    public void save() {
-        if (this.getId() == null || this.getId().length() == 0) {
-            return;
-        }
-
-        List<TaskTag> tmpTags = tags;
-        List<ChecklistItem> tmpChecklist = checklist;
-        List<RemindersItem> tmpReminders = reminders;
-
-        // remove them, so that the database don't add empty entries
-
-        tags = null;
-        checklist = null;
-        reminders = null;
-
-        if (repeat != null) {
-            repeat.task_id = this.id;
-        }
-
-        if (group != null) {
-            group.task_id = this.id;
-        }
-
-        super.save();
-
-        tags = tmpTags;
-        checklist = tmpChecklist;
-        reminders = tmpReminders;
-
-        if (this.tags != null) {
-            for (TaskTag tag : this.tags) {
-                tag.setTask(this);
-                tag.async().save();
-            }
-        }
-
-        int position = 0;
-        if (this.checklist != null) {
-            for (ChecklistItem item : this.checklist) {
-                if (item.getTask() == null) {
-                    item.setTask(this);
-                }
-                item.setPosition(position);
-                item.async().save();
-                position++;
-            }
-        }
-
-        if (daysOfMonth != null) {
-            daysOfMonthString = daysOfMonth.toString();
-        }
-        if (weeksOfMonth != null) {
-            weeksOfMonthString = weeksOfMonth.toString();
-        }
-
-        int index = 0;
-        if (this.reminders != null) {
-            for (RemindersItem item : this.reminders) {
-                if (item.getTask() == null) {
-                    item.setTask(this);
-                }
-                if (item.getId() == null) {
-                    item.setId(this.id + "task-reminder" + index);
-                }
-                item.async().save();
-                index++;
-            }
-        }
-    }
-
-    @Override
-    public void update() {
-        if (this.getId() == null || this.getId().length() == 0) {
-            return;
-        }
-        super.update();
-    }
-
     public int getLightTaskColor() {
         if (this.value < -20)
             return R.color.worst_100;
@@ -735,4 +658,52 @@ public class Task extends RealmObject implements Parcelable {
             return new Task[size];
         }
     };
+
+
+    public void setWeeksOfMonth(List<Integer> weeksOfMonth) {
+        this.weeksOfMonth = weeksOfMonth;
+        this.weeksOfMonthString = this.weeksOfMonth.toString();
+    }
+
+    public List<Integer> getWeeksOfMonth() {
+        if (weeksOfMonth == null) {
+            if (weeksOfMonthString != null) {
+                try {
+                    JSONArray obj = new JSONArray(weeksOfMonthString);
+                    for (int i = 0; i < obj.length(); i += 1) {
+                        weeksOfMonth.add(obj.getInt(i));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                weeksOfMonth = new ArrayList<>();
+            }
+        }
+        return weeksOfMonth;
+    }
+
+    public void setDaysOfMonth(List<Integer> daysOfMonth) {
+        this.daysOfMonth = daysOfMonth;
+        this.daysOfMonthString = this.daysOfMonth.toString();
+    }
+
+    public List<Integer> getDaysOfMonth() {
+        if (daysOfMonth == null) {
+            if (daysOfMonthString != null) {
+                try {
+                    JSONArray obj = new JSONArray(daysOfMonthString);
+                    for (int i = 0; i < obj.length(); i += 1) {
+                        daysOfMonth.add(obj.getInt(i));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                daysOfMonth = new ArrayList<>();
+            }
+        }
+
+        return daysOfMonth;
+    }
 }

@@ -505,19 +505,36 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         component.inject(this);
     }
 
+    public void hideMonthOptions () {
+        ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
+        repeatablesOnSpinnerParams.height = 0;
+        repeatablesOnSpinner.setLayoutParams(repeatablesOnSpinnerParams);
+
+        ViewGroup.LayoutParams repeatablesOnTitleParams = reapeatablesOnTextView.getLayoutParams();
+        repeatablesOnTitleParams.height =  0;
+        reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
+    }
+
+    public void hideWeekOptions () {
+        ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
+        repeatablesFrequencyContainerParams.height = 0;
+        repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
+    }
+
     // @TODO: abstract business logic to Presenter and only modify view?
     private void enableRepeatables()
     {
-        if (!remoteConfigManager.repeatablesAreEnabled() || !taskType.equals("daily")) {
+        if (!remoteConfigManager.repeatablesAreEnabled() || !taskType.equals("daily")){
             repeatablesLayout.setVisibility(View.INVISIBLE);
             ViewGroup.LayoutParams repeatablesLayoutParams = repeatablesLayout.getLayoutParams();
             repeatablesLayoutParams.height = 0;
             repeatablesLayout.setLayoutParams(repeatablesLayoutParams);
             return;
-        }
+        };
 
         startDateLayout.setVisibility(View.INVISIBLE);
 
+        // Hide old stuff
         ViewGroup.LayoutParams startDateLayoutParams = startDateLayout.getLayoutParams();
         startDateLayoutParams.height = 0;
         startDateLayout.setLayoutParams(startDateLayoutParams);
@@ -543,8 +560,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         dailyFrequencySpinnerParams.height = 0;
         dailyFrequencySpinner.setLayoutParams(dailyFrequencySpinnerParams);
 
+        // Start Date
         startDateListener = new DateEditTextListener(repeatablesStartDatePickerText);
 
+        // Frequency
         ArrayAdapter<CharSequence> frequencyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.repeatables_frequencies, android.R.layout.simple_spinner_item);
         frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -558,6 +577,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 // @TODO: remove magic numbers
 
                 if (position == 2) {
+                    hideWeekOptions();
+
                     ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
                     repeatablesOnSpinnerParams.height =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72, r.getDisplayMetrics());
                     repeatablesOnSpinner.setLayoutParams(repeatablesOnSpinnerParams);
@@ -566,21 +587,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     repeatablesOnTitleParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
                     reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
                 }else if (position == 1) {
+                    hideMonthOptions();
+
                     ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
                     repeatablesFrequencyContainerParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 220, r.getDisplayMetrics());
                     repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
                 } else {
-                    ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
-                    repeatablesOnSpinnerParams.height = 0;
-                    repeatablesOnSpinner.setLayoutParams(repeatablesOnSpinnerParams);
-
-                    ViewGroup.LayoutParams repeatablesOnTitleParams = reapeatablesOnTextView.getLayoutParams();
-                    repeatablesOnTitleParams.height =  0;
-                    reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
-
-                    ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
-                    repeatablesFrequencyContainerParams.height = 0;
-                    repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
+                    hideWeekOptions();
+                    hideMonthOptions();
                 }
             }
 
@@ -590,6 +604,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
 
+        // Repeat On
         ArrayAdapter<CharSequence> repeatablesOnAdapter = ArrayAdapter.createFromResource(this,
                 R.array.repeatables_on, android.R.layout.simple_spinner_item);
         repeatablesOnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -606,9 +621,16 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
 
+        // Every X
         setEveryXSpinner(repeatablesEveryXSpinner);
-        repeatablesEveryXSpinner.setOnValueChangedListener((picker, oldVal, newVal) -> generateSummary());
+        repeatablesEveryXSpinner.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                generateSummary();
+            }
+        });
 
+        // WeekDays
         this.repeatablesFrequencyContainer.removeAllViews();
         String[] weekdays = getResources().getStringArray(R.array.weekdays);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -625,7 +647,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
             checkbox.setText(weekdays[i]);
             checkbox.setChecked(true);
-            checkbox.setOnClickListener(v -> generateSummary());
+            checkbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    generateSummary();
+                }
+            });
             repeatablesWeekDayCheckboxes.add(checkbox);
             repeatablesFrequencyContainer.addView(weekdayRow);
         }
@@ -698,6 +725,45 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         String summary = getResources().getString(R.string.repeat_summary, frequency, everyX, frequencyQualifier, weekdays);
         summaryTextView.setText(summary);
+    }
+
+    private void populateRepeatables(Task task) {
+        // Frequency
+        int frequencySelection = 0;
+        if (task.getFrequency().equals("weekly")) {
+            frequencySelection = 1;
+        } else if (task.getFrequency().equals("monthly")) {
+            frequencySelection = 2;
+        } else if (task.getFrequency().equals("yearly")) {
+            frequencySelection = 3;
+        }
+        this.repeatablesFrequencySpinner.setSelection(frequencySelection);
+
+        // Every X
+        this.repeatablesEveryXSpinner.setValue(task.getEveryX());
+
+        // Weekdays
+        if (task.getFrequency().equals("weekly")) {
+            if (repeatablesWeekDayCheckboxes.size() == 7) {
+                int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                this.repeatablesWeekDayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
+                this.repeatablesWeekDayCheckboxes.get((offset + 1) % 7).setChecked(this.task.getRepeat().getT());
+                this.repeatablesWeekDayCheckboxes.get((offset + 2) % 7).setChecked(this.task.getRepeat().getW());
+                this.repeatablesWeekDayCheckboxes.get((offset + 3) % 7).setChecked(this.task.getRepeat().getTh());
+                this.repeatablesWeekDayCheckboxes.get((offset + 4) % 7).setChecked(this.task.getRepeat().getF());
+                this.repeatablesWeekDayCheckboxes.get((offset + 5) % 7).setChecked(this.task.getRepeat().getS());
+                this.repeatablesWeekDayCheckboxes.get((offset + 6) % 7).setChecked(this.task.getRepeat().getSu());
+            }
+        }
+
+        // Repeats On
+
+        if (task.getDaysOfMonth() != null && task.getDaysOfMonth().size() > 0) {
+            this.repeatablesOnSpinner.setSelection(0);
+        } else if (task.getWeeksOfMonth() != null && task.getWeeksOfMonth().size() > 0) {
+            this.repeatablesOnSpinner.setSelection(1);
+        }
+
     }
 
     private void setEveryXSpinner(NumberPicker frequencyPicker) {
@@ -1004,6 +1070,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     this.frequencyPicker.setValue(task.getEveryX());
                 }
             }
+
+            populateRepeatables(task);
         }
 
         if (task.type.equals("todo")) {
@@ -1185,14 +1253,16 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                             String monthlyFreq = repeatablesOnSpinner.getSelectedItem().toString();
                             if (monthlyFreq.equals("Day of Month")) {
                                 Integer date = calendar.get(Calendar.DATE);
-                                task.daysOfMonth = new ArrayList<>();
-                                task.daysOfMonth.add(date);
-                                task.weeksOfMonth = new ArrayList<>();
+                                List<Integer> daysOfMonth = new ArrayList<>();
+                                daysOfMonth.add(date);
+                                task.setDaysOfMonth(daysOfMonth);
+                                task.setWeeksOfMonth(new ArrayList<>());
                             } else {
                                 Integer week = calendar.get(Calendar.WEEK_OF_MONTH);
-                                task.weeksOfMonth = new ArrayList<>();
-                                task.weeksOfMonth.add(week);
-                                task.daysOfMonth = new ArrayList<>();
+                                List<Integer> weeksOfMonth = new ArrayList<>();
+                                weeksOfMonth.add(week);
+                                task.setWeeksOfMonth(weeksOfMonth);
+                                task.setDaysOfMonth(new ArrayList<>());
                             }
                         }
                     } else {

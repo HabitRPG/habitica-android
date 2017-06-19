@@ -32,6 +32,12 @@ public class DateDeserializer implements JsonDeserializer<Date>, JsonSerializer<
 
     @Override
     public synchronized Date deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) {
+        if (jsonElement.isJsonArray()) {
+            if (jsonElement.getAsJsonArray().size() == 0) {
+                return null;
+            }
+            jsonElement = jsonElement.getAsJsonArray().get(0);
+        }
         if (jsonElement.getAsString().length() == 0) {
             return null;
         }

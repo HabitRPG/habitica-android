@@ -39,8 +39,8 @@ public class TaskSerializer implements JsonSerializer<Task> {
                 obj.addProperty("streak", task.getStreak());
                 obj.add("checklist", context.serialize(task.getChecklist()));
                 obj.add("reminders", context.serialize(task.getReminders()));
-                obj.add("daysOfMonth", context.serialize(task.daysOfMonth));
-                obj.add("weeksOfMonth", context.serialize(task.weeksOfMonth));
+                obj.add("daysOfMonth", context.serialize(task.getDaysOfMonth()));
+                obj.add("weeksOfMonth", context.serialize(task.getWeeksOfMonth()));
                 obj.addProperty("completed", task.getCompleted());
                 break;
             case "todo":
