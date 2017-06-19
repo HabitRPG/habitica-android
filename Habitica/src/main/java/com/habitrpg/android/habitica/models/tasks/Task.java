@@ -77,6 +77,10 @@ public class Task extends RealmObject implements Parcelable {
     public Boolean isDue;
 
     // These do need to be local columns because all logic is stored in
+    public Date nextDue;
+
+    @Column
+    public String daysOfMonthString;
     // is due for now
     @Ignore
     public List<Integer> daysOfMonth  = new ArrayList<>();
@@ -383,6 +387,86 @@ public class Task extends RealmObject implements Parcelable {
         this.attribute = attribute;
     }
 
+
+    @Override
+    public void save() {
+        if (this.getId() == null || this.getId().length() == 0) {
+            return;
+        }
+
+        List<TaskTag> tmpTags = tags;
+        List<ChecklistItem> tmpChecklist = checklist;
+        List<RemindersItem> tmpReminders = reminders;
+
+        // remove them, so that the database don't add empty entries
+
+        tags = null;
+        checklist = null;
+        reminders = null;
+
+        if (repeat != null) {
+            repeat.task_id = this.id;
+        }
+
+        if (group != null) {
+            group.task_id = this.id;
+        }
+
+        super.save();
+
+        tags = tmpTags;
+        checklist = tmpChecklist;
+        reminders = tmpReminders;
+
+        if (this.tags != null) {
+            for (TaskTag tag : this.tags) {
+                tag.setTask(this);
+                tag.async().save();
+            }
+        }
+
+        int position = 0;
+        if (this.checklist != null) {
+            for (ChecklistItem item : this.checklist) {
+                if (item.getTask() == null) {
+                    item.setTask(this);
+                }
+                item.setPosition(position);
+                item.async().save();
+                position++;
+            }
+        }
+
+        if (daysOfMonth != null) {
+            daysOfMonthString = daysOfMonth.toString();
+        }
+        if (weeksOfMonth != null) {
+            weeksOfMonthString = weeksOfMonth.toString();
+        }
+
+        int index = 0;
+        if (this.reminders != null) {
+            for (RemindersItem item : this.reminders) {
+                if (item.getTask() == null) {
+                    item.setTask(this);
+                }
+                if (item.getId() == null) {
+                    item.setId(this.id + "task-reminder" + index);
+                }
+                item.async().save();
+                index++;
+            }
+        }
+    }
+
+    @Override
+    public void update() {
+        if (this.getId() == null || this.getId().length() == 0) {
+            return;
+        }
+        super.update();
+    }
+
     public int getLightTaskColor() {
         if (this.value < -20)
             return R.color.worst_100;
@@ -501,6 +585,13 @@ public class Task extends RealmObject implements Parcelable {
         newTime.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
         if (today.before(newTime)) {
             today.add(Calendar.DAY_OF_MONTH, -1);
+        }
+
+        if (nextDue != null) {
+            Calendar nextDueCalendar = new GregorianCalendar();
+            nextDueCalendar.setTime(nextDue);
+            newTime.set(nextDueCalendar.get(Calendar.YEAR), nextDueCalendar.get(Calendar.MONTH), nextDueCalendar.get(Calendar.DAY_OF_MONTH));
+            return newTime.getTime();
         }
 
         if (this.getFrequency().equals(FREQUENCY_DAILY)) {

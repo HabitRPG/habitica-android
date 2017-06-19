@@ -1,5 +1,9 @@
 package com.habitrpg.android.habitica.utils;
 
+import android.util.Log;
+
+import com.google.gson.JsonArray;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -21,6 +25,7 @@ public class TaskListDeserializer implements JsonDeserializer<TaskList> {
 
         for (JsonElement e : json.getAsJsonArray()) {
             Task task = ctx.deserialize(e, Task.class);
+
             taskMap.put(task.getId(), task);
         }
 

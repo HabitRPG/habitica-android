@@ -21,9 +21,17 @@ import java.security.InvalidParameterException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.android.schedulers.AndroidSchedulers;
+
 import rx.observers.TestSubscriber;
+import rx.plugins.RxJavaPlugins;
+import rx.plugins.RxJavaSchedulersHook;
 
 import static org.junit.Assert.assertTrue;
+import rx.schedulers.Schedulers;
+
 
 public class BaseAPITests {
 
@@ -38,6 +46,15 @@ public class BaseAPITests {
         if (BuildConfig.BASE_URL.contains("habitica.com")) {
             throw new InvalidParameterException("Can't test against production server.");
         }
+
+        RxJavaTestPlugins.resetPlugins();
+        RxJavaPlugins.getInstance().registerSchedulersHook(new RxJavaSchedulersHook() {
+            @Override
+            public Scheduler getIOScheduler() {
+                return AndroidSchedulers.mainThread();
+            }
+        }
+
         Context context = RuntimeEnvironment.application;
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
                 BuildConfig.PORT,
