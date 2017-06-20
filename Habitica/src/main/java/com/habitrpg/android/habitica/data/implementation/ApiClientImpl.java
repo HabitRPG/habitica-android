@@ -527,8 +527,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Task> createItem(Task item) {
-        return apiService.createItem(item).compose(configureApiCallObserver());
+    public Observable<Task> createTask(Task item) {
+        return apiService.createTask(item).compose(configureApiCallObserver());
     }
 
     @Override

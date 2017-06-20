@@ -114,7 +114,7 @@ public interface ApiService {
     Observable<HabitResponse<Task>> scoreChecklistItem(@Path("taskId") String taskId, @Path("itemId") String itemId);
 
     @POST("tasks/user")
-    Observable<HabitResponse<Task>> createItem(@Body Task item);
+    Observable<HabitResponse<Task>> createTask(@Body Task item);
 
     @POST("tasks/user")
     Observable<HabitResponse<List<Task>>> createTasks(@Body List<Task> tasks);

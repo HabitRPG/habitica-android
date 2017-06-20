@@ -149,8 +149,13 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     @Override
     public Observable<Task> getTaskCopy(String taskId) {
         return getTask(taskId)
-                .filter(task -> task.isManaged() && task.isValid())
-                .map(realm::copyFromRealm);
+                .map(task -> {
+                    if (task.isManaged() && task.isValid()) {
+                        return realm.copyFromRealm(task);
+                    } else {
+                        return task;
+                    }
+                });
     }
 
     @Override

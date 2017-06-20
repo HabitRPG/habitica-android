@@ -87,7 +87,7 @@ public interface ApiClient {
 
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
-    Observable<Task> createItem(Task item);
+    Observable<Task> createTask(Task item);
 
     Observable<List<Task>> createTasks(List<Task> tasks);
 
