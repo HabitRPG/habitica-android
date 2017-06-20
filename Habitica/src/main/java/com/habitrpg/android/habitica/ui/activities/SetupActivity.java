@@ -141,7 +141,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     protected void onDestroy() {
         userRepository.close();
-        taskRepository.close();
         super.onDestroy();
     }
 

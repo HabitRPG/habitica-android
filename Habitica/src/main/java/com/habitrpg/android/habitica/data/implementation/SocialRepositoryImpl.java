@@ -121,7 +121,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
         copiedGroup.leaderID = leader;
         copiedGroup.privacy = privacy;
         localRepository.save(copiedGroup);
-        return apiClient.updateGroup(group.id, group);
+        return apiClient.updateGroup(copiedGroup.id, copiedGroup);
     }
 
     @Override

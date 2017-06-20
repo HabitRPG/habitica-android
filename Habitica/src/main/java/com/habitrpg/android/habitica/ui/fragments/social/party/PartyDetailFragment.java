@@ -177,12 +177,14 @@ public class PartyDetailFragment extends BaseFragment {
             partyInvitationWrapper.setVisibility(invitationVisibility);
         }
 
-        if (isQuestActive() || !user.getParty().getQuest().RSVPNeeded) {
-            questLeaderResponseWrapper.setVisibility(View.GONE);
-            questParticipantResponseWrapper.setVisibility(View.GONE);
-        } else {
-            questLeaderResponseWrapper.setVisibility(View.GONE);
-            questParticipantResponseWrapper.setVisibility(View.VISIBLE);
+        if (questLeaderResponseWrapper != null) {
+            if (isQuestActive() || !user.getParty().getQuest().RSVPNeeded) {
+                questLeaderResponseWrapper.setVisibility(View.GONE);
+                questParticipantResponseWrapper.setVisibility(View.GONE);
+            } else {
+                questLeaderResponseWrapper.setVisibility(View.GONE);
+                questParticipantResponseWrapper.setVisibility(View.VISIBLE);
+            }
         }
     }
 

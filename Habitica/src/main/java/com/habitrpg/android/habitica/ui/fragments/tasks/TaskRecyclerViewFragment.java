@@ -304,7 +304,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public void onDestroy() {
         userRepository.close();
         inventoryRepository.close();
-        taskRepository.close();
         super.onDestroy();
     }
 

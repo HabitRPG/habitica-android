@@ -495,7 +495,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @Override
     protected void onDestroy() {
-        taskRepository.close();
         tagRepository.close();
         super.onDestroy();
     }

@@ -545,7 +545,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     @Override
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
-        taskRepository.close();
         userRepository.close();
         tagRepository.close();
         inventoryRepository.close();

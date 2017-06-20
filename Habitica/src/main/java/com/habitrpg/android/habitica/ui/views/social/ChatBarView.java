@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -43,11 +44,10 @@ public class ChatBarView extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
         if (changed) {
             resizeForDrawingUnderNavbar();
         }
+        super.onLayout(changed, left, top, right, bottom);
     }
 
     //https://github.com/roughike/BottomBar/blob/master/bottom-bar/src/main/java/com/roughike/bottombar/BottomBar.java#L834
@@ -55,12 +55,13 @@ public class ChatBarView extends FrameLayout {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int currentHeight = getHeight();
 
-            if (currentHeight != 0 && !navBarAccountedHeightCalculated) {
+            if (!navBarAccountedHeightCalculated) {
                 navBarAccountedHeightCalculated = true;
-                //tabContainer.getLayoutParams().height = currentHeight;
 
                 int navbarHeight = NavbarUtils.getNavbarHeight(getContext());
-                getLayoutParams().height = currentHeight + navbarHeight;
+                ViewGroup.LayoutParams params = getLayoutParams();
+                params.height = currentHeight + navbarHeight;
+                setLayoutParams(params);
             }
         }
     }

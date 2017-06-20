@@ -83,7 +83,6 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                     taskList = tasks;
                     reloadData = false;
                     AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
-                    taskRepository.close();
                 }, throwable -> reloadData = false));
 
     }

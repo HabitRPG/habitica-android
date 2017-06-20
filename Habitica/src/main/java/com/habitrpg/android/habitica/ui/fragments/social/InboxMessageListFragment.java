@@ -1,12 +1,19 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -25,6 +32,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -36,11 +45,18 @@ public class InboxMessageListFragment extends BaseMainFragment
     @Inject
     UserRepository userRepository;
 
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
-    @BindView(R.id.recyclerView)
-    RecyclerView chatRecyclerView;
+    @BindView(R.id.emoji_button)
+    ImageButton emojiButton;
+    @BindView(R.id.chat_edit_text)
+    EditText chatEditText;
+    @BindView(R.id.send_button)
+    ImageButton sendButton;
+    @BindView(R.id.community_guidelines_view)
+    TextView communityGuidelinesView;
 
     ChatRecyclerViewAdapter chatAdapter;
     String chatRoomUser;
@@ -53,21 +69,32 @@ public class InboxMessageListFragment extends BaseMainFragment
         disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
+        View view = inflater.inflate(R.layout.fragment_inbox_message_list, container, false);
         ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        chatRecyclerView.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(false);
+        recyclerView.setLayoutManager(layoutManager);
 
         chatAdapter = new ChatRecyclerViewAdapter(null, true, user, null);
         chatAdapter.setToInboxChat(this.replyToUserUUID);
         chatAdapter.setSendingUser(this.user);
-        chatRecyclerView.setAdapter(chatAdapter);
+        recyclerView.setAdapter(chatAdapter);
 
         loadMessages();
 
+        communityGuidelinesView.setVisibility(View.GONE);
+
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.invalidate();
+        view.forceLayout();
     }
 
     private void loadMessages() {
@@ -131,5 +158,38 @@ public class InboxMessageListFragment extends BaseMainFragment
     public void setReceivingUser(String chatRoomUser, String replyToUserUUID) {
         this.chatRoomUser = chatRoomUser;
         this.replyToUserUUID = replyToUserUUID;
+    }
+
+    @OnTextChanged(R.id.chat_edit_text)
+    public void onChatMessageTextChanged() {
+        Editable chatText = chatEditText.getText();
+        setSendButtonEnabled(chatText.length() > 0);
+    }
+
+    private void setSendButtonEnabled(boolean enabled) {
+        int tintColor;
+        if (enabled) {
+            tintColor = ContextCompat.getColor(getContext(), R.color.brand_400);
+        } else {
+            tintColor = ContextCompat.getColor(getContext(), R.color.md_grey_400);
+        }
+        sendButton.setEnabled(enabled);
+        sendButton.setColorFilter(tintColor);
+    }
+
+    @OnClick(R.id.send_button)
+    public void sendChatMessage() {
+        String chatText = chatEditText.getText().toString();
+        if (chatText.length() > 0) {
+            chatEditText.setText(null);
+            socialRepository.postPrivateMessage(replyToUserUUID, chatText).subscribe(postChatMessageResult -> {
+                recyclerView.scrollToPosition(0);
+            }, RxErrorHandler.handleEmptyError());
+        }
+    }
+
+    @OnClick(R.id.emoji_button)
+    public void openEmojiView() {
+
     }
 }

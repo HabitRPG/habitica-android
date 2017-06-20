@@ -70,12 +70,6 @@ public class HabitButtonWidgetActivity extends BaseActivity {
         taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(tasks -> recyclerView.setAdapter(new SkillTasksRecyclerViewAdapter(tasks, true)));
     }
 
-    @Override
-    protected void onDestroy() {
-        taskRepository.close();
-        super.onDestroy();
-    }
-
     public void taskSelected(String taskId) {
         finishWithSelection(taskId);
     }
