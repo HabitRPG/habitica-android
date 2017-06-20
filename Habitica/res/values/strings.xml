@@ -610,4 +610,6 @@
     <string name="abort_confirmation">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
     <string name="leave_quest_confirmation">Are you sure you want to leave the active quest? All your quest progress will be lost.</string>
     <string name="number_participants">%1$d Participants</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="yesterdaililes_prompt">Did you do any of these Dailies yesterday?</string>
 </resources>
