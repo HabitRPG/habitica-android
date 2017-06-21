@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,7 +82,7 @@ public class FullProfileActivity extends BaseActivity {
     @BindView(R.id.attributes_table)
     TableLayout attributesTableLayout;
     @BindView(R.id.attributes_collapse_icon)
-    ImageView attributesCollapseIcon;
+    AppCompatImageView attributesCollapseIcon;
     @BindView(R.id.equipment_table)
     TableLayout equipmentTableLayout;
     @BindView(R.id.costume_table)

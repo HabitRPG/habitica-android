@@ -295,7 +295,7 @@
                                 android:text="@string/attributes"
                                 android:textStyle="bold" />
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <android.support.v7.widget.AppCompatImageView
                                     android:id="@+id/attributes_collapse_icon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
