@@ -30,6 +30,8 @@ import rx.plugins.RxJavaPlugins;
 import rx.plugins.RxJavaSchedulersHook;
 
 import static org.junit.Assert.assertTrue;
+
+import rx.plugins.RxJavaTestPlugins;
 import rx.schedulers.Schedulers;
 
 
@@ -53,7 +55,7 @@ public class BaseAPITests {
             public Scheduler getIOScheduler() {
                 return AndroidSchedulers.mainThread();
             }
-        }
+        });
 
         Context context = RuntimeEnvironment.application;
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
