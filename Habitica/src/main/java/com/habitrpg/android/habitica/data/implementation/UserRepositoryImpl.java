@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation;
 
+import android.content.Context;
+
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
@@ -11,29 +13,39 @@ import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 import rx.Observable;
+import rx.functions.Func1;
 
 
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> implements UserRepository {
 
+    private final Context context;
     private Date lastSync;
+    private String userId;
 
     private TaskRepository taskRepository;
 
-    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, TaskRepository taskRepository) {
+    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, Context context, String userId, TaskRepository taskRepository) {
         super(localRepository, apiClient);
         this.taskRepository = taskRepository;
+        this.context = context;
+        this.userId = userId;
     }
 
     @Override
@@ -66,6 +78,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
             return apiClient.retrieveUser(withTasks)
                     .doOnNext(localRepository::saveUser)
                     .doOnNext(user -> taskRepository.saveTasks(user.getId(), user.getTasksOrder(), user.tasks))
+                    .doOnNext(user -> YesterdailyDialog.showDialogIfNeeded(context, userId, this, taskRepository))
                     .flatMap(user -> {
                         Calendar calendar = new GregorianCalendar();
                         TimeZone timeZone = calendar.getTimeZone();
@@ -191,6 +204,20 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                     copiedUser.setBalance(copiedUser.getBalance()-set.price/4.0);
                     localRepository.saveUser(copiedUser);
                 });
+    }
+
+    @Override
+    public void runCron() {
+        runCron(new ArrayList<>());
+    }
+
+    @Override
+    public void runCron(List<Task> tasks) {
+        Observable.from(tasks)
+                .flatMap(task -> taskRepository.taskChecked(null, task, true))
+                .toList()
+                .flatMap(taskScoringResults -> apiClient.runCron())
+                .flatMap(aVoid -> this.retrieveUser(true));
     }
 
     private User mergeUser(User oldUser, User newUser) {

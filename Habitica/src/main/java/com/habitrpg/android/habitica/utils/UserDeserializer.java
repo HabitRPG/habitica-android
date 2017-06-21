@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -102,6 +103,10 @@ public class UserDeserializer implements JsonDeserializer<User> {
                     user.getPurchased().getPlan().mysteryItemCount = obj.get("purchased").getAsJsonObject().get("plan").getAsJsonObject().get("mysteryItems").getAsJsonArray().size();
                 }
             }
+        }
+
+        if (obj.has("lastCron")) {
+            user.setLastCron(context.deserialize(obj.get("lastCron"), Date.class));
         }
 
         return user;

@@ -828,4 +828,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         return apiService.openMysteryItem().compose(configureApiCallObserver());
     }
 
+    @Override
+    public Observable<Void> runCron() {
+        return apiService.runCron().compose(configureApiCallObserver());
+    }
 }

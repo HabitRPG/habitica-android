@@ -313,4 +313,7 @@ public interface ApiService {
 
     @POST("user/open-mystery-item")
     Observable<HabitResponse<Equipment>> openMysteryItem();
+
+    @POST("cron")
+    Observable<HabitResponse<Void>> runCron();
 }

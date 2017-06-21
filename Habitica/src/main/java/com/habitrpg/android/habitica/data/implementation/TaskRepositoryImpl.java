@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation;
 
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
@@ -51,7 +53,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<TaskScoringResult> taskChecked(User user, Task task, boolean up) {
+    public Observable<TaskScoringResult> taskChecked(@Nullable User user, Task task, boolean up) {
         long now = new Date().getTime();
         if (lastTaskAction > now-500) {
             return Observable.just(null);
@@ -61,31 +63,33 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
                 .map(res -> {
                     // save local task changes
                     TaskScoringResult result = new TaskScoringResult();
-                    Stats stats = user.getStats();
+                    if (user != null) {
+                        Stats stats = user.getStats();
 
-                    result.taskValueDelta = res.getDelta();
-                    result.healthDelta = res.hp - stats.getHp();
-                    result.experienceDelta = res.exp - stats.getExp();
-                    result.manaDelta = res.mp - stats.getMp();
-                    result.goldDelta = res.gp - stats.getGp();
-                    result.hasLeveledUp = res.lvl > stats.getLvl();
-                    if (res.get_tmp() != null) {
-                        result.drop = res.get_tmp().getDrop();
-                    }
-                    this.localRepository.executeTransaction(realm -> {
-                        if (task.type != null && !task.type.equals("reward")) {
-                            task.value = task.value + res.getDelta();
-                            if (Task.TYPE_DAILY.equals(task.type) || Task.TYPE_TODO.equals(task.type)) {
-                                task.completed = up;
-                            }
+                        result.taskValueDelta = res.getDelta();
+                        result.healthDelta = res.hp - stats.getHp();
+                        result.experienceDelta = res.exp - stats.getExp();
+                        result.manaDelta = res.mp - stats.getMp();
+                        result.goldDelta = res.gp - stats.getGp();
+                        result.hasLeveledUp = res.lvl > stats.getLvl();
+                        if (res.get_tmp() != null) {
+                            result.drop = res.get_tmp().getDrop();
                         }
-                        stats.setHp(res.hp);
-                        stats.setExp(res.exp);
-                        stats.setMp(res.mp);
-                        stats.setGp(res.gp);
-                        stats.setLvl(res.lvl);
-                        user.setStats(stats);
-                    });
+                        this.localRepository.executeTransaction(realm -> {
+                            if (task.type != null && !task.type.equals("reward")) {
+                                task.value = task.value + res.getDelta();
+                                if (Task.TYPE_DAILY.equals(task.type) || Task.TYPE_TODO.equals(task.type)) {
+                                    task.completed = up;
+                                }
+                            }
+                            stats.setHp(res.hp);
+                            stats.setExp(res.exp);
+                            stats.setMp(res.mp);
+                            stats.setGp(res.gp);
+                            stats.setLvl(res.lvl);
+                            user.setStats(stats);
+                        });
+                    }
                     return result;
                 });
     }
@@ -207,5 +211,10 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public Observable<List<Task>> getTaskCopies(String userId) {
         return getTasks(userId)
                 .map(localRepository::getUnmanagedCopy);
+    }
+
+    @Override
+    public Observable<List<Task>> getTaskCopies(RealmResults<Task> tasks) {
+        return Observable.just(localRepository.getUnmanagedCopy(tasks));
     }
 }

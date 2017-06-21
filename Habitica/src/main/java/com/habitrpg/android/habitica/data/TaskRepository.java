@@ -53,4 +53,6 @@ public interface TaskRepository extends BaseRepository  {
     void createTaskInBackground(Task task);
 
     Observable<List<Task>> getTaskCopies(String userId);
+
+    Observable<List<Task>> getTaskCopies(RealmResults<Task> tasks1);
 }

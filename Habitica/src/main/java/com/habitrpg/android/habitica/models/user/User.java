@@ -13,8 +13,11 @@ import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.ui.AvatarView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -53,6 +56,9 @@ public class User extends RealmObject {
     private TasksOrder tasksOrder;
 
     private RealmList<Challenge> challenges;
+
+    private Date lastCron;
+    private Boolean needsCron;
 
     public Preferences getPreferences() {
         return preferences;
@@ -450,5 +456,17 @@ public class User extends RealmObject {
 
     public boolean hasParty() {
         return party != null && party.id != null && party.id.length() > 0;
+    }
+
+    public boolean getNeedsCron() {
+        return needsCron;
+    }
+
+    public Date getLastCron() {
+        return lastCron;
+    }
+
+    public void setLastCron(Date lastCron) {
+        this.lastCron = lastCron;
     }
 }

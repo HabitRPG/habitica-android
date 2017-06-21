@@ -226,4 +226,6 @@ public interface ApiClient {
     <T> Observable.Transformer<HabitResponse<T>, T> configureApiCallObserver();
 
     Observable<Equipment> openMysteryItem();
+
+    Observable<Void> runCron();
 }

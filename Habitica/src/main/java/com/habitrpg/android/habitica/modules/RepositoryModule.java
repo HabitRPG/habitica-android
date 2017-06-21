@@ -43,6 +43,7 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmTaskLocalRep
 import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRepository;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -99,8 +100,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, TaskRepository taskRepository) {
-        return new UserRepositoryImpl(localRepository, apiClient, taskRepository);
+    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, Context context, @Named(AppModule.NAMED_USER_ID) String userId, TaskRepository taskRepository) {
+        return new UserRepositoryImpl(localRepository, apiClient, context, userId, taskRepository);
     }
 
     @Provides
