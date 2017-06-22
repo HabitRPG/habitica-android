@@ -98,6 +98,7 @@ public class UserRepositoryImplTest extends BaseTestCase {
         when(mockedApiClient.retrieveUser(false)).thenReturn(Observable.just(testUser));
         TestSubscriber<User> subscriber = new TestSubscriber<>();
         userRepository.retrieveUser(false).toBlocking().subscribe(subscriber);
+        subscriber.assertNoErrors();
         verify(mockedApiClient).retrieveUser(false);
         verify(mockedTaskRepository).saveTasks(testUser.getId(), testUser.getTasksOrder(), testUser.tasks);
     }

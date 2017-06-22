@@ -87,19 +87,21 @@ public class YesterdailyDialog extends AlertDialog {
     }
 
     public static void showDialogIfNeeded(Context context, String userId, UserRepository userRepository, TaskRepository taskRepository) {
-        userRepository.getUser(userId).first()
-                .filter(User::getNeedsCron)
-                .flatMap(user -> taskRepository.getTasks(Task.TYPE_DAILY, userId))
-                .first()
-                .map(tasks -> tasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll())
-                .flatMap(taskRepository::getTaskCopies)
-                .subscribe(tasks -> {
-                    if (tasks.size() > 0) {
-                        YesterdailyDialog dialog = new YesterdailyDialog(context, userRepository, tasks);
-                        dialog.show();
-                    } else {
-                        userRepository.runCron();
-                    }
-        }, RxErrorHandler.handleEmptyError());
+        if (userRepository != null && userId != null) {
+            userRepository.getUser(userId).first()
+                    .filter(User::getNeedsCron)
+                    .flatMap(user -> taskRepository.getTasks(Task.TYPE_DAILY, userId))
+                    .first()
+                    .map(tasks -> tasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll())
+                    .flatMap(taskRepository::getTaskCopies)
+                    .subscribe(tasks -> {
+                        if (tasks.size() > 0) {
+                            YesterdailyDialog dialog = new YesterdailyDialog(context, userRepository, tasks);
+                            dialog.show();
+                        } else {
+                            userRepository.runCron();
+                        }
+                    }, RxErrorHandler.handleEmptyError());
+        }
     }
 }
