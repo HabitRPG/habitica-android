@@ -28,6 +28,8 @@ import io.realm.RealmResults;
 
 public class YesterdailyDialog extends AlertDialog {
 
+    private static boolean isDisplaying = false;
+
     private final List<Task> tasks;
     private UserRepository userRepository;
 
@@ -46,16 +48,29 @@ public class YesterdailyDialog extends AlertDialog {
         View view = inflater.inflate(R.layout.dialog_yesterdaily, null);
         ButterKnife.bind(this, view);
         this.setView(view);
-        this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.start_day), (dialog, which) -> {
-            userRepository.runCron(tasks);
-        });
+        this.setButton(AlertDialog.BUTTON_POSITIVE,
+                context.getString(R.string.start_day),
+                (dialog, which) -> this.runCron());
+
+        this.setOnDismissListener(dialog -> runCron());
 
         createTaskViews(inflater);
+    }
+
+    private void runCron() {
+        List<Task> completedTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.completed) {
+                completedTasks.add(task);
+            }
+        }
+        userRepository.runCron(completedTasks);
     }
 
     private void createTaskViews(LayoutInflater inflater) {
         for (Task task : tasks) {
             View taskView = createNewTaskView(inflater);
+            taskView.setClipToOutline(true);
             configureTaskView(taskView, task);
             taskView.setOnClickListener(v -> {
                 task.completed = !task.completed;
@@ -66,7 +81,7 @@ public class YesterdailyDialog extends AlertDialog {
     }
 
     private void configureTaskView(View taskView, Task task) {
-        boolean completed = task.isDisplayedActive(0);
+        boolean completed = !task.isDisplayedActive(0);
         CheckBox checkbox = (CheckBox) taskView.findViewById(R.id.checkBox);
         View checkboxHolder = taskView.findViewById(R.id.checkBoxHolder);
         checkbox.setChecked(completed);
@@ -77,8 +92,6 @@ public class YesterdailyDialog extends AlertDialog {
         }
         TextView textView = (TextView) taskView.findViewById(R.id.text_view);
         textView.setText(task.getText());
-
-
     }
 
 
@@ -86,7 +99,7 @@ public class YesterdailyDialog extends AlertDialog {
         return inflater.inflate(R.layout.dialog_yesterdaily_task, yesterdailiesList, false);
     }
 
-    public static void showDialogIfNeeded(Context context, String userId, UserRepository userRepository, TaskRepository taskRepository) {
+    public static void showDialogIfNeeded(Activity activity, String userId, UserRepository userRepository, TaskRepository taskRepository) {
         if (userRepository != null && userId != null) {
             userRepository.getUser(userId).first()
                     .filter(User::getNeedsCron)
@@ -95,9 +108,13 @@ public class YesterdailyDialog extends AlertDialog {
                     .map(tasks -> tasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll())
                     .flatMap(taskRepository::getTaskCopies)
                     .subscribe(tasks -> {
+                        if (isDisplaying) {
+                            return;
+                        }
                         if (tasks.size() > 0) {
-                            YesterdailyDialog dialog = new YesterdailyDialog(context, userRepository, tasks);
+                            YesterdailyDialog dialog = new YesterdailyDialog(activity, userRepository, tasks);
                             dialog.show();
+                            isDisplaying = true;
                         } else {
                             userRepository.runCron();
                         }

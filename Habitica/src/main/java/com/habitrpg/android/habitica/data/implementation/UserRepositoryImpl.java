@@ -78,7 +78,6 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
             return apiClient.retrieveUser(withTasks)
                     .doOnNext(localRepository::saveUser)
                     .doOnNext(user -> taskRepository.saveTasks(user.getId(), user.getTasksOrder(), user.tasks))
-                    .doOnNext(user -> YesterdailyDialog.showDialogIfNeeded(context, userId, this, taskRepository))
                     .flatMap(user -> {
                         Calendar calendar = new GregorianCalendar();
                         TimeZone timeZone = calendar.getTimeZone();

@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="60dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:elevation="2dp"
+    android:layout_margin="4dp"
+    android:background="@drawable/layout_rounded_bg">
     <FrameLayout
         android:id="@+id/checkBoxHolder"
         android:layout_width="@dimen/button_width"
@@ -26,5 +29,6 @@
     <TextView
         android:id="@+id/text_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp" />
 </LinearLayout>

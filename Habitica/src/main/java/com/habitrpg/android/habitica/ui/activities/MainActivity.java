@@ -94,6 +94,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
+import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
@@ -388,6 +389,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             });
 
             displayDeathDialogIfNeeded();
+            YesterdailyDialog.showDialogIfNeeded(this, user.getId(), userRepository, taskRepository);
 
             if (!fromLocalDb) {
                 displayNewInboxMessagesBadge();

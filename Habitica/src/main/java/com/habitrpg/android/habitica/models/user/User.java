@@ -469,4 +469,8 @@ public class User extends RealmObject {
     public void setLastCron(Date lastCron) {
         this.lastCron = lastCron;
     }
+
+    public void setNeedsCron(boolean needsCron) {
+        this.needsCron = needsCron;
+    }
 }

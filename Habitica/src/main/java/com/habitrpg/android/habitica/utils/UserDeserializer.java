@@ -109,6 +109,10 @@ public class UserDeserializer implements JsonDeserializer<User> {
             user.setLastCron(context.deserialize(obj.get("lastCron"), Date.class));
         }
 
+        if (obj.has("needsCron")) {
+            user.setNeedsCron(obj.get("needsCron").getAsBoolean());
+        }
+
         return user;
     }
 }
