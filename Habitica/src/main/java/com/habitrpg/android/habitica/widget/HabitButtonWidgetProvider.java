@@ -75,7 +75,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
             int[] ids = {appWidgetId};
 
             if (taskId != null) {
-                userRepository.getUser(userId).flatMap(user -> taskRepository.taskChecked(user, taskId, TaskDirection.up.toString().equals(direction)))
+                userRepository.getUser(userId).flatMap(user -> taskRepository.taskChecked(user, taskId, TaskDirection.up.toString().equals(direction), false))
                         .subscribe(taskDirectionData -> {
                             showToastForTaskDirection(context, taskDirectionData, userId);
                             this.onUpdate(context, mgr, ids);

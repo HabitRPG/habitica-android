@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
@@ -212,11 +213,17 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     @Override
     public void runCron(List<Task> tasks) {
-        Observable.from(tasks)
-                .flatMap(task -> taskRepository.taskChecked(null, task, true))
-                .toList()
-                .flatMap(taskScoringResults -> apiClient.runCron())
-                .flatMap(aVoid -> this.retrieveUser(true));
+        Observable<List<TaskScoringResult>> observable;
+        if (tasks.size() > 0) {
+            observable = Observable.from(tasks)
+                    .flatMap(task -> taskRepository.taskChecked(null, task, true, true))
+                    .toList();
+        } else {
+            observable = Observable.just(null);
+        }
+        observable.flatMap(taskScoringResults -> apiClient.runCron())
+                .flatMap(aVoid -> this.retrieveUser(true))
+                .subscribe(user -> {}, RxErrorHandler.handleEmptyError());
     }
 
     private User mergeUser(User oldUser, User newUser) {

@@ -50,7 +50,7 @@ public class YesterdailyDialog extends AlertDialog {
         this.setView(view);
         this.setButton(AlertDialog.BUTTON_POSITIVE,
                 context.getString(R.string.start_day),
-                (dialog, which) -> this.runCron());
+                (dialog, which) -> {});
 
         this.setOnDismissListener(dialog -> runCron());
 
@@ -65,6 +65,7 @@ public class YesterdailyDialog extends AlertDialog {
             }
         }
         userRepository.runCron(completedTasks);
+        isDisplaying = false;
     }
 
     private void createTaskViews(LayoutInflater inflater) {

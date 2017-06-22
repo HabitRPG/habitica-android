@@ -23,8 +23,8 @@ public interface TaskRepository extends BaseRepository  {
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 
-    Observable<TaskScoringResult> taskChecked(User user, Task task, boolean up);
-    Observable<TaskScoringResult> taskChecked(User user, String taskId, boolean up);
+    Observable<TaskScoringResult> taskChecked(User user, Task task, boolean up, boolean force);
+    Observable<TaskScoringResult> taskChecked(User user, String taskId, boolean up, boolean force);
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
     Observable<Task> getTask(String taskId);

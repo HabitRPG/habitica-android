@@ -28,10 +28,7 @@ public class TodoCheckUseCase  extends UseCase<TodoCheckUseCase.RequestValues, T
 
     @Override
     protected Observable<TaskScoringResult> buildUseCaseObservable(TodoCheckUseCase.RequestValues requestValues) {
-        return taskRepository.taskChecked(requestValues.user, requestValues.task, requestValues.up).doOnNext(res -> {
-
-            soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
-        });
+        return taskRepository.taskChecked(requestValues.user, requestValues.task, requestValues.up, false).doOnNext(res -> soundManager.loadAndPlayAudio(SoundManager.SoundTodo));
     }
 
     public static final class RequestValues implements UseCase.RequestValues {

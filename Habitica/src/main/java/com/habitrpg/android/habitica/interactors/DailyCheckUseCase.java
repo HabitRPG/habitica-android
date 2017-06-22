@@ -28,10 +28,7 @@ public class DailyCheckUseCase extends UseCase<DailyCheckUseCase.RequestValues, 
 
     @Override
     protected Observable<TaskScoringResult> buildUseCaseObservable(RequestValues requestValues) {
-        return taskRepository.taskChecked(requestValues.user, requestValues.task, requestValues.up).doOnNext(res -> {
-
-            soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
-        });
+        return taskRepository.taskChecked(requestValues.user, requestValues.task, requestValues.up, false).doOnNext(res -> soundManager.loadAndPlayAudio(SoundManager.SoundDaily));
     }
 
     public static final class RequestValues implements UseCase.RequestValues {

@@ -29,7 +29,7 @@ public class BuyRewardUseCase extends UseCase<BuyRewardUseCase.RequestValues, Ta
     @Override
     protected Observable<TaskScoringResult> buildUseCaseObservable(BuyRewardUseCase.RequestValues requestValues) {
         return taskRepository
-                .taskChecked(requestValues.user, requestValues.task, false)
+                .taskChecked(requestValues.user, requestValues.task, false, false)
                 .doOnNext(res -> soundManager.loadAndPlayAudio(SoundManager.SoundReward));
     }
 

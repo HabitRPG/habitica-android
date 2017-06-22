@@ -55,7 +55,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
             String taskId = intent.getStringExtra(TASK_ID_ITEM);
 
             if (taskId != null) {
-                userRepository.getUser(userId).flatMap(user -> taskRepository.taskChecked(user, taskId, true))
+                userRepository.getUser(userId).flatMap(user -> taskRepository.taskChecked(user, taskId, true, false))
                         .subscribe(taskDirectionData -> {
                             taskRepository.markTaskCompleted(taskId, true);
                             showToastForTaskDirection(context, taskDirectionData, userId);

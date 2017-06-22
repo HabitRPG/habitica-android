@@ -53,9 +53,9 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<TaskScoringResult> taskChecked(@Nullable User user, Task task, boolean up) {
+    public Observable<TaskScoringResult> taskChecked(@Nullable User user, Task task, boolean up, boolean force) {
         long now = new Date().getTime();
-        if (lastTaskAction > now-500) {
+        if (lastTaskAction > now-500 || force) {
             return Observable.just(null);
         }
         lastTaskAction = now;
@@ -95,9 +95,9 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<TaskScoringResult> taskChecked(User user, String taskId, boolean up) {
+    public Observable<TaskScoringResult> taskChecked(User user, String taskId, boolean up, boolean force) {
         return localRepository.getTask(taskId)
-                .flatMap(task -> taskChecked(user, task, up));
+                .flatMap(task -> taskChecked(user, task, up, force));
     }
 
     public Observable<Task> scoreChecklistItem(String taskId, String itemId){
