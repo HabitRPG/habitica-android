@@ -458,7 +458,7 @@ public class User extends RealmObject {
         return party != null && party.id != null && party.id.length() > 0;
     }
 
-    public boolean getNeedsCron() {
+    public Boolean getNeedsCron() {
         return needsCron;
     }
 

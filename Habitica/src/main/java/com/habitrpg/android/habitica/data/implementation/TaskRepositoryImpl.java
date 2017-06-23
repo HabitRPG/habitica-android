@@ -55,7 +55,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     @Override
     public Observable<TaskScoringResult> taskChecked(@Nullable User user, Task task, boolean up, boolean force) {
         long now = new Date().getTime();
-        if (lastTaskAction > now-500 || force) {
+        if (lastTaskAction > now-500 && !force) {
             return Observable.just(null);
         }
         lastTaskAction = now;

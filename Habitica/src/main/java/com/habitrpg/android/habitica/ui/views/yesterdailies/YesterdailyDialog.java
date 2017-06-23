@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.yesterdailies;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,6 @@ import java.util.List;
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.RealmResults;
 
 public class YesterdailyDialog extends AlertDialog {
 
@@ -103,9 +101,8 @@ public class YesterdailyDialog extends AlertDialog {
     public static void showDialogIfNeeded(Activity activity, String userId, UserRepository userRepository, TaskRepository taskRepository) {
         if (userRepository != null && userId != null) {
             userRepository.getUser(userId).first()
-                    .filter(User::getNeedsCron)
-                    .flatMap(user -> taskRepository.getTasks(Task.TYPE_DAILY, userId))
-                    .first()
+                    .filter(user -> user != null && user.getNeedsCron() != null && user.getNeedsCron())
+                    .flatMap(user -> taskRepository.getTasks(Task.TYPE_DAILY, userId).first())
                     .map(tasks -> tasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll())
                     .flatMap(taskRepository::getTaskCopies)
                     .subscribe(tasks -> {
