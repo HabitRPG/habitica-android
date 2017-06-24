@@ -59,6 +59,7 @@ public class UiUtils {
                 snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.worse_10));
                 break;
             case FAILURE_BLUE:
+            case BLUE:
                 snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.best_100));
                 break;
             case DROP:
@@ -72,7 +73,7 @@ public class UiUtils {
     }
 
     public enum SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP
+        NORMAL, FAILURE, FAILURE_BLUE, DROP, BLUE
     }
 
 }

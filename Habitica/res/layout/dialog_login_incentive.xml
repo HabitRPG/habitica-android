@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
-
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:id="@+id/imageView" />
+        android:id="@+id/imageView"
+        android:layout_marginTop="16dp"/>
 
     <TextView
         android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:id="@+id/you_earned_message" />
+        android:id="@+id/you_earned_message"
+        tools:text="You unlocked something"/>
 
     <TextView
-        android:text=""
+        tools:text="Next prize unlocks in 2 check-ins."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:id="@+id/next_unlock_message" />
-
-    <Button
-        android:text="@string/see_you_tomorrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:id="@+id/confirm_button"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+        android:layout_marginTop="20dp"
+        android:id="@+id/next_unlock_message"
+        android:textColor="@color/best_10"/>
 
 </LinearLayout>
