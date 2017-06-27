@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="@dimen/bar_padding"
     android:orientation="horizontal"
     android:id="@+id/value_bar_layout">
@@ -48,13 +49,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            tools:text="50/50"
             />
         <TextView
             android:id="@+id/descriptionLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center|right"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:text="Health"/>
     </LinearLayout>
 
 </RelativeLayout>

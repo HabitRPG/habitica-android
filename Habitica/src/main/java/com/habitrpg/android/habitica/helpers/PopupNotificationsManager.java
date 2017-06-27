@@ -17,10 +17,14 @@ import com.google.repacked.kotlin.Unit;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
 import com.habitrpg.android.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.notifications.Reward;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.mikepenz.aboutlibraries.util.UIUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -105,7 +109,10 @@ public class PopupNotificationsManager {
             final AlertDialog dialog = builder.create();
             dialog.show();
         } else {
-            UiUtils.showSnackbar(context, null, context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt), UiUtils.SnackbarDisplayType.BLUE);
+            ShowSnackbarEvent event = new ShowSnackbarEvent();
+            event.text = context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt);
+            event.type = UiUtils.SnackbarDisplayType.BLUE;
+            EventBus.getDefault().post(event);
         }
         return true;
     }

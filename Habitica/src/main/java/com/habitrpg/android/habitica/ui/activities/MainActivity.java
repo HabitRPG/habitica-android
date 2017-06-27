@@ -52,6 +52,7 @@ import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
 import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
@@ -980,6 +981,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    @Subscribe
+    public void showSnackBarEvent(ShowSnackbarEvent event) {
+        showSnackbar(this, floatingMenuWrapper, event.text, event.type);
     }
 
     public boolean isAppBarExpanded() {
