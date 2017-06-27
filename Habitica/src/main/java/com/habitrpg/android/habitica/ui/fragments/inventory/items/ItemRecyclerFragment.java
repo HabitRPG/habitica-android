@@ -167,11 +167,11 @@ public class ItemRecyclerFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        if (this.isHatching != null && this.isHatching && getDialog().getWindow() != null) {
-            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        if (((this.isHatching != null && this.isHatching) || (this.isFeeding != null && this.isFeeding)) && getDialog().getWindow() != null) {
+            android.view.WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
             params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-            getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            params.verticalMargin = 60;
+            getDialog().getWindow().setAttributes(params);
         }
 
         super.onResume();
