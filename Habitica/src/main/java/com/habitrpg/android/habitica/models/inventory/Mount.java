@@ -108,7 +108,11 @@ public class Mount extends RealmObject implements Animal {
     }
 
     public boolean getOwned() {
-        return owned;
+        if (owned == null) {
+            return false;
+        } else {
+            return owned;
+        }
     }
 
     public void setOwned(@Nullable Boolean owned) {

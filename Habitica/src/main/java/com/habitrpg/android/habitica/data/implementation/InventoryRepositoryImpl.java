@@ -146,12 +146,18 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                 .map(user1 -> {
                     localRepository.executeTransaction(realm -> {
                         if (user != null) {
-                            user1.getItems().setUserId(user.getId());
-                            Items items = realm.copyToRealmOrUpdate(user1.getItems());
-                            user1.getStats().setUserId(user.getId());
-                            Stats stats = realm.copyToRealmOrUpdate(user1.getStats());
-                            user.setItems(items);
-                            user.setStats(stats);
+                            if (user1.getItems() != null) {
+                                user1.getItems().setUserId(user.getId());
+                                Items items = realm.copyToRealmOrUpdate(user1.getItems());
+                                user.setItems(items);
+                            } else {
+                                item.setOwned(item.getOwned()-1);
+                            }
+                            if (user.getStats() != null) {
+                                user1.getStats().setUserId(user.getId());
+                                Stats stats = realm.copyToRealmOrUpdate(user1.getStats());
+                                user.setStats(stats);
+                            }
                         }
                     });
                     return user;
