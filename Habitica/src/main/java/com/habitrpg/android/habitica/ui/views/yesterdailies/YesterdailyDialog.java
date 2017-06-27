@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class YesterdailyDialog extends AlertDialog {
 
-    private static boolean isDisplaying = false;
+    static boolean isDisplaying = false;
 
     private final List<Task> tasks;
     private UserRepository userRepository;
@@ -110,13 +109,17 @@ public class YesterdailyDialog extends AlertDialog {
                             return;
                         }
                         if (tasks.size() > 0) {
-                            YesterdailyDialog dialog = new YesterdailyDialog(activity, userRepository, tasks);
-                            dialog.show();
-                            isDisplaying = true;
+                            showDialog(activity, userRepository, tasks);
                         } else {
                             userRepository.runCron();
                         }
                     }, RxErrorHandler.handleEmptyError());
         }
+    }
+
+    static void showDialog(Activity activity, UserRepository userRepository, List<Task> tasks) {
+        YesterdailyDialog dialog = new YesterdailyDialog(activity, userRepository, tasks);
+        dialog.show();
+        isDisplaying = true;
     }
 }
