@@ -187,4 +187,16 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
                 .filter(realmObject -> realmObject.isLoaded())
                 .cast(Task.class);
     }
+
+    @Override
+    public void updateIsdue(TaskList dailies) {
+        RealmResults<Task> tasks = realm.where(Task.class).equalTo("type", "daily").findAll();
+        realm.executeTransaction(realm1 -> {
+            for (Task task : tasks) {
+                if (dailies.tasks.containsKey(task.getId())) {
+                    task.isDue = dailies.tasks.get(task.getId()).isDue;
+                }
+            }
+        });
+    }
 }

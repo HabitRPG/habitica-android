@@ -17,6 +17,8 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindColor;
@@ -101,6 +103,12 @@ public class YesterdailyDialog extends AlertDialog {
         if (userRepository != null && userId != null) {
             userRepository.getUser(userId).first()
                     .filter(user -> user != null && user.getNeedsCron() != null && user.getNeedsCron())
+                    .filter(user -> user != null)
+                    .flatMap(user -> {
+                        final Calendar cal = Calendar.getInstance();
+                        cal.add(Calendar.DATE, -1);
+                        return taskRepository.updateDailiesIsDue(cal.getTime());
+                    })
                     .flatMap(user -> taskRepository.getTasks(Task.TYPE_DAILY, userId).first())
                     .map(tasks -> tasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll())
                     .flatMap(taskRepository::getTaskCopies)

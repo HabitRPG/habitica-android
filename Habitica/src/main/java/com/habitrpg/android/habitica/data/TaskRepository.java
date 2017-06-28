@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data;
 
+import com.google.android.gms.tasks.Tasks;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
@@ -10,6 +11,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -21,7 +23,8 @@ public interface TaskRepository extends BaseRepository  {
     Observable<RealmResults<Task>> getTasks(String userId);
     void saveTasks(String userId, TasksOrder order, TaskList tasks);
 
-    Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
+    Observable<TaskList> retrieveTasks(String userId, TasksOrder tasksOrder);
+    Observable<TaskList> retrieveTasks(String userId, TasksOrder tasksOrder, Date dueDate);
 
     Observable<TaskScoringResult> taskChecked(User user, Task task, boolean up, boolean force);
     Observable<TaskScoringResult> taskChecked(User user, String taskId, boolean up, boolean force);
@@ -55,4 +58,6 @@ public interface TaskRepository extends BaseRepository  {
     Observable<List<Task>> getTaskCopies(String userId);
 
     Observable<List<Task>> getTaskCopies(RealmResults<Task> tasks1);
+
+    Observable<TaskList> updateDailiesIsDue(Date date);
 }

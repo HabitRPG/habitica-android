@@ -47,9 +47,15 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<TaskList> refreshTasks(TasksOrder tasksOrder) {
+    public Observable<TaskList> retrieveTasks(String userId, TasksOrder tasksOrder) {
         return this.apiClient.getTasks()
-                .doOnNext(res -> this.localRepository.saveTasks(null, tasksOrder, res));
+                .doOnNext(res -> this.localRepository.saveTasks(userId, tasksOrder, res));
+    }
+
+    @Override
+    public Observable<TaskList> retrieveTasks(String userId, TasksOrder tasksOrder, Date dueDate) {
+        return this.apiClient.getTasks("dailys", dueDate)
+                .doOnNext(res -> this.localRepository.saveTasks(userId, tasksOrder, res));
     }
 
     @Override
@@ -216,5 +222,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     @Override
     public Observable<List<Task>> getTaskCopies(RealmResults<Task> tasks) {
         return Observable.just(localRepository.getUnmanagedCopy(tasks));
+    }
+
+    @Override
+    public Observable<TaskList> updateDailiesIsDue(Date date) {
+        return apiClient.getTasks("dailys", date)
+                .doOnNext(localRepository::updateIsdue);
     }
 }

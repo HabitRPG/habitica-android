@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Items;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +77,9 @@ public interface ApiClient {
 
 
     Observable<TaskList> getTasks();
+    Observable<TaskList> getTasks(String type);
+    Observable<TaskList> getTasks(String type, Date dueDate);
+
 
     Observable<UnlockResponse> unlockPath(String path);
 

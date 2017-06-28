@@ -502,6 +502,18 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
+    public Observable<TaskList> getTasks(String type) {
+        return apiService.getTasks(type).compose(configureApiCallObserver());
+    }
+
+
+    @Override
+    public Observable<TaskList> getTasks(String type, Date dueDate) {
+        return apiService.getTasks(type, dueDate).compose(configureApiCallObserver());
+    }
+
+
+    @Override
     public Observable<UnlockResponse> unlockPath(String path) {
         return apiService.unlockPath(path).compose(configureApiCallObserver());
     }

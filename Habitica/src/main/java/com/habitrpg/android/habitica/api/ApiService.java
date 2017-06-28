@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -97,6 +98,13 @@ public interface ApiService {
 
     @GET("tasks/user")
     Observable<HabitResponse<TaskList>> getTasks();
+
+    @GET("tasks/user")
+    Observable<HabitResponse<TaskList>> getTasks(@Query("type") String type);
+
+    @GET("tasks/user")
+    Observable<HabitResponse<TaskList>> getTasks(@Query("type") String type, @Query("dueDate") Date dueDate);
+
 
     @POST("user/unlock")
     Observable<HabitResponse<UnlockResponse>> unlockPath(@Query("path") String path);

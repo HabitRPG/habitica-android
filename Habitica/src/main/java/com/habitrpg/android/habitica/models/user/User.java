@@ -459,6 +459,9 @@ public class User extends RealmObject {
     }
 
     public Boolean getNeedsCron() {
+        if (needsCron == null) {
+            return false;
+        }
         return needsCron;
     }
 
