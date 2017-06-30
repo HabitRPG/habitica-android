@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.yesterdailies;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,9 @@ public class YesterdailyDialog extends AlertDialog {
     private void createTaskViews(LayoutInflater inflater) {
         for (Task task : tasks) {
             View taskView = createNewTaskView(inflater);
-            taskView.setClipToOutline(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                taskView.setClipToOutline(true);
+            }
             configureTaskView(taskView, task);
             taskView.setOnClickListener(v -> {
                 task.completed = !task.completed;
