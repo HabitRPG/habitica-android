@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -144,6 +145,12 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         chatAdapter = new ChatRecyclerViewAdapter(null, true, user, groupId);
+        compositeSubscription.add(chatAdapter.getUserLabelClickEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getDeleteMessageEvents().subscribe(this::showDeleteConfirmationDialog, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getFlatMessageEvents().subscribe(this::showFlagConfirmationDialog, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getCopyMessageAsTodoEvents().subscribe(this::copyMessageAsTodo, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getCopyMessageEvents().subscribe(this::copyMessageToClipboard, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getLikeMessageEvents().flatMap(socialRepository::likeMessage).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError()));
 
         recyclerView.setAdapter(chatAdapter);
 
@@ -162,6 +169,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
         onRefresh();
     }
+
 
     @Override
     public void onRefresh() {
@@ -195,42 +203,38 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
     }
 
-    @Subscribe
-    public void onEvent(CopyChatMessageCommand cmd) {
+    public void copyMessageToClipboard(ChatMessage chatMessage) {
         ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData chatMessage = ClipData.newPlainText("Chat message", cmd.chatMessage.text);
-        clipMan.setPrimaryClip(chatMessage);
+        ClipData messageText = ClipData.newPlainText("Chat message", chatMessage.text);
+        clipMan.setPrimaryClip(messageText);
         MainActivity activity = (MainActivity) getActivity();
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), UiUtils.SnackbarDisplayType.NORMAL);
     }
 
-    @Subscribe
-    public void onEvent(final FlagChatMessageCommand cmd) {
+    public void showFlagConfirmationDialog(ChatMessage chatMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.chat_flag_confirmation)
-                .setPositiveButton(R.string.flag_confirm, (dialog, id) -> socialRepository.flagMessage(cmd.groupId, cmd.chatMessage.id)
+                .setPositiveButton(R.string.flag_confirm, (dialog, id) -> socialRepository.flagMessage(chatMessage)
                         .subscribe(aVoid -> {
                             MainActivity activity = (MainActivity) getActivity();
-                            UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
+                            UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
                         }, throwable -> {
                         }))
-                .setNegativeButton(R.string.action_cancel, (dialog, id) -> {
-                });
+                .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});
         builder.show();
     }
 
-    @Subscribe
-    public void onEvent(final ToggleLikeMessageCommand cmd) {
-        socialRepository.likeMessage(cmd.groupId, cmd.chatMessage.id)
-                .subscribe(voids -> {
-                }, throwable -> {
-                });
+    private void showDeleteConfirmationDialog(ChatMessage chatMessage) {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.confirm_delete_tag_title)
+                .setMessage(R.string.confirm_delete_tag_message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> socialRepository.deleteMessage(chatMessage).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError()))
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
-    @Subscribe
-    public void onEvent(final DeleteChatMessageCommand cmd) {
-        socialRepository.deleteMessage(cmd.groupId, cmd.chatMessage.id)
-                .subscribe(aVoid -> {}, throwable -> {});
+    private void copyMessageAsTodo(ChatMessage chatMessage) {
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data.local;
 
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
@@ -23,7 +24,9 @@ public interface SocialLocalRepository extends BaseLocalRepository {
 
     void deleteMessage(String id);
 
-    Observable<RealmResults<User>> getGroupMembers(String partyId);
+    Observable<RealmResults<Member>> getGroupMembers(String partyId);
 
     void updateRSVPNeeded(User user, boolean newValue);
+
+    void likeMessage(ChatMessage chatMessage, String userId, boolean liked);
 }

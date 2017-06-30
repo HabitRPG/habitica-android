@@ -104,7 +104,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
             AvatarView avatarView = new AvatarView(context, true, true, true);
 
-            avatarView.setUser(user);
+            avatarView.setAvatar(user);
             RemoteViews finalRemoteViews = remoteViews;
             avatarView.onAvatarImageReady(bitmap -> {
                 finalRemoteViews.setImageViewBitmap(R.id.avatar_view, bitmap);

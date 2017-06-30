@@ -113,6 +113,12 @@ public class PopupNotificationsManager {
             event.text = context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt);
             event.type = UiUtils.SnackbarDisplayType.BLUE;
             EventBus.getDefault().post(event);
+            if (apiClient != null) {
+                // @TODO: This should be handled somewhere else? MAybe we notifiy via event
+                apiClient.readNotificaiton(notification.getId())
+                        .subscribe(next -> {
+                        }, RxErrorHandler.handleEmptyError());
+            }
         }
         return true;
     }

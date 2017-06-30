@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
@@ -77,6 +78,7 @@ import com.habitrpg.android.habitica.utils.FeedResponseDeserializer;
 import com.habitrpg.android.habitica.utils.FoodListDeserializer;
 import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.HatchingPotionListDeserializer;
+import com.habitrpg.android.habitica.utils.MemberSerialization;
 import com.habitrpg.android.habitica.utils.MountListDeserializer;
 import com.habitrpg.android.habitica.utils.MountMapDeserializer;
 import com.habitrpg.android.habitica.utils.PetListDeserializer;
@@ -259,6 +261,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(chatMessageListType, new ChatMessageListDeserializer())
                 .registerTypeAdapter(challengeListType, new ChallengeListDeserializer())
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
+                .registerTypeAdapter(Member.class, new MemberSerialization())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);
@@ -654,12 +657,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<List<User>> getGroupMembers(String groupId, Boolean includeAllPublicFields) {
+    public Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields) {
         return apiService.getGroupMembers(groupId, includeAllPublicFields).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<List<User>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId) {
+    public Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId) {
         return apiService.getGroupMembers(groupId, includeAllPublicFields, lastId).compose(configureApiCallObserver());
     }
 
@@ -739,7 +742,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<User> getMember(String memberId) {
+    public Observable<Member> getMember(String memberId) {
         return apiService.getMember(memberId).compose(configureApiCallObserver());
     }
 

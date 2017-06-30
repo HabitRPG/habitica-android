@@ -13,17 +13,15 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -282,7 +280,7 @@ public class ChallengeDetailDialogHolder {
 
     @OnClick(R.id.challenge_leader)
     void openLeaderProfile() {
-        EventBus.getDefault().post(new OpenFullProfileCommand(challenge.leaderId));
+        FullProfileActivity.open(context, challenge.leaderId);
     }
 
     @OnClick(R.id.challenge_go_to_btn)

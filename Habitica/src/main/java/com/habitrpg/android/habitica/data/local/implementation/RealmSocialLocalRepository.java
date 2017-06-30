@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.ChatMessageLike;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.User;
-
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -73,8 +73,8 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
     }
 
     @Override
-    public Observable<RealmResults<User>> getGroupMembers(String partyId) {
-        return realm.where(User.class)
+    public Observable<RealmResults<Member>> getGroupMembers(String partyId) {
+        return realm.where(Member.class)
                 .equalTo("party.id", partyId)
                 .findAllAsync()
                 .asObservable()
@@ -86,6 +86,25 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
         if (user != null && user.getParty() != null && user.getParty().getQuest() != null) {
             realm.executeTransaction(realm1 -> user.getParty().getQuest().RSVPNeeded = newValue);
         }
+    }
+
+    @Override
+    public void likeMessage(ChatMessage chatMessage, String userId, boolean liked) {
+        if (chatMessage.userLikesMessage(userId) == liked) {
+            return;
+        }
+        realm.executeTransaction(realm1 -> {
+            if (liked) {
+                chatMessage.likes.add(new ChatMessageLike(userId));
+            } else {
+                for (ChatMessageLike like : chatMessage.likes) {
+                    if (userId.equals(like.id)) {
+                        like.deleteFromRealm();
+                        return;
+                    }
+                }
+            }
+        });
     }
 
     private Observable<ChatMessage> getMessage(String id) {

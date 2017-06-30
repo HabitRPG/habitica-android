@@ -33,7 +33,8 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
                 .findAllSorted("position")
                 .sort("dateCreated", Sort.DESCENDING)
                 .asObservable()
-                .filter(RealmResults::isLoaded);
+                .filter(RealmResults::isLoaded)
+                .retry(1);
     }
 
     @Override

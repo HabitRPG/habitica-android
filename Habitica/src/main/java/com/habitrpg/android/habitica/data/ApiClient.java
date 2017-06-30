@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data;
 
 import android.support.annotation.Nullable;
 
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.habitrpg.android.habitica.models.AchievementResult;
 import com.habitrpg.android.habitica.models.ContentResult;
@@ -145,9 +146,9 @@ public interface ApiClient {
 
     Observable<Void> deleteMessage(String groupId, String messageId);
 
-    Observable<List<User>> getGroupMembers(String groupId, Boolean includeAllPublicFields);
+    Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields);
 
-    Observable<List<User>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId);
+    Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId);
 
     // Like returns the full chat list
     Observable<ChatMessage> likeMessage(String groupId, String mid);
@@ -179,7 +180,7 @@ public interface ApiClient {
     Observable<User> changeCustomDayStart(Map<String, Object> updateObject);
 
     //Members URL
-    Observable<User> getMember(String memberId);
+    Observable<Member> getMember(String memberId);
 
     Observable<AchievementResult> getMemberAchievements(String memberId);
 

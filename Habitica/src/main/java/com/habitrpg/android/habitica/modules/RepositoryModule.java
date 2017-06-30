@@ -110,8 +110,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    SocialRepository providesSocialRepository(SocialLocalRepository localRepository, ApiClient apiClient) {
-        return new SocialRepositoryImpl(localRepository, apiClient);
+    SocialRepository providesSocialRepository(SocialLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
+        return new SocialRepositoryImpl(localRepository, apiClient, userId);
     }
 
     @Provides

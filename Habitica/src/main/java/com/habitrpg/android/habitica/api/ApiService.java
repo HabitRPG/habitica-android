@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.responses.HabitResponse;
@@ -206,10 +207,10 @@ public interface ApiService {
     Observable<HabitResponse<Void>> deleteMessage(@Path("gid") String groupId, @Path("messageId") String messageId);
 
     @GET("groups/{gid}/members")
-    Observable<HabitResponse<List<User>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields);
+    Observable<HabitResponse<List<Member>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields);
 
     @GET("groups/{gid}/members")
-    Observable<HabitResponse<List<User>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields, @Query("lastId") String lastId);
+    Observable<HabitResponse<List<Member>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields, @Query("lastId") String lastId);
 
     // Like returns the full chat list
     @POST("groups/{gid}/chat/{mid}/like")
@@ -259,7 +260,7 @@ public interface ApiService {
 
     //Members URL
     @GET("members/{mid}")
-    Observable<HabitResponse<User>> getMember(@Path("mid") String memberId);
+    Observable<HabitResponse<Member>> getMember(@Path("mid") String memberId);
 
     @GET("members/{mid}/achievements")
     Observable<HabitResponse<AchievementResult>> getMemberAchievements(@Path("mid") String memberId);

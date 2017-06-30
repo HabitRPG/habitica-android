@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data;
 
 import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
@@ -20,11 +21,11 @@ public interface SocialRepository extends BaseRepository {
 
     void markMessagesSeen(String seenGroupId);
 
-    Observable<Void> flagMessage(String groupId, String id);
+    Observable<Void> flagMessage(ChatMessage chatMessage);
 
-    Observable<ChatMessage> likeMessage(String groupId, String id);
+    Observable<ChatMessage> likeMessage(ChatMessage chatMessage);
 
-    Observable<Void> deleteMessage(String groupId, String id);
+    Observable<Void> deleteMessage(ChatMessage chatMessage);
 
     Observable<PostChatMessageResult> postGroupChat(String groupId, HashMap<String, String> messageObject);
     Observable<PostChatMessageResult> postGroupChat(String groupId, String message);
@@ -46,14 +47,14 @@ public interface SocialRepository extends BaseRepository {
     Observable<PostChatMessageResult> postPrivateMessage(String recipientId, String message);
 
 
-    Observable<RealmResults<User>> getGroupMembers(String id);
-    Observable<List<User>> retrieveGroupMembers(String id, boolean includeAllPublicFields);
+    Observable<RealmResults<Member>> getGroupMembers(String id);
+    Observable<List<Member>> retrieveGroupMembers(String id, boolean includeAllPublicFields);
 
     Observable<Void> inviteToGroup(String id, Map<String, Object> inviteData);
 
     Observable<List<Challenge>> getUserChallenges();
 
-    Observable<User> getMember(String userId);
+    Observable<Member> getMember(String userId);
 
     Observable<Void> markPrivateMessagesRead(User user);
 

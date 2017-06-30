@@ -8,10 +8,14 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.social.Backer;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.ChatMessageLike;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
+
+import io.realm.RealmList;
 
 public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
     @Override
@@ -28,8 +32,12 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
             message.timestamp = obj.get("timestamp").getAsLong();
         }
         if (obj.has("likes")) {
-            message.likes = context.deserialize(obj.get("likes"), new TypeToken<HashMap<String, Boolean>>() {
-            }.getType());
+            message.likes = new RealmList<>();
+            for (Map.Entry<String, JsonElement> likeEntry : obj.getAsJsonObject("likes").entrySet()) {
+                if (likeEntry.getValue().getAsBoolean()) {
+                    message.likes.add(new ChatMessageLike(likeEntry.getKey()));
+                }
+            }
         }
         if (obj.has("flagCount")) {
             message.flagCount = obj.get("flagCount").getAsInt();

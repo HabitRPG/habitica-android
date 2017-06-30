@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -37,8 +37,8 @@ import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.AchievementGroup;
 import com.habitrpg.android.habitica.models.AchievementResult;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.user.Buffs;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Profile;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -113,7 +113,18 @@ public class FullProfileActivity extends BaseActivity {
     private boolean attributeDetailsHidden = true;
     private ArrayList<TableRow> attributeRows = new ArrayList<>();
 
-    // region Utils
+    public static void open(Context context, String userId) {
+        if (userId.equals("system")) {
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", userId);
+
+        Intent intent = new Intent(context, FullProfileActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,10 +136,7 @@ public class FullProfileActivity extends BaseActivity {
 
         setTitle(R.string.profile_loading_data);
 
-        socialRepository.getMember(this.userId)
-                .subscribe(this::updateView,
-                        throwable -> {
-                        });
+        socialRepository.getMember(this.userId).subscribe(this::updateView, RxErrorHandler.handleEmptyError());
 
         avatarWithBars = new AvatarWithBarsViewModel(this, avatar_with_bars);
         avatarWithBars.hideGems();
@@ -152,7 +160,6 @@ public class FullProfileActivity extends BaseActivity {
 
         if (id == R.id.private_message) {
             showSendMessageToUserDialog();
-
             return true;
         }
 
@@ -176,7 +183,7 @@ public class FullProfileActivity extends BaseActivity {
 
         final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    socialRepository.postPrivateMessage(emojiEditText.getText().toString(), userId)
+                    socialRepository.postPrivateMessage(userId, emojiEditText.getText().toString())
                             .subscribe(postChatMessageResult -> UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
                                     String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL), throwable -> {
                             });
@@ -192,7 +199,7 @@ public class FullProfileActivity extends BaseActivity {
         addMessageDialog.show();
     }
 
-    private void updateView(User user) {
+    private void updateView(Member user) {
         Profile profile = user.getProfile();
         Stats stats = user.getStats();
 
@@ -224,20 +231,18 @@ public class FullProfileActivity extends BaseActivity {
         copyUserIdButton.setOnClickListener(view -> {
             android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
                     .getSystemService(CLIPBOARD_SERVICE);
-            android.content.ClipData clip = android.content.ClipData
-                    .newPlainText(
-                            userId, userId);
+            android.content.ClipData clip = android.content.ClipData.newPlainText(userId, userId);
             clipboard.setPrimaryClip(clip);
         });
 
 
-        avatarView.setUser(user);
+        avatarView.setAvatar(user);
         avatarWithBars.updateData(user);
 
         addLevelAttributes(stats, user);
 
-        petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
-        mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
+        //petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
+        //mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
         apiClient.getMemberAchievements(this.userId)
@@ -340,15 +345,15 @@ public class FullProfileActivity extends BaseActivity {
         return gearRow;
     }
 
-    private void addLevelAttributes(Stats stats, User user) {
+    private void addLevelAttributes(Stats stats, Member user) {
         float byLevelStat = Math.min(stats.getLvl() / 2.0f, 50f);
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
 
-        loadItemDataByOutfit(user.getItems().getGear().getEquipped()).subscribe(gear -> this.gotGear(gear, user), RxErrorHandler.handleEmptyError());
+        loadItemDataByOutfit(user.getEquipped()).subscribe(gear -> this.gotGear(gear, user), RxErrorHandler.handleEmptyError());
 
         if (user.getPreferences().getCostume()) {
-            loadItemDataByOutfit(user.getItems().getGear().getCostume()).subscribe(this::gotCostume, RxErrorHandler.handleEmptyError());
+            loadItemDataByOutfit(user.getCostume()).subscribe(this::gotCostume, RxErrorHandler.handleEmptyError());
         } else {
             costumeCard.setVisibility(View.GONE);
         }
@@ -368,7 +373,7 @@ public class FullProfileActivity extends BaseActivity {
         return inventoryRepository.getItems(outfitList);
     }
 
-    public void gotGear(List<Equipment> equipmentList, User user) {
+    public void gotGear(List<Equipment> equipmentList, Member user) {
         UserStatComputer userStatComputer = new UserStatComputer();
         List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
 

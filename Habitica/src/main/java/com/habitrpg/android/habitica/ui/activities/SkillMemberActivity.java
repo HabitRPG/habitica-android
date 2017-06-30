@@ -8,13 +8,11 @@ import android.support.v7.widget.RecyclerView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
@@ -48,7 +46,13 @@ public class SkillMemberActivity extends BaseActivity {
 
     private void loadMemberList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        viewAdapter = new PartyMemberRecyclerViewAdapter(null, true, this, true);
+        viewAdapter = new PartyMemberRecyclerViewAdapter(null, true, this);
+        viewAdapter.getUserClickedEvents().subscribe(userId -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("member_id", userId);
+            setResult(Activity.RESULT_OK, resultIntent);
+            finish();
+        }, RxErrorHandler.handleEmptyError());
         recyclerView.setAdapter(viewAdapter);
 
         socialRepository.getGroup("party")
@@ -61,13 +65,5 @@ public class SkillMemberActivity extends BaseActivity {
                                     .subscribe(members -> viewAdapter.updateData(members),
                                             throwable -> {});
                         }, throwable -> {});
-    }
-
-    @Subscribe
-    public void onEvent(SelectMemberCommand evt) {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("member_id", evt.MemberId);
-        setResult(Activity.RESULT_OK, resultIntent);
-        finish();
     }
 }

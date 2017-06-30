@@ -11,33 +11,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
-import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
-public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<User, PartyMemberRecyclerViewAdapter.MemberViewHolder> {
+public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Member, PartyMemberRecyclerViewAdapter.MemberViewHolder> {
 
 
     private Context context;
-    private boolean isMemberSelection;
 
-    public PartyMemberRecyclerViewAdapter(@Nullable OrderedRealmCollection<User> data, boolean autoUpdate, Context context, boolean isMemberSelection) {
+    private PublishSubject<String> userClickedEvents = PublishSubject.create();
+
+
+    public PartyMemberRecyclerViewAdapter(@Nullable OrderedRealmCollection<Member> data, boolean autoUpdate, Context context) {
         super(data, autoUpdate);
         this.context = context;
-        this.isMemberSelection = isMemberSelection;
     }
 
     @Override
@@ -54,6 +51,10 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Use
         if (getData() != null) {
             holder.bind(getData().get(position));
         }
+    }
+
+    public Observable<String> getUserClickedEvents() {
+        return userClickedEvents.asObservable();
     }
 
     class MemberViewHolder extends RecyclerView.ViewHolder {
@@ -88,8 +89,8 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Use
             resources = itemView.getResources();
         }
 
-        public void bind(User user) {
-            avatarView.setUser(user);
+        public void bind(Member user) {
+            avatarView.setAvatar(user);
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats());
 
@@ -122,19 +123,7 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Use
             userName.setText(user.getProfile().getName());
 
             itemView.setClickable(true);
-            itemView.setOnClickListener(view -> {
-                if (isMemberSelection) {
-                    SelectMemberCommand cmd = new SelectMemberCommand(user.getId());
-
-                    EventBus.getDefault().post(cmd);
-                } else {
-                    OpenFullProfileCommand cmd = new OpenFullProfileCommand(user.getId());
-
-                    EventBus.getDefault().post(cmd);
-                }
-            });
+            itemView.setOnClickListener(view -> userClickedEvents.onNext(user.getId()));
         }
-
-
     }
 }

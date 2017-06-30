@@ -25,7 +25,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,8 +35,8 @@ import android.widget.FrameLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.api.MaintenanceApiService;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
@@ -58,7 +57,6 @@ import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
@@ -451,7 +449,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 }
             }
             profile.withName(user.getProfile().getName());
-            sideAvatarView.setUser(user);
+            sideAvatarView.setAvatar(user);
             sideAvatarView.onAvatarImageReady(avatarImage -> {
                 profile.withIcon(avatarImage);
                 accountHeader.updateProfile(profile);
@@ -767,7 +765,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 hpBarView.setLightBackground(true);
 
                 AvatarView dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
-                dialogAvatarView.setUser(user);
+                dialogAvatarView.setAvatar(user);
             }
 
             this.faintDialog = new AlertDialog.Builder(this)
@@ -966,21 +964,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         data.putBoolean("deprecationNotice", isDeprecationNotice);
         intent.putExtras(data);
         return intent;
-    }
-
-
-    @Subscribe
-    public void onEvent(OpenFullProfileCommand cmd) {
-        if (cmd.MemberId.equals("system")) {
-            return;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString("userId", cmd.MemberId);
-
-        Intent intent = new Intent(this, FullProfileActivity.class);
-        intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
     }
 
     @Subscribe

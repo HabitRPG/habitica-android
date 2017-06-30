@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
@@ -17,12 +18,16 @@ import java.util.Map;
 
 import io.realm.RealmResults;
 import rx.Observable;
+import rx.functions.Action1;
 
 
 public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalRepository> implements SocialRepository {
 
-    public SocialRepositoryImpl(SocialLocalRepository localRepository, ApiClient apiClient) {
+    private final String userId;
+
+    public SocialRepositoryImpl(SocialLocalRepository localRepository, ApiClient apiClient, String userId) {
         super(localRepository, apiClient);
+        this.userId = userId;
     }
 
     @Override
@@ -48,19 +53,22 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<Void> flagMessage(String groupId, String id) {
-        return apiClient.flagMessage(groupId, id);
+    public Observable<Void> flagMessage(ChatMessage chatMessage) {
+        return apiClient.flagMessage(chatMessage.groupId, chatMessage.id);
     }
 
     @Override
-    public Observable<ChatMessage> likeMessage(String groupId, String id) {
-        return apiClient.likeMessage(groupId, id);
+    public Observable<ChatMessage> likeMessage(ChatMessage chatMessage) {
+        boolean liked = chatMessage.userLikesMessage(userId);
+        localRepository.likeMessage(chatMessage, userId, !liked);
+        return apiClient.likeMessage(chatMessage.groupId, chatMessage.id)
+                .doOnError(throwable -> localRepository.likeMessage(chatMessage, userId, liked));
     }
 
     @Override
-    public Observable<Void> deleteMessage(String groupId, String id) {
-        return apiClient.deleteMessage(groupId, id)
-                .doOnNext(aVoid -> localRepository.deleteMessage(id));
+    public Observable<Void> deleteMessage(ChatMessage chatMessage) {
+        return apiClient.deleteMessage(chatMessage.groupId, chatMessage.id)
+                .doOnNext(aVoid -> localRepository.deleteMessage(chatMessage.id));
     }
 
     @Override
@@ -161,12 +169,12 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<RealmResults<User>> getGroupMembers(String id) {
+    public Observable<RealmResults<Member>> getGroupMembers(String id) {
         return localRepository.getGroupMembers(id);
     }
 
     @Override
-    public Observable<List<User>> retrieveGroupMembers(String id, boolean includeAllPublicFields) {
+    public Observable<List<Member>> retrieveGroupMembers(String id, boolean includeAllPublicFields) {
         return apiClient.getGroupMembers(id, includeAllPublicFields)
                 .doOnNext(localRepository::save);
     }
@@ -182,7 +190,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<User> getMember(String userId) {
+    public Observable<Member> getMember(String userId) {
         return apiClient.getMember(userId);
     }
 

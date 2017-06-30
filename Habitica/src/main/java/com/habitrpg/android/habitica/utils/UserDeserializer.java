@@ -36,8 +36,6 @@ public class UserDeserializer implements JsonDeserializer<User> {
         User user = new User();
         JsonObject obj = json.getAsJsonObject();
 
-        boolean isMember = !obj.has("tasksOrder");
-
         if (obj.has("_id")) {
             user.setId(obj.get("_id").getAsString());
         }
@@ -71,8 +69,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
             }
         }
 
-        //Only load items for authenticated user, since it otherwise messes up item ownership
-        if (obj.has("items") && !isMember) {
+        if (obj.has("items")) {
             user.setItems(context.deserialize(obj.get("items"), Items.class));
         }
         if (obj.has("auth")) {

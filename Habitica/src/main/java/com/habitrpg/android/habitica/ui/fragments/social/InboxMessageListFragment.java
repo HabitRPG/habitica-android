@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
@@ -82,6 +83,7 @@ public class InboxMessageListFragment extends BaseMainFragment
         chatAdapter.setToInboxChat(this.replyToUserUUID);
         chatAdapter.setSendingUser(this.user);
         recyclerView.setAdapter(chatAdapter);
+        compositeSubscription.add(chatAdapter.getUserLabelClickEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
 
         loadMessages();
 

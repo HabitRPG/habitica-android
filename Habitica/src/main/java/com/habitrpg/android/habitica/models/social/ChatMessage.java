@@ -6,8 +6,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
 
 import java.util.Date;
-import java.util.HashMap;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -24,8 +24,7 @@ public class ChatMessage extends RealmObject {
 
     public Long timestamp;
 
-    @Ignore
-    public HashMap<String, Boolean> likes;
+    public RealmList<ChatMessageLike> likes;
 
     public int flagCount;
 
@@ -95,6 +94,29 @@ public class ChatMessage extends RealmObject {
             return res.getString(R.string.ago_1Minute);
         }
         return res.getString(R.string.ago_minutes, diffMinutes);
+    }
+
+    public boolean isSystemMessage() {
+        return uuid.equals("system");
+    }
+
+    public int getLikeCount() {
+        if (likes != null) {
+            return likes.size();
+        }
+        return 0;
+    }
+
+    public boolean userLikesMessage(String userId) {
+        if (likes == null || userId == null) {
+            return false;
+        }
+        for (ChatMessageLike like : likes) {
+            if (userId.equals(like.id)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

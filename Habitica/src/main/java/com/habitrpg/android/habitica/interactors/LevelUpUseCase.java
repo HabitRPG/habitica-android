@@ -57,13 +57,13 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
                 TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
                 detailView.setText(requestValues.compatActivity.getString(R.string.levelup_detail, requestValues.newLevel));
                 AvatarView dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
-                dialogAvatarView.setUser(requestValues.user);
+                dialogAvatarView.setAvatar(requestValues.user);
             }
 
             final ShareEvent event = new ShareEvent();
             event.sharedMessage = requestValues.compatActivity.getString(R.string.share_levelup, requestValues.newLevel) + " https://habitica.com/social/level-up";
             AvatarView avatarView = new AvatarView(requestValues.compatActivity, true, true, true);
-            avatarView.setUser(requestValues.user);
+            avatarView.setAvatar(requestValues.user);
             avatarView.onAvatarImageReady(avatarImage -> event.shareImage = avatarImage);
 
             AlertDialog alert = new AlertDialog.Builder(requestValues.compatActivity)

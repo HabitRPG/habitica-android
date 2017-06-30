@@ -137,10 +137,6 @@ public class PartyDetailFragment extends BaseFragment {
         if (titleView == null) {
             return;
         }
-        if (party.quest != null && user != null && user.getId().equals(party.quest.leader)) {
-            questLeaderResponseWrapper.setVisibility(View.VISIBLE);
-            questParticipantResponseWrapper.setVisibility(View.GONE);
-        }
         titleView.setText(party.name);
         descriptionView.setText(party.description);
 
@@ -148,7 +144,6 @@ public class PartyDetailFragment extends BaseFragment {
             newQuestButton.setVisibility(View.GONE);
             questDetailButton.setVisibility(View.VISIBLE);
             questImageWrapper.setVisibility(View.VISIBLE);
-
             getActivity().runOnUiThread(() -> inventoryRepository.getQuestContent(quest.getKey())
                     .first()
                     .subscribe(this::updateQuestContent, RxErrorHandler.handleEmptyError()));
@@ -156,8 +151,6 @@ public class PartyDetailFragment extends BaseFragment {
             newQuestButton.setVisibility(View.VISIBLE);
             questDetailButton.setVisibility(View.GONE);
             questImageWrapper.setVisibility(View.GONE);
-            questLeaderResponseWrapper.setVisibility(View.GONE);
-            questParticipantResponseWrapper.setVisibility(View.GONE);
             questProgressView.setVisibility(View.GONE);
         }
     }
@@ -178,14 +171,33 @@ public class PartyDetailFragment extends BaseFragment {
         }
 
         if (questLeaderResponseWrapper != null) {
-            if (isQuestActive() || !user.getParty().getQuest().RSVPNeeded) {
-                questLeaderResponseWrapper.setVisibility(View.GONE);
-                questParticipantResponseWrapper.setVisibility(View.GONE);
-            } else {
+            if (showParticipatantButtons()) {
                 questLeaderResponseWrapper.setVisibility(View.GONE);
                 questParticipantResponseWrapper.setVisibility(View.VISIBLE);
+            } else if (showLeaderButtons()) {
+                if (isQuestActive()) {
+                    questLeaderResponseWrapper.setVisibility(View.GONE);
+                    questParticipantResponseWrapper.setVisibility(View.GONE);
+                } else {
+                    questLeaderResponseWrapper.setVisibility(View.VISIBLE);
+                    questParticipantResponseWrapper.setVisibility(View.GONE);
+                }
+            } else {
+                questLeaderResponseWrapper.setVisibility(View.GONE);
+                questParticipantResponseWrapper.setVisibility(View.GONE);
             }
         }
+    }
+
+    private boolean showLeaderButtons() {
+        return party != null && party.quest != null && user != null && user.getId().equals(party.quest.leader);
+    }
+
+    private boolean showParticipatantButtons() {
+        if (user == null || user.getParty() == null || user.getParty().getQuest() == null) {
+            return false;
+        }
+        return !isQuestActive() && user.getParty().getQuest().RSVPNeeded;
     }
 
     private void updateQuestContent(QuestContent questContent) {

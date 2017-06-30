@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
-import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.members.Member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class UserStatComputer {
         public String stats;
     }
 
-    public List<StatsRow> computeClassBonus (List<Equipment> equipmentList, User user) {
+    public List<StatsRow> computeClassBonus (List<Equipment> equipmentList, Member user) {
         List<StatsRow> skillRows = new ArrayList<>();
 
         float strAttributes = 0;

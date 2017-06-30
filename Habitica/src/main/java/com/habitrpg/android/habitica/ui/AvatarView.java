@@ -26,7 +26,7 @@ import com.facebook.drawee.view.DraweeHolder;
 import com.facebook.drawee.view.MultiDraweeHolder;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.Avatar;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -60,7 +60,7 @@ public class AvatarView extends View {
     private boolean hasPet;
     private boolean isOrphan;
     private MultiDraweeHolder<GenericDraweeHierarchy> multiDraweeHolder = new MultiDraweeHolder<>();
-    private User user;
+    private Avatar avatar;
     private RectF avatarRectF;
     private Matrix matrix = new Matrix();
     private AtomicInteger numberLayersInProcess = new AtomicInteger(0);
@@ -166,35 +166,35 @@ public class AvatarView extends View {
     }
 
     private Map<LayerType, String> getLayerMap() {
-        assert user != null;
-        return getLayerMap(user, true);
+        assert avatar != null;
+        return getLayerMap(avatar, true);
     }
 
-    private Map<LayerType, String> getLayerMap(@NonNull User user, boolean resetHasAttributes) {
-        EnumMap<LayerType, String> layerMap = user.getAvatarLayerMap();
+    private Map<LayerType, String> getLayerMap(@NonNull Avatar avatar, boolean resetHasAttributes) {
+        EnumMap<LayerType, String> layerMap = avatar.getAvatarLayerMap();
 
         if (resetHasAttributes) hasBackground = hasMount = hasPet = false;
 
-        String mountName = user.getItems().getCurrentMount();
-        if (showMount && !TextUtils.isEmpty(mountName)) {
-            layerMap.put(LayerType.MOUNT_BODY, "Mount_Body_" + mountName);
-            layerMap.put(LayerType.MOUNT_HEAD, "Mount_Head_" + mountName);
-            if (resetHasAttributes) hasMount = true;
-        }
+            String mountName = avatar.getCurrentMount();
+            if (showMount && !TextUtils.isEmpty(mountName)) {
+                layerMap.put(LayerType.MOUNT_BODY, "Mount_Body_" + mountName);
+                layerMap.put(LayerType.MOUNT_HEAD, "Mount_Head_" + mountName);
+                if (resetHasAttributes) hasMount = true;
+            }
 
-        String petName = user.getItems().getCurrentPet();
-        if (showPet && !TextUtils.isEmpty(petName)) {
-            layerMap.put(LayerType.PET, "Pet-" + petName);
-            if (resetHasAttributes) hasPet = true;
-        }
+            String petName = avatar.getCurrentPet();
+            if (showPet && !TextUtils.isEmpty(petName)) {
+                layerMap.put(LayerType.PET, "Pet-" + petName);
+                if (resetHasAttributes) hasPet = true;
+            }
 
-        String backgroundName = user.getPreferences().getBackground();
+        String backgroundName = avatar.getBackground();
         if (showBackground && !TextUtils.isEmpty(backgroundName)) {
             layerMap.put(LayerType.BACKGROUND, "background_" + backgroundName);
             if (resetHasAttributes) hasBackground = true;
         }
 
-        if (showSleeping && user.getPreferences().getSleep()) {
+        if (showSleeping && avatar.getSleep()) {
             layerMap.put(AvatarView.LayerType.ZZZ, "zzz");
         }
 
@@ -322,12 +322,12 @@ public class AvatarView extends View {
         }
     }
 
-    public void setUser(@NonNull User user) {
-        User oldUser = this.user;
-        this.user = user;
+    public void setAvatar(@NonNull Avatar avatar) {
+        Avatar oldUser = this.avatar;
+        this.avatar = avatar;
 
         if (oldUser != null) {
-            Map<LayerType, String> newLayerMap = getLayerMap(user, false);
+            Map<LayerType, String> newLayerMap = getLayerMap(avatar, false);
 
             boolean equals = currentLayers != null && currentLayers.equals(newLayerMap);
 
@@ -339,12 +339,14 @@ public class AvatarView extends View {
         invalidate();
     }
 
+
+
     private Rect getOriginalRect() {
         return (showMount || showPet) ? FULL_HERO_RECT : ((showBackground) ? COMPACT_HERO_RECT : HERO_ONLY_RECT);
     }
 
     private Bitmap getAvatarImage() {
-        assert user != null;
+        assert avatar != null;
         assert avatarRectF != null;
         Rect canvasRect = new Rect();
         avatarRectF.round(canvasRect);
@@ -386,7 +388,7 @@ public class AvatarView extends View {
         initAvatarRectMatrix();
 
         // draw only when user is set
-        if (user == null) return;
+        if (avatar == null) return;
 
         // request image layers if not yet processed
         if (multiDraweeHolder.size() == 0) {

@@ -1,63 +1,43 @@
-package com.habitrpg.android.habitica.models.user;
+package com.habitrpg.android.habitica.models.members;
 
 import android.text.TextUtils;
 
-import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.Avatar;
-import com.habitrpg.android.habitica.models.PushDevice;
-import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.invitations.Invitations;
-import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.UserParty;
-import com.habitrpg.android.habitica.models.tasks.TaskList;
-import com.habitrpg.android.habitica.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.models.user.Buffs;
+import com.habitrpg.android.habitica.models.user.ContributorInfo;
+import com.habitrpg.android.habitica.models.user.Flags;
+import com.habitrpg.android.habitica.models.user.Hair;
+import com.habitrpg.android.habitica.models.user.Inbox;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Preferences;
+import com.habitrpg.android.habitica.models.user.Profile;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.AvatarView;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.EnumMap;
-import java.util.List;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
-public class User extends RealmObject implements Avatar {
+public class Member extends RealmObject implements Avatar {
 
-    @Ignore
-    public TaskList tasks;
 
     @PrimaryKey
-    @SerializedName("_id")
     private String id;
-    private double balance;
     private Stats stats;
     private Inbox inbox;
     private Preferences preferences;
     private Profile profile;
     private UserParty party;
-    private Items items;
-    @SerializedName("auth")
-    private Authentication authentication;
     private Flags flags;
     private ContributorInfo contributor;
-    private Invitations invitations;
 
-    RealmList<Tag> tags;
+    private Outfit costume;
+    private Outfit equipped;
 
-    @Ignore
-    private List<PushDevice> pushDevices;
-
-    private Purchases purchased;
-
-    @Ignore
-    private TasksOrder tasksOrder;
-
-    private RealmList<Challenge> challenges;
-
-    private Date lastCron;
-    private Boolean needsCron;
+    private String currentMount;
+    private String currentPet;
 
     public Preferences getPreferences() {
         return preferences;
@@ -88,20 +68,17 @@ public class User extends RealmObject implements Avatar {
         if (profile != null && !profile.isManaged()) {
             profile.setUserId(id);
         }
-        if (items != null && !items.isManaged()) {
-            items.setUserId(id);
-        }
-        if (authentication != null && !authentication.isManaged()) {
-            authentication.setUserId(id);
-        }
         if (flags != null && !flags.isManaged()) {
             flags.setUserId(id);
         }
         if (contributor != null && !contributor.isManaged()) {
             contributor.setUserId(id);
         }
-        if (invitations != null && !invitations.isManaged()) {
-            invitations.setUserId(id);
+        if (costume != null && !costume.isManaged()) {
+            costume.setUserId(id+"costume");
+        }
+        if (equipped != null && !equipped.isManaged()) {
+            equipped.setUserId(id+"equipped");
         }
     }
 
@@ -149,17 +126,6 @@ public class User extends RealmObject implements Avatar {
         }
     }
 
-    public Invitations getInvitations() {
-        return invitations;
-    }
-
-    public void setInvitations(Invitations invitations) {
-        this.invitations = invitations;
-        if (invitations != null && id != null && !invitations.isManaged()) {
-            invitations.setUserId(id);
-        }
-    }
-
     public UserParty getParty() {
         return party;
     }
@@ -171,53 +137,13 @@ public class User extends RealmObject implements Avatar {
         }
     }
 
-    public Items getItems() {
-        return items;
-    }
-
-    public void setItems(Items items) {
-        this.items = items;
-        if (items != null && id != null && !items.isManaged()) {
-            items.setUserId(id);
-        }
-    }
-
-    public double getBalance() {
-        return this.balance;
-    }
-
-    public Integer getGemCount(){
-        return (int)(this.balance * 4);
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public Authentication getAuthentication() {
-        return authentication;
-    }
-
-    public void setAuthentication(Authentication authentication) {
-        this.authentication = authentication;
-        if (authentication != null && id != null) {
-            authentication.setUserId(id);
-        }
-    }
-
-    public Purchases getPurchased() {
-        return purchased;
-    }
-
-    public void setPurchased(Purchases purchased) {
-        this.purchased = purchased;
-        if (purchased != null && id != null) {
-            purchased.setUserId(id);
-        }
-    }
-
     public Flags getFlags() {
         return flags;
+    }
+
+    @Override
+    public Integer getGemCount() {
+        return 0;
     }
 
     public void setFlags(Flags flags) {
@@ -227,106 +153,26 @@ public class User extends RealmObject implements Avatar {
         }
     }
 
-    public TasksOrder getTasksOrder() {
-        return tasksOrder;
+    public Outfit getCostume() {
+        return costume;
     }
 
-    public void setTasksOrder(TasksOrder tasksOrder) {
-        this.tasksOrder = tasksOrder;
+    public void setCostume(Outfit costume) {
+        this.costume = costume;
+        if (costume != null && id != null) {
+            costume.setUserId(id);
+        }
     }
 
-    public List<PushDevice> getPushDevices() {
-        return this.pushDevices;
+    public Outfit getEquipped() {
+        return equipped;
     }
 
-    public void setPushDevices(List<PushDevice> pushDevices) {
-        this.pushDevices = pushDevices;
-    }
-
-    public List<String> getAvatarLayerNames() {
-        List<String> layerNames = new ArrayList<String>();
-
-        Preferences prefs = this.getPreferences();
-
-        if (prefs.getChair() != null) {
-            layerNames.add(prefs.getChair());
+    public void setEquipped(Outfit equipped) {
+        this.equipped = equipped;
+        if (equipped != null && id != null) {
+            equipped.setUserId(id);
         }
-
-        Outfit outfit = null;
-        if (this.getItems() != null) {
-            if (prefs.getCostume()) {
-                outfit = this.getItems().getGear().getCostume();
-            } else {
-                outfit = this.getItems().getGear().getEquipped();
-            }
-        }
-
-        if (outfit != null) {
-            if (outfit.getBack() != null) {
-                layerNames.add(outfit.getBack());
-            }
-        }
-
-        if (prefs.getSleep()) {
-            layerNames.add("skin_" + prefs.getSkin() + "_sleep");
-        } else {
-            layerNames.add("skin_" + prefs.getSkin());
-        }
-        layerNames.add(prefs.getSize() + "_shirt_" + prefs.getShirt());
-        layerNames.add("head_0");
-
-        if (outfit != null) {
-            String armor = outfit.getArmor();
-
-            if (armor != null && !armor.equals("armor_base_0")) {
-                layerNames.add(prefs.getSize() + "_" + armor);
-            }
-            if (outfit.getBody() != null && !outfit.getBody().equals("body_base_0")) {
-                layerNames.add(outfit.getBody());
-            }
-        }
-
-        Hair hair = prefs.getHair();
-        if (hair != null) {
-            String hairColor = hair.getColor();
-
-            if (hair.getBase() > 0) {
-                layerNames.add("hair_base_" + hair.getBase() + "_" + hairColor);
-            }
-            if (hair.getBangs() > 0) {
-                layerNames.add("hair_bangs_" + hair.getBangs() + "_" + hairColor);
-            }
-            if (hair.getMustache() > 0) {
-                layerNames.add("hair_mustache_" + hair.getMustache() + "_" + hairColor);
-            }
-            if (hair.getBeard() > 0) {
-                layerNames.add("hair_beard_" + hair.getBeard() + "_" + hairColor);
-            }
-        }
-
-        if (outfit != null) {
-            if (outfit.getEyeWear() != null && !outfit.getEyeWear().equals("eyewear_base_0")) {
-                layerNames.add(outfit.getEyeWear());
-            }
-            if (outfit.getHead() != null && !outfit.getHead().equals("head_base_0")) {
-                layerNames.add(outfit.getHead());
-            }
-            if (outfit.getHeadAccessory() != null && !outfit.getHeadAccessory().equals("headAccessory_base_0")) {
-                layerNames.add(outfit.getHeadAccessory());
-            }
-            if (outfit.getShield() != null && !outfit.getShield().equals("shield_base_0")) {
-                layerNames.add(outfit.getShield());
-            }
-            if (outfit.getWeapon() != null && !outfit.getWeapon().equals("weapon_base_0")) {
-                layerNames.add(outfit.getWeapon());
-            }
-        }
-
-        if (prefs.getSleep()) {
-            layerNames.add("zzz");
-        }
-
-        return layerNames;
     }
 
     public EnumMap<AvatarView.LayerType, String> getAvatarLayerMap() {
@@ -336,13 +182,11 @@ public class User extends RealmObject implements Avatar {
         if (prefs == null) {
             return layerMap;
         }
-        Outfit outfit = null;
-        if (getItems() != null && getItems().getGear() != null) {
-            if (prefs.getCostume()) {
-                outfit = getItems().getGear().getCostume();
-            } else {
-                outfit = getItems().getGear().getEquipped();
-            }
+        Outfit outfit;
+        if (prefs.getCostume()) {
+            outfit = getCostume();
+        } else {
+            outfit = getEquipped();
         }
 
         boolean hasVisualBuffs = false;
@@ -441,19 +285,20 @@ public class User extends RealmObject implements Avatar {
 
     @Override
     public String getCurrentMount() {
-        if (getItems() != null) {
-            return getItems().getCurrentMount();
-        }
-        return "";
+        return currentMount;
+    }
+
+    public void setCurrentMount(String currentMount) {
+        this.currentMount = currentMount;
     }
 
     @Override
     public String getCurrentPet() {
+        return currentPet;
+    }
 
-        if (getItems() != null) {
-            return getItems().getCurrentPet();
-        }
-        return "";
+    public void setCurrentPet(String currentPet) {
+        this.currentPet = currentPet;
     }
 
     @Override
@@ -467,52 +312,5 @@ public class User extends RealmObject implements Avatar {
     @Override
     public boolean getSleep() {
         return getPreferences() != null && getPreferences().getSleep();
-    }
-
-    public int getPetsFoundCount() {
-        return items == null || items.getPets() == null ? 0 : items.getPets().size();
-    }
-
-    public int getMountsTamedCount() {
-        return items == null || items.getMounts() == null ? 0 : items.getMounts().size();
-    }
-
-    public RealmList<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(RealmList<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public RealmList<Challenge> getChallenges() {
-        return challenges;
-    }
-
-    public void setChallenges(RealmList<Challenge> challenges) {
-        this.challenges = challenges;
-    }
-
-    public boolean hasParty() {
-        return party != null && party.id != null && party.id.length() > 0;
-    }
-
-    public Boolean getNeedsCron() {
-        if (needsCron == null) {
-            return false;
-        }
-        return needsCron;
-    }
-
-    public Date getLastCron() {
-        return lastCron;
-    }
-
-    public void setLastCron(Date lastCron) {
-        this.lastCron = lastCron;
-    }
-
-    public void setNeedsCron(boolean needsCron) {
-        this.needsCron = needsCron;
     }
 }

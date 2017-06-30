@@ -77,14 +77,14 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
         healerOutfit.setShield("shield_healer_5");
         healerOutfit.setWeapon("weapon_healer_6");
         User healer = this.makeUser(preferences, healerOutfit);
-        healerAvatarView.setUser(healer);
+        healerAvatarView.setAvatar(healer);
 
         Outfit mageOutfit = new Outfit();
         mageOutfit.setArmor("armor_wizard_5");
         mageOutfit.setHead("head_wizard_5");
         mageOutfit.setWeapon("weapon_wizard_6");
         User mage = this.makeUser(preferences, mageOutfit);
-        mageAvatarView.setUser(mage);
+        mageAvatarView.setAvatar(mage);
 
         Outfit rogueOutfit = new Outfit();
         rogueOutfit.setArmor("armor_rogue_5");
@@ -92,7 +92,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
         rogueOutfit.setShield("shield_rogue_6");
         rogueOutfit.setWeapon("weapon_rogue_6");
         User rogue = this.makeUser(preferences, rogueOutfit);
-        rogueAvatarView.setUser(rogue);
+        rogueAvatarView.setAvatar(rogue);
 
         Outfit warriorOutfit = new Outfit();
         warriorOutfit.setArmor("armor_warrior_5");
@@ -100,7 +100,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
         warriorOutfit.setShield("shield_warrior_5");
         warriorOutfit.setWeapon("weapon_warrior_6");
         User warrior = this.makeUser(preferences, warriorOutfit);
-        warriorAvatarView.setUser(warrior);
+        warriorAvatarView.setAvatar(warrior);
 
         if (!isInitialSelection) {
             userRepository.changeClass()

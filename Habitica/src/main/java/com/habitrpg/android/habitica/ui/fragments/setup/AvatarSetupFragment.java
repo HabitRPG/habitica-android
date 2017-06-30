@@ -167,7 +167,7 @@ public class AvatarSetupFragment extends BaseFragment {
     }
 
     private void updateAvatar() {
-        avatarView.setUser(user);
+        avatarView.setAvatar(user);
     }
 
 

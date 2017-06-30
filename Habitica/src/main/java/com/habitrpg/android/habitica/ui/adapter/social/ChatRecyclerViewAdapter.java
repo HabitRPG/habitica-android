@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
@@ -15,33 +14,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
-import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 
 import net.pherth.android.emoji_library.EmojiTextView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.realm.OrderedRealmCollection;
-import io.realm.RealmList;
 import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessage, ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
 
@@ -51,6 +40,14 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
     private boolean isInboxChat = false;
     private String replyToUserUUID;
     private User sendingUser;
+
+    private PublishSubject<ChatMessage> likeMessageEvents = PublishSubject.create();
+    private PublishSubject<String> userLabelClickEvents = PublishSubject.create();
+    private PublishSubject<String> privateMessageClickEvents = PublishSubject.create();
+    private PublishSubject<ChatMessage> deleteMessageEvents = PublishSubject.create();
+    private PublishSubject<ChatMessage> flatMessageEvents = PublishSubject.create();
+    private PublishSubject<ChatMessage> copyMessageAsTodoEvents = PublishSubject.create();
+    private PublishSubject<ChatMessage> copyMessageEvents = PublishSubject.create();
 
     public ChatRecyclerViewAdapter(@Nullable OrderedRealmCollection<ChatMessage> data, boolean autoUpdate, User user, String groupId) {
         super(data, autoUpdate);
@@ -83,6 +80,34 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
         }
     }
 
+    public Observable<ChatMessage> getLikeMessageEvents() {
+        return likeMessageEvents.asObservable();
+    }
+
+    public Observable<String> getUserLabelClickEvents() {
+        return userLabelClickEvents.asObservable();
+    }
+
+    public Observable<String> getPrivateMessageClickEvents() {
+        return privateMessageClickEvents.asObservable();
+    }
+
+    public Observable<ChatMessage> getDeleteMessageEvents() {
+        return deleteMessageEvents.asObservable();
+    }
+
+    public Observable<ChatMessage> getFlatMessageEvents() {
+        return flatMessageEvents.asObservable();
+    }
+
+    public Observable<ChatMessage> getCopyMessageAsTodoEvents() {
+        return copyMessageAsTodoEvents.asObservable();
+    }
+
+    public Observable<ChatMessage> getCopyMessageEvents() {
+        return copyMessageEvents.asObservable();
+    }
+
     class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
         @BindView(R.id.btn_options)
@@ -102,16 +127,12 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
 
         Context context;
         Resources res;
-        int likeCount = 0;
-        boolean currentUserLikedPost = false;
-        private String uuid;
-        private String groupId;
-        private ChatMessage currentMsg;
+        private String userId;
+        private ChatMessage chatMessage;
 
         ChatRecyclerViewHolder(View itemView, String currentUserId, String groupId) {
             super(itemView);
-            this.uuid = currentUserId;
-            this.groupId = groupId;
+            this.userId = currentUserId;
 
             ButterKnife.bind(this, itemView);
 
@@ -122,15 +143,12 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
             if (btnOptions != null) {
                 btnOptions.setOnClickListener(this);
             }
-            if (tvLikes != null) {
-                tvLikes.setOnClickListener(this);
-            }
         }
 
         public void bind(final ChatMessage msg) {
-            currentMsg = msg;
+            chatMessage = msg;
 
-            setLikeProperties(msg);
+            setLikeProperties();
 
             if (userBackground != null) {
                 if (msg.sent != null && msg.sent.equals("true")) {
@@ -152,11 +170,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 }
 
                 userLabel.setClickable(true);
-                userLabel.setOnClickListener(view -> {
-                    OpenFullProfileCommand cmd = new OpenFullProfileCommand(msg.uuid);
-
-                    EventBus.getDefault().post(cmd);
-                });
+                userLabel.setOnClickListener(view -> userLabelClickEvents.onNext(user.getId()));
             }
 
             DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
@@ -174,35 +188,14 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
             }
         }
 
-        private void setLikeProperties(ChatMessage msg) {
-            likeCount = 0;
-            currentUserLikedPost = false;
-
-            if (msg != null && msg.likes != null) {
-                for (Map.Entry<String, Boolean> e : msg.likes.entrySet()) {
-                    if (e.getValue()) {
-                        likeCount++;
-                    }
-
-                    if (e.getKey().equals(uuid)) {
-                        currentUserLikedPost = true;
-                    }
-                }
-            }
-
-            setLikeProperties(likeCount);
-        }
-
-        private void setLikeProperties(int likeCount) {
-            if (tvLikes != null) {
-                tvLikes.setText("+" + likeCount);
-            }
+        private void setLikeProperties() {
+            tvLikes.setText("+" + chatMessage.getLikeCount());
 
             int backgroundColorRes;
             int foregroundColorRes;
 
-            if (likeCount != 0) {
-                if (currentUserLikedPost) {
+            if (chatMessage.getLikeCount() != 0) {
+                if (chatMessage.userLikesMessage(userId)) {
                     backgroundColorRes = R.color.tavern_userliked_background;
                     foregroundColorRes = R.color.tavern_userliked_foreground;
                 } else {
@@ -220,7 +213,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
 
         @Override
         public void onClick(View v) {
-            if (currentMsg != null) {
+            if (chatMessage != null) {
                 if (btnOptions == v) {
                     PopupMenu popupMenu = new PopupMenu(context, v);
 
@@ -241,14 +234,8 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                     } catch (Exception ignored) {
                     }
 
-                    ChatMessage chatMsg = currentMsg;
 
-                    if (!chatMsg.uuid.equals(uuid)) {
-                        popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
-                    }
-                    if (user.getContributor() != null && user.getContributor().getAdmin()) {
-                        popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(true);
-                    }
+                    popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(shouldShowDelete(chatMessage));
                     popupMenu.getMenu().findItem(R.id.menu_chat_copy_as_todo).setVisible(false);
                     popupMenu.getMenu().findItem(R.id.menu_chat_send_pm).setVisible(false);
 
@@ -270,65 +257,47 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
 
                         // Invoke show() to update the window's position
                         listPopupClass.getDeclaredMethod("show").invoke(listPopup);
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
 
                     }
 
                     return;
                 }
             }
-
-            if (tvLikes == v) {
-                toggleLike();
-
-                return;
-            }
         }
 
-        private void toggleLike() {
-            int newCount = currentUserLikedPost ? --likeCount : ++likeCount;
-            currentUserLikedPost = !currentUserLikedPost;
+        private boolean shouldShowDelete(ChatMessage chatMsg) {
+            return !chatMsg.isSystemMessage() && (chatMsg.uuid.equals(userId) || user.getContributor() != null && user.getContributor().getAdmin());
+        }
 
-            setLikeProperties(newCount);
-
-            EventBus.getDefault().post(new ToggleLikeMessageCommand(groupId, currentMsg));
+        @OnClick(R.id.tvLikes)
+        public void toggleLike() {
+            likeMessageEvents.onNext(chatMessage);
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_chat_delete: {
-                    new AlertDialog.Builder(context)
-                            .setTitle(R.string.confirm_delete_tag_title)
-                            .setMessage(R.string.confirm_delete_tag_message)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-                                Toast.makeText(context, R.string.edit_tag_btn_done, Toast.LENGTH_SHORT).show();
-                                EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, currentMsg));
-                            })
-                            .setNegativeButton(android.R.string.no, null).show();
+                    deleteMessageEvents.onNext(chatMessage);
                     break;
                 }
                 case R.id.menu_chat_flag: {
-                    EventBus.getDefault().post(new FlagChatMessageCommand(groupId, currentMsg));
-
+                    flatMessageEvents.onNext(chatMessage);
                     break;
                 }
                 case R.id.menu_chat_copy_as_todo: {
-                    EventBus.getDefault().post(new CopyChatAsTodoCommand(groupId, currentMsg));
-
+                    copyMessageAsTodoEvents.onNext(chatMessage);
                     break;
                 }
 
                 case R.id.menu_chat_send_pm: {
-                    EventBus.getDefault().post(new OpenNewPMActivityCommand());
-
+                    privateMessageClickEvents.onNext(user.getId());
                     break;
                 }
 
                 case R.id.menu_chat_copy: {
-                    EventBus.getDefault().post(new CopyChatMessageCommand(groupId, currentMsg));
-
+                    copyMessageEvents.onNext(chatMessage);
                     break;
                 }
             }

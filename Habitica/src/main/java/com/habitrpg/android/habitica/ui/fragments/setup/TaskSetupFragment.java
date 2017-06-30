@@ -81,7 +81,7 @@ public class TaskSetupFragment extends BaseFragment {
     }
 
     private void updateAvatar() {
-        avatarView.setUser(user);
+        avatarView.setAvatar(user);
     }
 
     @Override

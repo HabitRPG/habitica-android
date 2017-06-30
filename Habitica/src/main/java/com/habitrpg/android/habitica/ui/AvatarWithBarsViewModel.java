@@ -13,8 +13,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.user.Stats;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 
@@ -49,7 +49,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     @BindView(R.id.gems_tv)
     TextView gemsText;
 
-    private User userObject;
+    private Avatar userObject;
 
     private int cachedMaxHealth, cachedMaxExp, cachedMaxMana;
 
@@ -77,7 +77,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void updateData(User user) {
+    public void updateData(Avatar user) {
         userObject = user;
 
         Stats stats = user.getStats();
@@ -86,7 +86,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         int gp = (stats.getGp().intValue());
         int sp = (int) ((stats.getGp() - gp) * 100);
 
-        avatarView.setUser(user);
+        avatarView.setAvatar(user);
 
         if (stats.getHabitClass() != null) {
             userClass = stats.getTranslatedClassName(context);
@@ -131,8 +131,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         goldText.setText(String.valueOf(gp));
         silverText.setText(String.valueOf(sp));
 
-        Double gems = user.getBalance() * 4;
-        gemsText.setText(String.valueOf(gems.intValue()));
+        Integer gems = user.getGemCount();
+        gemsText.setText(String.valueOf(gems));
     }
 
     private void setHpBarData(float value, int valueMax) {
@@ -164,9 +164,9 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     @Subscribe
     public void onEvent(BoughtGemsEvent gemsEvent) {
-        Double gems = userObject.getBalance() * 4;
+        Integer gems = userObject.getGemCount();
         gems += gemsEvent.NewGemsToAdd;
-        gemsText.setText(String.valueOf(gems.intValue()));
+        gemsText.setText(String.valueOf(gems));
     }
 
     @Override
