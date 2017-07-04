@@ -39,7 +39,7 @@ public class Gear extends RealmObject {
     public void setUserId(String userId) {
         this.userId = userId;
         if (costume != null && !costume.isManaged()) {
-            costume.setUserId(userId+"costume");
+            costume.setUserId(userId);
         }
         if (equipped != null && !equipped.isManaged()) {
             equipped.setUserId(userId+"equipped");

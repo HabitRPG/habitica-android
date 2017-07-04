@@ -160,7 +160,7 @@ public class Member extends RealmObject implements Avatar {
     public void setCostume(Outfit costume) {
         this.costume = costume;
         if (costume != null && id != null) {
-            costume.setUserId(id);
+            costume.setUserId(id+"costume");
         }
     }
 
@@ -171,7 +171,7 @@ public class Member extends RealmObject implements Avatar {
     public void setEquipped(Outfit equipped) {
         this.equipped = equipped;
         if (equipped != null && id != null) {
-            equipped.setUserId(id);
+            equipped.setUserId(id+"equipped");
         }
     }
 
