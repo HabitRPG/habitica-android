@@ -123,8 +123,8 @@ import rx.Observable;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LEVEL_FOR_SKILLS;
-import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
-import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
 public class MainActivity extends BaseActivity implements TutorialView.OnTutorialReaction {
 
@@ -601,7 +601,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             int maxHp = user.getStats().getMaxHealth();
 
             if (currentHp == maxHp) {
-                UiUtils.showSnackbar(this, floatingMenuWrapper, getString(R.string.no_potion), SnackbarDisplayType.FAILURE_BLUE);
+                showSnackbar(this, floatingMenuWrapper, getString(R.string.no_potion), SnackbarDisplayType.FAILURE_BLUE);
                 return;
             }
         }
@@ -960,7 +960,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void showSnackBarEvent(ShowSnackbarEvent event) {
-        showSnackbar(this, floatingMenuWrapper, event.text, event.type);
+        showSnackbar(this, floatingMenuWrapper, event.title, event.text, event.type);
     }
 
     public boolean isAppBarExpanded() {

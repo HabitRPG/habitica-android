@@ -42,38 +42,4 @@ public class UiUtils {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
-    /**
-     * Shows snackbar in given container.
-     *
-     * @param context   Context.
-     * @param container Parent view where Snackbar will appear.
-     * @param content   message.
-     */
-    public static void showSnackbar(Context context, View container, String content, SnackbarDisplayType displayType) {
-        Snackbar snackbar = Snackbar.make(container, content, Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-
-        switch (displayType) {
-            case FAILURE:
-                snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.worse_10));
-                break;
-            case FAILURE_BLUE:
-            case BLUE:
-                snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.best_100));
-                break;
-            case DROP:
-                TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-                tv.setMaxLines(5);
-                snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.best_10));
-                break;
-        }
-
-        snackbar.show();
-    }
-
-    public enum SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP, BLUE
-    }
-
 }

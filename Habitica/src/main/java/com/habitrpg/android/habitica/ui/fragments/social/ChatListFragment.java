@@ -31,7 +31,6 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import javax.inject.Inject;
 
@@ -40,6 +39,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.realm.RealmResults;
+
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
 
 public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -202,7 +204,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         ClipData messageText = ClipData.newPlainText("Chat message", chatMessage.text);
         clipMan.setPrimaryClip(messageText);
         MainActivity activity = (MainActivity) getActivity();
-        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), UiUtils.SnackbarDisplayType.NORMAL);
+        showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL);
     }
 
     public void showFlagConfirmationDialog(ChatMessage chatMessage) {
@@ -211,7 +213,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                 .setPositiveButton(R.string.flag_confirm, (dialog, id) -> socialRepository.flagMessage(chatMessage)
                         .subscribe(aVoid -> {
                             MainActivity activity = (MainActivity) getActivity();
-                            UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
+                            showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL);
                         }, throwable -> {
                         }))
                 .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});

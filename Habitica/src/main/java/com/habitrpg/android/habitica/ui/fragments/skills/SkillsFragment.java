@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -32,6 +33,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import rx.Observable;
+
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
 public class SkillsFragment extends BaseMainFragment {
 
@@ -145,7 +148,7 @@ public class SkillsFragment extends BaseMainFragment {
             message.append(" + ").append(round(response.goldDiff, 2)).append(" GP");
         }
         if (activity != null) {
-            UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
+            showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), HabiticaSnackbar.SnackbarDisplayType.NORMAL);
         }
         userRepository.retrieveUser(false).subscribe(habitRPGUser -> {}, RxErrorHandler.handleEmptyError());
     }

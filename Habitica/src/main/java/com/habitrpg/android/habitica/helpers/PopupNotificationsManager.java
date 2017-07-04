@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.notifications.Reward;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 import com.mikepenz.aboutlibraries.util.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -100,8 +101,7 @@ public class PopupNotificationsManager {
                         if (apiClient != null) {
                             // @TODO: This should be handled somewhere else? MAybe we notifiy via event
                             apiClient.readNotificaiton(notification.getId())
-                                    .subscribe(next -> {
-                                    }, RxErrorHandler.handleEmptyError());
+                                    .subscribe(next -> {}, RxErrorHandler.handleEmptyError());
                         }
                     })
                     .setMessage("");
@@ -110,8 +110,9 @@ public class PopupNotificationsManager {
             dialog.show();
         } else {
             ShowSnackbarEvent event = new ShowSnackbarEvent();
+            event.title = notification.data.message;
             event.text = context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt);
-            event.type = UiUtils.SnackbarDisplayType.BLUE;
+            event.type = HabiticaSnackbar.SnackbarDisplayType.BLUE;
             EventBus.getDefault().post(event);
             if (apiClient != null) {
                 // @TODO: This should be handled somewhere else? MAybe we notifiy via event

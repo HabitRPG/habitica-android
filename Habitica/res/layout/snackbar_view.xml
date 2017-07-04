@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="12dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:gravity="center"
+    tools:background="@color/best_50">
+        <TextView
+            android:id="@+id/snackbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="This is the Title"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:textColor="@color/white_75_alpha"/>
+        <TextView
+            android:id="@+id/snackbar_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="This is the Content"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/white_75_alpha"/>
+</LinearLayout>

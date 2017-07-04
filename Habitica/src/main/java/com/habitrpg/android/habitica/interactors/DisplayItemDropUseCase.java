@@ -2,20 +2,17 @@ package com.habitrpg.android.habitica.interactors;
 
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import javax.inject.Inject;
 
 import rx.Observable;
-
-import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.RequestValues, Void> {
 
@@ -35,8 +32,8 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
             if (data != null) {
                 if (data.drop != null) {
                     new Handler().postDelayed(() -> {
-                        showSnackbar(requestValues.context, requestValues.snackbarTargetView,
-                                data.drop.getDialog(), UiUtils.SnackbarDisplayType.DROP);
+                        HabiticaSnackbar.showSnackbar(requestValues.context, requestValues.snackbarTargetView,
+                                data.drop.getDialog(), HabiticaSnackbar.SnackbarDisplayType.DROP);
                         soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                     }, 3000L);
                 }
@@ -50,9 +47,9 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
 
         private TaskScoringResult data;
         private AppCompatActivity context;
-        private View snackbarTargetView;
+        private ViewGroup snackbarTargetView;
 
-        public RequestValues(TaskScoringResult data, AppCompatActivity context, View snackbarTargetView) {
+        public RequestValues(TaskScoringResult data, AppCompatActivity context, ViewGroup snackbarTargetView) {
             this.data = data;
             this.context = context;
             this.snackbarTargetView = snackbarTargetView;

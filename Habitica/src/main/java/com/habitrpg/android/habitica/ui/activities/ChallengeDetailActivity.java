@@ -45,6 +45,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDet
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -63,7 +64,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class ChallengeDetailActivity extends BaseActivity {
 
@@ -412,7 +412,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     @Subscribe
     public void onEvent(final BuyRewardCommand event) {
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            showSnackbar(this, floatingMenuWrapper, getString(R.string.no_gold), UiUtils.SnackbarDisplayType.FAILURE);
+            HabiticaSnackbar.showSnackbar(this, floatingMenuWrapper, getString(R.string.no_gold), HabiticaSnackbar.SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -420,7 +420,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         if (event.Reward.specialTag == null || !event.Reward.specialTag.equals("item")) {
 
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
-                    .subscribe(res -> showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), UiUtils.SnackbarDisplayType.NORMAL), error -> {});
+                    .subscribe(res -> HabiticaSnackbar.showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), HabiticaSnackbar.SnackbarDisplayType.NORMAL), error -> {});
         }
 
     }

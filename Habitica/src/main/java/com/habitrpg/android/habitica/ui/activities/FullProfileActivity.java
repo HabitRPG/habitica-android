@@ -60,6 +60,9 @@ import butterknife.BindView;
 import io.realm.RealmResults;
 import rx.Observable;
 
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
+
 public class FullProfileActivity extends BaseActivity {
     @Inject
     InventoryRepository inventoryRepository;
@@ -184,8 +187,8 @@ public class FullProfileActivity extends BaseActivity {
         final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     socialRepository.postPrivateMessage(userId, emojiEditText.getText().toString())
-                            .subscribe(postChatMessageResult -> UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
-                                    String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL), throwable -> {
+                            .subscribe(postChatMessageResult -> showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
+                                    String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), throwable -> {
                             });
 
                     UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
