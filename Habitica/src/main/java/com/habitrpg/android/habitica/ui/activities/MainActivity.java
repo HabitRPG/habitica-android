@@ -48,7 +48,6 @@ import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
-import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
@@ -632,15 +631,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     @Subscribe
     public void openMysteryItem(OpenMysteryItemEvent event) {
         inventoryRepository.openMysteryItem(user)
-                .subscribe(mysteryItem -> userRepository.retrieveUser(false)
-                        .subscribe(user1 -> {
-                            OpenedMysteryItemEvent openedEvent = new OpenedMysteryItemEvent();
-                            openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItemCount;
-                            openedEvent.mysteryItem = mysteryItem;
-                            EventBus.getDefault().post(openedEvent);
-                        }, throwable -> {
-                        }), throwable -> {
-                });
+                .flatMap(mysteryItem -> userRepository.retrieveUser(false))
+                .subscribe(mysteryItem -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe

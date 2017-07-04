@@ -13,23 +13,18 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
@@ -37,8 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.OrderedRealmCollection;
-
-import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class ItemRecyclerFragment extends BaseFragment {
 

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -15,8 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -24,7 +21,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TagRepository;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
@@ -35,8 +31,6 @@ import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
-import com.habitrpg.android.habitica.ui.adapter.tasks.RealmBaseTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
@@ -418,11 +412,6 @@ public class TasksFragment extends BaseMainFragment {
         openNewTaskActivity(event.taskType.toLowerCase(Locale.US));
     }
 
-    @Subscribe
-    public void onEvent(final TaskSaveEvent event) {
-        floatingMenu.close(true);
-    }
-
     //endregion Events
 
     @Override
@@ -443,6 +432,7 @@ public class TasksFragment extends BaseMainFragment {
                 this.displayingTaskForm = false;
                 break;
         }
+        floatingMenu.close(true);
     }
 
     private void onTaskCreatedResult(int resultCode, Intent data) {

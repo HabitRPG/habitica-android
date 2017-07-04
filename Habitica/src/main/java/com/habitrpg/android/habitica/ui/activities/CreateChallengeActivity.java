@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Challenge;
@@ -262,16 +261,6 @@ public class CreateChallengeActivity extends BaseActivity {
     @Subscribe
     public void onEvent(TaskTappedEvent tappedEvent) {
         openNewTaskActivity(null, tappedEvent.Task);
-    }
-
-    @Subscribe
-    public void onEvent(TaskSaveEvent saveEvent) {
-
-        if (saveEvent.task.getId() == null) {
-            saveEvent.task.setId(UUID.randomUUID().toString());
-        }
-
-        addOrUpdateTaskInList(saveEvent.task);
     }
 
     @OnClick(R.id.challenge_add_gem_btn)

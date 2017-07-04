@@ -24,10 +24,6 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.user.User;
@@ -36,8 +32,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
