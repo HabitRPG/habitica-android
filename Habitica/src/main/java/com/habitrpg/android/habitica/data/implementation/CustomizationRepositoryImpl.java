@@ -15,7 +15,7 @@ public class CustomizationRepositoryImpl extends ContentRepositoryImpl<Customiza
     }
 
     @Override
-    public Observable<RealmResults<Customization>> getCustomizations(String type, String category) {
-        return localRepository.getCustomizations(type, category);
+    public Observable<RealmResults<Customization>> getCustomizations(String type, String category, boolean onlyAvailable) {
+        return localRepository.getCustomizations(type, category, onlyAvailable);
     }
 }

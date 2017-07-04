@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindColor;

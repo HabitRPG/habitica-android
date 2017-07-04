@@ -32,6 +32,7 @@ public class HabitButtonWidgetActivity extends BaseActivity {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private int widgetId;
+    private SkillTasksRecyclerViewAdapter adapter;
 
     @Override
     protected int getLayoutResId() {
@@ -67,7 +68,11 @@ public class HabitButtonWidgetActivity extends BaseActivity {
             recyclerView.setLayoutManager(layoutManager);
         }
 
-        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(tasks -> recyclerView.setAdapter(new SkillTasksRecyclerViewAdapter(tasks, true)));
+        adapter = new SkillTasksRecyclerViewAdapter(null, true);
+        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe(task -> taskSelected(task.getId())));
+        recyclerView.setAdapter(adapter);
+
+        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(adapter::updateData);
     }
 
     public void taskSelected(String taskId) {

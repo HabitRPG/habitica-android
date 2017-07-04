@@ -32,7 +32,7 @@ public class RxErrorHandler {
         };
     }
 
-    private static void reportError(Throwable throwable) {
+    public static void reportError(Throwable throwable) {
         if (BuildConfig.DEBUG) {
             try {
                 Log.e("ObservableError", Log.getStackTraceString(throwable));

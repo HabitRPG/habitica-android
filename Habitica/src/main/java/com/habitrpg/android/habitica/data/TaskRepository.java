@@ -57,7 +57,7 @@ public interface TaskRepository extends BaseRepository  {
 
     Observable<List<Task>> getTaskCopies(String userId);
 
-    Observable<List<Task>> getTaskCopies(RealmResults<Task> tasks1);
+    Observable<List<Task>> getTaskCopies(List<Task> tasks1);
 
     Observable<TaskList> updateDailiesIsDue(Date date);
 }

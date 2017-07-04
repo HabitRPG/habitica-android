@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
@@ -73,9 +74,11 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
     private void loadData() {
         Handler mainHandler = new Handler(context.getMainLooper());
         mainHandler.post(() -> taskRepository.getTasks(taskType, userID)
+                .first()
                 .flatMap(Observable::from)
                 .filter(task -> task.type.equals(Task.TYPE_TODO) || task.isDisplayedActive(customDayStart))
                 .toList()
+                .flatMap(tasks -> taskRepository.getTaskCopies(tasks))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .first()
@@ -83,7 +86,10 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                     taskList = tasks;
                     reloadData = false;
                     AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
-                }, throwable -> reloadData = false));
+                }, throwable -> {
+                    RxErrorHandler.reportError(throwable);
+                    reloadData = false;
+                }));
 
     }
 

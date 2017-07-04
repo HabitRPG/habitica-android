@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -20,6 +22,9 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+
+import net.pherth.android.emoji_library.EmojiHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +69,12 @@ public class HabitButtonWidgetService extends Service {
     private void updateData(Task task) {
         RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.widget_habit_button);
         if (task != null) {
-            remoteViews.setTextViewText(R.id.habit_title, task.text);
+            CharSequence parsedText = MarkdownParser.parseMarkdown(task.text);
+
+            SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
+            EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false);
+
+            remoteViews.setTextViewText(R.id.habit_title, builder);
 
             if (!task.getUp()) {
                 remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.GONE);

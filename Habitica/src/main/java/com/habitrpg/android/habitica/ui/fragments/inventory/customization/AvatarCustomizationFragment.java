@@ -109,7 +109,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         if (user == null || adapter == null) {
             return;
         }
-        customizationRepository.getCustomizations(type, category).subscribe(adapter::setCustomizationList, RxErrorHandler.handleEmptyError());
+        customizationRepository.getCustomizations(type, category, true).subscribe(adapter::setCustomizationList, RxErrorHandler.handleEmptyError());
     }
 
     private void setGridSpanCount(int width) {

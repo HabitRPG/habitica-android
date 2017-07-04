@@ -220,7 +220,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<List<Task>> getTaskCopies(RealmResults<Task> tasks) {
+    public Observable<List<Task>> getTaskCopies(List<Task> tasks) {
         return Observable.just(localRepository.getUnmanagedCopy(tasks));
     }
 
