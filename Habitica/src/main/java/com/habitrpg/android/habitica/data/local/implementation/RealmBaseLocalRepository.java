@@ -28,7 +28,11 @@ abstract class RealmBaseLocalRepository implements BaseLocalRepository {
 
     @Override
     public <T extends RealmObject> T getUnmanagedCopy(T object) {
-        return realm.copyFromRealm(object);
+        if (object.isManaged() && object.isValid()) {
+            return realm.copyFromRealm(object);
+        } else {
+            return object;
+        }
     }
 
     @Override

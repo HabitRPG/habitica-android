@@ -124,7 +124,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_challenge_details, menu);
 
-        if(challenge != null && !challenge.leaderId.equals(userId)){
+        if(challenge != null && challenge.leaderId != null && !challenge.leaderId.equals(userId)){
             menu.setGroupVisible(R.id.challenge_edit_action_group, false);
         }
 
