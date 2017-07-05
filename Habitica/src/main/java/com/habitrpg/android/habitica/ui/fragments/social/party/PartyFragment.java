@@ -159,8 +159,8 @@ public class PartyFragment extends BaseMainFragment {
                 return true;
             case R.id.menu_guild_leave:
                 new AlertDialog.Builder(viewPager.getContext())
-                        .setTitle(viewPager.getContext().getString(R.string.party_leave))
-                        .setMessage(viewPager.getContext().getString(R.string.party_leave_confirmation))
+                        .setTitle(viewPager.getContext().getString(R.string.leave_party))
+                        .setMessage(viewPager.getContext().getString(R.string.leave_party_confirmation))
                         .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  {
                             if (this.group != null){
                                 this.socialRepository.leaveGroup(this.group.id)

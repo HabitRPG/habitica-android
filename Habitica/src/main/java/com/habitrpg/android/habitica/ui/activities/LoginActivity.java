@@ -56,7 +56,9 @@ import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
@@ -101,6 +103,8 @@ public class LoginActivity extends BaseActivity
     public SharedPreferences sharedPrefs;
     @Inject
     public HostConfig hostConfig;
+    @Inject
+    UserRepository userRepository;
     public String mTmpUserToken;
     public String mTmpApiToken;
     public Boolean isRegistering;
@@ -270,7 +274,6 @@ public class LoginActivity extends BaseActivity
                     return;
                 }
                 apiClient.connectUser(username, password)
-
                         .subscribe(LoginActivity.this, throwable -> hideProgress());
             }
         }
@@ -416,15 +419,6 @@ public class LoginActivity extends BaseActivity
         }
     }
 
-    public void onUserReceived(User user) {
-        try {
-            saveTokens(mTmpApiToken, mTmpUserToken);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.startMainActivity();
-    }
-
     private void hideProgress() {
         mProgressBar.setVisibility(View.GONE);
     }
@@ -448,12 +442,15 @@ public class LoginActivity extends BaseActivity
             e.printStackTrace();
         }
 
-        if (userAuthResponse.getNewUser()) {
-            this.startSetupActivity();
-        } else {
-            AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT);
-            this.startMainActivity();
-        }
+        userRepository.retrieveUser(true)
+                .subscribe(user -> {
+                    if (userAuthResponse.getNewUser()) {
+                        this.startSetupActivity();
+                    } else {
+                        AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT);
+                        this.startMainActivity();
+                    }
+                }, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.fb_login_button)

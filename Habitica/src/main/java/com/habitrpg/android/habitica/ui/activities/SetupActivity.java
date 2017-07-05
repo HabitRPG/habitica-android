@@ -82,7 +82,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userRepository.getUser(hostConfig.getUser())
+        compositeSubscription.add(userRepository.getUser(hostConfig.getUser())
                 .flatMap(user -> {
                     if (user == null) {
                         return userRepository.retrieveUser(true);
@@ -91,8 +91,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
                     }
                 })
                 .subscribe(this::onUserReceived, throwable -> {
-
-        });
+        }));
 
         Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("status", "displayed");
@@ -230,6 +229,9 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
     public void onUserReceived(User user) {
         if (completedSetup) {
+            if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
+                compositeSubscription.unsubscribe();
+            }
             this.startMainActivity();
             return;
         }

@@ -22,8 +22,10 @@ public class TaskSerializer implements JsonSerializer<Task> {
         obj.addProperty("attribute", task.getAttribute());
         obj.addProperty("type", task.getType());
         JsonArray tagsList = new JsonArray();
-        for (Tag tag : task.getTags()) {
-            tagsList.add(tag.getId());
+        if (task.getTags() != null) {
+            for (Tag tag : task.getTags()) {
+                tagsList.add(tag.getId());
+            }
         }
         obj.add("tags", tagsList);
         switch (task.getType()) {
