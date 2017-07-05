@@ -75,8 +75,8 @@ public class InboxMessageListFragment extends BaseMainFragment
         swipeRefreshLayout.setOnRefreshListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(false);
+        //layoutManager.setReverseLayout(true);
+        //layoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(layoutManager);
 
         chatAdapter = new ChatRecyclerViewAdapter(null, true, user, null);

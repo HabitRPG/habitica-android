@@ -134,8 +134,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext());
-            layoutManager.setReverseLayout(true);
-            layoutManager.setStackFromEnd(false);
+            //layoutManager.setReverseLayout(true);
+            //layoutManager.setStackFromEnd(false);
 
             recyclerView.setLayoutManager(layoutManager);
         }
