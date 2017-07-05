@@ -55,27 +55,15 @@ public class PopupNotificationsManager {
     Boolean displayNotification(Notification notification) {
         if (notification.data.rewardKey != null) {
             String title = notification.data.message;
-            String youEarnedMessage = "";
 
             LayoutInflater factory = LayoutInflater.from(context);
             final View view = factory.inflate(R.layout.dialog_login_incentive, null);
 
             SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
-            String imageKey = "shop_" + notification.data.rewardKey.get(0);
+            String imageKey = notification.data.rewardKey.get(0);
             DataBindingUtils.loadImage(imageView, imageKey);
 
-            if (notification.data.reward != null && notification.data.reward.size() > 0) {
-                String earnedString = "";
-                int count = 0;
-                for (Reward reward : notification.data.reward) {
-                    earnedString += reward.key;
-                    count += 1;
-                    if (notification.data.reward.size() > 1 && count != notification.data.reward.size()) {
-                        earnedString += ", ";
-                    }
-                }
-                youEarnedMessage = context.getString(R.string.checkInRewardEarned, earnedString);
-            }
+            String youEarnedMessage = context.getString(R.string.checkInRewardEarned, notification.data.rewardText)
 
             TextView titleTextView = new TextView(context);
             titleTextView.setBackgroundResource(R.color.best_100);
