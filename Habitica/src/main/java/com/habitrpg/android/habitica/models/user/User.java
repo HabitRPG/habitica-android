@@ -58,6 +58,7 @@ public class User extends RealmObject implements Avatar {
 
     private Date lastCron;
     private Boolean needsCron;
+    private int loginIncentives;
 
     public Preferences getPreferences() {
         return preferences;
@@ -514,5 +515,13 @@ public class User extends RealmObject implements Avatar {
 
     public void setNeedsCron(boolean needsCron) {
         this.needsCron = needsCron;
+    }
+
+    public int getLoginIncentives() {
+        return loginIncentives;
+    }
+
+    public void setLoginIncentives(int loginIncentives) {
+        this.loginIncentives = loginIncentives;
     }
 }

@@ -614,4 +614,5 @@
     <string name="yesterdaililes_prompt">Did you do any of these Dailies yesterday?</string>
     <string name="start_day">Start My Day</string>
     <string name="leave_party_confirmation">Are you sure you want to leave the Party?</string>
+    <string name="nextPrizeUnlocksIn" formatted="false">Next Prize in %d Check-ins</string>
 </resources>

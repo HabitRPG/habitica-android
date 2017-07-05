@@ -162,7 +162,6 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         this.context = context;
         this.crashlyticsProxy = crashlyticsProxy;
         this.popupNotificationsManager = popupNotificationsManager;
-        this.popupNotificationsManager.setApiClient(this);
 
         HabiticaBaseApplication.getComponent().inject(this);
         crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
@@ -829,7 +828,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<List> readNotificaiton(String notificationId) {
+    public Observable<List> readNotification(String notificationId) {
         return apiService.readNotification(notificationId).compose(configureApiCallObserver());
     }
 

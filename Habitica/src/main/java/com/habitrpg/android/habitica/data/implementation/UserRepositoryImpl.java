@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,10 +27,8 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import io.realm.RealmObject;
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.functions.Func1;
 
 
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> implements UserRepository {
@@ -52,6 +49,11 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public Observable<User> getUser(String userID) {
         return localRepository.getUser(userID);
+    }
+
+    @Override
+    public Observable<User> getUser() {
+        return getUser(userId);
     }
 
     @Override
@@ -209,6 +211,11 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public void runCron() {
         runCron(new ArrayList<>());
+    }
+
+    @Override
+    public Observable<List> readNotification(String id) {
+        return apiClient.readNotification(id);
     }
 
     @Override

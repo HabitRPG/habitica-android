@@ -19,6 +19,7 @@ import rx.Observable;
 public interface UserRepository extends BaseRepository {
 
     Observable<User> getUser(String userID);
+    Observable<User> getUser();
     Observable<User> updateUser(User user, Map<String, Object> updateData);
     Observable<User> updateUser(User user, String key, Object value);
 
@@ -50,4 +51,7 @@ public interface UserRepository extends BaseRepository {
 
     void runCron(List<Task> tasks);
     void runCron();
+
+    Observable<List> readNotification(String id);
+
 }
