@@ -87,7 +87,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
      * @param content   message.
      */
     public static void showSnackbar(Context context, ViewGroup container, String content, SnackbarDisplayType displayType) {
-        showSnackbar(context, container, null, content, displayType);
+        showSnackbar(context, container, content, null, displayType);
     }
 
     /**

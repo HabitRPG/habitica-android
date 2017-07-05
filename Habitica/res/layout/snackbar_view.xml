@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:paddingBottom="12dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:gravity="center"
-    tools:background="@color/best_50">
+    android:fitsSystemWindows="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:gravity="center"
+        tools:background="@color/best_50">
         <TextView
             android:id="@+id/snackbar_title"
             android:layout_width="wrap_content"
@@ -28,4 +32,5 @@
             android:gravity="center"
             android:textSize="12sp"
             android:textColor="@color/white_75_alpha"/>
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>

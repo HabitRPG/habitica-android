@@ -13,7 +13,6 @@ public class Flags extends RealmObject {
     @PrimaryKey
     private String userId;
 
-    User user;
     RealmList<TutorialStep> tutorial;
     private boolean showTour;
     private boolean dropsEnabled;

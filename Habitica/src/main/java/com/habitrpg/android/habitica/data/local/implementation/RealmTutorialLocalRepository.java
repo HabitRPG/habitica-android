@@ -18,16 +18,18 @@ public class RealmTutorialLocalRepository extends RealmBaseLocalRepository imple
 
     @Override
     public Observable<TutorialStep> getTutorialStep(String key) {
-        return realm.where(TutorialStep.class).equalTo("key", key).findFirstAsync()
+        return realm.where(TutorialStep.class).equalTo("identifier", key)
+                .findAllAsync()
                 .asObservable()
-                .filter(realmObject -> realmObject.isLoaded())
+                .filter(realmObject -> realmObject.isLoaded() && realmObject.isValid() && !realmObject.isEmpty())
+                .map(steps -> steps.first())
                 .cast(TutorialStep.class);
     }
 
     @Override
     public Observable<RealmResults<TutorialStep>> getTutorialSteps(List<String> keys) {
         return realm.where(TutorialStep.class)
-                .in("key", (String[]) keys.toArray())
+                .in("identifier", (String[]) keys.toArray())
                 .findAll()
                 .asObservable()
                 .filter(RealmResults::isLoaded);

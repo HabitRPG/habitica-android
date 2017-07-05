@@ -124,6 +124,9 @@ public abstract class BaseFragment extends DialogFragment {
 
     @Override
     public void onDestroy() {
+        if (tutorialRepository != null) {
+            tutorialRepository.close();
+        }
         if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
             compositeSubscription.unsubscribe();
         }
