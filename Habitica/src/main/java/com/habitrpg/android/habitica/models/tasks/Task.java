@@ -183,7 +183,7 @@ public class Task extends RealmObject implements Parcelable {
         this.type = type;
     }
 
-    public List<Tag> getTags() {
+    public RealmList<Tag> getTags() {
         return tags;
     }
 

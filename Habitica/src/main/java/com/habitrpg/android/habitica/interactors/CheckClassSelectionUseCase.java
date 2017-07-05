@@ -24,7 +24,7 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
 
     @Override
     protected Observable<Void> buildUseCaseObservable(RequestValues requestValues) {
-        return Observable.from(() -> {
+        return Observable.defer(() -> {
 
             User user = requestValues.user;
 
@@ -34,14 +34,14 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
                         !user.getFlags().getClassSelected()) {
                     SelectClassEvent event = new SelectClassEvent();
                     event.isInitialSelection = true;
-                    event.currentClass = user.getStats().getHabitClass().toString();
+                    event.currentClass = user.getStats().getHabitClass();
                     displayClassSelectionActivity(user, event);
                 }
             } else {
                 displayClassSelectionActivity(user, requestValues.selectClassEvent);
             }
 
-            return null;
+            return Observable.just(null);
         });
     }
 

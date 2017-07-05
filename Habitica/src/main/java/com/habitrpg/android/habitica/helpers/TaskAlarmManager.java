@@ -33,9 +33,6 @@ import rx.schedulers.Schedulers;
 
 import static android.os.Build.VERSION.SDK_INT;
 
-/**
- * Created by keithholliday on 5/29/16.
- */
 public class TaskAlarmManager {
     public static final String TASK_ID_INTENT_KEY = "TASK_ID";
     public static final String TASK_NAME_INTENT_KEY = "TASK_NAME";
@@ -127,7 +124,7 @@ public class TaskAlarmManager {
                 //Ensure that we set to the next available time
                 reminder = this.setTimeForDailyReminder(reminder, task);
             }
-            this.setAlarmForRemindersItem(reminder);
+            this.setAlarmForRemindersItem(task, reminder);
         }
     }
 
@@ -170,9 +167,7 @@ public class TaskAlarmManager {
         return remindersItem;
     }
 
-    private void setAlarmForRemindersItem(RemindersItem remindersItem) {
-        Task reminderItemTask = remindersItem.getTask();
-
+    private void setAlarmForRemindersItem(Task reminderItemTask, RemindersItem remindersItem) {
         Date now = new Date();
         if (remindersItem.getTime().before(now)) {
             return;

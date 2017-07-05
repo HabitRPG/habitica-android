@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 
@@ -132,6 +134,10 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
             return Observable.just(task);
         }
         lastTaskAction = now;
+        if (task.getTags() != null && task.getTags().size() > 0) {
+            RealmList<Tag> tags = new RealmList<>(localRepository.getUnmanagedCopy(task.getTags()).toArray(new Tag[0]));
+            task.setTags(tags);
+        }
         return apiClient.createTask(task)
                 .map(task1 -> {
                     task1.dateCreated = new Date();

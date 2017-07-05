@@ -38,7 +38,7 @@ public class RxErrorHandler {
                 Log.e("ObservableError", Log.getStackTraceString(throwable));
             } catch (Exception ignored) {}
         } else {
-            if (!IOException.class.isAssignableFrom(throwable.getClass()) && !HttpException.class.isAssignableFrom(throwable.getClass())) {
+            if (!IOException.class.isAssignableFrom(throwable.getClass()) && !HttpException.class.isAssignableFrom(throwable.getClass()) && !retrofit2.HttpException.class.isAssignableFrom(throwable.getClass())) {
                 instance.crashlyticsProxy.logException(throwable);
             }
         }

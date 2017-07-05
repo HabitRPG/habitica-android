@@ -26,7 +26,7 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
 
     @Override
     protected Observable<Void> buildUseCaseObservable(RequestValues requestValues) {
-        return Observable.from(() -> {
+        return Observable.defer(() -> {
             TaskScoringResult data = requestValues.data;
 
             if (data != null) {
@@ -39,7 +39,7 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
                 }
             }
 
-            return null;
+            return Observable.just(null);
         });
     }
 

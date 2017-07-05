@@ -239,6 +239,6 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Quest> forceStartQuest(Group party) {
-        return apiClient.forceStartQuest(party.id, party);
+        return apiClient.forceStartQuest(party.id, localRepository.getUnmanagedCopy(party));
     }
 }
