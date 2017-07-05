@@ -13,17 +13,12 @@
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Tvoj API Token</string>
   <string name="PS_contact_title">Kontaktiraj me</string>
-  <string name="unknown_error">Dogodila se greška...</string>
   <string name="pref_account_header">Račun</string>
   <string name="pref_reminder_header">Svakodnevni Podsjetnik</string>
   <string name="pref_reminder_checkbox">Aktiviraj Podsjetnik</string>
   <string name="pref_reminder_picker">Postavi Vrijeme Podsjetnika</string>
   <!--Adding tasks-->
   <string name="task_value">Vrijednost</string>
-  <string name="new_todo">Novi To-Do</string>
-  <string name="new_reward">Nova nagrada</string>
-  <string name="new_daily">Novi daily</string>
-  <string name="new_habit">Nova navika</string>
   <string name="action_edit">Uredi</string>
   <string name="action_delete">Izbriši</string>
   <string name="action_cancel">Otkaži</string>
@@ -157,24 +152,14 @@
   <string name="sidebar_help">Pomoć &amp; Često Postavljena Pitanja</string>
   <string name="complete_tutorial">Razumijem!</string>
   <string name="dismiss_tutorial">Podsjeti me ponovno</string>
-  <string name="intro_1_title">Dobrodošli u Habiticu</string>
-  <string name="intro_2_title">Napredak u Igri = Napredak u Životu </string>
-  <string name="intro_2_description">Otključaj nove mogućnosti u igri označavanjem napravljenih zadataka u stvarnom životu. Zaradi oklope, ljubimce i više nagrada za ispunjavanje ciljeva!</string>
-  <string name="intro_3_title">Postani društven i bori se protiv Čudovišta</string>
   <string name="intro_3_description">Drži svoje ciljeve na stazi uz pomoć prijatelja. Podržavajte se u bitci i životu te tako napredujte zajedno!</string>
-  <string name="intro_finish_button">Započni</string>
   <string name="previous_button">Prijašnje</string>
   <string name="next_button">Dalje</string>
   <string name="skip_button">Preskoči</string>
   <string name="setup_welcome_description">Dobrodošli u Habiticu, gdje će napredak u igri poboljšati tvoj stvarni život! Kako postižeš ciljeve u stvarnom svijetu, otključat ćeš opremu, ljubimce, pothvate i više.</string>
   <string name="setup_welcome_title">Dobrodošli </string>
-  <string name="avatar_setup_description">Prvo, trebaš avatara u igri da te predstavlja! Stvari koje radiš u stvarnom životu utjecat će na avatarov život, iskustvo, razinu i zlato.</string>
-  <string name="task_setup_description">Izvrsno! Sada ajmo namjestiti tvoje zadatke tako da možeš početi zarađivati iskustvo i zlato.
-
-Za početak, koje djelove života želiš poboljšati?</string>
   <string name="setup_group_work">Posao</string>
   <string name="setup_group_exercise">Vježbanje</string>
-  <string name="setup_group_heathWellness">Zdravlje i Wellness</string>
   <string name="setup_group_school">Školu</string>
   <string name="setup_group_teams">Timove </string>
   <string name="setup_group_chores">Kućanske poslove</string>
@@ -208,13 +193,11 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="join">Pridruži se</string>
   <string name="leader">Vođa</string>
   <string name="gems">Dragulji</string>
-  <string name="copy_as_todo">Kopiraj kao ToDo</string>
   <string name="send_pm">Pošalji PM</string>
   <string name="flag">Označi</string>
   <string name="delete">Izbriši</string>
   <string name="name">Ime</string>
   <string name="description">Opis</string>
-  <string name="add_tag">Dodaj oznaku</string>
   <string name="privacy">Privatnost </string>
   <string name="write_message">Napiši Poruku</string>
   <string name="post">Objavi</string>

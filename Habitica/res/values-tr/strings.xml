@@ -67,6 +67,7 @@
   <string name="about.give_us_feedback">Bize Geribildirim gönder!</string>
   <string name="about.bugreport">Hata Bildir</string>
   <string name="about.source_code">Kaynak Kodu</string>
+  <string name="repeatEvery">Tekrar aralığı</string>
   <!--Network Errors-->
   <string name="network_error_title">Bağlantı Hatası</string>
   <string name="network_error_no_network_body">İnternete bağlı değilsin.</string>
@@ -99,6 +100,15 @@
   <string name="frequency">Sıklık</string>
   <string name="frequency_weekly">Haftanın Belirli Günlerinde</string>
   <string name="frequency_daily">X günde bir</string>
+  <string name="repeatables_summary_title">Özet</string>
+  <string name="repeatables_title">Tekrarlar</string>
+  <string name="repeatables_on_title">Yinelenir</string>
+  <string name="repeatables_frequency_daily">Günlük</string>
+  <string name="repeatables_frequency_weekly">Haftalık</string>
+  <string name="repeatables_frequency_monthly">Aylık</string>
+  <string name="repeatables_frequency_yearly">Yıllık</string>
+  <string name="repeatables_frequency_day_of_month">Ayda Bir Gün</string>
+  <string name="repeatables_frequency_day_of_week">Haftada Bir Gün</string>
   <string name="monday">Pazartesi</string>
   <string name="tuesday">Salı</string>
   <string name="wednesday">Çarşamba</string>
@@ -240,6 +250,7 @@
   <string name="delete">Sil</string>
   <string name="name">Ad</string>
   <string name="description">Tanım</string>
+  <string name="add_tag">Yeni Etiket ekle</string>
   <string name="privacy">Gizlilik</string>
   <string name="write_message">Mesaj Yaz</string>
   <string name="post">Gönder</string>
@@ -529,4 +540,25 @@
   <string name="empty_title_dailies">Hiç Günlük İş sahibi değilsin</string>
   <string name="empty_title_todos">Hiç Yapılacak İş sahibi değilsin</string>
   <string name="empty_title_rewards">Hiç Ödül sahibi değilsin</string>
+  <string name="read_community_guidelines">undefined</string>
+  <string name="maintenance">Bakım</string>
+  <string name="reload_content">İçeriği Yenile</string>
+  <string name="dailyDueDefaultView">Günlükleri varsayılan \'due\' sekmesine ayarla</string>
+  <string name="save">Kaydet</string>
+  <string name="location">Konum</string>
+  <string name="gem_reward">Elmas ödülü</string>
+  <string name="tasks">İşler</string>
+  <string name="create_challenge">Mücadele Yarat</string>
+  <string name="edit_challenge">Mücadeleyi Düzenle</string>
+  <string name="challenge_create_error_enough_gems">Bir mücadele oluşturacak kadar elmasınız yok.</string>
+  <string name="identify_your_challenge_with_a_tag">Bir etiketle mücadeleyi belirleyin ..</string>
+  <string name="challenge_create_error_tag">Bu Mücadeleyi oluşturmak için bir etikete ihtiyacınız var.</string>
+  <string name="challenge_create_error_no_tasks">Bu Mücadeleyi oluşturmak için en az bir göreve ihtiyacınız var.</string>
+  <string name="challenge_create_error_title">Bu Mücadeleyi oluşturmak için bir başlığa ihtiyacınız var.</string>
+  <string name="description_optional">Açıklama (isteğe bağlı)</string>
+  <string name="new_challenge_title">Yeni mücadele başlığı</string>
+  <string name="inn">Han</string>
+  <string name="system">Sistem</string>
+  <string name="leave_party">Takımdan Ayrıl</string>
+  <string name="party_description">Takım Tanımı</string>
 </resources>

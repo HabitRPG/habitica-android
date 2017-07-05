@@ -13,5 +13,6 @@
     <string name="profile_private_message">Mensagem Privada</string>
     <string name="profile_achievements">Conquistas</string>
     <string name="profile_achievement_ok">Ok</string>
+    <string name="profile_qrcode_close">Fechar</string>
 
 </resources>

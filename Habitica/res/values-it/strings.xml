@@ -10,8 +10,8 @@
   <string name="SP_address_hint">Il tuo server personalizzato</string>
   <string name="SP_userID_title">ID utente</string>
   <string name="SP_userID_summary">Il tuo ID utente</string>
-  <string name="SP_APIToken_title">API Token</string>
-  <string name="SP_APIToken_summary">Il tuo API Token</string>
+  <string name="SP_APIToken_title">Chiave API</string>
+  <string name="SP_APIToken_summary">La tua Chiave API</string>
   <string name="Language_title">Lingua</string>
   <string name="Language_summary">Cambia la lingua di Habitica</string>
   <string name="SP_user_qr_code">Il tuo codice QR</string>
@@ -39,9 +39,9 @@
   <!--Adding tasks-->
   <string name="task_value">Valore</string>
   <string name="new_todo">Nuova To-Do</string>
-  <string name="new_reward">Nuova ricompensa</string>
+  <string name="new_reward">Nuova Ricompensa</string>
   <string name="new_daily">Nuova Daily</string>
-  <string name="new_habit">Nuova Habit</string>
+  <string name="new_habit">Nuova abitudine</string>
   <string name="action_edit">Modifica</string>
   <string name="action_delete">Elimina</string>
   <string name="action_cancel">Annulla</string>
@@ -67,6 +67,7 @@
   <string name="about.give_us_feedback">Invia suggerimenti!</string>
   <string name="about.bugreport">Segnala un bug</string>
   <string name="about.source_code">Codice sorgente</string>
+  <string name="repeatEvery">Ripeti ogni</string>
   <!--Network Errors-->
   <string name="network_error_title">Errore di connessione</string>
   <string name="network_error_no_network_body">Non sei connesso ad internet.</string>
@@ -99,6 +100,15 @@
   <string name="frequency">Frequenza</string>
   <string name="frequency_weekly">Certi giorni della settimana</string>
   <string name="frequency_daily">Ogni X giorni</string>
+  <string name="repeatables_summary_title">Riepilogo</string>
+  <string name="repeatables_title">Frequenza</string>
+  <string name="repeatables_on_title">Ripeti di</string>
+  <string name="repeatables_frequency_daily">Quotidianamente</string>
+  <string name="repeatables_frequency_weekly">Settimanalmente</string>
+  <string name="repeatables_frequency_monthly">Mensilmente</string>
+  <string name="repeatables_frequency_yearly">Annualmente</string>
+  <string name="repeatables_frequency_day_of_month">Giorno del mese</string>
+  <string name="repeatables_frequency_day_of_week">Giorno della settimana</string>
   <string name="monday">Lunedì</string>
   <string name="tuesday">Martedì</string>
   <string name="wednesday">Mercoledì</string>
@@ -137,7 +147,7 @@
   <string name="party">Squadra</string>
   <string name="chat">Chat</string>
   <string name="members">Membri</string>
-  <string name="habits">Habit</string>
+  <string name="habits">Abitudini</string>
   <string name="dailies">Daily</string>
   <string name="todos">To-do</string>
   <string name="rewards">Ricompense</string>
@@ -345,8 +355,8 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="invite_users">Invita nella squadra</string>
   <string name="share_using">Condividi con</string>
   <string name="share_levelup">Ho raggiunto il livello %d su Habitica migliorando le mie abitudini nella vita reale!</string>
-  <string name="share_hatched">Oh apena schiuso un %1$s %2$s beniamino in Habitica completando I miei compiti nella vita reale!</string>
-  <string name="share_raised">Oh apena guadagnato una %1$s %2$s montatura in Habitica completando I miei compiti nella vita reale!</string>
+  <string name="share_hatched">Ho appena schiuso un %1$s %2$s in Habitica completando le mie attività nella vita reale!</string>
+  <string name="share_raised">Ho appena ottenuto un %1$s %2$s in Habitica completando le mie attività nella vita reale!</string>
   <string name="open_in_store">Apri nel Play Store</string>
   <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
   <string name="change_class_equipment_warning">Attenzione: non potrai più comprare equipaggiamento per la classe %s.</string>
@@ -369,7 +379,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="gold_singular">oro</string>
   <string name="gold_plural">oro</string>
   <string name="chat_message_copied">Messaggio copiato negli Appunti</string>
-  <string name="copy_chat_message">Copia negli appunti</string>
+  <string name="copy_chat_message">Copia testo</string>
   <string name="edit_tag_title">Modifica etichetta</string>
   <string name="edit_tag_btn_edit">Modifica</string>
   <string name="edit_tag_btn_done">Fatto</string>
@@ -380,7 +390,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="filter_drawer_filter_tags">Filtra per etichette</string>
   <!--QR Strings-->
   <string name="qr_section_title">Fatti invitare da qualcuno con questo codice QR</string>
-  <string name="qr_save_message">Codice QR salvato a</string>
+  <string name="qr_save_message">Codice QR salvato in</string>
   <string name="qr_dialogue_title">Il tuo codice QR</string>
   <string name="download">Scarica</string>
   <string name="send_new_message">Invia nuovo messaggio</string>
@@ -503,7 +513,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="group_tasks_edit_description">Le attività di gruppo non possono essere modificate.</string>
   <string name="group_tasks_edit_title">Non puoi modificare questa attività</string>
   <string name="groups">Gruppi</string>
-  <string name="all">Tutti</string>
+  <string name="all">Tutto</string>
   <string name="none">Nessuno</string>
   <string name="owned">Posseduto</string>
   <string name="not_owned">Non posseduto</string>
@@ -540,4 +550,33 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="reload_content">Ricarica contenuti</string>
   <string name="dailyDueDefaultView">Visualizza lista Daily incomplete di default</string>
   <string name="dailyDueDefaultViewDescription">Con questa opzione selezionata, le Daily mostrate saranno quelle della lista \'incomplete\' invece che \'tutte\'.</string>
+  <string name="repeat_summary">Ripeti %1$s ogni %2$s %3$s %4$s</string>
+  <string name="no_billing_gems">Il tuo dispositivo non dispone di alcuno dei metodi di pagamento supportati. Per favore usa il sito web di Habitica se vuoi acquistare delle Gemme.</string>
+  <string name="no_billing_subscriptions">Il tuo dispositivo non dispone di alcuno dei metodi di pagamento supportati. Per favore usa il sito web di Habitica se vuoi acquistare un abbonamento.</string>
+  <string name="save">Salva</string>
+  <string name="location">Posizione</string>
+  <string name="gem_reward">Ricompensa in gemme</string>
+  <string name="tasks">Attività</string>
+  <string name="create_challenge">Crea sfida</string>
+  <string name="edit_challenge">Modifica sfida</string>
+  <string name="challenge_create_error_tavern_one_gem">Hai bisogni di almeno una gemma per creare una sfida nella Taverna.</string>
+  <string name="challenge_create_error_enough_gems">Non hai abbastanza gemme per creare una sfida.</string>
+  <string name="identify_your_challenge_with_a_tag">Identifica la tua sfida con una etichetta.</string>
+  <string name="challenge_create_error_tag">Hai bisogno di una etichetta per creare questa sfida.</string>
+  <string name="challenge_create_error_no_tasks">Devi aggiungere almeno una attività per creare questa sfida.</string>
+  <string name="challenge_create_error_title">Hai bisogno di un titolo per creare questa sfida.</string>
+  <string name="description_optional">Descrizione (opzionale)</string>
+  <string name="new_challenge_title">Titolo della nuova sfida</string>
+  <string name="ownership">Proprietà</string>
+  <string name="inn">Locanda</string>
+  <string name="system">Sistema</string>
+  <string name="start_quest">Comincia una nuova Missione</string>
+  <string name="leave_party">Abbandona squadra</string>
+  <string name="party_description">Descrizione squadra</string>
+  <string name="abort_confirmation">Vuoi davvero annullare questa missione? Verrà annullata per tutti i membri della tua squadra e tutti i progressi nella missione saranno persi. La Pergamena tornerà al proprietario della missione.</string>
+  <string name="leave_quest_confirmation">Vuoi davvero abbandonare la missione corrente? Tutti i tuoi progressi nella missione saranno persi.</string>
+  <string name="number_participants">%1$d Partecipanti</string>
+  <string name="welcome_back">Bentornato</string>
+  <string name="yesterdaililes_prompt">Hai completato qualcuna di queste Daily ieri?</string>
+  <string name="start_day">Inizia la mia giornata</string>
 </resources>

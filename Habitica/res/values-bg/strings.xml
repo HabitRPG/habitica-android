@@ -67,6 +67,7 @@
   <string name="about.give_us_feedback">Изпратете ни отзивите си!</string>
   <string name="about.bugreport">Докладване на проблем</string>
   <string name="about.source_code">Изходен код</string>
+  <string name="repeatEvery">Повтаря се всеки</string>
   <!--Network Errors-->
   <string name="network_error_title">Грешка при свързване</string>
   <string name="network_error_no_network_body">Нямате връзка с Интернет.</string>
@@ -99,6 +100,15 @@
   <string name="frequency">Честота</string>
   <string name="frequency_weekly">В определени дни от седмицата</string>
   <string name="frequency_daily">На всеки Х дни</string>
+  <string name="repeatables_summary_title">Резюме</string>
+  <string name="repeatables_title">Повтаря се</string>
+  <string name="repeatables_on_title">Повтаря се в</string>
+  <string name="repeatables_frequency_daily">Ежедневно</string>
+  <string name="repeatables_frequency_weekly">Ежеседмично</string>
+  <string name="repeatables_frequency_monthly">Ежемесечно</string>
+  <string name="repeatables_frequency_yearly">Всяка година</string>
+  <string name="repeatables_frequency_day_of_month">Ден от месеца</string>
+  <string name="repeatables_frequency_day_of_week">Ден от седмицата</string>
   <string name="monday">Понеделник</string>
   <string name="tuesday">Вторник</string>
   <string name="wednesday">Сряда</string>
@@ -183,7 +193,7 @@
   <string name="dismiss_tutorial">Напомнете ми отново</string>
   <string name="intro_1_subtitle">Добре дошли в</string>
   <string name="intro_1_title">Хабитика</string>
-  <string name="intro_1_description">Време е да започнете да се забавлявате, докато вършите задачите си. Над %s вече подобряват живота си, с малки стъпки.</string>
+  <string name="intro_1_description">Време е да започнете да се забавлявате, докато вършите задачите си. Над %s вече подобряват живота си с малки стъпки.</string>
   <string name="intro_2_subtitle">Напредък в играта</string>
   <string name="intro_2_title">Напредък в живота</string>
   <string name="intro_2_description">Отключвайте функционалности в играта като отбелязвате завършените задачи в истинския си живот. За изпълнението на целите си ще получавате екипировка, любимци и най-различни други награди.</string>
@@ -539,4 +549,33 @@
   <string name="reload_content">Презареждане на съдържанието</string>
   <string name="dailyDueDefaultView">Ежедневните по подразбиране да са неизпълнени</string>
   <string name="dailyDueDefaultViewDescription">Ако това е избрано, ежедневните задачи по подразбиране ще се появяват в раздела с неизпълнени, вместо в този с всички задачи</string>
+  <string name="repeat_summary">Повтаря се %1$s всеки %2$s %3$s %4$s</string>
+  <string name="no_billing_gems">Устройството Ви не разполага с никой от поддържаните разплащателни методи. Моля, използвайте уеб сайта на Хабитика, ако искате да закупите диаманти.</string>
+  <string name="no_billing_subscriptions">Устройството Ви не разполага с никой от поддържаните разплащателни методи. Моля, използвайте уеб сайта на Хабитика, ако искате да закупите абонамент.</string>
+  <string name="save">Запазване</string>
+  <string name="location">Местоположение</string>
+  <string name="gem_reward">Награда в диаманти</string>
+  <string name="tasks">Задачи</string>
+  <string name="create_challenge">Създаване на предизвикателство</string>
+  <string name="edit_challenge">Редактирай предизвикателството</string>
+  <string name="challenge_create_error_tavern_one_gem">За да създадете предизвикателство в кръчмата, се нуждаете от поне 1 диамант.</string>
+  <string name="challenge_create_error_enough_gems">Не разполагате с достатъчно диаманти, за да създадете предизвикателство.</string>
+  <string name="identify_your_challenge_with_a_tag">Задайте етикет на предизвикателството си…</string>
+  <string name="challenge_create_error_tag">Трябва Ви етикет, за да създадете това предизвикателство.</string>
+  <string name="challenge_create_error_no_tasks">Трябва да добавите поне една задача, за да създадете това предизвикателство.</string>
+  <string name="challenge_create_error_title">Трябва Ви заглавие, за да създадете това предизвикателство.</string>
+  <string name="description_optional">Описание (незадължително)</string>
+  <string name="new_challenge_title">Ново заглавие на предизвикателството</string>
+  <string name="ownership">Притежание</string>
+  <string name="inn">Странноприемница</string>
+  <string name="system">Система</string>
+  <string name="start_quest">Започване на нова мисия</string>
+  <string name="leave_party">Напускане на групата</string>
+  <string name="party_description">Описание на групата</string>
+  <string name="abort_confirmation">Наистина ли искате да прекъснете мисията? Така тя ще приключи за всички в групата Ви и целият Ви напредък ще бъде изгубен. Свитъкът с мисията ще бъде върнат на собственика си.</string>
+  <string name="leave_quest_confirmation">Наистина ли искате да напуснете текущата мисия? Целият Ви напредък по нея ще бъде изгубен</string>
+  <string name="number_participants">%1$d участници</string>
+  <string name="welcome_back">Добре дошли отново</string>
+  <string name="yesterdaililes_prompt">Свършихте ли някоя от тези ежедневни задачи вчера?</string>
+  <string name="start_day">Начало на деня ми</string>
 </resources>

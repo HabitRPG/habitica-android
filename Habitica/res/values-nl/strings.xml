@@ -67,6 +67,7 @@
   <string name="about.give_us_feedback">Stuur ons feedback!</string>
   <string name="about.bugreport">Fout melden</string>
   <string name="about.source_code">Broncode</string>
+  <string name="repeatEvery">Herhaal elke</string>
   <!--Network Errors-->
   <string name="network_error_title">Verbindingsfout</string>
   <string name="network_error_no_network_body">Je bent niet verbonden met het internet.</string>
@@ -99,6 +100,15 @@
   <string name="frequency">Frequentie</string>
   <string name="frequency_weekly">Op Bepaalde Dagen van de Week</string>
   <string name="frequency_daily">Iedere X Dagen</string>
+  <string name="repeatables_summary_title">Samenvatting</string>
+  <string name="repeatables_title">Herhaalt</string>
+  <string name="repeatables_on_title">Herhaalt op</string>
+  <string name="repeatables_frequency_daily">Dagelijks</string>
+  <string name="repeatables_frequency_weekly">Wekelijks</string>
+  <string name="repeatables_frequency_monthly">Maandelijks</string>
+  <string name="repeatables_frequency_yearly">Jaarlijks</string>
+  <string name="repeatables_frequency_day_of_month">Dag van de maand</string>
+  <string name="repeatables_frequency_day_of_week">Dag van de week</string>
   <string name="monday">Maandag</string>
   <string name="tuesday">Dinsdag</string>
   <string name="wednesday">Woensdag</string>
@@ -539,4 +549,32 @@
   <string name="reload_content">Inhoud herladen</string>
   <string name="dailyDueDefaultView">Standaard de \'Onvoltooid\' tab laten zien in Dagelijkse Taken</string>
   <string name="dailyDueDefaultViewDescription">Als deze optie aan staat, wordt standaard de \'onvoltooid\' tab getoond in plaats van \'alle\'</string>
+  <string name="repeat_summary">Herhaalt %1$s elke %2$s %3$s %4$s</string>
+  <string name="no_billing_gems">Je apparaat heeft geen van de ondersteunende betaalmethodes. Gebruik alsjeblieft de habitica website als je edelstenen wilt kopen.</string>
+  <string name="no_billing_subscriptions">Je apparaat heeft geen van de ondersteunende betaalmethodes. Gebruik alsjeblieft de habitica website als je een abonnement wilt kopen.</string>
+  <string name="save">Opslaan</string>
+  <string name="location">Locatie</string>
+  <string name="gem_reward">Edelsteen beloning</string>
+  <string name="tasks">Taken</string>
+  <string name="create_challenge">Uitdaging maken</string>
+  <string name="edit_challenge">Uitdaging bewerken</string>
+  <string name="challenge_create_error_tavern_one_gem">Je hebt minstens 1 edelsteen nodig om een uitdaging in de herberg te maken.</string>
+  <string name="challenge_create_error_enough_gems">Je hebt niet genoeg edelstenen om een uitdaging te maken.</string>
+  <string name="identify_your_challenge_with_a_tag">Identificeer je uitdaging met een label ..</string>
+  <string name="challenge_create_error_tag">Je hebt een label nodig om deze uitdaging te maken.</string>
+  <string name="challenge_create_error_no_tasks">Je moet op zijn minst een taak toevoegen om deze uitdaging te maken.</string>
+  <string name="challenge_create_error_title">Je hebt een titel nodig om deze uitdaging te maken.</string>
+  <string name="description_optional">Beschrijving (optioneel)</string>
+  <string name="new_challenge_title">Nieuwe titel voor uitdaging</string>
+  <string name="ownership">Eigenaarschap</string>
+  <string name="inn">Herberg</string>
+  <string name="system">Systeem</string>
+  <string name="start_quest">Begin aan een nieuwe Queeste</string>
+  <string name="leave_party">Verlaat Groep</string>
+  <string name="party_description">Beschrijving Groep</string>
+  <string name="abort_confirmation">Ben je zeker dat je deze queeste wilt annuleren? Het zal voor iedereen in je groep worden geannuleerd en alle voortgang zal verloren gaan. De queeste-perkamentrol zal teruggegeven worden aan de eigenaar van de queeste.</string>
+  <string name="leave_quest_confirmation">Weet je zeker dat je de actieve queeste wilt verlaten? Al je voortgang in de queeste zal verloren gaan.</string>
+  <string name="number_participants">%1$d Deelnemers</string>
+  <string name="welcome_back">Welkom terug</string>
+  <string name="yesterdaililes_prompt">Heb je gisteren één van deze Dagelijkse taken voltooid?</string>
 </resources>

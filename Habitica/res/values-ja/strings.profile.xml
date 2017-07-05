@@ -13,4 +13,6 @@
     <string name="profile_private_message">プライベートメッセージ</string>
     <string name="profile_achievements">実績</string>
     <string name="profile_achievement_ok">Ok</string>
-    </resources>
+    <string name="profile_qrcode_close">閉じる</string>
+
+</resources>

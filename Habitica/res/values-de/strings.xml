@@ -16,6 +16,7 @@
   <string name="Language_summary">Habiticas Sprache ändern</string>
   <string name="SP_user_qr_code">Dein QR Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
+  <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_first_day_of_the_week_title">Erster Tag der Woche</string>
   <string name="pref_first_day_of_the_week_summary">Erster Tag der Woche in allen Kalendern</string>
@@ -37,6 +38,10 @@
   <string name="preference_push_invited_to_quest">Zur Quest eingeladen</string>
   <!--Adding tasks-->
   <string name="task_value">Wert</string>
+  <string name="new_todo">Neue To-Do</string>
+  <string name="new_reward">Neue Belohnung</string>
+  <string name="new_daily">Neue tägliche Aufgabe</string>
+  <string name="new_habit">Neue Gewohnheit</string>
   <string name="action_edit">Bearbeiten</string>
   <string name="action_delete">Löschen</string>
   <string name="action_cancel">Abbrechen</string>
@@ -62,6 +67,7 @@
   <string name="about.give_us_feedback">Feedback senden!</string>
   <string name="about.bugreport">Melde einen Fehler</string>
   <string name="about.source_code">Quellcode</string>
+  <string name="repeatEvery">Es wiederholt sich jeden</string>
   <!--Network Errors-->
   <string name="network_error_title">Verbindungsfehler</string>
   <string name="network_error_no_network_body">Keine Internetverbindung.</string>
@@ -94,6 +100,15 @@
   <string name="frequency">Häufigkeit</string>
   <string name="frequency_weekly">An bestimmten Tagen der Woche</string>
   <string name="frequency_daily">Alle X Tage</string>
+  <string name="repeatables_summary_title">Zusammenfassung</string>
+  <string name="repeatables_title">Es wiederholt sich</string>
+  <string name="repeatables_on_title">Wiederholt sich am </string>
+  <string name="repeatables_frequency_daily">Täglich</string>
+  <string name="repeatables_frequency_weekly">Wöchentlich</string>
+  <string name="repeatables_frequency_monthly">Monatlich</string>
+  <string name="repeatables_frequency_yearly">Jährlich</string>
+  <string name="repeatables_frequency_day_of_month">Tag des Monats</string>
+  <string name="repeatables_frequency_day_of_week">Tag der Woche</string>
   <string name="monday">Montag</string>
   <string name="tuesday">Dienstag</string>
   <string name="wednesday">Mittwoch</string>
@@ -182,6 +197,8 @@
   <string name="intro_2_subtitle">Fortschritt im Spiel</string>
   <string name="intro_2_title">Fortschritt im Leben</string>
   <string name="intro_2_description">Schalte Spielinhalte durch das Erledigen und Abhaken deiner realen Aufgaben frei. Bekomme Rüstungen, Tiere und vieles mehr als Belohnungen für das Erfüllen deiner Ziele.</string>
+  <string name="intro_3_subtitle">Bekämpfe Monster</string>
+  <string name="intro_3_title">Triff dich mit Anderen</string>
   <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf, während Ihr Euch gemeinsam verbessert!</string>
   <string name="intro_finish_button">Fangen wir an!</string>
   <string name="previous_button">Zurück</string>
@@ -190,6 +207,7 @@
   <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während Du Ziele im echten Leben erreichst, wirst Du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
   <string name="setup_welcome_title">Willkommen</string>
   <string name="avatar_setup_description">Also, wie möchtest Du aussehen? Keine Sorge, Du kannst das jederzeit ändern.</string>
+  <string name="task_setup_description">Großartig! Woran möchtest Du zukünftig arbeiten?</string>
   <string name="setup_group_work">Arbeit</string>
   <string name="setup_group_exercise">Bewegung</string>
   <string name="setup_group_health">Gesundheit</string>
@@ -226,11 +244,13 @@
   <string name="join">Beitreten</string>
   <string name="leader">Anführer</string>
   <string name="gems">Edelsteine</string>
+  <string name="copy_as_todo">Als Aufgabe kopieren</string>
   <string name="send_pm">PN senden</string>
   <string name="flag">Melden</string>
   <string name="delete">Löschen</string>
   <string name="name">Name</string>
   <string name="description">Beschreibung</string>
+  <string name="add_tag">Tag hinzufügen</string>
   <string name="privacy">Privatsphäre</string>
   <string name="write_message">Nachricht schreiben</string>
   <string name="post">posten</string>
@@ -387,6 +407,7 @@
   <string name="all_dailies_completed">Du hast alle deine täglichen Aufgaben erledigt. Gut gemacht!</string>
   <string name="widget_habit_button">Habitica: Gewohnheit</string>
   <string name="widget_dailies">Habitica: Tägliche Aufgaben</string>
+  <string name="widget_todo_list">Habitica To-Do-Liste</string>
   <string name="widget_add_task">Habitica: Neue Aufgabe</string>
   <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden</string>
   <string name="gem.purchase.toolbartitle">Kaufen</string>
@@ -495,9 +516,12 @@
   <string name="none">Nichts</string>
   <string name="owned">Im Besitz</string>
   <string name="not_owned">Nicht im Besitz</string>
+  <string name="new_game">Neues\nSpiel</string>
   <string name="login_btn_fb">Mit Facebook-Konto einloggen</string>
   <string name="login_btn_google">Mit Google-Konto einloggen</string>
+  <string name="action_back">Zurück</string>
   <string name="welcome_text">Oh, Du musst neu hier sein. Ich bin Justin, der Stadtführer von Habitica.\n\nAls erstes erstellen wir Dir einen Avatar.</string>
+  <string name="randomize">Zufällig</string>
   <string name="avatar_extras">Extras</string>
   <string name="avatar_skin_color">Hautfarbe</string>
   <string name="avatar_hair_color">Haarfarbe</string>
@@ -507,6 +531,8 @@
   <string name="avatar_wheelchair">Rollstuhl</string>
   <string name="weak">Schwach</string>
   <string name="strong">Stark</string>
+  <string name="gray">Grau</string>
+  <string name="dated">Terminiert</string>
   <string name="completed">Vervollständigt</string>
   <string name="setuP_group_other">Anderes</string>
   <string name="clear">löschen</string>
@@ -515,6 +541,41 @@
   <string name="empty_title_dailies">Du hast keine täglichen Aufgaben</string>
   <string name="empty_description_dailies">Tägliche Aufgaben sind sich regelmäßig wiederholende Aufgaben. Such Dir den Zeitplan aus, der Dir am besten passt!</string>
   <string name="empty_title_todos">Du hast keine To-Dos</string>
-  <string name="empty_description_todos">To-Dos sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu To-Dos hinzu, um deren Wert zu steigern.</string>
+  <string name="empty_description_todos">To-Dos sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu den To-Dos hinzu, um deren Wert zu steigern.</string>
   <string name="empty_title_rewards">Du hast keine Belohnungen</string>
+  <string name="reset_walkthrough">Setze Justins Einführung zurück</string>
+  <string name="read_community_guidelines">Bitte lies dir unsere Community-Richtlinien durch, bevor du etwas postest.</string>
+  <string name="maintenance">Wartung</string>
+  <string name="reload_content">Inhalt erneut laden</string>
+  <string name="dailyDueDefaultView">Setze die Standards der täglichen Aufgaben auf \"fällig\"</string>
+  <string name="dailyDueDefaultViewDescription">Mit der Auswahl dieser Option werden Deine täglichen Aufgaben auf \"fällig\" zurückgesetzt, anstelle von \"all\"</string>
+  <string name="repeat_summary">%1$s wird jeden %2$s %3$s %4$s wiederholt</string>
+  <string name="no_billing_gems">Mit deinem Zugangsgerät hast Du keinen Zugriff auf die möglichen Zahlungsmethoden. Bitte nutze die Habitica Website um Edelsteine zu kaufen.</string>
+  <string name="no_billing_subscriptions">Mit deinem Zugangsgerät hast Du keinen Zugriff auf die möglichen Zahlungsmethoden. Bitte nutze die Habitica Website um ein Abonnement zu kaufen.</string>
+  <string name="save">Speichern</string>
+  <string name="location">Standort</string>
+  <string name="gem_reward">Edelstein-Belohnung</string>
+  <string name="tasks">Aufgaben</string>
+  <string name="create_challenge">Wettbewerb erstellen</string>
+  <string name="edit_challenge">Wettbewerb bearbeiten</string>
+  <string name="challenge_create_error_tavern_one_gem">Du benötigst mindestens 1 Edelstein, um einen Wettbewerb im Gasthaus zu erstellen.</string>
+  <string name="challenge_create_error_enough_gems">Du hast nicht genug Edelsteine, um einen Wettbewerb zu erstellen.</string>
+  <string name="identify_your_challenge_with_a_tag">Markiere Deinen Wettbewerb mit einem Tag ..</string>
+  <string name="challenge_create_error_tag">Du musst ein Tag angeben, um diesen Wettbewerb erstellen zu können.</string>
+  <string name="challenge_create_error_no_tasks">Du musst wenigstens eine Aufgabe hinzufügen, um diesen Wettbewerb erstellen zu können.</string>
+  <string name="challenge_create_error_title">Du musst einen Titel angeben, um diesen Wettbewerb erstellen zu können.</string>
+  <string name="description_optional">Beschreibung (optional)</string>
+  <string name="new_challenge_title">Neuer Wettbewerbstitel</string>
+  <string name="ownership">Besitz</string>
+  <string name="inn">Gasthaus</string>
+  <string name="system">System</string>
+  <string name="start_quest">Starte eine neue Quest</string>
+  <string name="leave_party">Verlasse die Gruppe</string>
+  <string name="party_description">Gruppen-Beschreibung</string>
+  <string name="abort_confirmation">Bist Du Dir sicher, dass Du die Mission abbrechen möchtest? Die Mission wird für alle Mitglieder Deiner Gruppe abgebrochen und Euer gesamter Fortschritt geht verloren. Die Questschriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
+  <string name="leave_quest_confirmation">Bist Du Dir sicher, dass Du die aktive Quest verlassen möchtest? Dein gesamter Fortschritt geht dabei verloren.</string>
+  <string name="number_participants">%1$d Teilnehmer</string>
+  <string name="welcome_back">Willkommen zurück</string>
+  <string name="yesterdaililes_prompt">Hast du gestern einige Deiner täglichen Aufgaben gemacht?</string>
+  <string name="start_day">Starte meinen Tag</string>
 </resources>

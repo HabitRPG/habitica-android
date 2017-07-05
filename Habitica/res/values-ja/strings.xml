@@ -16,6 +16,7 @@
   <string name="Language_summary">Habitica の言語を変更する</string>
   <string name="SP_user_qr_code">QR コード</string>
   <string name="PS_contact_title">開発者に連絡する</string>
+  <string name="unknown_error">エラーが発生しました…</string>
   <string name="pref_account_header">アカウント</string>
   <string name="pref_first_day_of_the_week_title">週の最初の曜日</string>
   <string name="pref_first_day_of_the_week_summary">すべてのカレンダーでの週の最初の曜日</string>
@@ -37,6 +38,10 @@
   <string name="preference_push_invited_to_quest">クエストに招待されました</string>
   <!--Adding tasks-->
   <string name="task_value">値</string>
+  <string name="new_todo">To-Do を追加</string>
+  <string name="new_reward">ごほうびを追加</string>
+  <string name="new_daily">日課を追加</string>
+  <string name="new_habit">習慣を追加</string>
   <string name="action_edit">編集</string>
   <string name="action_delete">削除</string>
   <string name="action_cancel">戻る</string>
@@ -180,6 +185,8 @@
   <string name="intro_1_title">Habitica</string>
   <string name="intro_2_subtitle">ゲームの進行</string>
   <string name="intro_2_title">人生の進行</string>
+  <string name="intro_3_subtitle">モンスターと戦おう</string>
+  <string name="intro_3_title">友達とつながって</string>
   <string name="intro_3_description">友達の力を借りて目標にしがみつこう。実生活とバトルでお互いに助け合い、いっしょに成長しよう!</string>
   <string name="intro_finish_button">始めましょう!</string>
   <string name="previous_button">戻る</string>
@@ -189,6 +196,7 @@
   <string name="setup_welcome_title">ようこそ</string>
   <string name="setup_group_work">仕事</string>
   <string name="setup_group_exercise">エクササイズ</string>
+  <string name="setup_group_health">体力</string>
   <string name="setup_group_school">学校</string>
   <string name="setup_group_teams">チーム</string>
   <string name="setup_group_chores">家事</string>
@@ -228,6 +236,7 @@
   <string name="delete">削除</string>
   <string name="name">名前</string>
   <string name="description">詳細</string>
+  <string name="add_tag">タグを追加する</string>
   <string name="privacy">プライバシー</string>
   <string name="write_message">メッセージを書く</string>
   <string name="post">投稿</string>
@@ -413,6 +422,7 @@
   <string name="subscribe.listitem3">詳細な履歴の保存</string>
   <string name="subscribe.listitem4">毎日の落とし物の定数が2倍</string>
   <string name="subscriptions">寄付</string>
+  <string name="subscription_duration">毎%sに起こる</string>
   <string name="subscribe.listitem1.description">商人・アレクサンダーが、ジェム1個を20ゴールドで売ってくれます！\n\nアレクサンダーと1ヵ月の間に取り引きできるジェムの数は、最初は25個に限定されていますが、寄付期間によって増えます。\n\n寄付の継続3カ月ごとにその数が5個ずつ増えていき、最大で月に50個を買うことができます。</string>
   <string name="subscribe.listitem2.description">毎月、アバターを個性的にメークアップするアイテムが手に入ります！\n\nさらに寄付の継続3カ月ごとに、謎のタイムトラベラーによって、歴史的（そして未来的！）なメークアップ アイテムへのアクセスが許されます。</string>
   <string name="subscribe.listitem3.description">完了した To-Do やタスクの履歴を、より長期間閲覧可能になります。</string>
@@ -423,6 +433,12 @@
   <string name="subscription_hourglasses">+%d個の神秘の砂時計</string>
   <string name="payment_method">支払方法</string>
   <string name="subscription">寄付</string>
+  <string name="cancel_subscription">寄付のキャンセル</string>
+  <string name="cancel_subscription_google.description">寄付をやめたいですか? Googleプレイストアのマイアプリの項目から寄付をやめることができます。</string>
+  <string name="cancel_subscription_notgoogle.description">寄付をやめたいですか?あなたの支払い方法では,ウェブサイトからのみ寄付をやめることができます。下のボタンをクリックしてあなたのブラウザでウェブサイトを開きます!</string>
+  <string name="visit_habitica_website">Habiticaのウェブサイトを訪れる</string>
+  <string name="current_bonuses">現在のボーナス</string>
+  <string name="months_subscribed">購読した月数</string>
   <string name="one_month">1ヶ月</string>
   <string name="months">%dヶ月</string>
   <string name="month">月</string>
@@ -430,6 +446,7 @@
   <string name="six_months">6ヶ月</string>
   <string name="twelve_months">12ヶ月</string>
   <string name="subscribe_prompt_thanks">寄付のお礼として、こんな便利な特典をもらっています：</string>
+  <string name="byLeader">%sで</string>
   <string name="challenge_details">チャレンジの概要</string>
   <string name="challenge_leave_title">チャレンジから抜ける</string>
   <string name="challenge_leave_text">本当にチャレンジ「%s」を抜けますか？</string>
@@ -461,7 +478,19 @@
   <string name="open">開く</string>
   <string name="notification_mystery_item">プレゼントボックスを開いて%sを手に入れました！</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">あと%1$d日のログインで、新たな賞品が手に入ります！</string>
+  <string name="groups">グループ</string>
   <string name="all">全部</string>
   <string name="none">なし</string>
+  <string name="login_btn_fb">Facebookでログイン</string>
+  <string name="login_btn_google">Googleでログイン</string>
   <string name="action_back">戻る</string>
+  <string name="avatar_hair_color">髪色</string>
+  <string name="avatar_hair_ponytail">ポニーテール</string>
+  <string name="avatar_glasses">メガネ</string>
+  <string name="weak">弱い</string>
+  <string name="strong">強い</string>
+  <string name="setuP_group_other">ほか</string>
+  <string name="empty_title_habits">習慣を持っていません</string>
+  <string name="empty_title_dailies">日課を持っていません</string>
+  <string name="maintenance">修理</string>
 </resources>
