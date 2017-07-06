@@ -58,8 +58,12 @@ public class MemberSerialization implements JsonDeserializer<Member> {
 
         if (obj.has("items")) {
             JsonObject items = obj.getAsJsonObject("items");
-            member.setCurrentMount(items.get("currentMount").getAsString());
-            member.setCurrentPet(items.get("currentPet").getAsString());
+            if (items.has("currentMount")) {
+                member.setCurrentMount(items.get("currentMount").getAsString());
+            }
+            if (items.has("currentPet")) {
+                member.setCurrentPet(items.get("currentPet").getAsString());
+            }
             if (items.has("gear")) {
                 JsonObject gear = items.getAsJsonObject("gear");
                 if (gear.has("costume")) {
