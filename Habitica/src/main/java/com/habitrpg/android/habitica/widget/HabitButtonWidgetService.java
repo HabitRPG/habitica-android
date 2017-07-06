@@ -68,7 +68,7 @@ public class HabitButtonWidgetService extends Service {
 
     private void updateData(Task task) {
         RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.widget_habit_button);
-        if (task != null && task.isManaged()) {
+        if (task != null && task.isValid()) {
             CharSequence parsedText = MarkdownParser.parseMarkdown(task.text);
 
             SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
