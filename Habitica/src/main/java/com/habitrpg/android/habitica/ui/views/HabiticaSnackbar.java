@@ -7,6 +7,7 @@ import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
     public HabiticaSnackbar setText(CharSequence text) {
         TextView textView = (TextView) getView().findViewById(R.id.snackbar_text);
         textView.setText(text);
+        textView.setVisibility(text != null ? View.VISIBLE : View.GONE);
         return this;
     }
 
@@ -86,7 +88,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
      * @param container Parent view where Snackbar will appear.
      * @param content   message.
      */
-    public static void showSnackbar(Context context, ViewGroup container, String content, SnackbarDisplayType displayType) {
+    public static void showSnackbar(Context context, ViewGroup container, CharSequence content, SnackbarDisplayType displayType) {
         showSnackbar(context, container, content, null, displayType);
     }
 
@@ -97,7 +99,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
      * @param container Parent view where Snackbar will appear.
      * @param content   message.
      */
-    public static void showSnackbar(Context context, ViewGroup container, String title, String content, SnackbarDisplayType displayType) {
+    public static void showSnackbar(Context context, ViewGroup container, CharSequence title, CharSequence content, SnackbarDisplayType displayType) {
         HabiticaSnackbar snackbar = HabiticaSnackbar.make(container, Snackbar.LENGTH_LONG)
                 .setTitle(title)
                 .setText(content);

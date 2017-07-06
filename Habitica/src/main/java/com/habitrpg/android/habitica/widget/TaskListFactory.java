@@ -76,7 +76,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         mainHandler.post(() -> taskRepository.getTasks(taskType, userID)
                 .first()
                 .flatMap(Observable::from)
-                .filter(task -> task.type.equals(Task.TYPE_TODO) || task.isDisplayedActive(customDayStart))
+                .filter(task -> (task.type.equals(Task.TYPE_TODO) && !task.completed) || task.isDisplayedActive(customDayStart))
                 .toList()
                 .flatMap(tasks -> taskRepository.getTaskCopies(tasks))
                 .subscribeOn(AndroidSchedulers.mainThread())

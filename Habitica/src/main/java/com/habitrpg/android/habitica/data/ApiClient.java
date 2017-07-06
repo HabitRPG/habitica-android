@@ -79,7 +79,7 @@ public interface ApiClient {
 
     Observable<TaskList> getTasks();
     Observable<TaskList> getTasks(String type);
-    Observable<TaskList> getTasks(String type, Date dueDate);
+    Observable<TaskList> getTasks(String type, String dueDate);
 
 
     Observable<UnlockResponse> unlockPath(String path);

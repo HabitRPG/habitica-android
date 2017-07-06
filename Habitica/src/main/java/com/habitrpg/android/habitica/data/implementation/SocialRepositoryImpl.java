@@ -97,7 +97,15 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
                     }
                     return group;
                 })
-                .doOnNext(localRepository::save);
+                .doOnNext(group -> {
+                    localRepository.save(group);
+                    localRepository.getGroup(group.id)
+                            .first()
+                            .subscribe(group1 -> {
+                                group.isMember = group1.isMember;
+                                localRepository.save(group);
+                            }, RxErrorHandler.handleEmptyError());
+                });
     }
 
     @Override

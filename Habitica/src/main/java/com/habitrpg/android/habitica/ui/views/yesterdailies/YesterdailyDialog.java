@@ -111,7 +111,6 @@ public class YesterdailyDialog extends AlertDialog {
                     .flatMap(aVoid -> userRepository.getUser(userId))
                     .first()
                     .filter(user -> user != null && user.getNeedsCron() != null && user.getNeedsCron())
-                    .filter(user -> user != null)
                     .flatMap(user -> {
                         final Calendar cal = Calendar.getInstance();
                         cal.add(Calendar.DATE, -1);

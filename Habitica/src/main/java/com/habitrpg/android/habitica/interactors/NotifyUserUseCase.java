@@ -1,9 +1,15 @@
 package com.habitrpg.android.habitica.interactors;
 
+import android.content.Context;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
+import android.text.style.ImageSpan;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
@@ -42,36 +48,39 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
                         .flatMap(aVoid -> userRepository.retrieveUser(false))
                         .map(User::getStats);
             } else {
-                Pair<String, SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp);
+                Pair<SpannableStringBuilder, SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp);
                 showSnackbar(requestValues.context, requestValues.snackbarTargetView, pair.first, pair.second);
                 return Observable.just(stats);
             }
         });
     }
 
-    public static Pair<String, SnackbarDisplayType> getNotificationAndAddStatsToUser(double xp, double hp, double gold, double mp){
+    public static Pair<SpannableStringBuilder, SnackbarDisplayType> getNotificationAndAddStatsToUser(Context context, double xp, double hp, double gold, double mp){
 
-        StringBuilder message = new StringBuilder();
+        SpannableStringBuilder builder = new SpannableStringBuilder();
         SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
 
         if (xp > 0) {
-            message.append(" + ").append(round(xp, 2)).append(" XP");
+            builder.append(" + ").append(String.valueOf(round(xp, 2))).append(" Exp");
         }
         if (hp != 0) {
             displayType = SnackbarDisplayType.FAILURE;
-            message.append(" - ").append(round(hp, 2)).append(" HP");
+            builder.append(" - ").append(String.valueOf(Math.abs(round(hp, 2)))).append(" Health");
         }
-        if (gold > 0) {
-            message.append(" + ").append(round(gold, 2)).append(" GP");
-        } else if (gold < 0) {
-            displayType = SnackbarDisplayType.FAILURE;
-            message.append(" - ").append(round(gold, 2)).append(" GP");
+        if (gold != 0) {
+            if (gold > 0) {
+                builder.append(" + ").append(String.valueOf(round(gold, 2)));
+            } else if (gold < 0) {
+                displayType = SnackbarDisplayType.FAILURE;
+                builder.append(" - ").append(String.valueOf(Math.abs(round(gold, 2))));
+            }
+            builder.append(" Gold");
         }
         if (mp > 0) {
-            message.append(" + ").append(round(mp, 2)).append(" MP");
+            builder.append(" + ").append(String.valueOf(round(mp, 2))).append(" Magic");
         }
 
-        return new Pair<>(message.toString(), displayType);
+        return new Pair<>(builder, displayType);
     }
 
      public static final class RequestValues implements UseCase.RequestValues {

@@ -510,7 +510,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
 
     @Override
-    public Observable<TaskList> getTasks(String type, Date dueDate) {
+    public Observable<TaskList> getTasks(String type, String dueDate) {
         return apiService.getTasks(type, dueDate).compose(configureApiCallObserver());
     }
 

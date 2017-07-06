@@ -31,6 +31,8 @@
             tools:text="This is the Content"
             android:gravity="center"
             android:textSize="12sp"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:textColor="@color/white_75_alpha"/>
     </LinearLayout>
 </FrameLayout>

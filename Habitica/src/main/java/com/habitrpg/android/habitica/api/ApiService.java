@@ -104,7 +104,7 @@ public interface ApiService {
     Observable<HabitResponse<TaskList>> getTasks(@Query("type") String type);
 
     @GET("tasks/user")
-    Observable<HabitResponse<TaskList>> getTasks(@Query("type") String type, @Query("dueDate") Date dueDate);
+    Observable<HabitResponse<TaskList>> getTasks(@Query("type") String type, @Query("dueDate") String dueDate);
 
 
     @POST("user/unlock")

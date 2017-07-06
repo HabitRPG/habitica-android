@@ -16,8 +16,11 @@ import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -56,7 +59,8 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
 
     @Override
     public Observable<TaskList> retrieveTasks(String userId, TasksOrder tasksOrder, Date dueDate) {
-        return this.apiClient.getTasks("dailys", dueDate)
+        DateFormat formatter = new SimpleDateFormat("YYYY-MM-dd", Locale.US);
+        return this.apiClient.getTasks("dailys", formatter.format(dueDate))
                 .doOnNext(res -> this.localRepository.saveTasks(userId, tasksOrder, res));
     }
 
@@ -232,7 +236,8 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
 
     @Override
     public Observable<TaskList> updateDailiesIsDue(Date date) {
-        return apiClient.getTasks("dailys", date)
+        DateFormat formatter = new SimpleDateFormat("YYYY-MM-dd", Locale.US);
+        return apiClient.getTasks("dailys", formatter.format(date))
                 .doOnNext(localRepository::updateIsdue);
     }
 }
