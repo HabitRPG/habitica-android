@@ -125,7 +125,7 @@ dependencies {
     //Tests
     testCompile "junit:junit:4.10"
     testCompile "org.assertj:assertj-core:1.7.0"
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     testCompile "org.robolectric:robolectric:3.3.2"
     testCompile 'org.robolectric:shadows-multidex:3.3.2'
     testCompile "org.robolectric:shadows-support-v4:3.3.2"
@@ -136,8 +136,8 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4:1.7.0'
 
     //Leak Detection
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 
     //Push Notifications
     compile 'com.google.firebase:firebase-core:10.2.0'
