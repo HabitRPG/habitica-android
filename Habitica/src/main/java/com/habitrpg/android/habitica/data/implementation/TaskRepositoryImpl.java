@@ -59,7 +59,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
 
     @Override
     public Observable<TaskList> retrieveTasks(String userId, TasksOrder tasksOrder, Date dueDate) {
-        DateFormat formatter = new SimpleDateFormat("YYYY-MM-dd", Locale.US);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         return this.apiClient.getTasks("dailys", formatter.format(dueDate))
                 .doOnNext(res -> this.localRepository.saveTasks(userId, tasksOrder, res));
     }
