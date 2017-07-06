@@ -215,7 +215,9 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         if (subscriptionOptionButton != null) {
             subscriptionOptionButton.setIsPurchased(true);
         }
-        this.subscriptionButton.setEnabled(true);
+        if (this.subscriptionButton != null) {
+            this.subscriptionButton.setEnabled(true);
+        }
     }
 
     @Nullable

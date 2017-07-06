@@ -324,7 +324,7 @@ public class TasksFragment extends BaseMainFragment {
             }
             if (activeTutorialFragments.size() == 1) {
                 TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(indexForTaskType(activeTutorialFragments.get(0)));
-                if (fragment != null && fragment.tutorialTexts != null) {
+                if (fragment != null && fragment.tutorialTexts != null && getContext() != null) {
                     String finalText = getContext().getString(R.string.tutorial_tasks_complete);
                     if (!fragment.tutorialTexts.contains(finalText)) {
                         fragment.tutorialTexts.add(finalText);

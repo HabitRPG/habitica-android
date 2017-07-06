@@ -20,10 +20,13 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class YesterdailyDialog extends AlertDialog {
 
@@ -103,7 +106,10 @@ public class YesterdailyDialog extends AlertDialog {
 
     public static void showDialogIfNeeded(Activity activity, String userId, UserRepository userRepository, TaskRepository taskRepository) {
         if (userRepository != null && userId != null) {
-            userRepository.getUser(userId).first()
+            Observable.just(null)
+                    .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .flatMap(aVoid -> userRepository.getUser(userId))
+                    .first()
                     .filter(user -> user != null && user.getNeedsCron() != null && user.getNeedsCron())
                     .filter(user -> user != null)
                     .flatMap(user -> {
@@ -114,6 +120,7 @@ public class YesterdailyDialog extends AlertDialog {
                     .flatMap(user -> taskRepository.getTasks(Task.TYPE_DAILY, userId).first())
                     .map(tasks -> tasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll())
                     .flatMap(taskRepository::getTaskCopies)
+                    .retry(1)
                     .subscribe(tasks -> {
                         if (isDisplaying) {
                             return;

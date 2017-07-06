@@ -6,8 +6,6 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 
 import cz.msebera.android.httpclient.HttpException;
 import rx.functions.Action1;

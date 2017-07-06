@@ -170,7 +170,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 }
 
                 userLabel.setClickable(true);
-                userLabel.setOnClickListener(view -> userLabelClickEvents.onNext(user.getId()));
+                userLabel.setOnClickListener(view -> userLabelClickEvents.onNext(msg.uuid));
             }
 
             DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
@@ -292,7 +292,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 }
 
                 case R.id.menu_chat_send_pm: {
-                    privateMessageClickEvents.onNext(user.getId());
+                    privateMessageClickEvents.onNext(chatMessage.uuid);
                     break;
                 }
 

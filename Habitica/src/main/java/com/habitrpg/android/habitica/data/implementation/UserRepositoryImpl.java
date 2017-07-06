@@ -117,11 +117,9 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     @Override
     public Observable<User> sleep(User user) {
+        localRepository.executeTransaction(realm -> user.getPreferences().setSleep(!user.getPreferences().getSleep()));
         return apiClient.sleep()
-                .map(isSleeping -> {
-                    localRepository.executeTransaction(realm -> user.getPreferences().setSleep(isSleeping));
-                    return user;
-                });
+                .map(isSleeping -> user);
     }
 
     @Override
@@ -228,8 +226,9 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
         } else {
             observable = Observable.just(null);
         }
+        localRepository.getUser(userId).first().subscribe(user -> localRepository.executeTransaction(realm -> user.setNeedsCron(false)), RxErrorHandler.handleEmptyError());
         observable.flatMap(taskScoringResults -> apiClient.runCron())
-                .flatMap(aVoid -> this.retrieveUser(true))
+                .flatMap(aVoid -> this.retrieveUser(true, true))
                 .subscribe(user -> {}, RxErrorHandler.handleEmptyError());
     }
 
