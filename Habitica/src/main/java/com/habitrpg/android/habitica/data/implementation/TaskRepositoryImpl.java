@@ -236,7 +236,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
 
     @Override
     public Observable<TaskList> updateDailiesIsDue(Date date) {
-        DateFormat formatter = new SimpleDateFormat("YYYY-MM-dd", Locale.US);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         return apiClient.getTasks("dailys", formatter.format(date))
                 .doOnNext(localRepository::updateIsdue);
     }

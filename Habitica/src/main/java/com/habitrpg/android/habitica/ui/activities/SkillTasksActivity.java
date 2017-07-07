@@ -69,7 +69,7 @@ public class SkillTasksActivity extends BaseActivity {
                         fragment.taskType = Task.TYPE_DAILY;
                         break;
                     default:
-                        fragment.taskType = Task.TYPE_REWARD;
+                        fragment.taskType = Task.TYPE_TODO;
                 }
 
                 compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe(task -> taskSelected(task), RxErrorHandler.handleEmptyError()));

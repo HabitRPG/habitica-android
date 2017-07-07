@@ -77,7 +77,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
             builder.append(" Gold");
         }
         if (mp > 0) {
-            builder.append(" + ").append(String.valueOf(round(mp, 2))).append(" Magic");
+            builder.append(" + ").append(String.valueOf(round(mp, 2))).append(" Mana");
         }
 
         return new Pair<>(builder, displayType);

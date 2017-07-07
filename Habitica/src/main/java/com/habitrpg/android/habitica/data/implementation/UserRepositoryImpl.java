@@ -80,7 +80,11 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
             lastSync = new Date();
             return apiClient.retrieveUser(withTasks)
                     .doOnNext(localRepository::saveUser)
-                    .doOnNext(user -> taskRepository.saveTasks(user.getId(), user.getTasksOrder(), user.tasks))
+                    .doOnNext(user -> {
+                        if (withTasks) {
+                            taskRepository.saveTasks(user.getId(), user.getTasksOrder(), user.tasks);
+                        }
+                    })
                     .flatMap(user -> {
                         Calendar calendar = new GregorianCalendar();
                         TimeZone timeZone = calendar.getTimeZone();
