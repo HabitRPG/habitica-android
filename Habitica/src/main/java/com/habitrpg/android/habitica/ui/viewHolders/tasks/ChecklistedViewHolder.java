@@ -100,7 +100,12 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                     // Populate the data into the template view using the data object
                     textView.setText(item.getText());
                     checkbox.setChecked(item.getCompleted());
-                    checkbox.setOnCheckedChangeListener(this);
+                    checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                        ChecklistCheckedCommand event = new ChecklistCheckedCommand();
+                        event.task = task;
+                        event.item = item;
+                        EventBus.getDefault().post(event);
+                    });
                     RelativeLayout checkboxHolder = (RelativeLayout) itemView.findViewById(R.id.checkBoxHolder);
                     expandCheckboxTouchArea(checkboxHolder, checkbox);
                     this.checklistView.addView(itemView);
@@ -147,18 +152,6 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
 
                 // it needs to be changed after the event is send -> to the server
                 // maybe a refactor is needed here
-                EventBus.getDefault().post(event);
-            }
-        } else {
-            View v = (View) buttonView.getParent();
-            while (v.getParent().equals(this.checklistView)) {
-                v = (View) v.getParent();
-            }
-            Integer position = ((ViewGroup) v.getParent()).indexOfChild(v);
-            if (task.checklist.size() > position && isChecked != task.checklist.get(position).getCompleted()) {
-                ChecklistCheckedCommand event = new ChecklistCheckedCommand();
-                event.task = task;
-                event.item = task.getChecklist().get(position);
                 EventBus.getDefault().post(event);
             }
         }
