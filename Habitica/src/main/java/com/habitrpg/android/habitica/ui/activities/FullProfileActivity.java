@@ -242,16 +242,19 @@ public class FullProfileActivity extends BaseActivity {
         avatarView.setAvatar(user);
         avatarWithBars.updateData(user);
 
-        addLevelAttributes(stats, user);
+        loadItemDataByOutfit(user.getEquipped()).subscribe(gear -> this.gotGear(gear, user), RxErrorHandler.handleEmptyError());
+
+        if (user.getPreferences().getCostume()) {
+            loadItemDataByOutfit(user.getCostume()).subscribe(this::gotCostume, RxErrorHandler.handleEmptyError());
+        } else {
+            costumeCard.setVisibility(View.GONE);
+        }
 
         //petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
         //mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiClient.getMemberAchievements(this.userId)
-                .subscribe(this::fillAchievements,
-                        throwable -> {
-                        });
+        apiClient.getMemberAchievements(this.userId).subscribe(this::fillAchievements, throwable -> {});
     }
 
     // endregion
@@ -348,18 +351,10 @@ public class FullProfileActivity extends BaseActivity {
         return gearRow;
     }
 
-    private void addLevelAttributes(Stats stats, Member user) {
-        float byLevelStat = Math.min(stats.getLvl() / 2.0f, 50f);
+    private void addLevelAttributes(Member user) {
+        float byLevelStat = Math.min(user.getStats().getLvl() / 2.0f, 50f);
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
-
-        loadItemDataByOutfit(user.getEquipped()).subscribe(gear -> this.gotGear(gear, user), RxErrorHandler.handleEmptyError());
-
-        if (user.getPreferences().getCostume()) {
-            loadItemDataByOutfit(user.getCostume()).subscribe(this::gotCostume, RxErrorHandler.handleEmptyError());
-        } else {
-            costumeCard.setVisibility(View.GONE);
-        }
     }
 
     private Observable<RealmResults<Equipment>> loadItemDataByOutfit(Outfit outfit) {
@@ -380,6 +375,13 @@ public class FullProfileActivity extends BaseActivity {
         UserStatComputer userStatComputer = new UserStatComputer();
         List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
 
+        equipmentTableLayout.removeAllViews();
+        for (int index = 1 ; index < attributesTableLayout.getChildCount() ; index++) {
+            attributesTableLayout.removeViewAt(index);
+        }
+
+        addLevelAttributes(user);
+
         for (UserStatComputer.StatsRow row : statsRows) {
             if (row.getClass().equals(UserStatComputer.EquipmentRow.class)) {
                 UserStatComputer.EquipmentRow equipmentRow = (UserStatComputer.EquipmentRow) row;
@@ -395,6 +397,7 @@ public class FullProfileActivity extends BaseActivity {
 
     public void gotCostume(List<Equipment> obj) {
         // fill costume table
+        costumeTableLayout.removeAllViews();
         for (Equipment i : obj) {
             addEquipmentRow(costumeTableLayout, i.getKey(), i.getText(), "");
         }
