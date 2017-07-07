@@ -19,10 +19,12 @@ public class HostConfig {
     private String api;
     private String user;
 
-    public HostConfig(SharedPreferences sharedPreferences, Context context) {
+    public HostConfig(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.port = BuildConfig.PORT;
         this.address = BuildConfig.DEBUG ? BuildConfig.BASE_URL : context.getString(R.string.base_url);
+        if (prefs.contains("base_url"))
+            this.address = prefs.getString("base_url", context.getString(R.string.base_url));
         this.api = prefs.getString("APIToken", null);
         this.user = prefs.getString(context.getString(R.string.SP_userID), null);
     }

@@ -57,12 +57,14 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.fragments.AdvancedLogin;
+import com.habitrpg.android.habitica.ui.fragments.AdvancedRegister;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
@@ -141,6 +143,8 @@ public class LoginActivity extends BaseActivity
     EditText mConfirmPassword;
     @BindView(R.id.forgot_pw_tv)
     TextView mForgotPWTV;
+    @BindView(R.id.advanced_login_tv)
+    TextView mAdvancedLogin;
     private CallbackManager callbackManager;
     private String googleEmail;
     private LoginManager loginManager;
@@ -169,6 +173,8 @@ public class LoginActivity extends BaseActivity
         SpannableString content = new SpannableString(mForgotPWTV.getText());
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         mForgotPWTV.setText(content);
+
+        mAdvancedLogin.setOnClickListener(advancedLoginClick(true));
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -252,6 +258,11 @@ public class LoginActivity extends BaseActivity
     private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            //Ensure that there is no custom API endpoint set up:
+            setAPIEndpoint(getString(R.string.base_url));
+            ((ApiClientImpl) apiClient).setHostConfig(new HostConfig(LoginActivity.this));
+
             mProgressBar.setVisibility(View.VISIBLE);
             if (isRegistering) {
                 String username, email, password, cpassword;
@@ -278,6 +289,56 @@ public class LoginActivity extends BaseActivity
             }
         }
     };
+
+    private View.OnClickListener advancedLoginClick(boolean isLogin) {
+        return v ->
+                new AlertDialog.Builder(this).setPositiveButton(R.string.advanced_login_warning_continue, (v2, i) -> {
+                    if (isLogin) {
+                        AdvancedLogin login = AdvancedLogin.newInstance();
+                        new AlertDialog.Builder(this).setTitle(R.string.advanced_login_title)
+                                .setView(login.onCreateView(getLayoutInflater(), null, null))
+                                .setPositiveButton(R.string.advanced_login_login, (v3, i2) -> {
+                                    String username = login.getUsername();
+                                    String password = login.getPassword();
+                                    setAPIEndpoint(login.getAPIEndpoint());
+
+                                    ((ApiClientImpl) apiClient).setHostConfig(new HostConfig(LoginActivity.this));
+                                    apiClient.connectUser(username, password)
+                                            .subscribe(LoginActivity.this, throwable -> hideProgress());
+                                })
+                                .setNegativeButton(R.string.advanced_login_cancel, null)
+                                .show();
+                    } else {
+                        AdvancedRegister register = AdvancedRegister.newInstance();
+                        new AlertDialog.Builder(this).setTitle(R.string.advanced_register_title)
+                                .setView(R.layout.fragment_advanced_register)
+                                .setPositiveButton(R.string.advanced_register_register, (v3, i2) -> {
+                                    String username = register.getUsername();
+                                    String email = register.getEmail();
+                                    String password = register.getPassword();
+                                    String confirmPassword = register.getConfirmPassword();
+                                    setAPIEndpoint(register.getAPIEndpoint());
+
+                                    ((ApiClientImpl) apiClient).setHostConfig(new HostConfig(LoginActivity.this));
+                                    apiClient.registerUser(username, email, password, confirmPassword)
+                                            .subscribe(LoginActivity.this, throwable -> hideProgress());
+                                })
+                                .setNegativeButton(R.string.advanced_login_cancel, null)
+                                .show();
+                    }
+                })
+                        .setNegativeButton(R.string.advanced_login_warning_cancel, null)
+                        .setTitle(R.string.advanced_login_warning_title)
+                        .setMessage(R.string.advanced_login_warning)
+                        .show();
+
+    }
+
+    private void setAPIEndpoint(String url) {
+        sharedPrefs.edit().putString("base_url", url).apply();
+    }
+
+
 
     private View.OnClickListener mForgotPWClick = v -> {
         String url = BuildConfig.BASE_URL;
@@ -319,10 +380,14 @@ public class LoginActivity extends BaseActivity
             this.mLoginNormalBtn.setText(getString(R.string.register_btn));
             mUsernameET.setHint(R.string.username);
             mPasswordET.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+            mAdvancedLogin.setText(R.string.advanced_register_title);
+            mAdvancedLogin.setOnClickListener(advancedLoginClick(false));
         } else {
             this.mLoginNormalBtn.setText(getString(R.string.login_btn));
             mUsernameET.setHint(R.string.email_username);
             mPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            mAdvancedLogin.setText(R.string.advanced_login_title);
+            mAdvancedLogin.setOnClickListener(advancedLoginClick(true));
         }
         this.resetLayout();
     }
