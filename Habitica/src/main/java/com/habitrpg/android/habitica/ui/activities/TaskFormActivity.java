@@ -462,6 +462,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         enableRepeatables();
 
         tagRepository.getTags(userId)
+                .first()
                 .subscribe(loadedTags -> {
                             tags = loadedTags;
                             createTagsCheckBoxes();
@@ -866,6 +867,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     private void createTagsCheckBoxes() {
         int position = 0;
+        this.tagsContainerLinearLayout.removeAllViews();
         for (Tag tag : tags) {
             TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.row_checklist, this.tagsContainerLinearLayout, false);
             CheckBox checkbox = (CheckBox) row.findViewById(R.id.checkbox);
@@ -881,7 +883,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 } else {
                     if (selectedTags.contains(tag)) {
                         selectedTags.remove(tag);
-
                     }
                 }
             });

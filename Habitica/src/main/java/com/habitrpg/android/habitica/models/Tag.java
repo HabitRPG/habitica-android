@@ -47,7 +47,7 @@ public class Tag extends RealmObject {
 
     @Override
     public boolean equals(Object o) {
-        if (o.getClass().equals(Tag.class)) {
+        if (Tag.class.isAssignableFrom(o.getClass())) {
             Tag otherTag = (Tag) o;
             return this.getId().equals(otherTag.getId());
         }
