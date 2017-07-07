@@ -667,6 +667,7 @@ public class Task extends RealmObject implements Parcelable {
 
     public List<Integer> getWeeksOfMonth() {
         if (weeksOfMonth == null) {
+            weeksOfMonth = new ArrayList<>();
             if (weeksOfMonthString != null) {
                 try {
                     JSONArray obj = new JSONArray(weeksOfMonthString);
@@ -690,6 +691,7 @@ public class Task extends RealmObject implements Parcelable {
 
     public List<Integer> getDaysOfMonth() {
         if (daysOfMonth == null) {
+            daysOfMonth = new ArrayList<>();
             if (daysOfMonthString != null) {
                 try {
                     JSONArray obj = new JSONArray(daysOfMonthString);
