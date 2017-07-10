@@ -623,12 +623,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         // Every X
         setEveryXSpinner(repeatablesEveryXSpinner);
-        repeatablesEveryXSpinner.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                generateSummary();
-            }
-        });
+        repeatablesEveryXSpinner.setOnValueChangedListener((picker, oldVal, newVal) -> generateSummary());
 
         // WeekDays
         this.repeatablesFrequencyContainer.removeAllViews();
@@ -647,12 +642,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
             checkbox.setText(weekdays[i]);
             checkbox.setChecked(true);
-            checkbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    generateSummary();
-                }
-            });
+            checkbox.setOnClickListener(v -> generateSummary());
             repeatablesWeekDayCheckboxes.add(checkbox);
             repeatablesFrequencyContainer.addView(weekdayRow);
         }
@@ -794,7 +784,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void createCheckListRecyclerView() {
-
         checklistAdapter = new CheckListAdapter();
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -813,25 +802,20 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private void populateChecklistRecyclerView() {
         List<ChecklistItem> checklistItems = new ArrayList<>();
         if (task != null && task.getChecklist() != null) {
-            checklistItems = task.getChecklist();
+            checklistItems = taskRepository.getUnmanagedCopy(task.getChecklist());
         }
         checklistAdapter.setItems(checklistItems);
     }
 
     @OnClick(R.id.add_checklist_button)
     public void addChecklistItem() {
-        String checklist = newCheckListEditText.getText().toString();
-        ChecklistItem item = new ChecklistItem(checklist);
+        String text = newCheckListEditText.getText().toString();
+        ChecklistItem item = new ChecklistItem(text);
         checklistAdapter.addItem(item);
         newCheckListEditText.setText("");
     }
 
     private void createRemindersRecyclerView() {
-        List<RemindersItem> reminders = new ArrayList<>();
-        if (task != null && task.getReminders() != null) {
-            reminders = task.getReminders();
-        }
-
         remindersAdapter = new RemindersAdapter(taskType);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -850,7 +834,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private void populateRemindersRecyclerView() {
         List<RemindersItem> reminders = new ArrayList<>();
         if (task != null && task.getReminders() != null) {
-            reminders = task.getReminders();
+            reminders = taskRepository.getUnmanagedCopy(task.getReminders());
         }
 
         remindersAdapter.setReminders(reminders);
@@ -1111,63 +1095,18 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             if (checklistAdapter != null) {
                 if (checklistAdapter.getCheckListItems() != null) {
-                    List<ChecklistItem> newItems = checklistAdapter.getCheckListItems();
-                    if (task.getChecklist() == null) {
-                        task.setChecklist(new RealmList<>());
-                    }
-                    List<ChecklistItem> itemsToRemove = new ArrayList<>();
-                    for (ChecklistItem item : task.getChecklist()) {
-                        if (item.getId() == null) {
-                            itemsToRemove.add(item);
-                            break;
-                        }
-                        ChecklistItem newItem = null;
-                        for (ChecklistItem checkedItem : newItems) {
-                            if (item.getId().equals(checkedItem.getId())) {
-                                newItem = checkedItem;
-                                break;
-                            }
-                        }
-                        if (newItem == null) {
-                            itemsToRemove.add(item);
-                        } else {
-                            item.setText(newItem.getText());
-                            newItems.remove(newItem);
-                        }
-                    }
-                    task.getChecklist().removeAll(itemsToRemove);
-                    task.getChecklist().addAll(newItems);
+                    RealmList<ChecklistItem> newChecklist = new RealmList<>();
+                    newChecklist.addAll(realm.copyToRealmOrUpdate(checklistAdapter.getCheckListItems()));
+                    task.setChecklist(newChecklist);
                 }
             }
 
             if (remindersAdapter != null) {
                 if (remindersAdapter.getRemindersItems() != null) {
-                    List<RemindersItem> newItems = remindersAdapter.getRemindersItems();
-                    if (task.getReminders() == null) {
-                        task.setReminders(new RealmList<>());
-                    }
-                    List<RemindersItem> itemsToRemove = new ArrayList<>();
-                    for (RemindersItem item : task.getReminders()) {
-                        if (item.getId() == null) {
-                            itemsToRemove.add(item);
-                            break;
-                        }
-                        RemindersItem newItem = null;
-                        for (RemindersItem checkedItem : newItems) {
-                            if (item.getId().equals(checkedItem.getId())) {
-                                newItem = checkedItem;
-                                break;
-                            }
-                        }
-                        if (newItem == null) {
-                            itemsToRemove.add(item);
-                        } else {
-                            item.setTime(newItem.getTime());
-                            newItems.remove(newItem);
-                        }
-                    }
-                    task.getReminders().removeAll(itemsToRemove);
-                    task.getReminders().addAll(newItems);                }
+                    RealmList<RemindersItem> newReminders = new RealmList<>();
+                    newReminders.addAll(realm.copyToRealmOrUpdate(remindersAdapter.getRemindersItems()));
+                    task.setReminders(newReminders);
+                }
             }
 
 

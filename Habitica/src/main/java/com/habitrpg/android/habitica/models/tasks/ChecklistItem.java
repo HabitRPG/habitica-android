@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.models.tasks;
 
+import java.util.UUID;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -25,7 +27,11 @@ public class ChecklistItem extends RealmObject {
 
     public ChecklistItem(String id, String text, boolean completed) {
         this.setText(text);
-        this.setId(id);
+        if (id == null) {
+            this.setId(UUID.randomUUID().toString());
+        } else {
+            this.setId(id);
+        }
         this.setCompleted(completed);
     }
 

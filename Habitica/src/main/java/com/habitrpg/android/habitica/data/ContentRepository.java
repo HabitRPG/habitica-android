@@ -7,4 +7,5 @@ import rx.Observable;
 public interface ContentRepository extends BaseRepository {
 
     Observable<ContentResult> retrieveContent();
+    Observable<ContentResult> retrieveContent(boolean forced);
 }

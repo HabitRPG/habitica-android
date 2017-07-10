@@ -42,7 +42,9 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
+        holder.textWatcher.id = null;
         holder.checkListTextView.setText(items.get(position).getText());
+        holder.textWatcher.id = items.get(position).getId();
     }
 
     public void addItem(ChecklistItem item) {

@@ -103,6 +103,9 @@ public class Task extends RealmObject implements Parcelable {
      */
     public void setId(String id) {
         this.id = id;
+        if (repeat != null) {
+            repeat.setTaskId(id);
+        }
     }
 
     /**

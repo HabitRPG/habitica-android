@@ -25,7 +25,8 @@ public class TaskListDeserializer implements JsonDeserializer<TaskList> {
 
         for (JsonElement e : json.getAsJsonArray()) {
             Task task = ctx.deserialize(e, Task.class);
-
+            //Workaround, since gson doesn't call setter methods
+            task.setId(task.getId());
             taskMap.put(task.getId(), task);
         }
 

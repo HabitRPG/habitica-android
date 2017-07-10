@@ -131,4 +131,12 @@ public class Days extends RealmObject implements Parcelable {
             return new Days[size];
         }
     };
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 }
