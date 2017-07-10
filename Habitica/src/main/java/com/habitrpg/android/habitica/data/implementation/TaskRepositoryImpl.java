@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
@@ -112,13 +113,16 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
                 .flatMap(task -> taskChecked(user, task, up, force));
     }
 
-    public Observable<Task> scoreChecklistItem(String taskId, String itemId){
+    public Observable<Task> scoreChecklistItem(String taskId, String itemId) {
         return apiClient.scoreChecklistItem(taskId, itemId)
-                .zipWith(localRepository.getTask(taskId), (newTask, oldTask) -> {
-                    newTask.position = oldTask.position;
-                    return newTask;
-                })
-                .doOnNext(this.localRepository::saveTask);
+                .flatMap(task -> localRepository.getTask(taskId))
+                .doOnNext(task -> localRepository.executeTransaction(realm -> {
+                    for (ChecklistItem item : task.getChecklist()) {
+                        if (itemId.equals(item.getId())) {
+                            item.setCompleted(!item.getCompleted());
+                        }
+                    }
+                }));
     }
 
     @Override

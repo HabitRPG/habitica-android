@@ -910,9 +910,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
-        checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId()))
-                .subscribe(task -> {}, error -> {
-                });
+        checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId())).subscribe(task -> {}, error -> {});
     }
 
     @Subscribe

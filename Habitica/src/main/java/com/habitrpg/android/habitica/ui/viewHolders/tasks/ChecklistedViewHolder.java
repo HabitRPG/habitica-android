@@ -29,7 +29,8 @@ import butterknife.OnClick;
 
 public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implements CompoundButton.OnCheckedChangeListener {
 
-    public Boolean displayChecklist;
+    static Integer expandedChecklistRow = null;
+
     @BindView(R.id.checkBoxHolder)
     ViewGroup checkboxHolder;
     @BindView(R.id.checkBox)
@@ -50,7 +51,6 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
         checklistIndicatorWrapper.setClickable(true);
         checkbox.setOnCheckedChangeListener(this);
         expandCheckboxTouchArea(checkboxHolder, checkbox);
-        this.displayChecklist = false;
     }
 
     @Override
@@ -71,7 +71,7 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
         this.checklistAllTextView.setText(String.valueOf(task.getChecklist().size()));
 
         this.checklistView.removeAllViews();
-        this.setDisplayChecklist(this.displayChecklist);
+        this.updateChecklistDisplay();
 
         this.checklistIndicatorWrapper.setVisibility(task.checklist.size() == 0 ? View.GONE : View.VISIBLE);
         if (this.rightBorderView != null) {
@@ -87,11 +87,10 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
 
     abstract public Boolean shouldDisplayAsActive();
 
-    public void setDisplayChecklist(Boolean displayChecklist) {
-        this.displayChecklist = displayChecklist;
+    public void updateChecklistDisplay() {
         //This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
         if (this.checklistView != null) {
-            if (this.displayChecklist && this.task.checklist != null) {
+            if (this.shouldDisplayExpandedChecklist() && this.task.checklist != null) {
                 LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 for (ChecklistItem item : this.task.checklist) {
                     LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView, false);
@@ -122,16 +121,18 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
 
     @OnClick(R.id.checklistIndicatorWrapper)
     public void onChecklistIndicatorClicked() {
-        if (this.displayChecklist != null) {
-            this.setDisplayChecklist(!this.displayChecklist);
-        } else {
-            this.setDisplayChecklist(true);
-        }
-        if (this.displayChecklist) {
+        expandedChecklistRow = this.shouldDisplayExpandedChecklist() ? null : getAdapterPosition();
+        if (this.shouldDisplayExpandedChecklist()) {
             RecyclerView recyclerView = (RecyclerView) this.checklistView.getParent().getParent();
             LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             layoutManager.scrollToPositionWithOffset(this.getAdapterPosition(), 15);
         }
+        updateChecklistDisplay();
+
+    }
+
+    private boolean shouldDisplayExpandedChecklist() {
+        return expandedChecklistRow != null && getAdapterPosition() == expandedChecklistRow;
     }
 
     public void expandCheckboxTouchArea(final View expandedView, final View checkboxView) {
