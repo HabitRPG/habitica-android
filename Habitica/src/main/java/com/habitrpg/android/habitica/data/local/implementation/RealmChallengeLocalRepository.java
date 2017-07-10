@@ -38,7 +38,7 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
     public Observable<RealmResults<Challenge>> getChallenges() {
         return realm.where(Challenge.class)
                 .isNotNull("name")
-                .findAllSortedAsync("memberCount", Sort.DESCENDING)
+                .findAllSortedAsync("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }
@@ -48,7 +48,7 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
         return realm.where(Challenge.class)
                 .isNotNull("name")
                 .equalTo("isParticipating", true)
-                .findAllSortedAsync("memberCount", Sort.DESCENDING)
+                .findAllSortedAsync("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }

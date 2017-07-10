@@ -12,6 +12,7 @@ import com.google.gson.JsonSerializer;
 import com.habitrpg.android.habitica.models.social.Challenge;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 
 public class ChallengeDeserializer implements JsonDeserializer<Challenge>, JsonSerializer<Challenge> {
     @Override
@@ -57,6 +58,13 @@ public class ChallengeDeserializer implements JsonDeserializer<Challenge>, JsonS
                     }
                 }
             }
+        }
+
+        if (jsonObject.has("createdAt")) {
+            challenge.createdAt = context.deserialize(jsonObject.get("createdAt"), Date.class);
+        }
+        if (jsonObject.has("updatedAt")) {
+            challenge.updatedAt = context.deserialize(jsonObject.get("updatedAt"), Date.class);
         }
 
         JsonElement groupElement = jsonObject.get("group");

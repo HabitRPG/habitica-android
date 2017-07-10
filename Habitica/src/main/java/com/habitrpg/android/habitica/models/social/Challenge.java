@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import io.realm.RealmObject;
@@ -33,6 +34,8 @@ public class Challenge extends RealmObject {
     public String habitList;
     public String dailyList;
     public String rewardList;
+    public Date createdAt;
+    public Date updatedAt;
 
     public Group group;
 
