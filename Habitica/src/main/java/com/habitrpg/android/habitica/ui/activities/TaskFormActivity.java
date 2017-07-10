@@ -988,13 +988,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskNotes.setText(task.notes);
         taskValue.setText(String.format(Locale.getDefault(), "%.2f", task.value));
 
+        for (Tag tag : task.getTags()) {
+            selectedTags.add(tag);
+        }
+
         if (tags != null) {
             fillTagCheckboxes();
         }
 
-        for (Tag tag : task.getTags()) {
-            selectedTags.add(tag);
-        }
 
         float priority = task.getPriority();
         if (Math.abs(priority - 0.1) < 0.000001) {
