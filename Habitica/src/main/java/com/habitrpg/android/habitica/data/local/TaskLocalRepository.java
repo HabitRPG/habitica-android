@@ -34,5 +34,5 @@ public interface TaskLocalRepository extends BaseLocalRepository {
 
     Observable<Task> getTaskAtPosition(int currentPosition);
 
-    void updateIsdue(TaskList daily);
+    Observable<TaskList> updateIsdue(TaskList daily);
 }

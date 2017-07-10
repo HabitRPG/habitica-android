@@ -207,7 +207,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     public Observable<List<String>> updateTaskPosition(int currentPosition) {
-        return localRepository.getTaskAtPosition(currentPosition)
+        return localRepository.getTaskAtPosition(currentPosition).first()
                 .flatMap(task -> apiClient.postTaskNewPosition(task.getId(), currentPosition));
     }
 
@@ -242,6 +242,6 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public Observable<TaskList> updateDailiesIsDue(Date date) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         return apiClient.getTasks("dailys", formatter.format(date))
-                .doOnNext(localRepository::updateIsdue);
+                .flatMap(localRepository::updateIsdue);
     }
 }
