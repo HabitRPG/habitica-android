@@ -140,7 +140,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             recyclerView.setLayoutManager(layoutManager);
         }
 
-        chatAdapter = new ChatRecyclerViewAdapter(null, true, user, groupId);
+        chatAdapter = new ChatRecyclerViewAdapter(null, true, user);
         compositeSubscription.add(chatAdapter.getUserLabelClickEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
         compositeSubscription.add(chatAdapter.getDeleteMessageEvents().subscribe(this::showDeleteConfirmationDialog, RxErrorHandler.handleEmptyError()));
         compositeSubscription.add(chatAdapter.getFlatMessageEvents().subscribe(this::showFlagConfirmationDialog, RxErrorHandler.handleEmptyError()));

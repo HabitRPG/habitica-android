@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import net.pherth.android.emoji_library.EmojiTextView;
 
@@ -30,15 +31,14 @@ import butterknife.OnClick;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
 public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessage, ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
 
     private User user;
     private String uuid;
-    private String groupId;
-    private boolean isInboxChat = false;
-    private String replyToUserUUID;
     private User sendingUser;
 
     private PublishSubject<ChatMessage> likeMessageEvents = PublishSubject.create();
@@ -49,17 +49,10 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
     private PublishSubject<ChatMessage> copyMessageAsTodoEvents = PublishSubject.create();
     private PublishSubject<ChatMessage> copyMessageEvents = PublishSubject.create();
 
-    public ChatRecyclerViewAdapter(@Nullable OrderedRealmCollection<ChatMessage> data, boolean autoUpdate, User user, String groupId) {
+    public ChatRecyclerViewAdapter(@Nullable OrderedRealmCollection<ChatMessage> data, boolean autoUpdate, User user) {
         super(data, autoUpdate);
         this.user = user;
         if (user != null) this.uuid = user.getId();
-        this.groupId = groupId;
-    }
-
-
-    public void setToInboxChat(String replyToUserUUID) {
-        this.replyToUserUUID = replyToUserUUID;
-        this.isInboxChat = true;
     }
 
     public void setSendingUser(@Nullable User user) {
@@ -70,7 +63,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
     public ChatRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tavern_chat_item, parent, false);
-        return new ChatRecyclerViewHolder(view, uuid, groupId);
+        return new ChatRecyclerViewHolder(view, uuid);
     }
 
     @Override
@@ -108,6 +101,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
         return copyMessageEvents.asObservable();
     }
 
+
     class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
         @BindView(R.id.btn_options)
@@ -130,7 +124,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
         private String userId;
         private ChatMessage chatMessage;
 
-        ChatRecyclerViewHolder(View itemView, String currentUserId, String groupId) {
+        ChatRecyclerViewHolder(View itemView, String currentUserId) {
             super(itemView);
             this.userId = currentUserId;
 
@@ -176,9 +170,17 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
             DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
             if (messageText != null) {
-                messageText.setText(msg.parsedText);
+                messageText.setText(chatMessage.parsedText);
                 if (msg.parsedText == null) {
-                    messageText.setText(msg.text);
+                    messageText.setText(chatMessage.text);
+                    Observable.just(chatMessage.text)
+                            .map(MarkdownParser::parseMarkdown)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(parsedText -> {
+                                chatMessage.parsedText = parsedText;
+                                messageText.setText(chatMessage.parsedText);
+                            }, Throwable::printStackTrace);
                 }
                 this.messageText.setMovementMethod(LinkMovementMethod.getInstance());
             }
@@ -260,8 +262,6 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                     } catch (Exception ignored) {
 
                     }
-
-                    return;
                 }
             }
         }

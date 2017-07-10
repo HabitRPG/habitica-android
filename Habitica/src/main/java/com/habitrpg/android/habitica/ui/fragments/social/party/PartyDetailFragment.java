@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.views.social.QuestProgressView;
 
 import javax.inject.Inject;
@@ -138,7 +139,7 @@ public class PartyDetailFragment extends BaseFragment {
             return;
         }
         titleView.setText(party.name);
-        descriptionView.setText(party.description);
+        descriptionView.setText(MarkdownParser.parseMarkdown(party.description));
 
         if (quest.key != null) {
             newQuestButton.setVisibility(View.GONE);

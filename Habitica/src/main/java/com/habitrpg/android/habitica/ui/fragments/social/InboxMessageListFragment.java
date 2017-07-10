@@ -79,8 +79,7 @@ public class InboxMessageListFragment extends BaseMainFragment
         //layoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(layoutManager);
 
-        chatAdapter = new ChatRecyclerViewAdapter(null, true, user, null);
-        chatAdapter.setToInboxChat(this.replyToUserUUID);
+        chatAdapter = new ChatRecyclerViewAdapter(null, true, user);
         chatAdapter.setSendingUser(this.user);
         recyclerView.setAdapter(chatAdapter);
         compositeSubscription.add(chatAdapter.getUserLabelClickEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
@@ -155,7 +154,6 @@ public class InboxMessageListFragment extends BaseMainFragment
                 });
         UiUtils.dismissKeyboard(getActivity());
     }
-
 
     public void setReceivingUser(String chatRoomUser, String replyToUserUUID) {
         this.chatRoomUser = chatRoomUser;
