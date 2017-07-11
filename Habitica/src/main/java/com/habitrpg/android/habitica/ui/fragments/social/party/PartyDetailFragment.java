@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -85,6 +87,8 @@ public class PartyDetailFragment extends BaseFragment {
     Button questCancelButton;
     @BindView(R.id.quest_progress_view)
     QuestProgressView questProgressView;
+    @BindView(R.id.quest_participant_list)
+    LinearLayout questParticipantList;
 
 
     public String partyId;

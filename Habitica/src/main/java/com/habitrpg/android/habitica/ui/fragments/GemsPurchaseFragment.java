@@ -119,23 +119,7 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
     }
 
     public void purchaseGems(String sku) {
-        // check if the user already bought and if it hasn't validated yet
-        billingRequests.isPurchased(ProductTypes.IN_APP, sku, new RequestListener<Boolean>() {
-            @Override
-            public void onSuccess(@NonNull Boolean aBoolean) {
-                if (!aBoolean) {
-                    // no current product exist
-                    final ActivityCheckout checkout = listener.getActivityCheckout();
-                    Log.d("GEM", sku);
-                    billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
-                }
-            }
-
-            @Override
-            public void onError(int i, @NonNull Exception e) {
-                crashlyticsProxy.fabricLogE("Purchase", "Error", e);
-            }
-        });
-
+        final ActivityCheckout checkout = listener.getActivityCheckout();
+        billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
     }
 }

@@ -161,6 +161,9 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
 
     @Override
     public Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup) {
+        if (animalGroup == null) {
+            animalGroup = "";
+        }
         animalGroup = animalGroup.replace("pets", "mounts").replace("Pets", "Mounts");
         return realm.where(Mount.class)
                 .equalTo("animalGroup", animalGroup)

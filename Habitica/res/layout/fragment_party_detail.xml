@@ -113,7 +113,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="3 Participants"
-                                android:textColor="@color/gray_300"/>
+                                android:textColor="@color/gray_300"
+                                android:visibility="gone"/>
                         </LinearLayout>
                         <ImageView
                             android:layout_width="wrap_content"
@@ -161,7 +162,6 @@
                             android:layout_height="wrap_content"
                             android:text="@string/quest.reject"
                             style="@style/HabiticaButton.Red"/>
-
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/quest_leader_response_wrapper"
@@ -186,6 +186,11 @@
                             android:text="@string/quest.cancel"
                             style="@style/HabiticaButton.Red" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/quest_participant_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
