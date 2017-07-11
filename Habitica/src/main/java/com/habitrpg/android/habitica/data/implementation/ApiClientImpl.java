@@ -54,7 +54,6 @@ import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
@@ -67,7 +66,6 @@ import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
 import com.habitrpg.android.habitica.utils.ChallengeListDeserializer;
 import com.habitrpg.android.habitica.utils.ChatMessageDeserializer;
 import com.habitrpg.android.habitica.utils.ChatMessageListDeserializer;
-import com.habitrpg.android.habitica.utils.ChecklistItemSerializer;
 import com.habitrpg.android.habitica.utils.ContentDeserializer;
 import com.habitrpg.android.habitica.utils.CustomizationDeserializer;
 import com.habitrpg.android.habitica.utils.DateDeserializer;
@@ -233,7 +231,6 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(Boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(skillListType, new SkillDeserializer())
-                .registerTypeAdapter(ChecklistItem.class, new ChecklistItemSerializer())
                 .registerTypeAdapter(RemindersItem.class, new RemindersItemSerializer())
                 .registerTypeAdapter(TaskList.class, new TaskListDeserializer())
                 .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())

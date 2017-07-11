@@ -10,7 +10,6 @@ import io.realm.annotations.PrimaryKey;
  */
 public class ChecklistItem extends RealmObject {
 
-    Task task;
     @PrimaryKey
     private String id;
     private String text;
@@ -75,14 +74,6 @@ public class ChecklistItem extends RealmObject {
 
     public void setPosition(int position) {
         this.position = position;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
     }
 
     @Override

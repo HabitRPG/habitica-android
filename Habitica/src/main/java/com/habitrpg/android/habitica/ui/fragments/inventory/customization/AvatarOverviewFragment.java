@@ -133,6 +133,9 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     }
 
     private void setSize(String size) {
+        if (avatarSizeSpinner == null) {
+            return;
+        }
         if (size.equals("slim")) {
             avatarSizeSpinner.setSelection(0, false);
         } else {

@@ -131,7 +131,7 @@ public class TaskFilterHelper {
                     }
                     break;
                 case Task.FILTER_GRAY:
-                    query = query.equalTo("completed", true);
+                    query = query.equalTo("completed", true).or().equalTo("isDue", false);
                 break;
                 case Task.FILTER_WEAK:
                     query = query.lessThan("value", 0.0d);

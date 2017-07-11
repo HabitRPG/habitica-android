@@ -6,9 +6,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 public class TaskSerializer implements JsonSerializer<Task> {
     @Override
@@ -39,7 +41,9 @@ public class TaskSerializer implements JsonSerializer<Task> {
                 obj.add("repeat", context.serialize(task.getRepeat()));
                 obj.add("startDate", context.serialize(task.getStartDate()));
                 obj.addProperty("streak", task.getStreak());
-                obj.add("checklist", context.serialize(task.getChecklist()));
+                if (task.getChecklist() != null) {
+                    obj.add("checklist", serializeChecklist(task.getChecklist(), context));
+                }
                 obj.add("reminders", context.serialize(task.getReminders()));
                 obj.add("daysOfMonth", context.serialize(task.getDaysOfMonth()));
                 obj.add("weeksOfMonth", context.serialize(task.getWeeksOfMonth()));
@@ -51,12 +55,26 @@ public class TaskSerializer implements JsonSerializer<Task> {
                 } else {
                     obj.add("date", context.serialize(task.getDueDate()));
                 }
-                obj.add("checklist", context.serialize(task.getChecklist()));
+                if (task.getChecklist() != null) {
+                    obj.add("checklist", serializeChecklist(task.getChecklist(), context));
+                }
                 obj.add("reminders", context.serialize(task.getReminders()));
                 obj.addProperty("completed", task.getCompleted());
                 break;
         }
 
         return obj;
+    }
+
+    private JsonArray serializeChecklist(List<ChecklistItem> checklist, JsonSerializationContext context) {
+        JsonArray jsonArray = new JsonArray();
+        for (ChecklistItem item : checklist) {
+            JsonObject object = new JsonObject();
+            object.addProperty("text", item.getText());
+            object.addProperty("id", item.getId());
+            object.addProperty("completed", item.getCompleted());
+            jsonArray.add(object);
+        }
+        return jsonArray;
     }
 }
