@@ -51,7 +51,14 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
 
     @Override
     public long getArmoireRemainingCount() {
-        return 0;
+        return realm.where(Equipment.class)
+                .equalTo("klass", "armoire")
+                .beginGroup()
+                .equalTo("owned", false)
+                .or()
+                .isNull("owned")
+                .endGroup()
+                .count();
     }
 
     @Override
