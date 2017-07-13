@@ -27,14 +27,14 @@ public class DataBindingUtils {
 
     @BindingAdapter("bind:imageName")
     public static void loadImage(SimpleDraweeView view, String imageName) {
-        if (view.getVisibility() == View.VISIBLE) {
+        if (view != null && view.getVisibility() == View.VISIBLE) {
             view.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png"));
         }
     }
 
     @BindingAdapter("bind:questImageName")
     public static void loadQuestImage(SimpleDraweeView view, String imageName) {
-        if (view.getVisibility() == View.VISIBLE) {
+        if (view != null && view.getVisibility() == View.VISIBLE) {
             view.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png"));
         }
     }
