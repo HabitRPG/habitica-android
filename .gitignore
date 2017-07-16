@@ -52,7 +52,7 @@ fabric.properties
 .DS_Store
 *.iml
 Habitica/res/values/secret_strings.xml
-habitica.properties
-habitica.resources
-Habitica/google-services.json
+#habitica.properties
+#habitica.resources
+#Habitica/google-services.json
 reports/
