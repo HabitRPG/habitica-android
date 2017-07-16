@@ -1,10 +1,14 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.models.tasks.Days;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.receivers.TaskReceiver;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,15 +18,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowApplication;
 
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.UUID;
 
 import io.realm.RealmList;
@@ -209,52 +206,52 @@ public class TaskAlarmManagerTest {
         Assert.assertEquals(1, newReminderTime.get(Calendar.DAY_OF_WEEK));
     }
 
-    @Test
-    //This also tests for when the receiver tries to schedule the next daily available
-    public void itScheduledAlarmForTheNextAvailableDayForRegularDailyWhenUserTriesToSetAlarmForNow() {
-        Task task = new Task();
-        task.setType(Task.TYPE_DAILY);
-        task.setFrequency(Task.FREQUENCY_WEEKLY);
-
-        Days taskRepeatDays = new Days();
-        taskRepeatDays.setM(true);
-        taskRepeatDays.setT(true);
-        taskRepeatDays.setW(true);
-        taskRepeatDays.setTh(true);
-        taskRepeatDays.setF(true);
-        taskRepeatDays.setS(false);
-        taskRepeatDays.setSu(false);
-        task.setRepeat(taskRepeatDays);
-
-        RealmList<RemindersItem> reminders = new RealmList<>();
-        RemindersItem remindersItem1 = new RemindersItem();
-        UUID randomUUID = UUID.randomUUID();
-        remindersItem1.setId(randomUUID.toString());
-
-        //We try to set a reminder for now, but by the manager will correct (because the seconds will be different)
-        Calendar cal = Calendar.getInstance();
-
-        remindersItem1.setTime(cal.getTime());
-        reminders.add(remindersItem1);
-
-        task.setReminders(reminders);
-
-        taskAlarmManager.setAlarmsForTask(task);
-
-        int alarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
-
-        Calendar newReminderTime = Calendar.getInstance();
-        newReminderTime.setTime(reminders.get(0).getTime());
-
-        Intent intent = new Intent(context, TaskReceiver.class);
-        intent.setAction(remindersItem1.getId());
-        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
-        boolean alarmUp = sender != null;
-
-        Assert.assertNotNull(alarmId);
-        Assert.assertEquals(true, alarmUp);
-        Assert.assertNotSame(cal.getTime(), newReminderTime);
-    }
+//    @Test
+//    //This also tests for when the receiver tries to schedule the next daily available
+//    public void itScheduledAlarmForTheNextAvailableDayForRegularDailyWhenUserTriesToSetAlarmForNow() {
+//        Task task = new Task();
+//        task.setType(Task.TYPE_DAILY);
+//        task.setFrequency(Task.FREQUENCY_WEEKLY);
+//
+//        Days taskRepeatDays = new Days();
+//        taskRepeatDays.setM(true);
+//        taskRepeatDays.setT(true);
+//        taskRepeatDays.setW(true);
+//        taskRepeatDays.setTh(true);
+//        taskRepeatDays.setF(true);
+//        taskRepeatDays.setS(false);
+//        taskRepeatDays.setSu(false);
+//        task.setRepeat(taskRepeatDays);
+//
+//        RealmList<RemindersItem> reminders = new RealmList<>();
+//        RemindersItem remindersItem1 = new RemindersItem();
+//        UUID randomUUID = UUID.randomUUID();
+//        remindersItem1.setId(randomUUID.toString());
+//
+//        //We try to set a reminder for now, but by the manager will correct (because the seconds will be different)
+//        Calendar cal = Calendar.getInstance();
+//
+//        remindersItem1.setTime(cal.getTime());
+//        reminders.add(remindersItem1);
+//
+//        task.setReminders(reminders);
+//
+//        taskAlarmManager.setAlarmsForTask(task);
+//
+//        int alarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
+//
+//        Calendar newReminderTime = Calendar.getInstance();
+//        newReminderTime.setTime(reminders.get(0).getTime());
+//
+//        Intent intent = new Intent(context, TaskReceiver.class);
+//        intent.setAction(remindersItem1.getId());
+//        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
+//        boolean alarmUp = sender != null;
+//
+//        Assert.assertNotNull(alarmId);
+//        Assert.assertEquals(true, alarmUp);
+//        Assert.assertNotSame(cal.getTime(), newReminderTime);
+//    }
 
     @Test
     public void itScheduledAlarmForTheNextAvailableDayForEveryXDayDaily() {
