@@ -4,8 +4,6 @@ import com.habitrpg.android.habitica.BaseTestCase;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
-import com.habitrpg.android.habitica.models.tasks.TaskList;
-import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.Flags;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Preferences;
@@ -91,17 +89,17 @@ public class UserRepositoryImplTest extends BaseTestCase {
         verify(mockedApiClient).updateUser(anyMap());
     }
 
-    @Test
-    public void testRetrievingUserSavesTasks() {
-        testUser.setTasksOrder(new TasksOrder());
-        testUser.tasks = new TaskList();
-        when(mockedApiClient.retrieveUser(false)).thenReturn(Observable.just(testUser));
-        TestSubscriber<User> subscriber = new TestSubscriber<>();
-        userRepository.retrieveUser(false).toBlocking().subscribe(subscriber);
-        subscriber.assertNoErrors();
-        verify(mockedApiClient).retrieveUser(false);
-        verify(mockedTaskRepository).saveTasks(testUser.getId(), testUser.getTasksOrder(), testUser.tasks);
-    }
+//    @Test
+//    public void testRetrievingUserSavesTasks() {
+//        testUser.setTasksOrder(new TasksOrder());
+//        testUser.tasks = new TaskList();
+//        when(mockedApiClient.retrieveUser(false)).thenReturn(Observable.just(testUser));
+//        TestSubscriber<User> subscriber = new TestSubscriber<>();
+//        userRepository.retrieveUser(false).toBlocking().subscribe(subscriber);
+//        subscriber.assertNoErrors();
+//        verify(mockedApiClient).retrieveUser(false);
+//        verify(mockedTaskRepository).saveTasks(testUser.getId(), testUser.getTasksOrder(), testUser.tasks);
+//    }
 
     @Test
     public void testRetrievingUserDoesntRetrieveTwice() {
