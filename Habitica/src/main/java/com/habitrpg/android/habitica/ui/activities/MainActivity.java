@@ -106,6 +106,10 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.roughike.bottombar.BottomBar;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+import net.hockeyapp.android.metrics.MetricsManager;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -273,6 +277,18 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 }, RxErrorHandler.handleEmptyError());
 
         EventBus.getDefault().register(this);
+
+        MetricsManager.register(getApplication());
+        checkForUpdates();
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store builds!
+        UpdateManager.register(this);
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
     }
 
     public int getStatusBarHeight() {
@@ -319,6 +335,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
             }
         }
+
+        CrashManager.register(this);
     }
 
     @Override
@@ -328,6 +346,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         updateWidget(DailiesWidgetProvider.class);
         updateWidget(HabitButtonWidgetProvider.class);
         super.onPause();
+        unregisterManagers();
     }
 
     private void updateWidget(Class widgetClass) {
@@ -549,6 +568,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         tagRepository.close();
         inventoryRepository.close();
         super.onDestroy();
+        unregisterManagers();
     }
 
     @Subscribe
