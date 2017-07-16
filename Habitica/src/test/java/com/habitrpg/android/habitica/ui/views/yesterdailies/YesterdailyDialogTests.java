@@ -18,12 +18,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.List;
 
 import io.realm.RealmResults;
-import rx.Observable;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(YesterdailyDialog.class)
@@ -47,14 +41,14 @@ public class YesterdailyDialogTests extends BaseTestCase {
 
     @Before
     public void setUp() throws Exception {
-        testUser = new User();
-        testUser.setId("123");
-        testUser.setNeedsCron(true);
-        whenNew(YesterdailyDialog.class).withAnyArguments().thenReturn(mockDialog);
-        when(mockUserRepository.getUser(anyString())).thenReturn(Observable.just(testUser));
-        when(mockTaskRepository.getTasks(anyString(), anyString())).thenReturn(Observable.just(mockResultsTasks));
-        when(mockTaskRepository.getTaskCopies(any(RealmResults.class))).thenReturn(Observable.just(mockTasks));
-        when(mockResultsTasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll()).thenReturn(mockResultsTasks);
+//        testUser = new User();
+//        testUser.setId("123");
+//        testUser.setNeedsCron(true);
+//        whenNew(YesterdailyDialog.class).withAnyArguments().thenReturn(mockDialog);
+//        when(mockUserRepository.getUser(anyString())).thenReturn(Observable.just(testUser));
+//        when(mockTaskRepository.getTasks(anyString(), anyString())).thenReturn(Observable.just(mockResultsTasks));
+//        when(mockTaskRepository.getTaskCopies(any(RealmResults.class))).thenReturn(Observable.just(mockTasks));
+//        when(mockResultsTasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll()).thenReturn(mockResultsTasks);
     }
 
 
