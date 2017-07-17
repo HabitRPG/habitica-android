@@ -1091,6 +1091,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             return false;
         }
 
+        if (!task.isValid()) {
+            return true;
+        }
+
         taskRepository.executeTransaction(realm -> {
             task.text = text;
 

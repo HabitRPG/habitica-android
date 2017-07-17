@@ -5,11 +5,7 @@ import java.util.Date;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by keithholliday on 5/31/16.
- */
 public class RemindersItem extends RealmObject {
-    Task task;
     @PrimaryKey
     private String id;
     private Date startDate;
@@ -49,14 +45,6 @@ public class RemindersItem extends RealmObject {
 
     public void setTime(Date time) {
         this.time = time;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
     }
 
     public String getType() {

@@ -115,7 +115,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
 
     public Observable<Task> scoreChecklistItem(String taskId, String itemId) {
         return apiClient.scoreChecklistItem(taskId, itemId)
-                .flatMap(task -> localRepository.getTask(taskId))
+                .flatMap(task -> localRepository.getTask(taskId).first())
                 .doOnNext(task -> localRepository.executeTransaction(realm -> {
                     for (ChecklistItem item : task.getChecklist()) {
                         if (itemId.equals(item.getId())) {
