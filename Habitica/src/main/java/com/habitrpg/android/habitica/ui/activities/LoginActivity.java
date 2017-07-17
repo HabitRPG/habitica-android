@@ -76,8 +76,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -572,8 +574,8 @@ public class LoginActivity extends BaseActivity
         isRegistering = true;
 
         // Just some code to cause an IndexOutOfBoundsException
-        // List<String> list = new ArrayList<>();
-        // String fail = list.get(0);
+         List<String> list = new ArrayList<>();
+         String fail = list.get(0);
 
         showForm();
         setRegistering();
