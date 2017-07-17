@@ -107,4 +107,7 @@
     <dimen name="setup_customization_size">56dp</dimen>
     <dimen name="outer_inset">16dp</dimen>
 	<dimen name="rounded_button_radius">6dp</dimen>
+    <dimen name="content_border">21dp</dimen>
+	<dimen name="content_section_spacing">21dp</dimen>
+	<dimen name="header_spacing">6dp</dimen>
 </resources>

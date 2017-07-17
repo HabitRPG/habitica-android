@@ -29,4 +29,10 @@ public interface SocialLocalRepository extends BaseLocalRepository {
     void updateRSVPNeeded(User user, boolean newValue);
 
     void likeMessage(ChatMessage chatMessage, String userId, boolean liked);
+
+    void saveGroupMembers(String groupId, List<Member> members);
+
+    void removeQuest(String partyId);
+
+    void setQuestActivity(Group party, boolean active);
 }

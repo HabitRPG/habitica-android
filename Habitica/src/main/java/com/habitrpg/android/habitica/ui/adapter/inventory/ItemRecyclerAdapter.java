@@ -38,8 +38,8 @@ import rx.subjects.PublishSubject;
 
 public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecyclerAdapter.ItemViewHolder> {
 
-    public Boolean isHatching;
-    public Boolean isFeeding;
+    public boolean isHatching;
+    public boolean isFeeding;
     public Item hatchingItem;
     public Pet feedingPet;
     public ItemRecyclerFragment fragment;
@@ -135,7 +135,7 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
                 }
                 imageName = "Pet_" + type + "_" + item.getKey();
 
-                if (isHatching != null && isHatching) {
+                if (isHatching) {
                     disabled = this.isPetOwned();
                 }
             }

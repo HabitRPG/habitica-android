@@ -615,4 +615,11 @@
     <string name="start_day">Start My Day</string>
     <string name="leave_party_confirmation">Are you sure you want to leave the Party?</string>
     <string name="nextPrizeUnlocksIn" formatted="false">Next Prize in %d Check-ins</string>
+    <string name="pending">Pending</string>
+    <string name="accepted">Accepted</string>
+    <string name="declined">Declined</string>
+    <string name="participants">Participants</string>
+    <string name="invitations">Invitations</string>
+    <string name="quest_leader_header" formatted="false">Started by %s</string>
+    <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
 </resources>

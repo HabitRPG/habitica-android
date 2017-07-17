@@ -17,9 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/CardView.Default"
-                android:id="@+id/party_invitation_wrapper"
-                >
-
+                android:id="@+id/party_invitation_wrapper">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -119,8 +117,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_keyboard_arrow_right_gray_24dp"
-                            android:visibility="gone"/>
+                            app:srcCompat="@drawable/ic_keyboard_arrow_right_gray_24dp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/quest_image_wrapper"

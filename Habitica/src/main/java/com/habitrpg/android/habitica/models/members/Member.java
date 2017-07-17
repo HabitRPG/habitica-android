@@ -39,6 +39,8 @@ public class Member extends RealmObject implements Avatar {
     private String currentMount;
     private String currentPet;
 
+    private Boolean participatesInQuest;
+
     public Preferences getPreferences() {
         return preferences;
     }
@@ -312,5 +314,20 @@ public class Member extends RealmObject implements Avatar {
     @Override
     public boolean getSleep() {
         return getPreferences() != null && getPreferences().getSleep();
+    }
+
+    public Boolean getParticipatesInQuest() {
+        return participatesInQuest;
+    }
+
+    public void setParticipatesInQuest(Boolean participatesInQuest) {
+        this.participatesInQuest = participatesInQuest;
+    }
+
+    public String getDisplayName() {
+        if (profile == null) {
+            return "";
+        }
+        return profile.getName();
     }
 }

@@ -23,11 +23,15 @@ import io.realm.Realm;
 public class MemberSerialization implements JsonDeserializer<Member> {
     @Override
     public Member deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        Member member = new Member();
         JsonObject obj = json.getAsJsonObject();
+        String id = obj.get("_id").getAsString();
 
-        if (obj.has("_id")) {
-            member.setId(obj.get("_id").getAsString());
+        Realm realm = Realm.getDefaultInstance();
+        Member member = realm.where(Member.class).equalTo("id", id).findFirst();
+        if (member == null) {
+            member = new Member();
+        } else {
+            member = realm.copyFromRealm(member);
         }
 
         if (obj.has("stats")) {
@@ -47,7 +51,6 @@ public class MemberSerialization implements JsonDeserializer<Member> {
             if (member.getParty() != null && member.getParty().getQuest() != null) {
                 member.getParty().getQuest().id = member.getId();
                 if (!obj.get("party").getAsJsonObject().get("quest").getAsJsonObject().has("RSVPNeeded")) {
-                    Realm realm = Realm.getDefaultInstance();
                     Quest quest = realm.where(Quest.class).equalTo("id", member.getId()).findFirst();
                     if (quest != null && quest.isValid()) {
                         member.getParty().getQuest().RSVPNeeded = quest.RSVPNeeded;
@@ -81,6 +84,7 @@ public class MemberSerialization implements JsonDeserializer<Member> {
             member.setContributor(context.deserialize(obj.get("contributor"), ContributorInfo.class));
         }
 
+        realm.close();
         return member;
     }
 }

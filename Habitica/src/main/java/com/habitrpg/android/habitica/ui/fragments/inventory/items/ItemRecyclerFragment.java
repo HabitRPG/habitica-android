@@ -54,8 +54,8 @@ public class ItemRecyclerFragment extends BaseFragment {
     public ItemRecyclerAdapter adapter;
     public String itemType;
     public String itemTypeText;
-    public Boolean isHatching;
-    public Boolean isFeeding;
+    public boolean isHatching;
+    public boolean isFeeding;
     public Item hatchingItem;
     public Pet feedingPet;
     @Nullable
@@ -118,14 +118,14 @@ public class ItemRecyclerFragment extends BaseFragment {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "");
         }
 
-        if (this.isHatching != null && this.isHatching) {
+        if (this.isHatching) {
             getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
             this.titleView.setText(getString(R.string.hatch_with, this.hatchingItem.getText()));
             this.titleView.setVisibility(View.VISIBLE);
             this.footerView.setText(getString(R.string.hatching_market_info));
             this.footerView.setVisibility(View.VISIBLE);
             this.openMarketButton.setVisibility(View.VISIBLE);
-        } else if (this.isFeeding != null && this.isFeeding) {
+        } else if (this.isFeeding) {
             getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
             this.titleView.setText(getString(R.string.dialog_feeding, this.feedingPet.getColorText(), this.feedingPet.getAnimalText()));
             this.titleView.setVisibility(View.VISIBLE);
@@ -160,7 +160,7 @@ public class ItemRecyclerFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        if (((this.isHatching != null && this.isHatching) || (this.isFeeding != null && this.isFeeding)) && getDialog().getWindow() != null) {
+        if ((this.isHatching || this.isFeeding) && getDialog().getWindow() != null) {
             android.view.WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
             params.width = ViewGroup.LayoutParams.MATCH_PARENT;
             params.verticalMargin = 60;

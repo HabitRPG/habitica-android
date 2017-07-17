@@ -24,7 +24,10 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.views.social.QuestProgressView;
@@ -75,16 +78,10 @@ public class PartyDetailFragment extends BaseFragment {
     SimpleDraweeView questImageView;
     @BindView(R.id.quest_participant_response_wrapper)
     ViewGroup questParticipantResponseWrapper;
-    @BindView(R.id.quest_leader_response_wrapper)
-    ViewGroup questLeaderResponseWrapper;
     @BindView(R.id.quest_accept_button)
     Button questAcceptButton;
     @BindView(R.id.quest_reject_button)
     Button questRejectButton;
-    @BindView(R.id.quest_begin_button)
-    Button questBeginButton;
-    @BindView(R.id.quest_cancel_button)
-    Button questCancelButton;
     @BindView(R.id.quest_progress_view)
     QuestProgressView questProgressView;
     @BindView(R.id.quest_participant_list)
@@ -145,7 +142,7 @@ public class PartyDetailFragment extends BaseFragment {
         titleView.setText(party.name);
         descriptionView.setText(MarkdownParser.parseMarkdown(party.description));
 
-        if (quest.key != null) {
+        if (quest != null && quest.key != null) {
             newQuestButton.setVisibility(View.GONE);
             questDetailButton.setVisibility(View.VISIBLE);
             questImageWrapper.setVisibility(View.VISIBLE);
@@ -175,34 +172,17 @@ public class PartyDetailFragment extends BaseFragment {
             partyInvitationWrapper.setVisibility(invitationVisibility);
         }
 
-        if (questLeaderResponseWrapper != null) {
+        if (questParticipantResponseWrapper != null) {
             if (showParticipatantButtons()) {
-                questLeaderResponseWrapper.setVisibility(View.GONE);
                 questParticipantResponseWrapper.setVisibility(View.VISIBLE);
-            } else if (showLeaderButtons()) {
-                if (isQuestActive()) {
-                    questLeaderResponseWrapper.setVisibility(View.GONE);
-                    questParticipantResponseWrapper.setVisibility(View.GONE);
-                } else {
-                    questLeaderResponseWrapper.setVisibility(View.VISIBLE);
-                    questParticipantResponseWrapper.setVisibility(View.GONE);
-                }
             } else {
-                questLeaderResponseWrapper.setVisibility(View.GONE);
                 questParticipantResponseWrapper.setVisibility(View.GONE);
             }
         }
     }
 
-    private boolean showLeaderButtons() {
-        return party != null && party.quest != null && user != null && user.getId().equals(party.quest.leader);
-    }
-
     private boolean showParticipatantButtons() {
-        if (user == null || user.getParty() == null || user.getParty().getQuest() == null) {
-            return false;
-        }
-        return !isQuestActive() && user.getParty().getQuest().RSVPNeeded;
+        return !(user == null || user.getParty() == null || user.getParty().getQuest() == null) && !isQuestActive() && user.getParty().getQuest().RSVPNeeded;
     }
 
     private void updateQuestContent(QuestContent questContent) {
@@ -227,13 +207,19 @@ public class PartyDetailFragment extends BaseFragment {
 
     @OnClick(R.id.new_quest_button)
     public void inviteNewQuest() {
-
+        ItemRecyclerFragment fragment = new ItemRecyclerFragment();
+        fragment.itemType = "quests";
+        fragment.itemTypeText = getString(R.string.quest);
+        fragment.show(getFragmentManager(), "questDialog");
     }
 
     @OnClick(R.id.leave_button)
     public void leaveParty() {
-
-    }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.leave_party_confirmation)
+                .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.leaveGroup(partyId)
+                        .subscribe(aVoid -> {}, throwable -> {})).setNegativeButton(R.string.no, (dialog, which) -> {});
+        builder.show();    }
 
     @OnClick(R.id.quest_accept_button)
     public void onQuestAccept() {
@@ -244,25 +230,6 @@ public class PartyDetailFragment extends BaseFragment {
     @OnClick(R.id.quest_reject_button)
     public void onQuestReject() {
         socialRepository.rejectQuest(user, partyId).subscribe(aVoid -> {}, throwable -> {});
-    }
-
-    @OnClick(R.id.quest_begin_button)
-    public void onQuestBegin() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.quest_begin_message)
-                .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.forceStartQuest(party)
-                        .subscribe(quest -> {}, throwable -> {}))
-                .setNegativeButton(R.string.no, (dialog, which) -> {});
-        builder.show();
-    }
-
-    @OnClick(R.id.quest_cancel_button)
-    public void onQuestCancel() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.quest_cancel_message)
-                .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.cancelQuest(partyId)
-                        .subscribe(aVoid -> {}, throwable -> {})).setNegativeButton(R.string.no, (dialog, which) -> {});
-        builder.show();
     }
 
     @OnClick(R.id.party_invite_accept_button)
@@ -278,6 +245,19 @@ public class PartyDetailFragment extends BaseFragment {
         if (user != null) {
             socialRepository.rejectGroupInvite(user.getInvitations().getParty().getId())
                     .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+        }
+    }
+
+    @OnClick(R.id.quest_detail_button)
+    public void questDetailButtonClicked() {
+        QuestDetailFragment fragment = new QuestDetailFragment();
+        fragment.partyId = partyId;
+        if (party != null && party.quest != null) {
+            fragment.questKey = party.quest.key;
+        }
+        if (getActivity() != null) {
+            MainActivity activity = (MainActivity) getActivity();
+            activity.displayFragment(fragment);
         }
     }
 }

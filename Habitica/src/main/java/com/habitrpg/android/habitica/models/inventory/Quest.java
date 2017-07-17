@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.models.inventory;
 
+import com.habitrpg.android.habitica.models.members.Member;
+
 import java.util.HashMap;
 
 import io.realm.RealmList;
@@ -17,6 +19,8 @@ public class Quest extends RealmObject {
 
     public RealmList<QuestMember> members;
     private QuestProgress progress;
+
+    public RealmList<Member> participants;
 
     private Quest(String key, QuestProgress progress) {
         this.key = key;

@@ -184,7 +184,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     @Override
     public Observable<List<Member>> retrieveGroupMembers(String id, boolean includeAllPublicFields) {
         return apiClient.getGroupMembers(id, includeAllPublicFields)
-                .doOnNext(localRepository::save);
+                .doOnNext(members -> localRepository.saveGroupMembers(id, members));
     }
 
     @Override
@@ -232,12 +232,14 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Void> cancelQuest(String partyId) {
-        return apiClient.cancelQuest(partyId);
+        return apiClient.cancelQuest(partyId)
+                .doOnNext(aVoid -> localRepository.removeQuest(partyId));
     }
 
     @Override
     public Observable<Quest> abortQuest(String partyId) {
-        return apiClient.abortQuest(partyId);
+        return apiClient.abortQuest(partyId)
+                .doOnNext(aVoid -> localRepository.removeQuest(partyId));
     }
 
     @Override
@@ -247,6 +249,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Quest> forceStartQuest(Group party) {
-        return apiClient.forceStartQuest(party.id, localRepository.getUnmanagedCopy(party));
+        return apiClient.forceStartQuest(party.id, localRepository.getUnmanagedCopy(party))
+                .doOnNext(aVoid -> localRepository.setQuestActivity(party, true));
     }
 }

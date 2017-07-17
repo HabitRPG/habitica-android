@@ -70,6 +70,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
@@ -271,4 +272,6 @@ public interface AppComponent {
     void inject(TavernDetailFragment tavernDetailFragment);
 
     void inject(PartyDetailFragment partyDetailFragment);
+
+    void inject(QuestDetailFragment questDetailFragment);
 }

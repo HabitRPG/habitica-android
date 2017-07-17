@@ -7,6 +7,9 @@ import com.habitrpg.android.habitica.models.social.ChatMessageLike;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -106,6 +109,53 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
             }
         });
     }
+
+    @Override
+    public void saveGroupMembers(String groupId, List<Member> members) {
+        realm.executeTransaction(realm1 -> realm.insertOrUpdate(members));
+        if (groupId != null) {
+            List<Member> existingMembers = realm.where(Member.class).equalTo("party.id", groupId).findAll();
+            List<Member> membersToRemove = new ArrayList<>();
+            for (Member existingMember : existingMembers) {
+                boolean isStillMember = false;
+                for (Member newMember : members) {
+                    if (existingMember.getId() != null && existingMember.getId().equals(newMember.getId())) {
+                        isStillMember = true;
+                        break;
+                    }
+                }
+                if (!isStillMember) {
+                    membersToRemove.add(existingMember);
+                }
+            }
+            realm.executeTransaction(realm1 -> {
+                for (Member member : membersToRemove) {
+                    member.deleteFromRealm();
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void removeQuest(String partyId) {
+        Group party = realm.where(Group.class).equalTo("id", partyId).findFirst();
+        if (party != null) {
+            realm.executeTransaction(realm1 -> {
+                party.quest = null;
+            });
+        }
+    }
+
+    @Override
+    public void setQuestActivity(Group party, boolean active) {
+        realm.executeTransaction(realm1 -> {
+            if (party != null && party.quest != null) {
+                party.quest.active = active;
+            }
+        });
+    }
+
 
     private Observable<ChatMessage> getMessage(String id) {
         return realm.where(ChatMessage.class).equalTo("id", id)
