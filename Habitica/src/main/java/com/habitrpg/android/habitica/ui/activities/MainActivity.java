@@ -107,6 +107,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.roughike.bottombar.BottomBar;
 
 import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.FeedbackManager;
 import net.hockeyapp.android.UpdateManager;
 import net.hockeyapp.android.metrics.MetricsManager;
 
@@ -337,6 +338,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         }
 
         CrashManager.register(this);
+        FeedbackManager.register(this);
     }
 
     @Override
