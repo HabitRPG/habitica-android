@@ -132,6 +132,7 @@ dependencies {
         exclude group: 'com.google.android.gms'
         exclude group: 'com.android.support', module: 'multidex'
     }
+    compile 'net.hockeyapp.android:HockeySDK:4.1.5'
 }
 
 android {

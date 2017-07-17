@@ -52,27 +52,34 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.FeedbackManager;
+import net.hockeyapp.android.UpdateManager;
+import net.hockeyapp.android.metrics.MetricsManager;
+import net.hockeyapp.android.utils.HockeyLog;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -189,6 +196,35 @@ public class LoginActivity extends BaseActivity
             }
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
+        HockeyLog.setLogLevel(Log.VERBOSE);
+        CrashManager.register(this, "ee347e558b7e49f7bc5e54c102efab66");
+        FeedbackManager.register(this, "ee347e558b7e49f7bc5e54c102efab66");
+
+        MetricsManager.register(getApplication(), "ee347e558b7e49f7bc5e54c102efab66");
+        checkForUpdates();
+    }
+
+
+    private void checkForUpdates() {
+        // Remove this for store builds!
+        UpdateManager.register(this, "ee347e558b7e49f7bc5e54c102efab66");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterManagers();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterManagers();
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
     }
 
     private void setupFacebookLogin() {
@@ -536,6 +572,11 @@ public class LoginActivity extends BaseActivity
     @OnClick(R.id.new_game_button)
     void newGameButtonClicked() {
         isRegistering = true;
+
+        // Just some code to cause an IndexOutOfBoundsException
+         List<String> list = new ArrayList<>();
+         String fail = list.get(0);
+
         showForm();
         setRegistering();
     }
@@ -543,8 +584,9 @@ public class LoginActivity extends BaseActivity
     @OnClick(R.id.show_login_button)
     void showLoginButtonClicked() {
         isRegistering = false;
-        showForm();
-        setRegistering();
+        //showForm();
+        // setRegistering();
+        FeedbackManager.showFeedbackActivity(LoginActivity.this);
     }
 
     @OnClick(R.id.back_button)

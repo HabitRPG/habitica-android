@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "project-number",
+    "firebase_url": "https://example.firebaseio.com",
+    "project_id": "project-id",
+    "storage_bucket": "storage.bucket"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "app-id",
+        "android_client_info": {
+          "package_name": "com.habitrpg.android.habitica.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "client-key",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "api-key"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "app-id",
+        "android_client_info": {
+          "package_name": "com.habitrpg.android.habitica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "client-id",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "api-key"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
