@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.inventory.Equipment;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.HabitRpgClass;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.user.Stats;
 
 import junit.framework.Assert;
@@ -13,14 +13,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Keith Holliday on 3/31/2017.
- */
 
 public class UserStatComputerTest {
 
     private UserStatComputer userStatComputer;
-    private User user;
+    private Member user;
     private Equipment equipment;
     private List<Equipment> equipmentList;
     private String key;
@@ -33,7 +30,7 @@ public class UserStatComputerTest {
 
     public UserStatComputerTest () {
         userStatComputer = new UserStatComputer();
-        user = new User();
+        user = new Member();
         Stats stats = new Stats();
         user.setStats(stats);
 
