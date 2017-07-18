@@ -7,6 +7,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.lang.reflect.Type;
@@ -42,7 +43,10 @@ public class TaskSerializer implements JsonSerializer<Task> {
                 obj.add("startDate", context.serialize(task.getStartDate()));
                 obj.addProperty("streak", task.getStreak());
                 if (task.getChecklist() != null) {
-                    obj.add("checklist", serializeChecklist(task.getChecklist(), context));
+                    obj.add("checklist", serializeChecklist(task.getChecklist()));
+                }
+                if (task.getReminders() != null) {
+                    obj.add("reminders", serializeReminders(task.getReminders()));
                 }
                 obj.add("reminders", context.serialize(task.getReminders()));
                 obj.add("daysOfMonth", context.serialize(task.getDaysOfMonth()));
@@ -56,9 +60,11 @@ public class TaskSerializer implements JsonSerializer<Task> {
                     obj.add("date", context.serialize(task.getDueDate()));
                 }
                 if (task.getChecklist() != null) {
-                    obj.add("checklist", serializeChecklist(task.getChecklist(), context));
+                    obj.add("checklist", serializeChecklist(task.getChecklist()));
                 }
-                obj.add("reminders", context.serialize(task.getReminders()));
+                if (task.getReminders() != null) {
+                    obj.add("reminders", serializeReminders(task.getReminders()));
+                }
                 obj.addProperty("completed", task.getCompleted());
                 break;
         }
@@ -66,13 +72,27 @@ public class TaskSerializer implements JsonSerializer<Task> {
         return obj;
     }
 
-    private JsonArray serializeChecklist(List<ChecklistItem> checklist, JsonSerializationContext context) {
+    private JsonArray serializeChecklist(List<ChecklistItem> checklist) {
         JsonArray jsonArray = new JsonArray();
         for (ChecklistItem item : checklist) {
             JsonObject object = new JsonObject();
             object.addProperty("text", item.getText());
             object.addProperty("id", item.getId());
             object.addProperty("completed", item.getCompleted());
+            jsonArray.add(object);
+        }
+        return jsonArray;
+    }
+
+    private JsonArray serializeReminders(List<RemindersItem> reminders) {
+        JsonArray jsonArray = new JsonArray();
+        for (RemindersItem item : reminders) {
+            JsonObject object = new JsonObject();
+            object.addProperty("id", item.getId());
+            if (item.getStartDate() != null) {
+                object.addProperty("startDate", item.getStartDate().getTime());
+            }
+            object.addProperty("time", item.getTime().getTime());
             jsonArray.add(object);
         }
         return jsonArray;

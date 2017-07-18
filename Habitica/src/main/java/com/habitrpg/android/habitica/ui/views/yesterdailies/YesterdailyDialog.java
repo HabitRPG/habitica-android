@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -81,6 +82,11 @@ public class YesterdailyDialog extends AlertDialog {
                 task.completed = !task.completed;
                 configureTaskView(taskView, task);
             });
+            CheckBox checkBox = (CheckBox) taskView.findViewById(R.id.checkBox);
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                task.completed = !task.completed;
+                configureTaskView(taskView, task);
+            });
             yesterdailiesList.addView(taskView);
         }
     }
@@ -133,7 +139,10 @@ public class YesterdailyDialog extends AlertDialog {
         }
     }
 
-    static void showDialog(Activity activity, UserRepository userRepository, List<Task> tasks) {
+    private static void showDialog(Activity activity, UserRepository userRepository, List<Task> tasks) {
+        if (activity.isFinishing()) {
+            return;
+        }
         YesterdailyDialog dialog = new YesterdailyDialog(activity, userRepository, tasks);
         dialog.show();
         isDisplaying = true;

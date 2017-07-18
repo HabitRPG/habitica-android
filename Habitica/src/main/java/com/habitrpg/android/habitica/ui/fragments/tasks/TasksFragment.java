@@ -177,6 +177,9 @@ public class TasksFragment extends BaseMainFragment {
             }
         }
         dialog.setListener((activeTaskFilter, activeTags) -> {
+            if (viewFragmentsDictionary == null) {
+                return;
+            }
             int activePos = viewPager.getCurrentItem();
             if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
                 viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
