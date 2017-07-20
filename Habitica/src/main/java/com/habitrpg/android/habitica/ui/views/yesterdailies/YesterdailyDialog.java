@@ -83,10 +83,8 @@ public class YesterdailyDialog extends AlertDialog {
                 configureTaskView(taskView, task);
             });
             CheckBox checkBox = (CheckBox) taskView.findViewById(R.id.checkBox);
-            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                task.completed = !task.completed;
-                configureTaskView(taskView, task);
-            });
+            checkBox.setEnabled(false);
+            checkBox.setClickable(false);
             yesterdailiesList.addView(taskView);
         }
     }
