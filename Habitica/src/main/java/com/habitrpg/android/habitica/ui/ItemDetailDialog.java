@@ -92,10 +92,10 @@ public class ItemDetailDialog extends AlertDialog {
     public void setCurrency(String currency) {
         switch (currency) {
             case "gold":
-                currencyImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_header_gold));
+                currencyImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.currency_gold));
                 break;
             case "gems":
-                currencyImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_header_gem));
+                currencyImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.currency_gem));
                 break;
             default:
                 currencyImageView.setImageDrawable(null);

@@ -132,7 +132,7 @@
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="36dp"
-                                        android:src="@drawable/ic_header_gem"
+                                        android:src="@drawable/currency_gem"
                                         android:layout_marginRight="5dp"/>
 
                                     <TextView

@@ -30,4 +30,6 @@ public interface Avatar {
     Flags getFlags();
 
     Integer getGemCount();
+
+    Integer getHourglassCount();
 }

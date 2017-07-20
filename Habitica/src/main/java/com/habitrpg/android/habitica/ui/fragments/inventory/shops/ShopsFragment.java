@@ -1,26 +1,35 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.views.CurrencyView;
 
 public class ShopsFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
+    private CurrencyView currencyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
+        hideToolbar();
+        disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
@@ -31,6 +40,26 @@ public class ShopsFragment extends BaseMainFragment {
         setViewPagerAdapter();
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        currencyView = new CurrencyView(getContext());
+        if (toolbarAccessoryContainer != null) {
+            toolbarAccessoryContainer.addView(currencyView);
+        }
+        updateCurrencyView();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (toolbarAccessoryContainer != null) {
+            toolbarAccessoryContainer.removeView(currencyView);
+        }
+        showToolbar();
+        enableToolbarScrolling();
+        super.onDestroyView();
     }
 
     @Override
@@ -107,4 +136,18 @@ public class ShopsFragment extends BaseMainFragment {
         }
     }
 
+    @Override
+    public void updateUserData(User user) {
+        super.updateUserData(user);
+        updateCurrencyView();
+    }
+
+    private void updateCurrencyView() {
+        if (user == null || currencyView == null) {
+            return;
+        }
+        currencyView.setGold(user.getStats().getGp());
+        currencyView.setGems(user.getGemCount());
+        currencyView.setHourglasses(user.getHourglassCount());
+    }
 }

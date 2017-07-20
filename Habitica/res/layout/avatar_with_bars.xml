@@ -87,51 +87,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-    <LinearLayout
+    <com.habitrpg.android.habitica.ui.views.CurrencyView
+        android:id="@+id/currencyView"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/gems_tv"
-            android:drawableLeft="@drawable/ic_header_gem"
-            android:drawableStart="@drawable/ic_header_gem"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="8dp"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            />
-
-        <TextView
-            android:id="@+id/gold_tv"
-            android:drawableLeft="@drawable/ic_header_gold"
-            android:drawableStart="@drawable/ic_header_gold"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="6dp"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            />
-        <TextView
-            android:id="@+id/silver_tv"
-            android:drawableLeft="@drawable/ic_header_silver"
-            android:drawableStart="@drawable/ic_header_silver"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="6dp"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            />
-    </LinearLayout>
+        android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

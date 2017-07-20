@@ -50,6 +50,8 @@
     <color name="gray_600">#edecee</color>
     <color name="gray_700">#f9f9f9</color>
 
+    <color name="gray_600_30">#4cedecee</color>
+
     <color name="completed">#D9D9D9</color>
     <color name="completed_btn">#989898</color>
 

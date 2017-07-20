@@ -127,6 +127,12 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @BindView(R.id.priceLabel)
         TextView priceLabel;
 
+        @BindView(R.id.item_limited_icon)
+        ImageView itemLimitedIcon;
+        @BindView(R.id.item_locked_icon)
+        ImageView itemLockedIcon;
+        @BindView(R.id.item_count_icon)
+        TextView itemCountView;
 
         String shopIdentifier;
         ShopItem item;
@@ -160,21 +166,33 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (item.getUnlockCondition() == null) {
                 priceLabel.setText(item.getValue().toString());
                 if (item.getCurrency().equals("gold")) {
-                    currencyIconView.setImageResource(R.drawable.ic_header_gold);
+                    currencyIconView.setImageResource(R.drawable.currency_gold);
                     priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gold));
                 } else if (item.getCurrency().equals("gems")) {
-                    currencyIconView.setImageResource(R.drawable.ic_header_gem);
+                    currencyIconView.setImageResource(R.drawable.currency_gem);
                     priceLabel.setTextColor(ContextCompat.getColor(context, R.color.good_10));
                 } else {
                     buyButton.setVisibility(View.GONE);
                 }
             }
 
+            if (item.isLimited()) {
+                itemLimitedIcon.setVisibility(View.VISIBLE);
+                itemCountView.setVisibility(View.GONE);
+                itemLockedIcon.setVisibility(View.GONE);
+            } else {
+                itemLimitedIcon.setVisibility(View.GONE);
+            }
+
             if (item.getLocked()) {
                 priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300));
                 currencyIconView.setAlpha(0.5f);
+                itemLockedIcon.setVisibility(View.VISIBLE);
+                itemCountView.setVisibility(View.GONE);
+                itemLimitedIcon.setVisibility(View.GONE);
             } else {
                 currencyIconView.setAlpha(1.0f);
+                itemLockedIcon.setVisibility(View.GONE);
             }
         }
 
@@ -203,6 +221,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @BindView(R.id.descriptionView)
         public TextView descriptionView;
+
 
         ShopHeaderViewHolder(View itemView) {
             super(itemView);

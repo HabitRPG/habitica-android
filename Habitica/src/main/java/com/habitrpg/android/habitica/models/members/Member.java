@@ -148,6 +148,11 @@ public class Member extends RealmObject implements Avatar {
         return 0;
     }
 
+    @Override
+    public Integer getHourglassCount() {
+        return 0;
+    }
+
     public void setFlags(Flags flags) {
         this.flags = flags;
         if (flags != null && id != null) {

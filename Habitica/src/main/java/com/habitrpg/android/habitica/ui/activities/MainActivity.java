@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -153,6 +154,10 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     AppBarLayout appBar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbar_accessory_container)
+    FrameLayout toolbarAccessoryContainer;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitleTextView;
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.detail_tabs)
@@ -346,6 +351,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         fragment.setUser(user);
         fragment.setActivity(this);
         fragment.setTabLayout(detail_tabs);
+        fragment.setToolbarAccessoryContainer(toolbarAccessoryContainer);
         fragment.setCollapsingToolbar(collapsingToolbar);
         fragment.setBottomNavigation(bottomNavigation);
         fragment.setFloatingMenuWrapper(floatingMenuWrapper);
@@ -505,9 +511,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             return;
         }
         if (fragment != null && fragment.customTitle() != null) {
-            getSupportActionBar().setTitle(fragment.customTitle());
+            toolbarTitleTextView.setText(fragment.customTitle());
         } else if (user != null && user.getProfile() != null) {
-            getSupportActionBar().setTitle(user.getProfile().getName());
+            toolbarTitleTextView.setText(user.getProfile().getName());
         }
     }
 

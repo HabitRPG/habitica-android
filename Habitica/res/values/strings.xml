@@ -624,4 +624,7 @@
     <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
     <string name="loading">Loading...</string>
     <string name="reloading_content">Reloading Content</string>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
 </resources>

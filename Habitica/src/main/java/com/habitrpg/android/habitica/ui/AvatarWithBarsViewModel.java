@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.views.CurrencyView;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,8 +26,9 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class AvatarWithBarsViewModel implements View.OnClickListener {
+public class AvatarWithBarsViewModel {
     @BindView(R.id.hpBar)
     ValueBar hpBar;
     @BindView(R.id.xpBar)
@@ -42,12 +44,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     @BindView(R.id.lvl_tv)
     TextView lvlText;
-    @BindView(R.id.gold_tv)
-    TextView goldText;
-    @BindView(R.id.silver_tv)
-    TextView silverText;
-    @BindView(R.id.gems_tv)
-    TextView gemsText;
+    @BindView(R.id.currencyView)
+    CurrencyView currencyView;
 
     private Avatar userObject;
 
@@ -68,12 +66,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setHpBarData(0, 50);
         setXpBarData(0, 1);
         setMpBarData(0, 1);
-
-        gemsText.setClickable(true);
-        gemsText.setOnClickListener(this);
-
-        avatarView.setClickable(true);
-        avatarView.setOnClickListener(this);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -83,8 +75,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         Stats stats = user.getStats();
 
         String userClass = "";
-        int gp = (stats.getGp().intValue());
-        int sp = (int) ((stats.getGp() - gp) * 100);
 
         avatarView.setAvatar(user);
 
@@ -128,11 +118,9 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setXpBarData(stats.getExp().floatValue(), stats.getToNextLevel());
         setMpBarData(stats.getMp().floatValue(), stats.getMaxMP());
 
-        goldText.setText(String.valueOf(gp));
-        silverText.setText(String.valueOf(sp));
-
-        Integer gems = user.getGemCount();
-        gemsText.setText(String.valueOf(gems));
+        currencyView.setHourglasses(user.getHourglassCount());
+        currencyView.setGold(stats.getGp());
+        currencyView.setGems(user.getGemCount());
     }
 
     private void setHpBarData(float value, int valueMax) {
@@ -166,25 +154,19 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     public void onEvent(BoughtGemsEvent gemsEvent) {
         Integer gems = userObject.getGemCount();
         gems += gemsEvent.NewGemsToAdd;
-        gemsText.setText(String.valueOf(gems));
+        currencyView.setGems(gems);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view == gemsText) {
-            // Gems Clicked
-
-            EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
-        } else {
-            // Avatar overview
-            OpenMenuItemCommand event = new OpenMenuItemCommand();
-            event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;
-            EventBus.getDefault().post(event);
-        }
+    @OnClick(R.id.gemTextView)
+    public void gemTextClicked() {
+        EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
     }
 
-    public void hideGems() {
-        gemsText.setVisibility(View.GONE);
+    @OnClick(R.id.avatarView)
+    public void avatarViewClicked() {
+        OpenMenuItemCommand event = new OpenMenuItemCommand();
+        event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;
+        EventBus.getDefault().post(event);
     }
 
     public void valueBarLabelsToBlack() {

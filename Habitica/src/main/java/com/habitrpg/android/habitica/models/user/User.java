@@ -191,6 +191,14 @@ public class User extends RealmObject implements Avatar {
         return (int)(this.balance * 4);
     }
 
+    @Override
+    public Integer getHourglassCount() {
+        if (getPurchased() != null) {
+            return getPurchased().getPlan().consecutive.getTrinkets();
+        }
+        return 0;
+    }
+
     public void setBalance(double balance) {
         this.balance = balance;
     }

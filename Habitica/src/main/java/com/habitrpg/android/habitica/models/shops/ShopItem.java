@@ -15,7 +15,8 @@ public class ShopItem {
     @SerializedName("class")
     public String imageName;
     public Integer value;
-    public Boolean locked;
+    public boolean locked;
+    public boolean limited;
     public String currency;
     public String purchaseType;
     public String categoryIdentifier;
@@ -79,9 +80,6 @@ public class ShopItem {
     }
 
     public Boolean getLocked() {
-        if (locked == null) {
-            return false;
-        }
         return locked;
     }
 
@@ -137,5 +135,9 @@ public class ShopItem {
         } else {
             return false;
         }
+    }
+
+    public boolean isLimited() {
+        return limited;
     }
 }

@@ -142,7 +142,6 @@ public class FullProfileActivity extends BaseActivity {
         socialRepository.getMember(this.userId).subscribe(this::updateView, RxErrorHandler.handleEmptyError());
 
         avatarWithBars = new AvatarWithBarsViewModel(this, avatar_with_bars);
-        avatarWithBars.hideGems();
         avatarWithBars.valueBarLabelsToBlack();
 
         avatar_with_bars.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));

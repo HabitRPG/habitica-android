@@ -107,47 +107,10 @@
                             android:layout_height="0dp"
                             android:layout_weight="1" />
 
-                        <LinearLayout
+                        <com.habitrpg.android.habitica.ui.views.CurrencyView
+                            android:id="@+id/currencyView"
                             android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:id="@+id/gems_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginStart="16dp"
-                                android:drawableLeft="@drawable/ic_header_gem"
-                                android:drawablePadding="8dp"
-                                android:drawableStart="@drawable/ic_header_gem"
-                                android:gravity="center"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/gold_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginStart="16dp"
-                                android:drawableLeft="@drawable/ic_header_gold"
-                                android:drawablePadding="6dp"
-                                android:drawableStart="@drawable/ic_header_gold"
-                                android:gravity="center"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/silver_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginStart="16dp"
-                                android:drawableLeft="@drawable/ic_header_silver"
-                                android:drawablePadding="6dp"
-                                android:drawableStart="@drawable/ic_header_silver"
-                                android:gravity="center"
-                                android:textSize="14sp" />
-                        </LinearLayout>
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
 

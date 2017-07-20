@@ -117,7 +117,7 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_header_gem" />
+                    android:src="@drawable/currency_gem" />
 
                 <EditText
                     style="@style/Subheader2"

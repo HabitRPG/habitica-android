@@ -13,6 +13,7 @@ import android.widget.RemoteViews;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.NumberAbbreviator;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -95,11 +96,15 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setProgressBar(R.id.mp_bar, stats.getMaxMP(), stats.getMp().intValue(), false);
             remoteViews.setViewVisibility(R.id.mp_wrapper, (stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
-            int gp = (stats.getGp().intValue());
-            int sp = (int) ((stats.getGp() - gp) * 100);
-            remoteViews.setTextViewText(R.id.gold_tv, String.valueOf(gp));
-            remoteViews.setTextViewText(R.id.silver_tv, String.valueOf(sp));
+            remoteViews.setTextViewText(R.id.gold_tv, NumberAbbreviator.abbreviate(context, stats.getGp()));
             remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
+            int hourGlassCount = user.getHourglassCount();
+            if (hourGlassCount == 0) {
+                remoteViews.setViewVisibility(R.id.hourglasses_tv, View.GONE);
+            } else {
+                remoteViews.setTextViewText(R.id.hourglasses_tv, String.valueOf(hourGlassCount));
+                remoteViews.setViewVisibility(R.id.hourglasses_tv, View.VISIBLE);
+            }
             remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl()));
 
             AvatarView avatarView = new AvatarView(context, true, true, true);
