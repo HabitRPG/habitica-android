@@ -1,70 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              style="@style/RowWrapper"
               android:clickable="true"
-              android:background="@android:color/white">
-    <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/gear_image_size"
-            android:layout_height="@dimen/gear_image_size"
-            android:scaleType="fitEnd"
-            android:layout_marginRight="@dimen/row_padding"/>
+    android:background="@color/white">
+    <ImageView
+        android:layout_width="@dimen/shopitem_status_size"
+        android:layout_height="@dimen/shopitem_status_size"
+        android:layout_gravity="right"/>
     <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
-        <TextView
-                android:id="@+id/titleView"
-                android:layout_width="match_parent"
+        android:layout_margin="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/layout_rounded_bg_shopitem">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/shopitem_image_size"
+            android:layout_height="@dimen/shopitem_image_size"
+            android:layout_margin="4dp"
+            android:scaleType="center"
+            android:layout_marginRight="@dimen/row_padding"
+            android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+            android:id="@+id/buyButton"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:background="@drawable/layout_rounded_bg_shopitem_price">
+            <ImageView
+                android:id="@+id/currency_icon_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                tools:src="@drawable/ic_header_gold"/>
+            <TextView
+                android:id="@+id/priceLabel"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Title"
-                style="@style/Subheader1" />
-        <TextView
-                android:id="@+id/limitedCountText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                tools:text="2 Left"
-                style="@style/Caption3" />
-        <TextView
-                android:id="@+id/descriptionView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Description"
-                android:maxLines="5"
-                style="@style/Caption2.Regular" />
+                android:textColor="@color/gray_300"
+                tools:text="150"
+                android:layout_marginLeft="6dp"
+                android:textSize="15sp"
+                />
+            </LinearLayout>
     </LinearLayout>
 
-    <Button
-            android:id="@+id/buyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:minWidth="64dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="left|center_vertical"
-            android:drawablePadding="5dp"
-            android:background="@drawable/rounded_purple_square"
-            android:paddingLeft="12dp"
-            android:paddingStart="12dp"
-            android:paddingRight="12dp"
-            android:paddingEnd="12dp"
-            android:textColor="@color/white"
-            tools:text="150"
-            android:textSize="15sp" />
-    <TextView
-            android:id="@+id/unlockView"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            tools:text="Description"
-            android:visibility="gone"
-            android:maxLines="5"
-            style="@style/RowText"
-            android:layout_gravity="center_vertical"/>
-</LinearLayout>
+</FrameLayout>

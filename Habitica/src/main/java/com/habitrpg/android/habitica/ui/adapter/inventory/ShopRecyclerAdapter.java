@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -59,7 +61,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return new ShopHeaderViewHolder(view);
         } else if (viewType == 1) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.customization_section_header, parent, false);
+                    .inflate(R.layout.shop_section_header, parent, false);
 
             return new SectionViewHolder(view);
         } else {
@@ -75,15 +77,11 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Object obj = this.items.get(position);
         if (obj.getClass().equals(Shop.class)) {
-            ShopHeaderViewHolder viewHolder = (ShopHeaderViewHolder) holder;
-            Shop shop = (Shop) obj;
-            DataBindingUtils.loadImage(viewHolder.imageView, shop.imageName);
-            viewHolder.descriptionView.setText(Html.fromHtml(shop.getNotes()));
+            ((ShopHeaderViewHolder) holder).bind((Shop) obj);
         } else if (obj.getClass().equals(ShopCategory.class)) {
             ((SectionViewHolder) holder).bind(((ShopCategory) obj).getText());
         } else {
             ((ItemViewHolder) holder).bind((ShopItem) items.get(position));
-
         }
     }
 
@@ -122,16 +120,13 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @BindView(R.id.imageView)
         SimpleDraweeView imageView;
-        @BindView(R.id.titleView)
-        TextView titleView;
-        @BindView(R.id.descriptionView)
-        TextView descriptionView;
         @BindView(R.id.buyButton)
-        Button buyButton;
-        @BindView(R.id.unlockView)
-        TextView unlockView;
-        @BindView(R.id.limitedCountText)
-        TextView limitedCountText;
+        View buyButton;
+        @BindView(R.id.currency_icon_view)
+        ImageView currencyIconView;
+        @BindView(R.id.priceLabel)
+        TextView priceLabel;
+
 
         String shopIdentifier;
         ShopItem item;
@@ -147,35 +142,6 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             itemView.setOnClickListener(this);
             itemView.setClickable(true);
-
-            buyButton.setOnClickListener(view -> {
-                String currencyString = "";
-                if (item.getCurrency().equals("gems")) {
-                    if (item.getValue() == 1) {
-                        currencyString = context.getString(R.string.gem);
-                    } else {
-                        currencyString = context.getString(R.string.gems);
-                    }
-                } else if (item.getCurrency().equals("gold")) {
-                    if (item.getValue() == 1) {
-                        currencyString = context.getString(R.string.gold_singular);
-                    } else {
-                        currencyString = context.getString(R.string.gold_plural);
-                    }
-                } else if (item.getCurrency().equals("hourglasses")) {
-                    if (item.getValue() == 1) {
-                        currencyString = context.getString(R.string.hourglass);
-                    } else {
-                        currencyString = context.getString(R.string.hourglasses);
-                    }
-                }
-                new AlertDialog.Builder(context)
-                        .setTitle(R.string.purchase_confirmation_title)
-                        .setMessage(context.getString(R.string.confirm_purchase_text, item.getText(), item.getValue().toString(), currencyString))
-                        .setPositiveButton(android.R.string.yes, (dialog, which) -> this.buyItem())
-                        .setNegativeButton(android.R.string.no, (dialog, which) -> dialog.dismiss())
-                        .show();
-            });
         }
 
         private void buyItem() {
@@ -188,36 +154,27 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void bind(ShopItem item) {
             this.item = item;
             buyButton.setVisibility(View.VISIBLE);
-            titleView.setText(item.getText());
-            descriptionView.setText(Html.fromHtml(item.getNotes()));
 
             DataBindingUtils.loadImage(this.imageView, item.getImageName());
 
             if (item.getUnlockCondition() == null) {
-                buyButton.setText(item.getValue().toString());
+                priceLabel.setText(item.getValue().toString());
                 if (item.getCurrency().equals("gold")) {
-                    buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gold, 0, 0, 0);
+                    currencyIconView.setImageResource(R.drawable.ic_header_gold);
+                    priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gold));
                 } else if (item.getCurrency().equals("gems")) {
-                    buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gem, 0, 0, 0);
+                    currencyIconView.setImageResource(R.drawable.ic_header_gem);
+                    priceLabel.setTextColor(ContextCompat.getColor(context, R.color.good_10));
                 } else {
                     buyButton.setVisibility(View.GONE);
                 }
-                unlockView.setVisibility(View.GONE);
-            } else {
-                buyButton.setVisibility(View.GONE);
-                unlockView.setVisibility(View.VISIBLE);
-                unlockView.setText(item.unlockCondition.readableUnlockConditionId());
             }
 
             if (item.getLocked()) {
-                buyButton.setVisibility(View.GONE);
-            }
-
-            if (item.limitedNumberLeft != null) {
-                limitedCountText.setText(context.getString(R.string.limited_count, item.limitedNumberLeft));
-                limitedCountText.setVisibility(View.VISIBLE);
+                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300));
+                currencyIconView.setAlpha(0.5f);
             } else {
-                limitedCountText.setVisibility(View.GONE);
+                currencyIconView.setAlpha(1.0f);
             }
         }
 
@@ -236,18 +193,39 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
+    static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.imageView)
         public SimpleDraweeView imageView;
 
+        @BindView(R.id.name_plate)
+        public TextView namePlate;
+
         @BindView(R.id.descriptionView)
         public TextView descriptionView;
 
-        public ShopHeaderViewHolder(View itemView) {
+        ShopHeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+
+        public void bind(Shop shop) {
+            DataBindingUtils.loadImage(imageView, shop.imageName);
+            descriptionView.setText(Html.fromHtml(shop.getNotes()));
+            switch (shop.getIdentifier()) {
+                case "market":
+                    namePlate.setText(R.string.market_owner);
+                    break;
+                case "questShop":
+                    namePlate.setText(R.string.questShop_owner);
+                    break;
+                case "seasonalShop":
+                    namePlate.setText(R.string.seasonalShop_owner);
+                    break;
+                case "timetravelers":
+                    namePlate.setText(R.string.timetravelers_owner);
+            }
         }
 
     }

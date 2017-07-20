@@ -60,7 +60,7 @@ public class ShopItem {
 
     public String getImageName() {
         if (imageName != null) {
-            return imageName;
+            return imageName.replace("inventory_quest_scroll_locked", "");
         } else {
             return "shop_" + key;
         }

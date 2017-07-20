@@ -121,6 +121,7 @@
     <color name="gem_icon_color">#24cc8f</color>
     <color name="subscription_description_text">#b1000000</color>
     <color name="pill_gray">#efefef</color>
+    <color name="white_80_alpha">#ccffffff</color>
     <color name="white_75_alpha">#bfffffff</color>
     <color name="white_50_alpha">#7fffffff</color>
     <color name="white_15_alpha">#26ffffff</color>
@@ -143,4 +144,5 @@
     <color name="hair_blond">#CFA925</color>
     <color name="hair_red">#EC720E</color>
     <color name="hair_black">#313131</color>
+    <color name="gold">#ee9109</color>
 </resources>
