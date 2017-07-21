@@ -113,4 +113,5 @@
     <dimen name="shopitem_status_size">24dp</dimen>
 	<dimen name="shopitem_image_size">68dp</dimen>
     <dimen name="shop_scene_height">186dp</dimen>
+    <dimen name="currency_icon_size">24dp</dimen>
 </resources>

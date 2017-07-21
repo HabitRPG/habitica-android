@@ -30,6 +30,7 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.helpers.TiledBitmapPostProcessor;
@@ -39,6 +40,7 @@ import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -215,15 +217,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View view) {
-            ItemDetailDialog dialog = new ItemDetailDialog(context);
-            dialog.setTitle(item.getText());
-            dialog.setDescription(Html.fromHtml(item.getNotes()));
-            dialog.setImage(item.getImageName());
-            if (item.getUnlockCondition() == null) {
-                dialog.setCurrency(item.getCurrency());
-                dialog.setValue(item.getValue());
-                dialog.setBuyListener((clickedDialog, which) -> this.buyItem());
-            }
+            PurchaseDialog dialog = new PurchaseDialog(context, HabiticaBaseApplication.getComponent(), item);
             dialog.show();
         }
     }

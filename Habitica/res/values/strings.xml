@@ -627,4 +627,6 @@
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
+    <string name="your_balance">Your balance:</string>
+    <string name="available_until" formatted="false">Available until %s</string>
 </resources>

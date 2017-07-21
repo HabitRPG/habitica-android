@@ -83,6 +83,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.BaseWidgetProvider;
@@ -274,4 +275,6 @@ public interface AppComponent {
     void inject(PartyDetailFragment partyDetailFragment);
 
     void inject(QuestDetailFragment questDetailFragment);
+
+    void inject(PurchaseDialog purchaseDialog);
 }
