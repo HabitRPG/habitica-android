@@ -959,7 +959,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void showSnackBarEvent(ShowSnackbarEvent event) {
-        showSnackbar(this, floatingMenuWrapper, event.title, event.text, event.type);
+        showSnackbar(this, floatingMenuWrapper, event.title, event.text, event.specialView, event.type);
     }
 
     public boolean isAppBarExpanded() {

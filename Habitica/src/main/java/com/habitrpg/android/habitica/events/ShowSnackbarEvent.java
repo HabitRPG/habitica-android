@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.events;
 
+import android.view.View;
+
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 /**
@@ -11,4 +13,5 @@ public class ShowSnackbarEvent {
     public String title;
     public String text;
     public HabiticaSnackbar.SnackbarDisplayType type;
+    public View specialView;
 }
