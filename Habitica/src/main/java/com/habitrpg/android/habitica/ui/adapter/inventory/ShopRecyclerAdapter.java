@@ -1,11 +1,17 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +19,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
+import com.habitrpg.android.habitica.helpers.TiledBitmapPostProcessor;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
@@ -213,8 +230,11 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imageView)
-        public SimpleDraweeView imageView;
+        private final Context context;
+        @BindView(R.id.sceneView)
+        public SimpleDraweeView sceneView;
+        @BindView(R.id.backgroundView)
+        public ImageView backgroundView;
 
         @BindView(R.id.name_plate)
         public TextView namePlate;
@@ -226,11 +246,47 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ShopHeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
             descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
         public void bind(Shop shop) {
-            DataBindingUtils.loadImage(imageView, shop.imageName);
+            DataBindingUtils.loadImage(sceneView, shop.identifier+"_scene");
+
+            backgroundView.setScaleType(ImageView.ScaleType.FIT_START);
+
+            ImageRequest imageRequest = ImageRequestBuilder
+                    .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + shop.identifier+"_background.png"))
+                    .build();
+
+            ImagePipeline imagePipeline = Fresco.getImagePipeline();
+            final DataSource<CloseableReference<CloseableImage>>
+                    dataSource = imagePipeline.fetchDecodedImage(imageRequest, this);
+
+            dataSource.subscribe(new BaseBitmapDataSubscriber() {
+
+                @Override
+                public void onNewResultImpl(@Nullable Bitmap bitmap) {
+                    if (dataSource.isFinished() && bitmap != null){
+                        float aspectRatio = bitmap.getWidth() /
+                                (float) bitmap.getHeight();
+                        int height = (int) context.getResources().getDimension(R.dimen.shop_height);
+                        int width = Math.round(height * aspectRatio);
+                        BitmapDrawable drawable = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, width, height, false));
+                        drawable.setTileModeX(Shader.TileMode.REPEAT);
+                        backgroundView.setBackground(drawable);
+                        dataSource.close();
+                    }
+                }
+
+                @Override
+                public void onFailureImpl(DataSource dataSource) {
+                    if (dataSource != null) {
+                        dataSource.close();
+                    }
+                }
+            }, CallerThreadExecutor.getInstance());
+
             descriptionView.setText(Html.fromHtml(shop.getNotes()));
             switch (shop.getIdentifier()) {
                 case "market":
