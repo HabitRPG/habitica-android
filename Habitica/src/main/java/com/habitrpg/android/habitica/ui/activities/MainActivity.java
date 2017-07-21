@@ -293,13 +293,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     protected void onResume() {
         super.onResume();
 
-        //resync, if last sync was more than 10 minutes ago
-        if (this.apiClient != null && this.apiClient.hasAuthenticationKeys()) {
-            retrieveUser();
-            this.checkMaintenance();
-        }
-
-        inventoryRepository.retrieveContent().subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
+        retrieveUser();
+        this.checkMaintenance();
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
             try {
@@ -792,6 +787,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     protected void retrieveUser() {
         if (this.userRepository != null) {
             this.userRepository.retrieveUser(true)
+                    .flatMap(user1 -> inventoryRepository.retrieveContent(false))
                     .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         }
     }
@@ -941,8 +937,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                             }
                         }
                     }
-                }, throwable -> {
-                });
+                }, throwable -> {});
     }
 
     private Intent createMaintenanceIntent(MaintenanceResponse maintenanceResponse, Boolean isDeprecationNotice) {
