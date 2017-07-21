@@ -54,4 +54,7 @@ public interface UserRepository extends BaseRepository {
 
     Observable<List> readNotification(String id);
 
+    Observable<User> changeCustomDayStart(int dayStartTime);
+
+    Observable<User> updateLanguage(User user, String languageCode);
 }

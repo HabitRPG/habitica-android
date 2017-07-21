@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +14,7 @@ import android.support.v7.preference.PreferenceScreen;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
@@ -21,7 +22,6 @@ import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -38,7 +38,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
-    public ApiClient apiClient;
+    public InventoryRepository inventoryRepository;
     @Inject
     public SoundManager soundManager;
     @Inject
@@ -137,7 +137,11 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             }
             return true;
         } else if (preference.getKey().equals("reload_content")) {
-            apiClient.getContent().subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
+            ProgressDialog dialog = ProgressDialog.show(context, context.getString(R.string.reloading_content), null, true);
+            inventoryRepository.retrieveContent(true).subscribe(contentResult -> dialog.dismiss(), throwable -> {
+                dialog.dismiss();
+                RxErrorHandler.reportError(throwable);
+            });
         }
         return super.onPreferenceTreeClick(preference);
     }
@@ -172,12 +176,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 String timeval = sharedPreferences.getString("cds_time", "00:00");
                 String[] pieces = timeval.split(":");
                 int hour = Integer.parseInt(pieces[0]);
-                Map<String, Object> updateObject = new HashMap<>();
-                updateObject.put("dayStart", hour);
-                apiClient.changeCustomDayStart(updateObject)
-                        .subscribe(user -> {
-                        }, throwable -> {
-                        });
+                userRepository.changeCustomDayStart(hour).subscribe(user -> {}, throwable -> {});
                 break;
             case "language": {
                 LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key, "en"));
@@ -189,14 +188,10 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 } else {
                     configuration.setLocale(languageHelper.getLocale());
                 }
-                getActivity().getResources().updateConfiguration(configuration,
-                        getActivity().getResources().getDisplayMetrics());
-                userRepository.updateUser(user, "preferences.language", languageHelper.getLanguageCode())
-                        .subscribe(habitRPGUser -> {
-                        }, throwable -> {
-                        });
-                apiClient.setLanguageCode(languageHelper.getLanguageCode());
-                apiClient.getContent().subscribe(contentResult -> {}, throwable -> {});
+                getActivity().getResources().updateConfiguration(configuration, getActivity().getResources().getDisplayMetrics());
+                userRepository.updateLanguage(user, languageHelper.getLanguageCode())
+                        .flatMap(user1 -> inventoryRepository.retrieveContent(true))
+                        .subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -207,22 +202,19 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                     this.startActivity(intent);
                     getActivity().finishAffinity();
                 }
-
                 break;
             }
             case "audioTheme": {
                 String newAudioTheme = sharedPreferences.getString(key, "off");
                 userRepository.updateUser(user, "preferences.sound", newAudioTheme)
-                        .subscribe(habitRPGUser -> {}, throwable -> {});
-
+                        .subscribe(habitRPGUser -> {}, RxErrorHandler.handleEmptyError());
                 soundManager.setSoundTheme(newAudioTheme);
-
                 soundManager.preloadAllFiles();
                 break;
             }
             case "dailyDueDefaultView":
                 userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
-                        .subscribe(habitRPGUser -> {}, throwable -> {});
+                        .subscribe(habitRPGUser -> {}, RxErrorHandler.handleEmptyError());
                 break;
         }
     }

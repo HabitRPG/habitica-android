@@ -221,6 +221,19 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     @Override
+    public Observable<User> changeCustomDayStart(int dayStartTime) {
+        Map<String, Object> updateObject = new HashMap<>();
+        updateObject.put("dayStart", dayStartTime);
+        return apiClient.changeCustomDayStart(updateObject);
+    }
+
+    @Override
+    public Observable<User> updateLanguage(User user, String languageCode) {
+        return updateUser(user, "preferences.language", languageCode)
+                .doOnNext(user1 -> apiClient.setLanguageCode(languageCode));
+    }
+
+    @Override
     public void runCron(List<Task> tasks) {
         Observable<List<TaskScoringResult>> observable;
         if (tasks.size() > 0) {
