@@ -41,7 +41,7 @@ public class TagRepositoryImpl extends BaseRepositoryImpl<TagLocalRepository> im
     @Override
     public Observable<Tag> createTags(Collection<Tag> tags) {
         return Observable.defer(() -> Observable.from(tags))
-                .filter(tag -> !tag.getName().isEmpty())
+                .filter(tag -> tag.getName() != null && !tag.getName().isEmpty())
                 .flatMap(this::createTag);
     }
 

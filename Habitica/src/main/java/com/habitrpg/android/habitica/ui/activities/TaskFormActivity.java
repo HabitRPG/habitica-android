@@ -311,7 +311,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         btnDelete.setOnClickListener(view -> new AlertDialog.Builder(view.getContext())
                 .setTitle(getString(R.string.taskform_delete_title))
                 .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), (dialog, which) -> {
-                    if (task != null) {
+                    if (task != null && task.isValid()) {
                         taskRepository.deleteTask(task.getId());
                     }
 
