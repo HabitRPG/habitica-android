@@ -68,22 +68,20 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         container.setOrientation(LinearLayout.HORIZONTAL);
 
         if (xp > 0) {
-            container.addView(createTextView(context, " + "+String.valueOf(round(xp, 2)), R.drawable.ic_header_exp));
+            container.addView(createTextView(context, xp, R.drawable.snack_experience));
         }
         if (hp != 0) {
             displayType = SnackbarDisplayType.FAILURE;
-            container.addView(createTextView(context, " - "+String.valueOf(Math.abs(round(hp, 2))), R.drawable.ic_header_heart));
+            container.addView(createTextView(context, hp, R.drawable.snack_heart_red));
         }
         if (gold != 0) {
-            if (gold > 0) {
-                container.addView(createTextView(context, " + "+String.valueOf(round(gold, 2)), R.drawable.currency_gold));
-            } else if (gold < 0) {
+            container.addView(createTextView(context, gold, R.drawable.currency_gold));
+            if (gold < 0) {
                 displayType = SnackbarDisplayType.FAILURE;
-                container.addView(createTextView(context, " - "+String.valueOf(Math.abs(round(gold, 2))), R.drawable.currency_gold));
             }
         }
         if (mp > 0) {
-            container.addView(createTextView(context, " + "+String.valueOf(round(mp, 2)), R.drawable.ic_header_magic));
+            container.addView(createTextView(context, mp, R.drawable.snack_mana));
         }
 
         int padding = (int) context.getResources().getDimension(R.dimen.spacing_medium);
@@ -95,9 +93,15 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         return new Pair<>(container, displayType);
     }
 
-    private static View createTextView(Context context, String text, int icon) {
+    private static View createTextView(Context context, double value, int icon) {
         TextView textView = new TextView(context);
         textView.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
+        String text;
+        if (value > 0) {
+            text = " + "+String.valueOf(Math.abs(round(value, 2));
+        } else {
+            text = " - "+String.valueOf(Math.abs(round(value, 2));
+        }
         textView.setText(text);
         textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setTextColor(ContextCompat.getColor(context, R.color.white));
