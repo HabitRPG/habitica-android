@@ -48,7 +48,6 @@ import io.realm.RealmConfiguration;
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
 public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
-    public static Activity currentActivity = null;
     private static AppComponent component;
     public RefWatcher refWatcher;
     @Inject
@@ -123,7 +122,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         setupLeakCanary();
         setupFacebookSdk();
         createBillingAndCheckout();
-        registerActivityLifecycleCallbacks();
 
         if (!BuildConfig.DEBUG) {
             try {
@@ -196,47 +194,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         if (fbApiKey != null) {
             FacebookSdk.sdkInitialize(getApplicationContext());
         }
-    }
-
-    private void registerActivityLifecycleCallbacks() {
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                HabiticaBaseApplication.currentActivity = activity;
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-                HabiticaBaseApplication.currentActivity = activity;
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-                if (currentActivity != null && currentActivity.equals(activity)) {
-                    currentActivity = null;
-                }
-            }
-        });
     }
 
     @Override

@@ -277,7 +277,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     MainActivity.this.setUserData(true);
                 }, RxErrorHandler.handleEmptyError());
 
-        EventBus.getDefault().register(this);
     }
 
     public int getStatusBarHeight() {
@@ -545,7 +544,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);
         userRepository.close();
         tagRepository.close();
         inventoryRepository.close();
@@ -800,10 +798,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void displayClassSelectionActivity(SelectClassEvent event) {
-        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(user, event))
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(user, event, this))
+                .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     private void displayTutorialStep(TutorialStep step, String text, boolean canBeDeferred) {

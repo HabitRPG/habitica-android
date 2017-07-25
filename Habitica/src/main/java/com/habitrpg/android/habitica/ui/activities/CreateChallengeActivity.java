@@ -240,8 +240,6 @@ public class CreateChallengeActivity extends BaseActivity {
             challengeId = bundle.getString(CHALLENGE_ID_KEY, null);
         }
 
-        EventBus.getDefault().register(this);
-
         fillControls();
 
         if (challengeId != null) {
@@ -254,7 +252,6 @@ public class CreateChallengeActivity extends BaseActivity {
     public void onDestroy() {
         socialRepository.close();
         challengeRepository.close();
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 

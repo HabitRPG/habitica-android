@@ -8,6 +8,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -58,12 +59,10 @@ public class MaxHeightLinearLayout extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        if (HabiticaApplication.currentActivity != null) {
-            HabiticaApplication.currentActivity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int height = (int) (displaymetrics.heightPixels * maxHeight);
-
-            heightMeasureSpec = Math.min(heightMeasureSpec, View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.AT_MOST));
-        }
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(displaymetrics);
+        int height = (int) (displaymetrics.heightPixels * maxHeight);
+        heightMeasureSpec = Math.min(heightMeasureSpec, View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.AT_MOST));
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 

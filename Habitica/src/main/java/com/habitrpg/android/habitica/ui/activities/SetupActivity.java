@@ -126,18 +126,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     protected void onDestroy() {
         userRepository.close();
         super.onDestroy();

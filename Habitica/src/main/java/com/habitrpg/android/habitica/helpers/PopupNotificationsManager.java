@@ -77,7 +77,7 @@ public class PopupNotificationsManager {
             TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
             nextUnlockTextView.setText(nextUnlockText);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity, R.style.AlertDialogTheme)
+            AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme)
                     .setView(view)
                     .setCustomTitle(titleTextView)
                     .setPositiveButton(R.string.start_day, (dialog, which) -> {
@@ -111,31 +111,22 @@ public class PopupNotificationsManager {
             return false;
         }
 
-        if (HabiticaApplication.currentActivity == null || HabiticaApplication.currentActivity.isFinishing()) {
-            return false;
+        if (this.seenNotifications == null) {
+            this.seenNotifications = new HashMap<>();
         }
 
-        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-            if (HabiticaApplication.currentActivity == null) return;
-            if ((HabiticaApplication.currentActivity).isFinishing()) return;
-
-            if (this.seenNotifications == null) {
-                this.seenNotifications = new HashMap<>();
+        for (Notification notification : notifications) {
+            if (this.seenNotifications.get(notification.getId()) != null) {
+                continue;
             }
 
-            for (Notification notification : notifications) {
-                if (this.seenNotifications.get(notification.getId()) != null) {
-                    continue;
-                }
-
-                if (!notification.getType().equals("LOGIN_INCENTIVE")) {
-                    continue;
-                }
-
-                this.displayNotification(notification);
-                this.seenNotifications.put(notification.getId(), true);
+            if (!notification.getType().equals("LOGIN_INCENTIVE")) {
+                continue;
             }
-        });
+
+            this.displayNotification(notification);
+            this.seenNotifications.put(notification.getId(), true);
+        }
 
         return true;
     }

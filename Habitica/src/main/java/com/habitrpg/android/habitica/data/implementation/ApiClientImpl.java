@@ -2,19 +2,20 @@ package com.habitrpg.android.habitica.data.implementation;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.amplitude.api.Amplitude;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.api.ApiService;
 import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.api.Server;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.models.AchievementResult;
 import com.habitrpg.android.habitica.models.ContentResult;
@@ -54,7 +55,6 @@ import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
@@ -92,6 +92,8 @@ import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
 import com.habitrpg.android.habitica.utils.UserDeserializer;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -123,6 +125,7 @@ import rx.schedulers.Schedulers;
 
 
 public class ApiClientImpl implements Action1<Throwable>, ApiClient {
+    private static final String TAG = "ApiClientImpl";
     private final GsonConverterFactory gsonConverter;
     private final HostConfig hostConfig;
     private final Retrofit retrofitAdapter;
@@ -363,21 +366,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString) {
-        if (HabiticaApplication.currentActivity != null) {
-            HabiticaApplication.currentActivity.runOnUiThread(() -> {
-                if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
-                            .setTitle(resourceTitleString)
-                            .setMessage(resourceMessageString)
-                            .setNeutralButton(android.R.string.ok, (dialog, which) -> displayedAlert = null);
-
-                    if (!resourceTitleString.isEmpty()) {
-                        builder.setIcon(R.drawable.ic_warning_black);
-                    }
-
-                    displayedAlert = builder.show();
-                }
-            });
+        ShowConnectionProblemEvent event = new ShowConnectionProblemEvent(resourceTitleString, resourceMessageString);
+        EventBus.getDefault().post(event);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "showConnectionProblemDialog: " + resourceTitleString + " " + resourceMessageString);
         }
     }
 

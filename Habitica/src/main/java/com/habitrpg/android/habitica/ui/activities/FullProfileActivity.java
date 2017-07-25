@@ -190,9 +190,9 @@ public class FullProfileActivity extends BaseActivity {
                                     String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), throwable -> {
                             });
 
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    UiUtils.dismissKeyboard(this);
                 })
-                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> UiUtils.dismissKeyboard(HabiticaApplication.currentActivity))
+                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> UiUtils.dismissKeyboard(this))
 
                 .create();
 

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -76,7 +77,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return itemList == null ? 0 : itemList.size();
     }
 
-    class AchievementViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class AchievementViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Achievement achievement;
 
         @BindView(R.id.achievement_drawee)
@@ -91,14 +92,14 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         @BindView(R.id.achievement_item_layout)
         LinearLayout item_layout;
 
-        Resources resources;
+        Context context;
 
         AchievementViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
             item_layout = (LinearLayout) itemView;
-            resources = itemView.getResources();
+            context = itemView.getContext();
 
             item_layout.setClickable(true);
             item_layout.setOnClickListener(this);
@@ -116,7 +117,6 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     })
                     .build());
 
-
             this.achievement = item;
             titleView.setText(item.title);
 
@@ -130,7 +130,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public void onClick(View view) {
-            AlertDialog.Builder b = new AlertDialog.Builder(HabiticaApplication.currentActivity);
+            AlertDialog.Builder b = new AlertDialog.Builder(context);
 
             View customView = LayoutInflater.from(itemView.getContext())
                     .inflate(R.layout.dialog_achievement_details, null);
