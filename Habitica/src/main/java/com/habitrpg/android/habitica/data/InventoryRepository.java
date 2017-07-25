@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
+import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -71,4 +72,14 @@ public interface InventoryRepository extends ContentRepository {
     Observable<Quest> inviteToQuest(QuestContent quest);
 
     Observable<BuyResponse> buyItem(User user, String id, double value);
+
+    Observable<Shop> fetchShopInventory(String identifier);
+
+    Observable<Void> purchaseMysterySet(String categoryIdentifier);
+
+    Observable<Void> purchaseHourglassItem(String purchaseType, String key);
+
+    Observable<Void> purchaseQuest(String key);
+
+    Observable<Void> purchaseItem(String purchaseType, String key);
 }

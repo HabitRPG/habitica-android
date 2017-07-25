@@ -18,10 +18,6 @@ import com.habitrpg.android.habitica.R;
 
 import javax.annotation.Resource;
 
-/**
- * Created by phillip on 04.07.17.
- */
-
 public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
 
     /**
@@ -35,7 +31,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
         super(parent, content, callback);
     }
 
-    public static HabiticaSnackbar make(@NonNull ViewGroup parent, int duration) {
+    private static HabiticaSnackbar make(@NonNull ViewGroup parent, int duration) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View content = inflater.inflate(R.layout.snackbar_view, parent, false);
         final ContentViewCallback viewCallback = new ContentViewCallback(content);
@@ -70,7 +66,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
         return this;
     }
 
-    public HabiticaSnackbar setSpecialView(View specialView) {
+    private HabiticaSnackbar setSpecialView(View specialView) {
         if (specialView != null) {
             LinearLayout snackbarView = (LinearLayout) getView().findViewById(R.id.snackbar_view);
             snackbarView.addView(specialView);
@@ -133,6 +129,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
                 snackbar.setBackgroundResource(R.drawable.snackbar_background_blue);
                 break;
             case NORMAL:
+            case SUCCESS:
                 snackbar.setBackgroundResource(R.drawable.snackbar_background_green);
                 break;
         }
@@ -141,7 +138,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
     }
 
     public enum SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP, BLUE
+        NORMAL, FAILURE, FAILURE_BLUE, DROP, SUCCESS, BLUE
     }
 
 }

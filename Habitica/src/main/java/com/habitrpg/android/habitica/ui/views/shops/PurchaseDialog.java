@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views.shops;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -16,11 +15,13 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.views.CurrencyView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
 
@@ -55,9 +56,10 @@ public class PurchaseDialog extends AlertDialog {
 
     private ShopItem shopItem;
 
-    PurchaseDialogContent contentView;
+    private PurchaseDialogContent contentView;
 
-    CompositeSubscription compositeSubscription;
+    private CompositeSubscription compositeSubscription;
+    public String shopIdentifier;
 
     public PurchaseDialog(Context context, AppComponent component, ShopItem item) {
         super(context);
@@ -181,6 +183,15 @@ public class PurchaseDialog extends AlertDialog {
 
     @OnClick(R.id.closeButton)
     void onCloseClicked() {
+        dismiss();
+    }
+
+    @OnClick(R.id.buyButton)
+    void onBuyButtonClicked() {
+        BuyGemItemCommand event = new BuyGemItemCommand();
+        event.shopIdentifier = shopIdentifier;
+        event.item = shopItem;
+        EventBus.getDefault().post(event);
         dismiss();
     }
 

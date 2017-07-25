@@ -399,7 +399,7 @@
     <string name="party_invite">Unlock by inviting friends</string>
     <string name="no_gold">Not enough Gold</string>
     <string name="no_potion">You don\'t need to buy an health potion</string>
-    <string name="successful_purchase" >%1$s successfully purchased</string>
+    <string name="successful_purchase" >Purchased %1$s</string>
     <string name="purchase_confirmation_title">Confirm purchase</string>
     <string name="confirm_purchase_text" >Purchase %1$s for %2$s %3$s</string>
     <string name="gem">gem</string>

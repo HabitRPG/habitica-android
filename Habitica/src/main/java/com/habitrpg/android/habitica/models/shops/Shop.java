@@ -67,7 +67,7 @@ public class Shop {
                 return R.string.questShop_owner;
             case "seasonalShop":
                 return R.string.seasonalShop_owner;
-            case "timetravelersShop":
+            case "timeTravelersShop":
                 return R.string.timetravelers_owner;
             default:
                 return R.string.market_owner;

@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
+import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -242,5 +243,30 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                     }
                     localRepository.save(copiedUser);
                 }));
+    }
+
+    @Override
+    public Observable<Shop> fetchShopInventory(String identifier) {
+        return apiClient.fetchShopInventory(identifier);
+    }
+
+    @Override
+    public Observable<Void> purchaseMysterySet(String categoryIdentifier) {
+        return apiClient.purchaseMysterySet(categoryIdentifier);
+    }
+
+    @Override
+    public Observable<Void> purchaseHourglassItem(String purchaseType, String key) {
+        return apiClient.purchaseHourglassItem(purchaseType, key);
+    }
+
+    @Override
+    public Observable<Void> purchaseQuest(String key) {
+        return apiClient.purchaseQuest(key);
+    }
+
+    @Override
+    public Observable<Void> purchaseItem(String purchaseType, String key) {
+        return apiClient.purchaseItem(purchaseType, key);
     }
 }

@@ -49,6 +49,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscription;
+import rx.subjects.PublishSubject;
 
 public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -169,13 +172,6 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemView.setClickable(true);
         }
 
-        private void buyItem() {
-            BuyGemItemCommand command = new BuyGemItemCommand();
-            command.shopIdentifier = shopIdentifier;
-            command.item = item;
-            EventBus.getDefault().post(command);
-        }
-
         public void bind(ShopItem item) {
             this.item = item;
             buyButton.setVisibility(View.VISIBLE);
@@ -223,6 +219,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @Override
         public void onClick(View view) {
             PurchaseDialog dialog = new PurchaseDialog(context, HabiticaBaseApplication.getComponent(), item);
+            dialog.shopIdentifier = shopIdentifier;
             dialog.show();
         }
     }
