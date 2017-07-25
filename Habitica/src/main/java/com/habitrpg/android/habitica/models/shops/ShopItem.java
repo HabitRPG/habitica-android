@@ -61,7 +61,11 @@ public class ShopItem {
 
     public String getImageName() {
         if (imageName != null) {
-            return imageName.replace("inventory_quest_scroll_locked", "");
+            if (imageName.contains(" ")) {
+                return imageName.split(" ")[1];
+            } else {
+                return imageName;
+            }
         } else {
             return "shop_" + key;
         }
@@ -139,5 +143,21 @@ public class ShopItem {
 
     public boolean isLimited() {
         return limited;
+    }
+
+    public boolean isTypeItem() {
+        return "eggs".equals(purchaseType) || "hatchingPotions".equals(purchaseType) || "food".equals(purchaseType);
+    }
+
+    public boolean isTypeQuest() {
+        return "quests".equals(purchaseType);
+    }
+
+    public boolean isTypeGear() {
+        return false;
+    }
+
+    public boolean isTypeAnimal() {
+        return "pets".equals(purchaseType) || "mounts".equals(purchaseType);
     }
 }

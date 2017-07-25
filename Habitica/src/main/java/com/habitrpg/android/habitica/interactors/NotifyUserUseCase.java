@@ -98,9 +98,9 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         textView.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
         String text;
         if (value > 0) {
-            text = " + "+String.valueOf(Math.abs(round(value, 2));
+            text = " + "+String.valueOf(Math.abs(round(value, 2)));
         } else {
-            text = " - "+String.valueOf(Math.abs(round(value, 2));
+            text = " - "+String.valueOf(Math.abs(round(value, 2)));
         }
         textView.setText(text);
         textView.setGravity(Gravity.CENTER_VERTICAL);

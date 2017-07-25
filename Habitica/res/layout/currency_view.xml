@@ -15,6 +15,8 @@
         android:textColor="@color/textColorSecondaryDark"
         style="@style/CurrencyTextView"
         android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="2"
         />
     <TextView
         android:id="@+id/gemTextView"
@@ -25,6 +27,8 @@
         android:textColor="@color/textColorSecondaryDark"
         style="@style/CurrencyTextView"
         android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="22"
         />
 
     <TextView
@@ -35,5 +39,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/textColorSecondaryDark"
         style="@style/CurrencyTextView"
+        tools:text="4.2k"
         />
 </merge>

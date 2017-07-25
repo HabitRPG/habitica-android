@@ -190,9 +190,14 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 } else if (item.getCurrency().equals("gems")) {
                     currencyIconView.setImageResource(R.drawable.currency_gem);
                     priceLabel.setTextColor(ContextCompat.getColor(context, R.color.good_10));
+                } else if (item.getCurrency().equals("hourglasses")) {
+                    currencyIconView.setImageResource(R.drawable.currency_hourglass);
+                    priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
                 } else {
                     buyButton.setVisibility(View.GONE);
                 }
+            } else {
+                priceLabel.setText(item.getUnlockCondition().readableUnlockConditionId());
             }
 
             if (item.isLimited()) {
@@ -282,19 +287,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }, CallerThreadExecutor.getInstance());
 
             descriptionView.setText(Html.fromHtml(shop.getNotes()));
-            switch (shop.getIdentifier()) {
-                case "market":
-                    namePlate.setText(R.string.market_owner);
-                    break;
-                case "questShop":
-                    namePlate.setText(R.string.questShop_owner);
-                    break;
-                case "seasonalShop":
-                    namePlate.setText(R.string.seasonalShop_owner);
-                    break;
-                case "timetravelers":
-                    namePlate.setText(R.string.timetravelers_owner);
-            }
+            namePlate.setText(shop.getNpcNameResource());
         }
 
     }

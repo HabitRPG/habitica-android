@@ -1,5 +1,9 @@
 package com.habitrpg.android.habitica.models.shops;
 
+import android.content.Context;
+
+import com.habitrpg.android.habitica.R;
+
 import java.util.List;
 
 public class Shop {
@@ -53,5 +57,24 @@ public class Shop {
 
     public void setCategories(List<ShopCategory> categories) {
         this.categories = categories;
+    }
+
+    public int getNpcNameResource() {
+        switch (getIdentifier()) {
+            case "market":
+                return R.string.market_owner;
+            case "questShop":
+                return R.string.questShop_owner;
+            case "seasonalShop":
+                return R.string.seasonalShop_owner;
+            case "timetravelersShop":
+                return R.string.timetravelers_owner;
+            default:
+                return R.string.market_owner;
+        }
+    }
+
+    public String getNpcName(Context context) {
+        return context.getString(getNpcNameResource());
     }
 }

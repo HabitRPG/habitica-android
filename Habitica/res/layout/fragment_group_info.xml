@@ -273,7 +273,7 @@
                         android:layout_width="@dimen/quest_image_width"
                         android:layout_height="@dimen/quest_image_height"
                         android:layout_marginBottom="8dp"
-                        bind:questImageName='@{"quest_"+ quest.key}'
+                        bind:imageName='@{"quest_"+ quest.key}'
                         />
 
                     <LinearLayout

@@ -12,7 +12,7 @@ public class ShopItemUnlockCondition {
             case "party invite":
                 return R.string.party_invite;
             default:
-                return 0;
+                return R.string.empty;
         }
     }
 }

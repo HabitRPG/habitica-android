@@ -41,6 +41,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.ErrorResponse;
@@ -84,6 +85,7 @@ import com.habitrpg.android.habitica.utils.PetMapDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
 import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDeserializer;
+import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.QuestListDeserializer;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
@@ -226,6 +228,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {}.getType();
         Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {}.getType();
         Type challengeListType = new TypeToken<List<Challenge>>() {}.getType();
+        Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {}.getType();
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -258,6 +261,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
                 .registerTypeAdapter(chatMessageListType, new ChatMessageListDeserializer())
                 .registerTypeAdapter(challengeListType, new ChallengeListDeserializer())
+                .registerTypeAdapter(questDropItemListType, new QuestDropItemsListSerialization())
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")

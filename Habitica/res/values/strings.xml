@@ -629,4 +629,15 @@
     <string name="billion_abbrev">b</string>
     <string name="your_balance">Your balance:</string>
     <string name="available_until" formatted="false">Available until %s</string>
+    <string name="gems_left_max" formatted="false">Monthly Gems: %1$d/%2$d Remaining</string>
+    <string name="gems_left_nomax" formatted="false">Monthly Gems: %d Remaining</string>
+    <string name="health">Health</string>
+    <string name="collect">Collect</string>
+    <string name="rage_meter">Rage Meter</string>
+    <string name="boss_quest">Boss Quest</string>
+    <string name="collection_quest">Collection Quest</string>
+    <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+    <string name="experience_reward" formatted="false">%d Experience points</string>
+    <string name="gold_reward" formatted="false">%d Gold</string>
+    <string name="quest_owner_rewards">Quest Owner Rewards</string>
 </resources>

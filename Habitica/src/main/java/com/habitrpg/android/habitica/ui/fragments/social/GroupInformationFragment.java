@@ -151,15 +151,15 @@ public class GroupInformationFragment extends BaseFragment {
             return;
         }
 
-        boolean showHpBar = (quest.boss != null && quest.boss.hp > 0);
+        boolean showHpBar = (quest.getBoss() != null && quest.getBoss().hp > 0);
         bossHpBar.setVisibility(showHpBar ? View.VISIBLE : View.GONE);
         if (showHpBar) {
-            bossHpBar.set(group.quest.getProgress().hp, quest.boss.hp);
+            bossHpBar.set(group.quest.getProgress().hp, quest.getBoss().hp);
         }
-        boolean showRageBar = (quest.boss != null && quest.boss.rage_value > 0);
+        boolean showRageBar = (quest.getBoss() != null && quest.getBoss().hasRage());
         bossRageBar.setVisibility(showRageBar ? View.VISIBLE : View.GONE);
         if (showRageBar) {
-            bossHpBar.set(group.quest.getProgress().rage, quest.boss.rage_value);
+            bossHpBar.set(group.quest.getProgress().rage, quest.getBoss().rage.value);
         }
 
         if (group.quest.members == null) {

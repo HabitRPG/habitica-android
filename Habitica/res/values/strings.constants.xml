@@ -25,4 +25,5 @@
     <string name="questShop_owner" translatable="false">Ian</string>
     <string name="seasonalShop_owner" translatable="false">Leslie</string>
     <string name="timetravelers_owner" translatable="false">Time Travelers</string>
+    <string name="empty" translatable="false"> </string>
 </resources>

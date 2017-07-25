@@ -32,13 +32,6 @@ public class DataBindingUtils {
         }
     }
 
-    @BindingAdapter("bind:questImageName")
-    public static void loadQuestImage(SimpleDraweeView view, String imageName) {
-        if (view != null && view.getVisibility() == View.VISIBLE) {
-            view.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png"));
-        }
-    }
-
     @BindingAdapter("bind:cardColor")
     public static void setCardColor(CardView cardView, int color) {
         if (color > 0) {

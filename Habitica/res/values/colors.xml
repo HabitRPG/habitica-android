@@ -130,6 +130,7 @@
     <color name="black_5_alpha">#0b000000</color>
     <color name="black_10_alpha">#16000000</color>
     <color name="black_20_alpha">#33000000</color>
+    <color name="black_50_alpha">#89000000</color>
     <color name="light_gray_bg">#F6F4F8</color>
 
     <color name="skin_ddc994">#ddc994</color>
@@ -147,4 +148,5 @@
     <color name="hair_red">#EC720E</color>
     <color name="hair_black">#313131</color>
     <color name="gold">#ee9109</color>
+    <color name="reward_buy_button_bg">#4cfedead</color>
 </resources>

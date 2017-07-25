@@ -50,10 +50,10 @@ public class QuestProgressView extends LinearLayout {
 
     public void setData(QuestContent quest, QuestProgress progress) {
         collectionContainer.removeAllViews();
-        if (quest.boss != null) {
-            bossNameView.setText(quest.boss.name);
+        if (quest.isBossQuest()) {
+            bossNameView.setText(quest.getBoss().name);
             if (progress != null) {
-                bossHealthView.set(progress.hp, quest.boss.hp);
+                bossHealthView.set(progress.hp, quest.getBoss().hp);
             }
             bossNameView.setVisibility(View.VISIBLE);
             bossHealthView.setVisibility(View.VISIBLE);

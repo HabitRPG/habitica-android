@@ -8,34 +8,21 @@ import io.realm.annotations.PrimaryKey;
 public class QuestBoss extends RealmObject {
 
     @PrimaryKey
-    public String key;
+    private String key;
     public String name;
-    public double hp;
-    public double str;
-    public double def;
+    public int hp;
+    public float str;
 
-    /* Boss Columns */
-
-    public String rage_title;
-    public String rage_description;
-    public double rage_value;
-    public String rage_tavern;
-    public String rage_stables;
-    public String rage_market;
-    @Ignore
     public QuestBossRage rage;
 
-    public class QuestBossRage {
-        public String title;
+    public boolean hasRage() {
+        return rage != null && rage.value != 0;
+    }
 
-        public String description;
-
-        public double value;
-
-        public String tavern;
-
-        public String stables;
-
-        public String market;
+    public void setKey(String key) {
+        this.key = key;
+        if (rage != null) {
+            rage.key = key;
+        }
     }
 }

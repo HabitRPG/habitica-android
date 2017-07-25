@@ -37,9 +37,7 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
                         item.setPrevious(parsedItem.getPrevious());
                         item.setCanBuy(parsedItem.isCanBuy());
                         item.setBoss(parsedItem.getBoss());
-                        if (item.getBoss() != null) {
-                            item.getBoss().key = item.getKey();
-                        }
+                        item.setDrop(parsedItem.getDrop());
                         item.setCategory(parsedItem.getCategory());
                         item.setCollect(parsedItem.getCollect());
                         item.setLvl(parsedItem.getLvl());
@@ -55,6 +53,9 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
                 QuestContent item;
                 if (entry.getValue().isJsonObject()) {
                     item = context.deserialize(entry.getValue(), QuestContent.class);
+                    //Make sure keys are set
+                    item.setBoss(item.getBoss());
+                    item.setDrop(item.getDrop());
                 } else {
                     item = new QuestContent();
                     item.setKey(entry.getKey());
