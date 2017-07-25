@@ -154,7 +154,7 @@ public class ShopItem {
     }
 
     public boolean isTypeGear() {
-        return false;
+        return "gear".equals(purchaseType);
     }
 
     public boolean isTypeAnimal() {

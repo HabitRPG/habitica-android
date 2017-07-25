@@ -147,7 +147,10 @@ public class PurchaseDialog extends AlertDialog {
             contentView = new PurchaseDialogItemContent(getContext());
         } else if (shopItem.isTypeQuest()) {
             contentView = new PurchaseDialogQuestContent(getContext());
-            inventoryRepository.getQuestContent(item.getKey()).first().subscribe(((PurchaseDialogQuestContent)contentView)::setQuestContent, RxErrorHandler.handleEmptyError());
+            inventoryRepository.getQuestContent(item.getKey()).first().subscribe(((PurchaseDialogQuestContent) contentView)::setQuestContent, RxErrorHandler.handleEmptyError());
+        } else if (shopItem.isTypeGear()) {
+            contentView = new PurchaseDialogGearContent(getContext());
+            inventoryRepository.getEquipment(item.getKey()).first().subscribe(((PurchaseDialogGearContent) contentView)::setEquipment, RxErrorHandler.handleEmptyError());
         } else if ("gems".equals(shopItem.purchaseType)) {
             contentView = new PurchaseDialogGemsContent(getContext());
         } else {

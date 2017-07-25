@@ -640,4 +640,8 @@
     <string name="experience_reward" formatted="false">%d Experience points</string>
     <string name="gold_reward" formatted="false">%d Gold</string>
     <string name="quest_owner_rewards">Quest Owner Rewards</string>
+    <string name="str_abbrv">Str:</string>
+    <string name="per_abbrv">Per:</string>
+    <string name="int_abbrv">Int:</string>
+    <string name="con_abbrv">Con:</string>
 </resources>
