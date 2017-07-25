@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
@@ -23,32 +24,22 @@ import butterknife.OnClick;
 public class RewardViewHolder extends BaseTaskViewHolder {
 
     private final DecimalFormat priceFormat;
-    @BindView(R.id.rewardImageView)
-    SimpleDraweeView rewardImageView;
 
-    @BindView(R.id.btnReward)
-    Button rewardButton;
-
-    private Drawable customRewardIcon;
+    @BindView(R.id.buyButton)
+    View buyButton;
+    @BindView(R.id.priceLabel)
+    TextView priceLabel;
 
     public RewardViewHolder(View itemView) {
         super(itemView);
         priceFormat = new DecimalFormat("0.##");
-
-        customRewardIcon = ContextCompat.getDrawable(itemView.getContext(), R.drawable.custom_reward);
     }
 
     @Override
     public void bindHolder(Task newTask, int position) {
         super.bindHolder(newTask, position);
 
-        this.rewardButton.setText(this.priceFormat.format(this.task.value));
-
-        if (this.isItem()) {
-            DataBindingUtils.loadImage(this.rewardImageView, "shop_" + this.task.getId());
-        } else {
-            this.rewardImageView.setImageDrawable(customRewardIcon);
-        }
+        this.priceLabel.setText(this.priceFormat.format(this.task.value));
     }
 
     private boolean isItem() {
@@ -60,7 +51,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
         return !isItem();
     }
 
-    @OnClick(R.id.btnReward)
+    @OnClick(R.id.buyButton)
     void buyReward() {
         BuyRewardCommand event = new BuyRewardCommand();
         event.Reward = task;
@@ -92,7 +83,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
     public void setDisabled(boolean openTaskDisabled, boolean taskActionsDisabled) {
         super.setDisabled(openTaskDisabled, taskActionsDisabled);
 
-        this.rewardButton.setEnabled(!taskActionsDisabled);
+        this.buyButton.setEnabled(!taskActionsDisabled);
     }
 
 }
