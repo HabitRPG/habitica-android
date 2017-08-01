@@ -218,25 +218,25 @@ public class PartyDetailFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.leave_party_confirmation)
                 .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.leaveGroup(partyId)
-                        .subscribe(aVoid -> {}, throwable -> {})).setNegativeButton(R.string.no, (dialog, which) -> {});
+                        .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError())).setNegativeButton(R.string.no, (dialog, which) -> {});
         builder.show();    }
 
     @OnClick(R.id.quest_accept_button)
     public void onQuestAccept() {
-        socialRepository.acceptQuest(user, partyId).subscribe(aVoid -> {}, throwable -> {});
+        socialRepository.acceptQuest(user, partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
 
     @OnClick(R.id.quest_reject_button)
     public void onQuestReject() {
-        socialRepository.rejectQuest(user, partyId).subscribe(aVoid -> {}, throwable -> {});
+        socialRepository.rejectQuest(user, partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.party_invite_accept_button)
     public void onPartyInviteAccepted() {
         if (user != null) {
             socialRepository.joinGroup(user.getInvitations().getParty().getId())
-                    .subscribe(group -> {}, throwable -> {});
+                    .subscribe(group -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.local.implementation;
 import android.content.Context;
 
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
@@ -219,7 +220,7 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
 
     @Override
     public void changeOwnedCount(String type, String key, int amountToAdd) {
-        this.getItem(type, key).first().subscribe(item -> changeOwnedCount(item, amountToAdd));
+        this.getItem(type, key).first().subscribe(item -> changeOwnedCount(item, amountToAdd), RxErrorHandler.handleEmptyError());
     }
 
     @Override

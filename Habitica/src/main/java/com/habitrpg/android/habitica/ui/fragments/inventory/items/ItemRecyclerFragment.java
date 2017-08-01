@@ -110,7 +110,7 @@ public class ItemRecyclerFragment extends BaseFragment {
                                 OpenMenuItemCommand event1 = new OpenMenuItemCommand();
                                 event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
                                 EventBus.getDefault().post(event1);
-                            }, throwable -> {}));
+                            }, RxErrorHandler.handleEmptyError()));
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 

@@ -154,8 +154,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
         if (this.user != null && !this.user.getPreferences().getSize().equals(newSize)) {
             userRepository.updateUser(user, "preferences.size", newSize)
-                    .subscribe(user1 -> {}, throwable -> {
-                    });
+                    .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 

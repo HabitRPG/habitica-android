@@ -91,8 +91,7 @@ public class TavernFragment extends BaseMainFragment {
                                 }
                             }, RxErrorHandler.handleEmptyError());
                         }
-                    }, throwable -> {
-                    });
+                    }, RxErrorHandler.handleEmptyError());
         }
     }
 

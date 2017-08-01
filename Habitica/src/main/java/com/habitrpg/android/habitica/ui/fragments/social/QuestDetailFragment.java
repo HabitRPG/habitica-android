@@ -217,13 +217,13 @@ public class QuestDetailFragment extends BaseMainFragment {
 
     @OnClick(R.id.quest_accept_button)
     public void onQuestAccept() {
-        socialRepository.acceptQuest(user, partyId).subscribe(aVoid -> {}, throwable -> {});
+        socialRepository.acceptQuest(user, partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
 
     @OnClick(R.id.quest_reject_button)
     public void onQuestReject() {
-        socialRepository.rejectQuest(user, partyId).subscribe(aVoid -> {}, throwable -> {});
+        socialRepository.rejectQuest(user, partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.quest_begin_button)
@@ -231,7 +231,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_begin_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.forceStartQuest(party)
-                        .subscribe(quest -> {}, throwable -> {}))
+                        .subscribe(quest -> {}, RxErrorHandler.handleEmptyError()))
                 .setNegativeButton(R.string.no, (dialog, which) -> {});
         builder.show();
     }
@@ -241,7 +241,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_cancel_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.cancelQuest(partyId)
-                        .subscribe(aVoid -> {getActivity().getFragmentManager().popBackStack();}, throwable -> {})).setNegativeButton(R.string.no, (dialog, which) -> {});
+                        .subscribe(aVoid -> getActivity().getFragmentManager().popBackStack(), RxErrorHandler.handleEmptyError())).setNegativeButton(R.string.no, (dialog, which) -> {});
         builder.show();
     }
 
@@ -250,7 +250,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_abort_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.abortQuest(partyId)
-                        .subscribe(aVoid -> {getActivity().getFragmentManager().popBackStack();}, throwable -> {})).setNegativeButton(R.string.no, (dialog, which) -> {});
+                        .subscribe(aVoid -> getActivity().getFragmentManager().popBackStack(), RxErrorHandler.handleEmptyError())).setNegativeButton(R.string.no, (dialog, which) -> {});
         builder.show();
     }
 

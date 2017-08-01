@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.Gear;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Hair;
@@ -104,8 +105,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
 
         if (!isInitialSelection) {
             userRepository.changeClass()
-                    .subscribe(user -> classWasUnset = true, throwable -> {
-                    });
+                    .subscribe(user -> classWasUnset = true, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -202,13 +202,13 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
     private void optOutOfClasses() {
         shouldFinish = true;
         this.displayProgressDialog();
-        userRepository.disableClasses().subscribe(this, throwable -> {});
+        userRepository.disableClasses().subscribe(this, RxErrorHandler.handleEmptyError());
     }
 
     private void selectClass(String selectedClass) {
         shouldFinish = true;
         this.displayProgressDialog();
-        userRepository.changeClass(selectedClass).subscribe(this, throwable -> {});
+        userRepository.changeClass(selectedClass).subscribe(this, RxErrorHandler.handleEmptyError());
     }
 
     private void displayProgressDialog() {

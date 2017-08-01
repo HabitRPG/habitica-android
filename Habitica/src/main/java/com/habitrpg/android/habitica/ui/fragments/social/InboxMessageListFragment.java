@@ -150,8 +150,7 @@ public class InboxMessageListFragment extends BaseMainFragment
     @Subscribe
     public void onEvent(SendNewInboxMessageCommand cmd) {
         socialRepository.postPrivateMessage(cmd.userToSendTo, cmd.message)
-                .subscribe(postChatMessageResult -> this.refreshUserInbox(), throwable -> {
-                });
+                .subscribe(postChatMessageResult -> this.refreshUserInbox(), RxErrorHandler.handleEmptyError());
         UiUtils.dismissKeyboard(getActivity());
     }
 

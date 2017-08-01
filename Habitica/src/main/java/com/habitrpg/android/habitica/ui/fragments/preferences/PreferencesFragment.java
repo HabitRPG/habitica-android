@@ -176,7 +176,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 String timeval = sharedPreferences.getString("cds_time", "00:00");
                 String[] pieces = timeval.split(":");
                 int hour = Integer.parseInt(pieces[0]);
-                userRepository.changeCustomDayStart(hour).subscribe(user -> {}, throwable -> {});
+                userRepository.changeCustomDayStart(hour).subscribe(user -> {}, RxErrorHandler.handleEmptyError());
                 break;
             case "language": {
                 LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key, "en"));

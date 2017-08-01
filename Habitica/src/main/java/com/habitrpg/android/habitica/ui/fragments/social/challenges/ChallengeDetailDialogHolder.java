@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
@@ -296,7 +297,7 @@ public class ChallengeDetailDialogHolder {
 
     @OnClick(R.id.challenge_join_btn)
     void joinChallenge() {
-        this.challengeRepository.joinChallenge(challenge).subscribe(this::changeViewsByChallenge, throwable -> {});
+        this.challengeRepository.joinChallenge(challenge).subscribe(this::changeViewsByChallenge, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.challenge_leave_btn)
@@ -311,7 +312,7 @@ public class ChallengeDetailDialogHolder {
                                         challengeLeftAction.call(challenge);
                                     }
                                     this.dialog.dismiss();
-                                }, throwable -> {})))
+                                }, RxErrorHandler.handleEmptyError())))
                 .setNegativeButton(context.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
 

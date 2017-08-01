@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.api.MaintenanceApiService;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -80,8 +81,7 @@ public class MaintenanceActivity extends BaseActivity {
                         if (!maintenanceResponse.activeMaintenance) {
                             finish();
                         }
-                    }, throwable -> {
-                    });
+                    }, RxErrorHandler.handleEmptyError());
         }
     }
 

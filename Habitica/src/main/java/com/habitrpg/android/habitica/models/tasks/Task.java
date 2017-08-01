@@ -500,6 +500,7 @@ public class Task extends RealmObject implements Parcelable {
         return this.isDisplayedActive(offset) && (this.checklist.size() != this.getCompletedChecklistCount());
     }
 
+    @Nullable
     public Date getNextReminderOccurence(Date oldTime) {
         Calendar today = Calendar.getInstance();
 
@@ -517,7 +518,7 @@ public class Task extends RealmObject implements Parcelable {
             return newTime.getTime();
         }
 
-        if (this.getFrequency().equals(FREQUENCY_DAILY)) {
+        if (FREQUENCY_DAILY.equals(this.getFrequency())) {
             Calendar startDate = new GregorianCalendar();
             startDate.setTime(this.getStartDate());
 
@@ -528,13 +529,21 @@ public class Task extends RealmObject implements Parcelable {
 
             today.add(Calendar.DATE, (int) daysUntilNextReminder);
             newTime.setTime(today.getTime());
-        } else {
+        } else if (FREQUENCY_WEEKLY.equals(this.getFrequency())) {
             int nextActiveDayOfTheWeek = newTime.get(Calendar.DAY_OF_WEEK);
-            while (!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today) || newTime.equals(today)) {
-                if (nextActiveDayOfTheWeek == 6) nextActiveDayOfTheWeek = 0;
-                nextActiveDayOfTheWeek += 1;
+            while ((!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today) || newTime.equals(today)) && nextActiveDayOfTheWeek < 7) {
+                if (nextActiveDayOfTheWeek == 6) {
+                    nextActiveDayOfTheWeek = 0;
+                } else {
+                    nextActiveDayOfTheWeek += 1;
+                }
                 newTime.add(Calendar.DATE, 1);
             }
+            if (nextActiveDayOfTheWeek > 7) {
+                return null;
+            }
+        } else {
+            return null;
         }
 
         return newTime.getTime();

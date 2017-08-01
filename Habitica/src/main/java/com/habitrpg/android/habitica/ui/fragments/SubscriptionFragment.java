@@ -14,8 +14,10 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
@@ -44,7 +46,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     CrashlyticsProxy crashlyticsProxy;
 
     @Inject
-    ApiClient apiClient;
+    UserRepository userRepository;
 
     @BindView(R.id.subscribe_listitem1_box)
     View subscribeListitem1Box;
@@ -125,8 +127,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     @Subscribe
     public void fetchUser(@Nullable UserSubscribedEvent event) {
-        apiClient.getUser().subscribe(this::setUser, throwable -> {
-                });
+        userRepository.retrieveUser(false).subscribe(this::setUser, RxErrorHandler.handleEmptyError());
     }
 
     @Override

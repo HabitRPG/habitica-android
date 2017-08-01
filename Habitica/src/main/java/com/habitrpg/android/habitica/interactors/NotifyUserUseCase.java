@@ -41,6 +41,9 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
     @Override
     protected Observable<Stats> buildUseCaseObservable(RequestValues requestValues) {
         return Observable.defer(() -> {
+            if (requestValues.user == null) {
+                return Observable.just(null);
+            }
             Stats stats = requestValues.user.getStats();
 
             if (requestValues.hasLeveledUp) {

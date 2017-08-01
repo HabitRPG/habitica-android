@@ -188,8 +188,7 @@ public class FullProfileActivity extends BaseActivity {
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     socialRepository.postPrivateMessage(userId, emojiEditText.getText().toString())
                             .subscribe(postChatMessageResult -> showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
-                                    String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), throwable -> {
-                            });
+                                    String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
 
                     UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
                 })
@@ -254,7 +253,7 @@ public class FullProfileActivity extends BaseActivity {
         //mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiClient.getMemberAchievements(this.userId).subscribe(this::fillAchievements, throwable -> {});
+        apiClient.getMemberAchievements(this.userId).subscribe(this::fillAchievements, RxErrorHandler.handleEmptyError());
     }
 
     // endregion

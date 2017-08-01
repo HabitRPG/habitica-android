@@ -681,8 +681,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                             })
                             .create();
                     dialog.show();
-                }, throwable -> {
-                });
+                }, RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
@@ -719,8 +718,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                                 .create();
                         dialog.show();
                     }
-                }, throwable -> {
-                });
+                }, RxErrorHandler.handleEmptyError());
     }
 
     // endregion
@@ -760,7 +758,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     .setView(customView)
                     .setPositiveButton(R.string.faint_button, (dialog, which) -> {
                         faintDialog = null;
-                        userRepository.revive(user).subscribe(user1 -> {}, throwable -> {});
+                        userRepository.revive(user).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
                     })
                     .create();
 
@@ -796,8 +794,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     public void displayClassSelectionActivity(SelectClassEvent event) {
         checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(user, event))
                 .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+                }, RxErrorHandler.handleEmptyError());
     }
 
     private void displayTutorialStep(TutorialStep step, String text, boolean canBeDeferred) {
@@ -836,8 +833,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(path, true);
         userRepository.updateUser(user,  updateData)
-                .subscribe(user1 -> {}, throwable -> {
-                });
+                .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         this.overlayLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
 
@@ -920,6 +916,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         this.maintenanceService.getMaintenanceStatus()
                 .compose(apiClient.configureApiCallObserver())
                 .subscribe(maintenanceResponse -> {
+                    if (maintenanceResponse == null) {
+                        return;
+                    }
                     if (maintenanceResponse.activeMaintenance) {
                         Intent intent = createMaintenanceIntent(maintenanceResponse, false);
                         startActivity(intent);
@@ -937,7 +936,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                             }
                         }
                     }
-                }, throwable -> {});
+                }, RxErrorHandler.handleEmptyError());
     }
 
     private Intent createMaintenanceIntent(MaintenanceResponse maintenanceResponse, Boolean isDeprecationNotice) {

@@ -64,8 +64,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                     .subscribe(habitRPGUser -> {
                         customDayStart = habitRPGUser.getPreferences().getDayStart();
                         this.loadData();
-                    }, throwable -> {
-                    });
+                    }, RxErrorHandler.handleEmptyError());
         } else {
             this.loadData();
         }

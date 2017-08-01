@@ -244,92 +244,6 @@ public class User extends RealmObject implements Avatar {
         this.pushDevices = pushDevices;
     }
 
-    public List<String> getAvatarLayerNames() {
-        List<String> layerNames = new ArrayList<String>();
-
-        Preferences prefs = this.getPreferences();
-
-        if (prefs.getChair() != null) {
-            layerNames.add(prefs.getChair());
-        }
-
-        Outfit outfit = null;
-        if (this.getItems() != null) {
-            if (prefs.getCostume()) {
-                outfit = this.getItems().getGear().getCostume();
-            } else {
-                outfit = this.getItems().getGear().getEquipped();
-            }
-        }
-
-        if (outfit != null) {
-            if (outfit.getBack() != null) {
-                layerNames.add(outfit.getBack());
-            }
-        }
-
-        if (prefs.getSleep()) {
-            layerNames.add("skin_" + prefs.getSkin() + "_sleep");
-        } else {
-            layerNames.add("skin_" + prefs.getSkin());
-        }
-        layerNames.add(prefs.getSize() + "_shirt_" + prefs.getShirt());
-        layerNames.add("head_0");
-
-        if (outfit != null) {
-            String armor = outfit.getArmor();
-
-            if (armor != null && !armor.equals("armor_base_0")) {
-                layerNames.add(prefs.getSize() + "_" + armor);
-            }
-            if (outfit.getBody() != null && !outfit.getBody().equals("body_base_0")) {
-                layerNames.add(outfit.getBody());
-            }
-        }
-
-        Hair hair = prefs.getHair();
-        if (hair != null) {
-            String hairColor = hair.getColor();
-
-            if (hair.getBase() > 0) {
-                layerNames.add("hair_base_" + hair.getBase() + "_" + hairColor);
-            }
-            if (hair.getBangs() > 0) {
-                layerNames.add("hair_bangs_" + hair.getBangs() + "_" + hairColor);
-            }
-            if (hair.getMustache() > 0) {
-                layerNames.add("hair_mustache_" + hair.getMustache() + "_" + hairColor);
-            }
-            if (hair.getBeard() > 0) {
-                layerNames.add("hair_beard_" + hair.getBeard() + "_" + hairColor);
-            }
-        }
-
-        if (outfit != null) {
-            if (outfit.getEyeWear() != null && !outfit.getEyeWear().equals("eyewear_base_0")) {
-                layerNames.add(outfit.getEyeWear());
-            }
-            if (outfit.getHead() != null && !outfit.getHead().equals("head_base_0")) {
-                layerNames.add(outfit.getHead());
-            }
-            if (outfit.getHeadAccessory() != null && !outfit.getHeadAccessory().equals("headAccessory_base_0")) {
-                layerNames.add(outfit.getHeadAccessory());
-            }
-            if (outfit.getShield() != null && !outfit.getShield().equals("shield_base_0")) {
-                layerNames.add(outfit.getShield());
-            }
-            if (outfit.getWeapon() != null && !outfit.getWeapon().equals("weapon_base_0")) {
-                layerNames.add(outfit.getWeapon());
-            }
-        }
-
-        if (prefs.getSleep()) {
-            layerNames.add("zzz");
-        }
-
-        return layerNames;
-    }
-
     public EnumMap<AvatarView.LayerType, String> getAvatarLayerMap() {
         EnumMap<AvatarView.LayerType, String> layerMap = new EnumMap<>(AvatarView.LayerType.class);
 
@@ -378,7 +292,7 @@ public class User extends RealmObject implements Avatar {
             }
 
             if (outfit != null) {
-                if (!TextUtils.isEmpty(outfit.getBack())) {
+                if (!TextUtils.isEmpty(outfit.getBack()) && !"back_base_0".equals(outfit.getBack())) {
                     layerMap.put(AvatarView.LayerType.BACK, outfit.getBack());
                 }
                 if (outfit.isAvailable(outfit.getArmor())) {

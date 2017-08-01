@@ -466,7 +466,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 .subscribe(loadedTags -> {
                             tags = loadedTags;
                             createTagsCheckBoxes();
-                        }, throwable -> {}
+                        }, RxErrorHandler.handleEmptyError()
                 );
 
         if (taskId != null) {

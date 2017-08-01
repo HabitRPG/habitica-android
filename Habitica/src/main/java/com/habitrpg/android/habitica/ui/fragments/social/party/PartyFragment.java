@@ -164,8 +164,7 @@ public class PartyFragment extends BaseMainFragment {
                         .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  {
                             if (this.group != null){
                                 this.socialRepository.leaveGroup(this.group.id)
-                                        .subscribe(group -> getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit(), throwable -> {
-                                        });
+                                        .subscribe(group -> getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit(), RxErrorHandler.handleEmptyError());
                             }
                         })
                         .setNegativeButton(viewPager.getContext().getString(R.string.no), (dialog, which) -> dialog.dismiss())
@@ -201,7 +200,7 @@ public class PartyFragment extends BaseMainFragment {
                         break;
                     }
                     this.socialRepository.updateGroup(this.group, bundle.getString("name"), bundle.getString("description"), bundle.getString("leader"), bundle.getString("privacy"))
-                            .subscribe(aVoid -> {}, throwable -> {});
+                            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
                 }
                 break;
             }
@@ -228,8 +227,7 @@ public class PartyFragment extends BaseMainFragment {
                     if (this.group != null) {
                         this.socialRepository.inviteToGroup(this.group.id, inviteData)
                                 .subscribe(aVoid -> {
-                                }, throwable -> {
-                                });
+                                }, RxErrorHandler.handleEmptyError());
                     }
                 }
             }
