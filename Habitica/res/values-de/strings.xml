@@ -14,7 +14,7 @@
   <string name="SP_APIToken_summary">Dein API-Token</string>
   <string name="Language_title">Sprache</string>
   <string name="Language_summary">Habiticas Sprache ändern</string>
-  <string name="SP_user_qr_code">Dein QR Code</string>
+  <string name="SP_user_qr_code">Dein QR-Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
   <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
   <string name="pref_account_header">Konto</string>
@@ -578,4 +578,17 @@
   <string name="welcome_back">Willkommen zurück</string>
   <string name="yesterdaililes_prompt">Hast du gestern einige Deiner täglichen Aufgaben gemacht?</string>
   <string name="start_day">Starte meinen Tag</string>
+  <string name="leave_party_confirmation">Bist Du sicher, dass Du die Gruppe verlassen willst?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Nächste Belohnung in %d Check-Ins</string>
+  <string name="pending">Ausstehend</string>
+  <string name="accepted">Angenommen</string>
+  <string name="declined">Abgelehnt</string>
+  <string name="participants">Teilnehmer</string>
+  <string name="invitations">Einladungen</string>
+  <string name="quest_leader_header" formatted="false">Begonnen von %s</string>
+  <string name="quest_abort_message">Willst Du diese Mission wirklich abbrechen?
+Sie wird für alle Mitglieder Deiner Gruppe abgebrochen und Euer gesamter Fortschritt geht verloren.
+Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
+  <string name="loading">Inhalt wird geladen....</string>
+  <string name="reloading_content">Inhalt wird erneut geladen</string>
 </resources>

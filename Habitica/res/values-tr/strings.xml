@@ -537,19 +537,28 @@
   <string name="setuP_group_other">Diğer</string>
   <string name="clear">Temizle</string>
   <string name="empty_title_habits">Hiç Alışkanlık sahibi değilsin</string>
+  <string name="empty_description_habits">Alışkanlıklar katı bir zamanlamaya sahip olmayan işlerdir. Onları günde birçok kez yapabilir ya da hiç yapmayabilirsin.</string>
   <string name="empty_title_dailies">Hiç Günlük İş sahibi değilsin</string>
+  <string name="empty_description_dailies">Günlük İşler, düzenli olarak tekrar eden işlerdir. Senin için uygun olan program seç!</string>
   <string name="empty_title_todos">Hiç Yapılacak İş sahibi değilsin</string>
+  <string name="empty_description_todos">Yapılacak İşler yalnızca bir kez tamamlanması gereken işlerdir. Değerlerini artırmak için Yapılacak İşlerine kontrol listeleri ekle.</string>
   <string name="empty_title_rewards">Hiç Ödül sahibi değilsin</string>
+  <string name="reset_walkthrough">Junstin\'in Rehberliğini Sıfırla</string>
   <string name="read_community_guidelines">undefined</string>
   <string name="maintenance">Bakım</string>
   <string name="reload_content">İçeriği Yenile</string>
   <string name="dailyDueDefaultView">Günlükleri varsayılan \'due\' sekmesine ayarla</string>
+  <string name="dailyDueDefaultViewDescription">Bu seçenek seçili ise, Günlük İşler işleri varsayılan olarak \'tümü\' yerine \'bitirme\' olacaktır</string>
+  <string name="repeat_summary">%1$sher %2$s%3$s%4$s tekrarlanır</string>
+  <string name="no_billing_gems">Cihazında desteklenen ödeme yöntemleri yok. Elmas satın almak istersen lütfen habitica web sitesini kullan.</string>
+  <string name="no_billing_subscriptions">Cihazında desteklenen ödeme yöntemleri yok. Abonelik satın almak istersen lütfen habitica web sitesini kullan.</string>
   <string name="save">Kaydet</string>
   <string name="location">Konum</string>
   <string name="gem_reward">Elmas ödülü</string>
   <string name="tasks">İşler</string>
   <string name="create_challenge">Mücadele Yarat</string>
   <string name="edit_challenge">Mücadeleyi Düzenle</string>
+  <string name="challenge_create_error_tavern_one_gem">Tavernada bir mücadele yaratmak için en azından 1 elmasa ihtiyacın var.</string>
   <string name="challenge_create_error_enough_gems">Bir mücadele oluşturacak kadar elmasınız yok.</string>
   <string name="identify_your_challenge_with_a_tag">Bir etiketle mücadeleyi belirleyin ..</string>
   <string name="challenge_create_error_tag">Bu Mücadeleyi oluşturmak için bir etikete ihtiyacınız var.</string>
@@ -557,8 +566,27 @@
   <string name="challenge_create_error_title">Bu Mücadeleyi oluşturmak için bir başlığa ihtiyacınız var.</string>
   <string name="description_optional">Açıklama (isteğe bağlı)</string>
   <string name="new_challenge_title">Yeni mücadele başlığı</string>
+  <string name="ownership">Sahiplik</string>
   <string name="inn">Han</string>
   <string name="system">Sistem</string>
+  <string name="start_quest">Yeni bir Göreve başla</string>
   <string name="leave_party">Takımdan Ayrıl</string>
   <string name="party_description">Takım Tanımı</string>
+  <string name="abort_confirmation">Bu görevi iptal etmek istediğine emin misin?  Tüm davet kabulleri ve ilerleme kaybolacak. Görev sahibi görev parşömenini geri alacaktır.</string>
+  <string name="leave_quest_confirmation">Etkin görevden ayrılmak istediğinden emin misin? Tüm görev ilerlemen kaybolacak.</string>
+  <string name="number_participants">%1$dKatılımcı</string>
+  <string name="welcome_back">Tekrar Hoş Geldin</string>
+  <string name="yesterdaililes_prompt">Bu Günlük İşlerden dün yaptın mı?</string>
+  <string name="start_day">Günüme Başla</string>
+  <string name="leave_party_confirmation">Takımdan ayrılmak istediğinden emin misin?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Bir sonraki ödülün %d Girişten sonra</string>
+  <string name="pending">Gönderiliyor</string>
+  <string name="accepted">Kabul edildi</string>
+  <string name="declined">Reddedildi</string>
+  <string name="participants">Katılımcılar</string>
+  <string name="invitations">Davetiyeler</string>
+  <string name="quest_leader_header" formatted="false">%s tarafından başlatıldı</string>
+  <string name="quest_abort_message">Bu görevi iptal etmek istediğine emin misin?  Tüm davet kabulleri ve ilerleme kaybolacak. Görev parşömenini görev sahibine geri verilecektir.</string>
+  <string name="loading">Yükleniyor...</string>
+  <string name="reloading_content">İçerik Yeniden Yükleniyor</string>
 </resources>

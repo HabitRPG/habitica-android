@@ -579,4 +579,6 @@
   <string name="welcome_back">Bem vindo de volta</string>
   <string name="yesterdaililes_prompt">Você fez alguma dessas Tarefas Diárias ontem?</string>
   <string name="start_day">Começar Meu Dia</string>
+  <string name="leave_party_confirmation">Você tem certeza de que quer sair do grupo?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Próximo prêmio em %d Check-ins</string>
 </resources>
