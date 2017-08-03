@@ -783,7 +783,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     }
 
     protected void retrieveUser() {
-        if (this.userRepository != null) {
+        if (this.userRepository != null && hostConfig.hasAuthentication()) {
             this.userRepository.retrieveUser(true)
                     .flatMap(user1 -> inventoryRepository.retrieveContent(false))
                     .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
