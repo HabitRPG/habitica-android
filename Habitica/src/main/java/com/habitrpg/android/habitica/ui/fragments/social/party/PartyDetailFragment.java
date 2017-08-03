@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -32,11 +32,15 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.views.social.QuestProgressView;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 public class PartyDetailFragment extends BaseFragment {
@@ -146,9 +150,10 @@ public class PartyDetailFragment extends BaseFragment {
             newQuestButton.setVisibility(View.GONE);
             questDetailButton.setVisibility(View.VISIBLE);
             questImageWrapper.setVisibility(View.VISIBLE);
-            getActivity().runOnUiThread(() -> inventoryRepository.getQuestContent(quest.getKey())
+            Handler mainHandler = new Handler(getContext().getMainLooper());
+            mainHandler.postDelayed(() -> inventoryRepository.getQuestContent(quest.getKey())
                     .first()
-                    .subscribe(this::updateQuestContent, RxErrorHandler.handleEmptyError()));
+                    .subscribe(PartyDetailFragment.this::updateQuestContent, RxErrorHandler.handleEmptyError()), 500);
         } else {
             newQuestButton.setVisibility(View.VISIBLE);
             questDetailButton.setVisibility(View.GONE);
@@ -186,9 +191,10 @@ public class PartyDetailFragment extends BaseFragment {
     }
 
     private void updateQuestContent(QuestContent questContent) {
-        if (questTitleView != null) {
-            questTitleView.setText(questContent.getText());
+        if (questTitleView == null) {
+            return;
         }
+        questTitleView.setText(questContent.getText());
         DataBindingUtils.loadImage(questScrollImageView, "inventory_quest_scroll_"+questContent.getKey());
         DataBindingUtils.loadImage(questImageView, "quest_"+questContent.getKey());
         if (isQuestActive()) {

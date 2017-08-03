@@ -48,7 +48,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
 
             if (requestValues.hasLeveledUp) {
                 return levelUpUseCase.observable(new LevelUpUseCase.RequestValues(requestValues.user, requestValues.context))
-                        .flatMap(aVoid -> userRepository.retrieveUser(false))
+                        .flatMap(aVoid -> userRepository.retrieveUser(true))
                         .map(User::getStats);
             } else {
                 Pair<SpannableStringBuilder, SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp);

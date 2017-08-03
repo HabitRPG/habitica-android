@@ -201,6 +201,10 @@ public class SkillsFragment extends BaseMainFragment {
     }
 
 	@Override
-	public String customTitle() {	return getString(R.string.sidebar_skills);	}
-
+	public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
+        return getString(R.string.sidebar_skills);
+	}
 }

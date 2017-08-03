@@ -438,9 +438,7 @@ public class CreateChallengeActivity extends BaseActivity {
 
             checkPrizeAndMinimumForTavern();
 
-            challengeRepository.getChallengeTasks(challengeId).subscribe(tasks -> {
-                tasks.tasks.forEach((s, task) -> addOrUpdateTaskInList(task));
-            }, Throwable::printStackTrace, () -> {
+            challengeRepository.getChallengeTasks(challengeId).subscribe(tasks -> tasks.tasks.forEach((s, task) -> addOrUpdateTaskInList(task)), RxErrorHandler.handleEmptyError(), () -> {
                 // activate editMode to track taskChanges
                 editMode = true;
             });

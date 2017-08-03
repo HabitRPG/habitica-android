@@ -211,10 +211,9 @@ public class InboxFragment extends BaseMainFragment
 
     @Override
     public String customTitle() {
-        if (isAdded()) {
-            return getString(R.string.sidebar_inbox);
-        } else {
+        if (!isAdded()) {
             return "";
         }
+        return getString(R.string.sidebar_inbox);
     }
 }

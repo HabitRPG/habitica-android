@@ -741,7 +741,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             return;
         }
 
-        if (this.faintDialog == null) {
+        if (this.faintDialog == null && !this.isFinishing()) {
 
             View customView = View.inflate(this, R.layout.dialog_faint, null);
             if (customView != null) {
