@@ -531,15 +531,17 @@ public class Task extends RealmObject implements Parcelable {
             newTime.setTime(today.getTime());
         } else if (FREQUENCY_WEEKLY.equals(this.getFrequency())) {
             int nextActiveDayOfTheWeek = newTime.get(Calendar.DAY_OF_WEEK);
-            while ((!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today) || newTime.equals(today)) && nextActiveDayOfTheWeek < 7) {
+            int daysChecked = 0;
+            while ((!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today) || newTime.equals(today)) && daysChecked <= 7) {
                 if (nextActiveDayOfTheWeek == 6) {
                     nextActiveDayOfTheWeek = 0;
                 } else {
                     nextActiveDayOfTheWeek += 1;
                 }
+                daysChecked += 1;
                 newTime.add(Calendar.DATE, 1);
             }
-            if (nextActiveDayOfTheWeek > 7) {
+            if (daysChecked > 7) {
                 return null;
             }
         } else {
