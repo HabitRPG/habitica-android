@@ -421,7 +421,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             @Override
             public void onKeyboardClose() {
-                if (popup.isShowing()) {
+                if (popup != null && popup.isShowing()) {
                     popup.dismiss();
                 }
             }
