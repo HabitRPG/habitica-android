@@ -110,10 +110,10 @@
     <string name="actions">Actions</string>
 
     <string name="attributes">Attributes</string>
-    <string name="physical">Physical</string>
-    <string name="mental">Mental</string>
-    <string name="social">Social</string>
-    <string name="other">Other</string>
+    <string name="physical">Strength</string>
+    <string name="mental">Intelligence</string>
+    <string name="social">Constitution</string>
+    <string name="other">Perception</string>
 
     <string name="frequency">Frequency</string>
     <string name="frequency_weekly">On Certain Days of the Week</string>
