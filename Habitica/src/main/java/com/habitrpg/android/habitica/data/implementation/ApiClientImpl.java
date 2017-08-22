@@ -124,15 +124,15 @@ import rx.schedulers.Schedulers;
 
 public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     private final GsonConverterFactory gsonConverter;
-    private final HostConfig hostConfig;
-    private final Retrofit retrofitAdapter;
+    private HostConfig hostConfig;
+    private Retrofit retrofitAdapter;
     private final PopupNotificationsManager popupNotificationsManager;
 
     private CrashlyticsProxy crashlyticsProxy;
     private Context context;
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
-    private final ApiService apiService;
+    private ApiService apiService;
 
     private final Observable.Transformer apiCallTransformer =
             observable -> ((Observable) observable)
@@ -166,6 +166,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         crashlyticsProxy.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
 
+        initApiService();
+    }
+
+    private void initApiService() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -859,5 +863,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     @Override
     public Observable<Void> runCron() {
         return apiService.runCron().compose(configureApiCallObserver());
+    }
+
+    public void setHostConfig(HostConfig hostConfig) {
+        this.hostConfig = hostConfig;
+        initApiService();
     }
 }

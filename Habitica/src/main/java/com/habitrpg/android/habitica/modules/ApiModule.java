@@ -24,7 +24,7 @@ public class ApiModule {
     @Provides
     @Singleton
     public HostConfig providesHostConfig(SharedPreferences sharedPreferences, Context context) {
-        return new HostConfig(sharedPreferences, context);
+        return new HostConfig(context);
     }
 
     @Provides

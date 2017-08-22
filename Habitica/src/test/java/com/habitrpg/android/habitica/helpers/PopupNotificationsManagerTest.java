@@ -47,10 +47,7 @@ public class PopupNotificationsManagerTest {
     @Before
     public void setUp() {
         context = RuntimeEnvironment.application;
-        hostConfig = new HostConfig(BuildConfig.BASE_URL,
-                BuildConfig.PORT,
-                "",
-                "");
+        hostConfig = new HostConfig(context);
         popupNotificationsManager =new PopupNotificationsManager(context);
     }
 

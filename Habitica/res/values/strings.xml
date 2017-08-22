@@ -66,6 +66,17 @@
     <string name="account_details">Account Details</string>
     <string name="LoginActivityName">Welcome</string>
 
+    <string name="advanced_login_warning">Warning: Beyond this point, there is no support. Continuing will break a lot of the game and is strictly not recommended!</string>
+    <string name="advanced_login_warning_title">Use a custom API endpoint</string>
+    <string name="advanced_login_warning_cancel">Take me out of here!</string>
+    <string name="advanced_login_cancel">Cancel</string>
+    <string name="advanced_register_title">Advanced Register</string>
+    <string name="advanced_register_register">Register</string>
+    <string name="advanced_login_login">Login</string>
+    <string name="advanced_login_title">Advanced Login</string>
+    <string name="advanced_login_warning_continue">Continue Anyway</string>
+    <string name="api_endpoint">API-Endpoint</string>
+
     <string name="string_revive">Revive</string>
     <string name="please_connect">Please connect through the application before using a widget</string>
         
