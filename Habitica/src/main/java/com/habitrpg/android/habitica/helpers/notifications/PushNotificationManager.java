@@ -79,9 +79,10 @@ public class PushNotificationManager {
     }
 
     public void removePushDeviceUsingStoredToken() {
-        apiClient.deletePushDevice(this.refreshedToken)
-
-            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+        if (this.refreshedToken == null) {
+            return;
+        }
+        apiClient.deletePushDevice(this.refreshedToken).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     private Boolean userHasPushDevice() {

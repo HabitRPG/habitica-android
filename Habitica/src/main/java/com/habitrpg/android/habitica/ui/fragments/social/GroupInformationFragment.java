@@ -53,8 +53,6 @@ public class GroupInformationFragment extends BaseFragment {
     @Nullable
     private User user;
     private QuestContent quest;
-    private ValueBar bossHpBar;
-    private ValueBar bossRageBar;
 
     public GroupInformationFragment() {
 
@@ -89,9 +87,6 @@ public class GroupInformationFragment extends BaseFragment {
         }
 
         unbinder = ButterKnife.bind(this, view);
-
-        bossHpBar = (ValueBar) view.findViewById(R.id.bossHpBar);
-        bossRageBar = (ValueBar) view.findViewById(R.id.bossRageBar);
 
         if (this.group == null) {
             QrCodeManager qrCodeManager = new QrCodeManager(userRepository, this.getContext());
@@ -149,17 +144,6 @@ public class GroupInformationFragment extends BaseFragment {
     private void updateQuestProgress(@Nullable Group group, QuestContent quest) {
         if (group == null || quest == null) {
             return;
-        }
-
-        boolean showHpBar = (quest.getBoss() != null && quest.getBoss().hp > 0);
-        bossHpBar.setVisibility(showHpBar ? View.VISIBLE : View.GONE);
-        if (showHpBar) {
-            bossHpBar.set(group.quest.getProgress().hp, quest.getBoss().hp);
-        }
-        boolean showRageBar = (quest.getBoss() != null && quest.getBoss().hasRage());
-        bossRageBar.setVisibility(showRageBar ? View.VISIBLE : View.GONE);
-        if (showRageBar) {
-            bossHpBar.set(group.quest.getProgress().rage, quest.getBoss().rage.value);
         }
 
         if (group.quest.members == null) {

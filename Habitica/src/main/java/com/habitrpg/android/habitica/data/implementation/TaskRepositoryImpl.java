@@ -150,6 +150,10 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
             RealmList<ChecklistItem> checklist = new RealmList<>(localRepository.getUnmanagedCopy(task.getChecklist()).toArray(new ChecklistItem[0]));
             task.setChecklist(checklist);
         }
+        if (task.getReminders() != null && task.getReminders().size() > 0) {
+            RealmList<RemindersItem> reminders = new RealmList<>(localRepository.getUnmanagedCopy(task.getReminders()).toArray(new RemindersItem[0]));
+            task.setReminders(reminders);
+        }
         return apiClient.createTask(task)
                 .map(task1 -> {
                     task1.dateCreated = new Date();

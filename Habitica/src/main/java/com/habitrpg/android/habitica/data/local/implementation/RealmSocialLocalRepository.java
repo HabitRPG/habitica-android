@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.ChatMessageLike;
@@ -72,7 +73,7 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
 
     @Override
     public void deleteMessage(String id) {
-        getMessage(id).first().subscribe(chatMessage -> realm.executeTransaction(realm1 -> chatMessage.deleteFromRealm()), throwable -> {});
+        getMessage(id).first().subscribe(chatMessage -> realm.executeTransaction(realm1 -> chatMessage.deleteFromRealm()), RxErrorHandler.handleEmptyError());
     }
 
     @Override

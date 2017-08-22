@@ -19,6 +19,7 @@ import java.util.Map;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action1;
+import rx.functions.Func2;
 
 
 public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalRepository> implements SocialRepository {
@@ -90,22 +91,20 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Group> retrieveGroup(String id) {
-        return apiClient.getGroup(id)
-                .map(group -> {
-                    for (ChatMessage message : group.chat) {
-                        message.groupId = group.id;
-                    }
-                    return group;
-                })
-                .doOnNext(group -> {
-                    localRepository.save(group);
-                    localRepository.getGroup(group.id)
-                            .first()
-                            .subscribe(group1 -> {
-                                group.isMember = group1.isMember;
-                                localRepository.save(group);
-                            }, RxErrorHandler.handleEmptyError());
-                });
+        Observable<Group> observable = apiClient.getGroup(id);
+        if (!"party".equals(id)) {
+            observable = observable.withLatestFrom(localRepository.getGroup(id)
+                    .first(), (newGroup, oldGroup) -> {
+                newGroup.isMember = oldGroup.isMember;
+                return newGroup;
+            });
+        }
+        return observable.map(group -> {
+            for (ChatMessage message : group.chat) {
+                message.groupId = group.id;
+            }
+            return group;
+        }).doOnNext(localRepository::save);
     }
 
     @Override

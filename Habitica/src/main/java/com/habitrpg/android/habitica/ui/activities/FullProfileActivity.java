@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -186,9 +187,8 @@ public class FullProfileActivity extends BaseActivity {
         final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     socialRepository.postPrivateMessage(userId, emojiEditText.getText().toString())
-                            .subscribe(postChatMessageResult -> showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
-                                    String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), throwable -> {
-                            });
+                            .subscribe(postChatMessageResult -> showSnackbar(FullProfileActivity.this, (ViewGroup) FullProfileActivity.this.fullprofile_scrollview.getChildAt(0),
+                                    String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
 
                     UiUtils.dismissKeyboard(this);
                 })
@@ -253,7 +253,7 @@ public class FullProfileActivity extends BaseActivity {
         //mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiClient.getMemberAchievements(this.userId).subscribe(this::fillAchievements, throwable -> {});
+        apiClient.getMemberAchievements(this.userId).subscribe(this::fillAchievements, RxErrorHandler.handleEmptyError());
     }
 
     // endregion

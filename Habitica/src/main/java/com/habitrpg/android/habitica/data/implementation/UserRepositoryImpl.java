@@ -96,7 +96,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                         }
                     });
         } else {
-            return Observable.just(null);
+            return getUser();
         }
     }
 

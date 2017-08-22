@@ -434,18 +434,25 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Items> equipItem(String type, String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.equipItem(type, itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<BuyResponse> buyItem(String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.buyItem(itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseItem(String type, String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseItem(type, itemKey).compose(configureApiCallObserver());
     }
 
@@ -461,22 +468,33 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Void> purchaseHourglassItem(String type, String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseMysterySet(String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseMysterySet(itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseQuest(String key) {
+        if (key == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseQuest(key).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<User> sellItem(String itemType, String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.sellItem(itemType, itemKey).compose(configureApiCallObserver());
     }
 

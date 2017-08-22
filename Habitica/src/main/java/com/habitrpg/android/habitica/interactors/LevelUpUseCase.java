@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -46,8 +47,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
                 if (suppressedModals.getLevelUp()) {
                     checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null, requestValues.activity))
                             .subscribe(aVoid -> {
-                            }, throwable -> {
-                            });
+                            }, RxErrorHandler.handleEmptyError());
 
                     return Observable.just(requestValues.user.getStats());
                 }
@@ -72,8 +72,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
                     .setView(customView)
                     .setPositiveButton(R.string.levelup_button, (dialog, which) -> checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null, requestValues.activity))
                             .subscribe(aVoid -> {
-                            }, throwable -> {
-                            }))
+                            }, RxErrorHandler.handleEmptyError()))
                     .setNeutralButton(R.string.share, (dialog, which) -> {
                         EventBus.getDefault().post(event);
                         dialog.dismiss();

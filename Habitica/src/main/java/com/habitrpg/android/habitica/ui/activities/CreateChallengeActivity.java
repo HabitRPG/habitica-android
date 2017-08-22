@@ -388,7 +388,7 @@ public class CreateChallengeActivity extends BaseActivity {
             } else if (t.equals(addReward)) {
                 openNewTaskActivity(Task.TYPE_REWARD, null);
             }
-        });
+        }, RxErrorHandler.handleEmptyError());
 
         createChallengeTaskList.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             @Override
@@ -435,13 +435,11 @@ public class CreateChallengeActivity extends BaseActivity {
 
             checkPrizeAndMinimumForTavern();
 
-            challengeRepository.getChallengeTasks(challengeId).subscribe(tasks -> {
-                tasks.tasks.forEach((s, task) -> addOrUpdateTaskInList(task));
-            }, Throwable::printStackTrace, () -> {
+            challengeRepository.getChallengeTasks(challengeId).subscribe(tasks -> tasks.tasks.forEach((s, task) -> addOrUpdateTaskInList(task)), RxErrorHandler.handleEmptyError(), () -> {
                 // activate editMode to track taskChanges
                 editMode = true;
             });
-        });
+        }, RxErrorHandler.handleEmptyError());
     }
 
     private void openNewTaskActivity(String type, Task task) {

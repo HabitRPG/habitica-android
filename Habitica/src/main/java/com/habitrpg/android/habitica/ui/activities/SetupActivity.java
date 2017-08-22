@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
@@ -90,8 +91,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
                         return Observable.just(user);
                     }
                 })
-                .subscribe(this::onUserReceived, throwable -> {
-        }));
+                .subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError()));
 
         Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("status", "displayed");
@@ -101,8 +101,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         for (String language : getResources().getStringArray(R.array.LanguageValues)) {
             if (language.equals(currentDeviceLanguage)) {
                 apiClient.registrationLanguage(currentDeviceLanguage)
-                        .subscribe(habitRPGUser -> {}, throwable -> {
-                        });
+                        .subscribe(habitRPGUser -> {}, RxErrorHandler.handleEmptyError());
             }
         }
 
@@ -143,15 +142,13 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
         this.userRepository.updateUser(user, event.updateData)
-                .subscribe(this::onUserReceived, throwable -> {
-                });
+                .subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
     public void onEvent(EquipCommand event) {
         this.apiClient.equipItem(event.type, event.key)
-                .subscribe(items -> {}, throwable -> {
-                });
+                .subscribe(items -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.nextButton)
@@ -168,8 +165,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
             List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
             this.completedSetup = true;
             this.taskRepository.createTasks(newTasks)
-                    .subscribe(tasks -> onUserReceived(user), throwable -> {
-                    });
+                    .subscribe(tasks -> onUserReceived(user), RxErrorHandler.handleEmptyError());
         }
         this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
     }

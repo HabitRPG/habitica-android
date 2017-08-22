@@ -154,8 +154,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
         if (this.user != null && !this.user.getPreferences().getSize().equals(newSize)) {
             userRepository.updateUser(user, "preferences.size", newSize)
-                    .subscribe(user1 -> {}, throwable -> {
-                    });
+                    .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -166,10 +165,9 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
     @Override
     public String customTitle() {
-        if (isAdded()) {
-            return getString(R.string.sidebar_avatar);
-        } else {
+        if (!isAdded()) {
             return "";
         }
+        return getString(R.string.sidebar_avatar);
     }
 }

@@ -533,4 +533,6 @@
   <string name="strong">강함</string>
   <string name="gray">회색</string>
   <string name="empty_title_habits">습관이 하나도 없어요.</string>
+  <string name="start_quest">새로운 퀘스트 시작하기</string>
+  <string name="leave_party">파티 떠나기</string>
 </resources>

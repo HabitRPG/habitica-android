@@ -130,6 +130,9 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     @Override
     public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
         return getString(R.string.sidebar_challenges);
     }
 

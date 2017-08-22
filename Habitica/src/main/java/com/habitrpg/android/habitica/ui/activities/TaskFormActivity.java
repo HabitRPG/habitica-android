@@ -421,7 +421,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             @Override
             public void onKeyboardClose() {
-                if (popup.isShowing()) {
+                if (popup != null && popup.isShowing()) {
                     popup.dismiss();
                 }
             }
@@ -466,7 +466,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 .subscribe(loadedTags -> {
                             tags = loadedTags;
                             createTagsCheckBoxes();
-                        }, throwable -> {}
+                        }, RxErrorHandler.handleEmptyError()
                 );
 
         if (taskId != null) {
@@ -984,6 +984,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void populate(Task task) {
+        if (!task.isValid()) {
+            return;
+        }
         taskText.setText(task.text);
         taskNotes.setText(task.notes);
         taskValue.setText(String.format(Locale.getDefault(), "%.2f", task.value));
@@ -1327,6 +1330,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         View currentFocus = getCurrentFocus();
         if (currentFocus != null) {
             imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
+        if (popup != null) {
+            popup.dismiss();
+            popup = null;
         }
     }
 

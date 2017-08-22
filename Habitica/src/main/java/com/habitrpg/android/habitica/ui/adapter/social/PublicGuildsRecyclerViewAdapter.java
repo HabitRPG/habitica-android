@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 
@@ -63,18 +64,20 @@ public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Gr
                 PublicGuildsRecyclerViewAdapter.this.apiClient.leaveGroup(guild.id)
                         .subscribe(aVoid -> {
                             memberGuildIDs.remove(guild.id);
-                            int indexOfGroup = getData().indexOf(guild);
-                            notifyItemChanged(indexOfGroup);
-                        }, throwable -> {
-                        });
+                            if (getData() != null) {
+                                int indexOfGroup = getData().indexOf(guild);
+                                notifyItemChanged(indexOfGroup);
+                            }
+                        }, RxErrorHandler.handleEmptyError());
             } else {
                 PublicGuildsRecyclerViewAdapter.this.apiClient.joinGroup(guild.id)
                         .subscribe(group -> {
                             memberGuildIDs.add(group.id);
-                            int indexOfGroup = getData().indexOf(group);
-                            notifyItemChanged(indexOfGroup);
-                        }, throwable -> {
-                        });
+                            if (getData() != null) {
+                                int indexOfGroup = getData().indexOf(group);
+                                notifyItemChanged(indexOfGroup);
+                            }
+                        }, RxErrorHandler.handleEmptyError());
             }
 
         });
@@ -83,11 +86,13 @@ public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Gr
 
     @Override
     public void onBindViewHolder(GuildViewHolder holder, int position) {
-        Group guild = getData().get(position);
-        boolean isInGroup = isInGroup(guild);
-        holder.bind(guild, isInGroup);
-        holder.itemView.setTag(guild);
-        holder.joinLeaveButton.setTag(guild);
+        if (getData() != null) {
+            Group guild = getData().get(position);
+            boolean isInGroup = isInGroup(guild);
+            holder.bind(guild, isInGroup);
+            holder.itemView.setTag(guild);
+            holder.joinLeaveButton.setTag(guild);
+        }
     }
 
     private boolean isInGroup(Group guild) {

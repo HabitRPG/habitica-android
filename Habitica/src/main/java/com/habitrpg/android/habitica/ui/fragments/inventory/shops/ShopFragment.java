@@ -134,7 +134,7 @@ public class ShopFragment extends BaseFragment {
         this.inventoryRepository.fetchShopInventory(shopUrl)
                 .map(shop1 -> {
                     if (shop1.identifier.equals(Shop.MARKET)) {
-                        if (user.getPurchased().getPlan().isActive()) {
+                        if (user != null && user.isValid() && user.getPurchased().getPlan().isActive()) {
                             ShopCategory specialCategory = new ShopCategory();
                             specialCategory.text = getString(R.string.special);
                             specialCategory.items = new ArrayList<>();

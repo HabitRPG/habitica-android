@@ -295,7 +295,7 @@ public class ChallengeDetailActivity extends BaseActivity {
                     dialog.dismiss();
 
                     showRemoveTasksDialog(keepTasks -> this.challengeRepository.leaveChallenge(challenge, new LeaveChallengeBody(keepTasks))
-                            .subscribe(aVoid -> finish(), throwable -> {}));
+                            .subscribe(aVoid -> finish(), RxErrorHandler.handleEmptyError()));
                 })
                 .setNegativeButton(this.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }

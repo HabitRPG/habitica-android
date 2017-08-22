@@ -97,5 +97,9 @@ public class HostConfig {
     public void setUser(String user) {
         this.user = user;
     }
+
+    public boolean hasAuthentication() {
+        return user != null && user.length() > 0 && api != null && api.length() > 0;
+    }
 }
 

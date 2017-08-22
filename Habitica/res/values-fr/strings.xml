@@ -578,4 +578,15 @@
   <string name="welcome_back">Bienvenue à nouveau</string>
   <string name="yesterdaililes_prompt">Avez-vous réalisé une de ces quotidiennes hier ?</string>
   <string name="start_day">Démarrer ma journée</string>
+  <string name="leave_party_confirmation">Voulez-vous vraiment quitter l\'équipe ?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Prochaine récompense dans %d connexions</string>
+  <string name="pending">En cours</string>
+  <string name="accepted">Accepté</string>
+  <string name="declined">Refusé</string>
+  <string name="participants">Participants</string>
+  <string name="invitations">Invitations</string>
+  <string name="quest_leader_header" formatted="false">Lancé par %s</string>
+  <string name="quest_abort_message">Voulez-vous vraiment annuler cette mission ? Cela l\'annulera pour tout le   monde dans l\'équipe et toute avancée sera perdue. Le parchemin de quête retournera à son propriétaire. </string>
+  <string name="loading">Chargement...</string>
+  <string name="reloading_content">Recharger le contenu</string>
 </resources>
