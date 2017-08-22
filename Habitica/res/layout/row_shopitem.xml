@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,15 +7,14 @@
     android:clickable="true"
     android:background="@color/white">
     <LinearLayout
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
+        android:id="@+id/container"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="78dp"
+        android:layout_height="108dp"
         android:orientation="vertical"
-        android:layout_gravity="center"
-        android:background="@drawable/layout_rounded_bg_shopitem">
+        android:background="@drawable/layout_rounded_bg_shopitem"
+        android:layout_centerInParent="true">
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
             android:layout_width="@dimen/shopitem_image_size"
@@ -43,8 +42,7 @@
                 tools:text="150"
                 android:layout_marginLeft="6dp"
                 style="@style/Body1"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
     <ImageView
@@ -53,20 +51,23 @@
         android:layout_height="@dimen/shopitem_status_size"
         android:src="@drawable/item_limited_bubble"
         android:layout_gravity="right"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_alignRight="@id/container"/>
     <ImageView
         android:id="@+id/item_locked_icon"
         android:layout_width="@dimen/shopitem_status_size"
         android:layout_height="@dimen/shopitem_status_size"
         android:src="@drawable/item_locked_bubble"
         android:layout_gravity="right"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_alignRight="@id/container"/>
     <TextView
         android:id="@+id/item_count_icon"
         android:layout_width="@dimen/shopitem_status_size"
         android:layout_height="@dimen/shopitem_status_size"
         android:background="@drawable/item_count_bubble"
         android:layout_gravity="right"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_alignRight="@id/container"/>
 
-</FrameLayout>
+</RelativeLayout>

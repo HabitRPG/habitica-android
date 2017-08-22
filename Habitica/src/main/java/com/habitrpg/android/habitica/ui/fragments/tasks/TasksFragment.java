@@ -220,7 +220,7 @@ public class TasksFragment extends BaseMainFragment {
                         fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_DAILY);
                         break;
                     case 3:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_REWARD);
+                        fragment = RewardsRecyclerviewFragment.newInstance(getContext(), user, Task.TYPE_REWARD);
                         break;
                     default:
                         fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_TODO);

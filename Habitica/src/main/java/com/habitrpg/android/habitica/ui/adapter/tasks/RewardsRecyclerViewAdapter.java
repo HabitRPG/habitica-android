@@ -9,33 +9,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.helpers.RxErrorHandler;
-import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.OrderedRealmCollection;
 
-public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RewardViewHolder> implements TaskRecyclerViewAdapter {
+public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements TaskRecyclerViewAdapter {
+    private static int VIEWTYPE_CUSTOM_REWARD = 0;
+    private static int VIEWTYPE_HEADER = 1;
+    private static int VIEWTYPE_IN_APP_REWARD = 2;
+
 
     private final Context context;
-    private OrderedRealmCollection<Task> data;
-    private List<Task> equipmentRewards;
+    private OrderedRealmCollection<Task> customRewards;
+    private OrderedRealmCollection<ShopItem> inAppRewards;
     private final int layoutResource;
-    private InventoryRepository inventoryRepository;
     @Nullable
     private User user;
 
-    public RewardsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, Context context, int layoutResource, InventoryRepository inventoryRepository, @Nullable User user) {
+    public RewardsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, Context context, int layoutResource, @Nullable User user) {
         this.context = context;
         this.layoutResource = layoutResource;
-        this.data = data;
-        this.inventoryRepository = inventoryRepository;
+        this.customRewards = data;
         this.user = user;
     }
 
@@ -44,85 +42,62 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RewardViewH
     }
 
     @Override
-    public RewardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RewardViewHolder(getContentView(parent));
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == VIEWTYPE_CUSTOM_REWARD) {
+            return new RewardViewHolder(getContentView(parent));
+        } else {
+            return new ShopItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row_shopitem, parent, false));
+        }
     }
 
     @Override
-    public void onBindViewHolder(RewardViewHolder holder, int position) {
-        if (data != null && position < data.size()) {
-            holder.bindHolder(data.get(position), position);
-        } else if (equipmentRewards != null) {
-            holder.bindHolder(equipmentRewards.get(position-getCustomRewardCount()), position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (customRewards != null && position < customRewards.size()) {
+            ((RewardViewHolder)holder).bindHolder(customRewards.get(position), position);
+        } else if (inAppRewards != null) {
+            ((ShopItemViewHolder)holder).bind(inAppRewards.get(position-getCustomRewardCount()));
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (customRewards != null && position < customRewards.size()) {
+            return VIEWTYPE_CUSTOM_REWARD;
+        } else {
+            return VIEWTYPE_IN_APP_REWARD;
         }
     }
 
     @Override
     public int getItemCount() {
         int rewardCount = getCustomRewardCount();
-        rewardCount += getEquipmentRewardCount();
+        rewardCount += getInAppRewardCount();
         return rewardCount;
     }
 
-    private int getEquipmentRewardCount() {
-        return equipmentRewards != null ? equipmentRewards.size() : 0;
+    private int getInAppRewardCount() {
+        return inAppRewards != null ? inAppRewards.size() : 0;
     }
 
     private int getCustomRewardCount() {
-        return data != null ? data.size() : 0;
-    }
-
-    private void loadEquipmentRewards() {
-        if (inventoryRepository != null) {
-            inventoryRepository.getInventoryBuyableGear()
-                    .map(items -> {
-                        ArrayList<String> itemKeys = new ArrayList<>();
-                        for (Equipment item : items) {
-                            itemKeys.add(item.key);
-                        }
-                        itemKeys.add("potion");
-                        if (user != null && user.getFlags() != null && user.getFlags().getArmoireEnabled()) {
-                            itemKeys.add("armoire");
-                        }
-                        return itemKeys;
-                    }).flatMap(itemKeys -> inventoryRepository.getItems(itemKeys))
-                    .map(items -> {
-                        ArrayList<Task> buyableItems = new ArrayList<>();
-                        if (items != null) {
-                            for (Equipment item : items) {
-                                Task reward = new Task();
-                                reward.text = item.text;
-                                reward.notes = item.notes;
-                                reward.value = item.value;
-                                reward.setType("reward");
-                                reward.specialTag = "item";
-                                reward.setId(item.key);
-
-                                if ("armoire".equals(item.key)) {
-                                    if (user != null && user.isValid() && user.getFlags() != null && user.getFlags().getArmoireEmpty()) {
-                                        reward.notes = context.getResources().getString(R.string.armoireNotesEmpty);
-                                    } else {
-                                        long gearCount = inventoryRepository.getArmoireRemainingCount();
-                                        reward.notes = context.getResources().getString(R.string.armoireNotesFull, gearCount);
-                                    }
-                                }
-
-                                buyableItems.add(reward);
-                            }
-                        }
-                        return buyableItems;
-                    })
-                    .subscribe(items -> {
-                        equipmentRewards = items;
-                        notifyDataSetChanged();
-                    }, RxErrorHandler.handleEmptyError());
-        }
+        return customRewards != null ? customRewards.size() : 0;
     }
 
     @Override
     public void updateData(OrderedRealmCollection<Task> data) {
-        this.data = data;
-        loadEquipmentRewards();
+        this.customRewards = data;
+        notifyDataSetChanged();
+    }
+
+    public void updateItemRewards(OrderedRealmCollection<ShopItem> items) {
+        if (items.size() > 0) {
+            if (Task.class.isAssignableFrom(items.first().getClass())) {
+                //this catches a weird bug where the observable gets a list of tasks for no apparent reason.
+                return;
+            }
+        }
+        this.inAppRewards = items;
+        notifyDataSetChanged();
     }
 
     @Override

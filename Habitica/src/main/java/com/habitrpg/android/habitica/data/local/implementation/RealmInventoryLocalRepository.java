@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
@@ -260,5 +261,13 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
                 }
             });
         }
+    }
+
+    @Override
+    public Observable<RealmResults<ShopItem>> getInAppRewards() {
+        return realm.where(ShopItem.class)
+                .findAllAsync()
+                .asObservable()
+                .filter(RealmResults::isLoaded);
     }
 }

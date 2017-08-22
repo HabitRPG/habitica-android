@@ -53,6 +53,7 @@ import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
@@ -428,8 +429,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<List<Equipment>> getInventoryBuyableGear() {
-        return apiService.getInventoryBuyableGear().compose(configureApiCallObserver());
+    public Observable<List<ShopItem>> retrieveInAppRewards() {
+        return apiService.retrieveInAppRewards().compose(configureApiCallObserver());
     }
 
     @Override

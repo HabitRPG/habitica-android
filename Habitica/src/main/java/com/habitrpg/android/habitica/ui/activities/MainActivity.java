@@ -558,6 +558,38 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     }
 
     @Subscribe
+    public void onEvent(final BuyGemItemCommand event) {
+        if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
+            Observable<Void> observable;
+            if ((event.shopIdentifier!= null && event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(event.item.purchaseType)) {
+                if (event.item.purchaseType.equals("gear")) {
+                    observable = apiClient.purchaseMysterySet(event.item.categoryIdentifier);
+                } else {
+                    observable = apiClient.purchaseHourglassItem(event.item.purchaseType, event.item.key);
+                }
+            } else if (event.item.purchaseType.equals("quests") && event.item.getCurrency().equals("gold")) {
+                observable = apiClient.purchaseQuest(event.item.key);
+            } else if ("gold".equals(event.item.currency)) {
+                observable = apiClient.buyItem(event.item.key).flatMap(buyResponse -> Observable.just(null));
+            } else {
+                observable = apiClient.purchaseItem(event.item.purchaseType, event.item.key);
+            }
+            observable
+                    .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
+                    .flatMap(buyResponse -> userRepository.retrieveUser(false))
+                    .flatMap(user1 -> inventoryRepository.retrieveInAppRewards())
+                    .subscribe(buyResponse -> {}, throwable -> {
+                        retrofit2.HttpException error = (retrofit2.HttpException) throwable;
+                        if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
+                            openGemPurchaseFragment(null);
+                        }
+                    });
+        } else {
+            openGemPurchaseFragment(null);
+        }
+    }
+
+    @Subscribe
     public void onEvent(final BuyRewardCommand event) {
         final String rewardKey = event.Reward.getId();
 

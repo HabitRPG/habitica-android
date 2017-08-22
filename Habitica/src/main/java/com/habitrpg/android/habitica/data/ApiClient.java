@@ -2,8 +2,6 @@ package com.habitrpg.android.habitica.data;
 
 import android.support.annotation.Nullable;
 
-import com.habitrpg.android.habitica.models.members.Member;
-import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.habitrpg.android.habitica.models.AchievementResult;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
@@ -14,7 +12,9 @@ import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
+import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.responses.HabitResponse;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
@@ -23,15 +23,15 @@ import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.User;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +55,7 @@ public interface ApiClient {
 
     Observable<User> registrationLanguage(String registrationLanguage);
 
-    Observable<List<Equipment>> getInventoryBuyableGear();
+    Observable<List<ShopItem>> retrieveInAppRewards();
 
     Observable<Items> equipItem(String type, String itemKey);
 
@@ -233,4 +233,6 @@ public interface ApiClient {
     Observable<Equipment> openMysteryItem();
 
     Observable<Void> runCron();
+
+
 }

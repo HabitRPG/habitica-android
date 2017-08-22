@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
@@ -46,4 +47,6 @@ public interface InventoryLocalRepository extends ContentLocalRepository {
     Observable<Item> getItem(String type, String key);
 
     void decrementMysteryItemCount(User user);
+
+    Observable<RealmResults<ShopItem>> getInAppRewards();
 }

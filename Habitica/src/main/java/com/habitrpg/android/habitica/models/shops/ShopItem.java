@@ -6,9 +6,13 @@ import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.user.User;
 
-public class ShopItem {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class ShopItem extends RealmObject {
 
     public static final String GEM_FOR_GOLD = "gem";
+    @PrimaryKey
     public String key;
     public String text;
     public String notes;
@@ -22,6 +26,9 @@ public class ShopItem {
     public String categoryIdentifier;
     public Integer limitedNumberLeft;
     public ShopItemUnlockCondition unlockCondition;
+    public String path;
+    public String isSuggested;
+    public String pinType;
 
     public static ShopItem makeGemItem(Resources res) {
         ShopItem item = new ShopItem();
@@ -92,6 +99,9 @@ public class ShopItem {
     }
 
     public String getCurrency() {
+        if (currency == null) {
+            return "";
+        }
         return currency;
     }
 

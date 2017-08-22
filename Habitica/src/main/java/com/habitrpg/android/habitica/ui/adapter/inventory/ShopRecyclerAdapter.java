@@ -6,16 +6,12 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,35 +19,25 @@ import com.facebook.common.executors.CallerThreadExecutor;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
-import com.habitrpg.android.habitica.helpers.TiledBitmapPostProcessor;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
-import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
-
-import org.greenrobot.eventbus.EventBus;
+import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscription;
-import rx.subjects.PublishSubject;
 
 public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -89,7 +75,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_shopitem, parent, false);
-            ItemViewHolder viewHolder = new ItemViewHolder(view);
+            ShopItemViewHolder viewHolder = new ShopItemViewHolder(view);
             viewHolder.shopIdentifier = shopIdentifier;
             return viewHolder;
         }
@@ -103,7 +89,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (obj.getClass().equals(ShopCategory.class)) {
             ((SectionViewHolder) holder).bind(((ShopCategory) obj).getText());
         } else {
-            ((ItemViewHolder) holder).bind((ShopItem) items.get(position));
+            ((ShopItemViewHolder) holder).bind((ShopItem) items.get(position));
         }
     }
 
@@ -136,92 +122,6 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemPos++;
         }
         notifyItemChanged(itemPos);
-    }
-
-    static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        @BindView(R.id.imageView)
-        SimpleDraweeView imageView;
-        @BindView(R.id.buyButton)
-        View buyButton;
-        @BindView(R.id.currency_icon_view)
-        ImageView currencyIconView;
-        @BindView(R.id.priceLabel)
-        TextView priceLabel;
-
-        @BindView(R.id.item_limited_icon)
-        ImageView itemLimitedIcon;
-        @BindView(R.id.item_locked_icon)
-        ImageView itemLockedIcon;
-        @BindView(R.id.item_count_icon)
-        TextView itemCountView;
-
-        String shopIdentifier;
-        ShopItem item;
-
-        Context context;
-
-        public ItemViewHolder(View itemView) {
-            super(itemView);
-
-            context = itemView.getContext();
-
-            ButterKnife.bind(this, itemView);
-
-            itemView.setOnClickListener(this);
-            itemView.setClickable(true);
-        }
-
-        public void bind(ShopItem item) {
-            this.item = item;
-            buyButton.setVisibility(View.VISIBLE);
-
-            DataBindingUtils.loadImage(this.imageView, item.getImageName());
-
-            if (item.getUnlockCondition() == null) {
-                priceLabel.setText(item.getValue().toString());
-                if (item.getCurrency().equals("gold")) {
-                    currencyIconView.setImageResource(R.drawable.currency_gold);
-                    priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gold));
-                } else if (item.getCurrency().equals("gems")) {
-                    currencyIconView.setImageResource(R.drawable.currency_gem);
-                    priceLabel.setTextColor(ContextCompat.getColor(context, R.color.good_10));
-                } else if (item.getCurrency().equals("hourglasses")) {
-                    currencyIconView.setImageResource(R.drawable.currency_hourglass);
-                    priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
-                } else {
-                    buyButton.setVisibility(View.GONE);
-                }
-            } else {
-                priceLabel.setText(item.getUnlockCondition().readableUnlockConditionId());
-            }
-
-            if (item.isLimited()) {
-                itemLimitedIcon.setVisibility(View.VISIBLE);
-                itemCountView.setVisibility(View.GONE);
-                itemLockedIcon.setVisibility(View.GONE);
-            } else {
-                itemLimitedIcon.setVisibility(View.GONE);
-            }
-
-            if (item.getLocked()) {
-                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300));
-                currencyIconView.setAlpha(0.5f);
-                itemLockedIcon.setVisibility(View.VISIBLE);
-                itemCountView.setVisibility(View.GONE);
-                itemLimitedIcon.setVisibility(View.GONE);
-            } else {
-                currencyIconView.setAlpha(1.0f);
-                itemLockedIcon.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void onClick(View view) {
-            PurchaseDialog dialog = new PurchaseDialog(context, HabiticaBaseApplication.getComponent(), item);
-            dialog.shopIdentifier = shopIdentifier;
-            dialog.show();
-        }
     }
 
     static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {

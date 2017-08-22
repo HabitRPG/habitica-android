@@ -2,12 +2,12 @@ package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
-import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ import io.realm.RealmList;
  */
 public class ContentResult {
 
-    public Equipment potion;
+    public ShopItem potion;
 
-    public Equipment armoire;
+    public ShopItem armoire;
 
     public ContentGear gear;
 
