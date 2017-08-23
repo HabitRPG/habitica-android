@@ -26,6 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+
 /**
  * Created by krh12 on 12/9/2016.
  */
@@ -89,8 +92,12 @@ public class PopupNotificationsManager {
                     })
                     .setMessage("");
 
-            final AlertDialog dialog = builder.create();
-            dialog.show();
+            Observable.just(null)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(o -> {
+                        final AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }, throwable -> {});
         } else {
             ShowSnackbarEvent event = new ShowSnackbarEvent();
             event.title = notification.data.message;

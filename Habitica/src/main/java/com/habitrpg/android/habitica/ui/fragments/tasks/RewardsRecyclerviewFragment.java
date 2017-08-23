@@ -52,6 +52,8 @@ public class RewardsRecyclerviewFragment extends TaskRecyclerViewFragment {
                 }
             });
         }
+
+        inventoryRepository.retrieveInAppRewards().subscribe(shopItems -> {}, RxErrorHandler.handleEmptyError());
         return view;
     }
 

@@ -52,7 +52,8 @@
         android:src="@drawable/item_limited_bubble"
         android:layout_gravity="right"
         android:visibility="gone"
-        android:layout_alignRight="@id/container"/>
+        android:layout_alignRight="@id/container"
+        android:layout_marginRight="-4dp"/>
     <ImageView
         android:id="@+id/item_locked_icon"
         android:layout_width="@dimen/shopitem_status_size"
@@ -60,7 +61,9 @@
         android:src="@drawable/item_locked_bubble"
         android:layout_gravity="right"
         android:visibility="gone"
-        android:layout_alignRight="@id/container"/>
+        android:layout_alignRight="@id/container"
+        tools:visibility="visible"
+        android:layout_marginRight="-4dp"/>
     <TextView
         android:id="@+id/item_count_icon"
         android:layout_width="@dimen/shopitem_status_size"
@@ -68,6 +71,7 @@
         android:background="@drawable/item_count_bubble"
         android:layout_gravity="right"
         android:visibility="gone"
-        android:layout_alignRight="@id/container"/>
+        android:layout_alignRight="@id/container"
+        android:layout_marginRight="-4dp"/>
 
 </RelativeLayout>

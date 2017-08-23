@@ -10,5 +10,5 @@ import rx.Observable;
 public interface TagLocalRepository extends BaseLocalRepository {
     Observable<RealmResults<Tag>> getTags(String userId);
 
-    void removeOldTags(List<Tag> onlineTags);
+    void removeOldTags(List<Tag> onlineTags, String userID);
 }

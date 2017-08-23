@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
@@ -18,6 +19,7 @@ import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
+import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
@@ -270,4 +272,19 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }
+
+    @Override
+    public void saveInAppRewards(List<ShopItem> onlineItems) {
+        OrderedRealmCollectionSnapshot<ShopItem> localItems = realm.where(ShopItem.class).findAll().createSnapshot();
+        realm.executeTransaction(realm1 -> {
+            for (ShopItem localItem : localItems) {
+                if (!onlineItems.contains(localItem)) {
+                    localItem.deleteFromRealm();
+                }
+            }
+            realm.insertOrUpdate(onlineItems);
+        });
+    }
+
+
 }

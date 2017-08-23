@@ -4,6 +4,7 @@ import android.content.res.Resources;
 
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 
 import io.realm.RealmObject;
@@ -169,5 +170,14 @@ public class ShopItem extends RealmObject {
 
     public boolean isTypeAnimal() {
         return "pets".equals(purchaseType) || "mounts".equals(purchaseType);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (ShopItem.class.isAssignableFrom(obj.getClass())) {
+            ShopItem otherItem = (ShopItem) obj;
+            return this.key.equals(otherItem.key);
+        }
+        return super.equals(obj);
     }
 }

@@ -55,7 +55,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     @Override
     public Observable<List<ShopItem>> retrieveInAppRewards() {
         return apiClient.retrieveInAppRewards()
-                .doOnNext(localRepository::save);
+                .doOnNext(localRepository::saveInAppRewards);
     }
 
     @Override

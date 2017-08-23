@@ -49,4 +49,5 @@ public interface InventoryLocalRepository extends ContentLocalRepository {
     void decrementMysteryItemCount(User user);
 
     Observable<RealmResults<ShopItem>> getInAppRewards();
+    void saveInAppRewards(List<ShopItem> onlineItems);
 }
