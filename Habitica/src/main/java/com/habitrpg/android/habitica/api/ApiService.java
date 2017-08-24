@@ -37,6 +37,7 @@ import java.util.Map;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -325,4 +326,10 @@ public interface ApiService {
 
     @POST("cron")
     Observable<HabitResponse<Void>> runCron();
+
+    @POST("user/reset")
+    Observable<HabitResponse<Void>> resetAccount();
+
+    @HTTP(method = "DELETE", path = "user", hasBody = true)
+    Observable<HabitResponse<Void>> deleteAccount(@Body Map<String, String> body);
 }

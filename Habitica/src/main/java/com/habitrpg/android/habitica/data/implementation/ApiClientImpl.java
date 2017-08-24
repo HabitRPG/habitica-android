@@ -104,6 +104,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -856,5 +857,17 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     @Override
     public Observable<Void> runCron() {
         return apiService.runCron().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> resetAccount() {
+        return apiService.resetAccount().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> deleteAccount(String password) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("password", password);
+        return apiService.deleteAccount(updateObject).compose(configureApiCallObserver());
     }
 }

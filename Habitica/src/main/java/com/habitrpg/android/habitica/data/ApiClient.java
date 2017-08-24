@@ -234,5 +234,6 @@ public interface ApiClient {
 
     Observable<Void> runCron();
 
-
+    Observable<Void> resetAccount();
+    Observable<Void> deleteAccount(String password);
 }
