@@ -112,6 +112,7 @@ public class YesterdailyDialog extends AlertDialog {
         if (userRepository != null && userId != null) {
             Observable.just(null)
                     .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .filter(aVoid -> !userRepository.isClosed())
                     .flatMap(aVoid -> userRepository.getUser(userId))
                     .first()
                     .filter(user -> user != null && user.getNeedsCron() != null && user.getNeedsCron())

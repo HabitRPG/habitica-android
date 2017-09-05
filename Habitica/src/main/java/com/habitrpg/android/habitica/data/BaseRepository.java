@@ -10,4 +10,6 @@ public interface BaseRepository {
 
     <T extends RealmObject> T getUnmanagedCopy(T object);
     <T extends RealmObject> List<T> getUnmanagedCopy(List<T> list);
+
+    boolean isClosed();
 }

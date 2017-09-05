@@ -46,6 +46,11 @@ abstract class RealmBaseLocalRepository implements BaseLocalRepository {
     }
 
     @Override
+    public boolean isClosed() {
+        return realm.isClosed();
+    }
+
+    @Override
     public <T extends RealmObject> void save(List<T> objects) {
         realm.executeTransactionAsync(realm1 -> realm1.insertOrUpdate(objects));
     }

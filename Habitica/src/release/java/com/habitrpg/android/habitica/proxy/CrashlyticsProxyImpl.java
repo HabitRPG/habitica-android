@@ -47,4 +47,9 @@ public class CrashlyticsProxyImpl implements CrashlyticsProxy {
     public void fabricLogE(String s1, String s2, Exception e) {
         Fabric.getLogger().e(s1,s2,e);
     }
+
+    @Override
+    public void log(String msg) {
+        Crashlytics.getInstance().log(msg);
+    }
 }

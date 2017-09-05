@@ -46,7 +46,7 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
     public Observable<Group> getGroup(String id) {
         return realm.where(Group.class)
                 .equalTo("id", id)
-                .findAllAsync()
+                .findAll()
                 .asObservable()
                 .filter(group -> group.isLoaded() && group.isValid() && !group.isEmpty())
                 .map(groups -> groups.first());

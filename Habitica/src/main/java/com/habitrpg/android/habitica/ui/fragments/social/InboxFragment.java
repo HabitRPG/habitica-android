@@ -186,7 +186,9 @@ public class InboxFragment extends BaseMainFragment
 
     public void onUserReceived(User user) {
         this.user = user;
-        swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

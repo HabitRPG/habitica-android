@@ -15,4 +15,6 @@ public interface CrashlyticsProxy {
     void setUserName(String name);
 
     void fabricLogE(String s1, String s2, Exception e);
+
+    void log(String msg);
 }

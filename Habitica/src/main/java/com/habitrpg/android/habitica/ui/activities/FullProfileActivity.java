@@ -253,7 +253,7 @@ public class FullProfileActivity extends BaseActivity {
         //mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiClient.getMemberAchievements(this.userId).subscribe(this::fillAchievements, RxErrorHandler.handleEmptyError());
+        socialRepository.getMemberAchievements(this.userId).subscribe(this::fillAchievements, RxErrorHandler.handleEmptyError());
     }
 
     // endregion
@@ -261,6 +261,9 @@ public class FullProfileActivity extends BaseActivity {
     // region Attributes
 
     private void fillAchievements(AchievementResult achievements) {
+        if (achievements == null) {
+            return;
+        }
         List<Object> items = new ArrayList<>();
 
         fillAchievements(achievements.basic, items);

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.models.members;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.user.Buffs;
@@ -24,6 +25,7 @@ public class Member extends RealmObject implements Avatar {
 
 
     @PrimaryKey
+    @SerializedName("_id")
     private String id;
     private Stats stats;
     private Inbox inbox;

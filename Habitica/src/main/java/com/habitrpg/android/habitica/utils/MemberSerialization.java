@@ -30,6 +30,7 @@ public class MemberSerialization implements JsonDeserializer<Member> {
         Member member = realm.where(Member.class).equalTo("id", id).findFirst();
         if (member == null) {
             member = new Member();
+            member.setId(id);
         } else {
             member = realm.copyFromRealm(member);
         }

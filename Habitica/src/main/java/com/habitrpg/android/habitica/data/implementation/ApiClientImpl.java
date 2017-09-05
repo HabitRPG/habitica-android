@@ -7,6 +7,7 @@ import android.util.Log;
 import com.amplitude.api.Amplitude;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
@@ -117,7 +118,6 @@ import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
 import retrofit2.HttpException;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -157,6 +157,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     .doOnError(this);
     private AlertDialog displayedAlert;
     private String languageCode;
+    private String lastAPICallURL;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
@@ -194,8 +195,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent);
                     }
+                    builder = builder.addHeader("Authorization", "Basic " + BuildConfig.STAGING_KEY);
                     Request request = builder.method(original.method(), original.body())
                             .build();
+                    lastAPICallURL = original.url().toString();
                     return chain.proceed(request);
                 })
                 .build();
@@ -326,18 +329,23 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
             } else {
                 showConnectionProblemDialog(R.string.internal_error_api);
             }
+        } else if (JsonSyntaxException.class.isAssignableFrom(throwableClass)) {
+            crashlyticsProxy.log("Json Error: " + lastAPICallURL + ",  " + throwable.getMessage());
         } else {
             crashlyticsProxy.logException(throwable);
         }
     }
 
     public ErrorResponse getErrorResponse(HttpException error) {
-        Response<?> response = error.response();
+        ResponseBody errorResponse = error.response().errorBody();
+        if (errorResponse == null) {
+            return new ErrorResponse();
+        }
         Converter<ResponseBody, ?> errorConverter =
                 gsonConverter
                         .responseBodyConverter(ErrorResponse.class, new Annotation[0], retrofitAdapter);
         try {
-            return (ErrorResponse) errorConverter.convert(response.errorBody());
+            return (ErrorResponse) errorConverter.convert(errorResponse);
         } catch (IOException e) {
             return new ErrorResponse();
         }

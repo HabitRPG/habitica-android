@@ -22,4 +22,6 @@ public interface BaseLocalRepository {
 
     <T extends RealmObject>void save(List<T> objects);
     <T extends RealmObject>void save(T object);
+
+    boolean isClosed();
 }

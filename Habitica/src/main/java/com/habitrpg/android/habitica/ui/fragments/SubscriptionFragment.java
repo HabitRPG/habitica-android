@@ -294,6 +294,10 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                 }
             }
 
+            if (this.subscriptionDetailsView == null) {
+                return;
+            }
+
             if (isSubscribed) {
                 this.subscriptionDetailsView.setVisibility(View.VISIBLE);
                 this.subscriptionDetailsView.setPlan(plan);

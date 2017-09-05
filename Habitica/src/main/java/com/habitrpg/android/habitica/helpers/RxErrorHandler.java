@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import cz.msebera.android.httpclient.HttpException;
 import rx.functions.Action1;
+import rx.plugins.RxJavaHooks;
 
 public class RxErrorHandler {
 
@@ -18,6 +19,8 @@ public class RxErrorHandler {
     public static void init(CrashlyticsProxy crashlyticsProxy) {
         instance = new RxErrorHandler();
         instance.crashlyticsProxy = crashlyticsProxy;
+
+        RxJavaHooks.setOnError(handleEmptyError());
     }
 
     public static Action1<Throwable> handleEmptyError() {

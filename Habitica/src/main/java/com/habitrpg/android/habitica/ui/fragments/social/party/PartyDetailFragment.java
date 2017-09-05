@@ -134,7 +134,11 @@ public class PartyDetailFragment extends BaseFragment {
                     if (refreshLayout != null) {
                         refreshLayout.setRefreshing(false);
                     }
-                }, throwable -> refreshLayout.setRefreshing(false));
+                }, throwable -> {
+                    if (refreshLayout != null) {
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
     }
 
     private void updateParty(Group party) {
@@ -191,7 +195,7 @@ public class PartyDetailFragment extends BaseFragment {
     }
 
     private void updateQuestContent(QuestContent questContent) {
-        if (questTitleView == null) {
+        if (questTitleView == null && questContent.isManaged()) {
             return;
         }
         questTitleView.setText(questContent.getText());
