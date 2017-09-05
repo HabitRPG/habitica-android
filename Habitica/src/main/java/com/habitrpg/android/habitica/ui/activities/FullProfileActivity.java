@@ -1,121 +1,134 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.content.ClipboardManager;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.helpers.UserStatComputer;
+import com.habitrpg.android.habitica.models.Achievement;
+import com.habitrpg.android.habitica.models.AchievementGroup;
+import com.habitrpg.android.habitica.models.AchievementResult;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.members.Member;
+import com.habitrpg.android.habitica.models.user.Buffs;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Profile;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
-import com.magicmicky.habitrpgwrapper.lib.models.Profile;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.realm.RealmResults;
+import rx.Observable;
+
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
 
 public class FullProfileActivity extends BaseActivity {
-    private String userId;
-    private String userName;
-
     @Inject
-    ContentCache contentCache;
-
+    InventoryRepository inventoryRepository;
     @Inject
-    APIHelper apiHelper;
-
+    ApiClient apiClient;
+    @Inject
+    SocialRepository socialRepository;
     @BindView(R.id.profile_image)
     SimpleDraweeView profile_image;
-
     @BindView(R.id.profile_blurb)
     TextView blurbTextView;
-
     @BindView(R.id.avatarView)
     AvatarView avatarView;
-
     @BindView(R.id.copy_userid)
     Button copyUserIdButton;
-
     @BindView(R.id.userid)
     TextView userIdText;
-
     @BindView(R.id.profile_attributes_card)
     CardView attributesCardView;
-
     @BindView(R.id.attributes_table)
     TableLayout attributesTableLayout;
-
     @BindView(R.id.attributes_collapse_icon)
-    ImageView attributesCollapseIcon;
-
+    AppCompatImageView attributesCollapseIcon;
     @BindView(R.id.equipment_table)
     TableLayout equipmentTableLayout;
-
     @BindView(R.id.costume_table)
     TableLayout costumeTableLayout;
-
-    @BindView(R.id.avatar_attributes_progress)
-    ProgressBar attributesProgress;
-
-    @BindView(R.id.avatar_equip_progress)
-    ProgressBar equipmentProgress;
-
-    @BindView(R.id.avatar_costume_progress)
-    ProgressBar costumeProgress;
-
     @BindView(R.id.profile_costume_card)
     CardView costumeCard;
-
     @BindView(R.id.avatar_with_bars)
     View avatar_with_bars;
-    private AvatarWithBarsViewModel avatarWithBars;
-
     @BindView(R.id.fullprofile_scrollview)
     ScrollView fullprofile_scrollview;
-
     @BindView(R.id.profile_pets_found_count)
     TextView petsFoundCount;
-
     @BindView(R.id.profile_mounts_tamed_count)
     TextView mountsTamedCount;
+    @BindView(R.id.profile_achievements_card)
+    CardView achievementCard;
+    @BindView(R.id.avatar_achievements_progress)
+    ProgressBar achievementProgress;
+    @BindView(R.id.recyclerView)
+    RecyclerView achievementGroupList;
+    private String userId;
+    private String userName;
+    private AvatarWithBarsViewModel avatarWithBars;
+    private float attributeStrSum = 0;
+    private float attributeIntSum = 0;
+    private float attributeConSum = 0;
+    private float attributePerSum = 0;
+    private boolean attributeDetailsHidden = true;
+    private ArrayList<TableRow> attributeRows = new ArrayList<>();
+
+    public static void open(Context context, String userId) {
+        if (userId.equals("system")) {
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", userId);
+
+        Intent intent = new Intent(context, FullProfileActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,20 +140,21 @@ public class FullProfileActivity extends BaseActivity {
 
         setTitle(R.string.profile_loading_data);
 
-        apiHelper.apiService.GetMember(this.userId)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(this::updateView,
-                        throwable -> {
-                        });
+        socialRepository.getMember(this.userId).subscribe(this::updateView, RxErrorHandler.handleEmptyError());
 
         avatarWithBars = new AvatarWithBarsViewModel(this, avatar_with_bars);
-        avatarWithBars.hideGems();
         avatarWithBars.valueBarLabelsToBlack();
 
-        avatar_with_bars.setBackgroundColor(getResources().getColor(R.color.transparent));
+        avatar_with_bars.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
 
         attributeRows.clear();
         attributesCardView.setOnClickListener(view -> toggleAttributeDetails());
+    }
+
+    @Override
+    protected void onDestroy() {
+        inventoryRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -149,7 +163,6 @@ public class FullProfileActivity extends BaseActivity {
 
         if (id == R.id.private_message) {
             showSendMessageToUserDialog();
-
             return true;
         }
 
@@ -164,8 +177,7 @@ public class FullProfileActivity extends BaseActivity {
 
     private void showSendMessageToUserDialog() {
         LayoutInflater factory = LayoutInflater.from(this);
-        final View newMessageView = factory.inflate(
-                R.layout.profile_new_message_dialog, null);
+        final View newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null);
 
         EmojiEditText emojiEditText = (EmojiEditText) newMessageView.findViewById(R.id.edit_new_message_text);
 
@@ -174,24 +186,13 @@ public class FullProfileActivity extends BaseActivity {
 
         final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    HashMap<String, String> messageObject = new HashMap<>();
-                    messageObject.put("message", emojiEditText.getText().toString());
-                    messageObject.put("toUserId", userId);
+                    socialRepository.postPrivateMessage(userId, emojiEditText.getText().toString())
+                            .subscribe(postChatMessageResult -> showSnackbar(FullProfileActivity.this, (ViewGroup) FullProfileActivity.this.fullprofile_scrollview.getChildAt(0),
+                                    String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
 
-                    apiHelper.apiService.postPrivateMessage(messageObject)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(postChatMessageResult -> {
-                                UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
-                                        String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL);
-                            }, throwable -> {
-                            });
-
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    UiUtils.dismissKeyboard(this);
                 })
-                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
-
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
-                })
+                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> UiUtils.dismissKeyboard(this))
 
                 .create();
 
@@ -200,7 +201,7 @@ public class FullProfileActivity extends BaseActivity {
         addMessageDialog.show();
     }
 
-    private void updateView(HabitRPGUser user) {
+    private void updateView(Member user) {
         Profile profile = user.getProfile();
         Stats stats = user.getStats();
 
@@ -229,31 +230,71 @@ public class FullProfileActivity extends BaseActivity {
         }
         userIdText.setText(userId);
         copyUserIdButton.setVisibility(View.VISIBLE);
-        copyUserIdButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
-                            .getSystemService(view.getContext().CLIPBOARD_SERVICE);
-                    android.content.ClipData clip = android.content.ClipData
-                            .newPlainText(
-                                    userId, userId);
-                    clipboard.setPrimaryClip(clip);
-            }
+        copyUserIdButton.setOnClickListener(view -> {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
+                    .getSystemService(CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText(userId, userId);
+            clipboard.setPrimaryClip(clip);
         });
 
 
-        avatarView.setUser(user);
+        avatarView.setAvatar(user);
         avatarWithBars.updateData(user);
 
-        addLevelAttributes(stats, user);
+        loadItemDataByOutfit(user.getEquipped()).subscribe(gear -> this.gotGear(gear, user), RxErrorHandler.handleEmptyError());
 
-        petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
-        mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
+        if (user.getPreferences().getCostume()) {
+            loadItemDataByOutfit(user.getCostume()).subscribe(this::gotCostume, RxErrorHandler.handleEmptyError());
+        } else {
+            costumeCard.setVisibility(View.GONE);
+        }
+
+        //petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
+        //mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
+
+        // Load the members achievements now
+        apiClient.getMemberAchievements(this.userId).subscribe(this::fillAchievements, RxErrorHandler.handleEmptyError());
     }
 
+    // endregion
 
+    // region Attributes
 
-    // region Utils
+    private void fillAchievements(AchievementResult achievements) {
+        List<Object> items = new ArrayList<>();
+
+        fillAchievements(achievements.basic, items);
+        fillAchievements(achievements.seasonal, items);
+        fillAchievements(achievements.special, items);
+
+        AchievementAdapter adapter = new AchievementAdapter();
+        adapter.setItemList(items);
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapter.getItemViewType(position) == 0) {
+                    return layoutManager.getSpanCount();
+                } else {
+                    return 1;
+                }
+            }
+        });
+        achievementGroupList.setLayoutManager(layoutManager);
+        achievementGroupList.setAdapter(adapter);
+
+        stopAndHideProgress(achievementProgress);
+    }
+
+    private void fillAchievements(AchievementGroup achievementGroup, List<Object> targetList) {
+        // Order by ID first
+        ArrayList<Achievement> achievementList = new ArrayList<>(achievementGroup.achievements.values());
+        Collections.sort(achievementList, (achievement, t1) -> Double.compare(achievement.index, t1.index));
+
+        targetList.add(achievementGroup.label);
+        targetList.addAll(achievementList);
+    }
 
     private void stopAndHideProgress(ProgressBar bar) {
         bar.setIndeterminate(false);
@@ -261,9 +302,15 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private String getFloorValueString(float val, boolean roundDown) {
-        return roundDown
-                ? ((int) Math.floor(val)) + ""
-                : (val == 0.0 ? "0" : val + "");
+        if (roundDown) {
+            return String.valueOf(Math.floor(val));
+        } else {
+            if (val == 0.0) {
+                return "0";
+            } else {
+                return String.valueOf(val);
+            }
+        }
     }
 
     private float getFloorValue(float val, boolean roundDown) {
@@ -273,7 +320,7 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private TableRow addEquipmentRow(TableLayout table, String gearKey, String text, String stats) {
-        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_gear_tablerow, null);
+        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_gear_tablerow, table, false);
 
         SimpleDraweeView draweeView = (SimpleDraweeView) gearRow.findViewById(R.id.gear_drawee);
 
@@ -290,8 +337,6 @@ public class FullProfileActivity extends BaseActivity {
         TextView keyTextView = (TextView) gearRow.findViewById(R.id.tableRowTextView1);
         keyTextView.setText(text);
 
-        table.addView(gearRow);
-
         TextView valueTextView = (TextView) gearRow.findViewById(R.id.tableRowTextView2);
 
         if (!stats.isEmpty()) {
@@ -300,40 +345,18 @@ public class FullProfileActivity extends BaseActivity {
             valueTextView.setVisibility(View.GONE);
         }
 
+        table.addView(gearRow);
+
         return gearRow;
     }
 
-    // endregion
-
-    // region Attributes
-
-    private float attributeStrSum = 0;
-    private float attributeIntSum = 0;
-    private float attributeConSum = 0;
-    private float attributePerSum = 0;
-
-    private void addLevelAttributes(Stats stats, HabitRPGUser user) {
-        float byLevelStat = Math.min(stats.getLvl() / 2.0f, 50f);
+    private void addLevelAttributes(Member user) {
+        float byLevelStat = Math.min(user.getStats().getLvl() / 2.0f, 50f);
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
-
-        loadItemDataByOutfit(user.getItems().getGear().getEquipped(), obj -> {
-            gotGear(obj, user);
-            addNormalAddBuffAttributes(stats);
-
-            stopAndHideProgress(attributesProgress);
-        });
-
-        if (user.getPreferences().getCostume()) {
-            loadItemDataByOutfit(user.getItems().getGear().getCostume(), obj -> {
-                gotCostume(obj);
-            });
-        } else {
-            costumeCard.setVisibility(View.GONE);
-        }
     }
 
-    private void loadItemDataByOutfit(Outfit outfit, ContentCache.GotContentEntryCallback<List<ItemData>> gotEntries) {
+    private Observable<RealmResults<Equipment>> loadItemDataByOutfit(Outfit outfit) {
         ArrayList<String> outfitList = new ArrayList<>();
         outfitList.add(outfit.getArmor());
         outfitList.add(outfit.getBack());
@@ -344,91 +367,39 @@ public class FullProfileActivity extends BaseActivity {
         outfitList.add(outfit.getShield());
         outfitList.add(outfit.getWeapon());
 
-        contentCache.GetItemDataList(outfitList, gotEntries);
+        return inventoryRepository.getItems(outfitList);
     }
 
-    public void gotGear(List<ItemData> obj, HabitRPGUser user) {
-        float strAttributes = 0;
-        float intAttributes = 0;
-        float conAttributes = 0;
-        float perAttributes = 0;
+    public void gotGear(List<Equipment> equipmentList, Member user) {
+        UserStatComputer userStatComputer = new UserStatComputer();
+        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
 
-        // Summarize stats and fill equipment table
-        for (ItemData i : obj) {
-            int str_ = (int) i.getStr();
-            int int_ = (int) i.get_int();
-            int con_ = (int) i.getCon();
-            int per_ = (int) i.getPer();
-
-            strAttributes += str_;
-            intAttributes += int_;
-            conAttributes += con_;
-            perAttributes += per_;
-
-            StringBuilder sb = new StringBuilder();
-
-            if (str_ != 0) {
-                sb.append("STR " + str_ + ", ");
-            }
-            if (int_ != 0) {
-                sb.append("INT " + int_ + ", ");
-            }
-            if (con_ != 0) {
-                sb.append("CON " + con_ + ", ");
-            }
-            if (per_ != 0) {
-                sb.append("PER " + per_ + ", ");
-            }
-
-            // remove the last comma
-            if (sb.length() > 2) {
-                sb.delete(sb.length() - 2, sb.length());
-            }
-
-            addEquipmentRow(equipmentTableLayout, i.getKey(), i.getText(), sb.toString());
+        equipmentTableLayout.removeAllViews();
+        for (int index = 1 ; index < attributesTableLayout.getChildCount() ; index++) {
+            attributesTableLayout.removeViewAt(index);
         }
 
-        stopAndHideProgress(equipmentProgress);
-        equipmentTableLayout.setVisibility(View.VISIBLE);
+        addLevelAttributes(user);
 
-        addAttributeRow(getString(R.string.battle_gear) + ": ", strAttributes, intAttributes, conAttributes, perAttributes, true, false);
-
-        if (!user.getPreferences().isDisableClasses()) {
-            float strClassBonus = 0;
-            float intClassBonus = 0;
-            float conClassBonus = 0;
-            float perClassBonus = 0;
-
-            switch (user.getStats().get_class()) {
-                case rogue:
-                    strClassBonus = strAttributes * 0.5f;
-                    perClassBonus = perAttributes * 0.5f;
-                    break;
-                case healer:
-                    conClassBonus = conAttributes * 0.5f;
-                    intClassBonus = intClassBonus * 0.5f;
-                    break;
-                case warrior:
-                    strClassBonus = strAttributes * 0.5f;
-                    conClassBonus = conAttributes * 0.5f;
-                    break;
-                case wizard:
-                    intClassBonus = intClassBonus * 0.5f;
-                    perClassBonus = perAttributes * 0.5f;
-                    break;
+        for (UserStatComputer.StatsRow row : statsRows) {
+            if (row.getClass().equals(UserStatComputer.EquipmentRow.class)) {
+                UserStatComputer.EquipmentRow equipmentRow = (UserStatComputer.EquipmentRow) row;
+                addEquipmentRow(equipmentTableLayout, equipmentRow.gearKey, equipmentRow.text, equipmentRow.stats);
+            } else if (row.getClass().equals(UserStatComputer.AttributeRow.class)) {
+                UserStatComputer.AttributeRow attributeRow2 = (UserStatComputer.AttributeRow) row;
+                addAttributeRow(getString(attributeRow2.labelId), attributeRow2.strVal, attributeRow2.intVal, attributeRow2.conVal, attributeRow2.perVal, attributeRow2.roundDown, attributeRow2.isSummary);
             }
-
-            addAttributeRow(getString(R.string.profile_class_bonus), strClassBonus, intClassBonus, conClassBonus, perClassBonus, false, false);
         }
+
+        addNormalAddBuffAttributes(user.getStats());
     }
 
-    public void gotCostume(List<ItemData> obj) {
+    public void gotCostume(List<Equipment> obj) {
         // fill costume table
-        for (ItemData i : obj) {
+        costumeTableLayout.removeAllViews();
+        for (Equipment i : obj) {
             addEquipmentRow(costumeTableLayout, i.getKey(), i.getText(), "");
         }
-
-        stopAndHideProgress(costumeProgress);
     }
 
     private void addNormalAddBuffAttributes(Stats stats) {
@@ -442,7 +413,7 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private TableRow addAttributeRow(String label, float strVal, float intVal, float conVal, float perVal, boolean roundDown, boolean isSummary) {
-        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_attributetablerow, null);
+        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_attributetablerow, attributesTableLayout, false);
         TextView keyTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_type);
         keyTextView.setText(label);
 
@@ -479,14 +450,10 @@ public class FullProfileActivity extends BaseActivity {
         return tableRow;
     }
 
-    private boolean attributeDetailsHidden = true;
-
-    private ArrayList<TableRow> attributeRows = new ArrayList<>();
-
     private void toggleAttributeDetails() {
         attributeDetailsHidden = !attributeDetailsHidden;
 
-        attributesCollapseIcon.setImageDrawable(getResources().getDrawable(attributeDetailsHidden
+        attributesCollapseIcon.setImageDrawable(ContextCompat.getDrawable(this, attributeDetailsHidden
                 ? R.drawable.ic_keyboard_arrow_right_black_24dp
                 : R.drawable.ic_keyboard_arrow_down_black_24dp));
 
@@ -533,4 +500,5 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     // endregion
+
 }

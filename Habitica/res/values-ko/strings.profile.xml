@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_pets_and_mounts">펫 &amp; 탑승펫</string>
+    <string name="profile_pets_found">발견한 펫</string>
+    <string name="profile_mounts_tamed">길들여진 탑승펫</string>
+    <string name="profile_loading_data">회원 데이터 가져오는 중.</string>
+    <string name="profile_send_message_to">%s에게 메세지 보내기</string>
+    <string name="profile_message_sent_to">%s에게 메세지가 전송되었습니다.</string>
+    <string name="profile_level">레벨:</string>
+    <string name="profile_class_bonus">직업 보너스:</string>
+    <string name="profile_allocated">할당된 포인트:</string>
+    <string name="profile_boosts">부스트:</string>
+    <string name="profile_private_message">개인 메시지</string>
+    <string name="profile_achievements">업적</string>
+    <string name="profile_achievement_ok">확인</string>
+    <string name="profile_qrcode_close">닫힘</string>
+
+</resources>

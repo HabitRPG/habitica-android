@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Réalisez vos Bonnes Habitudes afin de gagner de l\'or et de l\'expérience. Les Mauvaises Habitudes blesseront votre avatar si vous tapez sur elles, alors essayez de les éviter dans la vie réelle !</string>
-  <string name="tutorial_dailies">Accomplissez vos Tâches Quotidiennes afin de gagner de l\'or et de l\'expérience. Attention ! Les Tâches Quotidiennes blesseront votre avatar si vous ne les accomplissez pas à temps.</string>
-  <string name="tutorial_todos">Effectuez vos tâches À Faire dans la vraie vie, puis cochez-les pour gagner de l\'OR et de l\'EXPERIENCE, afin de récupérer des Récompenses et de débloquer du nouveau contenu !</string>
-  <string name="tutorial_rewards">Voici vos Récompenses !  Gagnez de l\'or en effectuant des Habitudes, des Tâches Quotidiennes et des Tâches à Faire dans le monde réel. Puis, dépensez-le en Récompenses dans le jeu ou en Récompenses personnalisées dans le monde réel.</string>
   <string name="tutorial_equipment">Quand vous achetez de l\'équipement, il apparaît ici. Votre Equipement de Combat affecte vos caractéristiques, et votre Costume (si utilisé) change l\'apparence de votre avatar.</string>
   <string name="tutorial_items">Gagnez des objets en accomplissant des tâches et en changeant de niveau. Tapez sur un objet pour l\'utiliser !</string>
   <string name="tutorial_pets">En accomplissant des tâches dans le monde réel, vous avez désormais une chance de trouver des œufs et des potions. Combinez-les pour faire éclore des familiers</string>

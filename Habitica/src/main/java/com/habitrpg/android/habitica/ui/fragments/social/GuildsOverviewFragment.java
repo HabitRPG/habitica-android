@@ -1,10 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,20 +10,34 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 
 public class GuildsOverviewFragment extends BaseMainFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    @Inject
+    SocialRepository socialRepository;
+    @Inject
+    ChallengeRepository challengeRepository;
+
     @BindView(R.id.my_guilds_listview)
     LinearLayout guildsListView;
-
     @BindView(R.id.publicGuildsButton)
     Button publicGuildsButton;
-
     @BindView(R.id.chat_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -49,10 +58,15 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
         unbinder = ButterKnife.bind(this, v);
         swipeRefreshLayout.setOnRefreshListener(this);
         this.publicGuildsButton.setOnClickListener(this);
-        if (this.guilds != null) {
-            this.setGuildsOnListView();
-        }
+        compositeSubscription.add(socialRepository.getUserGroups().subscribe(this::setGuilds, RxErrorHandler.handleEmptyError()));
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        challengeRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -63,26 +77,22 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-
         fetchGuilds();
     }
 
     private void fetchGuilds() {
-        if (this.apiHelper != null && this.apiHelper.apiService != null) {
-            this.apiHelper.apiService.listGroups("guilds")
-                    .compose(apiHelper.configureApiCallObserver())
+        if (this.socialRepository != null) {
+            this.socialRepository.retrieveGroups("guilds")
                     .subscribe(groups -> {
-                        GuildsOverviewFragment.this.guilds = groups;
-                        GuildsOverviewFragment.this.setGuildsOnListView();
                         if (swipeRefreshLayout != null) {
                             swipeRefreshLayout.setRefreshing(false);
                         }
-                    }, throwable -> {
-                    });
+                    }, RxErrorHandler.handleEmptyError());
         }
     }
 
-    private void setGuildsOnListView() {
+    private void setGuilds(RealmResults<Group> guilds) {
+        this.guilds = guilds;
         if (this.guildsListView == null) {
             return;
         }
@@ -100,16 +110,30 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
 
     @Override
     public void onClick(View v) {
+        BaseMainFragment fragment;
         if (v == this.publicGuildsButton) {
             PublicGuildsFragment publicGuildsFragment = new PublicGuildsFragment();
             publicGuildsFragment.memberGuildIDs = this.guildIDs;
-            this.activity.displayFragment(publicGuildsFragment);
+            fragment = publicGuildsFragment;
         } else {
             Integer guildIndex = ((ViewGroup) v.getParent()).indexOfChild(v);
             GuildFragment guildFragment = new GuildFragment();
-            guildFragment.setGuild(this.guilds.get(guildIndex));
+            guildFragment.setGuildId(this.guilds.get(guildIndex).id);
             guildFragment.isMember = true;
-            this.activity.displayFragment(guildFragment);
+            fragment = guildFragment;
+        }
+        if (this.activity != null) {
+            this.activity.displayFragment(fragment);
+        }
+    }
+
+
+    @Override
+    public String customTitle() {
+        if (isAdded()) {
+            return getString(R.string.sidebar_guilds);
+        } else {
+            return "";
         }
     }
 }

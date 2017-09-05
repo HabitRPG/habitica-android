@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/CardView.Default"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    style="@style/CardView.Default"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:id="@+id/avatarView"
             android:layout_width="103dp"
             android:layout_height="90dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="12dp"
             app:showBackground="false"
             app:showMount="false"
             app:showPet="false" />
@@ -47,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="lvl" />
+                    tools:text="lvl" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -72,16 +73,21 @@
                             android:layout_margin="5dp"
                             android:ellipsize="middle"
                             android:lines="1"
-                            android:text="class"
+                            tools:text="class"
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
 
-            <include
+            <com.habitrpg.android.habitica.ui.views.ValueBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/hpBar"
-                layout="@layout/value_bar" />
+                app:barForegroundColor="@color/hpColor"
+                app:description="@string/HP_default"
+                app:barIconDrawable="@drawable/ic_header_heart"
+                app:lightBackground="true"/>
         </LinearLayout>
 
     </LinearLayout>

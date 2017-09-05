@@ -1,27 +1,31 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AvatarOverviewFragment extends BaseMainFragment implements AdapterView.OnItemSelectedListener {
+
+    @Inject
+    UserRepository userRepository;
 
     FragmentAvatarOverviewBinding viewBinding;
 
@@ -60,14 +64,10 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (this.apiHelper != null) {
-            this.apiHelper.apiService.getContent(apiHelper.languageCode)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(contentResult -> {
-                    }, throwable -> {
-                    });
+        if (apiClient != null) {
+            apiClient.getContent()
+                    .subscribe(contentResult -> {}, RxErrorHandler.handleEmptyError());
         }
-
     }
 
     @Override
@@ -104,25 +104,38 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     }
 
     @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
 
-    private void displayCustomizationFragment(String type, String category) {
+    private void displayCustomizationFragment(String type, @Nullable String category) {
         AvatarCustomizationFragment fragment = new AvatarCustomizationFragment();
         fragment.type = type;
         fragment.category = category;
-        activity.displayFragment(fragment);
+        if (activity != null) {
+            activity.displayFragment(fragment);
+        }
     }
 
     @Override
-    public void updateUserData(HabitRPGUser user) {
+    public void updateUserData(User user) {
         super.updateUserData(user);
-        viewBinding.setPreferences(user.getPreferences());
-        this.setSize(user.getPreferences().getSize());
+        if (user != null && viewBinding != null) {
+            viewBinding.setPreferences(user.getPreferences());
+            this.setSize(user.getPreferences().getSize());
+        }
     }
 
     private void setSize(String size) {
+        if (avatarSizeSpinner == null) {
+            return;
+        }
         if (size.equals("slim")) {
             avatarSizeSpinner.setSelection(0, false);
         } else {
@@ -139,17 +152,22 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
             newSize = "broad";
         }
 
-        if (!this.user.getPreferences().getSize().equals(newSize)) {
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.size", newSize);
-            apiHelper.apiService.updateUser(updateData)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
-                    });
+        if (this.user != null && !this.user.getPreferences().getSize().equals(newSize)) {
+            userRepository.updateUser(user, "preferences.size", newSize)
+                    .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+
+    @Override
+    public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
+        return getString(R.string.sidebar_avatar);
     }
 }

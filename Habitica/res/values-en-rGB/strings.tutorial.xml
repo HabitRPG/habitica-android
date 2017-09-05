@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Complete Positive Habits to earn gold and experience! Negative Habits will hurt your avatar if you tap them, so avoid them in real life!</string>
-  <string name="tutorial_dailies">Defeat your repeating Daily tasks to gain gold and experience. Danger! Dailies will hurt your avatar if you don\'t complete them in time.</string>
-  <string name="tutorial_todos">Complete your To-Dos in real life, then check them off for GOLD and EXPERIENCE so you can earn Rewards and unlock new features!</string>
-  <string name="tutorial_rewards">These are your Rewards! Earn gold by completing real-world Habits, Dailies, and To-Dos. Then spend it on in-game Rewards or custom real-world Rewards!</string>
   <string name="tutorial_equipment">When you buy equipment, it appears here. Your Battle Gear affects your stats, and your Costume (if enabled) affects what your avatar wears.</string>
   <string name="tutorial_items">Earn items by completing tasks and levelling up. Tap on an item to use it!</string>
   <string name="tutorial_pets">As you complete real-world tasks, you now have a random chance of finding eggs and potions. Combine them to hatch pets.</string>

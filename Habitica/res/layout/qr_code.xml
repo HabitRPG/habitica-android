@@ -11,10 +11,10 @@
         android:text="@string/qr_section_title"
         style="@style/SectionTitle"
         android:layout_gravity="center"
+        android:layout_marginTop="40dp"
          />
 
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="300dp"
@@ -26,7 +26,7 @@
             android:id="@+id/QRImageView"
             android:layout_gravity="center" />
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:orientation="vertical"
             android:layout_width="60dp"
             android:layout_height="60dp"

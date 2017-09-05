@@ -12,10 +12,11 @@ buildscript {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
-        minSdkVersion 12
+        minSdkVersion 14
         versionCode 1
         versionName "1.0"
 
@@ -46,11 +47,11 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'org.glassfish:javax.json:1.0.4'
-    compile 'com.google.android.gms:play-services:9.2.0'
-    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'org.solovyev.android:checkout:0.7.5@aar'
+    compile 'org.solovyev.android:checkout:0.9.1@aar'
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0'

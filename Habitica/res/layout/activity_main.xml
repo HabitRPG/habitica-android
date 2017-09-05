@@ -2,22 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activities.MainActivity"
-    android:id="@+id/overlayFrameLayout">
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:gravity="center">
-
+    android:layout_height="match_parent">
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="0dp"
-        tools:context=".ui.activities.MainActivity">
+        tools:context=".ui.activities.MainActivity"
+        android:fitsSystemWindows="false">
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -28,14 +19,12 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="false">
+            android:layout_height="wrap_content">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="false"
                 app:titleEnabled="false"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginEnd="?attr/actionBarSize"
@@ -57,7 +46,33 @@
                     android:minHeight="?attr/actionBarSize"
                     android:theme="@style/Toolbar"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/Theme.AppCompat.Light" />
+                    app:popupTheme="@style/Theme.AppCompat.Light">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="16dp">
+
+                        <TextView
+                            android:id="@+id/toolbar_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                            tools:text="Habitica"/>
+
+                        <FrameLayout
+                            android:id="@+id/toolbar_accessory_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:adjustViewBounds="true"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"/>
+
+                    </RelativeLayout>
+                    </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
 
             <android.support.design.widget.TabLayout
@@ -79,17 +94,44 @@
                 app:tabMode="fixed" />
         </android.support.design.widget.AppBarLayout>
 
-        <FrameLayout
-            android:id="@+id/floating_menu_wrapper"
-            app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/bottom_wrapper"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:orientation="vertical"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="8dp" />
+            app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
+            android:padding="0dp">
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/floating_menu_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="-5dp"
+                />
+            <com.roughike.bottombar.BottomBar
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/brand_100"
+                app:bb_tabXmlResource="@xml/main_menu_tasks"
+                app:bb_inActiveTabColor="@color/brand_500"
+                app:bb_activeTabColor="@color/white"
+                app:bb_behavior="underNavbar"
+                app:bb_badgesHideWhenActive="true"
+                app:bb_badgeBackgroundColor="@color/brand_400"
+                android:layout_gravity="bottom"
+                android:layout_margin="0dp"
+                />
 
+        </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
-</android.support.v4.widget.DrawerLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/overlayFrameLayout"
+        android:clickable="false"
+        android:fitsSystemWindows="true"
+        />
 </FrameLayout>

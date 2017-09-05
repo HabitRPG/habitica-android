@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -27,7 +27,6 @@
                     android:id="@+id/avatar_with_bars"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
                     android:adjustViewBounds="true"
                     android:background="@color/transparent"
@@ -57,17 +56,34 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <include
+                            <com.habitrpg.android.habitica.ui.views.ValueBar
                                 android:id="@+id/hpBar"
-                                layout="@layout/value_bar" />
+                                layout="@layout/value_bar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/header_bar_spacing"
+                                app:barForegroundColor="@color/hpColor"
+                                app:description="@string/HP_default"
+                                app:barIconDrawable="@drawable/ic_header_heart" />
 
-                            <include
+                            <com.habitrpg.android.habitica.ui.views.ValueBar
                                 android:id="@+id/xpBar"
-                                layout="@layout/value_bar" />
+                                layout="@layout/value_bar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/header_bar_spacing"
+                                app:barForegroundColor="@color/xpColor"
+                                app:description="@string/XP_default"
+                                app:barIconDrawable="@drawable/ic_header_exp"  />
 
-                            <include
+                            <com.habitrpg.android.habitica.ui.views.ValueBar
                                 android:id="@+id/mpBar"
-                                layout="@layout/value_bar" />
+                                layout="@layout/value_bar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:barForegroundColor="@color/mpColor"
+                                app:description="@string/MP_default"
+                                app:barIconDrawable="@drawable/ic_header_magic" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -91,47 +107,10 @@
                             android:layout_height="0dp"
                             android:layout_weight="1" />
 
-                        <LinearLayout
+                        <com.habitrpg.android.habitica.ui.views.CurrencyView
+                            android:id="@+id/currencyView"
                             android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:id="@+id/gems_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginStart="16dp"
-                                android:drawableLeft="@drawable/ic_header_gem"
-                                android:drawablePadding="8dp"
-                                android:drawableStart="@drawable/ic_header_gem"
-                                android:gravity="center"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/gold_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginStart="16dp"
-                                android:drawableLeft="@drawable/ic_header_gold"
-                                android:drawablePadding="6dp"
-                                android:drawableStart="@drawable/ic_header_gold"
-                                android:gravity="center"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/silver_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginStart="16dp"
-                                android:drawableLeft="@drawable/ic_header_silver"
-                                android:drawablePadding="6dp"
-                                android:drawableStart="@drawable/ic_header_silver"
-                                android:gravity="center"
-                                android:textSize="14sp" />
-                        </LinearLayout>
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -140,7 +119,7 @@
                     android:id="@+id/profile_blurb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-		    android:textIsSelectable="true"
+                    android:textIsSelectable="true"
                     android:text="Blurb" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -208,13 +187,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/battle_gear"
                     android:textStyle="bold" />
-
-                <ProgressBar
-                    android:id="@+id/avatar_equip_progress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true" />
-
                 <TableLayout
                     android:id="@+id/equipment_table"
                     android:layout_width="match_parent"
@@ -242,13 +214,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/costume"
                     android:textStyle="bold" />
-
-                <ProgressBar
-                    android:id="@+id/avatar_costume_progress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true" />
-
                 <TableLayout
                     android:id="@+id/costume_table"
                     android:layout_width="match_parent"
@@ -293,12 +258,12 @@
                                 android:text="@string/attributes"
                                 android:textStyle="bold" />
 
-                            <com.facebook.drawee.view.SimpleDraweeView
-                                android:id="@+id/attributes_collapse_icon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
-                                android:layout_gravity="bottom" />
+                            <android.support.v7.widget.AppCompatImageView
+                                    android:id="@+id/attributes_collapse_icon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+                                    android:layout_gravity="bottom" />
 
                         </LinearLayout>
 
@@ -324,12 +289,6 @@
                     </TableRow>
 
                 </TableLayout>
-
-                <ProgressBar
-                    android:id="@+id/avatar_attributes_progress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -386,6 +345,42 @@
                             tools:text="#" />
                     </TableRow>
                 </TableLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/profile_achievements_card"
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                style="@style/CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_achievements"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/avatar_achievements_progress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+
+                <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbarSize="3dp"
+                    android:scrollbarThumbVertical="@color/md_grey_500"
+                    android:scrollbars="vertical" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

@@ -4,21 +4,20 @@ import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 
 public class ViewHelper {
 
     public static void SetBackgroundTint(Button b, int tint) {
-        ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{tint});
-
         if (b instanceof AppCompatButton) {
+            ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{tint});
             AppCompatButton compatButton = (AppCompatButton) b;
-
-            compatButton.setSupportBackgroundTintList(csl);
-
+            ViewCompat.setBackgroundTintList(compatButton, csl);
             return;
         }
 
@@ -28,18 +27,22 @@ public class ViewHelper {
     }
 
     @TargetApi(21)
-    public static void SetBackgroundTintV21(Button b, int tint) {
+    private static void SetBackgroundTintV21(Button b, int tint) {
 
         ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{tint});
 
         b.setBackgroundTintList(csl);
     }
 
+    public static void SetBackgroundTint(ImageView v, int tint) {
+        v.setColorFilter(tint, PorterDuff.Mode.SRC);
+    }
+
     public static void SetBackgroundTint(View v, int tint) {
         v.getBackground().setColorFilter(tint, PorterDuff.Mode.SRC_OVER);
     }
 
-    public static void SetBackgroundTint(CheckBox c, int tint) {
+    static void SetBackgroundTint(CheckBox c, int tint) {
         if (c != null) {
             c.setBackgroundColor(tint);
         }

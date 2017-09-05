@@ -2,22 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="138"
-    android:versionName="0.0.35"
+    android:versionCode="1926"
+    android:versionName="1.1.6"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="24" />
+        android:targetSdkVersion="25" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".HabiticaApplication"
@@ -29,6 +31,7 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -46,12 +49,13 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/LoginActivityName"
-            android:theme="@style/AppThemeWithActionBarBlackText"
+            android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.activities.IntroActivity"
+            android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
         </activity>
@@ -72,7 +76,9 @@
         </activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-
+        <meta-data
+                android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+                android:value="false"/>
         <activity
             android:name=".ui.activities.AboutActivity"
             android:theme="@style/AppThemeWithActionBarBlackText"
@@ -125,6 +131,27 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".ui.activities.ChallengeDetailActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.activities.CreateChallengeActivity"
+            android:theme="@style/AppTheme.ActionBar"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -135,7 +162,7 @@
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activities.GemPurchaseActivity"
                   android:screenOrientation="portrait" />
-        <receiver  android:process=":remote" android:name=".NotificationPublisher" />
+        <receiver  android:process=":remote" android:name=".receivers.NotificationPublisher" />
 
         <receiver
                 android:process=":remote"
@@ -230,5 +257,4 @@
         <service android:name=".widget.HabitButtonWidgetService"/>
     </application>
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>

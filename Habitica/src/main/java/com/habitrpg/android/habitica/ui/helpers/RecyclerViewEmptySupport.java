@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.WindowInsets;
 
 //http://stackoverflow.com/a/27801394/1315039
 public class RecyclerViewEmptySupport extends RecyclerView {
@@ -35,6 +36,11 @@ public class RecyclerViewEmptySupport extends RecyclerView {
 
     public RecyclerViewEmptySupport(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    @Override
+    public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+        return super.onApplyWindowInsets(insets);
     }
 
     void checkIfEmpty() {

@@ -6,11 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -68,7 +67,7 @@ public class AddTaskWidgetActivity extends AppCompatActivity {
         finish();
 
         Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, AddTaskWidgetProvider.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] {widgetId});
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{widgetId});
         sendBroadcast(intent);
     }
 

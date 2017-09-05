@@ -1,24 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.ContentReloadedEvent;
-import com.habitrpg.android.habitica.events.ReloadContentEvent;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,17 +8,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.inventory.Animal;
+import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class StableRecyclerFragment extends BaseFragment {
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
+
+    @Inject
+    InventoryRepository inventoryRepository;
+
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
     @BindView(R.id.empty_view)
@@ -45,7 +44,7 @@ public class StableRecyclerFragment extends BaseFragment {
     public StableRecyclerAdapter adapter;
     public String itemType;
     public String itemTypeText;
-    public HabitRPGUser user;
+    public User user;
     GridLayoutManager layoutManager = null;
 
     private View view;
@@ -97,6 +96,12 @@ public class StableRecyclerFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        inventoryRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
@@ -128,28 +133,17 @@ public class StableRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        Observable.defer(() -> {
-            if (itemType == null) {
-                throw new IllegalArgumentException();
-            }
-            List<Object> items = new ArrayList<>();
+        Observable<? extends Animal> observable;
 
-            Where<? extends Animal> query = null;
-            switch (itemType) {
-                case "pets":
-                    query = new Select().from(Pet.class).orderBy(true, "animalGroup", "animal", "color");
-                    break;
-                case "mounts":
-                    query = new Select().from(Mount.class).orderBy(true, "animalGroup", "animal", "color");
-                    break;
-            }
-            if (query == null) {
-                throw new IllegalArgumentException();
-            }
-            List<? extends Animal> unsortedAnimals = query.queryList();
+        if ("pets".equals(itemType)) {
+            observable = inventoryRepository.getPets().first().flatMap(Observable::from);
+        } else {
+            observable = inventoryRepository.getMounts().first().flatMap(Observable::from);
+        }
+
+        observable.toList().flatMap(unsortedAnimals -> {
+            List<Object> items = new ArrayList<>();
             if (unsortedAnimals.size() == 0) {
-                ReloadContentEvent event = new ReloadContentEvent();
-                EventBus.getDefault().post(event);
                 return Observable.just(items);
             }
             String lastSectionTitle = "";
@@ -174,24 +168,14 @@ public class StableRecyclerFragment extends BaseFragment {
                 if (user != null && user.getItems() != null) {
                     switch (itemType) {
                         case "pets":
-                            if (user.getItems().getPets() != null
-                                    && user.getItems().getPets().containsKey(animal.getKey())
-                                    && user.getItems().getPets().get(animal.getKey()) != null
-                                    && user.getItems().getPets().get(animal.getKey()) > 0) {
-                                if (lastAnimal.getNumberOwned() == 0) {
-                                    lastAnimal.setColor(animal.getColor());
-                                }
+                            Pet pet = (Pet) animal;
+                            if (pet.getTrained() > 0) {
                                 lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
                             }
                             break;
                         case "mounts":
-                            if (user.getItems().getMounts() != null
-                                    && user.getItems().getMounts().containsKey(animal.getKey())
-                                    && user.getItems().getMounts().get(animal.getKey()) != null
-                                    && user.getItems().getMounts().get(animal.getKey())) {
-                                if (lastAnimal.getNumberOwned() == 0) {
-                                    lastAnimal.setColor(animal.getColor());
-                                }
+                            Mount mount = (Mount) animal;
+                            if (mount.getOwned()) {
                                 lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
                             }
                             break;
@@ -199,17 +183,6 @@ public class StableRecyclerFragment extends BaseFragment {
                 }
             }
             return Observable.just(items);
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(items -> {
-                    adapter.setItemList(items);
-                }, throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void reloadedContent(ContentReloadedEvent event) {
-        this.loadItems();
+        }).subscribe(items -> adapter.setItemList(items), RxErrorHandler.handleEmptyError());
     }
 }

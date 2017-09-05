@@ -1,137 +1,194 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
-/**
- * Created by keithholliday on 6/20/16.
- */
 public class InboxMessageListFragment extends BaseMainFragment
-            implements SwipeRefreshLayout.OnRefreshListener, HabitRPGUserCallback.OnUserReceived {
+        implements SwipeRefreshLayout.OnRefreshListener {
 
-        @BindView(R.id.inbox_refresh_layout)
-        SwipeRefreshLayout swipeRefreshLayout;
+    @Inject
+    SocialRepository socialRepository;
+    @Inject
+    UserRepository userRepository;
 
-        @BindView(R.id.chat_list)
-        RecyclerView chatRecyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.emoji_button)
+    ImageButton emojiButton;
+    @BindView(R.id.chat_edit_text)
+    EditText chatEditText;
+    @BindView(R.id.send_button)
+    ImageButton sendButton;
+    @BindView(R.id.community_guidelines_view)
+    TextView communityGuidelinesView;
 
-        List<ChatMessage> messages;
-        ChatRecyclerViewAdapter chatAdapter;
-        String chatRoomUser;
-        String replyToUserUUID;
+    ChatRecyclerViewAdapter chatAdapter;
+    String chatRoomUser;
+    String replyToUserUUID;
 
-        public InboxMessageListFragment() {
-            messages = new ArrayList<ChatMessage>();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        hideToolbar();
+        disableToolbarScrolling();
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        View view = inflater.inflate(R.layout.fragment_inbox_message_list, container, false);
+        ButterKnife.bind(this, view);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        //layoutManager.setReverseLayout(true);
+        //layoutManager.setStackFromEnd(false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        chatAdapter = new ChatRecyclerViewAdapter(null, true, user);
+        chatAdapter.setSendingUser(this.user);
+        recyclerView.setAdapter(chatAdapter);
+        compositeSubscription.add(chatAdapter.getUserLabelClickEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
+
+        loadMessages();
+
+        communityGuidelinesView.setVisibility(View.GONE);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.invalidate();
+        view.forceLayout();
+    }
+
+    private void loadMessages() {
+        if (user != null && user.isManaged()) {
+            compositeSubscription.add(user.getInbox().getMessages().where()
+                    .equalTo("uuid", replyToUserUUID)
+                    .findAllSortedAsync("timestamp", Sort.DESCENDING)
+                    .asObservable()
+                    .filter(RealmResults::isLoaded)
+                    .first()
+                    .subscribe(chatMessages -> this.chatAdapter.updateData(chatMessages), RxErrorHandler.handleEmptyError()));
         }
+    }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            super.onCreateView(inflater, container, savedInstanceState);
+    @Override
+    public void onDestroyView() {
+        showToolbar();
+        enableToolbarScrolling();
+        super.onDestroyView();
+    }
 
-            View view = inflater.inflate(R.layout.fragment_inbox_message_list, container, false);
-            ButterKnife.bind(this, view);
-            swipeRefreshLayout.setOnRefreshListener(this);
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        userRepository.close();
+        super.onDestroy();
+    }
 
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-            chatRecyclerView.setLayoutManager(layoutManager);
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
+    }
 
-            chatAdapter = new ChatRecyclerViewAdapter(messages, null, null, false);
-            chatAdapter.setToInboxChat(this.replyToUserUUID);
-            chatAdapter.setSendingUser(this.user);
-            chatRecyclerView.setAdapter(chatAdapter);
+    private void refreshUserInbox () {
+        this.swipeRefreshLayout.setRefreshing(true);
+        this.userRepository.retrieveUser(true)
+                .subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError());
+    }
 
-            return view;
-        }
+    @Override
+    public void onRefresh() {
+        this.refreshUserInbox();
+    }
 
-        @Override
-        public void injectFragment(AppComponent component) {
-            component.inject(this);
-        }
-
-        private void refreshUserInbox () {
-            this.swipeRefreshLayout.setRefreshing(true);
-            this.apiHelper.retrieveUser(true)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new HabitRPGUserCallback(this), throwable -> {});
-        }
-
-        @Override
-        public void onRefresh() {
-            this.refreshUserInbox();
-        }
-
-        public void setMessages(Map<String, ChatMessage> messages, String chatRoomUser, String replyToUserUUID) {
-            this.chatRoomUser = chatRoomUser;
-            this.replyToUserUUID = replyToUserUUID;
-
-            this.messages = new ArrayList<>();
-
-            for (Object o : messages.entrySet()) {
-                Map.Entry pair = (Map.Entry) o;
-                ChatMessage message = (ChatMessage) pair.getValue();
-                if (!message.uuid.equals(replyToUserUUID)) continue;
-                this.messages.add(0, message);
-            }
-
-            Collections.sort(this.messages,
-                    (message1, message2) -> message2.timestamp.compareTo(message1.timestamp));
-
-            if (this.chatAdapter != null) {
-                chatAdapter.setToInboxChat(replyToUserUUID);
-                this.chatAdapter.setMessages(this.messages);
-            }
-        }
-
-        @Override
-        public void onUserReceived(HabitRPGUser user) {
-            this.user = user;
-            this.setMessages(user.getInbox().getMessages(), this.chatRoomUser, this.replyToUserUUID);
+    public void onUserReceived(User user) {
+        this.user = user;
+        if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
+    }
 
-        @Subscribe
-        public void onEvent(SendNewInboxMessageCommand cmd) {
-            HashMap<String, String> messageObject = new HashMap<>();
-            messageObject.put("message", cmd.Message);
-            messageObject.put("toUserId", cmd.UserToSendTo);
+    @Subscribe
+    public void onEvent(SendNewInboxMessageCommand cmd) {
+        socialRepository.postPrivateMessage(cmd.userToSendTo, cmd.message)
+                .subscribe(postChatMessageResult -> this.refreshUserInbox(), RxErrorHandler.handleEmptyError());
+        UiUtils.dismissKeyboard(getActivity());
+    }
 
-            apiHelper.apiService.postPrivateMessage(messageObject)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(postChatMessageResult -> {
-                        this.refreshUserInbox();
-                    }, throwable -> {
-                    });
+    public void setReceivingUser(String chatRoomUser, String replyToUserUUID) {
+        this.chatRoomUser = chatRoomUser;
+        this.replyToUserUUID = replyToUserUUID;
+    }
 
-            UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+    @OnTextChanged(R.id.chat_edit_text)
+    public void onChatMessageTextChanged() {
+        Editable chatText = chatEditText.getText();
+        setSendButtonEnabled(chatText.length() > 0);
+    }
+
+    private void setSendButtonEnabled(boolean enabled) {
+        int tintColor;
+        if (enabled) {
+            tintColor = ContextCompat.getColor(getContext(), R.color.brand_400);
+        } else {
+            tintColor = ContextCompat.getColor(getContext(), R.color.md_grey_400);
         }
+        sendButton.setEnabled(enabled);
+        sendButton.setColorFilter(tintColor);
+    }
+
+    @OnClick(R.id.send_button)
+    public void sendChatMessage() {
+        String chatText = chatEditText.getText().toString();
+        if (chatText.length() > 0) {
+            chatEditText.setText(null);
+            socialRepository.postPrivateMessage(replyToUserUUID, chatText).subscribe(postChatMessageResult -> {
+                recyclerView.scrollToPosition(0);
+            }, RxErrorHandler.handleEmptyError());
+        }
+    }
+
+    @OnClick(R.id.emoji_button)
+    public void openEmojiView() {
+
+    }
 }

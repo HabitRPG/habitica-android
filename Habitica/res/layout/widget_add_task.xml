@@ -19,7 +19,6 @@
         android:layout_gravity="center_horizontal"
         android:textSize="12sp"
         android:textColor="@android:color/white"
-        android:singleLine="false"
         android:shadowColor="@android:color/black"
         android:shadowRadius="2"
         android:shadowDx="1"

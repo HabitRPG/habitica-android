@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events.commands;
 
-import com.magicmicky.habitrpgwrapper.lib.models.Skill;
+import com.habitrpg.android.habitica.models.Skill;
 
 /**
  * Created by viirus on 28/11/15.

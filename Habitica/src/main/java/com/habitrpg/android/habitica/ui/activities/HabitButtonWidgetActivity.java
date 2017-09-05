@@ -10,18 +10,29 @@ import android.support.v7.widget.RecyclerView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class HabitButtonWidgetActivity extends BaseActivity implements TaskClickActivity {
+public class HabitButtonWidgetActivity extends BaseActivity {
+
+    @Inject
+    TaskRepository taskRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private int widgetId;
+    private SkillTasksRecyclerViewAdapter adapter;
 
     @Override
     protected int getLayoutResId() {
@@ -57,10 +68,13 @@ public class HabitButtonWidgetActivity extends BaseActivity implements TaskClick
             recyclerView.setLayoutManager(layoutManager);
         }
 
-        recyclerView.setAdapter(new SkillTasksRecyclerViewAdapter(Task.TYPE_HABIT, this));
+        adapter = new SkillTasksRecyclerViewAdapter(null, true);
+        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe(task -> taskSelected(task.getId())));
+        recyclerView.setAdapter(adapter);
+
+        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(adapter::updateData);
     }
 
-    @Override
     public void taskSelected(String taskId) {
         finishWithSelection(taskId);
     }
@@ -74,7 +88,7 @@ public class HabitButtonWidgetActivity extends BaseActivity implements TaskClick
         finish();
 
         Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, HabitButtonWidgetProvider.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] {widgetId});
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{widgetId});
         sendBroadcast(intent);
     }
 

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 
 /**
  * Created by keithholliday on 7/16/16.

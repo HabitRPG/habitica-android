@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/task_group_name"
+        style="@style/Body1"
+        android:layout_marginTop="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="2 Habits" />
+
+    <LinearLayout
+        android:id="@+id/tasks_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/border_1f000000"
+        android:orientation="vertical">
+
+    </LinearLayout>
+</LinearLayout>

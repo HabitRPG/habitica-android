@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.content.Context;
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.HabiticaApplication;
 
 import java.io.File;
@@ -18,10 +21,12 @@ import rx.schedulers.Schedulers;
 
 // based on http://stackoverflow.com/questions/29838565/downloading-files-using-okhttp-okio-and-rxjava
 public class SoundFileLoader {
-    OkHttpClient client;
+    private final Context context;
+    private OkHttpClient client;
 
-    public SoundFileLoader(){
+    public SoundFileLoader(Context context) {
         client = new OkHttpClient();
+        this.context = context;
     }
 
     public Observable<List<SoundFile>> download(List<SoundFile> files) {
@@ -41,12 +46,14 @@ public class SoundFileLoader {
                         Response response;
                         try {
                             response = client.newCall(request).execute();
-                            if (!response.isSuccessful()) { throw new IOException(); }
+                            if (!response.isSuccessful()) {
+                                throw new IOException();
+                            }
                         } catch (IOException io) {
                             throw OnErrorThrowable.from(OnErrorThrowable.addValueAsLastCause(io, audioFile));
                         }
 
-                        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                             try {
                                 BufferedSink sink = Okio.buffer(Okio.sink(file));
                                 sink.writeAll(response.body().source());
@@ -68,8 +75,14 @@ public class SoundFileLoader {
                 .map(ArrayList::new);
     }
 
+    @Nullable
     private String getExternalCacheDir() {
-        return HabiticaApplication.getInstance(HabiticaApplication.currentActivity).getExternalCacheDir().getPath();
+        File cacheDir = HabiticaApplication.getInstance(context).getExternalCacheDir();
+        if (cacheDir != null) {
+            return cacheDir.getPath();
+        } else {
+            return null;
+        }
     }
 
     public String getFullAudioFilePath(SoundFile soundFile) {

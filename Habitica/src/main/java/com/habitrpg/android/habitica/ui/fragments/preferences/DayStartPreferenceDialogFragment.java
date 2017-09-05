@@ -1,9 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.prefs.TimePreference;
-
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,10 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.prefs.TimePreference;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class DayStartPreferenceDialogFragment extends PreferenceDialogFragmentCompat {
     public static final String TAG = TimePreferenceDialogFragment.class.getSimpleName();
@@ -66,7 +65,7 @@ public class DayStartPreferenceDialogFragment extends PreferenceDialogFragmentCo
     private void updateDescriptionText(int hour) {
         Calendar date = new GregorianCalendar();
         if (date.get(Calendar.HOUR) < hour) {
-            date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH)+1);
+            date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + 1);
         }
         date.set(Calendar.HOUR_OF_DAY, hour);
         date.set(Calendar.MINUTE, 0);

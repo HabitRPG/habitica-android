@@ -1,23 +1,11 @@
 package com.habitrpg.android.habitica.helpers.notifications;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.RemoteInput;
-import android.util.Log;
-import android.widget.RemoteViews;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-
-import java.util.Map;
 
 /**
  * Created by keithholliday on 7/1/16.

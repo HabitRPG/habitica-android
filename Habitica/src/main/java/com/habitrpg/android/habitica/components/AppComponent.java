@@ -1,18 +1,27 @@
 package com.habitrpg.android.habitica.components;
 
-import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.receivers.NotificationPublisher;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
+import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseInstanceIDService;
+import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseMessagingService;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.modules.DeveloperModule;
+import com.habitrpg.android.habitica.modules.RepositoryModule;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
+import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
+import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
+import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
+import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
+import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
@@ -25,13 +34,14 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
+import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
@@ -46,6 +56,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRe
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableRecyclerFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
@@ -59,17 +70,27 @@ import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeListFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
+import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
+import com.habitrpg.android.habitica.widget.BaseWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
+import com.habitrpg.android.habitica.widget.TaskListFactory;
 import com.habitrpg.android.habitica.widget.TaskListWidgetProvider;
 
 import javax.inject.Singleton;
@@ -77,7 +98,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class})
+@Component(modules = {DeveloperModule.class, AppModule.class, ApiModule.class, RepositoryModule.class})
 public interface AppComponent {
 
     void inject(ClassSelectionActivity classSelectionActivity);
@@ -196,11 +217,15 @@ public interface AppComponent {
 
     void inject(SoundManager soundManager);
 
+    void inject(ChallengesOverviewFragment challengesOverviewFragment);
+
+    void inject(ChallengeListFragment challengeListFragment);
+
+    void inject(ChallengeDetailActivity challengeDetailActivity);
+
+    void inject(ApiClient apiClient);
+
     void inject(TaskListWidgetProvider taskListWidgetProvider);
-
-    void inject(APIHelper apiHelper);
-
-    //void inject(BaseTasksRecyclerViewAdapter vhBaseTasksRecyclerViewAdapter);
 
     void inject(RemindersManager remindersManager);
 
@@ -213,4 +238,43 @@ public interface AppComponent {
     void inject(RewardsRecyclerViewAdapter rewardsRecyclerViewAdapter);
 
     void inject(TodosRecyclerViewAdapter todosRecyclerViewAdapter);
+
+    void inject(SubscriptionFragment subscriptionFragment);
+
+    void inject(ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter);
+
+    void inject(ChallengeTasksRecyclerViewFragment challengeTasksRecyclerViewFragment);
+
+    void inject(TaskListFactory taskListFactory);
+
+    void inject(GemPurchaseActivity gemPurchaseActivity);
+
+    void inject(TaskFilterDialog taskFilterDialog);
+
+    void inject(TaskReceiver taskReceiver);
+
+    void inject(TaskAlarmBootReceiver taskAlarmBootReceiver);
+
+    void inject(HabiticaFirebaseInstanceIDService habiticaFirebaseInstanceIDService);
+
+    void inject(HabiticaFirebaseMessagingService habiticaFirebaseMessagingService);
+
+    void inject(AccountDetailsFragment accountDetailsFragment);
+
+    void inject(BaseWidgetProvider baseWidgetProvider);
+
+
+    void inject(NotificationPublisher notificationPublisher);
+
+    void inject(CreateChallengeActivity createChallengeActivity);
+
+    void inject(ChallengeDetailDialogHolder challengeDetailDialogHolder);
+
+    void inject(TavernDetailFragment tavernDetailFragment);
+
+    void inject(PartyDetailFragment partyDetailFragment);
+
+    void inject(QuestDetailFragment questDetailFragment);
+
+    void inject(PurchaseDialog purchaseDialog);
 }

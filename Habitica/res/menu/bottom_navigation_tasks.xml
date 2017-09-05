@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/action_habits"
+            android:enabled="true"
+            android:icon="@drawable/icon_habits"
+            android:title="@string/habits"
+            app:showAsAction="always" />
+    <item
+            android:id="@+id/action_dailies"
+            android:enabled="true"
+            android:icon="@drawable/icon_dailies"
+            android:title="@string/dailies"
+            app:showAsAction="always" />
+    <item
+            android:id="@+id/action_todos"
+            android:enabled="true"
+            android:icon="@drawable/icon_todos"
+            android:title="@string/todos"
+            app:showAsAction="always" />
+    <item
+            android:id="@+id/action_rewards"
+            android:enabled="true"
+            android:icon="@drawable/icon_rewards"
+            android:title="@string/rewards"
+            app:showAsAction="always"/>
+</menu>

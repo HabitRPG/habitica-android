@@ -1,27 +1,30 @@
 package com.habitrpg.android.habitica;
 
-import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
-import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
-import com.magicmicky.habitrpgwrapper.lib.models.Transaction;
-import com.playseeds.android.sdk.Seeds;
-
-import org.solovyev.android.checkout.BasePurchaseVerifier;
-import org.solovyev.android.checkout.Purchase;
-import org.solovyev.android.checkout.RequestListener;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
-import java.io.IOException;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.UserSubscribedEvent;
+import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
+import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
+import com.habitrpg.android.habitica.models.Transaction;
+import com.habitrpg.android.habitica.models.responses.ErrorResponse;
+import com.playseeds.android.sdk.Seeds;
+
+import org.greenrobot.eventbus.EventBus;
+import org.solovyev.android.checkout.BasePurchaseVerifier;
+import org.solovyev.android.checkout.Purchase;
+import org.solovyev.android.checkout.RequestListener;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.HttpException;
 
 /**
  * Created by Negue on 26.11.2015.
@@ -29,16 +32,16 @@ import retrofit2.adapter.rxjava.HttpException;
 public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
     private static final String PURCHASED_PRODUCTS_KEY = "PURCHASED_PRODUCTS";
-    private final APIHelper apiHelper;
+    private final ApiClient apiClient;
     private Set<String> purchasedOrderList = new HashSet<>();
     private SharedPreferences preferences;
 
-    public HabiticaPurchaseVerifier(Context context, APIHelper apiHelper) {
+    public HabiticaPurchaseVerifier(Context context, ApiClient apiClient) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         preferences.getStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList);
 
-        this.apiHelper = apiHelper;
+        this.apiClient = apiClient;
     }
 
     @Override
@@ -51,17 +54,17 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
                 requestListener.onSuccess(verifiedPurchases);
             } else {
-                PurchaseValidationRequest validationRequest = new PurchaseValidationRequest();
-                validationRequest.transaction = new Transaction();
-                validationRequest.transaction.receipt = purchase.data;
-                validationRequest.transaction.signature = purchase.signature;
+                if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
+                    PurchaseValidationRequest validationRequest = new PurchaseValidationRequest();
+                    validationRequest.transaction = new Transaction();
+                    validationRequest.transaction.receipt = purchase.data;
+                    validationRequest.transaction.signature = purchase.signature;
 
-                apiHelper.apiService.validatePurchase(validationRequest).subscribe(purchaseValidationResult -> {
+                apiClient.validatePurchase(validationRequest).subscribe(purchaseValidationResult -> {
                     purchasedOrderList.add(purchase.orderId);
 
-                    verifiedPurchases.add(purchase);
+                        requestListener.onSuccess(verifiedPurchases);
 
-                    requestListener.onSuccess(verifiedPurchases);
 
                     //TODO: find way to get $ price automatically.
                     if (purchase.sku.equals(PurchaseTypes.Purchase4Gems)) {
@@ -74,22 +77,52 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         Seeds.sharedInstance().recordSeedsIAPEvent(purchase.sku, 19.99);
                     }
                 }, throwable -> {
-                    if (throwable.getClass().equals(HttpException.class)) {
+                    if (throwable.getClass().equals(retrofit2.adapter.rxjava.HttpException.class)) {
                         HttpException error = (HttpException)throwable;
-                        APIHelper.ErrorResponse res = apiHelper.getErrorResponse((HttpException) throwable);
+                        ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                         if (error.code() == 401) {
-                            if (res.message.equals("RECEIPT_ALREADY_USED")) {
+                            if (res.message != null && res.message.equals("RECEIPT_ALREADY_USED")) {
                                 purchasedOrderList.add(purchase.orderId);
 
-                                verifiedPurchases.add(purchase);
-
-                                requestListener.onSuccess(verifiedPurchases);
-                                return;
+                                    requestListener.onSuccess(verifiedPurchases);
+                                    return;
+                                }
                             }
                         }
-                    }
-                    requestListener.onError(purchases.indexOf(purchase), new Exception());
-                });
+                        requestListener.onError(purchases.indexOf(purchase), new Exception());
+                    });
+                } else if (PurchaseTypes.allSubscriptionTypes.contains(purchase.sku)) {
+                    SubscriptionValidationRequest validationRequest = new SubscriptionValidationRequest();
+                    validationRequest.transaction = new Transaction();
+                    validationRequest.transaction.receipt = purchase.data;
+                    validationRequest.transaction.signature = purchase.signature;
+                    validationRequest.sku = purchase.sku;
+                    apiClient.validateSubscription(validationRequest).subscribe(purchaseValidationResult -> {
+                        purchasedOrderList.add(purchase.orderId);
+
+                        verifiedPurchases.add(purchase);
+
+                        requestListener.onSuccess(verifiedPurchases);
+
+                        EventBus.getDefault().post(new UserSubscribedEvent());
+                    }, throwable -> {
+                        if (throwable.getClass().equals(retrofit2.adapter.rxjava.HttpException.class)) {
+                            HttpException error = (HttpException) throwable;
+                            ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
+                            if (error.code() == 401) {
+                                if (res.message != null && res.message.equals("RECEIPT_ALREADY_USED")) {
+                                    purchasedOrderList.add(purchase.orderId);
+
+                                    verifiedPurchases.add(purchase);
+
+                                    requestListener.onSuccess(verifiedPurchases);
+                                    return;
+                                }
+                            }
+                        }
+                        requestListener.onError(purchases.indexOf(purchase), new Exception());
+                    });
+                }
             }
         }
 

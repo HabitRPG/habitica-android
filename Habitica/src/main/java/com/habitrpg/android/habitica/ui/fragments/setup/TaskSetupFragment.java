@@ -1,20 +1,23 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.activities.SetupActivity;
-import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.models.tasks.Days;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.SpeechBubbleView;
+import com.habitrpg.android.habitica.ui.activities.SetupActivity;
+import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,9 +34,14 @@ public class TaskSetupFragment extends BaseFragment {
     View view;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.avatarView)
+    AvatarView avatarView;
+    @BindView(R.id.speech_bubble)
+    SpeechBubbleView speechBubbleView;
     TaskSetupAdapter adapter;
     private String[][] taskGroups;
     private Object[][] tasks;
+    private User user;
 
     @Nullable
     @Override
@@ -47,9 +55,33 @@ public class TaskSetupFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         this.adapter = new TaskSetupAdapter();
         this.adapter.setTaskList(this.taskGroups);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        this.recyclerView.setLayoutManager(new GridLayoutManager(activity, 2));
         this.recyclerView.setAdapter(this.adapter);
+
+        if (this.user != null) {
+            this.updateAvatar();
+        }
+
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && getContext() != null) {
+            speechBubbleView.animateText(getContext().getString(R.string.task_setup_description));
+        }
+    }
+
+    public void setUser(@Nullable User user) {
+        this.user = user;
+        if (avatarView != null) {
+            updateAvatar();
+        }
+    }
+
+    private void updateAvatar() {
+        avatarView.setAvatar(user);
     }
 
     @Override
@@ -61,11 +93,12 @@ public class TaskSetupFragment extends BaseFragment {
         this.taskGroups = new String[][]{
                 {getString(R.string.setup_group_work), "work"},
                 {getString(R.string.setup_group_exercise), "exercise"},
-                {getString(R.string.setup_group_heathWellness), "healthWellness"},
+                {getString(R.string.setup_group_health), "healthWellness"},
                 {getString(R.string.setup_group_school), "school"},
                 {getString(R.string.setup_group_teams), "teams"},
                 {getString(R.string.setup_group_chores), "chores"},
                 {getString(R.string.setup_group_creativity), "creativity"},
+                {getString(R.string.setuP_group_other), "other"}
         };
 
         this.tasks = new Object[][]{
@@ -110,7 +143,8 @@ public class TaskSetupFragment extends BaseFragment {
         }
         List<Task> tasks = new ArrayList<>();
         for (Object[] task : this.tasks) {
-            if (groups.contains((String) task[0])) {
+            String taskGroup = (String) task[0];
+            if (groups.contains(taskGroup)) {
                 Task taskObject;
                 if (task.length == 5) {
                     taskObject = this.makeTaskObject((String) task[1], (String) task[2], (Boolean) task[3], (Boolean) task[4]);
@@ -123,7 +157,7 @@ public class TaskSetupFragment extends BaseFragment {
         return tasks;
     }
 
-    private Task makeTaskObject(String type, String text, Boolean up, Boolean down) {
+    private Task makeTaskObject(String type, String text, @Nullable Boolean up, @Nullable Boolean down) {
         Task task = new Task();
         task.text = text;
         task.priority = 1.0f;

@@ -1,16 +1,5 @@
 package com.habitrpg.android.habitica.ui;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.DraweeHolder;
-import com.facebook.drawee.view.MultiDraweeHolder;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -27,6 +16,17 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.DraweeHolder;
+import com.facebook.drawee.view.MultiDraweeHolder;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.Avatar;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -54,18 +54,20 @@ public class AvatarView extends View {
     private boolean showBackground = true;
     private boolean showMount = true;
     private boolean showPet = true;
+    private boolean showSleeping = true;
     private boolean hasBackground;
     private boolean hasMount;
     private boolean hasPet;
     private boolean isOrphan;
     private MultiDraweeHolder<GenericDraweeHierarchy> multiDraweeHolder = new MultiDraweeHolder<>();
-    private HabitRPGUser user;
+    private Avatar avatar;
     private RectF avatarRectF;
     private Matrix matrix = new Matrix();
     private AtomicInteger numberLayersInProcess = new AtomicInteger(0);
     private Consumer<Bitmap> avatarImageConsumer;
     private Bitmap avatarBitmap;
     private Canvas avatarCanvas;
+    private Map<LayerType, String> currentLayers;
 
     public AvatarView(Context context) {
         super(context);
@@ -106,12 +108,11 @@ public class AvatarView extends View {
             showBackground = a.getBoolean(R.styleable.AvatarView_showBackground, true);
             showMount = a.getBoolean(R.styleable.AvatarView_showMount, true);
             showPet = a.getBoolean(R.styleable.AvatarView_showPet, true);
+            showSleeping = a.getBoolean(R.styleable.AvatarView_showSleeping, true);
         } finally {
             a.recycle();
         }
     }
-
-    private Map<LayerType, String> currentLayers;
 
     private void showLayers(@NonNull Map<LayerType, String> layerMap) {
         if (multiDraweeHolder.size() > 0) return;
@@ -165,33 +166,38 @@ public class AvatarView extends View {
     }
 
     private Map<LayerType, String> getLayerMap() {
-        assert user != null;
-        return getLayerMap(user, true);
+        assert avatar != null;
+        return getLayerMap(avatar, true);
     }
 
-    private Map<LayerType, String> getLayerMap(@NonNull HabitRPGUser user, boolean resetHasAttributes) {
-        EnumMap<LayerType, String> layerMap = user.getAvatarLayerMap();
+    private Map<LayerType, String> getLayerMap(@NonNull Avatar avatar, boolean resetHasAttributes) {
+        EnumMap<LayerType, String> layerMap = avatar.getAvatarLayerMap();
 
         if (resetHasAttributes) hasBackground = hasMount = hasPet = false;
 
-        String mountName = user.getItems().getCurrentMount();
-        if (showMount && !TextUtils.isEmpty(mountName)) {
-            layerMap.put(LayerType.MOUNT_BODY, "Mount_Body_" + mountName);
-            layerMap.put(LayerType.MOUNT_HEAD, "Mount_Head_" + mountName);
-            if (resetHasAttributes) hasMount = true;
-        }
+            String mountName = avatar.getCurrentMount();
+            if (showMount && !TextUtils.isEmpty(mountName)) {
+                layerMap.put(LayerType.MOUNT_BODY, "Mount_Body_" + mountName);
+                layerMap.put(LayerType.MOUNT_HEAD, "Mount_Head_" + mountName);
+                if (resetHasAttributes) hasMount = true;
+            }
 
-        String petName = user.getItems().getCurrentPet();
-        if (showPet && !TextUtils.isEmpty(petName)) {
-            layerMap.put(LayerType.PET, "Pet-" + petName);
-            if (resetHasAttributes) hasPet = true;
-        }
+            String petName = avatar.getCurrentPet();
+            if (showPet && !TextUtils.isEmpty(petName)) {
+                layerMap.put(LayerType.PET, "Pet-" + petName);
+                if (resetHasAttributes) hasPet = true;
+            }
 
-        String backgroundName = user.getPreferences().getBackground();
+        String backgroundName = avatar.getBackground();
         if (showBackground && !TextUtils.isEmpty(backgroundName)) {
             layerMap.put(LayerType.BACKGROUND, "background_" + backgroundName);
             if (resetHasAttributes) hasBackground = true;
         }
+
+        if (showSleeping && avatar.getSleep()) {
+            layerMap.put(AvatarView.LayerType.ZZZ, "zzz");
+        }
+
         return layerMap;
     }
 
@@ -316,15 +322,15 @@ public class AvatarView extends View {
         }
     }
 
-    public void setUser(@NonNull HabitRPGUser user) {
-        HabitRPGUser oldUser = this.user;
-        this.user = user;
+    public void setAvatar(@NonNull Avatar avatar) {
+        Avatar oldUser = this.avatar;
+        this.avatar = avatar;
 
         if (oldUser != null) {
-            Map<LayerType, String> newLayerMap = getLayerMap(user, false);
+            Map<LayerType, String> newLayerMap = getLayerMap(avatar, false);
 
             boolean equals = currentLayers != null && currentLayers.equals(newLayerMap);
-            
+
             if (!equals) {
                 multiDraweeHolder.clear();
                 numberLayersInProcess.set(0);
@@ -333,12 +339,14 @@ public class AvatarView extends View {
         invalidate();
     }
 
+
+
     private Rect getOriginalRect() {
         return (showMount || showPet) ? FULL_HERO_RECT : ((showBackground) ? COMPACT_HERO_RECT : HERO_ONLY_RECT);
     }
 
     private Bitmap getAvatarImage() {
-        assert user != null;
+        assert avatar != null;
         assert avatarRectF != null;
         Rect canvasRect = new Rect();
         avatarRectF.round(canvasRect);
@@ -380,7 +388,7 @@ public class AvatarView extends View {
         initAvatarRectMatrix();
 
         // draw only when user is set
-        if (user == null) return;
+        if (avatar == null) return;
 
         // request image layers if not yet processed
         if (multiDraweeHolder.size() == 0) {

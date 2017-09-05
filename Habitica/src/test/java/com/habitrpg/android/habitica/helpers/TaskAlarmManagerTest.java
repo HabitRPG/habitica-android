@@ -1,47 +1,37 @@
 package com.habitrpg.android.habitica.helpers;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.admin.SystemUpdatePolicy;
-import android.content.Context;
-import android.content.Intent;
-
-import android.os.Build;
-import android.test.mock.MockContext;
-import android.util.Log;
-
-import com.habitrpg.android.habitica.HabitDatabase;
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.config.FlowManager;
+import com.habitrpg.android.habitica.models.tasks.Days;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import io.realm.RealmList;
 
 /**
  * Created by keithholliday on 7/16/16.
  */
 
-@Config(manifest = "AndroidManifestTesting.xml")
+@Config(constants = BuildConfig.class)
 @RunWith(value = RobolectricTestRunner.class)
 public class TaskAlarmManagerTest {
     private TaskAlarmManager taskAlarmManager;
@@ -50,27 +40,20 @@ public class TaskAlarmManagerTest {
 
     @Before
     public void setUp() {
-        context = ShadowApplication.getInstance().getApplicationContext();
-        taskAlarmManager = TaskAlarmManager.getInstance(context);
+        context = RuntimeEnvironment.application;
+        taskAlarmManager = new TaskAlarmManager(context);
     }
 
     @After
     public void tearDown() {
-        FlowManager.getDatabase(HabitDatabase.NAME).reset(context);
     }
 
-    @Test
-    public void dummyTest() {
-        //temporary dummy test until the actual tests can be fixed.
-        assertTrue(true);
-    }
-/*
     @Test
     public void testItSchedulesAlarmsForTodosWithMultipleReminders() {
         Task task = new Task();
         task.setType(Task.TYPE_TODO);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -82,7 +65,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -101,7 +83,7 @@ public class TaskAlarmManagerTest {
         Task task = new Task();
         task.setType(Task.TYPE_TODO);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -113,7 +95,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -127,13 +108,11 @@ public class TaskAlarmManagerTest {
         Assert.assertEquals(true, alarmUp);
 
 
-        reminders = new ArrayList<RemindersItem>();
+        reminders = new RealmList<>();
         cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) + 1);
         remindersItem1.setTime(cal.getTime());
-        remindersItem1.save();
         reminders.add(remindersItem1);
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
         int newAlarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
@@ -151,14 +130,13 @@ public class TaskAlarmManagerTest {
         Task task = new Task();
         task.setType(Task.TYPE_TODO);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) + 1);
         remindersItem1.setTime(cal.getTime());
         reminders.add(remindersItem1);
         task.setReminders(reminders);
-        task.save();
 
 //        taskAlarmManager.setAlarmsForTask(task);
 //
@@ -199,7 +177,7 @@ public class TaskAlarmManagerTest {
         taskRepeatDays.setSu(false);
         task.setRepeat(taskRepeatDays);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -213,7 +191,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -249,7 +226,7 @@ public class TaskAlarmManagerTest {
         taskRepeatDays.setSu(false);
         task.setRepeat(taskRepeatDays);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -261,7 +238,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -289,7 +265,7 @@ public class TaskAlarmManagerTest {
         int everyXDay = 2;
         task.setEveryX(everyXDay);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        RealmList<RemindersItem> reminders = new RealmList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -308,53 +284,6 @@ public class TaskAlarmManagerTest {
         reminders.add(remindersItem1);
 
         task.setReminders(reminders);
-        task.save();
-
-        taskAlarmManager.setAlarmsForTask(task);
-
-        int alarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
-
-        Calendar newReminderTime = Calendar.getInstance();
-        newReminderTime.setTime(reminders.get(0).getTime());
-
-        Intent intent = new Intent(context, TaskReceiver.class);
-        intent.setAction(remindersItem1.getId());
-        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
-        boolean alarmUp = sender != null;
-
-        Assert.assertNotNull(alarmId);
-        Assert.assertEquals(true, alarmUp);
-
-        int expectedDay = (currentDayOfTheWeek + everyXDay) % 8;
-        if (expectedDay == 0) { expectedDay = 7;};
-
-        Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
-    }
-
-    @Test
-    //This also tests for when the receiver tries to schedule the next daily available
-    public void itScheduledAlarmForTheNextAvailableDayForEveryXDayDailyWhenUserTriesToSetAlarmForNow() {
-        Task task = new Task();
-        task.setType(Task.TYPE_DAILY);
-        task.setFrequency(Task.FREQUENCY_DAILY);
-
-        int everyXDay = 2;
-        task.setEveryX(everyXDay);
-
-        List<RemindersItem> reminders = new ArrayList<>();
-        RemindersItem remindersItem1 = new RemindersItem();
-        UUID randomUUID = UUID.randomUUID();
-        remindersItem1.setId(randomUUID.toString());
-
-        //We try to set a reminder for now, but the manager will correct since the seconds will be off
-        Calendar cal = Calendar.getInstance();
-        int currentDayOfTheWeek = cal.get(Calendar.DAY_OF_WEEK);
-
-        remindersItem1.setTime(cal.getTime());
-        reminders.add(remindersItem1);
-
-        task.setReminders(reminders);
-        task.save();
 
         taskAlarmManager.setAlarmsForTask(task);
 
@@ -375,5 +304,50 @@ public class TaskAlarmManagerTest {
         if (expectedDay == 0) { expectedDay = 7;};
 
         Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
-    }*/
+    }
+
+    @Test
+    //This also tests for when the receiver tries to schedule the next daily available
+    public void itScheduledAlarmForTheNextAvailableDayForEveryXDayDailyWhenUserTriesToSetAlarmForNow() {
+        Task task = new Task();
+        task.setType(Task.TYPE_DAILY);
+        task.setFrequency(Task.FREQUENCY_DAILY);
+
+        int everyXDay = 2;
+        task.setEveryX(everyXDay);
+
+        RealmList<RemindersItem> reminders = new RealmList<>();
+        RemindersItem remindersItem1 = new RemindersItem();
+        UUID randomUUID = UUID.randomUUID();
+        remindersItem1.setId(randomUUID.toString());
+
+        //We try to set a reminder for now, but the manager will correct since the seconds will be off
+        Calendar cal = Calendar.getInstance();
+        int currentDayOfTheWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+        remindersItem1.setTime(cal.getTime());
+        reminders.add(remindersItem1);
+
+        task.setReminders(reminders);
+
+        taskAlarmManager.setAlarmsForTask(task);
+
+        int alarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
+
+        Calendar newReminderTime = Calendar.getInstance();
+        newReminderTime.setTime(reminders.get(0).getTime());
+
+        Intent intent = new Intent(context, TaskReceiver.class);
+        intent.setAction(remindersItem1.getId());
+        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
+        boolean alarmUp = sender != null;
+
+        Assert.assertNotNull(alarmId);
+        Assert.assertEquals(true, alarmUp);
+
+        int expectedDay = (currentDayOfTheWeek + everyXDay) % 7;
+        if (expectedDay == 0) { expectedDay = 7;};
+
+        Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
+    }
 }

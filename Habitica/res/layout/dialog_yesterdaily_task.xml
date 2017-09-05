@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="60dp"
+    android:gravity="center_vertical"
+    android:elevation="2dp"
+    android:layout_margin="4dp"
+    android:background="@drawable/layout_rounded_bg">
+    <FrameLayout
+        android:id="@+id/checkBoxHolder"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginBottom="1dp"
+            android:background="@color/task_border_gray" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="@dimen/checkbox_size"
+            android:layout_height="@dimen/checkbox_size"
+            android:layout_gravity="center"
+            android:button="@drawable/daily_checkbox"
+            android:gravity="center" />
+    </FrameLayout>
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp" />
+</LinearLayout>

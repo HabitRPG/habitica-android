@@ -1,59 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              style="@style/RowWrapper"
-              android:clickable="true"
-              android:background="@android:color/white">
-    <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/gear_image_size"
-            android:layout_height="@dimen/gear_image_size"
-            android:scaleType="fitEnd"
-            android:layout_marginRight="@dimen/row_padding"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:background="@color/white">
     <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
-        <TextView
-                android:id="@+id/titleView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Title"
-                style="@style/RowTitle" />
-        <TextView
-                android:id="@+id/descriptionView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Description"
-                android:maxLines="5"
-                style="@style/RowText" />
-    </LinearLayout>
-
-    <Button
+        android:id="@+id/container"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_width="78dp"
+        android:layout_height="108dp"
+        android:orientation="vertical"
+        android:background="@drawable/layout_rounded_bg_shopitem"
+        android:layout_centerInParent="true">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/shopitem_image_size"
+            android:layout_height="@dimen/shopitem_image_size"
+            android:layout_margin="4dp"
+            android:scaleType="center"
+            android:layout_marginRight="@dimen/row_padding"
+            android:layout_gravity="center_horizontal"/>
+        <LinearLayout
             android:id="@+id/buyButton"
-            android:layout_width="60dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/white"
-            android:layout_gravity="center_vertical"
-            android:textSize="15sp"
-            android:background="@drawable/rounded_purple_square"
-            android:paddingLeft="6dp"
-            android:paddingStart="6dp" />
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:background="@drawable/layout_rounded_bg_shopitem_price">
+            <ImageView
+                android:id="@+id/currency_icon_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                tools:src="@drawable/currency_gold"/>
+            <TextView
+                android:id="@+id/priceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_300"
+                tools:text="150"
+                android:layout_marginLeft="6dp"
+                style="@style/Body1"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/item_limited_icon"
+        android:layout_width="@dimen/shopitem_status_size"
+        android:layout_height="@dimen/shopitem_status_size"
+        android:src="@drawable/item_limited_bubble"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        android:layout_alignRight="@id/container"
+        android:layout_marginRight="-4dp"/>
+    <ImageView
+        android:id="@+id/item_locked_icon"
+        android:layout_width="@dimen/shopitem_status_size"
+        android:layout_height="@dimen/shopitem_status_size"
+        android:src="@drawable/item_locked_bubble"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        android:layout_alignRight="@id/container"
+        tools:visibility="visible"
+        android:layout_marginRight="-4dp"/>
     <TextView
-            android:id="@+id/unlockView"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            tools:text="Description"
-            android:visibility="gone"
-            android:maxLines="5"
-            style="@style/RowText"
-            android:layout_gravity="center_vertical"/>
-</LinearLayout>
+        android:id="@+id/item_count_icon"
+        android:layout_width="@dimen/shopitem_status_size"
+        android:layout_height="@dimen/shopitem_status_size"
+        android:background="@drawable/item_count_bubble"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        android:layout_alignRight="@id/container"
+        android:layout_marginRight="-4dp"/>
+
+</RelativeLayout>

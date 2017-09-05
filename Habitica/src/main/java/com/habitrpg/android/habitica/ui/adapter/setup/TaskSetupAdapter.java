@@ -1,15 +1,17 @@
 package com.habitrpg.android.habitica.ui.adapter.setup;
 
-import com.habitrpg.android.habitica.R;
-
-import android.content.res.Resources;
+import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,28 +53,28 @@ public class TaskSetupAdapter extends RecyclerView.Adapter<TaskSetupAdapter.Task
 
     class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.checkedTextView)
+        private final Drawable icon;
+        @BindView(R.id.textView)
         TextView textView;
-
-        @BindView(R.id.checkBoxHolder)
-        RelativeLayout checkBoxHolder;
-
-        @BindView(R.id.checkBox)
-        CheckBox checkBox;
 
         String[] taskGroup;
         Boolean isChecked;
 
-        Resources resources;
+        Context context;
 
-        public TaskViewHolder(View itemView) {
+        TaskViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
 
-            resources = itemView.getResources();
+            context = itemView.getContext();
 
             itemView.setOnClickListener(this);
+
+            icon = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_check_white_18dp, null);
+            if (icon != null) {
+                icon.setColorFilter(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY);
+            }
         }
 
         public void bind(String[] taskGroup, Boolean isChecked) {
@@ -80,8 +82,15 @@ public class TaskSetupAdapter extends RecyclerView.Adapter<TaskSetupAdapter.Task
             this.isChecked = isChecked;
 
             this.textView.setText(this.taskGroup[0]);
-            this.checkBox.setChecked(this.isChecked);
-            this.checkBoxHolder.setBackgroundResource(R.color.brand_200);
+            if (this.isChecked) {
+                this.textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+                textView.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY);
+                textView.setTextColor(ContextCompat.getColor(context, R.color.brand_100));
+            } else {
+                this.textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                textView.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY);
+                textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+            }
         }
 
         @Override

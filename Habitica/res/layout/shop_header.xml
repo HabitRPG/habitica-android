@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-        android:layout_margin="@dimen/section_leftright_padding">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/backgroundView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/shop_height"/>
     <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/shop_width"
-            android:layout_height="@dimen/shop_height"
-            android:linksClickable="true"
-            android:autoLink="web" />
+        android:id="@+id/sceneView"
+        android:layout_width="375dp"
+        android:layout_height="@dimen/shop_scene_height" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="138dp"
+        android:background="@drawable/gradient_white"/>
+
     <TextView
-            android:id="@+id/descriptionView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/section_leftright_padding"
-            android:layout_marginStart="@dimen/section_leftright_padding"/>
-</LinearLayout>
+        android:id="@+id/name_plate"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        tools:text="Justin"
+        android:background="@drawable/name_plate"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="126dp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/descriptionView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="156dp"
+        tools:text="Welcome to the Market! Stock up on new gear or buy rare eggs and potions. Check in periodically for new stock."
+        />
+</FrameLayout>

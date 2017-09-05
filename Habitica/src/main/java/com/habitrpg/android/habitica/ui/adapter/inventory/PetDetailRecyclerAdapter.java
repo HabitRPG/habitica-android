@@ -1,18 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.EquipCommand;
-import com.habitrpg.android.habitica.events.commands.FeedCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,33 +11,39 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.List;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
+import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
-public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecyclerAdapter.PetViewHolder> {
+public class PetDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Pet, PetDetailRecyclerAdapter.PetViewHolder> {
 
     public String itemType;
     public Context context;
-    private List<Pet> itemList;
-    private HashMap<String, Integer> ownedMapping;
-    private HashMap<String, Boolean> ownedMountMapping;
+    private RealmResults<Mount> ownedMounts;
+    private PublishSubject<String> equipEvents = PublishSubject.create();
 
-    public void setItemList(List<Pet> itemList) {
-        this.itemList = itemList;
-        this.notifyDataSetChanged();
+    public PetDetailRecyclerAdapter(@Nullable OrderedRealmCollection<Pet> data, boolean autoUpdate) {
+        super(data, autoUpdate);
     }
 
-    public void setOwnedMapping(HashMap<String, Integer> map) {
-        this.ownedMapping = map;
-        this.notifyDataSetChanged();
-    }
-
-    public void setOwnedMountsMapping(HashMap<String, Boolean> map) {
-        this.ownedMountMapping = map;
-        this.notifyDataSetChanged();
+    public Observable<String> getEquipEvents() {
+        return equipEvents.asObservable();
     }
 
     @Override
@@ -61,12 +57,14 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
 
     @Override
     public void onBindViewHolder(PetViewHolder holder, int position) {
-        holder.bind(this.itemList.get(position));
+        if (getData() != null) {
+            holder.bind(this.getData().get(position));
+        }
     }
 
-    @Override
-    public int getItemCount() {
-        return itemList == null ? 0 : itemList.size();
+    public void setOwnedMounts(RealmResults<Mount> ownedMounts) {
+        this.ownedMounts = ownedMounts;
+        notifyDataSetChanged();
     }
 
     class PetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -95,46 +93,21 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             itemView.setOnClickListener(this);
         }
 
-        public int getOwnedStatus() {
-            if (ownedMapping != null && animal != null) {
-                if (ownedMapping.containsKey(animal.getKey())) {
-                    return ownedMapping.get(animal.getKey());
-                }
-            }
-            return 0;
-        }
-
-        public boolean isOwned() {
-            return this.getOwnedStatus() > 0;
-        }
-
-        public Boolean isMountOwned() {
-            if (animal.getAnimalGroup().equals("specialPets")) {
-                return false;
-            }
-            if (ownedMountMapping != null && animal != null) {
-                if (ownedMountMapping.get(animal.getKey()) != null) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public void bind(Pet item) {
             this.animal = item;
             this.titleView.setText(item.getColorText());
             this.trainedProgressbar.setVisibility(animal.getAnimalGroup().equals("specialPets") ? View.GONE : View.VISIBLE);
             this.imageView.setAlpha(1.0f);
-            if (this.getOwnedStatus() > 0) {
+            if (this.animal.getTrained() > 0) {
                 if (this.isMountOwned()) {
                     this.trainedProgressbar.setVisibility(View.GONE);
                 } else {
-                    this.trainedProgressbar.setProgress(ownedMapping.get(item.getKey()));
+                    this.trainedProgressbar.setProgress(this.animal.getTrained());
                 }
                 DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
             } else {
                 this.trainedProgressbar.setVisibility(View.GONE);
-                if (this.getOwnedStatus() == 0) {
+                if (this.animal.getTrained() == 0) {
                     DataBindingUtils.loadImage(this.imageView, "PixelPaw");
                 } else {
                     DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
@@ -155,10 +128,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             }
             menu.setSelectionRunnable(index -> {
                 if (index == 0) {
-                    EquipCommand event = new EquipCommand();
-                    event.type = "pet";
-                    event.key = animal.getKey();
-                    EventBus.getDefault().post(event);
+                    equipEvents.onNext(animal.getKey());
                 } else if (index == 1) {
                     FeedCommand event = new FeedCommand();
                     event.usingPet = animal;
@@ -166,6 +136,19 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
                 }
             });
             menu.show();
+        }
+
+        private boolean isOwned() {
+            return this.animal.getTrained() > 0;
+        }
+
+        public boolean isMountOwned() {
+            for (Mount ownedMount : ownedMounts) {
+                if (ownedMount.getKey().equals(animal.getKey())) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

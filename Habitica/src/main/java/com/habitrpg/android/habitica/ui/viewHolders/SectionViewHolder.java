@@ -1,12 +1,13 @@
 package com.habitrpg.android.habitica.ui.viewHolders;
 
-import com.habitrpg.android.habitica.R;
-
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +18,7 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     TextView label;
 
     @BindView(R.id.purchaseSetButton)
+    @Nullable
     Button purchaseSetButton;
 
     Context context;
@@ -25,7 +27,10 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         context = itemView.getContext();
         ButterKnife.bind(this, itemView);
-        this.purchaseSetButton.setVisibility(View.GONE);
+        if (this.purchaseSetButton != null) {
+            this.purchaseSetButton.setVisibility(View.GONE);
+
+        }
     }
 
     public void bind(String title) {

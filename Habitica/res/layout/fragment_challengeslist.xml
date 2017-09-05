@@ -1,0 +1,61 @@
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:scrollbars="vertical"
+            android:paddingBottom="?attr/actionBarSize" />
+        <LinearLayout
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginTop="32dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Headline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@string/not_part_of_a_challenge"
+                android:textAlignment="center"
+                android:textColor="#8a000000" />
+
+            <TextView
+                style="@style/Body2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:text="@string/join_a_challenge"
+                android:textAlignment="center"
+                android:textColor="#66000000" />
+
+            <TextView
+                style="@style/Body2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:text="@string/check_the_public_challenge_tab"
+                android:textAlignment="center"
+                android:textColor="#66000000" />
+
+        </LinearLayout>
+    </FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

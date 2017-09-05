@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:background="@drawable/intro_background">
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/brand">
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <com.viewpagerindicator.CirclePageIndicator
-        android:id="@+id/view_pager_indicator"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp" />
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+        <com.viewpagerindicator.IconPageIndicator
+            android:id="@+id/view_pager_indicator"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/skip_button"
-        android:id="@+id/skipButton"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="6dp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/rounded_purple_square" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/skip_button"
+            android:id="@+id/skipButton"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="6dp"
+            android:textColor="@android:color/white"
+            android:background="@color/transparent" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/intro_finish_button"
-        android:id="@+id/finishButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="6dp"
-        android:background="@drawable/rounded_purple_square"
-        android:textColor="@android:color/white"
-        android:visibility="gone" />
-</RelativeLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/intro_finish_button"
+            android:id="@+id/finishButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:background="@color/transparent"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+    </RelativeLayout>
+</FrameLayout>

@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Cumple con tus hábitos positivos para ganar oro y experiencia. Si pulsas en los hábitos negativos, tu personaje sufrirá daños, así que ¡evítalos en la vida real!</string>
-  <string name="tutorial_dailies">Vence a tus tareas diarias, día tras día, para ganar oro y experiencia. Pero ten cuidado: si no completas a tiempo una tarea diaria, hará daño a tu personaje.</string>
-  <string name="tutorial_todos">Completa tus tareas pendientes en la vida real y márcalas para obtener ORO y EXPERIENCIA con los que obtener recompensas y desbloquear nuevas funciones.</string>
-  <string name="tutorial_rewards">¡Estas son tus recompensas! Consigue oro completando tareas, hábitos y tareas diarias en el mundo real. Luego, podrás gastarlo en recompensas de dentro o fuera del juego.</string>
   <string name="tutorial_equipment">Cuando compres artículos de equipamiento, aparecerán aquí. El equipo de batalla que elijas afectará a tus estadísticas, y el disfraz (si lo habilitas) será lo que lleve tu personaje.</string>
   <string name="tutorial_items">Consigue artículos completando tareas y subiendo de nivel. Pulsa en un artículo para usarlo.</string>
   <string name="tutorial_pets">A medida que completes tareas del mundo real, a partir de ahora, podrás encontrar huevos y pociones al azar. Combínalos para que nazca una mascota.</string>

@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
-
-import net.pherth.android.emoji_library.EmojiTextView;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,17 +8,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.api.MaintenanceApiService;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+
+import net.pherth.android.emoji_library.EmojiTextView;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MaintenanceActivity extends BaseActivity {
 
     @Inject
     public MaintenanceApiService maintenanceService;
+
+    @Inject
+    public ApiClient apiClient;
+
     @BindView(R.id.titleTextView)
     TextView titleTextView;
     @BindView(R.id.imageView)
@@ -72,14 +76,12 @@ public class MaintenanceActivity extends BaseActivity {
         super.onResume();
         if (!isDeprecationNotice) {
             this.maintenanceService.getMaintenanceStatus()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose(apiClient.configureApiCallObserver())
                     .subscribe(maintenanceResponse -> {
                         if (!maintenanceResponse.activeMaintenance) {
                             finish();
                         }
-                    }, throwable -> {
-                    });
+                    }, RxErrorHandler.handleEmptyError());
         }
     }
 

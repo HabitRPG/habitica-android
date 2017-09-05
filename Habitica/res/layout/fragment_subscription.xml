@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/md_grey_500"
+        android:scrollbars="vertical"
+        android:background="@color/white">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:orientation="vertical" android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:padding="20dp">
+
+        <TextView
+                android:id="@+id/subscribeBenefitsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/subscribe_prompt"
+                android:gravity="center"
+                android:textStyle="normal|bold"
+                android:textColor="@color/brand_100"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"/>
+
+        <FrameLayout
+                android:id="@+id/subscribe.listitem1.box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subscriptionBox">
+
+            <TextView
+                    android:text="@string/subscribe.listitem1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubscriptionListTitle"
+                    />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/subscribe.listitem1.expand"
+                    android:layout_gravity="right"/>
+
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/subscribe.listitem1.description"
+                android:text="@string/subscribe.listitem1.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubscriptionListDescription"
+                android:visibility="gone"/>
+
+        <FrameLayout
+                android:id="@+id/subscribe.listitem2.box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subscriptionBox">
+            <TextView
+                    android:text="@string/subscribe.listitem2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubscriptionListTitle"
+                    />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/subscribe.listitem2.expand"
+                    android:layout_gravity="right"/>
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/subscribe.listitem2.description"
+                android:text="@string/subscribe.listitem2.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubscriptionListDescription"
+                android:visibility="gone" />
+
+        <FrameLayout
+                android:id="@+id/subscribe.listitem3.box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subscriptionBox">
+            <TextView
+                    android:text="@string/subscribe.listitem3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubscriptionListTitle"
+                    />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/subscribe.listitem3.expand"
+                    android:layout_gravity="right"/>
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/subscribe.listitem3.description"
+                android:text="@string/subscribe.listitem3.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubscriptionListDescription"
+                android:visibility="gone" />
+
+        <FrameLayout
+                android:id="@+id/subscribe.listitem4.box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subscriptionBox"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    android:text="@string/subscribe.listitem4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubscriptionListTitle"
+                    />
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/subscribe.listitem4.expand"
+                    android:layout_gravity="right"/>
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/subscribe.listitem4.description"
+                android:text="@string/subscribe.listitem4.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubscriptionListDescription"
+                android:visibility="gone" />
+
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/loadingIndicator"/>
+
+
+        <TextView
+            android:id="@+id/notAvailableTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_billing_subscriptions"
+            android:paddingTop="50dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/notAvailableButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/visit_habitica_website"
+            android:layout_marginBottom="50dp"
+            style="@style/Button.Purple"
+            android:visibility="gone" />
+
+        <LinearLayout
+                android:id="@+id/subscriptionOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="24dp"
+                >
+
+            <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+                    android:id="@+id/subscription1month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recurringText="@string/month"
+                    app:gemCapText="@string/subscribe1month.gemcap"/>
+
+            <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+                    android:id="@+id/subscription3month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recurringText="@string/three_months"
+                    app:gemCapText="@string/subscribe3month.gemcap"
+                    app:hourGlassCount="1" />
+            <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+                    android:id="@+id/subscription6month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recurringText="@string/six_months"
+                    app:gemCapText="@string/subscribe6month.gemcap"
+                    app:hourGlassCount="2" />
+            <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+                    android:id="@+id/subscription12month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recurringText="@string/twelve_months"
+                    app:gemCapText="@string/subscribe12month.gemcap"
+                    app:hourGlassCount="4" >
+
+            </com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView>
+
+            <Button
+                    android:text="@string/subscribe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/subscribeButton"
+                    android:layout_gravity="center"
+                    style="@style/Button.Purple"
+                    android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+
+        <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/subscriptionDetails"
+                android:layout_marginTop="24dp"/>
+
+        <TextView android:layout_height="wrap_content"
+                  android:layout_width="wrap_content"
+                  android:paddingLeft="16dp"
+                  android:paddingRight="16dp"
+                  android:paddingBottom="20dp"
+                  android:text="@string/subscribe.title"
+                  android:layout_gravity="center_horizontal"
+                  android:gravity="center"
+                  android:textColor="@color/best_10"
+                  android:drawableTop="@drawable/ic_heart_large"
+                  android:textSize="14sp"
+                  android:lineSpacingExtra="4dp"
+                android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

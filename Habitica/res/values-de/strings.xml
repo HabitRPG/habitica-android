@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">Aktualisieren</string>
   <string name="XP_default">Erfahrung</string>
   <string name="HP_default">Gesundheit</string>
@@ -14,7 +14,7 @@
   <string name="SP_APIToken_summary">Dein API-Token</string>
   <string name="Language_title">Sprache</string>
   <string name="Language_summary">Habiticas Sprache ändern</string>
-  <string name="SP_user_qr_code">Dein QR Code</string>
+  <string name="SP_user_qr_code">Dein QR-Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
   <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
   <string name="pref_account_header">Konto</string>
@@ -38,7 +38,7 @@
   <string name="preference_push_invited_to_quest">Zur Quest eingeladen</string>
   <!--Adding tasks-->
   <string name="task_value">Wert</string>
-  <string name="new_todo">Neuer To-Do-Eintrag</string>
+  <string name="new_todo">Neue To-Do</string>
   <string name="new_reward">Neue Belohnung</string>
   <string name="new_daily">Neue tägliche Aufgabe</string>
   <string name="new_habit">Neue Gewohnheit</string>
@@ -67,6 +67,7 @@
   <string name="about.give_us_feedback">Feedback senden!</string>
   <string name="about.bugreport">Melde einen Fehler</string>
   <string name="about.source_code">Quellcode</string>
+  <string name="repeatEvery">Es wiederholt sich jeden</string>
   <!--Network Errors-->
   <string name="network_error_title">Verbindungsfehler</string>
   <string name="network_error_no_network_body">Keine Internetverbindung.</string>
@@ -99,6 +100,15 @@
   <string name="frequency">Häufigkeit</string>
   <string name="frequency_weekly">An bestimmten Tagen der Woche</string>
   <string name="frequency_daily">Alle X Tage</string>
+  <string name="repeatables_summary_title">Zusammenfassung</string>
+  <string name="repeatables_title">Es wiederholt sich</string>
+  <string name="repeatables_on_title">Wiederholt sich am </string>
+  <string name="repeatables_frequency_daily">Täglich</string>
+  <string name="repeatables_frequency_weekly">Wöchentlich</string>
+  <string name="repeatables_frequency_monthly">Monatlich</string>
+  <string name="repeatables_frequency_yearly">Jährlich</string>
+  <string name="repeatables_frequency_day_of_month">Tag des Monats</string>
+  <string name="repeatables_frequency_day_of_week">Tag der Woche</string>
   <string name="monday">Montag</string>
   <string name="tuesday">Dienstag</string>
   <string name="wednesday">Mittwoch</string>
@@ -116,14 +126,14 @@
   <string name="faint_button">Lebenspunkte auffüllen &amp; Nochmal versuchen</string>
   <string name="filter">Filtern</string>
   <string name="profile_image">Profilbild</string>
-  <string name="mana_price_button" formatted="false">%d MP</string>
-  <string name="used_skill" formatted="false">Du hast %1$s für %2$d Mana benutzt.</string>
-  <string name="used_skill_without_mana" formatted="false">Du hast %1$s benutzt.</string>
+  <string name="mana_price_button">%d MP</string>
+  <string name="used_skill">Du hast %1$s für %2$d Mana benutzt.</string>
+  <string name="used_skill_without_mana">Du hast %1$s benutzt.</string>
   <string name="new_checklist_item">Neue Unteraufgabe</string>
   <string name="add_checklist_item">Hinzufügen</string>
   <string name="reminder_title">Denke daran Deine täglichen Aufgaben abzuhaken!</string>
   <string name="skill_progress_title">Fertigkeiten benutzen</string>
-  <string name="coming_soon">demnächst</string>
+  <string name="coming_soon">demnächst verfügbar</string>
   <string name="chat_flag_confirmation">Möchtest Du diesen Beitrag wirklich melden?</string>
   <string name="flag_confirm">Verletzung der Community-Richtlinien melden</string>
   <string name="unlock_lvl_11">Freigeschaltet ab Lvl 11</string>
@@ -163,9 +173,9 @@
   <string name="avatar_size_broad">Kräftig</string>
   <string name="avatar_background">Hintergrund</string>
   <string name="purchase_customization">Kaufe Anpassung</string>
-  <string name="purchase_set_button" formatted="false">Set für %d Edelsteine freischalten</string>
+  <string name="purchase_set_button">Set für %d Edelsteine freischalten</string>
   <string name="purchase_button">Kaufen</string>
-  <string name="purchase_set_title" formatted="false">Set %s kaufen</string>
+  <string name="purchase_set_title">Set %s kaufen</string>
   <string name="due_date">Frist</string>
   <string name="quest.accept">Annehmen</string>
   <string name="quest.reject">Ablehnen</string>
@@ -177,29 +187,30 @@
   <string name="quest.accepted">Angenommen</string>
   <string name="quest.rejected">Abgelehnt</string>
   <string name="quest.participants">Teilnehmer</string>
-  <string name="version_info" formatted="false">Version %s (%d)</string>
+  <string name="version_info">Version %1$s (%2$d)</string>
   <string name="sidebar_help">Hilfe &amp; FAQ</string>
   <string name="complete_tutorial">Verstanden!</string>
   <string name="dismiss_tutorial">Erinnere mich noch einmal</string>
-  <string name="intro_1_title">Willkommen in Habitica</string>
-  <string name="intro_1_description" formatted="false">Tritt einer Gemeinschaft von über %s Menschen bei und erledige Dinge mit Spaß. Erstelle einen Avatar und verwalte spielerisch Deine Aufgaben des Alltags.</string>
-  <string name="intro_2_title">Spielfortschritt = Lebensfortschritt</string>
-  <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei, indem Du Aufgaben im echten Leben erledigst. Verdiene Dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung Deiner Ziele!</string>
-  <string name="intro_3_title">Werde sozial und kämpfe gegen Monster</string>
+  <string name="intro_1_subtitle">Willkommen bei</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_1_description">Es ist an der Zeit für Spaß, während du deine Aufgaben machst. Tritt einer Gemeinschaft von %s anderen Menschen bei, die ihr Leben Aufgabe für Aufgabe verbessern möchten.</string>
+  <string name="intro_2_subtitle">Fortschritt im Spiel</string>
+  <string name="intro_2_title">Fortschritt im Leben</string>
+  <string name="intro_2_description">Schalte Spielinhalte durch das Erledigen und Abhaken deiner realen Aufgaben frei. Bekomme Rüstungen, Tiere und vieles mehr als Belohnungen für das Erfüllen deiner Ziele.</string>
+  <string name="intro_3_subtitle">Bekämpfe Monster</string>
+  <string name="intro_3_title">Triff dich mit Anderen</string>
   <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf, während Ihr Euch gemeinsam verbessert!</string>
-  <string name="intro_finish_button">Anfangen</string>
+  <string name="intro_finish_button">Fangen wir an!</string>
   <string name="previous_button">Zurück</string>
   <string name="next_button">Weiter</string>
   <string name="skip_button">Überspringen</string>
   <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während Du Ziele im echten Leben erreichst, wirst Du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
   <string name="setup_welcome_title">Willkommen</string>
-  <string name="avatar_setup_description">Als erstes benötigst Du einen Avatar, der Dich repräsentiert! Dinge die Du im echten Leben tust beeinflussen Deine Lebenspunkte, Dein Level und Dein Gold.</string>
-  <string name="task_setup_description">Großartig! Jetzt lass uns Deine Aufgaben anlegen, damit Du anfangen kannst Erfahrung zu sammeln und Gold zu bekommen.
-
-Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
+  <string name="avatar_setup_description">Also, wie möchtest Du aussehen? Keine Sorge, Du kannst das jederzeit ändern.</string>
+  <string name="task_setup_description">Großartig! Woran möchtest Du zukünftig arbeiten?</string>
   <string name="setup_group_work">Arbeit</string>
   <string name="setup_group_exercise">Bewegung</string>
-  <string name="setup_group_heathWellness">Gesundheit + Wohlbefinden</string>
+  <string name="setup_group_health">Gesundheit</string>
   <string name="setup_group_school">Schule</string>
   <string name="setup_group_teams">Teams</string>
   <string name="setup_group_chores">Hausarbeit</string>
@@ -220,7 +231,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="setup_task_teams_2">Team auf dem Laufenden halten</string>
   <string name="setup_task_teams_3">Team-Projekt abschließen</string>
   <string name="setup_task_chores_1">10 Minuten aufräumen</string>
-  <string name="setup_task_chores_2">Geschirr spülen</string>
+  <string name="setup_task_chores_2">Geschirr abwaschen</string>
   <string name="setup_task_chores_3">Schrank aufräumen</string>
   <string name="setup_task_creativity_1">Lerne ein Handwerk</string>
   <string name="setup_task_creativity_2">An einem kreativem Projekt arbeiten</string>
@@ -233,7 +244,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="join">Beitreten</string>
   <string name="leader">Anführer</string>
   <string name="gems">Edelsteine</string>
-  <string name="copy_as_todo">Als To-Do kopieren</string>
+  <string name="copy_as_todo">Als Aufgabe kopieren</string>
   <string name="send_pm">PN senden</string>
   <string name="flag">Melden</string>
   <string name="delete">Löschen</string>
@@ -244,8 +255,8 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="write_message">Nachricht schreiben</string>
   <string name="post">posten</string>
   <string name="guild_search_hint">Nach Gilden suchen</string>
-  <string name="todo_due" formatted="false">Bis: %s</string>
-  <string name="daily_streak" formatted="false">Aktuelle Serie: %d</string>
+  <string name="todo_due">Bis: %s</string>
+  <string name="daily_streak">Aktuelle Serie: %d</string>
   <string name="todo_has_duedate">Diese Aufgabe hat eine Frist.</string>
   <string name="battle_gear">Kampfausrüstung</string>
   <string name="costume">Kostüm</string>
@@ -264,10 +275,10 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="quest_begin_message">Bist Du sicher, dass Du die Quest beginnen willst? Sobald sie aktiv ist, können keine zusätzlichen Gruppenmitglieder beitreten.</string>
   <string name="quest.invitation.text">Du wurdest eingeladen, an einer Quest teilzunehmen!</string>
   <string name="ago_1day">Vor einem Tag</string>
-  <string name="ago_days" formatted="false">Vor %d Tagen</string>
+  <string name="ago_days">Vor %d Tagen</string>
   <string name="ago_1Minute">Vor einer Minute</string>
-  <string name="ago_minutes" formatted="false">Vor %d Minuten</string>
-  <string name="ago_hours" formatted="false">Vor %d Stunden</string>
+  <string name="ago_minutes">Vor %d Minuten</string>
+  <string name="ago_hours">Vor %d Stunden</string>
   <string name="ago_1hour">Vor einer Stunde</string>
   <string name="today">Heute</string>
   <string name="sidebar_items">Gegenstände</string>
@@ -277,26 +288,26 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="quests">Quests</string>
   <string name="pets">Haustiere</string>
   <string name="mounts">Reittiere</string>
-  <string name="armoireEquipment" formatted="false">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Juhu!</string>
-  <string name="armoireFood" formatted="false">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
+  <string name="armoireEquipment">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Großartig!</string>
+  <string name="armoireFood">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
   <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
-  <string name="armoireNotesFull" formatted="false">Öffne den Schrank um zufällig spezielle Gegenstände, Erfahrung oder Nahrung zu erhalten! Verbleibende Ausrüstungsgegenstände: %d</string>
+  <string name="armoireNotesFull">Öffne den Schrank um zufällig spezielle Gegenstände, Erfahrung oder Nahrung zu erhalten! Verbleibende Ausrüstungsgegenstände: %d</string>
   <string name="armoireLastItem">Du hast das letzte Stück der seltenen Ausrüstung im verzauberten Schrank gefunden.</string>
   <string name="armoireNotesEmpty">Der Schrank wird jeden Monat neue Ausrüstung beinhalten. Bis dahin kannst Du weiterklicken um Erfahrung und Nahrung zu erhalten.</string>
-  <string name="sell" formatted="false">Verkaufen (%s Gold)</string>
+  <string name="sell">Verkaufen (%d Gold)</string>
   <string name="hatch_with_potion">Mit Trank ausbrüten</string>
   <string name="feed_to_pet">An Haustier verfüttern</string>
   <string name="hatch_egg">Mit Ei ausbrüten</string>
   <string name="invite_party">Gruppe einladen</string>
-  <string name="dialog_feeding" formatted="false">Füttere %1$s %2$s mit:</string>
+  <string name="dialog_feeding">Füttere %1$s %2$s mit:</string>
   <string name="use_animal">Nutzen</string>
   <string name="feed">Füttern</string>
-  <string name="hatch_with" formatted="false">Haustier mit %s ausbrüten</string>
-  <string name="hatched_pet_title" formatted="false">Du hast ein %1$s %2$s ausgebrütet!</string>
+  <string name="hatch_with">Haustier mit %s ausbrüten</string>
+  <string name="hatched_pet_title">Du hast ein %1$s %2$s ausgebrütet!</string>
   <string name="close">Schließen</string>
   <string name="share">Teilen</string>
-  <string name="notification_pet_fed" formatted="false">Du hast Dein/e/n %1$s %2$s gefüttert!</string>
-  <string name="notification_purchase" formatted="false">%s gekauft</string>
+  <string name="notification_pet_fed">Du hast Dein/e/n %1$s %2$s gefüttert!</string>
+  <string name="notification_purchase">%s gekauft</string>
   <string name="sectionpets">Normale Haustiere</string>
   <string name="sectionpremiumPets">Magische Haustiere</string>
   <string name="sectionquestPets">Quest-Haustiere</string>
@@ -307,9 +318,9 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="sectionspecialMounts">Seltene Reittiere</string>
   <string name="world_quest">Weltenquest</string>
   <string name="inn_description">Ruhe Dich im Gasthaus aus damit Deine täglichen Aufgaben Dich über Nacht nicht verletzen! (Beachte: verhindert nicht den Schaden durch einen Boss.)</string>
-  <string name="empty_items" formatted="false">Du hast kein/e %s</string>
-  <string name="user_level" formatted="false">Lvl %s</string>
-  <string name="user_level_with_class" formatted="false">Lvl %1$s - %2$s</string>
+  <string name="empty_items">Du hast kein/e %s</string>
+  <string name="user_level">Lvl %d</string>
+  <string name="user_level_with_class">Lvl %1$d %2$s</string>
   <string name="warrior">Krieger</string>
   <string name="rogue">Schurke</string>
   <string name="mage">Magier</string>
@@ -321,7 +332,9 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="select_class">Klasse wählen</string>
   <string name="opt_out_class">Später entscheiden</string>
   <string name="opt_out_description">Du willst keine Klasse oder möchtest Dich später entscheiden? Entscheide Dich später und werde zunächst ein Krieger ohne Spezialfähigkeiten. Du kannst später im Wiki etwas über das Klassensystem lesen und Deine Klasse jederzeit aktivieren.</string>
-  <string name="class_confirmation" formatted="false">Bist Du sicher, dass Du %s werden willst?</string>
+  <string name="class_confirmation">Bist Du sicher, dass Du %s werden willst?</string>
+  <string name="class_changed">Du bist jetzt ein/eine %s!</string>
+  <string name="class_changed_description">Du hast neue Basis-Kampfausrüstung, die Du im Ausrüstungsreiter wechseln kannst!</string>
   <string name="choose_class">Klasse wählen</string>
   <string name="dialog_go_back">Zurück</string>
   <string name="opt_out_confirmation">Bist Du sicher, dass Du Dich noch nicht entscheiden willst?</string>
@@ -340,12 +353,14 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="email">E-Mail</string>
   <string name="invite_users">Zur Gruppe einladen</string>
   <string name="share_using">Teilen via</string>
-  <string name="share_levelup" formatted="false">Mit dem Verbessern meiner Real-Life-Gewohnheiten habe ich Level %s in Habitica erreicht!</string>
-  <string name="share_hatched" formatted="false">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Haustier in Habitica ausgebrütet!</string>
-  <string name="share_raised" formatted="false">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
+  <string name="share_levelup">Ich habe durch das Verbessern meiner realen Lebensgewohnheiten Level %d in Habitica erreicht!</string>
+  <string name="share_hatched">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Haustier in Habitica ausgebrütet!</string>
+  <string name="share_raised">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
   <string name="open_in_store">Im Play Store öffnen</string>
   <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
-  <string name="leaderMessage" formatted="false">Nachricht von %1$s</string>
+  <string name="change_class_equipment_warning">Warnung: Du wirst nicht mehr Ausrüstung für die %s Klasse kaufen können.</string>
+  <string name="leaderMessage">Nachricht von %1$s</string>
+  <string name="leaderName">Führender: %1$s</string>
   <string name="confirm">Bestätigen</string>
   <string name="market">Marktplatz</string>
   <string name="timeTravelers">Mysteriöse Zeitreisende</string>
@@ -354,9 +369,9 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="party_invite">Durch Einladen von Freunden freischalten</string>
   <string name="no_gold">Nicht genügend Gold</string>
   <string name="no_potion">Du musst keinen Heiltrank kaufen</string>
-  <string name="successful_purchase" formatted="false">%1$s gekauft</string>
+  <string name="successful_purchase">%1$s gekauft</string>
   <string name="purchase_confirmation_title">Kauf bestätigen</string>
-  <string name="confirm_purchase_text" formatted="false">%1$s für %2$s %3$s kaufen</string>
+  <string name="confirm_purchase_text">%1$s für %2$s %3$s kaufen</string>
   <string name="gem">Edelstein</string>
   <string name="hourglass">Sanduhr</string>
   <string name="hourglasses">Sanduhren</string>
@@ -384,14 +399,15 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="enter_recipient_uuid">ID des Empfängers eingeben</string>
   <string name="invited_to_party">Du wurdest in eine Gruppe eingeladen!</string>
   <string name="stats_widget_label">Habitica: Avatar</string>
-  <string name="add_task">Neue Aufgabe</string>
-  <string name="add_habit">Neue Gewohnheit</string>
-  <string name="add_daily">Neue Tägliche Aufgabe</string>
-  <string name="add_todo">Neue To-Do</string>
-  <string name="add_reward">Neue Belohnung</string>
+  <string name="add_task">Neue Aufgabe hinzufügen</string>
+  <string name="add_habit">Neue Gewohnheit hinzufügen</string>
+  <string name="add_daily">Neue Tägliche Aufgabe hinzufügen</string>
+  <string name="add_todo">Neue To-Do hinzufügen</string>
+  <string name="add_reward">Neue Belohnung hinzufügen</string>
   <string name="all_dailies_completed">Du hast alle deine täglichen Aufgaben erledigt. Gut gemacht!</string>
   <string name="widget_habit_button">Habitica: Gewohnheit</string>
   <string name="widget_dailies">Habitica: Tägliche Aufgaben</string>
+  <string name="widget_todo_list">Habitica To-Do-Liste</string>
   <string name="widget_add_task">Habitica: Neue Aufgabe</string>
   <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden</string>
   <string name="gem.purchase.toolbartitle">Kaufen</string>
@@ -406,7 +422,173 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="hatching_market_info">Kriegst Du nicht die richtige Beute? Besuche den Marktplatz!</string>
   <string name="feeding_market_info">Brauchst Du anderes Futter? Kaufe mehr auf dem Marktplatz!</string>
   <string name="open_market">Marktplatz öffnen</string>
-  <string name="cds_description" formatted="false">Deine Täglichen Aufgaben werden zurückgesetzt, wenn Du Dich nach %1$s einloggst. Stelle sicher, dass Du vorher alle Deine Täglichen Aufgaben erledigt hast!</string>
+  <string name="cds_description">Deine Täglichen Aufgaben werden zurückgesetzt, wenn Du Dich nach %1$s einloggst. Stelle sicher, dass Du vorher alle Deine Täglichen Aufgaben erledigt hast!</string>
   <string name="AudioTheme_title">Hintergrundmusik</string>
   <string name="AudioTheme_summary">Ändere Habiticas Hintergrundmusik</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">Bis morgen!</string>
+  <string name="belongs_to_challenge">Gehört zum Wettbewerb</string>
+  <string name="has_reminder">Hat eine Benachrichtigung</string>
+  <string name="has_tag">Hat einen Tag</string>
+  <string name="subscribe.title">Mit einem Abonnement unterstützt Du die Entwickler und den Betrieb von Habitica</string>
+  <string name="subscribe_prompt">Werde Abonnent und du bekommst diese nützlichen Vorteile: </string>
+  <string name="subscribe.listitem1">Kaufe Edelsteine mit Gold</string>
+  <string name="subscribe.listitem2">Exklusive monatliche Gegenstände</string>
+  <string name="subscribe.listitem3">Zusätzliche Verlaufseinträge sichern</string>
+  <string name="subscribe.listitem4">Tägliches Beute-Limit verdoppelt</string>
+  <string name="subscriptions">Abonnements</string>
+  <string name="subscription_duration">Alle %s wiederholen</string>
+  <string name="subscribe">Abonnieren</string>
+  <string name="subscribe.listitem1.description">Alexander der Händler wird Dir nun Edelsteine für jeweils 20 Goldmünzen pro Stück verkaufen.\n\nSeine monatlichen Lieferungen sind zunächst auf 25 Edelsteine pro Monat beschränkt, welche jedoch durch die Dauer Deines Abonnements erhöht werden.\n\nDas Limit steigt um 5 Edelsteine für jeweils drei durchgehend abonnierte Monate, bis zu einem Maximum von 50 Edelsteinen pro Monat!</string>
+  <string name="subscribe.listitem2.description">Jeden Monat wirst Du einen einzigartigen optischen Gegenstand für Deinen Avatar erhalten.\n\nAußerdem gewährt Dir der Mysteriöse Zeitreisende für jeweils drei durchgehend abonnierte Monate Zugang zu historischen (und futuristischen!) optischen Gegenständen.</string>
+  <string name="subscribe.listitem3.description">Verlängert die Historie erledigter To-Dos und Aufgaben.</string>
+  <string name="subscribe.listitem4.description">Verdoppelte Beute-Limits ermöglichen es Dir, täglich von erledigten Aufgaben mehr Gegenstände zu finden und deinen Stall schneller zu vervollständigen!</string>
+  <string name="subscribe1month.gemcap">Edelsteinobergrenze startet bei 25 Edelsteinen</string>
+  <string name="subscribe3month.gemcap">Edelsteinobergrenze auf 30 Edelsteine erhöht</string>
+  <string name="subscribe6month.gemcap">Edelsteinobergrenze auf 35 Edelsteine erhöht</string>
+  <string name="subscribe12month.gemcap">Edelsteinobergrenze auf 45 Edelsteine erhöht</string>
+  <string name="subscription_hourglasses">+%d Mystische Sanduhr</string>
+  <string name="payment_method">Zahlungsmethode</string>
+  <string name="subscription">Abonnement</string>
+  <string name="active">Aktiv</string>
+  <string name="cancel_subscription">Abonnement kündigen</string>
+  <string name="cancel_subscription_google.description">Du willst nicht länger Abonnent sein? Du findest die Option zum Kündigen im Google Play Store unter \"Meine Apps und Spiele\".</string>
+  <string name="cancel_subscription_notgoogle.description">Du möchtest Dein Abonnement beenden? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen!</string>
+  <string name="visit_habitica_website">Habitica-Internetseite besuchen</string>
+  <string name="current_bonuses">Aktuelle Boni</string>
+  <string name="months_subscribed">Abonnierte Monate</string>
+  <string name="current_hourclasses">Aktuelle mystische Sanduhren</string>
+  <string name="monthly_gem_cap">Monatliche Edelsteinobergrenze</string>
+  <string name="inactive">Inaktiv</string>
+  <string name="one_month">1 Monat</string>
+  <string name="months">%d Monate</string>
+  <string name="month">Monat</string>
+  <string name="three_months">3 Monate</string>
+  <string name="six_months">6 Monate</string>
+  <string name="twelve_months">12 Monate</string>
+  <string name="subscribe_prompt_thanks">Für das Abonnieren bekommst Du diese nützlichen Vorteile: </string>
+  <string name="subscription_status">Abonnement Status</string>
+  <string name="byLeader">von %s</string>
+  <string name="challenge_details">Wettbewerbdetails</string>
+  <string name="challenge_leave_title">Wettbewerb verlassen</string>
+  <string name="challenge_leave_text">Bist Du Dir sicher, dass du den Wettbewerb \"%s\" verlassen willst?</string>
+  <string name="challenge_remove_tasks_title">Aufgaben entfernen</string>
+  <string name="challenge_remove_tasks_text">Willst du deine Aufgaben wirklich entfernen?</string>
+  <string name="remove_tasks">Entfernen</string>
+  <string name="keep_tasks">Behalten</string>
+  <string name="my_challenges">Meine Wettbewerbe</string>
+  <string name="public_challenges">Öffentlich</string>
+  <string name="challenges">Wettbewerbe</string>
+  <string name="daily">Tägliche Aufgabe</string>
+  <string name="habit">Gewohnheit</string>
+  <string name="reward">Belohnung</string>
+  <string name="todo">To-Do</string>
+  <string name="official">Offiziell</string>
+  <string name="participating">Beigetreten</string>
+  <string name="challenge">Wettbewerb</string>
+  <string name="go_to_challenge">Gehe zum Wettbewerb</string>
+  <string name="not_part_of_a_challenge">Du nimmst im Moment an keinen Wettbewerben teil!</string>
+  <string name="join_a_challenge">Trete einem Wettbewerb bei, um ein ausgewähltes Set von Aufgaben zu deiner Liste hinzuzufügen. Trete dann gegen andere Habitica-Mitglieder an, um Erfolge und sogar Edelsteine zu gewinnen!</string>
+  <string name="check_the_public_challenge_tab">Drücke auf den \"Öffentlich\"-Tab, um die von Mitgliedern erstellten Wettbewerbe zu finden, die am besten zu Dir passen!</string>
+  <string name="add_reminder">Erinnerung hinzufügen</string>
+  <string name="warning">Warnung</string>
+  <string name="open_settings">Einstellungen öffnen</string>
+  <string name="dont_keep_activities_warning">Es sieht so aus, als wäre die Entwickleroption \\"Aktivitäten nicht behalten\\" aktiviert. Momentan können dadurch Probleme in der Habitica App entstehen, deshalb empfehlen wir Dir, die Option zu deaktivieren.</string>
+  <string name="inbox">Posteingang</string>
+  <string name="FAQ">Häufig gestellte Fragen</string>
+  <string name="special">Spezial</string>
+  <string name="gem_for_gold_description">Weil Du Habitica abonnierst, kannst Du jeden Monat eine Anzahl von Edelsteinen mit Gold kaufen. </string>
+  <string name="limited_count">%d übrig</string>
+  <string name="gem_shop">Edelstein</string>
+  <string name="mystery_item">Überraschungsgegenstand</string>
+  <string name="myster_item_notes">Jeden Monat bekommen Abonnenten einen Überraschungsgegenstand. Dieser wird üblicherweise circa eine Woche vor Ende des Monats veröffentlicht.</string>
+  <string name="open">Öffnen</string>
+  <string name="notification_mystery_item">Du öffnest die Kiste und findest %s!</string>
+  <string name="checkInRewardEarned">Du hast ein %1$s als Belohnung für Deine Hingabe, dein Leben zu verbessern, erhalten.</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Deine nächste Belohnung wird nach %1$d Log-Ins freigeschalten </string>
+  <string name="pending_approval">Zustimmung ausstehend</string>
+  <string name="filters">Filter</string>
+  <string name="done">Fertig</string>
+  <string name="group_tasks_edit_description">Gruppenaufgaben können nicht bearbeitet werden.</string>
+  <string name="group_tasks_edit_title">Aufgabe kann nicht bearbeitet werden</string>
+  <string name="groups">Gruppen</string>
+  <string name="all">Alles</string>
+  <string name="none">Nichts</string>
+  <string name="owned">Im Besitz</string>
+  <string name="not_owned">Nicht im Besitz</string>
+  <string name="new_game">Neues\nSpiel</string>
+  <string name="login_btn_fb">Mit Facebook-Konto einloggen</string>
+  <string name="login_btn_google">Mit Google-Konto einloggen</string>
+  <string name="action_back">Zurück</string>
+  <string name="welcome_text">Oh, Du musst neu hier sein. Ich bin Justin, der Stadtführer von Habitica.\n\nAls erstes erstellen wir Dir einen Avatar.</string>
+  <string name="randomize">Zufällig</string>
+  <string name="avatar_extras">Extras</string>
+  <string name="avatar_skin_color">Hautfarbe</string>
+  <string name="avatar_hair_color">Haarfarbe</string>
+  <string name="avatar_hair_bangs">Pony</string>
+  <string name="avatar_hair_ponytail">Zopf</string>
+  <string name="avatar_glasses">Brille</string>
+  <string name="avatar_wheelchair">Rollstuhl</string>
+  <string name="weak">Schwach</string>
+  <string name="strong">Stark</string>
+  <string name="gray">Grau</string>
+  <string name="dated">Terminiert</string>
+  <string name="completed">Vervollständigt</string>
+  <string name="setuP_group_other">Anderes</string>
+  <string name="clear">löschen</string>
+  <string name="empty_title_habits">Du hast keine Gewohnheiten</string>
+  <string name="empty_description_habits">Gewohnheiten sind Aufgaben ohne festen Zeitplan. Du kannst sie mehrmals am Tag oder gar nicht abhaken.</string>
+  <string name="empty_title_dailies">Du hast keine täglichen Aufgaben</string>
+  <string name="empty_description_dailies">Tägliche Aufgaben sind sich regelmäßig wiederholende Aufgaben. Such Dir den Zeitplan aus, der Dir am besten passt!</string>
+  <string name="empty_title_todos">Du hast keine To-Dos</string>
+  <string name="empty_description_todos">To-Dos sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu den To-Dos hinzu, um deren Wert zu steigern.</string>
+  <string name="empty_title_rewards">Du hast keine Belohnungen</string>
+  <string name="reset_walkthrough">Setze Justins Einführung zurück</string>
+  <string name="read_community_guidelines">Bitte lies dir unsere Community-Richtlinien durch, bevor du etwas postest.</string>
+  <string name="maintenance">Wartung</string>
+  <string name="reload_content">Inhalt erneut laden</string>
+  <string name="dailyDueDefaultView">Setze die Standards der täglichen Aufgaben auf \"fällig\"</string>
+  <string name="dailyDueDefaultViewDescription">Mit der Auswahl dieser Option werden Deine täglichen Aufgaben auf \"fällig\" zurückgesetzt, anstelle von \"all\"</string>
+  <string name="repeat_summary">%1$s wird jeden %2$s %3$s %4$s wiederholt</string>
+  <string name="no_billing_gems">Mit deinem Zugangsgerät hast Du keinen Zugriff auf die möglichen Zahlungsmethoden. Bitte nutze die Habitica Website um Edelsteine zu kaufen.</string>
+  <string name="no_billing_subscriptions">Mit deinem Zugangsgerät hast Du keinen Zugriff auf die möglichen Zahlungsmethoden. Bitte nutze die Habitica Website um ein Abonnement zu kaufen.</string>
+  <string name="save">Speichern</string>
+  <string name="location">Standort</string>
+  <string name="gem_reward">Edelstein-Belohnung</string>
+  <string name="tasks">Aufgaben</string>
+  <string name="create_challenge">Wettbewerb erstellen</string>
+  <string name="edit_challenge">Wettbewerb bearbeiten</string>
+  <string name="challenge_create_error_tavern_one_gem">Du benötigst mindestens 1 Edelstein, um einen Wettbewerb im Gasthaus zu erstellen.</string>
+  <string name="challenge_create_error_enough_gems">Du hast nicht genug Edelsteine, um einen Wettbewerb zu erstellen.</string>
+  <string name="identify_your_challenge_with_a_tag">Markiere Deinen Wettbewerb mit einem Tag ..</string>
+  <string name="challenge_create_error_tag">Du musst ein Tag angeben, um diesen Wettbewerb erstellen zu können.</string>
+  <string name="challenge_create_error_no_tasks">Du musst wenigstens eine Aufgabe hinzufügen, um diesen Wettbewerb erstellen zu können.</string>
+  <string name="challenge_create_error_title">Du musst einen Titel angeben, um diesen Wettbewerb erstellen zu können.</string>
+  <string name="description_optional">Beschreibung (optional)</string>
+  <string name="new_challenge_title">Neuer Wettbewerbstitel</string>
+  <string name="ownership">Besitz</string>
+  <string name="inn">Gasthaus</string>
+  <string name="system">System</string>
+  <string name="start_quest">Starte eine neue Quest</string>
+  <string name="leave_party">Verlasse die Gruppe</string>
+  <string name="party_description">Gruppen-Beschreibung</string>
+  <string name="abort_confirmation">Bist Du Dir sicher, dass Du die Mission abbrechen möchtest? Die Mission wird für alle Mitglieder Deiner Gruppe abgebrochen und Euer gesamter Fortschritt geht verloren. Die Questschriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
+  <string name="leave_quest_confirmation">Bist Du Dir sicher, dass Du die aktive Quest verlassen möchtest? Dein gesamter Fortschritt geht dabei verloren.</string>
+  <string name="number_participants">%1$d Teilnehmer</string>
+  <string name="welcome_back">Willkommen zurück</string>
+  <string name="yesterdaililes_prompt">Hast du gestern einige Deiner täglichen Aufgaben gemacht?</string>
+  <string name="start_day">Starte meinen Tag</string>
+  <string name="leave_party_confirmation">Bist Du sicher, dass Du die Gruppe verlassen willst?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Nächste Belohnung in %d Check-Ins</string>
+  <string name="pending">Ausstehend</string>
+  <string name="accepted">Angenommen</string>
+  <string name="declined">Abgelehnt</string>
+  <string name="participants">Teilnehmer</string>
+  <string name="invitations">Einladungen</string>
+  <string name="quest_leader_header" formatted="false">Begonnen von %s</string>
+  <string name="quest_abort_message">Willst Du diese Mission wirklich abbrechen?
+Sie wird für alle Mitglieder Deiner Gruppe abgebrochen und Euer gesamter Fortschritt geht verloren.
+Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
+  <string name="loading">Inhalt wird geladen....</string>
+  <string name="reloading_content">Inhalt wird erneut geladen</string>
 </resources>

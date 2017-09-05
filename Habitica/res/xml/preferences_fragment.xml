@@ -47,15 +47,25 @@
                     android:summary="@string/SP_APIToken_summary"/>
 
                 <Preference
-                    android:key="@string/SP_user_qr_code"
+                    android:key="SP_user_qr_code"
                     android:title="@string/SP_user_qr_code"
                     android:selectable="true"
                     android:persistent="false"
                     android:shouldDisableView="false"
                     android:summary="@string/SP_user_qr_code"/>
-
+                <Preference
+                        android:key="subscription_status"
+                        android:title="@string/subscription_status"
+                        android:selectable="true"
+                        android:persistent="false"
+                        android:shouldDisableView="false"/>
             </PreferenceCategory>
-
+            <PreferenceCategory android:title="@string/danger_zone">
+                <Preference android:title="@string/reset_account"
+                    android:key="reset_account" />
+                <Preference android:title="@string/delete_account"
+                    android:key="delete_account" />
+            </PreferenceCategory>
         </PreferenceScreen>
 
         <Preference
@@ -80,6 +90,11 @@
             android:entryValues="@array/AudioValues"
             android:summary="@string/AudioTheme_summary"
             android:order="3"/>
+        <CheckBoxPreference android:title="@string/dailyDueDefaultView"
+            android:key="dailyDueDefaultView"
+            android:order="6"
+            android:summary="@string/dailyDueDefaultViewDescription"
+            />
         <Preference android:title="@string/logout"
             android:key="logout"
             android:summary="@string/logout_description"
@@ -175,4 +190,11 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/maintenance">
+        <Preference android:title="@string/reload_content"
+            android:key="reload_content"
+            android:order="99"/>
+
+    </PreferenceCategory>
 </PreferenceScreen>

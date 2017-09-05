@@ -11,9 +11,9 @@
     <color name="brand">@color/brand_100</color>
 
     <!--  HabitRPG task color -->
-    <color name="worst_100">#a13f44</color>
-    <color name="worst_50">#a1334d</color>
-    <color name="worst_10">#a10013</color>
+    <color name="worst_100">#DE3F3F</color>
+    <color name="worst_50">#C92B2B</color>
+    <color name="worst_10">#B01515</color>
 
     <color name="worse_100">#FF6165</color>
     <color name="worse_50">#F74E52</color>
@@ -27,17 +27,30 @@
     <color name="neutral_50">#FFB445</color>
     <color name="neutral_10">#FFA624</color>
 
-    <color name="good_100">#69D59A</color>
-    <color name="good_50">#50C987</color>
-    <color name="good_10">#36B971</color>
+    <color name="good_100">#24CC8F</color>
+    <color name="good_50">#20B780</color>
+    <color name="good_10">#1CA372</color>
 
-    <color name="better_100">#5AE4B2</color>
-    <color name="better_50">#3FDAA2</color>
-    <color name="better_10">#23CC8F</color>
+    <color name="better_100">#3BCAD7</color>
+    <color name="better_50">#34B5C1</color>
+    <color name="better_10">#26A0AB</color>
 
     <color name="best_100">#50B5E9</color>
     <color name="best_50">#46A7D9</color>
     <color name="best_10">#2995cd</color>
+
+
+    <color name="gray_10">#34313a</color>
+    <color name="gray_50">#4e4a57</color>
+    <color name="gray_100">#686274</color>
+    <color name="gray_200">#878190</color>
+    <color name="gray_300">#a5a1ac</color>
+    <color name="gray_400">#c3c0c7</color>
+    <color name="gray_500">#e1e0e3</color>
+    <color name="gray_600">#edecee</color>
+    <color name="gray_700">#f9f9f9</color>
+
+    <color name="gray_600_30">#4cedecee</color>
 
     <color name="completed">#D9D9D9</color>
     <color name="completed_btn">#989898</color>
@@ -54,7 +67,8 @@
 
     <color name="changelog.note">#ffcf42</color>
 
-
+    <color name="colorPrimary">@color/brand_300</color>
+    <color name="colorPrimaryDark">@color/brand_50</color>
     <!-- text -->
     <color name="textColorDark">#FFFFFF</color>
     <color name="textColorSecondaryDark">@color/brand_500</color>
@@ -62,14 +76,14 @@
     <color name="textColorSecondaryLight">#727272</color>
 
     <!-- Cards -->
-    <color name="stroke">#dddddd</color>
+    <color name="stroke">@color/gray_500</color>
     <color name="text_light">#66000000</color>
-    <color name="card_text">#ff8d8d8d</color>
-    <color name="card_title_text">#ff707070</color>
-    <color name="card_light_text">#ffb5b5b5</color>
-    <color name="card_grid_text">#ff707070</color>
-    <color name="card_separator">#ffe5e5e5</color>
-    <color name="card_border">#ffdedede</color>
+    <color name="card_text">@color/gray_200</color>
+    <color name="card_title_text">@color/gray_100</color>
+    <color name="card_light_text">@color/gray_300</color>
+    <color name="card_grid_text">@color/gray_100</color>
+    <color name="card_separator">@color/gray_600</color>
+    <color name="card_border">@color/gray_500</color>
 
     <!-- dialog -->
     <color name="primary_text_light">#000000</color>
@@ -78,20 +92,20 @@
     <!--  clock styled weekdays -->
     <color name="days_gray">#ffb5b5b5</color>
     <color name="days_black">#FF000000</color>
-    <color name="holo_blue_light">#ff33b5e5</color>
 
-    <color name="btn_separator">#aaa</color>
-    <color name="new_task_bar_color">#555555</color>
-    <color name="white">#ffffff</color>
+    <color name="btn_separator">@color/gray_300</color>
+    <color name="white">#ffffff </color>
 
-    <color name="checkbox_tint_color">#ffd8dcdd</color>
+    <color name="checkbox_tint_color">@color/gray_500</color>
 
-    <color name="cell_separator">#c3c2c6</color>
-    <color name="checklist_separator">#ededed</color>
-    <color name="task_gray">#b7b7b7</color>
+    <color name="cell_separator">@color/gray_400</color>
+    <color name="checklist_separator">@color/gray_600</color>
+    <color name="task_gray">@color/gray_400</color>
     <color name="checkbox_fill">#50ffffff</color>
     <color name="checkbox_checked_fill">#c8ffffff</color>
-    <color name="checkbox_stroke">#32000000</color>
+    <color name="checkbox_checklist_fill">#23000000</color>
+
+    <color name="habit_inactive_gray">#F9F9F9</color>
 
     <!-- Preferences -->
     <color name="preference_fallback_accent_color">@color/colorAccent</color>
@@ -102,6 +116,37 @@
 
     <color name="widget_background">#c8432874</color>
 
-    <color name="gem_view_background">#10bda8ff</color>
+    <color name="gem_view_background">@color/habit_inactive_gray</color>
+    <color name="task_border_gray">#1a000000</color>
+    <color name="task_secondary_text">#B2B2B2</color>
+    <color name="header_class_name">#CCBEED</color>
+    <color name="gem_icon_color">#24cc8f</color>
+    <color name="subscription_description_text">#b1000000</color>
+    <color name="pill_gray">#efefef</color>
+    <color name="white_80_alpha">#ccffffff</color>
+    <color name="white_75_alpha">#bfffffff</color>
+    <color name="white_50_alpha">#7fffffff</color>
+    <color name="white_15_alpha">#26ffffff</color>
+    <color name="black_5_alpha">#0b000000</color>
+    <color name="black_10_alpha">#16000000</color>
+    <color name="black_20_alpha">#33000000</color>
+    <color name="black_50_alpha">#89000000</color>
+    <color name="light_gray_bg">#F6F4F8</color>
 
+    <color name="skin_ddc994">#ddc994</color>
+    <color name="skin_f5a76e">#f5a76e</color>
+    <color name="skin_ea8349">#ea8349</color>
+    <color name="skin_c06534">#c06534</color>
+    <color name="skin_98461a">#98461a</color>
+    <color name="skin_915533">#915533</color>
+    <color name="skin_c3e1dc">#c3e1dc</color>
+    <color name="skin_6bd049">#6bd049</color>
+    
+    <color name="hair_white">#DEDEDE</color>
+    <color name="hair_brown">#903A00</color>
+    <color name="hair_blond">#CFA925</color>
+    <color name="hair_red">#EC720E</color>
+    <color name="hair_black">#313131</color>
+    <color name="gold">#ee9109</color>
+    <color name="reward_buy_button_bg">#4cfedead</color>
 </resources>

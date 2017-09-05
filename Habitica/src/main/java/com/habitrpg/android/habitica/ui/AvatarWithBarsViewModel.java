@@ -1,48 +1,58 @@
 package com.habitrpg.android.habitica.ui;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.BoughtGemsEvent;
-import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-/**
- * Created by Negue on 14.06.2015.
- */
-public class AvatarWithBarsViewModel implements View.OnClickListener {
-    private ValueBarBinding hpBar;
-    private ValueBarBinding xpBar;
-    private ValueBarBinding mpBar;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.BoughtGemsEvent;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.models.Avatar;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.views.CurrencyView;
+import com.habitrpg.android.habitica.ui.views.ValueBar;
 
-    private AvatarView avatarView;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class AvatarWithBarsViewModel {
+    @BindView(R.id.hpBar)
+    ValueBar hpBar;
+    @BindView(R.id.xpBar)
+    ValueBar xpBar;
+    @BindView(R.id.mpBar)
+    ValueBar mpBar;
+    @BindView(R.id.avatarView)
+    AvatarView avatarView;
 
     private android.content.res.Resources res;
 
     private Context context;
 
-    private TextView lvlText, goldText, silverText, gemsText;
-    private HabitRPGUser userObject;
+    @BindView(R.id.lvl_tv)
+    TextView lvlText;
+    @BindView(R.id.currencyView)
+    CurrencyView currencyView;
+
+    private Avatar userObject;
 
     private int cachedMaxHealth, cachedMaxExp, cachedMaxMana;
 
     public AvatarWithBarsViewModel(Context context, View v) {
         this.context = context;
-
         res = context.getResources();
 
         if (v == null) {
@@ -50,84 +60,49 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             return;
         }
 
-        lvlText = (TextView) v.findViewById(R.id.lvl_tv);
-        goldText = (TextView) v.findViewById(R.id.gold_tv);
-        silverText = (TextView) v.findViewById(R.id.silver_tv);
-        gemsText = (TextView) v.findViewById(R.id.gems_tv);
-        View hpBarView = v.findViewById(R.id.hpBar);
+        ButterKnife.bind(this, v);
 
-        avatarView = (AvatarView) v.findViewById(R.id.avatarView);
-        hpBar = DataBindingUtil.bind(hpBarView);
-        xpBar = DataBindingUtil.bind(v.findViewById(R.id.xpBar));
-        mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
 
         setHpBarData(0, 50);
         setXpBarData(0, 1);
         setMpBarData(0, 1);
-
-        gemsText.setClickable(true);
-        gemsText.setOnClickListener(this);
-    }
-
-    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
-        Integer maxHP = stats.getMaxHealth();
-        if (maxHP == null || maxHP == 0) {
-            maxHP = 50;
-        }
-
-        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP, ctx.getString(R.string.HP_default), ContextCompat.getColor(ctx, R.color.hpColor), R.drawable.ic_header_heart);
-    }
-
-    // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
-    // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
-        double percent = Math.min(1, value / valueMax);
-
-        valueBar.setWeightToShow((float) percent);
-        valueBar.setText((int) value + "/" + (int) valueMax);
-        valueBar.setDescription(description);
-        valueBar.setBarForegroundColor(color);
-        valueBar.icHeader.setImageResource(icon);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void updateData(HabitRPGUser user) {
+    public void updateData(Avatar user) {
         userObject = user;
 
         Stats stats = user.getStats();
 
         String userClass = "";
-        int gp = (stats.getGp().intValue());
-        int sp = (int) ((stats.getGp() - gp) * 100);
 
-        avatarView.setUser(user);
+        avatarView.setAvatar(user);
 
-        if (stats.get_class() != null) {
-            userClass += stats.getCleanedClassName();
+        if (stats.getHabitClass() != null) {
+            userClass = stats.getTranslatedClassName(context);
         }
 
-        mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
+        mpBar.setVisibility((stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
-        if (user.getPreferences() != null && user.getFlags() != null && (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected())) {
+        if (user.getPreferences() != null && user.getFlags() != null && (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected() || userClass.length() == 0)) {
             lvlText.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
             lvlText.setCompoundDrawables(null, null, null, null);
         } else {
-            lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass));
+            lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1)));
             Drawable drawable;
-            switch (stats.get_class()) {
-                case warrior:
+            switch (stats.getHabitClass()) {
+                case "warrior":
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
                     break;
-                case rogue:
+                case "rogue":
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_rogue, null);
                     break;
-                case wizard:
+                case "wizard":
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
                     break;
-                case healer:
+                case "healer":
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_healer, null);
                     break;
-                case base:
                 default:
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
 
@@ -143,61 +118,69 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setXpBarData(stats.getExp().floatValue(), stats.getToNextLevel());
         setMpBarData(stats.getMp().floatValue(), stats.getMaxMP());
 
-        goldText.setText(String.valueOf(gp));
-        silverText.setText(String.valueOf(sp));
-
-        Double gems = user.getBalance() * 4;
-        gemsText.setText(String.valueOf(gems.intValue()));
+        currencyView.setHourglasses(user.getHourglassCount());
+        currencyView.setGold(stats.getGp());
+        currencyView.setGems(user.getGemCount());
     }
 
-    public void setHpBarData(float value, int valueMax) {
+    private void setHpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxHealth;
         } else {
             cachedMaxHealth = valueMax;
         }
-        setValueBar(hpBar, (float) Math.ceil(value), valueMax, context.getString(R.string.HP_default), ContextCompat.getColor(context, R.color.hpColor), R.drawable.ic_header_heart);
+        hpBar.set(Math.ceil(value), valueMax);
     }
 
-    public void setXpBarData(float value, int valueMax) {
+    private void setXpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxExp;
         } else {
             cachedMaxExp = valueMax;
         }
-        setValueBar(xpBar, (float) Math.floor(value), valueMax, context.getString(R.string.XP_default), ContextCompat.getColor(context, R.color.xpColor), R.drawable.ic_header_exp);
+        xpBar.set(Math.floor(value), valueMax);
     }
 
-    public void setMpBarData(float value, int valueMax) {
+    private void setMpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxMana;
         } else {
             cachedMaxMana = valueMax;
         }
-        setValueBar(mpBar, (float) Math.floor(value), valueMax, context.getString(R.string.MP_default), ContextCompat.getColor(context, R.color.mpColor), R.drawable.ic_header_magic);
+        mpBar.set(Math.floor(value), valueMax);
     }
 
     @Subscribe
     public void onEvent(BoughtGemsEvent gemsEvent) {
-        Double gems = userObject.getBalance() * 4;
+        Integer gems = userObject.getGemCount();
         gems += gemsEvent.NewGemsToAdd;
-        gemsText.setText(String.valueOf(gems.intValue()));
+        currencyView.setGems(gems);
     }
 
-    @Override
-    public void onClick(View view) {
-        // Gems Clicked
-
+    @OnClick(R.id.gemTextView)
+    public void gemTextClicked() {
         EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
     }
 
-    public void hideGems() {
-        gemsText.setVisibility(View.GONE);
+    @OnClick(R.id.avatarView)
+    public void avatarViewClicked() {
+        OpenMenuItemCommand event = new OpenMenuItemCommand();
+        event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;
+        EventBus.getDefault().post(event);
     }
 
     public void valueBarLabelsToBlack() {
-        hpBar.setPartyMembers(true);
-        mpBar.setPartyMembers(true);
-        xpBar.setPartyMembers(true);
+        hpBar.setLightBackground(true);
+        xpBar.setLightBackground(true);
+        mpBar.setLightBackground(true);
+    }
+
+    public static void setHpBarData(ValueBar valueBar, Stats stats) {
+        Integer maxHP = stats.getMaxHealth();
+        if (maxHP == null || maxHP == 0) {
+            maxHP = 50;
+        }
+
+        valueBar.set((float) Math.ceil(stats.getHp().floatValue()), maxHP);
     }
 }

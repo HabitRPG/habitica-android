@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.events.commands;
 
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.Pet;
 
 public class FeedCommand {
 

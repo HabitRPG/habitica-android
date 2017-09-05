@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="@color/gray_700">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:text="@string/your_balance"
+            android:layout_gravity="center_vertical"/>
+        <com.habitrpg.android.habitica.ui.views.CurrencyView
+            android:id="@+id/currencyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/limitedTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        style="@style/Body1"
+        android:textSize="12sp"
+        android:padding="4dp"
+        android:background="@color/brand_300"
+        android:textColor="@color/white"
+        tools:text="Available until May 6"/>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:id="@+id/content_container"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_600"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+        <ImageButton
+            android:id="@+id/pinButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/pin"
+            android:background="@color/transparent"/>
+        <LinearLayout
+            android:id="@+id/buyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reward.dialog.buy"
+                android:textAllCaps="true"
+                android:textColor="@color/brand_300"
+                style="@style/Body1" />
+            <ImageView
+                android:id="@+id/currency_icon_view"
+                android:layout_width="@dimen/currency_icon_size"
+                android:layout_height="@dimen/currency_icon_size"
+                tools:src="@drawable/currency_gem" />
+            <TextView
+                android:id="@+id/priceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="10"
+                tools:textColor="@color/good_10"
+                style="@style/Body1" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:text="@string/close"
+            android:layout_toLeftOf="@id/buyButton"
+            android:layout_marginRight="12dp"/>
+
+    </RelativeLayout>
+</LinearLayout>

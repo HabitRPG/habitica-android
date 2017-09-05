@@ -17,7 +17,7 @@
             android:id="@+id/avatarView"
             android:layout_width="140dp"
             android:layout_height="147dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="12dp"
             app:showBackground="true"
             app:showMount="true"
             app:showPet="true" />
@@ -79,9 +79,14 @@
             </LinearLayout>
 
 
-            <include
+            <com.habitrpg.android.habitica.ui.views.ValueBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/hpBar"
-                layout="@layout/value_bar" />
+                app:barForegroundColor="@color/hpColor"
+                app:description="@string/HP_default"
+                app:barIconDrawable="@drawable/ic_header_heart"
+                app:lightBackground="true"/>
         </LinearLayout>
 
     </LinearLayout>

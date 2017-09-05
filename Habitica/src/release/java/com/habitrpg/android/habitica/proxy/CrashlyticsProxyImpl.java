@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.proxy;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
 import android.content.Context;
 

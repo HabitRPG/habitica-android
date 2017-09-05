@@ -10,37 +10,39 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     public static final String DAILY_ACTION = "com.habitrpg.android.habitica.DAILY_ACTION";
     public static final String TASK_ID_ITEM = "com.habitrpg.android.habitica.TASK_ID_ITEM";
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
     @Inject
-    HostConfig hostConfig;
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
+    @Inject
+    TaskRepository taskRepository;
 
     private void setUp(Context context) {
-        if (apiHelper == null) {
-            HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
-            application.getComponent().inject(this);
+        if (apiClient == null) {
+            HabiticaBaseApplication.getComponent().inject(this);
         }
     }
 
     protected abstract Class getServiceClass();
+
     protected abstract Class getProviderClass();
+
     protected abstract int getTitleResId();
 
 
@@ -48,23 +50,17 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         setUp(context);
         if (intent.getAction().equals(DAILY_ACTION)) {
-            AppWidgetManager mgr = AppWidgetManager.getInstance(context);
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
             String taskId = intent.getStringExtra(TASK_ID_ITEM);
 
             if (taskId != null) {
-                apiHelper.apiService.postTaskDirection(taskId, TaskDirection.up.toString())
-                        .compose(apiHelper.configureApiCallObserver())
+                userRepository.getUser(userId).flatMap(user -> taskRepository.taskChecked(user, taskId, true, false))
                         .subscribe(taskDirectionData -> {
-                            Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
-                            task.completed = true;
-                            task.save();
-                            showToastForTaskDirection(context, taskDirectionData, hostConfig.getUser());
+                            taskRepository.markTaskCompleted(taskId, true);
+                            showToastForTaskDirection(context, taskDirectionData, userId);
                             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
-                        }, throwable -> {
-                            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
-                        });
+                        }, throwable -> AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view));
             }
         }
         super.onReceive(context, intent);
@@ -84,12 +80,12 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
             }
         }
 
-        for (int i = 0; i < appWidgetIds.length; ++i) {
+        for (int appWidgetId : appWidgetIds) {
             Intent intent = new Intent(context, getServiceClass());
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_task_list);
-            rv.setRemoteAdapter(appWidgetIds[i], R.id.list_view, intent);
+            rv.setRemoteAdapter(appWidgetId, R.id.list_view, intent);
             rv.setEmptyView(R.id.list, R.id.empty_view);
             rv.setTextViewText(R.id.widget_title, context.getString(getTitleResId()));
 
@@ -100,15 +96,15 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
 
             Intent taskIntent = new Intent(context, getProviderClass());
             taskIntent.setAction(DAILY_ACTION);
-            taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+            taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, taskIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent);
 
-            appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
+            appWidgetManager.updateAppWidget(appWidgetId, rv);
 
-            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.list_view);
+            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);

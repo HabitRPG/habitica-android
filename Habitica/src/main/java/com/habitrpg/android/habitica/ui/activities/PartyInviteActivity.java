@@ -1,19 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,18 +8,28 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 
@@ -43,40 +39,19 @@ public class PartyInviteActivity extends BaseActivity {
     public static final String USER_IDS_KEY = "userIDs";
     public static final String IS_EMAIL_KEY = "isEmail";
     public static final String EMAILS_KEY = "emails";
-
-    private HabitRPGUser user;
-    private String userIdToInvite;
-
     @Inject
-    APIHelper apiHelper;
-
+    @Named(AppModule.NAMED_USER_ID)
+    protected String userId;
     @Inject
-    protected HostConfig hostConfig;
-
+    SocialRepository socialRepository;
+    @Inject
+    UserRepository userRepository;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
     List<PartyInviteFragment> fragments = new ArrayList<>();
-
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            handleUserRecieved(habitRPGUser);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
+    private String userIdToInvite;
 
     @Override
     protected int getLayoutResId() {
@@ -189,13 +164,11 @@ public class PartyInviteActivity extends BaseActivity {
             }
             userIdToInvite = uri.getPathSegments().get(2);
 
-            //@TODO: Move to user helper/model
-            new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
+            userRepository.getUser(userId).subscribe(this::handleUserRecieved, RxErrorHandler.handleEmptyError());
         }
     }
 
-    public void handleUserRecieved(HabitRPGUser user) {
-        this.user = user;
+    public void handleUserRecieved(User user) {
 
         if (this.userIdToInvite == null) {
             return;
@@ -210,10 +183,7 @@ public class PartyInviteActivity extends BaseActivity {
         invites.add(userIdToInvite);
         inviteData.put("uuids", invites);
 
-        this.apiHelper.apiService.inviteToGroup(this.user.getParty().getId(), inviteData)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        this.socialRepository.inviteToGroup(user.getParty().getId(), inviteData)
+                .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 }

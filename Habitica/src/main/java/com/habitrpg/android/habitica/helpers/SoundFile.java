@@ -5,18 +5,20 @@ import android.media.MediaPlayer;
 
 import java.io.File;
 
-public class SoundFile {
+public class SoundFile implements MediaPlayer.OnCompletionListener {
     private String theme;
     private String fileName;
     private File file;
     private MediaPlayer mp;
     private Boolean playerPrepared = false;
+    private boolean isPlaying;
 
-    public SoundFile(String theme, String fileName){
+    public SoundFile(String theme, String fileName) {
 
         this.theme = theme;
         this.fileName = fileName;
         mp = new MediaPlayer();
+        mp.setOnCompletionListener(this);
     }
 
     public String getTheme() {
@@ -27,12 +29,12 @@ public class SoundFile {
         return fileName;
     }
 
-    public String getWebUrl(){
-        return "https://habitica.com/assets/audio/"+getTheme()+"/"+getFileName()+".mp3";
+    public String getWebUrl() {
+        return "https://habitica.com/assets/audio/" + getTheme() + "/" + getFileName() + ".mp3";
     }
 
     public String getFilePath() {
-        return getTheme()+"_"+getFileName()+".mp3";
+        return getTheme() + "_" + getFileName() + ".mp3";
     }
 
     public File getFile() {
@@ -43,8 +45,8 @@ public class SoundFile {
         this.file = file;
     }
 
-    public void prepareMediaPlayer(){
-        if(playerPrepared) {
+    public void prepareMediaPlayer() {
+        if (playerPrepared) {
             return;
         }
 
@@ -52,24 +54,28 @@ public class SoundFile {
 
         try {
             mp.setDataSource(path);
-            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mp.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
             mp.prepare();
 
             playerPrepared = true;
 
             file = null;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void play(){
-        prepareMediaPlayer();
-        if(mp.isPlaying()) {
-            mp.stop();
+    public void play() {
+        if (isPlaying) {
+            return;
         }
-
+        prepareMediaPlayer();
+        isPlaying = true;
         mp.start();
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        isPlaying = false;
     }
 }

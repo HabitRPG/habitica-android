@@ -1,9 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,13 +9,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class IntroFragment extends BaseFragment {
 
+    @BindView(R.id.subtitleTextView)
+    TextView subtitleTextView;
+
     @BindView(R.id.titleTextView)
     TextView titleTextView;
+
+    @BindView(R.id.titleImageView)
+    ImageView titleImageView;
 
     @BindView(R.id.descriptionTextView)
     TextView descriptionTextView;
@@ -27,9 +33,15 @@ public class IntroFragment extends BaseFragment {
     @BindView(R.id.imageView)
     ImageView imageView;
 
+    @BindView(R.id.container_view)
+    ViewGroup containerView;
+
     Drawable image;
+    Drawable titleImage;
+    String subtitle;
     String title;
     String description;
+    Integer backgroundColor;
 
     @Nullable
     @Override
@@ -43,12 +55,24 @@ public class IntroFragment extends BaseFragment {
             this.imageView.setImageDrawable(this.image);
         }
 
+        if (this.titleImage != null) {
+            this.titleImageView.setImageDrawable(this.titleImage);
+        }
+
+        if (this.subtitle != null) {
+            this.subtitleTextView.setText(this.subtitle);
+        }
+
         if (this.title != null) {
             this.titleTextView.setText(this.title);
         }
 
         if (this.description != null) {
             this.descriptionTextView.setText(this.description);
+        }
+
+        if (this.backgroundColor != null) {
+            this.containerView.setBackgroundColor(this.backgroundColor);
         }
 
         return v;
@@ -66,6 +90,20 @@ public class IntroFragment extends BaseFragment {
         }
     }
 
+    public void setTitleImage(Drawable image) {
+        this.titleImage = image;
+        if (this.titleImageView != null && image != null) {
+            this.titleImageView.setImageDrawable(image);
+        }
+    }
+
+    public void setSubtitle(String text) {
+        this.subtitle = text;
+        if (this.subtitleTextView != null && text != null) {
+            this.subtitleTextView.setText(text);
+        }
+    }
+
     public void setTitle(String text) {
         this.title = text;
         if (this.titleTextView != null && text != null) {
@@ -77,6 +115,13 @@ public class IntroFragment extends BaseFragment {
         this.description = text;
         if (this.descriptionTextView != null && text != null) {
             this.descriptionTextView.setText(text);
+        }
+    }
+
+    public void setBackgroundColor(int color) {
+        this.backgroundColor = color;
+        if (containerView != null) {
+            containerView.setBackgroundColor(color);
         }
     }
 

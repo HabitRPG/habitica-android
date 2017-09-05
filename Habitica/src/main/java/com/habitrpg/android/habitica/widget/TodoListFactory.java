@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 public class TodoListFactory extends TaskListFactory {
     public TodoListFactory(Context context, Intent intent) {

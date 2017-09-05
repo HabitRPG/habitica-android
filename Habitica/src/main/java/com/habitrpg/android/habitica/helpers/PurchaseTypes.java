@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.helpers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,5 +10,12 @@ public class PurchaseTypes {
     public static String Purchase42Gems = "com.habitrpg.android.habitica.iap.42gems";
     public static String Purchase84Gems = "com.habitrpg.android.habitica.iap.84gems";
 
-    public static List<String> allTypes = Arrays.asList(Purchase4Gems, Purchase21Gems, Purchase42Gems, Purchase84Gems);
+    public static List<String> allGemTypes = Arrays.asList(Purchase4Gems, Purchase21Gems, Purchase42Gems, Purchase84Gems);
+
+    public static String Subscription1Month = "com.habitrpg.android.habitica.subscription.1month";
+    public static String Subscription3Month = "com.habitrpg.android.habitica.subscription.3month";
+    public static String Subscription6Month = "com.habitrpg.android.habitica.subscription.6month";
+    public static String Subscription12Month = "com.habitrpg.android.habitica.subscription.12month";
+
+    public static List<String> allSubscriptionTypes = Arrays.asList(Subscription1Month, Subscription3Month, Subscription6Month, Subscription12Month);
 }

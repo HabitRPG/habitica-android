@@ -1,17 +1,20 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
-
-import android.view.View;
-import android.widget.Button;
 
 import java.text.DecimalFormat;
 
@@ -21,30 +24,22 @@ import butterknife.OnClick;
 public class RewardViewHolder extends BaseTaskViewHolder {
 
     private final DecimalFormat priceFormat;
-    @BindView(R.id.rewardImageView)
-    SimpleDraweeView rewardImageView;
 
-    @BindView(R.id.btnReward)
-    Button rewardButton;
+    @BindView(R.id.buyButton)
+    View buyButton;
+    @BindView(R.id.priceLabel)
+    TextView priceLabel;
 
     public RewardViewHolder(View itemView) {
         super(itemView);
         priceFormat = new DecimalFormat("0.##");
-
     }
 
     @Override
     public void bindHolder(Task newTask, int position) {
         super.bindHolder(newTask, position);
 
-        this.rewardButton.setText(this.priceFormat.format(this.task.value));
-
-        if (this.isItem()) {
-            this.rewardImageView.setVisibility(View.VISIBLE);
-            DataBindingUtils.loadImage(this.rewardImageView, "shop_" + this.task.getId());
-        } else {
-            this.rewardImageView.setVisibility(View.GONE);
-        }
+        this.priceLabel.setText(this.priceFormat.format(this.task.value));
     }
 
     private boolean isItem() {
@@ -56,8 +51,8 @@ public class RewardViewHolder extends BaseTaskViewHolder {
         return !isItem();
     }
 
-    @OnClick(R.id.btnReward)
-    public void buyReward() {
+    @OnClick(R.id.buyButton)
+    void buyReward() {
         BuyRewardCommand event = new BuyRewardCommand();
         event.Reward = task;
         EventBus.getDefault().post(event);
@@ -84,5 +79,11 @@ public class RewardViewHolder extends BaseTaskViewHolder {
         }
     }
 
+    @Override
+    public void setDisabled(boolean openTaskDisabled, boolean taskActionsDisabled) {
+        super.setDisabled(openTaskDisabled, taskActionsDisabled);
+
+        this.buyButton.setEnabled(!taskActionsDisabled);
+    }
 
 }

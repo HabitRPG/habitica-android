@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.Preferences" />
+        <import type="com.habitrpg.android.habitica.models.user.Preferences" />
         <import type="android.view.View" />
 
         <variable

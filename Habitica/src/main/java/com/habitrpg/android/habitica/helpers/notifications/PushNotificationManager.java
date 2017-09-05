@@ -2,69 +2,46 @@ package com.habitrpg.android.habitica.helpers.notifications;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.PushDevice;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-
-/**
- * Created by keithholliday on 6/27/16.
- */
 public class PushNotificationManager {
 
-    private static PushNotificationManager instance = null;
-    public static String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
-
-    public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
-    public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
-    public static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
-    public static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
-    public static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
-    public static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
-    public static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
-    public static String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
-
-
-    @Inject
-    public APIHelper apiHelper;
+    static final String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
+    static final String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
+    static final String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
+    static final String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
+    static final String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
+    static final String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
+    static final String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
+    static final String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
+    private static final String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
+    private final Context context;
+    public ApiClient apiClient;
 
     private String refreshedToken;
     private SharedPreferences sharedPreferences;
-    private Context context;
-    private HabitRPGUser user;
+    private User user;
 
-    protected PushNotificationManager(Context context) {
-        HabiticaApplication.getInstance(context).getComponent().inject(this);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    public PushNotificationManager(ApiClient apiClient, SharedPreferences sharedPreferences, Context context) {
+        this.apiClient = apiClient;
+        this.sharedPreferences = sharedPreferences;
+        this.context = context;
     }
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public static PushNotificationManager getInstance(Context context) {
-        if(instance == null) {
-            instance = new PushNotificationManager(context);
-        }
-
-        instance.refreshedToken = instance.sharedPreferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "");
-        instance.context = context;
-
-        return instance;
-    }
-
-    public void setRefreshedToken (String refreshedToken) {
+    void setRefreshedToken(String refreshedToken) {
         if (this.refreshedToken == null) {
             return;
         }
@@ -72,11 +49,11 @@ public class PushNotificationManager {
         this.refreshedToken = refreshedToken;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(DEVICE_TOKEN_PREFERENCE_KEY, refreshedToken);
-        editor.commit();
+        editor.apply();
     }
 
     //@TODO: Use preferences
-    public void addPushDeviceUsingStoredToken () {
+    public void addPushDeviceUsingStoredToken() {
         if (this.refreshedToken == null || this.refreshedToken.isEmpty()) {
             this.refreshedToken = FirebaseInstanceId.getInstance().getToken();
         }
@@ -85,7 +62,7 @@ public class PushNotificationManager {
             return;
         }
 
-        if (this.user == null ||  this.userHasPushDevice()) {
+        if (this.user == null || this.userHasPushDevice()) {
             return;
         }
 
@@ -93,18 +70,19 @@ public class PushNotificationManager {
             return;
         }
 
-        Map<String, String> pushDeviceData = new HashMap<String, String>();
+        Map<String, String> pushDeviceData = new HashMap<>();
         pushDeviceData.put("regId", this.refreshedToken);
         pushDeviceData.put("type", "android");
-        apiHelper.apiService.addPushDevice(pushDeviceData)
-            .compose(apiHelper.configureApiCallObserver())
-            .subscribe(aVoid -> {}, throwable -> {});
+        apiClient.addPushDevice(pushDeviceData)
+
+            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
-    public void removePushDeviceUsingStoredToken () {
-        apiHelper.apiService.deletePushDevice(this.refreshedToken)
-            .compose(apiHelper.configureApiCallObserver())
-            .subscribe(aVoid -> {}, throwable -> {});
+    public void removePushDeviceUsingStoredToken() {
+        if (this.refreshedToken == null) {
+            return;
+        }
+        apiClient.deletePushDevice(this.refreshedToken).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     private Boolean userHasPushDevice() {
@@ -112,15 +90,15 @@ public class PushNotificationManager {
             return true;
         }
 
-        for(PushDevice pushDevice : this.user.getPushDevices()) {
-            if(pushDevice.getRegId().equals(this.refreshedToken)) {
+        for (PushDevice pushDevice : this.user.getPushDevices()) {
+            if (pushDevice.getRegId().equals(this.refreshedToken)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void displayNotification (RemoteMessage remoteMessage) {
+    void displayNotification(RemoteMessage remoteMessage) {
         String remoteMessageIdentifier = remoteMessage.getData().get("identifier");
 
         HabiticaLocalNotificationFactory notificationFactory = new HabiticaLocalNotificationFactory();
@@ -139,6 +117,10 @@ public class PushNotificationManager {
         String key = "";
 
         //@TODO: If user has push turned off to send
+
+        if (type == null) {
+            return true;
+        }
 
         if (type.equals(PARTY_INVITE_PUSH_NOTIFICATION_KEY)) {
             key = "preference_push_invited_to_party";

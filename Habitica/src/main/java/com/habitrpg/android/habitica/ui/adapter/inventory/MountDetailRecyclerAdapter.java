@@ -1,17 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.EquipCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,27 +10,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.List;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
-public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetailRecyclerAdapter.MountViewHolder> {
+public class MountDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Mount, MountDetailRecyclerAdapter.MountViewHolder> {
 
     public String itemType;
     public Context context;
-    private List<Mount> itemList;
-    private HashMap<String, Boolean> ownedMapping;
 
-    public void setItemList(List<Mount> itemList) {
-        this.itemList = itemList;
-        this.notifyDataSetChanged();
+    private PublishSubject<String> equipEvents = PublishSubject.create();
+
+    public MountDetailRecyclerAdapter(@Nullable OrderedRealmCollection<Mount> data, boolean autoUpdate) {
+        super(data, autoUpdate);
     }
 
-    public void setOwnedMapping(HashMap<String, Boolean> map) {
-        this.ownedMapping = map;
-        this.notifyDataSetChanged();
+
+    public Observable<String> getEquipEvents() {
+        return equipEvents.asObservable();
     }
 
     @Override
@@ -53,12 +51,9 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
 
     @Override
     public void onBindViewHolder(MountViewHolder holder, int position) {
-        holder.bind(this.itemList.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return itemList == null ? 0 : itemList.size();
+        if (getData() != null) {
+            holder.bind(this.getData().get(position));
+        }
     }
 
     class MountViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -78,7 +73,7 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
 
         Resources resources;
 
-        public MountViewHolder(View itemView) {
+        MountViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -87,21 +82,12 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
             itemView.setOnClickListener(this);
         }
 
-        public Boolean isOwned() {
-            if (ownedMapping != null && animal != null) {
-                if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey())) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public void bind(Mount item) {
             animal = item;
             titleView.setText(item.getColorText());
             ownedTextView.setVisibility(View.GONE);
             this.imageView.setAlpha(1.0f);
-            if (this.isOwned()) {
+            if (this.animal.getOwned()) {
                 DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + itemType + "-" + item.getColor());
             } else {
                 DataBindingUtils.loadImage(this.imageView, "PixelPaw");
@@ -111,19 +97,12 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
 
         @Override
         public void onClick(View v) {
-            if (!this.isOwned()) {
+            if (!this.animal.getOwned()) {
                 return;
             }
             BottomSheetMenu menu = new BottomSheetMenu(context);
             menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.use_animal)));
-            menu.setSelectionRunnable(index -> {
-                if (index == 0) {
-                    EquipCommand event = new EquipCommand();
-                    event.type = "mount";
-                    event.key = animal.getKey();
-                    EventBus.getDefault().post(event);
-                }
-            });
+            menu.setSelectionRunnable(index -> equipEvents.onNext(animal.getKey()));
             menu.show();
         }
     }

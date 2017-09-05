@@ -1,23 +1,20 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.HatchingCommand;
-import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.commands.HatchingCommand;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 public class ItemsFragment extends BaseMainFragment {
 
@@ -71,17 +68,21 @@ public class ItemsFragment extends BaseMainFragment {
                         fragment.itemType = "quests";
                         break;
                     }
+                    case 4: {
+                        fragment.itemType = "special";
+                    }
                 }
                 fragment.isHatching = false;
                 fragment.isFeeding = false;
                 fragment.itemTypeText = this.getPageTitle(position).toString();
+                fragment.user = ItemsFragment.this.user;
 
                 return fragment;
             }
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
 
             @Override
@@ -95,25 +96,16 @@ public class ItemsFragment extends BaseMainFragment {
                         return activity.getString(R.string.food);
                     case 3:
                         return activity.getString(R.string.quests);
+                    case 4:
+                        return getString(R.string.special);
                 }
                 return "";
             }
         });
         if (tabLayout != null && viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
-    }
-
-    @Subscribe
-    public void onEvent(InvitePartyToQuestCommand event) {
-        this.apiHelper.apiService.inviteToQuest("party", event.questKey)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(group -> {
-                    OpenMenuItemCommand event1 = new OpenMenuItemCommand();
-                    event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
-                    EventBus.getDefault().post(event1);
-                }, throwable -> {
-                });
     }
 
     @Subscribe
@@ -129,8 +121,16 @@ public class ItemsFragment extends BaseMainFragment {
             }
             fragment.isHatching = true;
             fragment.isFeeding = false;
-            fragment.ownedPets = this.user.getItems().getPets();
             fragment.show(getFragmentManager(), "hatchingDialog");
         }
+    }
+
+
+    @Override
+    public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
+        return getString(R.string.sidebar_items);
     }
 }

@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-
-import net.pherth.android.emoji_library.EmojiTextView;
-
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
@@ -20,21 +14,20 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+
+import net.pherth.android.emoji_library.EmojiTextView;
 
 public class DataBindingUtils {
 
     @BindingAdapter("bind:imageName")
     public static void loadImage(SimpleDraweeView view, String imageName) {
-        if (view.getVisibility() == View.VISIBLE) {
-            view.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png"));
-        }
-    }
-
-    @BindingAdapter("bind:questImageName")
-    public static void loadQuestImage(SimpleDraweeView view, String imageName) {
-        if (view.getVisibility() == View.VISIBLE) {
+        if (view != null && view.getVisibility() == View.VISIBLE) {
             view.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png"));
         }
     }
@@ -77,20 +70,6 @@ public class DataBindingUtils {
             color = ContextCompat.getColor(view.getContext(), color);
         }
         view.setTextColor(color);
-    }
-
-    @BindingAdapter("android:layout_weight")
-    public static void setLayoutWeight(View view, float weight) {
-        ValueBarBinding value_bar = DataBindingUtil.findBinding(view);
-        if (weight == 0.0f || weight == 1.0f || value_bar.getPartyMembers()) {
-            LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams) view.getLayoutParams();
-            layout.weight = weight;
-            view.setLayoutParams(layout);
-        } else {
-            LayoutWeightAnimation anim = new LayoutWeightAnimation(view, weight);
-            anim.setDuration(1250);
-            view.startAnimation(anim);
-        }
     }
 
     @BindingAdapter("app:rounded_background")
