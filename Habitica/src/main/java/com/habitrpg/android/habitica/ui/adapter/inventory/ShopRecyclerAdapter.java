@@ -26,6 +26,7 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
@@ -35,6 +36,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +45,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private List<Object> items;
     private String shopIdentifier;
+    private Map<String, Item> ownedItems;
 
     public void setShop(Shop shop) {
         shopIdentifier = shop.identifier;
@@ -89,7 +92,11 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (obj.getClass().equals(ShopCategory.class)) {
             ((SectionViewHolder) holder).bind(((ShopCategory) obj).getText());
         } else {
-            ((ShopItemViewHolder) holder).bind((ShopItem) items.get(position));
+            ShopItem item = (ShopItem) items.get(position);
+            ((ShopItemViewHolder) holder).bind(item);
+            if (ownedItems.containsKey(item.getKey())) {
+                ((ShopItemViewHolder) holder).setItemCount(ownedItems.get(item.getKey()).getOwned());
+            }
         }
     }
 
@@ -122,6 +129,11 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemPos++;
         }
         notifyItemChanged(itemPos);
+    }
+
+    public void setOwnedItems(Map<String, Item> ownedItems) {
+        this.ownedItems = ownedItems;
+        this.notifyDataSetChanged();
     }
 
     static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {

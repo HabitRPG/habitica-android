@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
+import java.util.Map;
 
 import io.realm.RealmResults;
 import rx.Observable;
@@ -35,7 +36,8 @@ public interface InventoryRepository extends ContentRepository {
     Observable<RealmResults<Equipment>> getOwnedEquipment(String type);
     Observable<RealmResults<Equipment>> getOwnedEquipment();
 
-    Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType, User user);
+    Observable<? extends RealmResults<? extends Item>> getOwnedItems(Class<? extends Item> itemClass, User user);
+    Observable<? extends Map<String, Item>> getOwnedItems(User user);
 
     Observable<Equipment> getEquipment(String key);
 

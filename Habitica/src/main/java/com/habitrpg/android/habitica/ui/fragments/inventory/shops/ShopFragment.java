@@ -150,6 +150,11 @@ public class ShopFragment extends BaseFragment {
                     this.shop = shop;
                     this.adapter.setShop(shop);
                 }, RxErrorHandler.handleEmptyError());
+
+        this.inventoryRepository.getOwnedItems(user)
+                .subscribe(ownedItems -> {
+                    adapter.setOwnedItems(ownedItems);
+                }, RxErrorHandler.handleEmptyError());
     }
 
     @Override

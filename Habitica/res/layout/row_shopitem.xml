@@ -72,6 +72,8 @@
         android:layout_gravity="right"
         android:visibility="gone"
         android:layout_alignRight="@id/container"
+        android:gravity="center"
+        android:textColor="@color/white"
         android:layout_marginRight="-4dp"/>
 
 </RelativeLayout>

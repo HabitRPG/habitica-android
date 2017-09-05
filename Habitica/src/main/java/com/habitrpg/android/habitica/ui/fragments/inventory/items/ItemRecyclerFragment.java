@@ -15,8 +15,13 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -177,7 +182,25 @@ public class ItemRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        inventoryRepository.getOwnedItems(itemType, user).first().subscribe(items -> {
+        Class<? extends Item> itemClass = null;
+        switch (itemType) {
+            case "eggs":
+                itemClass = Egg.class;
+                break;
+            case "hatchingPotions":
+                itemClass = HatchingPotion.class;
+                break;
+            case "food":
+                itemClass = Food.class;
+                break;
+            case "quests":
+                itemClass = QuestContent.class;
+                break;
+            case "special":
+                itemClass = SpecialItem.class;
+                break;
+        }
+        inventoryRepository.getOwnedItems(itemClass, user).first().subscribe(items -> {
             if (items.size() > 0) {
                 adapter.updateData((OrderedRealmCollection<Item>) items);
             }

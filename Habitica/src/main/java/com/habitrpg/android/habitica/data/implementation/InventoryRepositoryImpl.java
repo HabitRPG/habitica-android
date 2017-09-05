@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
+import java.util.Map;
 
 import io.realm.RealmResults;
 import rx.Observable;
@@ -69,8 +70,13 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType, User user) {
-        return localRepository.getOwnedItems(itemType, user);
+    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(Class<? extends Item> itemClass, User user) {
+        return localRepository.getOwnedItems(itemClass, user);
+    }
+
+    @Override
+    public Observable<? extends Map<String, Item>> getOwnedItems(User user) {
+        return localRepository.getOwnedItems(user);
     }
 
     @Override

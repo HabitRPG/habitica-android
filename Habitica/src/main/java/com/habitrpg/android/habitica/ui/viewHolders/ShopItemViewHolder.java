@@ -96,7 +96,14 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
     }
 
     public void setItemCount(int count) {
-        itemCountView.setText(String.valueOf(count));
+        if (count > 0) {
+            itemCountView.setText(String.valueOf(count));
+            itemLockedIcon.setVisibility(View.GONE);
+            itemCountView.setVisibility(View.VISIBLE);
+            itemLimitedIcon.setVisibility(View.GONE);
+        } else {
+            itemCountView.setVisibility(View.GONE);
+        }
     }
 
     @Override
