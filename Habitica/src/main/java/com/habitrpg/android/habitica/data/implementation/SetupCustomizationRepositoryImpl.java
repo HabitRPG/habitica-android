@@ -85,7 +85,8 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
                 SetupCustomization.createGlasses("eyewear_special_greenTopFrame", R.drawable.creator_eyewear_special_greentopframe),
                 SetupCustomization.createGlasses("eyewear_special_pinkTopFrame", R.drawable.creator_eyewear_special_pinktopframe),
                 SetupCustomization.createGlasses("eyewear_special_redTopFrame", R.drawable.creator_eyewear_special_redtopframe),
-                SetupCustomization.createGlasses("eyewear_special_yellowTopFrame", R.drawable.creator_eyewear_special_yellowtopframe)
+                SetupCustomization.createGlasses("eyewear_special_yellowTopFrame", R.drawable.creator_eyewear_special_yellowtopframe),
+                SetupCustomization.createGlasses("eyewear_special_whiteTopFrame", R.drawable.creator_eyewear_special_whitetopframe)
         );
     }
 

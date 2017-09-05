@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -342,9 +344,6 @@ public class ChallengeDetailActivity extends BaseActivity {
         @BindView(R.id.challenge_member_count)
         TextView memberCountTextView;
 
-        @BindView(R.id.gem_prize_layout)
-        LinearLayout gem_prize_layout;
-
         @BindView(R.id.gem_amount)
         TextView gemPrizeTextView;
 
@@ -354,6 +353,9 @@ public class ChallengeDetailActivity extends BaseActivity {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            Drawable gemDrawable = new BitmapDrawable(itemView.getResources(), HabiticaIconsHelper.imageOfGem());
+            gemPrizeTextView.setCompoundDrawablesWithIntrinsicBounds(gemDrawable, null, null, null);
         }
 
         public void bind(Challenge challenge) {
@@ -367,9 +369,9 @@ public class ChallengeDetailActivity extends BaseActivity {
             memberCountTextView.setText(String.valueOf(challenge.memberCount));
 
             if (challenge.prize == 0) {
-                gem_prize_layout.setVisibility(View.GONE);
+                gemPrizeTextView.setVisibility(View.GONE);
             } else {
-                gem_prize_layout.setVisibility(View.VISIBLE);
+                gemPrizeTextView.setVisibility(View.VISIBLE);
                 gemPrizeTextView.setText(String.valueOf(challenge.prize));
             }
         }

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.faq;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import com.habitrpg.android.habitica.data.FAQRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 
 import javax.inject.Inject;
 
@@ -40,7 +40,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
         adapter.getResetWalkthroughEvents().subscribe(aVoid -> this.userRepository.resetTutorial(user), RxErrorHandler.handleEmptyError());
         adapter.activity = activity;
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
         this.loadArticles();
 

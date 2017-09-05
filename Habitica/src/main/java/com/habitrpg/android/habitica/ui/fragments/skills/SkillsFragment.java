@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,8 +24,6 @@ import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -87,7 +86,7 @@ public class SkillsFragment extends BaseMainFragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView.invalidateItemDecorations();
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setAdapter(adapter);
     }

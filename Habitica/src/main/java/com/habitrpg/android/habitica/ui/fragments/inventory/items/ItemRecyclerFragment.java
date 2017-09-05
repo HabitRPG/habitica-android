@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,6 @@ import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 
 import org.greenrobot.eventbus.EventBus;
@@ -117,7 +117,7 @@ public class ItemRecyclerFragment extends BaseFragment {
                                 EventBus.getDefault().post(event1);
                             }, RxErrorHandler.handleEmptyError()));
         }
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         if (savedInstanceState != null) {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "");

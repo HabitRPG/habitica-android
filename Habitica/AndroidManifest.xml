@@ -27,7 +27,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-            tools:replace="android:name">
+            tools:replace="android:name"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
@@ -168,7 +169,8 @@
                 android:process=":remote"
                 android:name=".receivers.TaskReceiver"/>
 
-        <receiver android:name=".receivers.LocalNotificationActionReceiver">
+        <receiver android:name=".receivers.LocalNotificationActionReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="ACCEPT_PARTY_INVITE"/>
                 <action android:name="REJECT_PARTY_INVITE"/>
@@ -193,13 +195,15 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".helpers.notifications.HabiticaFirebaseMessagingService">
+            android:name=".helpers.notifications.HabiticaFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name=".helpers.notifications.HabiticaFirebaseInstanceIDService">
+            android:name=".helpers.notifications.HabiticaFirebaseInstanceIDService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>

@@ -20,8 +20,6 @@ import butterknife.ButterKnife;
 public class AvatarCategoryView extends LinearLayout {
 
     private final Drawable icon;
-    @BindView(R.id.icon_view)
-    ImageView iconView;
     @BindView(R.id.text_view)
     TextView textView;
 
@@ -40,7 +38,7 @@ public class AvatarCategoryView extends LinearLayout {
 
         icon = a.getDrawable(R.styleable.AvatarCategoryView_iconDrawable);
         if (icon != null) {
-            iconView.setImageDrawable(icon);
+            textView.setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null);
         }
         setActive(false);
     }
@@ -55,7 +53,7 @@ public class AvatarCategoryView extends LinearLayout {
         textView.setTextColor(color);
         if (icon != null) {
             icon.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-            iconView.setImageDrawable(icon);
+            textView.setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null);
         }
     }
 }

@@ -95,7 +95,8 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="10dp"
                             android:orientation="horizontal"
-                            android:weightSum="2">
+                            android:weightSum="2"
+                            android:baselineAligned="false">
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -123,47 +124,26 @@
                                 android:gravity="right"
                                 android:orientation="horizontal">
 
-                                <LinearLayout
-                                    android:id="@+id/gem_prize_layout"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:id="@+id/gem_icon"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="36dp"
-                                        android:layout_marginRight="5dp"/>
-
                                     <TextView
                                         android:id="@+id/gem_amount"
                                         style="@style/Body1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/textColorDark"
-                                        tools:text="15" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="17dp"
-                                    android:layout_marginStart="17dp"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="36dp"
-                                        android:src="@drawable/participants_light" />
+                                        tools:text="15"
+                                        android:layout_gravity="center"/>
 
                                     <TextView
+                                        android:layout_marginLeft="17dp"
+                                        android:layout_marginStart="17dp"
                                         android:id="@+id/challenge_member_count"
                                         style="@style/Body1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textColor="@color/textColorDark"
-                                        tools:text="15" />
-                                </LinearLayout>
+                                        tools:text="15"
+                                        android:drawableLeft="@drawable/participants_light"
+                                        android:gravity="center"/>
                             </LinearLayout>
 
                         </LinearLayout>
