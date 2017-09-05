@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.res.ResourcesCompat;
@@ -93,22 +94,20 @@ public class AvatarWithBarsViewModel {
             lvlText.setCompoundDrawables(null, null, null, null);
         } else {
             lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1)));
-            Drawable drawable;
+            Drawable drawable = null;
             switch (stats.getHabitClass()) {
                 case "warrior":
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
+                    drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfWarriorDarkBg());
                     break;
                 case "rogue":
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_rogue, null);
+                    drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfRogueDarkBg());
                     break;
                 case "wizard":
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
+                    drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfMageDarkBg());
                     break;
                 case "healer":
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_healer, null);
+                    drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfHealerDarkBg());
                     break;
-                default:
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
 
             }
             if (drawable != null) {

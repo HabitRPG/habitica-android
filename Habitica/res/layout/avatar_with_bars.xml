@@ -74,8 +74,6 @@
         android:id="@+id/lvl_tv"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:drawableLeft="@drawable/ic_header_warrior"
-        android:drawableStart="@drawable/ic_header_warrior"
         android:drawablePadding="6dp"
         android:gravity="center"
         android:textSize="14sp"

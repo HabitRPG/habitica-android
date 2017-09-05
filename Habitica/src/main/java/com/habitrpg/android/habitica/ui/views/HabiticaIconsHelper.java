@@ -146,20 +146,6 @@ public class HabiticaIconsHelper {
         return imageOfHeartLightBg;
     }
 
-    private static Bitmap imageOfWarrior = null;
-    public static Bitmap imageOfWarrior() {
-        if (imageOfWarrior != null)
-            return imageOfWarrior;
-
-        int size = scaleSize(25);
-        imageOfWarrior = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfWarrior);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawWarrior(canvas);
-
-        return imageOfWarrior;
-    }
-
     private static Bitmap imageOfHeartLarge = null;
     public static Bitmap imageOfHeartLarge() {
         if (imageOfHeartLarge != null)
@@ -321,5 +307,117 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawGem(canvas);
 
         return imageOfGem_36;
+    }
+
+    private static Bitmap imageOfWarriorLightBg = null;
+    public static Bitmap imageOfWarriorLightBg() {
+        if (imageOfWarriorLightBg != null)
+            return imageOfWarriorLightBg;
+
+        int size = scaleSize(32);
+        imageOfWarriorLightBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfWarriorLightBg);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawWarriorLightBg(canvas);
+
+        return imageOfWarriorLightBg;
+    }
+
+    private static Bitmap imageOfWarriorDarkBg = null;
+    public static Bitmap imageOfWarriorDarkBg() {
+        if (imageOfWarriorDarkBg != null)
+            return imageOfWarriorDarkBg;
+
+        int size = scaleSize(32);
+        imageOfWarriorDarkBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfWarriorDarkBg);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawWarriorDarkBg(canvas);
+
+        return imageOfWarriorDarkBg;
+    }
+
+    private static Bitmap imageOfRogueLightBg = null;
+    public static Bitmap imageOfRogueLightBg() {
+        if (imageOfRogueLightBg != null)
+            return imageOfRogueLightBg;
+
+        int size = scaleSize(32);
+        imageOfRogueLightBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfRogueLightBg);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawRogueLightBg(canvas);
+
+        return imageOfRogueLightBg;
+    }
+
+    private static Bitmap imageOfRogueDarkBg = null;
+    public static Bitmap imageOfRogueDarkBg() {
+        if (imageOfRogueDarkBg != null)
+            return imageOfRogueDarkBg;
+
+        int size = scaleSize(32);
+        imageOfRogueDarkBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfRogueDarkBg);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawRogueDarkBg(canvas);
+
+        return imageOfRogueDarkBg;
+    }
+
+    private static Bitmap imageOfHealerLightBg = null;
+    public static Bitmap imageOfHealerLightBg() {
+        if (imageOfHealerLightBg != null)
+            return imageOfHealerLightBg;
+
+        int size = scaleSize(32);
+        imageOfHealerLightBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfHealerLightBg);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawHealerLightBg(canvas);
+
+        return imageOfHealerLightBg;
+    }
+
+    private static Bitmap imageOfHealerDarkBg = null;
+    public static Bitmap imageOfHealerDarkBg() {
+        if (imageOfHealerDarkBg != null)
+            return imageOfHealerDarkBg;
+
+        int size = scaleSize(32);
+        imageOfHealerDarkBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfHealerDarkBg);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawHealerDarkBg(canvas);
+
+        return imageOfHealerDarkBg;
+    }
+
+    private static Bitmap imageOfMageDarkBg = null;
+    public static Bitmap imageOfMageDarkBg() {
+        if (imageOfMageDarkBg != null)
+            return imageOfMageDarkBg;
+
+        int size = scaleSize(32);
+        imageOfMageDarkBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfMageDarkBg);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawMageDarkBg(canvas);
+
+        return imageOfMageDarkBg;
+    }
+
+    private static Bitmap imageOfMageLightBg = null;
+    public static Bitmap imageOfMageLightBg() {
+        if (imageOfMageLightBg != null)
+            return imageOfMageLightBg;
+
+        int size = scaleSize(32);
+        imageOfMageLightBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfMageLightBg);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawMageLightBg(canvas);
+
+        return imageOfMageLightBg;
     }
 }

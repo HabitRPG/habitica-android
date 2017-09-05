@@ -57,11 +57,6 @@
     @retrofit2.http.* <methods>;
 }
 
-#dbFlow
--keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }
--keep class * extends com.raizlabs.android.dbflow.config.BaseDatabaseDefinition { *; }
--keep class com.raizlabs.android.dbflow.** {*;}
-
 #gson
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
 -keep class * implements com.google.gson.TypeAdapterFactory
@@ -69,7 +64,15 @@
 -keep class * implements com.google.gson.JsonDeserializer
 
 #keep models
--keep class com.magicmicky.habitrpgwrapper.lib.models.** { *; }
+-keep class com.habitrpg.android.habitica.models.** { *; }
+
+#realm
+-keep class io.realm.annotations.RealmModule
+-keep @io.realm.annotations.RealmModule class *
+-keep class io.realm.internal.Keep
+-keep @io.realm.internal.Keep class *
+-dontwarn javax.**
+-dontwarn io.realm.**
 
 #eventbus
 -keepclassmembers class ** {
@@ -147,6 +150,9 @@
 #checkout
 -keep class com.android.vending.billing.**
 
+#seeds sdk
+-keep class com.playseeds.** { *; }
+
 -assumenosideeffects class org.solovyev.android.checkout.Billing {
     public static void debug(...);
     public static void warning(...);
@@ -164,5 +170,8 @@
 -dontwarn okio.**
 -dontwarn rx.**
 -dontwarn com.android.volley.toolbox.**
+-dontwarn com.facebook.infer.**
+-dontwarn com.roughike.bottombar.**
+-dontwarn com.viewpagerindicator.**
 #-ignorewarnings
 
