@@ -8,8 +8,6 @@
     tools:orientation="horizontal">
     <TextView
         android:id="@+id/hourglassTextView"
-        android:drawableLeft="@drawable/currency_hourglass"
-        android:drawableStart="@drawable/currency_hourglass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/textColorSecondaryDark"
@@ -20,8 +18,6 @@
         />
     <TextView
         android:id="@+id/gemTextView"
-        android:drawableLeft="@drawable/currency_gem"
-        android:drawableStart="@drawable/currency_gem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/textColorSecondaryDark"
@@ -33,8 +29,6 @@
 
     <TextView
         android:id="@+id/goldTextView"
-        android:drawableLeft="@drawable/currency_gold"
-        android:drawableStart="@drawable/currency_gold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/textColorSecondaryDark"

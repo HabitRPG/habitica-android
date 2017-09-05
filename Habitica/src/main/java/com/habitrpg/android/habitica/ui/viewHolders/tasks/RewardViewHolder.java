@@ -1,18 +1,15 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -29,10 +26,14 @@ public class RewardViewHolder extends BaseTaskViewHolder {
     View buyButton;
     @BindView(R.id.priceLabel)
     TextView priceLabel;
+    @BindView(R.id.gold_icon)
+    ImageView goldIconView;
 
     public RewardViewHolder(View itemView) {
         super(itemView);
         priceFormat = new DecimalFormat("0.##");
+
+        goldIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold());
     }
 
     @Override

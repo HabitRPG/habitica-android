@@ -66,9 +66,9 @@
             android:gravity="center"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/gold_icon"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:src="@drawable/rewards_gold"
                 android:paddingBottom="4dp"/>
             <TextView
                 android:id="@id/priceLabel"

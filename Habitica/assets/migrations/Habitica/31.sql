@@ -1,1 +1,0 @@
-ALTER TABLE HabitRPGUser ADD COLUMN purchased_id varchar(255);

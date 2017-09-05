@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.views.CurrencyView;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -114,13 +115,13 @@ public class PurchaseDialog extends AlertDialog {
         if (item.getUnlockCondition() == null) {
             priceLabel.setText(item.getValue().toString());
             if (item.getCurrency().equals("gold")) {
-                currencyIconView.setImageResource(R.drawable.currency_gold);
+                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold());
                 priceLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.gold));
             } else if (item.getCurrency().equals("gems")) {
-                currencyIconView.setImageResource(R.drawable.currency_gem);
+                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
                 priceLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.good_10));
             } else if (item.getCurrency().equals("hourglasses")) {
-                currencyIconView.setImageResource(R.drawable.currency_hourglass);
+                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfHourglass());
                 priceLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.brand_300));
             } else {
                 setBuyButtonEnabled(false);

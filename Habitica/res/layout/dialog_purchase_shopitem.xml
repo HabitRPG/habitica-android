@@ -64,7 +64,6 @@
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/pin"
             android:background="@color/transparent"/>
         <LinearLayout
             android:id="@+id/buyButton"
@@ -85,8 +84,7 @@
             <ImageView
                 android:id="@+id/currency_icon_view"
                 android:layout_width="@dimen/currency_icon_size"
-                android:layout_height="@dimen/currency_icon_size"
-                tools:src="@drawable/currency_gem" />
+                android:layout_height="@dimen/currency_icon_size" />
             <TextView
                 android:id="@+id/priceLabel"
                 android:layout_width="wrap_content"

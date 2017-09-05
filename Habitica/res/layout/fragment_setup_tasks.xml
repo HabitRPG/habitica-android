@@ -10,7 +10,6 @@
             android:id="@+id/heart_icon"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:src="@drawable/ic_heart_large"
             android:layout_marginTop="@dimen/setup_vertical_spacing"
             android:layout_centerHorizontal="true"/>
 

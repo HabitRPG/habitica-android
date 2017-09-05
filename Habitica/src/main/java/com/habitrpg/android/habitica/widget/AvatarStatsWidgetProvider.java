@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -91,6 +92,10 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setTextViewText(R.id.exp_TV_value, expValueString);
             remoteViews.setTextViewText(R.id.mp_TV_value, mpValueString);
 
+            remoteViews.setImageViewBitmap(R.id.ic_hp_header, HabiticaIconsHelper.imageOfHeartDarkBg());
+            remoteViews.setImageViewBitmap(R.id.ic_exp_header, HabiticaIconsHelper.imageOfExperience());
+            remoteViews.setImageViewBitmap(R.id.ic_mp_header, HabiticaIconsHelper.imageOfMagic());
+
             remoteViews.setProgressBar(R.id.hp_bar, stats.getMaxHealth(), stats.getHp().intValue(), false);
             remoteViews.setProgressBar(R.id.exp_bar, stats.getToNextLevel(), stats.getExp().intValue(), false);
             remoteViews.setProgressBar(R.id.mp_bar, stats.getMaxMP(), stats.getMp().intValue(), false);
@@ -105,6 +110,9 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
                 remoteViews.setTextViewText(R.id.hourglasses_tv, String.valueOf(hourGlassCount));
                 remoteViews.setViewVisibility(R.id.hourglasses_tv, View.VISIBLE);
             }
+            remoteViews.setImageViewBitmap(R.id.hourglass_cion, HabiticaIconsHelper.imageOfHourglass());
+            remoteViews.setImageViewBitmap(R.id.gem_icon, HabiticaIconsHelper.imageOfGem());
+            remoteViews.setImageViewBitmap(R.id.goldTextView, HabiticaIconsHelper.imageOfGold());
             remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl()));
 
             AvatarView avatarView = new AvatarView(context, true, true, true);

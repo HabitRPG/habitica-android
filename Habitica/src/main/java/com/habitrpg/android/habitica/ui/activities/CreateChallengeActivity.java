@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -102,6 +104,9 @@ public class CreateChallengeActivity extends BaseActivity {
     @BindView(R.id.create_challenge_task_list)
     RecyclerView createChallengeTaskList;
 
+    @BindView(R.id.gem_icon)
+    ImageView gemIconView;
+
     @Inject
     ChallengeRepository challengeRepository;
     @Inject
@@ -134,6 +139,7 @@ public class CreateChallengeActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         userRepository.getUser(userId).subscribe(user1 -> this.user = user1, RxErrorHandler.handleEmptyError());
+        gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
     }
 
     @Override

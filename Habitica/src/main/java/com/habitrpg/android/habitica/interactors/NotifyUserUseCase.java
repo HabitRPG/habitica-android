@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.interactors;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.style.DynamicDrawableSpan;
-import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import javax.inject.Inject;
 
@@ -71,20 +72,20 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         container.setOrientation(LinearLayout.HORIZONTAL);
 
         if (xp > 0) {
-            container.addView(createTextView(context, xp, R.drawable.snack_experience));
+            container.addView(createTextView(context, xp, HabiticaIconsHelper.imageOfExperience()));
         }
         if (hp != 0) {
             displayType = SnackbarDisplayType.FAILURE;
-            container.addView(createTextView(context, hp, R.drawable.snack_heart_red));
+            container.addView(createTextView(context, hp, HabiticaIconsHelper.imageOfHeartDarkBg()));
         }
         if (gold != 0) {
-            container.addView(createTextView(context, gold, R.drawable.currency_gold));
+            container.addView(createTextView(context, gold, HabiticaIconsHelper.imageOfGold()));
             if (gold < 0) {
                 displayType = SnackbarDisplayType.FAILURE;
             }
         }
         if (mp > 0) {
-            container.addView(createTextView(context, mp, R.drawable.snack_mana));
+            container.addView(createTextView(context, mp, HabiticaIconsHelper.imageOfMagic()));
         }
 
         int padding = (int) context.getResources().getDimension(R.dimen.spacing_medium);
@@ -96,9 +97,10 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         return new Pair<>(container, displayType);
     }
 
-    private static View createTextView(Context context, double value, int icon) {
+    private static View createTextView(Context context, double value, Bitmap icon) {
         TextView textView = new TextView(context);
-        textView.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
+        Drawable iconDrawable = new BitmapDrawable(context.getResources(), icon);
+        textView.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null);
         String text;
         if (value > 0) {
             text = " + "+String.valueOf(Math.abs(round(value, 2)));

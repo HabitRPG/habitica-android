@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import butterknife.BindView;
@@ -85,6 +86,7 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Mem
             ButterKnife.bind(this, itemView);
 
             hpBar.setLightBackground(true);
+            hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg());
 
             resources = itemView.getResources();
         }

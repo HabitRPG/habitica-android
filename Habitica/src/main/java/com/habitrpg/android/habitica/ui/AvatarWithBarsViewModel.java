@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.views.CurrencyView;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,6 +63,9 @@ public class AvatarWithBarsViewModel {
 
         ButterKnife.bind(this, v);
 
+        hpBar.setIcon(HabiticaIconsHelper.imageOfHeartDarkBg());
+        xpBar.setIcon(HabiticaIconsHelper.imageOfExperience());
+        mpBar.setIcon(HabiticaIconsHelper.imageOfMagic());
 
         setHpBarData(0, 50);
         setXpBarData(0, 1);

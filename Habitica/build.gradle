@@ -217,8 +217,17 @@ android {
     }
 
     lintOptions {
-        disable 'UnusedResources','MissingTranslation','UnusedAttribute','InvalidPackage'
+        disable 'MissingTranslation','InvalidPackage'
         enable 'LogConditional','IconExpectedSize','MissingRegistered','TypographyQuotes'
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
+            universalApk true
+        }
     }
 }
 

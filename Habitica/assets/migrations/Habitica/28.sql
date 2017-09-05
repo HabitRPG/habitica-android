@@ -1,1 +1,0 @@
-ALTER TABLE Items ADD COLUMN 'special_id' INTEGER;

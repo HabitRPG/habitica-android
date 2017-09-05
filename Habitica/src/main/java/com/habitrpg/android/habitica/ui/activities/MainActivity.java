@@ -90,8 +90,8 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
@@ -755,6 +755,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 ValueBar hpBarView = (ValueBar) customView.findViewById(R.id.hpBar);
 
                 hpBarView.setLightBackground(true);
+                hpBarView.setIcon(HabiticaIconsHelper.imageOfHeartLightBg());
 
                 AvatarView dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
                 dialogAvatarView.setAvatar(user);

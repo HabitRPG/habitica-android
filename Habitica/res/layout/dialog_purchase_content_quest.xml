@@ -69,7 +69,6 @@
                 android:id="@+id/boss_health_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/snack_heart_red"
                 android:textColor="@color/white"
                 tools:text="1000"
                 android:gravity="center_vertical"

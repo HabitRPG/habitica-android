@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 public class ItemDetailDialog extends AlertDialog {
 
@@ -92,10 +93,10 @@ public class ItemDetailDialog extends AlertDialog {
     public void setCurrency(String currency) {
         switch (currency) {
             case "gold":
-                currencyImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.currency_gold));
+                currencyImageView.setImageBitmap(HabiticaIconsHelper.imageOfGold());
                 break;
             case "gems":
-                currencyImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.currency_gem));
+                currencyImageView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
                 break;
             default:
                 currencyImageView.setImageDrawable(null);

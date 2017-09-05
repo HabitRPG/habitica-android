@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.views;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -36,6 +38,13 @@ public class CurrencyView extends LinearLayout {
         inflate(getContext(), R.layout.currency_view, this);
 
         ButterKnife.bind(this, this);
+
+        Drawable hourglassDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfHourglass());
+        hourglassTextView.setCompoundDrawablesWithIntrinsicBounds(hourglassDrawable, null, null, null);
+        Drawable goldDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold());
+        goldTextView.setCompoundDrawablesWithIntrinsicBounds(goldDrawable, null, null, null);
+        Drawable gemDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGem());
+        gemTextView.setCompoundDrawablesWithIntrinsicBounds(gemDrawable, null, null, null);
     }
 
     public void setGold(Double gold) {

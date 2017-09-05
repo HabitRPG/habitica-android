@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -122,6 +123,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         setupLeakCanary();
         setupFacebookSdk();
         createBillingAndCheckout();
+        HabiticaIconsHelper.init(this);
 
         if (!BuildConfig.DEBUG) {
             try {

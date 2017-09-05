@@ -16,8 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/header_bar_spacing"
         app:barForegroundColor="@color/hpColor"
-        app:description="@string/HP_default"
-        app:barIconDrawable="@drawable/ic_header_heart" />
+        app:description="@string/HP_default" />
 
     <com.habitrpg.android.habitica.ui.AvatarView
         android:layout_width="@dimen/avatar_small_width"

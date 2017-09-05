@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCo
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -120,6 +122,9 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
         @BindView(R.id.gemPrizeTextView)
         TextView gemPrizeTextView;
 
+        @BindView(R.id.gem_icon)
+        ImageView gemIconView;
+
         private Challenge challenge;
         private boolean viewUserChallengesOnly;
 
@@ -130,6 +135,8 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
             ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(this);
+
+            gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
 
             if (!viewUserChallengesOnly) {
                 challengeName.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.brand_200));

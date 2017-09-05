@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.viewHolders;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 
 import butterknife.BindView;
@@ -28,17 +31,17 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
     @BindView(R.id.priceLabel)
     TextView priceLabel;
 
-    @BindView(R.id.item_limited_icon)
-    ImageView itemLimitedIcon;
-    @BindView(R.id.item_locked_icon)
-    ImageView itemLockedIcon;
-    @BindView(R.id.item_count_icon)
-    TextView itemCountView;
+    @BindView(R.id.item_detail_indicator)
+    TextView itemDetailIndicator;
 
     public String shopIdentifier;
     private ShopItem item;
 
     private Context context;
+
+    Drawable lockedDrawable;
+    Drawable limitedDrawable;
+    Drawable countDrawable;
 
     public ShopItemViewHolder(View itemView) {
         super(itemView);
@@ -49,6 +52,10 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
 
         itemView.setOnClickListener(this);
         itemView.setClickable(true);
+
+        lockedDrawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfItemIndicatorLocked());
+        limitedDrawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfItemIndicatorLimited());
+        countDrawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfItemIndicatorNumber());
     }
 
     public void bind(ShopItem item) {
@@ -60,13 +67,13 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
         if (item.getUnlockCondition() == null || !item.getLocked()) {
             priceLabel.setText(String.valueOf(item.getValue()));
             if (item.getCurrency().equals("gold")) {
-                currencyIconView.setImageResource(R.drawable.currency_gold);
+                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold());
                 priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gold));
             } else if (item.getCurrency().equals("gems")) {
-                currencyIconView.setImageResource(R.drawable.currency_gem);
+                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
                 priceLabel.setTextColor(ContextCompat.getColor(context, R.color.good_10));
             } else if (item.getCurrency().equals("hourglasses")) {
-                currencyIconView.setImageResource(R.drawable.currency_hourglass);
+                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfHourglass());
                 priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
             } else {
                 buyButton.setVisibility(View.GONE);
@@ -75,34 +82,28 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
             priceLabel.setText(item.getUnlockCondition().readableUnlockConditionId());
         }
 
+        itemDetailIndicator.setText(null);
+        itemDetailIndicator.setVisibility(View.GONE);
         if (item.isLimited()) {
-            itemLimitedIcon.setVisibility(View.VISIBLE);
-            itemCountView.setVisibility(View.GONE);
-            itemLockedIcon.setVisibility(View.GONE);
-        } else {
-            itemLimitedIcon.setVisibility(View.GONE);
+            itemDetailIndicator.setBackground(limitedDrawable);
+            itemDetailIndicator.setVisibility(View.VISIBLE);
         }
 
         if (item.getLocked()) {
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300));
             currencyIconView.setAlpha(0.5f);
-            itemLockedIcon.setVisibility(View.VISIBLE);
-            itemCountView.setVisibility(View.GONE);
-            itemLimitedIcon.setVisibility(View.GONE);
+            itemDetailIndicator.setBackground(lockedDrawable);
+            itemDetailIndicator.setVisibility(View.VISIBLE);
         } else {
             currencyIconView.setAlpha(1.0f);
-            itemLockedIcon.setVisibility(View.GONE);
         }
     }
 
     public void setItemCount(int count) {
         if (count > 0) {
-            itemCountView.setText(String.valueOf(count));
-            itemLockedIcon.setVisibility(View.GONE);
-            itemCountView.setVisibility(View.VISIBLE);
-            itemLimitedIcon.setVisibility(View.GONE);
-        } else {
-            itemCountView.setVisibility(View.GONE);
+            itemDetailIndicator.setText(String.valueOf(count));
+            itemDetailIndicator.setBackground(countDrawable);
+            itemDetailIndicator.setVisibility(View.VISIBLE);
         }
     }
 

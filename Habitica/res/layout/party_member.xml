@@ -86,7 +86,6 @@
                 android:id="@+id/hpBar"
                 app:barForegroundColor="@color/hpColor"
                 app:description="@string/HP_default"
-                app:barIconDrawable="@drawable/ic_header_heart"
                 app:lightBackground="true"/>
         </LinearLayout>
 

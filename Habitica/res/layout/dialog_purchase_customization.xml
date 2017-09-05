@@ -25,8 +25,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton"
-            android:src="@drawable/currency_gem"
+            android:id="@+id/gem_icon"
             android:layout_gravity="center"/>
     </LinearLayout>
 
