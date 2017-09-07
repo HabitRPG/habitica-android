@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.implementation;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
@@ -21,6 +22,7 @@ import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +31,11 @@ import rx.Observable;
 
 public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLocalRepository> implements InventoryRepository {
 
-    public InventoryRepositoryImpl(InventoryLocalRepository localRepository, ApiClient apiClient) {
+    private final RemoteConfigManager remoteConfigManager;
+
+    public InventoryRepositoryImpl(InventoryLocalRepository localRepository, ApiClient apiClient, RemoteConfigManager remoteConfigManager) {
         super(localRepository, apiClient);
+        this.remoteConfigManager = remoteConfigManager;
     }
 
     @Override
@@ -55,8 +60,39 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
 
     @Override
     public Observable<List<ShopItem>> retrieveInAppRewards() {
-        return apiClient.retrieveInAppRewards()
-                .doOnNext(localRepository::saveInAppRewards);
+        if (remoteConfigManager.newShopsEnabled()) {
+            return apiClient.retrieveInAppRewards()
+                    .doOnNext(localRepository::saveInAppRewards);
+        } else {
+            return apiClient.retrieveOldGear()
+                    .map(items -> {
+                        List<String> itemKeys = new ArrayList<>();
+                        for (ShopItem item : items) {
+                            itemKeys.add(item.key);
+                        }
+                        itemKeys.add("potion");
+                        itemKeys.add("armoire");
+                        return itemKeys;
+                    })
+                    .flatMap(this::getItems)
+                    .map(items -> {
+                        List<ShopItem> buyableItems = new ArrayList<>();
+                        if (items != null) {
+                            for (Equipment item : items) {
+                                ShopItem shopItem = new ShopItem();
+                                shopItem.key = item.key;
+                                shopItem.text = item.text;
+                                shopItem.notes = item.notes;
+                                shopItem.value = (int)item.value;
+                                shopItem.currency = "gold";
+
+                                buyableItems.add(shopItem);
+                            }
+                        }
+                        return buyableItems;
+                    })
+                    .doOnNext(localRepository::saveInAppRewards);
+        }
     }
 
     @Override

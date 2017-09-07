@@ -69,6 +69,8 @@ public interface ApiService {
 
     @GET("user/in-app-rewards")
     Observable<HabitResponse<List<ShopItem>>> retrieveInAppRewards();
+    @GET("user/inventory/buy")
+    Observable<HabitResponse<List<ShopItem>>> retrieveOldGearRewards();
 
     @POST("user/equip/{type}/{key}")
     Observable<HabitResponse<Items>> equipItem(@Path("type") String type, @Path("key") String itemKey);

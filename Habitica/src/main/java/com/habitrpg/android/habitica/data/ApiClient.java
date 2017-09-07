@@ -56,6 +56,7 @@ public interface ApiClient {
     Observable<User> registrationLanguage(String registrationLanguage);
 
     Observable<List<ShopItem>> retrieveInAppRewards();
+    Observable<List<ShopItem>> retrieveOldGear();
 
     Observable<Items> equipItem(String type, String itemKey);
 

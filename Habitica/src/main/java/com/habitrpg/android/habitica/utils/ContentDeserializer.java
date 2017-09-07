@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.FAQArticle;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Mount;
@@ -39,12 +40,12 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         ContentResult result = new ContentResult();
         JsonObject object = json.getAsJsonObject();
 
-        result.potion = context.deserialize(object.get("potion"), ShopItem.class);
-        result.potion.imageName = "shop_potion";
-        result.potion.currency = "gold";
-        result.armoire = context.deserialize(object.get("armoire"), ShopItem.class);
-        result.armoire.imageName = "shop_armoire";
-        result.armoire.currency = "gold";
+        result.potion = context.deserialize(object.get("potion"), Equipment.class);
+        //result.potion.imageName = "shop_potion";
+        //result.potion.currency = "gold";
+        result.armoire = context.deserialize(object.get("armoire"), Equipment.class);
+        //result.armoire.imageName = "shop_armoire";
+        //result.armoire.currency = "gold";
         result.gear = context.deserialize(object.get("gear"), ContentGear.class);
 
         result.quests = context.deserialize(object.get("quests"), new TypeToken<RealmList<QuestContent>>() {

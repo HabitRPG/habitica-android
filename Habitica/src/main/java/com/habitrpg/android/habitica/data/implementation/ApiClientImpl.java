@@ -443,6 +443,11 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
+    public Observable<List<ShopItem>> retrieveOldGear() {
+        return apiService.retrieveOldGearRewards().compose(configureApiCallObserver());
+    }
+
+    @Override
     public Observable<Items> equipItem(String type, String itemKey) {
         if (itemKey == null) {
             return Observable.just(null);
