@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import com.habitrpg.android.habitica.models.PushDevice;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.invitations.Invitations;
@@ -24,6 +25,7 @@ import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -104,6 +106,14 @@ public class UserDeserializer implements JsonDeserializer<User> {
                 if (obj.get("purchased").getAsJsonObject().get("plan").getAsJsonObject().has("mysteryItems")) {
                     user.getPurchased().getPlan().mysteryItemCount = obj.get("purchased").getAsJsonObject().get("plan").getAsJsonObject().get("mysteryItems").getAsJsonArray().size();
                 }
+            }
+        }
+
+        if (obj.has("pushDevices")) {
+            user.setPushDevices(new ArrayList<>());
+            for (JsonElement entry : obj.getAsJsonArray("pushDevices")) {
+                PushDevice pushDevice = context.deserialize(entry, PushDevice.class);
+                user.getPushDevices().add(pushDevice);
             }
         }
 

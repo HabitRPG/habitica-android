@@ -73,9 +73,7 @@ public class PushNotificationManager {
         Map<String, String> pushDeviceData = new HashMap<>();
         pushDeviceData.put("regId", this.refreshedToken);
         pushDeviceData.put("type", "android");
-        apiClient.addPushDevice(pushDeviceData)
-
-            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+        apiClient.addPushDevice(pushDeviceData).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     public void removePushDeviceUsingStoredToken() {

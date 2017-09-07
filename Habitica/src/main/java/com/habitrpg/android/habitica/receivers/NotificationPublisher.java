@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.WakefulBroadcastReceiver;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -24,7 +25,7 @@ import javax.inject.Named;
 
 
 //https://gist.github.com/BrandonSmith/6679223
-public class NotificationPublisher extends BroadcastReceiver {
+public class NotificationPublisher extends WakefulBroadcastReceiver {
 
     @Inject
     TaskRepository taskRepository;

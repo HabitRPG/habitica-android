@@ -389,11 +389,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             displayDeathDialogIfNeeded();
             YesterdailyDialog.showDialogIfNeeded(this, user.getId(), userRepository, taskRepository);
 
-            if (!fromLocalDb) {
-                displayNewInboxMessagesBadge();
-                pushNotificationManager.setUser(user);
-                pushNotificationManager.addPushDeviceUsingStoredToken();
-            }
+            displayNewInboxMessagesBadge();
         }
     }
 
@@ -793,6 +789,10 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     protected void retrieveUser() {
         if (this.userRepository != null && hostConfig.hasAuthentication()) {
             this.userRepository.retrieveUser(true)
+                    .doOnNext(user1 -> {
+                        pushNotificationManager.setUser(user1);
+                        pushNotificationManager.addPushDeviceUsingStoredToken();
+                    })
                     .flatMap(user1 -> inventoryRepository.retrieveContent(false))
                     .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         }
