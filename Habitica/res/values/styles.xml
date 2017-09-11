@@ -272,7 +272,7 @@
     </style>
 
     <style name="subscriptionBoxText.Title.Red">
-        <item name="android:textColor">@color/worse_50</item>
+        <item name="android:textColor">@color/red_50</item>
     </style>
 
     <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">

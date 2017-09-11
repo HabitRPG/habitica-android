@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 tools:text="+6"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/good_50"/>
+                android:textColor="@color/green_50"/>
             <TextView
                 android:id="@+id/per_label"
                 android:text="@string/per_abbrv"
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 tools:text="+6"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/good_50"/>
+                android:textColor="@color/green_50"/>
         </TableRow>
         <TableRow
             android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 tools:text="+6"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/good_50"/>
+                android:textColor="@color/green_50"/>
             <TextView
                 android:id="@+id/int_label"
                 android:text="@string/int_abbrv"
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 tools:text="+6"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/good_50"/>
+                android:textColor="@color/green_50"/>
         </TableRow>
     </TableLayout>
 </merge>

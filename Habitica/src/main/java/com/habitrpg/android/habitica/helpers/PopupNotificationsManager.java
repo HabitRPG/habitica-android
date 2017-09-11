@@ -10,13 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
 import com.habitrpg.android.habitica.models.Notification;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
@@ -65,7 +62,7 @@ public class PopupNotificationsManager {
             String youEarnedMessage = context.getString(R.string.checkInRewardEarned, notification.data.rewardText);
 
             TextView titleTextView = new TextView(context);
-            titleTextView.setBackgroundResource(R.color.best_100);
+            titleTextView.setBackgroundResource(R.color.blue_100);
             titleTextView.setTextColor(ContextCompat.getColor(context, R.color.white));
             float density = context.getResources().getDisplayMetrics().density;
             int paddingDp = (int) (16 * density);

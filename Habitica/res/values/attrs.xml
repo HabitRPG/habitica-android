@@ -36,4 +36,10 @@
         <attr name="lightBackground" format="boolean" />
         <attr name="description" format="string" />
     </declare-styleable>
+    <declare-styleable name="CurrencyView">
+        <attr name="currency" format="string" />
+    </declare-styleable>
+    <declare-styleable name="CurrencyViews">
+        <attr name="hasLightBackground" format="boolean" />
+    </declare-styleable>
 </resources>

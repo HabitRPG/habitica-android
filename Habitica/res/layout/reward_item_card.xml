@@ -74,7 +74,7 @@
                 android:id="@id/priceLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/neutral_10"
+                android:textColor="@color/yellow_10"
                 android:gravity="center_horizontal"
                 tools:text="150"
                 style="@style/Body1"/>

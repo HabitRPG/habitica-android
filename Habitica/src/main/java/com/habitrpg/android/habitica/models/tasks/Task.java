@@ -392,18 +392,18 @@ public class Task extends RealmObject implements Parcelable {
 
     public int getLightTaskColor() {
         if (this.value < -20)
-            return R.color.worst_100;
+            return R.color.maroon_100;
         if (this.value < -10)
-            return R.color.worse_100;
+            return R.color.red_100;
         if (this.value < -1)
-            return R.color.bad_100;
+            return R.color.orange_100;
         if (this.value < 1)
-            return R.color.neutral_100;
+            return R.color.yellow_100;
         if (this.value < 5)
-            return R.color.good_100;
+            return R.color.green_100;
         if (this.value < 10)
-            return R.color.better_100;
-        return R.color.best_100;
+            return R.color.teal_100;
+        return R.color.blue_100;
     }
 
     /**
@@ -413,19 +413,19 @@ public class Task extends RealmObject implements Parcelable {
      */
     public int getMediumTaskColor() {
         if (this.value < -20)
-            return R.color.worst_50;
+            return R.color.maroon_50;
         if (this.value < -10)
-            return R.color.worse_50;
+            return R.color.red_50;
         if (this.value < -1)
-            return R.color.bad_50;
+            return R.color.orange_50;
         if (this.value < 1)
-            return R.color.neutral_50;
+            return R.color.yellow_50;
         if (this.value < 5)
-            return R.color.good_50;
+            return R.color.green_50;
         if (this.value < 10)
-            return R.color.better_50;
+            return R.color.teal_50;
 
-        return R.color.best_50;
+        return R.color.blue_50;
     }
 
     /**
@@ -437,17 +437,17 @@ public class Task extends RealmObject implements Parcelable {
         if (this.value < -20)
             return R.color.worst_10;
         if (this.value < -10)
-            return R.color.worse_10;
+            return R.color.red_10;
         if (this.value < -1)
-            return R.color.bad_10;
+            return R.color.orange_10;
         if (this.value < 1)
-            return R.color.neutral_10;
+            return R.color.yellow_10;
         if (this.value < 5)
-            return R.color.good_10;
+            return R.color.green_10;
         if (this.value < 10)
-            return R.color.better_10;
+            return R.color.teal_10;
 
-        return R.color.best_10;
+        return R.color.blue_10;
     }
 
     public Boolean checkIfDue(int offset) {

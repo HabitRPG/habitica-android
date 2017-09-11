@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/gem_amount"
-        android:textColor="@color/best_10"
+        android:textColor="@color/blue_10"
         android:gravity="center"
         android:textSize="36sp"
         tools:text="21" />
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/gems"
-        android:textColor="@color/best_10"
+        android:textColor="@color/blue_10"
         android:gravity="center"
         android:layout_marginBottom="14dp" />
 

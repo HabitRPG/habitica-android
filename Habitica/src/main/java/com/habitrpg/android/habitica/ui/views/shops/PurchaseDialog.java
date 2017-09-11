@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.views.CurrencyView;
+import com.habitrpg.android.habitica.ui.views.CurrencyViews;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -41,13 +42,11 @@ public class PurchaseDialog extends AlertDialog {
     InventoryRepository inventoryRepository;
 
     @BindView(R.id.currencyView)
-    CurrencyView currencyView;
+    CurrencyViews currencyView;
     @BindView(R.id.limitedTextView)
     TextView limitedTextView;
     @BindView(R.id.priceLabel)
-    TextView priceLabel;
-    @BindView(R.id.currency_icon_view)
-    ImageView currencyIconView;
+    CurrencyView priceLabel;
     @BindView(R.id.buyButton)
     View buyButton;
     @BindView(R.id.content_container)
@@ -56,8 +55,6 @@ public class PurchaseDialog extends AlertDialog {
     ScrollView scrollView;
 
     private ShopItem shopItem;
-
-    private PurchaseDialogContent contentView;
 
     private CompositeSubscription compositeSubscription;
     public String shopIdentifier;
@@ -93,7 +90,7 @@ public class PurchaseDialog extends AlertDialog {
                 limitedTextView.setText(getContext().getString(R.string.gems_left_nomax, gemsLeft));
             }
             limitedTextView.setVisibility(View.VISIBLE);
-            limitedTextView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.good_10));
+            limitedTextView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green_10));
         }
     }
 
@@ -113,19 +110,8 @@ public class PurchaseDialog extends AlertDialog {
         buyButton.setVisibility(View.VISIBLE);
 
         if (item.getUnlockCondition() == null) {
-            priceLabel.setText(item.getValue().toString());
-            if (item.getCurrency().equals("gold")) {
-                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold());
-                priceLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.gold));
-            } else if (item.getCurrency().equals("gems")) {
-                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
-                priceLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.good_10));
-            } else if (item.getCurrency().equals("hourglasses")) {
-                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfHourglass());
-                priceLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.brand_300));
-            } else {
-                setBuyButtonEnabled(false);
-            }
+            priceLabel.setValue(Double.valueOf(item.getValue()));
+            priceLabel.setCurrency(item.getCurrency());
         } else {
             setBuyButtonEnabled(false);
         }
@@ -137,13 +123,9 @@ public class PurchaseDialog extends AlertDialog {
             limitedTextView.setVisibility(View.GONE);
         }
 
-        if (item.getLocked()) {
-            priceLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.gray_300));
-            currencyIconView.setAlpha(0.5f);
-        } else {
-            currencyIconView.setAlpha(1.0f);
-        }
+        priceLabel.setLocked(item.getLocked());
 
+        PurchaseDialogContent contentView;
         if (shopItem.isTypeItem()) {
             contentView = new PurchaseDialogItemContent(getContext());
         } else if (shopItem.isTypeQuest()) {
@@ -199,7 +181,7 @@ public class PurchaseDialog extends AlertDialog {
         dismiss();
     }
 
-    public void setBuyButtonEnabled(boolean enabled) {
+    private void setBuyButtonEnabled(boolean enabled) {
         if (enabled) {
             buyButton.setAlpha(0.5f);
         } else{

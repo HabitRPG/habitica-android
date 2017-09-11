@@ -138,7 +138,7 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
                     fragment.setSubtitle(getString(R.string.intro_2_subtitle));
                     fragment.setTitle(getString(R.string.intro_2_title));
                     fragment.setDescription(getString(R.string.intro_2_description));
-                    fragment.setBackgroundColor(ContextCompat.getColor(IntroActivity.this, R.color.best_10));
+                    fragment.setBackgroundColor(ContextCompat.getColor(IntroActivity.this, R.color.blue_10));
                     break;
                 }
                 case 2: {
@@ -146,7 +146,7 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
                     fragment.setSubtitle(getString(R.string.intro_3_subtitle));
                     fragment.setTitle(getString(R.string.intro_3_title));
                     fragment.setDescription(getString(R.string.intro_3_description));
-                    fragment.setBackgroundColor(ContextCompat.getColor(IntroActivity.this, R.color.worse_100));
+                    fragment.setBackgroundColor(ContextCompat.getColor(IntroActivity.this, R.color.red_100));
                     break;
                 }
             }

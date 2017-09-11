@@ -112,7 +112,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             }
             remoteViews.setImageViewBitmap(R.id.hourglass_cion, HabiticaIconsHelper.imageOfHourglass());
             remoteViews.setImageViewBitmap(R.id.gem_icon, HabiticaIconsHelper.imageOfGem());
-            remoteViews.setImageViewBitmap(R.id.goldTextView, HabiticaIconsHelper.imageOfGold());
+            remoteViews.setImageViewBitmap(R.id.gold_icon, HabiticaIconsHelper.imageOfGold());
             remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl()));
 
             AvatarView avatarView = new AvatarView(context, true, true, true);

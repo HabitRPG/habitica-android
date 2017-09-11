@@ -83,9 +83,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-    <com.habitrpg.android.habitica.ui.views.CurrencyView
+    <com.habitrpg.android.habitica.ui.views.CurrencyViews
         android:id="@+id/currencyView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:hasLightBackground="false"/>
     </LinearLayout>
 </LinearLayout>

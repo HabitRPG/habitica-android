@@ -234,7 +234,7 @@
                   android:text="@string/subscribe.title"
                   android:layout_gravity="center_horizontal"
                   android:gravity="center"
-                  android:textColor="@color/best_10"
+                  android:textColor="@color/blue_10"
                   android:textSize="14sp"
                   android:lineSpacingExtra="4dp"
                 android:layout_marginTop="16dp"/>

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -17,7 +16,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-import com.habitrpg.android.habitica.ui.views.CurrencyView;
+import com.habitrpg.android.habitica.ui.views.CurrencyViews;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 
@@ -40,14 +39,12 @@ public class AvatarWithBarsViewModel {
     @BindView(R.id.avatarView)
     AvatarView avatarView;
 
-    private android.content.res.Resources res;
-
     private Context context;
 
     @BindView(R.id.lvl_tv)
     TextView lvlText;
     @BindView(R.id.currencyView)
-    CurrencyView currencyView;
+    CurrencyViews currencyView;
 
     private Avatar userObject;
 
@@ -55,7 +52,6 @@ public class AvatarWithBarsViewModel {
 
     public AvatarWithBarsViewModel(Context context, View v) {
         this.context = context;
-        res = context.getResources();
 
         if (v == null) {
             Log.w("AvatarWithBarsViewModel", "View is null");
@@ -160,7 +156,7 @@ public class AvatarWithBarsViewModel {
         currencyView.setGems(gems);
     }
 
-    @OnClick(R.id.gemTextView)
+    @OnClick(R.id.currencyView)
     public void gemTextClicked() {
         EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
     }

@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.views.CurrencyView;
+import com.habitrpg.android.habitica.ui.views.CurrencyViews;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -34,7 +34,7 @@ public class ShopsFragment extends BaseMainFragment {
     InventoryRepository inventoryRepository;
 
     public ViewPager viewPager;
-    private CurrencyView currencyView;
+    private CurrencyViews currencyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +57,7 @@ public class ShopsFragment extends BaseMainFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        currencyView = new CurrencyView(getContext());
+        currencyView = new CurrencyViews(getContext());
         if (toolbarAccessoryContainer != null) {
             toolbarAccessoryContainer.addView(currencyView);
         }

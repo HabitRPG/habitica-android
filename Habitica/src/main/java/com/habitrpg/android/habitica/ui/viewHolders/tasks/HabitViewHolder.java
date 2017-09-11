@@ -40,7 +40,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
         if (this.task.up) {
             this.btnPlusWrapper.setBackgroundResource(this.task.getLightTaskColor());
-            if (this.task.getLightTaskColor() == R.color.neutral_100) {
+            if (this.task.getLightTaskColor() == R.color.yellow_100) {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus_yellow);
             } else {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus);
@@ -56,7 +56,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
         if (this.task.down) {
             this.btnMinusWrapper.setBackgroundResource(this.task.getLightTaskColor());
-            if (this.task.getLightTaskColor() == R.color.neutral_100) {
+            if (this.task.getLightTaskColor() == R.color.yellow_100) {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus_yellow);
             } else {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus);

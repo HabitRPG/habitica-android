@@ -1,67 +1,87 @@
 package com.habitrpg.android.habitica.ui.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+public class CurrencyView extends android.support.v7.widget.AppCompatTextView {
 
-public class CurrencyView extends LinearLayout {
-
-    @BindView(R.id.hourglassTextView)
-    TextView hourglassTextView;
-    @BindView(R.id.gemTextView)
-    TextView gemTextView;
-    @BindView(R.id.goldTextView)
-    TextView goldTextView;
+    private boolean lightbackground = false;
+    private String currency;
+    private BitmapDrawable drawable;
 
     public CurrencyView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setupView();
     }
 
-    public CurrencyView(Context context) {
+    public CurrencyView(Context context, String currency, boolean lightbackground) {
         super(context);
-        setupView();
+        this.lightbackground = lightbackground;
+        setCurrency(currency);
     }
 
-    private void setupView() {
-        inflate(getContext(), R.layout.currency_view, this);
-
-        ButterKnife.bind(this, this);
-
-        Drawable hourglassDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfHourglass());
-        hourglassTextView.setCompoundDrawablesWithIntrinsicBounds(hourglassDrawable, null, null, null);
-        Drawable goldDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold());
-        goldTextView.setCompoundDrawablesWithIntrinsicBounds(goldDrawable, null, null, null);
-        Drawable gemDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGem());
-        gemTextView.setCompoundDrawablesWithIntrinsicBounds(gemDrawable, null, null, null);
+    private void setIcon(Bitmap iconBitmap) {
+        drawable = new BitmapDrawable(getResources(), iconBitmap);
+        this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, getContext().getResources().getDisplayMetrics());
+        setCompoundDrawablePadding(padding);
     }
 
-    public void setGold(Double gold) {
-        goldTextView.setText(NumberAbbreviator.abbreviate(getContext(), gold));
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setGems(Integer gemCount) {
-        gemTextView.setText(String.valueOf(gemCount));
-        gemTextView.setVisibility(View.VISIBLE);
-    }
-
-    public void setHourglasses(Integer hourglassCount) {
-        hourglassTextView.setText(String.valueOf(hourglassCount));
-        if (hourglassCount > 0) {
-            hourglassTextView.setVisibility(View.VISIBLE);
-        } else {
-            hourglassTextView.setVisibility(View.GONE);
+    public void setCurrency(String currency) {
+        this.currency = currency;
+        if ("gold".equals(currency)) {
+            setIcon(HabiticaIconsHelper.imageOfGold());
+            if (lightbackground) {
+                setTextColor(ContextCompat.getColor(getContext(), R.color.yellow_50));
+            } else {
+                setTextColor(ContextCompat.getColor(getContext(), R.color.yellow_100));
+            }
+        } else if ("gems".equals(currency)) {
+            setIcon(HabiticaIconsHelper.imageOfGem());
+            setTextColor(ContextCompat.getColor(getContext(), R.color.green_50));
+        } else if ("hourglasses".equals(currency)) {
+            setIcon(HabiticaIconsHelper.imageOfHourglass());
+            if (lightbackground) {
+                setTextColor(ContextCompat.getColor(getContext(), R.color.brand_300));
+            } else {
+                setTextColor(ContextCompat.getColor(getContext(), R.color.brand_500));
+            }
         }
+        updateVisibility();
+    }
+
+    private void updateVisibility() {
+        if ("hourglasses".equals(currency)) {
+            setVisibility("0".equals(getText()) ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    public void setValue(Double value) {
+        setText(NumberAbbreviator.abbreviate(getContext(), value));
+        updateVisibility();
+    }
+
+    public void setLocked(boolean isLocked) {
+        if (isLocked) {
+            this.setTextColor(ContextCompat.getColor(getContext(), R.color.gray_300));
+            drawable.setAlpha(127);
+        } else {
+            drawable.setAlpha(255);
+        }
+
+        this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
     }
 }

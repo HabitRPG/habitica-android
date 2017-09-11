@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,10 +22,11 @@
             android:maxLines="1"
             android:text="@string/your_balance"
             android:layout_gravity="center_vertical"/>
-        <com.habitrpg.android.habitica.ui.views.CurrencyView
+        <com.habitrpg.android.habitica.ui.views.CurrencyViews
             android:id="@+id/currencyView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:hasLightBackground="true"/>
     </LinearLayout>
     <TextView
         android:id="@+id/limitedTextView"
@@ -81,17 +83,14 @@
                 android:textAllCaps="true"
                 android:textColor="@color/brand_300"
                 style="@style/Body1" />
-            <ImageView
-                android:id="@+id/currency_icon_view"
-                android:layout_width="@dimen/currency_icon_size"
-                android:layout_height="@dimen/currency_icon_size" />
-            <TextView
+            <com.habitrpg.android.habitica.ui.views.CurrencyView
                 android:id="@+id/priceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="10"
-                tools:textColor="@color/good_10"
-                style="@style/Body1" />
+                tools:textColor="@color/green_10"
+                style="@style/Body1"
+                android:layout_marginLeft="12dp"/>
         </LinearLayout>
         <Button
             android:id="@+id/closeButton"

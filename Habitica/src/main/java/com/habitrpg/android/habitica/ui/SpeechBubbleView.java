@@ -41,7 +41,6 @@ public class SpeechBubbleView extends FrameLayout implements View.OnClickListene
         inflate(context, R.layout.speechbubble, this);
         ButterKnife.bind(this);
 
-
         TypedArray attributes = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.SpeechBubbleView,

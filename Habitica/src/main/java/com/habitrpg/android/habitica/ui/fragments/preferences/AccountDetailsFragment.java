@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.helpers.QrCodeManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -120,7 +119,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
                 }))
                 .setNegativeButton(R.string.nevermind, ((thisDialog, which) -> thisDialog.dismiss()))
                 .create();
-        dialog.setOnShowListener(arg0 -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.worse_10)));
+        dialog.setOnShowListener(arg0 -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.red_10)));
         dialog.setView(input);
         dialog.show();
     }
@@ -146,7 +145,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
                 }))
                 .setNegativeButton(R.string.nevermind, ((thisDialog, which) -> thisDialog.dismiss()))
                 .create();
-        dialog.setOnShowListener(arg0 -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.worse_10)));
+        dialog.setOnShowListener(arg0 -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.red_10)));
         dialog.show();
     }
 

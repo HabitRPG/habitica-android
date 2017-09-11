@@ -30,6 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:lightBackground="true"
-            app:barForegroundColor="@color/good_100"/>
+            app:barForegroundColor="@color/green_100"/>
         </LinearLayout>
 </LinearLayout>

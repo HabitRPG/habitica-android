@@ -71,7 +71,7 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
                 priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gold));
             } else if (item.getCurrency().equals("gems")) {
                 currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
-                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.good_10));
+                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.green_10));
             } else if (item.getCurrency().equals("hourglasses")) {
                 currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfHourglass());
                 priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
