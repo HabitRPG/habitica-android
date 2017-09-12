@@ -1,37 +1,31 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.habitrpg.android.habitica.BuildConfig;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
 import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.RequestListener;
 import org.solovyev.android.checkout.Sku;
-
-import android.content.ComponentName;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseActivity.CheckoutFragment {
 
@@ -43,20 +37,15 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
     GemPurchaseOptionsView gems42View;
     @BindView(R.id.gems_84_view)
     GemPurchaseOptionsView gems84View;
-    @BindView(R.id.gemPurchaseOptions)
-    ViewGroup gemPurchaseOptions;
 
-    @BindView(R.id.notAvailableTextView)
-    TextView billingNotAvailableTextView;
-    @BindView(R.id.notAvailableButton)
-    Button billingNotAvailableButton;
+    @BindView(R.id.supportTextView)
+    TextView supportTextView;
 
     @Inject
     CrashlyticsProxy crashlyticsProxy;
 
     private GemPurchaseActivity listener;
     private BillingRequests billingRequests;
-    private boolean billingNotSupported;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,11 +70,10 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
         gems42View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase42Gems));
         gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
 
-        gems84View.seedsImageButton.setOnClickListener(v -> ((GemPurchaseActivity) this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
+        Drawable heartDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfHeartLarge());
+        supportTextView.setCompoundDrawables(null, heartDrawable, null, null);
 
-        if (billingNotSupported) {
-            setBillingNotSupported();
-        }
+        gems84View.seedsImageButton.setOnClickListener(v -> ((GemPurchaseActivity) this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
     }
 
     @Override
@@ -99,7 +87,7 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
                     products -> {
                         Inventory.Product gems = products.get(ProductTypes.IN_APP);
                         if (!gems.supported) {
-                            setBillingNotSupported();
+                            // billing is not supported, user can't purchase anything
                             return;
                         }
                         java.util.List<Sku> skus = gems.getSkus();
@@ -107,15 +95,6 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
                             updateButtonLabel(sku.id.code, sku.price);
                         }
                     });
-        }
-    }
-
-    private void setBillingNotSupported() {
-        billingNotSupported = true;
-        if (gemPurchaseOptions != null) {
-            gemPurchaseOptions.setVisibility(View.GONE);
-            billingNotAvailableButton.setVisibility(View.VISIBLE);
-            billingNotAvailableTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -147,28 +126,7 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
     }
 
     public void purchaseGems(String sku) {
-        // check if the user already bought and if it hasn't validated yet
-        billingRequests.isPurchased(ProductTypes.IN_APP, sku, new RequestListener<Boolean>() {
-            @Override
-            public void onSuccess(@NonNull Boolean aBoolean) {
-                if (!aBoolean) {
-                    // no current product exist
-                    final ActivityCheckout checkout = listener.getActivityCheckout();
-                    Log.d("GEM", sku);
-                    billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
-                }
-            }
-
-            @Override
-            public void onError(int i, @NonNull Exception e) {
-                crashlyticsProxy.fabricLogE("Purchase", "Error", e);
-            }
-        });
-    }
-
-    @OnClick(R.id.notAvailableButton)
-    public void openWebsite() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL + "/"));
-        getContext().startActivity(intent);
+        final ActivityCheckout checkout = listener.getActivityCheckout();
+        billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
     }
 }

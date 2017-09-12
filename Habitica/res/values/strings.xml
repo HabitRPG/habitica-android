@@ -80,6 +80,7 @@
 
     <string name="repeatEvery">Repeat Every</string>
 
+
     <!-- Network Errors -->
     <string name="network_error_title">Connection Error</string>
     <string name="network_error_no_network_body">You are not connected to the internet.</string>
@@ -109,10 +110,10 @@
     <string name="actions">Actions</string>
 
     <string name="attributes">Attributes</string>
-    <string name="physical">Physical</string>
-    <string name="mental">Mental</string>
-    <string name="social">Social</string>
-    <string name="other">Other</string>
+    <string name="physical">Strength</string>
+    <string name="mental">Intelligence</string>
+    <string name="social">Constitution</string>
+    <string name="other">Perception</string>
 
     <string name="frequency">Frequency</string>
     <string name="frequency_weekly">On Certain Days of the Week</string>
@@ -127,6 +128,7 @@
     <string name="repeatables_frequency_yearly">Yearly</string>
     <string name="repeatables_frequency_day_of_month">Day of Month</string>
     <string name="repeatables_frequency_day_of_week">Day of Week</string>
+
 
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
@@ -397,7 +399,7 @@
     <string name="party_invite">Unlock by inviting friends</string>
     <string name="no_gold">Not enough Gold</string>
     <string name="no_potion">You don\'t need to buy an health potion</string>
-    <string name="successful_purchase" >%1$s successfully purchased</string>
+    <string name="successful_purchase" >Purchased %1$s</string>
     <string name="purchase_confirmation_title">Confirm purchase</string>
     <string name="confirm_purchase_text" >Purchase %1$s for %2$s %3$s</string>
     <string name="gem">gem</string>
@@ -599,4 +601,57 @@
     <string name="challenge_create_error_title">You need a title to create this Challenge.</string>
     <string name="description_optional">Description (optional)</string>
     <string name="new_challenge_title">New challenge title</string>
+    <string name="ownership">Ownership</string>
+    <string name="inn">Inn</string>
+    <string name="system">System</string>
+    <string name="start_quest">Start a new Quest</string>
+    <string name="leave_party">Leave Party</string>
+    <string name="party_description">Party Description</string>
+    <string name="abort_confirmation">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
+    <string name="leave_quest_confirmation">Are you sure you want to leave the active quest? All your quest progress will be lost.</string>
+    <string name="number_participants">%1$d Participants</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="yesterdaililes_prompt">Did you do any of these Dailies yesterday?</string>
+    <string name="start_day">Start My Day</string>
+    <string name="leave_party_confirmation">Are you sure you want to leave the Party?</string>
+    <string name="nextPrizeUnlocksIn" formatted="false">Next Prize in %d Check-ins</string>
+    <string name="pending">Pending</string>
+    <string name="accepted">Accepted</string>
+    <string name="declined">Declined</string>
+    <string name="participants">Participants</string>
+    <string name="invitations">Invitations</string>
+    <string name="quest_leader_header" formatted="false">Started by %s</string>
+    <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
+    <string name="loading">Loading...</string>
+    <string name="reloading_content">Reloading Content</string>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="your_balance">Your balance:</string>
+    <string name="available_until" formatted="false">Available until %s</string>
+    <string name="gems_left_max" formatted="false">Monthly Gems: %1$d/%2$d Remaining</string>
+    <string name="gems_left_nomax" formatted="false">Monthly Gems: %d Remaining</string>
+    <string name="health">Health</string>
+    <string name="collect">Collect</string>
+    <string name="rage_meter">Rage Meter</string>
+    <string name="boss_quest">Boss Quest</string>
+    <string name="collection_quest">Collection Quest</string>
+    <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+    <string name="experience_reward" formatted="false">%d Experience points</string>
+    <string name="gold_reward" formatted="false">%d Gold</string>
+    <string name="quest_owner_rewards">Quest Owner Rewards</string>
+    <string name="str_abbrv">Str:</string>
+    <string name="per_abbrv">Per:</string>
+    <string name="int_abbrv">Int:</string>
+    <string name="con_abbrv">Con:</string>
+    <string name="reset_account">Reset Account</string>
+    <string name="reset_account_description">WARNING! This resets many parts of your account. This is highly discouraged, but some people find it useful in the beginning after playing with the site for a short time.\n\nYou will lose all your levels, gold, and experience points. All your tasks (except those from challenges) will be deleted permanently and you will lose all of their historical data. You will lose all your equipment but you will be able to buy it all back, including all limited edition equipment or subscriber Mystery items that you already own (you will need to be in the correct class to re-buy class-specific gear). You will keep your current class and your pets and mounts. You might prefer to use an Orb of Rebirth instead, which is a much safer option and which will preserve your tasks and equipment.</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete_account_description">Are you sure? This will delete your account forever, and it can never be restored! You will need to register a new account to use Habitica again. Banked or spent Gems will not be refunded. If you\'re absolutely certain, type your password into the text box below.</string>
+    <string name="reset_account_confirmation">reset my account</string>
+    <string name="delete_account_confirmation">delete my account</string>
+    <string name="danger_zone">Danger Zone</string>
+    <string name="nevermind">Nevermind</string>
+    <string name="resetting_account">Resetting Account</string>
+    <string name="deleting_account">Deleting Account</string>
 </resources>

@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.HabitRpgClass;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.user.Stats;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
 
 import junit.framework.Assert;
 
@@ -13,16 +13,13 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Keith Holliday on 3/31/2017.
- */
 
 public class UserStatComputerTest {
 
     private UserStatComputer userStatComputer;
-    private HabitRPGUser user;
-    private ItemData itemData;
-    private List<ItemData> itemDataList;
+    private Member user;
+    private Equipment equipment;
+    private List<Equipment> equipmentList;
     private String key;
     private String text;
 
@@ -33,28 +30,28 @@ public class UserStatComputerTest {
 
     public UserStatComputerTest () {
         userStatComputer = new UserStatComputer();
-        user = new HabitRPGUser();
+        user = new Member();
         Stats stats = new Stats();
         user.setStats(stats);
 
         key = "example-key";
         text = "example-text";
 
-        itemData = new ItemData();
-        itemData.setKey(key);
-        itemData.setText(text);
-        itemData.setStr(str);
-        itemData.set_int(intStat);
-        itemData.setPer(per);
-        itemData.setCon(con);
+        equipment = new Equipment();
+        equipment.setKey(key);
+        equipment.setText(text);
+        equipment.setStr(str);
+        equipment.set_int(intStat);
+        equipment.setPer(per);
+        equipment.setCon(con);
 
-        itemDataList = new ArrayList<>();
-        itemDataList.add(itemData);
+        equipmentList = new ArrayList<>();
+        equipmentList.add(equipment);
     }
 
     @Test
     public void shouldReturnCorrectEquipmentRow () {
-        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(itemDataList, user);
+        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
         UserStatComputer.EquipmentRow equipmentRow = (UserStatComputer.EquipmentRow) statsRows.get(0);
 
         Assert.assertEquals(key, equipmentRow.gearKey);
@@ -64,10 +61,10 @@ public class UserStatComputerTest {
 
     @Test
     public void shouldReturnClassBonusRowWhenClassMatches () {
-        user.getStats().set_class(HabitRpgClass.rogue);
-        itemData.setKlass(HabitRpgClass.rogue.toString());
+        user.getStats().setHabitClass(HabitRpgClass.rogue);
+        equipment.setKlass(HabitRpgClass.rogue.toString());
 
-        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(itemDataList, user);
+        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
         UserStatComputer.AttributeRow attributeRow = (UserStatComputer.AttributeRow) statsRows.get(2);
 
         Assert.assertEquals(R.string.profile_class_bonus, attributeRow.labelId);
@@ -81,11 +78,11 @@ public class UserStatComputerTest {
 
     @Test
     public void ShouldReturnClassBonusRowWhenSpecialClassMatches () {
-        user.getStats().set_class(HabitRpgClass.rogue);
-        itemData.setKlass("");
-        itemData.setSpecialClass(HabitRpgClass.rogue.toString());
+        user.getStats().setHabitClass(HabitRpgClass.rogue);
+        equipment.setKlass("");
+        equipment.setSpecialClass(HabitRpgClass.rogue.toString());
 
-        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(itemDataList, user);
+        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
         UserStatComputer.AttributeRow attributeRow = (UserStatComputer.AttributeRow) statsRows.get(2);
 
         Assert.assertEquals(R.string.profile_class_bonus, attributeRow.labelId);
@@ -99,11 +96,11 @@ public class UserStatComputerTest {
 
     @Test
     public void shouldNotReturnClassBonusWhenClassDoesNotMatch () {
-        user.getStats().set_class(HabitRpgClass.rogue);
-        itemData.setKlass("");
-        itemData.setSpecialClass("");
+        user.getStats().setHabitClass(HabitRpgClass.rogue);
+        equipment.setKlass("");
+        equipment.setSpecialClass("");
 
-        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(itemDataList, user);
+        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
         UserStatComputer.AttributeRow attributeRow = (UserStatComputer.AttributeRow) statsRows.get(2);
 
         Assert.assertEquals(R.string.profile_class_bonus, attributeRow.labelId);

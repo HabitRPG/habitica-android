@@ -1,22 +1,23 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Transaction;
+import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.playseeds.android.sdk.Seeds;
 
 import org.greenrobot.eventbus.EventBus;
 import org.solovyev.android.checkout.BasePurchaseVerifier;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.RequestListener;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;

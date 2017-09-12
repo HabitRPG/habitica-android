@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.interactors;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,8 +9,8 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import javax.inject.Inject;
 
@@ -24,9 +26,9 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
 
     @Override
     protected Observable<Void> buildUseCaseObservable(RequestValues requestValues) {
-        return Observable.from(() -> {
+        return Observable.defer(() -> {
 
-            HabitRPGUser user = requestValues.user;
+            User user = requestValues.user;
 
             if(requestValues.selectClassEvent == null) {
                 if (user.getStats().getLvl() > 10 &&
@@ -34,18 +36,18 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
                         !user.getFlags().getClassSelected()) {
                     SelectClassEvent event = new SelectClassEvent();
                     event.isInitialSelection = true;
-                    event.currentClass = user.getStats().get_class().toString();
-                    displayClassSelectionActivity(user, event);
+                    event.currentClass = user.getStats().getHabitClass();
+                    displayClassSelectionActivity(user, event, requestValues.activity);
                 }
             } else {
-                displayClassSelectionActivity(user, requestValues.selectClassEvent);
+                displayClassSelectionActivity(user, requestValues.selectClassEvent, requestValues.activity);
             }
 
-            return null;
+            return Observable.just(null);
         });
     }
 
-    private void displayClassSelectionActivity(HabitRPGUser user, SelectClassEvent event) {
+    private void displayClassSelectionActivity(User user, SelectClassEvent event, Activity activity) {
         Bundle bundle = new Bundle();
         bundle.putString("size", user.getPreferences().getSize());
         bundle.putString("skin", user.getPreferences().getSkin());
@@ -58,21 +60,23 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
         bundle.putBoolean("isInitialSelection", event.isInitialSelection);
         bundle.putString("currentClass", event.currentClass);
 
-        Intent intent = new Intent(HabiticaApplication.currentActivity, ClassSelectionActivity.class);
+        Intent intent = new Intent(activity, ClassSelectionActivity.class);
         intent.putExtras(bundle);
-        HabiticaApplication.currentActivity.startActivityForResult(intent, SELECT_CLASS_RESULT);
+        activity.startActivityForResult(intent, SELECT_CLASS_RESULT);
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
 
 
-        private HabitRPGUser user;
+        private final Activity activity;
+        private User user;
         private SelectClassEvent selectClassEvent;
 
-        public RequestValues(HabitRPGUser user, SelectClassEvent selectClassEvent) {
+        public RequestValues(User user, SelectClassEvent selectClassEvent, Activity activity) {
 
             this.user = user;
             this.selectClassEvent = selectClassEvent;
+            this.activity = activity;
         }
     }
 }

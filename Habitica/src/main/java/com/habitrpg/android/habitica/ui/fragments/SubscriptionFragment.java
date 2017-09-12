@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,15 +15,17 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.solovyev.android.checkout.ActivityCheckout;
@@ -44,7 +48,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     CrashlyticsProxy crashlyticsProxy;
 
     @Inject
-    ApiClient apiClient;
+    UserRepository userRepository;
 
     @BindView(R.id.subscribe_listitem1_box)
     View subscribeListitem1Box;
@@ -97,10 +101,8 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     @BindView(R.id.subscribeBenefitsTitle)
     TextView subscribeBenefitsTitle;
 
-    @BindView(R.id.notAvailableTextView)
-    TextView billingNotAvailableTextView;
-    @BindView(R.id.notAvailableButton)
-    Button billingNotAvailableButton;
+    @BindView(R.id.supportTextView)
+    TextView supportTextView;
 
     @Nullable
     Sku selectedSubscriptionSku;
@@ -109,9 +111,8 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     private GemPurchaseActivity listener;
     private BillingRequests billingRequests;
 
-    private HabitRPGUser user;
+    private User user;
     private boolean hasLoadedSubscriptionOptions;
-    private boolean billingNotSupported;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,8 +132,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     @Subscribe
     public void fetchUser(@Nullable UserSubscribedEvent event) {
-        apiClient.getUser().subscribe(this::setUser, throwable -> {
-                });
+        userRepository.retrieveUser(false).subscribe(this::setUser, RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -152,9 +152,8 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         this.subscribeListitem3Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description));
         this.subscribeListitem4Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description));
 
-        if (billingNotSupported) {
-            setBillingNotSupported();
-        }
+        Drawable heartDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfHeartLarge());
+        supportTextView.setCompoundDrawables(null, heartDrawable, null, null);
     }
 
     private void toggleDescriptionView(ImageView button, TextView descriptionView) {
@@ -183,11 +182,6 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                     products -> {
                         Inventory.Product subscriptions = products.get(ProductTypes.SUBSCRIPTION);
 
-                        if (!subscriptions.supported) {
-                            setBillingNotSupported();
-                            return;
-                        }
-
                         skus = subscriptions.getSkus();
 
                         for (Sku sku : skus) {
@@ -197,16 +191,6 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                         hasLoadedSubscriptionOptions = true;
                         updateSubscriptionInfo();
                     });
-        }
-    }
-
-    private void setBillingNotSupported() {
-        billingNotSupported = true;
-        if (subscriptionOptions != null) {
-            subscriptionOptions.setVisibility(View.GONE);
-            loadingIndicator.setVisibility(View.GONE);
-            billingNotAvailableButton.setVisibility(View.VISIBLE);
-            billingNotAvailableTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -240,7 +224,9 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         if (subscriptionOptionButton != null) {
             subscriptionOptionButton.setIsPurchased(true);
         }
-        this.subscriptionButton.setEnabled(true);
+        if (this.subscriptionButton != null) {
+            this.subscriptionButton.setEnabled(true);
+        }
     }
 
     @Nullable
@@ -293,7 +279,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         }
     }
 
-    public void setUser(HabitRPGUser newUser) {
+    public void setUser(User newUser) {
         user = newUser;
         this.updateSubscriptionInfo();
     }
@@ -308,13 +294,15 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                 }
             }
 
+            if (this.subscriptionDetailsView == null) {
+                return;
+            }
+
             if (isSubscribed) {
                 this.subscriptionDetailsView.setVisibility(View.VISIBLE);
                 this.subscriptionDetailsView.setPlan(plan);
                 this.subscribeBenefitsTitle.setText(R.string.subscribe_prompt_thanks);
                 this.subscriptionOptions.setVisibility(View.GONE);
-                billingNotAvailableButton.setVisibility(View.GONE);
-                billingNotAvailableTextView.setVisibility(View.GONE);
             } else {
                 if (!hasLoadedSubscriptionOptions) {
                     return;

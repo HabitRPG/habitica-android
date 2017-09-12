@@ -1,35 +1,18 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import java.util.HashMap;
 
-/**
- * Created by viirus on 06/07/15.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class QuestProgress extends BaseModel {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
-    @Column
+public class QuestProgress extends RealmObject {
+
+    public String key;
     public double hp, rage;
-    public HashMap<String, Integer> collect;
-    @Column
-    @PrimaryKey(autoincrement = true)
-    long id;
-    @Column
-    private float down, up;
-
-    private QuestProgress(float down, float up) {
-        this.down = down;
-        this.up = up;
-    }
-
-    public QuestProgress() {
-    }
+    public RealmList<QuestProgressCollect> collect;
+    public float down;
+    public float up;
 
     public float getDown() {
         return down;

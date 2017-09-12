@@ -5,23 +5,25 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.habitrpg.android.habitica.models.inventory.Food;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import io.realm.Realm;
+import io.realm.RealmList;
 
 public class FoodListDeserializer implements JsonDeserializer<List<Food>> {
     @Override
     public List<Food> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<Food> vals = new ArrayList<>();
+        RealmList<Food> vals = new RealmList<>();
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<Food> existingItems = new Select().from(Food.class).queryList();
+            Realm realm = Realm.getDefaultInstance();
+            List<Food> existingItems = realm.copyFromRealm(realm.where(Food.class).findAll());
+            realm.close();
 
             for (Food item : existingItems) {
                 if (object.has(item.getKey())) {
@@ -60,7 +62,7 @@ public class FoodListDeserializer implements JsonDeserializer<List<Food>> {
             }
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((Food) context.deserialize(item.getAsJsonObject(), Food.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), Food.class));
             }
         }
 

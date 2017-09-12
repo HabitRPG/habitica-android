@@ -1,73 +1,78 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
-import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
+import io.realm.RealmResults;
 
-public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Action1<List<ChatMessage>> {
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
+
+public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public String seenGroupId;
     @Inject
-    public ApiClient apiClient;
+    SocialRepository socialRepository;
+    @Inject
+    UserRepository userRepository;
     public boolean isTavern;
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.emoji_button)
+    ImageButton emojiButton;
+    @BindView(R.id.chat_edit_text)
+    EditText chatEditText;
+    @BindView(R.id.send_button)
+    ImageButton sendButton;
+    @BindView(R.id.community_guidelines_view)
+    TextView communityGuidelinesView;
     LinearLayoutManager layoutManager;
     private String groupId;
-    private HabitRPGUser user;
+    private User user;
     private String userId;
     private ChatRecyclerViewAdapter chatAdapter;
     private View view;
-    private List<ChatMessage> currentChatMessages;
     private boolean navigatedOnceToFragment = false;
     private boolean gotNewMessages = false;
 
-    public void configure(String groupId, HabitRPGUser user, boolean isTavern) {
+    public void configure(String groupId, @Nullable User user, boolean isTavern) {
         this.groupId = groupId;
         this.user = user;
         if (this.user != null) {
@@ -92,16 +97,24 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             if (savedInstanceState.containsKey("userId")) {
                 this.userId = savedInstanceState.getString("userId");
                 if (this.userId != null) {
-                    this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
+                    userRepository.getUser(userId).subscribe(habitRPGUser -> this.user = habitRPGUser, RxErrorHandler.handleEmptyError());
                 }
             }
 
         }
 
-        if (view == null)
-            view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_chat, container, false);
+        }
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        userRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -117,28 +130,56 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(getContext());
+            //layoutManager.setReverseLayout(true);
+            //layoutManager.setStackFromEnd(false);
 
-            mRecyclerView.setLayoutManager(layoutManager);
+            recyclerView.setLayoutManager(layoutManager);
         }
 
-        chatAdapter = new ChatRecyclerViewAdapter(new ArrayList<>(), user, groupId, isTavern);
+        chatAdapter = new ChatRecyclerViewAdapter(null, true, user);
+        compositeSubscription.add(chatAdapter.getUserLabelClickEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getDeleteMessageEvents().subscribe(this::showDeleteConfirmationDialog, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getFlatMessageEvents().subscribe(this::showFlagConfirmationDialog, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getCopyMessageAsTodoEvents().subscribe(this::copyMessageAsTodo, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getCopyMessageEvents().subscribe(this::copyMessageToClipboard, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getLikeMessageEvents().flatMap(socialRepository::likeMessage).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError()));
 
-        mRecyclerView.setAdapter(chatAdapter);
+        recyclerView.setAdapter(chatAdapter);
 
+        socialRepository.getGroupChat(groupId).first().subscribe(this::setChatMessages, RxErrorHandler.handleEmptyError());
+
+        if (user != null && user.getFlags() != null && user.getFlags().isCommunityGuidelinesAccepted()) {
+            communityGuidelinesView.setVisibility(View.GONE);
+        } else {
+            communityGuidelinesView.setOnClickListener(v -> {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://habitica.com/static/community-guidelines"));
+                getContext().startActivity(i);
+
+                userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
+            });
+        }
         onRefresh();
     }
+
 
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
 
-        apiClient.listGroupChat(groupId)
-                .subscribe(this, throwable -> {
-                });
+        socialRepository.retrieveGroupChat(groupId).subscribe(chatMessages -> {
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, throwable -> {
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     public void setNavigatedToFragment(String groupId) {
@@ -154,93 +195,41 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
             gotNewMessages = false;
 
-            apiClient.seenMessages(seenGroupId)
-                    .subscribe(s -> {
-                    }, throwable -> {
-                    });
+            socialRepository.markMessagesSeen(seenGroupId);
         }
     }
 
-    @Subscribe
-    public void onEvent(CopyChatMessageCommand cmd) {
+    public void copyMessageToClipboard(ChatMessage chatMessage) {
         ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData chatMessage = ClipData.newPlainText("Chat Message", cmd.chatMessage.text);
-        clipMan.setPrimaryClip(chatMessage);
+        ClipData messageText = ClipData.newPlainText("Chat message", chatMessage.text);
+        clipMan.setPrimaryClip(messageText);
         MainActivity activity = (MainActivity) getActivity();
-        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), UiUtils.SnackbarDisplayType.NORMAL);
+        showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL);
     }
 
-    @Subscribe
-    public void onEvent(final FlagChatMessageCommand cmd) {
+    public void showFlagConfirmationDialog(ChatMessage chatMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.chat_flag_confirmation)
-                .setPositiveButton(R.string.flag_confirm, (dialog, id) -> {
-                    apiClient.flagMessage(cmd.groupId, cmd.chatMessage.id)
-
-                            .subscribe(aVoid -> {
-                                MainActivity activity = (MainActivity) getActivity();
-                                UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
-                            }, throwable -> {
-                            });
-                })
-                .setNegativeButton(R.string.action_cancel, (dialog, id) -> {
-                });
+                .setPositiveButton(R.string.flag_confirm, (dialog, id) -> socialRepository.flagMessage(chatMessage)
+                        .subscribe(aVoid -> {
+                            MainActivity activity = (MainActivity) getActivity();
+                            showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL);
+                        }, RxErrorHandler.handleEmptyError()))
+                .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});
         builder.show();
     }
 
-    @Subscribe
-    public void onEvent(final ToggleLikeMessageCommand cmd) {
-        apiClient.likeMessage(cmd.groupId, cmd.chatMessage.id)
-                .subscribe(voids -> {
-                }, throwable -> {
-                });
+    private void showDeleteConfirmationDialog(ChatMessage chatMessage) {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.confirm_delete_tag_title)
+                .setMessage(R.string.confirm_delete_tag_message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> socialRepository.deleteMessage(chatMessage).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError()))
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
-    @Subscribe
-    public void onEvent(final DeleteChatMessageCommand cmd) {
-        apiClient.deleteMessage(cmd.groupId, cmd.chatMessage.id)
+    private void copyMessageAsTodo(ChatMessage chatMessage) {
 
-                .subscribe(aVoid -> {
-                    if (currentChatMessages != null) {
-                        currentChatMessages.remove(cmd.chatMessage);
-
-                        ChatListFragment.this.call(currentChatMessages);
-                    }
-                }, throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(SendNewGroupMessageCommand cmd) {
-        HashMap<String, String> messageObject = new HashMap<>();
-        messageObject.put("message", cmd.Message);
-        apiClient.postGroupChat(cmd.TargetGroupId, messageObject)
-
-                .subscribe(postChatMessageResult -> {
-                    if (currentChatMessages != null) {
-                        currentChatMessages.add(0, postChatMessageResult.message);
-
-                        ChatListFragment.this.call(currentChatMessages);
-                    }
-                }, throwable -> {
-                });
-
-        UiUtils.dismissKeyboard(getActivity());
-    }
-
-    // If the ChatList is Tavern, we're able to toggle the sleep-mode
-    @Subscribe
-    public void onEvent(ToggleInnCommand event) {
-        apiClient.sleep()
-                .subscribe(aVoid -> {
-                    ToggledInnStateEvent innState = new ToggledInnStateEvent();
-                    innState.Inn = !user.getPreferences().getSleep();
-
-                    user.getPreferences().setSleep(innState.Inn);
-
-                    EventBus.getDefault().post(innState);
-                }, throwable -> {
-                });
     }
 
     @Override
@@ -251,53 +240,47 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void call(List<ChatMessage> chatMessages) {
-        currentChatMessages = chatMessages;
-
-        //Load unparsed messages first
+    public void setChatMessages(RealmResults<ChatMessage> chatMessages) {
         if (chatAdapter != null) {
-            chatAdapter.setMessages(chatMessages);
+            chatAdapter.updateData(chatMessages);
+            recyclerView.scrollToPosition(0);
         }
 
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
-
-        //Parse chatMessages in AsyncTask
-        ParseMessages parseMessages = new ParseMessages(chatMessages);
-        parseMessages.execute();
         gotNewMessages = true;
 
         markMessagesAsSeen();
     }
 
-    private class ParseMessages extends AsyncTask<Void, Void, Void> {
-        private List<ChatMessage> chatMessages;
+    @OnTextChanged(R.id.chat_edit_text)
+    public void onChatMessageTextChanged() {
+        Editable chatText = chatEditText.getText();
+        setSendButtonEnabled(chatText.length() > 0);
+    }
 
-        public ParseMessages(List<ChatMessage> chatMessages) {
-            this.chatMessages = chatMessages;
+    private void setSendButtonEnabled(boolean enabled) {
+        int tintColor;
+        if (enabled) {
+            tintColor = ContextCompat.getColor(getContext(), R.color.brand_400);
+        } else {
+            tintColor = ContextCompat.getColor(getContext(), R.color.md_grey_400);
         }
+        sendButton.setEnabled(enabled);
+        sendButton.setColorFilter(tintColor);
+    }
 
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            for (int i = 0; i < chatMessages.size(); i++) {
-                chatMessages.get(i).parsedText = MarkdownParser.parseMarkdown(chatMessages.get(i).text);
-            }
-
-            return null;
-        }
-
-        protected void onPostExecute(Void result) {
-            if (chatAdapter != null) {
-                chatAdapter.setMessages(chatMessages);
-            }
-
-            if (swipeRefreshLayout != null) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
+    @OnClick(R.id.send_button)
+    public void sendChatMessage() {
+        String chatText = chatEditText.getText().toString();
+        if (chatText.length() > 0) {
+            chatEditText.setText(null);
+            socialRepository.postGroupChat(groupId, chatText).subscribe(postChatMessageResult -> {
+                recyclerView.scrollToPosition(0);
+            }, RxErrorHandler.handleEmptyError());
         }
     }
 
+    @OnClick(R.id.emoji_button)
+    public void openEmojiView() {
+
+    }
 }

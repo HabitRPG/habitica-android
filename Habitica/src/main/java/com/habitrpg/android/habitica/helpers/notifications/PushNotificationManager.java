@@ -2,19 +2,16 @@ package com.habitrpg.android.habitica.helpers.notifications;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.PushDevice;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 public class PushNotificationManager {
 
@@ -32,7 +29,7 @@ public class PushNotificationManager {
 
     private String refreshedToken;
     private SharedPreferences sharedPreferences;
-    private HabitRPGUser user;
+    private User user;
 
     public PushNotificationManager(ApiClient apiClient, SharedPreferences sharedPreferences, Context context) {
         this.apiClient = apiClient;
@@ -40,7 +37,7 @@ public class PushNotificationManager {
         this.context = context;
     }
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -76,15 +73,14 @@ public class PushNotificationManager {
         Map<String, String> pushDeviceData = new HashMap<>();
         pushDeviceData.put("regId", this.refreshedToken);
         pushDeviceData.put("type", "android");
-        apiClient.addPushDevice(pushDeviceData)
-
-            .subscribe(aVoid -> {}, throwable -> {});
+        apiClient.addPushDevice(pushDeviceData).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     public void removePushDeviceUsingStoredToken() {
-        apiClient.deletePushDevice(this.refreshedToken)
-
-            .subscribe(aVoid -> {}, throwable -> {});
+        if (this.refreshedToken == null) {
+            return;
+        }
+        apiClient.deletePushDevice(this.refreshedToken).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     private Boolean userHasPushDevice() {

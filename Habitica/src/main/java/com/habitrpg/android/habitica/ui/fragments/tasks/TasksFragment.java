@@ -2,12 +2,10 @@ package com.habitrpg.android.habitica.ui.fragments.tasks;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -16,37 +14,32 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
-import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 import com.roughike.bottombar.BottomBarTab;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,13 +53,15 @@ public class TasksFragment extends BaseMainFragment {
     public ViewPager viewPager;
     @Inject
     public TaskFilterHelper taskFilterHelper; // This will be used for this fragment. Currently being used to help filtering
+    @Inject
+    TagRepository tagRepository;
     MenuItem refreshItem;
     FloatingActionMenu floatingMenu;
     SparseArray<TaskRecyclerViewFragment> viewFragmentsDictionary = new SparseArray<>();
 
     private boolean displayingTaskForm;
     @Nullable
-    private TextView filterCountTextView;
+    private MenuItem filterMenuItem;
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
@@ -122,6 +117,15 @@ public class TasksFragment extends BaseMainFragment {
         return v;
     }
 
+    @Override
+    public void onDestroy() {
+        tagRepository.close();
+        if (bottomNavigation != null) {
+            bottomNavigation.removeOnTabSelectListener();
+        }
+        super.onDestroy();
+    }
+
     private boolean onFloatingMenuLongClicked(View view) {
         int currentType = viewPager.getCurrentItem();
         TaskRecyclerViewFragment currentFragment = viewFragmentsDictionary.get(currentType);
@@ -139,9 +143,7 @@ public class TasksFragment extends BaseMainFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_activity, menu);
 
-        RelativeLayout badgeLayout = (RelativeLayout) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        filterCountTextView = (TextView) badgeLayout.findViewById(R.id.badge_textview);
-        badgeLayout.setOnClickListener(view -> showFilterDialog());
+        filterMenuItem = menu.findItem(R.id.action_search);
         updateFilterIcon();
     }
 
@@ -165,7 +167,7 @@ public class TasksFragment extends BaseMainFragment {
     private void showFilterDialog() {
         TaskFilterDialog dialog = new TaskFilterDialog(getContext(), HabiticaBaseApplication.getComponent());
         if (user != null) {
-            dialog.setTags(user.getTags());
+            dialog.setTags(user.getTags().createSnapshot());
         }
         dialog.setActiveTags(taskFilterHelper.getTags());
         if (getActiveFragment() != null) {
@@ -175,6 +177,9 @@ public class TasksFragment extends BaseMainFragment {
             }
         }
         dialog.setListener((activeTaskFilter, activeTags) -> {
+            if (viewFragmentsDictionary == null) {
+                return;
+            }
             int activePos = viewPager.getCurrentItem();
             if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
                 viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
@@ -206,28 +211,19 @@ public class TasksFragment extends BaseMainFragment {
             @Override
             public Fragment getItem(int position) {
                 TaskRecyclerViewFragment fragment;
-                SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback =
-                        (task, from, to) -> {
-                            if (apiClient != null){
-                                apiClient.postTaskNewPosition(task.getId(), String.valueOf(to))
-                                        .subscribe(aVoid -> {
-                                        }, e -> {
-                                        });
-                            }
-                        };
 
                 switch (position) {
                     case 0:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_HABIT, sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_HABIT);
                         break;
                     case 1:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_DAILY, sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_DAILY);
                         break;
                     case 3:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_REWARD, null);
+                        fragment = RewardsRecyclerviewFragment.newInstance(getContext(), user, Task.TYPE_REWARD);
                         break;
                     default:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_TODO,sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_TODO);
                 }
 
                 viewFragmentsDictionary.put(position, fragment);
@@ -280,7 +276,7 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private void updateFilterIcon() {
-        if (filterCountTextView == null) {
+        if (filterMenuItem == null) {
             return;
         }
         int filterCount = 0;
@@ -288,76 +284,73 @@ public class TasksFragment extends BaseMainFragment {
             filterCount = taskFilterHelper.howMany(getActiveFragment().classType);
         }
         if (filterCount == 0) {
-            filterCountTextView.setText(null);
-            filterCountTextView.setVisibility(View.GONE);
+            filterMenuItem.setIcon(R.drawable.ic_action_filter_list);
         } else {
-            filterCountTextView.setText(String.valueOf(filterCount));
-            filterCountTextView.setVisibility(View.VISIBLE);
+            filterMenuItem.setIcon(R.drawable.ic_filters_active);
         }
-
     }
 
     private void updateBottomBarBadges() {
         if (bottomNavigation == null) {
             return;
         }
-        List<TutorialStep> tutorialSteps = new Select().from(TutorialStep.class).where(Condition.column("identifier").in("habits", "dailies", "todos", "rewards")).queryList();
-
-        List<String> activeTutorialFragments = new ArrayList<>();
-        for (TutorialStep step : tutorialSteps) {
-            int id = -1;
-            String taskType = null;
-            switch (step.getIdentifier()) {
-                case "habits":
-                    id = R.id.tab_habits;
-                    taskType = Task.TYPE_HABIT;
-                    break;
-                case "dailies":
-                    id = R.id.tab_dailies;
-                    taskType = Task.TYPE_DAILY;
-                    break;
-                case "todos":
-                    id = R.id.tab_todos;
-                    taskType = Task.TYPE_TODO;
-                    break;
-                case "rewards":
-                    id = R.id.tab_rewards;
-                    taskType = Task.TYPE_REWARD;
-                    break;
-            }
-            BottomBarTab tab = bottomNavigation.getTabWithId(id);
-            if (step.shouldDisplay()) {
-                tab.setBadgeCount(1);
-                activeTutorialFragments.add(taskType);
-            } else {
-                tab.removeBadge();
-            }
-        }
-        if (activeTutorialFragments.size() == 1) {
-            TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(indexForTaskType(activeTutorialFragments.get(0)));
-            if (fragment != null && fragment.tutorialTexts != null) {
-                String finalText = getContext().getString(R.string.tutorial_tasks_complete);
-                if (!fragment.tutorialTexts.contains(finalText)) {
-                    fragment.tutorialTexts.add(finalText);
+        tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(tutorialSteps -> {
+            List<String> activeTutorialFragments = new ArrayList<>();
+            for (TutorialStep step : tutorialSteps) {
+                int id = -1;
+                String taskType = null;
+                switch (step.getIdentifier()) {
+                    case "habits":
+                        id = R.id.tab_habits;
+                        taskType = Task.TYPE_HABIT;
+                        break;
+                    case "dailies":
+                        id = R.id.tab_dailies;
+                        taskType = Task.TYPE_DAILY;
+                        break;
+                    case "todos":
+                        id = R.id.tab_todos;
+                        taskType = Task.TYPE_TODO;
+                        break;
+                    case "rewards":
+                        id = R.id.tab_rewards;
+                        taskType = Task.TYPE_REWARD;
+                        break;
+                }
+                BottomBarTab tab = bottomNavigation.getTabWithId(id);
+                if (step.shouldDisplay()) {
+                    tab.setBadgeCount(1);
+                    activeTutorialFragments.add(taskType);
+                } else {
+                    tab.removeBadge();
                 }
             }
-        }
+            if (activeTutorialFragments.size() == 1) {
+                TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(indexForTaskType(activeTutorialFragments.get(0)));
+                if (fragment != null && fragment.tutorialTexts != null && getContext() != null) {
+                    String finalText = getContext().getString(R.string.tutorial_tasks_complete);
+                    if (!fragment.tutorialTexts.contains(finalText)) {
+                        fragment.tutorialTexts.add(finalText);
+                    }
+                }
+            }
+        }, RxErrorHandler.handleEmptyError());
     }
     // endregion
 
     //region Events
-    public void updateUserData(HabitRPGUser user) {
+    public void updateUserData(User user) {
         super.updateUserData(user);
         if (this.user != null) {
             for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
                 TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(index);
                 if (fragment != null) {
-                    BaseTasksRecyclerViewAdapter adapter = fragment.recyclerAdapter;
+                    TaskRecyclerViewAdapter adapter = fragment.recyclerAdapter;
                     if (adapter.getClass().equals(DailiesRecyclerViewHolder.class)) {
                         final DailiesRecyclerViewHolder dailyAdapter = (DailiesRecyclerViewHolder) fragment.recyclerAdapter;
                         dailyAdapter.dailyResetOffset = this.user.getPreferences().getDayStart();
                     }
-                    AsyncTask.execute(() -> adapter.loadContent(true));
+                    //AsyncTask.execute(() -> adapter.loadContent(true));
                 }
             }
         }
@@ -369,8 +362,8 @@ public class TasksFragment extends BaseMainFragment {
         }
 
         String allocationMode = "";
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
-            allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        if (user != null && user.getPreferences() != null) {
+            allocationMode = user.getPreferences().getAllocationMode();
         }
 
         Bundle bundle = new Bundle();
@@ -387,13 +380,6 @@ public class TasksFragment extends BaseMainFragment {
         }
     }
 
-    @Subscribe
-    public void onEvent(RefreshUserCommand event) {
-        if (getActiveFragment() != null) {
-            getActiveFragment().onRefresh();
-        }
-    }
-
     @Nullable
     private TaskRecyclerViewFragment getActiveFragment() {
         return viewFragmentsDictionary.get(viewPager.getCurrentItem());
@@ -406,8 +392,8 @@ public class TasksFragment extends BaseMainFragment {
         }
 
         String allocationMode = "";
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
-            allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        if (user != null && user.getPreferences() != null) {
+            allocationMode = user.getPreferences().getAllocationMode();
         }
 
         Bundle bundle = new Bundle();
@@ -426,12 +412,7 @@ public class TasksFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(AddNewTaskCommand event) {
-        openNewTaskActivity(event.ClassType.toLowerCase(Locale.US));
-    }
-
-    @Subscribe
-    public void onEvent(final TaskSaveEvent event) {
-        floatingMenu.close(true);
+        openNewTaskActivity(event.taskType.toLowerCase(Locale.US));
     }
 
     //endregion Events
@@ -454,6 +435,7 @@ public class TasksFragment extends BaseMainFragment {
                 this.displayingTaskForm = false;
                 break;
         }
+        floatingMenu.close(true);
     }
 
     private void onTaskCreatedResult(int resultCode, Intent data) {

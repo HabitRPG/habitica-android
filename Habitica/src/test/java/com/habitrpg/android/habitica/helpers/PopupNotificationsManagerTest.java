@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.helpers;
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
+import com.habitrpg.android.habitica.api.HostConfig;
+import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.notifications.NotificationData;
@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
@@ -39,24 +40,18 @@ import static org.mockito.Mockito.verify;
 @RunWith(RobolectricTestRunner.class)
 public class PopupNotificationsManagerTest {
 
-    public ApiClient apiClient;
     public HostConfig hostConfig;
-
-    public String username;
-    public final String password = "password";
     private Context context;
     private PopupNotificationsManager popupNotificationsManager;
 
     @Before
     public void setUp() {
-        context = ShadowApplication.getInstance().getApplicationContext();
+        context = RuntimeEnvironment.application;
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
                 BuildConfig.PORT,
                 "",
                 "");
         popupNotificationsManager =new PopupNotificationsManager(context);
-
-        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), popupNotificationsManager, context);
     }
 
     @Test
@@ -72,10 +67,6 @@ public class PopupNotificationsManagerTest {
     @Test
     // @TODO: Eventually, we should have a list of implemented notifications and only use those
     public void itShouldNotDisplayNotificationsThatAreNotLoginIncentives() {
-        Activity activity;
-        activity = Robolectric.buildActivity(Activity.class).create().get();
-        HabiticaApplication.currentActivity = activity;
-
         List<Notification> notifications = new ArrayList<>();
 
         Notification notification = new Notification();
@@ -94,10 +85,6 @@ public class PopupNotificationsManagerTest {
 
     @Test
     public void itShouldDisplayADialogueForANotification() {
-        Activity activity;
-        activity = Robolectric.buildActivity(Activity.class).create().get();
-        HabiticaApplication.currentActivity = activity;
-
         String testTitle = "Test Title";
 
         List<Notification> notifications = new ArrayList<>();
@@ -122,10 +109,6 @@ public class PopupNotificationsManagerTest {
 
     @Test
     public void itShouldNotDisplayANotificationTwice() {
-        Activity activity;
-        activity = Robolectric.buildActivity(Activity.class).create().get();
-        HabiticaApplication.currentActivity = activity;
-
         String testTitle = "Test Title";
 
         List<Notification> notifications = new ArrayList<>();

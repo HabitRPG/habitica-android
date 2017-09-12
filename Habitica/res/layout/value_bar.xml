@@ -1,98 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="@dimen/bar_padding"
+    android:orientation="horizontal"
+    android:id="@+id/value_bar_layout">
+    <ImageView
+        android:id="@+id/ic_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/bar_icon_padding"
+        android:layout_marginEnd="@dimen/bar_icon_padding"
+        android:layout_alignTop="@+id/bar_full"
+        android:layout_alignBottom="@id/bar_full"
+        android:scaleType="center"
+        android:contentDescription="Bar Icon"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:id="@id/bar_full"
+        android:layout_toRightOf="@id/ic_header"
+        android:layout_toEndOf="@id/ic_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_size"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-    <data>
+        <View
+            android:id="@+id/bar"
+            android:layout_width="0dip"
+            android:layout_height="match_parent" />
 
-        <variable
-            name="text"
-            type="String" />
-        <variable
-            name="description"
-            type="String" />
+        <View
+            android:id="@+id/empty_bar_space"
+            android:layout_width="0dip"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
-        <variable
-            name="textColor"
-            type="int" />
-
-        <variable
-            name="weightToShow"
-            type="float" />
-
-        <variable
-            name="barForegroundColor"
-            type="int" />
-        <variable
-            name="icon"
-            type="int"/>
-        <variable
-            name="partyMembers"
-            type="boolean"/>
-
-    </data>
-
-    <RelativeLayout
+    <LinearLayout
+        android:layout_below="@id/bar_full"
+        android:layout_toRightOf="@id/ic_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bar_padding"
-        android:orientation="horizontal"
-        android:id="@+id/value_bar_layout">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/ic_header"
-            android:layout_width="wrap_content"
+        android:layout_marginTop="1dp">
+        <TextView
+            android:id="@+id/valueLabel"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/bar_icon_padding"
-            android:layout_marginEnd="@dimen/bar_icon_padding"
-            android:layout_alignTop="@+id/bar_full"
-            android:layout_alignBottom="@id/bar_full"
-            android:scaleType="center"
-            android:contentDescription="Bar Icon" />
-        <LinearLayout
-            android:id="@id/bar_full"
-            android:layout_toRightOf="@id/ic_header"
-            android:layout_toEndOf="@id/ic_header"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/bar_size"
-            android:orientation="horizontal"
-            android:background="@{partyMembers ? @drawable/layout_rounded_bg_light_gray : @drawable/layout_rounded_bg_brand}"
-            android:weightSum="1">
-
-            <View
-                android:id="@+id/bar"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="@{weightToShow}"
-                app:rounded_background="@{barForegroundColor}" />
-
-            <View
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="@{1.0f - weightToShow}" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_below="@id/bar_full"
-            android:layout_toRightOf="@id/ic_header"
-            android:layout_width="match_parent"
+            android:layout_weight="1"
+            tools:text="50/50"
+            />
+        <TextView
+            android:id="@+id/descriptionLabel"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-                android:layout_marginTop="1dp">
-            <TextView
-                android:id="@+id/TV_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@{partyMembers ? @color/md_black_1000 : @color/brand_500}"
-                android:text="@{text}"
-                android:layout_weight="1"
-                />
-            <TextView
-                android:id="@+id/TV_label"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center|right"
-                android:textColor="@{partyMembers ? @color/md_black_1000 : @color/brand_500}"
-                android:text="@{description}"
-                android:layout_weight="1" />
-        </LinearLayout>
+            android:gravity="center|right"
+            android:layout_weight="1"
+            tools:text="Health"/>
+    </LinearLayout>
 
-    </RelativeLayout>
-</layout>
+</RelativeLayout>

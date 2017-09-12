@@ -1,9 +1,13 @@
 package com.habitrpg.android.habitica.utils;
 
+import android.util.Log;
+
+import com.google.gson.JsonArray;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-
+import com.google.gson.internal.LinkedTreeMap;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 
@@ -21,8 +25,14 @@ public class TaskListDeserializer implements JsonDeserializer<TaskList> {
         Map<String, Task> taskMap = new HashMap<>();
 
         for (JsonElement e : json.getAsJsonArray()) {
-            Task task = ctx.deserialize(e, Task.class);
-            taskMap.put(task.getId(), task);
+            try {
+                Task task = ctx.deserialize(e, Task.class);
+                //Workaround, since gson doesn't call setter methods
+                task.setId(task.getId());
+                taskMap.put(task.getId(), task);
+            } catch (ClassCastException ignored) {
+
+            }
         }
 
         tasks.tasks = taskMap;

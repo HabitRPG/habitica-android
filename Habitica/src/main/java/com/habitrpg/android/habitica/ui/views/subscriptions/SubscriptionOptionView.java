@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.views.subscriptions;
 
-import com.habitrpg.android.habitica.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

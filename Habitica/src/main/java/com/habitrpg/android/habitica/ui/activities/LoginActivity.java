@@ -1,38 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.AccountPicker;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.Scopes;
-
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.AmplitudeManager;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
-import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -68,6 +35,41 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.api.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
+import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -87,13 +89,13 @@ import rx.schedulers.Schedulers;
  * @author Mickael Goubin
  */
 public class LoginActivity extends BaseActivity
-        implements Action1<UserAuthResponse>, HabitRPGUserCallback.OnUserReceived {
+        implements Action1<UserAuthResponse> {
     static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     private final static String TAG_ADDRESS = "address";
     private final static String TAG_USERID = "user";
     private final static String TAG_APIKEY = "key";
     private static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001;
-
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Inject
     public ApiClient apiClient;
@@ -101,6 +103,8 @@ public class LoginActivity extends BaseActivity
     public SharedPreferences sharedPrefs;
     @Inject
     public HostConfig hostConfig;
+    @Inject
+    UserRepository userRepository;
     public String mTmpUserToken;
     public String mTmpApiToken;
     public Boolean isRegistering;
@@ -270,7 +274,6 @@ public class LoginActivity extends BaseActivity
                     return;
                 }
                 apiClient.connectUser(username, password)
-
                         .subscribe(LoginActivity.this, throwable -> hideProgress());
             }
         }
@@ -416,16 +419,6 @@ public class LoginActivity extends BaseActivity
         }
     }
 
-    @Override
-    public void onUserReceived(HabitRPGUser user) {
-        try {
-            saveTokens(mTmpApiToken, mTmpUserToken);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.startMainActivity();
-    }
-
     private void hideProgress() {
         mProgressBar.setVisibility(View.GONE);
     }
@@ -449,12 +442,15 @@ public class LoginActivity extends BaseActivity
             e.printStackTrace();
         }
 
-        if (userAuthResponse.getNewUser()) {
-            this.startSetupActivity();
-        } else {
-            AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT);
-            this.startMainActivity();
-        }
+        userRepository.retrieveUser(true)
+                .subscribe(user -> {
+                    if (userAuthResponse.getNewUser()) {
+                        this.startSetupActivity();
+                    } else {
+                        AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT);
+                        this.startMainActivity();
+                    }
+                }, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.fb_login_button)
@@ -464,6 +460,9 @@ public class LoginActivity extends BaseActivity
 
     @OnClick(R.id.google_login_button)
     public void handleGoogleLogin() {
+        if (!checkPlayServices()) {
+            return;
+        }
         String[] accountTypes = new String[]{"com.google"};
         Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                 accountTypes, false, null, null, null, null);
@@ -507,6 +506,7 @@ public class LoginActivity extends BaseActivity
             // the user to update the APK
             int statusCode = ((GooglePlayServicesAvailabilityException) e)
                     .getConnectionStatusCode();
+            GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(statusCode,
                     LoginActivity.this,
                     REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
@@ -516,9 +516,21 @@ public class LoginActivity extends BaseActivity
             // the app access to the account, but the user can fix this.
             // Forward the user to an activity in Google Play services.
             Intent intent = ((UserRecoverableAuthException) e).getIntent();
-            startActivityForResult(intent,
-                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+            startActivityForResult(intent, REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
         }
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            }
+            return false;
+        }
+
+        return true;
     }
 
     @OnClick(R.id.new_game_button)

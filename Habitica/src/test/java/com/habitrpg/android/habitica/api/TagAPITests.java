@@ -20,7 +20,7 @@ import rx.observers.TestSubscriber;
 @RunWith(RobolectricTestRunner.class)
 public class TagAPITests extends BaseAPITests {
 
-    @Test
+    /*@Test
     public void shouldCreateTag() {
         TestSubscriber<Tag> testSubscriber = new TestSubscriber<>();
         Tag tag = new Tag();
@@ -64,6 +64,6 @@ public class TagAPITests extends BaseAPITests {
         testSub.awaitTerminalEvent();
         testSub.assertNoErrors();
         testSub.assertCompleted();
-    }
+    }*/
 
 }

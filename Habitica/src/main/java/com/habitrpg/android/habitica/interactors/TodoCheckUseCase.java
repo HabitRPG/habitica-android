@@ -5,13 +5,15 @@ import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
 
 import javax.inject.Inject;
 
 import rx.Observable;
 
-public class TodoCheckUseCase  extends UseCase<TodoCheckUseCase.RequestValues, TaskDirectionData> {
+public class TodoCheckUseCase  extends UseCase<TodoCheckUseCase.RequestValues, TaskScoringResult> {
 
     private TaskRepository taskRepository;
     private SoundManager soundManager;
@@ -25,11 +27,8 @@ public class TodoCheckUseCase  extends UseCase<TodoCheckUseCase.RequestValues, T
     }
 
     @Override
-    protected Observable<TaskDirectionData> buildUseCaseObservable(TodoCheckUseCase.RequestValues requestValues) {
-        return taskRepository.taskChecked(requestValues.task, requestValues.up).doOnNext(res -> {
-
-            soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
-        });
+    protected Observable<TaskScoringResult> buildUseCaseObservable(TodoCheckUseCase.RequestValues requestValues) {
+        return taskRepository.taskChecked(requestValues.user, requestValues.task, requestValues.up, false).doOnNext(res -> soundManager.loadAndPlayAudio(SoundManager.SoundTodo));
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
@@ -37,8 +36,10 @@ public class TodoCheckUseCase  extends UseCase<TodoCheckUseCase.RequestValues, T
         protected boolean up = false;
 
         protected final Task task;
+        public User user;
 
-        public RequestValues(Task task, boolean up) {
+        public RequestValues(User user, Task task, boolean up) {
+            this.user = user;
             this.task = task;
             this.up = up;
         }

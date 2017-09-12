@@ -24,8 +24,8 @@
             android:layout_width="@dimen/avatar_header_width"
             android:layout_height="@dimen/avatar_header_height"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             app:showBackground="true"
             app:showMount="true"
             app:showPet="true" />
@@ -36,25 +36,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
+            <com.habitrpg.android.habitica.ui.views.ValueBar
                 android:id="@+id/hpBar"
                 layout="@layout/value_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/header_bar_spacing" />
+                android:layout_marginBottom="@dimen/header_bar_spacing"
+                app:barForegroundColor="@color/hpColor"
+                app:description="@string/HP_default" />
 
-            <include
+            <com.habitrpg.android.habitica.ui.views.ValueBar
                 android:id="@+id/xpBar"
                 layout="@layout/value_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/header_bar_spacing"  />
+                android:layout_marginBottom="@dimen/header_bar_spacing"
+                app:barForegroundColor="@color/xpColor"
+                app:description="@string/XP_default" />
 
-            <include
+            <com.habitrpg.android.habitica.ui.views.ValueBar
                 android:id="@+id/mpBar"
                 layout="@layout/value_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:barForegroundColor="@color/mpColor"
+                app:description="@string/MP_default" />
 
         </LinearLayout>
     </LinearLayout>
@@ -62,13 +68,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="6dp"
-        android:paddingBottom="6dp">
+        android:paddingBottom="6dp"
+        android:gravity="center_vertical">
     <TextView
         android:id="@+id/lvl_tv"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:drawableLeft="@drawable/ic_header_warrior"
-        android:drawableStart="@drawable/ic_header_warrior"
         android:drawablePadding="6dp"
         android:gravity="center"
         android:textSize="14sp"
@@ -78,51 +83,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-    <LinearLayout
+    <com.habitrpg.android.habitica.ui.views.CurrencyViews
+        android:id="@+id/currencyView"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/gems_tv"
-            android:drawableLeft="@drawable/ic_header_gem"
-            android:drawableStart="@drawable/ic_header_gem"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="8dp"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            />
-
-        <TextView
-            android:id="@+id/gold_tv"
-            android:drawableLeft="@drawable/ic_header_gold"
-            android:drawableStart="@drawable/ic_header_gold"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="6dp"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            />
-        <TextView
-            android:id="@+id/silver_tv"
-            android:drawableLeft="@drawable/ic_header_silver"
-            android:drawableStart="@drawable/ic_header_silver"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="6dp"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        app:hasLightBackground="false"/>
     </LinearLayout>
 </LinearLayout>

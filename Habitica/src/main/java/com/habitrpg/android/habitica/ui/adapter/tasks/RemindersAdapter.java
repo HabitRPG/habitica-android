@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.helpers.RemindersManager;
-import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
-import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
-
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,10 +33,13 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
     private final String taskType;
     private RemindersManager remindersManager;
 
-    public RemindersAdapter(List<RemindersItem> remindersInc, String taskType) {
-        this.reminders.addAll(remindersInc);
+    public RemindersAdapter(String taskType) {
         this.remindersManager = new RemindersManager(taskType);
         this.taskType = taskType;
+    }
+
+    public void setReminders(List<RemindersItem> reminders) {
+        this.reminders.addAll(reminders);
     }
 
     @Override
@@ -71,7 +74,6 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
     @Override
     public void onItemDismiss(int position) {
         if (position >= 0 && position < reminders.size()) {
-            reminders.get(position).async().delete();
             reminders.remove(position);
             notifyItemRemoved(position);
         }

@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.habitrpg.android.habitica.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,7 +107,7 @@ public class AboutFragment extends Fragment {
         String bodyOfEmail = "Device: " + device +
                 " \nAndroid Version: " + version +
                 " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
-                " \nHabitRPGUser ID: " + userId +
+                " \nUser ID: " + userId +
                 " \nDetails: ";
 
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(

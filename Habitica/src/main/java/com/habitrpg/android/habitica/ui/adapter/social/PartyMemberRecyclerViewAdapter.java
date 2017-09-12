@@ -1,19 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,24 +10,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.members.Member;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
+import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
-public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMemberRecyclerViewAdapter.MemberViewHolder> {
+public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Member, PartyMemberRecyclerViewAdapter.MemberViewHolder> {
 
 
-    public Context context;
-    private List<HabitRPGUser> memberList;
-    private boolean isMemberSelection;
+    private Context context;
 
-    public void setMemberList(List<HabitRPGUser> memberList, boolean isMemberSelection) {
-        this.memberList = memberList;
-        this.isMemberSelection = isMemberSelection;
-        this.notifyDataSetChanged();
+    private PublishSubject<String> userClickedEvents = PublishSubject.create();
+
+
+    public PartyMemberRecyclerViewAdapter(@Nullable OrderedRealmCollection<Member> data, boolean autoUpdate, Context context) {
+        super(data, autoUpdate);
+        this.context = context;
     }
-
 
     @Override
     public MemberViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,12 +49,13 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
     @Override
     public void onBindViewHolder(MemberViewHolder holder, int position) {
-        holder.bind(memberList.get(position));
+        if (getData() != null) {
+            holder.bind(getData().get(position));
+        }
     }
 
-    @Override
-    public int getItemCount() {
-        return memberList == null ? 0 : memberList.size();
+    public Observable<String> getUserClickedEvents() {
+        return userClickedEvents.asObservable();
     }
 
     class MemberViewHolder extends RecyclerView.ViewHolder {
@@ -76,49 +75,46 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         @BindView(R.id.class_background_layout)
         View classBackground;
 
-        ValueBarBinding hpBar;
+        @BindView(R.id.hpBar)
+        ValueBar hpBar;
 
         Resources resources;
 
-        public MemberViewHolder(View itemView) {
+        MemberViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
 
-            View hpBarView = itemView.findViewById(R.id.hpBar);
-
-            hpBar = DataBindingUtil.bind(hpBarView);
-            hpBar.setPartyMembers(true);
+            hpBar.setLightBackground(true);
+            hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg());
 
             resources = itemView.getResources();
         }
 
-        public void bind(HabitRPGUser user) {
-            android.content.Context ctx = itemView.getContext();
+        public void bind(Member user) {
+            avatarView.setAvatar(user);
 
-            avatarView.setUser(user);
-
-            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
+            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats());
 
             lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 
             classLabel.setText(user.getStats().getTranslatedClassName(context));
 
             int colorResourceID;
-            switch (user.getStats()._class) {
-                case healer: {
+            switch (user.getStats().habitClass) {
+                case "healer": {
                     colorResourceID = R.color.class_healer;
                     break;
                 }
-                case warrior: {
+                case "warrior": {
                     colorResourceID = R.color.class_warrior;
                     break;
                 }
-                case rogue: {
+                case "rogue": {
                     colorResourceID = R.color.class_rogue;
                     break;
                 }
-                case wizard: {
+                case "wizard": {
                     colorResourceID = R.color.class_wizard;
                     break;
                 }
@@ -129,19 +125,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             userName.setText(user.getProfile().getName());
 
             itemView.setClickable(true);
-            itemView.setOnClickListener(view -> {
-                if (isMemberSelection) {
-                    SelectMemberCommand cmd = new SelectMemberCommand(user.getId());
-
-                    EventBus.getDefault().post(cmd);
-                } else {
-                    OpenFullProfileCommand cmd = new OpenFullProfileCommand(user.getId());
-
-                    EventBus.getDefault().post(cmd);
-                }
-            });
+            itemView.setOnClickListener(view -> userClickedEvents.onNext(user.getId()));
         }
-
-
     }
 }

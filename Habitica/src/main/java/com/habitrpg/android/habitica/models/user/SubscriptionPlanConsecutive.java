@@ -1,24 +1,17 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class SubscriptionPlanConsecutive extends BaseModel {
+public class SubscriptionPlanConsecutive extends RealmObject {
 
-    @Column
     @PrimaryKey
-    public String customerId;
-    @Column
+    private String customerId;
+
+    SubscriptionPlan subscriptionPlan;
     private int trinkets;
-    @Column
     private int gemCapExtra;
-    @Column
     private int offset;
-    @Column
     private int count;
 
     public int getTrinkets() {

@@ -3,38 +3,14 @@ package com.habitrpg.android.habitica.models.tasks;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ModelContainer;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by viirus on 06/07/15.
- */
-@ModelContainer
-@Table(databaseName = HabitDatabase.NAME)
-public class Days extends BaseModel implements Parcelable {
+public class Days extends RealmObject implements Parcelable {
 
-    @Column
     @PrimaryKey
-    @NotNull
-    String task_id;
-
-    @Column
+    private String taskId;
     private boolean m, t, w, th, f, s, su;
-
-    public Days() {
-        this.m = false;
-        this.t = false;
-        this.w = false;
-        this.th = false;
-        this.f = false;
-        this.s = true;
-        this.su = true;
-    }
 
     public boolean getT() {
         return t;
@@ -119,7 +95,7 @@ public class Days extends BaseModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.task_id);
+        dest.writeString(this.taskId);
         dest.writeByte(this.m ? (byte) 1 : (byte) 0);
         dest.writeByte(this.t ? (byte) 1 : (byte) 0);
         dest.writeByte(this.w ? (byte) 1 : (byte) 0);
@@ -130,7 +106,7 @@ public class Days extends BaseModel implements Parcelable {
     }
 
     protected Days(Parcel in) {
-        this.task_id = in.readString();
+        this.taskId = in.readString();
         this.m = in.readByte() != 0;
         this.t = in.readByte() != 0;
         this.w = in.readByte() != 0;
@@ -138,6 +114,10 @@ public class Days extends BaseModel implements Parcelable {
         this.f = in.readByte() != 0;
         this.s = in.readByte() != 0;
         this.su = in.readByte() != 0;
+    }
+
+    public Days() {
+
     }
 
     public static final Parcelable.Creator<Days> CREATOR = new Parcelable.Creator<Days>() {
@@ -151,4 +131,12 @@ public class Days extends BaseModel implements Parcelable {
             return new Days[size];
         }
     };
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 }

@@ -1,28 +1,21 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.Table;
+import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by viirus on 06/07/15.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class Buffs extends BasicStats {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-    @Column
-    private Boolean snowball;
+public class Buffs extends RealmObject {
 
-    @Column
+    @PrimaryKey
+    private String userId;
+
+    public Float con, str, per;
+    @SerializedName("int")
+    public Float _int;    private Boolean snowball;
     private Boolean streaks;
-
-    @Column
     private Boolean seafoam;
-
-    @Column
     private Boolean spookySparkles;
-
-    @Column
     private Boolean shinySeed;
 
     public Buffs() {
@@ -78,11 +71,38 @@ public class Buffs extends BasicStats {
         if (stats == null) {
             return;
         }
-        super.merge(stats);
+        this.con = stats.con != null ? stats.con : this.con;
+        this.str = stats.str != null ? stats.str : this.str;
+        this.per = stats.per != null ? stats.per : this.per;
+        this._int = stats._int != null ? stats._int : this._int;
         this.snowball = stats.snowball != null ? stats.snowball : this.snowball;
         this.streaks = stats.streaks != null ? stats.streaks : this.streaks;
         this.seafoam = stats.seafoam != null ? stats.seafoam : this.seafoam;
         this.shinySeed = stats.shinySeed != null ? stats.shinySeed : this.shinySeed;
         this.spookySparkles = stats.spookySparkles != null ? stats.spookySparkles : this.spookySparkles;
+    }
+
+    public Float getStr() {
+        return str;
+    }
+
+    public Float get_int() {
+        return _int;
+    }
+
+    public Float getCon() {
+        return con;
+    }
+
+    public Float getPer() {
+        return per;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

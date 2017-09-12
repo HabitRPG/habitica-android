@@ -1,1 +1,0 @@
-ALTER TABLE ChecklistItem ADD COLUMN 'position' INTEGER DEFAULT 0;

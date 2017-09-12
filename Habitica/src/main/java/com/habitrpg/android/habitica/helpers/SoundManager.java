@@ -64,7 +64,7 @@ public class SoundManager {
     }
 
     public void loadAndPlayAudio(String type) {
-        if (soundTheme.equals("off")) {
+        if ("off".equals(soundTheme) || soundTheme == null) {
             return;
         }
 

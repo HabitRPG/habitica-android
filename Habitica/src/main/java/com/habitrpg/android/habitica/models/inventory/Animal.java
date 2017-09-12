@@ -1,101 +1,40 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+public interface Animal {
 
-public class Animal extends BaseModel {
+    public String getKey();
 
-    @Column
-    @PrimaryKey
-    String key;
+    public void setKey(String key);
 
-    @Column
-    String animal, color, animalGroup, animalText, colorText;
+    public String getAnimal();
 
-    @Column
-    Boolean premium, limited;
+    public void setAnimal(String animal);
 
-    Integer numberOwned;
+    public String getColor();
 
-    public String getKey() {
-        return key;
-    }
+    public void setColor(String color);
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+    public String getAnimalGroup();
 
-    public String getAnimal() {
-        return animal;
-    }
+    public void setAnimalGroup(String group);
 
-    public void setAnimal(String animal) {
-        this.animal = animal;
-    }
+    public String getAnimalText();
 
-    public String getColor() {
-        return color;
-    }
+    public void setAnimalText(String animalText);
 
-    public void setColor(String color) {
-        this.color = color;
-    }
+    public String getColorText();
 
-    public String getAnimalGroup() {
-        return animalGroup;
-    }
+    public void setColorText(String colorText);
 
-    public void setAnimalGroup(String group) {
-        this.animalGroup = group;
-    }
+    public boolean getPremium();
 
-    public String getAnimalText() {
-        if (animalText == null) {
-            return animal;
-        }
-        return animalText;
-    }
+    public void setPremium(boolean premium);
 
-    public void setAnimalText(String animalText) {
-        this.animalText = animalText;
-    }
+    public boolean getLimited();
 
-    public String getColorText() {
-        if (colorText == null) {
-            return color;
-        }
-        return colorText;
-    }
+    public void setLimited(boolean limited);
 
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
-    }
+    public Integer getNumberOwned();
 
-    public Boolean getPremium() {
-        return premium;
-    }
-
-    public void setPremium(Boolean premium) {
-        this.premium = premium;
-    }
-
-    public Boolean getLimited() {
-        return limited;
-    }
-
-    public void setLimited(Boolean limited) {
-        this.limited = limited;
-    }
-
-    public Integer getNumberOwned() {
-        if (numberOwned == null) {
-            return 0;
-        }
-        return numberOwned;
-    }
-
-    public void setNumberOwned(Integer numberOwned) {
-        this.numberOwned = numberOwned;
-    }
+    public void setNumberOwned(Integer numberOwned);
 }

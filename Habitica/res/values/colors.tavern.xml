@@ -2,7 +2,7 @@
 <resources>
     <color name="tavern.nolikes.background">#eeeeee</color>
     <color name="tavern.somelikes.background">#cccccc</color>
-    <color name="tavern.userliked.background">@color/good_50</color>
+    <color name="tavern.userliked.background">@color/green_50</color>
     <color name="tavern.nolikes.foreground">#aaaaaa</color>
     <color name="tavern.somelikes.foreground">#FFFFFF</color>
     <color name="tavern.userliked.foreground">#FFFFFF</color>

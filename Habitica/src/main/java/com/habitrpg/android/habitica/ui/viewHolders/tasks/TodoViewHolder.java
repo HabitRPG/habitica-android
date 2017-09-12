@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.view.View;
+
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.text.DateFormat;
 

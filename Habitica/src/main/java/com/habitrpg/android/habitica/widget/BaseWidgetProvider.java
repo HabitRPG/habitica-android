@@ -1,10 +1,5 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -12,14 +7,25 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
+import android.text.SpannableStringBuilder;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
+
+import javax.inject.Inject;
 
 
 public abstract class BaseWidgetProvider extends AppWidgetProvider {
+
+    @Inject
+    UserRepository userRepository;
 
     protected Context context;
 
@@ -68,14 +74,13 @@ public abstract class BaseWidgetProvider extends AppWidgetProvider {
         return configureRemoteViews(remoteViews, widgetId, columns, rows);
     }
 
-    protected void showToastForTaskDirection(Context context, TaskDirectionData data, String userID) {
-        HabitRPGUser user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).querySingle();
-
-        Pair<String, UiUtils.SnackbarDisplayType> pair = NotifyUserUseCase.getNotificationAndAddStatsToUser(user, data.exp, data.hp, data.getGp(), data.mp);
-
-        user.save();
-        Toast toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG);
-        toast.show();
+    protected void showToastForTaskDirection(Context context, TaskScoringResult data, String userID) {
+        if (userRepository == null) {
+            HabiticaApplication.getComponent().inject(this);
+        }
+            Pair<SpannableStringBuilder, HabiticaSnackbar.SnackbarDisplayType> pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(context, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta);
+            Toast toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG);
+            toast.show();
     }
 
     abstract public int layoutResourceId();

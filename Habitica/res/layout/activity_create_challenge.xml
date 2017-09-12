@@ -114,10 +114,10 @@
                     android:drawableLeft="@drawable/challenge_gem_add_button"/>
 
                 <ImageView
+                    android:id="@+id/gem_icon"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_header_gem" />
+                    android:layout_gravity="center"/>
 
                 <EditText
                     style="@style/Subheader2"
@@ -163,7 +163,7 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="39dp"
                 android:drawablePadding="12dp"
-                android:drawableEnd="@drawable/ic_info_outline_black_24dp"
+                android:drawableRight="@drawable/ic_info_outline_black_24dp"
                 android:drawableTint="@color/brand_300"
                 android:gravity="center"
                 android:text="Tag"

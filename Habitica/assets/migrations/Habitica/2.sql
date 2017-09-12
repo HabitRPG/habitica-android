@@ -1,1 +1,0 @@
-ALTER TABLE HabitRPGUser ADD COLUMN authentication_id varchar(255);

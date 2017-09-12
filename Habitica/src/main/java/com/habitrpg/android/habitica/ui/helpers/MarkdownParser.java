@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
+import android.support.annotation.Nullable;
+import android.text.Html;
+
 import com.commonsware.cwac.anddown.AndDown;
 
 import net.pherth.android.emoji_library.EmojiParser;
-
-import android.support.annotation.Nullable;
-import android.text.Html;
 
 import static android.text.Html.FROM_HTML_MODE_LEGACY;
 

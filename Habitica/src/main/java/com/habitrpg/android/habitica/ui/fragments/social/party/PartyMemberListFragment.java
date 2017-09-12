@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +12,13 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
-import java.util.List;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -24,25 +27,24 @@ import butterknife.BindView;
  */
 public class PartyMemberListFragment extends BaseFragment {
 
+    @Inject
+    SocialRepository socialRepository;
+
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    private Context ctx;
-    private List<HabitRPGUser> members;
-    private PartyMemberRecyclerViewAdapter viewAdapter;
+    RecyclerView recyclerView;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
+    private PartyMemberRecyclerViewAdapter adapter;
     private View view;
-
-    public void configure(Context ctx, @Nullable List<HabitRPGUser> members) {
-        this.ctx = ctx;
-        this.members = members;
-
-    }
+    private String partyId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null)
-            view = inflater.inflate(R.layout.fragment_party_memberlist, container, false);
-
+        super.onCreateView(inflater, container, savedInstanceState);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
+        }
         return view;
     }
 
@@ -55,19 +57,38 @@ public class PartyMemberListFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
-        viewAdapter = new PartyMemberRecyclerViewAdapter();
-        viewAdapter.context = this.ctx;
-        mRecyclerView.setAdapter(viewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new PartyMemberRecyclerViewAdapter(null, true, getContext());
+        compositeSubscription.add(adapter.getUserClickedEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
+        recyclerView.setAdapter(adapter);
 
-        if (members != null) {
-            setMemberList(members);
+        refreshLayout.setOnRefreshListener(this::refreshMembers);
+
+        getUsers();
+    }
+
+    private void refreshMembers() {
+        socialRepository.retrieveGroupMembers(partyId, true).subscribe(users -> setRefreshing(false), RxErrorHandler.handleEmptyError());
+    }
+
+    private void setRefreshing(boolean isRefreshing) {
+        if (refreshLayout != null) {
+            refreshLayout.setRefreshing(isRefreshing);
         }
     }
 
-    public void setMemberList(List<HabitRPGUser> members) {
-        this.members = members;
-        viewAdapter.setMemberList(members, false);
+    public void setPartyId(String id) {
+        this.partyId = id;
     }
 
+    private void getUsers() {
+        if (partyId == null) {
+            return;
+        }
+        socialRepository.getGroupMembers(partyId).first().subscribe(users -> {
+            if (adapter != null) {
+                adapter.updateData(users);
+            }
+        }, RxErrorHandler.handleEmptyError());
+    }
 }

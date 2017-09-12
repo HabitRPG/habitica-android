@@ -1,15 +1,15 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
-
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,7 +40,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
         if (this.task.up) {
             this.btnPlusWrapper.setBackgroundResource(this.task.getLightTaskColor());
-            if (this.task.getLightTaskColor() == R.color.neutral_100) {
+            if (this.task.getLightTaskColor() == R.color.yellow_100) {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus_yellow);
             } else {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus);
@@ -56,7 +56,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
         if (this.task.down) {
             this.btnMinusWrapper.setBackgroundResource(this.task.getLightTaskColor());
-            if (this.task.getLightTaskColor() == R.color.neutral_100) {
+            if (this.task.getLightTaskColor() == R.color.yellow_100) {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus_yellow);
             } else {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus);

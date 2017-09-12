@@ -1,24 +1,15 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class Hair extends BaseModel {
+public class Hair extends RealmObject {
 
-    @Column
     @PrimaryKey
-    @NotNull
-    public String userId;
+    private String userId;
 
-    @Column
+    public Preferences preferences;
     private int mustache, beard, bangs, base, flower;
-
-    @Column
     private String color;
 
     public Hair() {
@@ -83,5 +74,13 @@ public class Hair extends BaseModel {
 
     public boolean isAvailable(int hairId) {
         return hairId > 0;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

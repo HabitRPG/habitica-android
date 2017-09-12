@@ -16,7 +16,6 @@
   <string name="Language_summary">更改Habitica的語言</string>
   <string name="SP_user_qr_code">你的 QR 碼</string>
   <string name="PS_contact_title">聯絡我</string>
-  <string name="unknown_error">發生了一個錯誤……</string>
   <string name="pref_account_header">帳號</string>
   <string name="pref_first_day_of_the_week_title">每周的第一天</string>
   <string name="pref_first_day_of_the_week_summary">所有日曆中第一周的第一天</string>
@@ -36,10 +35,6 @@
   <string name="preference_push_invited_to_quest">你受邀參加任務</string>
   <!--Adding tasks-->
   <string name="task_value">數值</string>
-  <string name="new_todo">新待辦事項</string>
-  <string name="new_reward">新獎勵</string>
-  <string name="new_daily">新每日任務</string>
-  <string name="new_habit">新習慣</string>
   <string name="action_edit">編輯</string>
   <string name="action_delete">刪除</string>
   <string name="action_cancel">取消</string>
@@ -179,24 +174,19 @@
   <string name="sidebar_help">幫助&amp;FAQ</string>
   <string name="complete_tutorial">成功！</string>
   <string name="dismiss_tutorial">再次提醒我</string>
-  <string name="intro_1_title">歡迎來到Habitica</string>
-  <string name="intro_2_title">生活即游戲！</string>
-  <string name="intro_2_description">通過完成現實生活中的任務來解鎖游戲內容。得到裝備、寵物和更多的獎勵來促使你完成你的目標吧！</string>
-  <string name="intro_3_title">與小伙伴一起，並肩擊退怪獸</string>
+  <string name="intro_1_subtitle">歡迎來到</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_2_subtitle">遊戲進度</string>
+  <string name="intro_2_title">生活進度</string>
   <string name="intro_3_description">和朋友們一起為目標努力吧。在生活和戰鬥中互相支持，共同進步！</string>
-  <string name="intro_finish_button">開始探險之旅</string>
+  <string name="intro_finish_button">開始吧!</string>
   <string name="previous_button">上一頁</string>
   <string name="next_button">下一頁</string>
   <string name="skip_button">跳過</string>
   <string name="setup_welcome_description">歡迎來到Habitica，在游戲中打怪升級的同時改善自己的真實生活。完成現實生活中的目標，解鎖大量裝備、寵物、任務卷軸，更多特色等你探索。</string>
   <string name="setup_welcome_title">歡迎你</string>
-  <string name="avatar_setup_description">首先，你需要創建一個角色來代表你自己。你在現實生活中的行動會影響到你的角色的生命值、經驗值以及金錢。</string>
-  <string name="task_setup_description">打起精神！現在開始設定你的任務，開始賺取經驗和金幣吧。
-
-首先，你想改善生活中的哪一部分呢？</string>
   <string name="setup_group_work">工作</string>
   <string name="setup_group_exercise">運動</string>
-  <string name="setup_group_heathWellness">健康</string>
   <string name="setup_group_school">學校</string>
   <string name="setup_group_teams">團隊</string>
   <string name="setup_group_chores">雜務</string>
@@ -230,13 +220,11 @@
   <string name="join">加入</string>
   <string name="leader">會長</string>
   <string name="gems">寶石</string>
-  <string name="copy_as_todo">複製為待辦事項</string>
   <string name="send_pm">發送私人信息</string>
   <string name="flag">標示</string>
   <string name="delete">刪除</string>
   <string name="name">名稱</string>
   <string name="description">Description</string>
-  <string name="add_tag">添加標籤</string>
   <string name="privacy">隱私</string>
   <string name="write_message">寫消息</string>
   <string name="post">公告</string>
@@ -305,6 +293,7 @@
   <string name="world_quest">世界任務</string>
   <string name="inn_description">在客棧休息讓你未完成的每日任務不會傷害你！ (注意：它不能阻止來自任務怪物的傷害。)</string>
   <string name="empty_items">你沒有擁有任何的%s</string>
+  <string name="user_level">%d等級</string>
   <string name="user_level_with_class">等級 %1$d - %2$s</string>
   <string name="warrior">戰士</string>
   <string name="rogue">盜賊</string>
@@ -342,6 +331,7 @@
   <string name="open_in_store">開啟Play sotre</string>
   <string name="change_class_confirmation">你確定要變更職業嗎？這會花費3寶石。</string>
   <string name="leaderMessage">訊息來自%1$s</string>
+  <string name="leaderName">隊長: %1$s</string>
   <string name="confirm">確認</string>
   <string name="market">市集</string>
   <string name="timeTravelers">時光旅人</string>
@@ -387,7 +377,6 @@
   <string name="all_dailies_completed">你完成了所有每日任務。做得好！</string>
   <string name="widget_habit_button">Habitica 做習慣</string>
   <string name="widget_dailies">Habitica 每日任務</string>
-  <string name="widget_todo_list">Habitica 待辦事項列表</string>
   <string name="widget_add_task">Habitica 添加獎勵</string>
   <string name="google_services_missing">找不到 Google play 服務。</string>
   <string name="gem.purchase.toolbartitle">支付</string>

@@ -1,20 +1,13 @@
 package com.habitrpg.android.habitica.models.invitations;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by keithholliday on 7/2/16.
- */
-public class PartyInvite {
-    @SerializedName("id")
-    @Expose
+public class PartyInvite extends RealmObject {
+
+    @PrimaryKey
     private String id;
-    @SerializedName("name")
-    @Expose
     private String name;
-    @SerializedName("inviter")
-    @Expose
     private String inviter;
 
     /**
