@@ -97,18 +97,18 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
         if (chatMessage.userLikesMessage(userId) == liked) {
             return;
         }
-        realm.executeTransaction(realm1 -> {
-            if (liked) {
+        if (liked) {
+            realm.executeTransaction(realm1 -> {
                 chatMessage.likes.add(new ChatMessageLike(userId));
-            } else {
-                for (ChatMessageLike like : chatMessage.likes) {
-                    if (userId.equals(like.id)) {
-                        like.deleteFromRealm();
-                        return;
-                    }
+            });
+        } else {
+            for (ChatMessageLike like : chatMessage.likes) {
+                if (userId.equals(like.id)) {
+                    realm.executeTransaction(realm1 -> like.deleteFromRealm());
+                    return;
                 }
             }
-        });
+        }
     }
 
     @Override

@@ -394,7 +394,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     }
 
     private void displayNewInboxMessagesBadge() {
-        Integer numberOfUnreadPms = this.user.getInbox().getNewMessages();
+        int numberOfUnreadPms = this.user.getInbox().getNewMessages();
         IDrawerItem newInboxItem;
 
         if (numberOfUnreadPms <= 0) {

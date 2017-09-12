@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
+import com.habitrpg.android.habitica.helpers.NumberAbbreviator;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
@@ -40,7 +41,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
     public void bindHolder(Task newTask, int position) {
         super.bindHolder(newTask, position);
 
-        this.priceLabel.setText(this.priceFormat.format(this.task.value));
+        this.priceLabel.setText(NumberAbbreviator.abbreviate(itemView.getContext(), this.task.value));
     }
 
     private boolean isItem() {
@@ -68,9 +69,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
             dialog.setImage("shop_" + this.task.getId());
             dialog.setCurrency("gold");
             dialog.setValue(task.getValue());
-            dialog.setBuyListener((clickedDialog, which) -> {
-                this.buyReward();
-            });
+            dialog.setBuyListener((clickedDialog, which) -> this.buyReward());
             dialog.show();
         } else {
             TaskTappedEvent event = new TaskTappedEvent();

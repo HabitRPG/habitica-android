@@ -74,6 +74,9 @@
 -dontwarn javax.**
 -dontwarn io.realm.**
 
+#support library
+-keep class android.support.v7.widget.SearchView { *; }
+
 #eventbus
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;

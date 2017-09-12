@@ -35,23 +35,26 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void saveUser(User user) {
-        realm.executeTransaction(realm1 -> {
-            realm1.insertOrUpdate(user);
-
-            if (user.getTags() != null) {
-                removeOldTags(user.getId(), user.getTags());
-            }
-        });
+        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(user));
+        if (user.getTags() != null) {
+            removeOldTags(user.getId(), user.getTags());
+        }
     }
 
     private void removeOldTags(String userId, List<Tag> onlineTags) {
         OrderedRealmCollectionSnapshot<Tag> tags = realm.where(Tag.class).equalTo("userId", userId).findAll().createSnapshot();
 
+        List<Tag> tagsToDelete = new ArrayList<>();
         for (Tag tag : tags) {
             if (!onlineTags.contains(tag)) {
-                tag.deleteFromRealm();
+                tagsToDelete.add(tag);
             }
         }
+        realm.executeTransaction(realm1 -> {
+            for (Tag tag : tagsToDelete) {
+                tag.deleteFromRealm();
+            }
+        });
     }
 
     @Override

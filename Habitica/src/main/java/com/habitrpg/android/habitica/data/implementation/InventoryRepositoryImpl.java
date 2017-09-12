@@ -267,7 +267,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     @Override
     public Observable<BuyResponse> buyItem(User user, String key, double value) {
         return apiClient.buyItem(key)
-                .doOnNext(buyResponse -> localRepository.executeTransaction(realm -> {
+                .doOnNext(buyResponse -> {
                     User copiedUser = localRepository.getUnmanagedCopy(user);
                     if (buyResponse.items != null) {
                         buyResponse.items.setUserId(user.getId());
@@ -291,7 +291,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                         copiedUser.getStats().setLvl(buyResponse.lvl);
                     }
                     localRepository.save(copiedUser);
-                }));
+                });
     }
 
     @Override

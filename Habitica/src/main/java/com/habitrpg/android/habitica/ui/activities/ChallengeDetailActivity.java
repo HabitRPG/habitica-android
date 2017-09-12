@@ -17,8 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
@@ -87,9 +85,6 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
-
-    @BindView(R.id.gem_icon)
-    ImageView gemIconView;
 
     // region UseCases
 
@@ -245,8 +240,6 @@ public class ChallengeDetailActivity extends BaseActivity {
                 challengeViewHolder.bind(challenge);
             });
         }
-
-        gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem_36());
     }
 
     private void createTaskRecyclerFragment(ObservableList<Task> fullList) {

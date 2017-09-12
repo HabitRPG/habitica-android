@@ -28,6 +28,8 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 
+import static com.habitrpg.android.habitica.R.id.item;
+
 
 public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> implements TaskRepository {
 
@@ -116,13 +118,18 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public Observable<Task> scoreChecklistItem(String taskId, String itemId) {
         return apiClient.scoreChecklistItem(taskId, itemId)
                 .flatMap(task -> localRepository.getTask(taskId).first())
-                .doOnNext(task -> localRepository.executeTransaction(realm -> {
+                .doOnNext(task -> {
+                    ChecklistItem updatedItem = null;
                     for (ChecklistItem item : task.getChecklist()) {
                         if (itemId.equals(item.getId())) {
-                            item.setCompleted(!item.getCompleted());
+                            updatedItem = item;
                         }
                     }
-                }));
+                    if (updatedItem != null) {
+                        ChecklistItem finalUpdatedItem = updatedItem;
+                        localRepository.executeTransaction(realm -> finalUpdatedItem.setCompleted(!finalUpdatedItem.getCompleted()));
+                    }
+                });
     }
 
     @Override

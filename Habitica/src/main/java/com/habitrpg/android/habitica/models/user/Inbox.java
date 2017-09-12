@@ -16,23 +16,23 @@ public class Inbox extends RealmObject {
     private String userId;
 
     User user;
-    private Boolean optOut;
+    private boolean optOut;
     private RealmList<ChatMessage> messages;
     @Ignore
     private List<Object> blocks = new ArrayList<>();
-    private Integer newMessages;
+    private int newMessages;
 
     /**
      * @return The optOut
      */
-    public Boolean getOptOut() {
+    public boolean getOptOut() {
         return optOut;
     }
 
     /**
      * @param optOut The optOut
      */
-    public void setOptOut(Boolean optOut) {
+    public void setOptOut(boolean optOut) {
         this.optOut = optOut;
     }
 
@@ -67,14 +67,14 @@ public class Inbox extends RealmObject {
     /**
      * @return The newMessages
      */
-    public Integer getNewMessages() {
+    public int getNewMessages() {
         return newMessages;
     }
 
     /**
      * @param newMessages The newMessages
      */
-    public void setNewMessages(Integer newMessages) {
+    public void setNewMessages(int newMessages) {
         this.newMessages = newMessages;
     }
 

@@ -98,16 +98,6 @@ public abstract class BaseMainFragment extends BaseFragment {
             }
         }
 
-        if (tabLayout != null) {
-            if (this.usesTabLayout) {
-                tabLayout.removeAllTabs();
-                tabLayout.setVisibility(View.VISIBLE);
-                tabLayout.setTabMode(TabLayout.MODE_FIXED);
-            } else {
-                tabLayout.setVisibility(View.GONE);
-            }
-        }
-
         if (bottomNavigation != null) {
             if (this.usesBottomNavigation) {
                 bottomNavigation.removeOnTabSelectListener();
@@ -128,7 +118,21 @@ public abstract class BaseMainFragment extends BaseFragment {
             activity.setActiveFragment(this);
         }
 
+        updateTabLayoutVisibility();
+
         return null;
+    }
+
+    private void updateTabLayoutVisibility() {
+        if (tabLayout != null) {
+            if (this.usesTabLayout) {
+                tabLayout.removeAllTabs();
+                tabLayout.setVisibility(View.VISIBLE);
+                tabLayout.setTabMode(TabLayout.MODE_FIXED);
+            } else {
+                tabLayout.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

@@ -45,41 +45,37 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void saveTasks(@Nullable String userId, TasksOrder tasksOrder, TaskList tasks) {
-        realm.executeTransactionAsync(realm1 -> {
+        List<Task> sortedTasks = new ArrayList<>();
+        if (tasks != null) {
+            if (tasksOrder != null) {
+                sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getHabits()));
+                sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getDailys()));
+                sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getTodos()));
+                sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getRewards()));
+            } else {
+                sortedTasks.addAll(tasks.tasks.values());
+            }
+        }
+        if (userId != null) {
+            removeOldTasks(userId, sortedTasks);
 
-            List<Task> sortedTasks = new ArrayList<>();
-            if (tasks != null) {
-                if (tasksOrder != null) {
-                    sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getHabits()));
-                    sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getDailys()));
-                    sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getTodos()));
-                    sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getRewards()));
-                } else {
-                    sortedTasks.addAll(tasks.tasks.values());
+            List<ChecklistItem> allChecklistItems = new ArrayList<>();
+            for (Task t : sortedTasks) {
+                if (t.checklist != null) {
+                    allChecklistItems.addAll(t.checklist);
                 }
             }
-            if (userId != null) {
-                removeOldTasks(realm1, userId, sortedTasks);
+            removeOldChecklists(allChecklistItems);
 
-                List<ChecklistItem> allChecklistItems = new ArrayList<>();
-                for (Task t : sortedTasks) {
-                    if (t.checklist != null) {
-                        allChecklistItems.addAll(t.checklist);
-                    }
+            List<RemindersItem> allReminders = new ArrayList<>();
+            for (Task t : sortedTasks) {
+                if (t.getReminders() != null) {
+                    allReminders.addAll(t.getReminders());
                 }
-                removeOldChecklists(realm1, allChecklistItems);
-
-                List<RemindersItem> allReminders = new ArrayList<>();
-                for (Task t : sortedTasks) {
-                    if (t.getReminders() != null) {
-                        allReminders.addAll(t.getReminders());
-                    }
-                }
-                removeOldReminders(realm1, allReminders);
             }
-
-            realm1.insertOrUpdate(sortedTasks);
-        });
+            removeOldReminders(allReminders);
+        }
+        realm.executeTransactionAsync(realm1 -> realm1.insertOrUpdate(sortedTasks));
     }
 
     private List<Task> sortTasks(Map<String, Task> taskMap, List<String> taskOrder) {
@@ -102,10 +98,16 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         realm.executeTransaction(realm1 -> realm1.insertOrUpdate(task));
     }
 
-    private void removeOldTasks(Realm realm, String userID, List<Task> onlineTaskList) {
+    private void removeOldTasks(String userID, List<Task> onlineTaskList) {
         OrderedRealmCollectionSnapshot<Task> localTasks = realm.where(Task.class).equalTo("userId", userID).findAll().createSnapshot();
+        List<Task> tasksToDelete = new ArrayList<>();
         for (Task localTask : localTasks) {
             if (!onlineTaskList.contains(localTask)) {
+                tasksToDelete.add(localTask);
+            }
+        }
+        realm.executeTransaction(realm1 -> {
+            for (Task localTask : tasksToDelete) {
                 if (localTask.checklist != null) {
                     localTask.checklist.deleteAllFromRealm();
                 }
@@ -114,25 +116,37 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
                 }
                 localTask.deleteFromRealm();
             }
-        }
+        });
     }
 
-    private void removeOldChecklists(Realm realm, List<ChecklistItem> onlineItems) {
+    private void removeOldChecklists(List<ChecklistItem> onlineItems) {
         OrderedRealmCollectionSnapshot<ChecklistItem> localItems = realm.where(ChecklistItem.class).findAll().createSnapshot();
+        List<ChecklistItem> itemsToDelete = new ArrayList<>();
         for (ChecklistItem localItem : localItems) {
             if (!onlineItems.contains(localItem)) {
-                localItem.deleteFromRealm();
+                itemsToDelete.add(localItem);
             }
         }
+        realm.executeTransaction(realm1 -> {
+            for (ChecklistItem item : itemsToDelete) {
+                item.deleteFromRealm();
+            }
+        });
     }
 
-    private void removeOldReminders(Realm realm, List<RemindersItem> onlineReminders) {
+    private void removeOldReminders(List<RemindersItem> onlineReminders) {
         OrderedRealmCollectionSnapshot<RemindersItem> localReminders = realm.where(RemindersItem.class).findAll().createSnapshot();
+        List<RemindersItem> itemsToDelete = new ArrayList<>();
         for (RemindersItem localItem : localReminders) {
             if (!onlineReminders.contains(localItem)) {
-                localItem.deleteFromRealm();
+                itemsToDelete.add(localItem);
             }
         }
+        realm.executeTransaction(realm1 -> {
+            for (RemindersItem item : itemsToDelete) {
+                item.deleteFromRealm();
+            }
+        });
     }
     @Override
     public void deleteTask(String taskID) {
