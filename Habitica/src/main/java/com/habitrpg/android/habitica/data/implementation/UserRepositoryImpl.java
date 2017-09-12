@@ -33,7 +33,6 @@ import rx.Observable;
 
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> implements UserRepository {
 
-    private final Context context;
     private Date lastSync;
     private String userId;
 
@@ -42,7 +41,6 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, Context context, String userId, TaskRepository taskRepository) {
         super(localRepository, apiClient);
         this.taskRepository = taskRepository;
-        this.context = context;
         this.userId = userId;
     }
 

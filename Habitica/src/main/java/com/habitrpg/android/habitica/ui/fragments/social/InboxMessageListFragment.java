@@ -182,7 +182,9 @@ public class InboxMessageListFragment extends BaseMainFragment
         if (chatText.length() > 0) {
             chatEditText.setText(null);
             socialRepository.postPrivateMessage(replyToUserUUID, chatText).subscribe(postChatMessageResult -> {
-                recyclerView.scrollToPosition(0);
+                if (recyclerView != null) {
+                    recyclerView.scrollToPosition(0);
+                }
             }, RxErrorHandler.handleEmptyError());
         }
     }

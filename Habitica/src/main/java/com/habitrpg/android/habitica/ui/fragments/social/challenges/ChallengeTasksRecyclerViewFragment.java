@@ -78,7 +78,9 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     public void setInnerAdapter() {
         this.recyclerAdapter = new ChallengeTasksRecyclerViewAdapter(null, 0, getContext(), userID, null, true, true);
 
-        this.recyclerAdapter.setDailyResetOffset(user.getPreferences().getDayStart());
+        if (user != null && user.getPreferences() != null) {
+            this.recyclerAdapter.setDailyResetOffset(user.getPreferences().getDayStart());
+        }
 
         if (tasksOnInitialize != null && tasksOnInitialize.size() != 0 && recyclerAdapter != null && recyclerAdapter.getItemCount() == 0) {
             recyclerAdapter.setTasks(tasksOnInitialize);

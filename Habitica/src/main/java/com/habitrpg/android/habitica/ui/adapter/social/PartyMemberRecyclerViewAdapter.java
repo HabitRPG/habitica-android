@@ -124,8 +124,10 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Mem
             ViewHelper.SetBackgroundTint(classBackground, ContextCompat.getColor(context, colorResourceID));
             userName.setText(user.getProfile().getName());
 
-            itemView.setClickable(true);
-            itemView.setOnClickListener(view -> userClickedEvents.onNext(user.getId()));
+            if (itemView != null) {
+                itemView.setClickable(true);
+                itemView.setOnClickListener(view -> userClickedEvents.onNext(user.getId()));
+            }
         }
     }
 }

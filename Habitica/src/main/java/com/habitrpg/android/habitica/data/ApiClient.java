@@ -127,7 +127,7 @@ public interface ApiClient {
 
     Observable<User> disableClasses();
 
-    Observable<Void> markPrivateMessagesRead();
+    Observable<List<Void>> markPrivateMessagesRead();
 
     /* Group API */
 
@@ -190,7 +190,7 @@ public interface ApiClient {
     Observable<Shop> fetchShopInventory(String identifier);
 
     //Push notifications
-    Observable<Void> addPushDevice(Map<String, String> pushDeviceData);
+    Observable<List<Void>> addPushDevice(Map<String, String> pushDeviceData);
 
     Observable<Void> deletePushDevice(String regId);
 

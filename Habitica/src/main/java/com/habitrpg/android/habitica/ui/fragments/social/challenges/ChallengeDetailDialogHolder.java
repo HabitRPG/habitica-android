@@ -80,6 +80,9 @@ public class ChallengeDetailDialogHolder {
     }
 
     public static void showDialog(Activity activity, ChallengeRepository challengeRepository, Challenge challenge, Action1<Challenge> challengeLeftAction) {
+        if (activity == null) {
+            return;
+        }
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
         ChallengeDetailDialogHolder challengeDetailDialogHolder = new ChallengeDetailDialogHolder(dialogLayout, activity);

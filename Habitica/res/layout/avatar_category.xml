@@ -7,7 +7,6 @@
     android:textAllCaps="true"
     android:paddingTop="8dp"
     android:textColor="@color/white_50_alpha"
-    android:ellipsize="marquee"
     android:layout_width="70dp"
     android:layout_height="70dp"
     android:gravity="center"

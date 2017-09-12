@@ -636,7 +636,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> markPrivateMessagesRead() {
+    public Observable<List<Void>> markPrivateMessagesRead() {
         return apiService.markPrivateMessagesRead().compose(configureApiCallObserver());
     }
 
@@ -786,7 +786,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> addPushDevice(Map<String, String> pushDeviceData) {
+    public Observable<List<Void>> addPushDevice(Map<String, String> pushDeviceData) {
         return apiService.addPushDevice(pushDeviceData).compose(configureApiCallObserver());
     }
 

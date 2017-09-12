@@ -37,6 +37,7 @@
                             android:layout_margin="5dp"
                             android:ellipsize="middle"
                             android:lines="1"
+                            android:singleLine="true"
                             tools:text="Username" />
                     </LinearLayout>
                 </LinearLayout>
@@ -102,6 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|right"
                 android:layout_marginRight="8dp"
-                android:ellipsize="end" />
+                android:singleLine="true"
+                android:lines="1"
+                android:ellipsize="end"/>
         </LinearLayout>
 </LinearLayout>

@@ -59,6 +59,7 @@
                             android:layout_centerVertical="true"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:singleLine="true"
                             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                             tools:text="Habitica"/>
 

@@ -11,15 +11,13 @@ import io.realm.OrderedRealmCollection;
 
 public class DailiesRecyclerViewHolder extends RealmBaseTasksRecyclerViewAdapter<DailyViewHolder> {
 
-    public int dailyResetOffset;
 
     public DailiesRecyclerViewHolder(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, int dailyResetOffset, TaskFilterHelper taskFilterHelper) {
         super(data, autoUpdate, layoutResource, taskFilterHelper);
-        this.dailyResetOffset = dailyResetOffset;
     }
 
     @Override
     public DailyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DailyViewHolder(getContentView(parent), dailyResetOffset);
+        return new DailyViewHolder(getContentView(parent));
     }
 }

@@ -48,6 +48,7 @@
                     android:layout_gravity="center"
                     android:ellipsize="middle"
                     android:lines="1"
+                    android:singleLine="true"
                     tools:text="0"
                     android:textColor="@color/gem_icon_color"
                     android:textSize="12sp"

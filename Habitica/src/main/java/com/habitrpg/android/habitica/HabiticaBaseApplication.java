@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.multidex.MultiDexApplication;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.amplitude.api.Amplitude;
@@ -124,6 +125,8 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         setupFacebookSdk();
         createBillingAndCheckout();
         HabiticaIconsHelper.init(this);
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         if (!BuildConfig.DEBUG) {
             try {

@@ -62,6 +62,9 @@ public class RewardViewHolder extends BaseTaskViewHolder {
 
     @Override
     public void onClick(View v) {
+        if (!task.isValid()) {
+            return;
+        }
         if (task.specialTag != null && task.specialTag.equals("item")) {
             ItemDetailDialog dialog = new ItemDetailDialog(context);
             dialog.setTitle(task.getText());

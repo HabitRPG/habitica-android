@@ -450,13 +450,12 @@ public class Task extends RealmObject implements Parcelable {
         return R.color.blue_10;
     }
 
-    public Boolean checkIfDue(int offset) {
+    public Boolean checkIfDue() {
         if (this.getCompleted()) {
             return true;
         }
 
         Calendar today = new GregorianCalendar();
-        today.add(Calendar.HOUR, -offset);
 
         Calendar startDate = new GregorianCalendar();
         Calendar startDateAtMidnight;
@@ -489,15 +488,15 @@ public class Task extends RealmObject implements Parcelable {
         }
     }
 
-    public Boolean isDisplayedActive(int offset) {
+    public Boolean isDisplayedActive() {
         if (this.isDue != null && !this.completed) {
             return this.isDue;
         }
-        return this.checkIfDue(offset) && !this.completed;
+        return this.checkIfDue() && !this.completed;
     }
 
-    public Boolean isChecklistDisplayActive(int offset) {
-        return this.isDisplayedActive(offset) && (this.checklist.size() != this.getCompletedChecklistCount());
+    public Boolean isChecklistDisplayActive() {
+        return this.isDisplayedActive() && (this.checklist.size() != this.getCompletedChecklistCount());
     }
 
     @Nullable

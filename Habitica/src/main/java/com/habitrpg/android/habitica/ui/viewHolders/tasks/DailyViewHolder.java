@@ -10,19 +10,17 @@ import butterknife.BindView;
 
 public class DailyViewHolder extends ChecklistedViewHolder {
 
-    private final int dailyResetOffset;
     @BindView(R.id.streakTextView)
     TextView streakTextView;
 
-    public DailyViewHolder(View itemView, int dailyResetOffset) {
+    public DailyViewHolder(View itemView) {
         super(itemView);
-        this.dailyResetOffset = dailyResetOffset;
     }
 
     @Override
     public void bindHolder(Task newTask, int position) {
         super.bindHolder(newTask, position);
-        if (this.task.isChecklistDisplayActive(dailyResetOffset)) {
+        if (this.task.isChecklistDisplayActive()) {
             this.checklistIndicatorWrapper.setBackgroundResource(this.task.getLightTaskColor());
         } else {
             this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray);
@@ -31,7 +29,7 @@ public class DailyViewHolder extends ChecklistedViewHolder {
 
     @Override
     public Boolean shouldDisplayAsActive() {
-        return this.task.isDisplayedActive(this.dailyResetOffset);
+        return this.task.isDisplayedActive();
     }
 
     @Override

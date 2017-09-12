@@ -179,7 +179,7 @@ public interface ApiService {
     Observable<HabitResponse<User>> disableClasses();
 
     @POST("user/mark-pms-read")
-    Observable<HabitResponse<Void>> markPrivateMessagesRead();
+    Observable<HabitResponse<List<Void>>> markPrivateMessagesRead();
 
 
 
@@ -276,7 +276,7 @@ public interface ApiService {
 
     //Push notifications
     @POST("user/push-devices")
-    Observable<HabitResponse<Void>> addPushDevice(@Body Map<String, String> pushDeviceData);
+    Observable<HabitResponse<List<Void>>> addPushDevice(@Body Map<String, String> pushDeviceData);
 
     @DELETE("user/push-devices/{regId}")
     Observable<HabitResponse<Void>> deletePushDevice(@Path("regId") String regId);

@@ -72,6 +72,7 @@
                             android:layout_margin="5dp"
                             android:ellipsize="middle"
                             android:lines="1"
+                            android:singleLine="true"
                             android:text="class"
                             android:textColor="@color/white" />
                     </LinearLayout>

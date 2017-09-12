@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -90,7 +89,7 @@ public class YesterdailyDialog extends AlertDialog {
     }
 
     private void configureTaskView(View taskView, Task task) {
-        boolean completed = !task.isDisplayedActive(0);
+        boolean completed = !task.isDisplayedActive();
         CheckBox checkbox = (CheckBox) taskView.findViewById(R.id.checkBox);
         View checkboxHolder = taskView.findViewById(R.id.checkBoxHolder);
         checkbox.setChecked(completed);

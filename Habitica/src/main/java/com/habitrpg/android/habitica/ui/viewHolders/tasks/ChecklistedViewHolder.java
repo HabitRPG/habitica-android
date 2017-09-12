@@ -146,6 +146,9 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView.equals(checkbox)) {
+            if (!task.isValid()) {
+                return;
+            }
             if (isChecked != task.getCompleted()) {
                 TaskCheckedCommand event = new TaskCheckedCommand();
                 event.Task = task;

@@ -53,7 +53,9 @@ public class RemoteConfigManager {
         try {
             JSONObject obj = new JSONObject(storedPreferences);
             enableRepeatbles = obj.getBoolean("enableRepeatables");
-            enableNewShops = obj.getBoolean("enableNewShops");
+            if (obj.has("enableNewShops")) {
+                enableNewShops = obj.getBoolean("enableNewShops");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

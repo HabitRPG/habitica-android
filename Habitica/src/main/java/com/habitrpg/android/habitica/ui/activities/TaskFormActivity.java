@@ -82,6 +82,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.RealmList;
 
+import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL;
+
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
     public static final String USER_ID_KEY = "userId";
@@ -770,7 +772,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void changeEmojiKeyboardIcon(Boolean keyboardOpened) {
-
         if (keyboardOpened) {
             emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
             emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
@@ -824,6 +825,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         remindersRecyclerView.setAdapter(remindersAdapter);
 
         remindersRecyclerView.setLayoutManager(new WrapContentRecyclerViewLayoutManager(this));
+
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(remindersAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
@@ -941,8 +943,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             this.frequencyContainer.addView(dayRow);
         }
 
-        if (this.task != null) {
-
+        if (this.task != null && this.task.isValid()) {
             if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                 int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
                 this.weekdayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
@@ -1098,8 +1099,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         taskRepository.executeTransaction(realm -> {
-            task.text = text;
+            try {
+                task.text = text;
+                task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
+            } catch (IllegalArgumentException ignored) {
 
+            }
             if (checklistAdapter != null) {
                 if (checklistAdapter.getCheckListItems() != null) {
                     RealmList<ChecklistItem> newChecklist = new RealmList<>();
@@ -1121,7 +1126,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             taskTags.addAll(selectedTags);
             task.setTags(taskTags);
 
-            task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
 
             if (taskDifficultySpinner.getSelectedItemPosition() == 0) {
                 task.setPriority((float) 0.1);

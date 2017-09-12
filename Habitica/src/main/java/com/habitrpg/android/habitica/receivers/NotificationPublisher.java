@@ -49,7 +49,7 @@ public class NotificationPublisher extends WakefulBroadcastReceiver {
             taskRepository.getTasks(Task.TYPE_DAILY, userId).subscribe(dailies -> {
                 boolean showNotifications = false;
                 for (Task task : dailies) {
-                    if (task.checkIfDue(0)) {
+                    if (task.checkIfDue()) {
                         showNotifications = true;
                         break;
                     }

@@ -274,7 +274,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         if (chatText.length() > 0) {
             chatEditText.setText(null);
             socialRepository.postGroupChat(groupId, chatText).subscribe(postChatMessageResult -> {
-                recyclerView.scrollToPosition(0);
+                if (recyclerView != null) {
+                    recyclerView.scrollToPosition(0);
+                }
             }, RxErrorHandler.handleEmptyError());
         }
     }

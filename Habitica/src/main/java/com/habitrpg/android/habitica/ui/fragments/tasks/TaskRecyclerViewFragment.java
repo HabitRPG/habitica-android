@@ -221,8 +221,10 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 if (swipeRefreshLayout != null) {
                     swipeRefreshLayout.setEnabled(true);
                 }
-                
-                viewHolder.itemView.setBackgroundColor(Color.WHITE);
+
+                if (viewHolder != null) {
+                    viewHolder.itemView.setBackgroundColor(Color.WHITE);
+                }
                 if (mFromPosition != null) {
                     taskRepository.updateTaskPosition(viewHolder.getAdapterPosition())
                             .subscribe(taskPositions -> {

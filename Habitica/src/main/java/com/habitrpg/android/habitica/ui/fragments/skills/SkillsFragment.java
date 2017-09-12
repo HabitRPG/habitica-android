@@ -176,6 +176,9 @@ public class SkillsFragment extends BaseMainFragment {
     }
 
     private void useSkill(Skill skill, @Nullable String taskId) {
+        if (skill == null) {
+            return;
+        }
         displayProgressDialog();
         Observable<SkillResponse> observable;
         if (taskId != null) {

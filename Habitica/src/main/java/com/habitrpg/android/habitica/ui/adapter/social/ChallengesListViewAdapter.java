@@ -91,6 +91,7 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
     }
 
     public static class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final Context context;
         @BindView(R.id.challenge_name)
         EmojiTextView challengeName;
 
@@ -131,9 +132,9 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
         ChallengeViewHolder(View itemView, boolean viewUserChallengesOnly) {
             super(itemView);
             this.viewUserChallengesOnly = viewUserChallengesOnly;
-
             ButterKnife.bind(this, itemView);
 
+            context = itemView.getContext();
             itemView.setOnClickListener(this);
 
             gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
@@ -158,7 +159,7 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
             } else {
                 challengeParticipatingTextView.setVisibility(challenge.isParticipating ? View.VISIBLE : View.GONE);
 
-                leaderName.setText(itemView.getContext().getString(R.string.byLeader, challenge.leaderName));
+                leaderName.setText(context.getString(R.string.byLeader, challenge.leaderName));
                 participantCount.setText(String.valueOf(challenge.memberCount));
                 leaderParticipantLayout.setVisibility(View.VISIBLE);
                 arrowImage.setVisibility(View.GONE);

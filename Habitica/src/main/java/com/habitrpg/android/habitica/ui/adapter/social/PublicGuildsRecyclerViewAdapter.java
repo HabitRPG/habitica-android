@@ -86,7 +86,7 @@ public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Gr
 
     @Override
     public void onBindViewHolder(GuildViewHolder holder, int position) {
-        if (getData() != null) {
+        if (getData() != null && holder != null) {
             Group guild = getData().get(position);
             boolean isInGroup = isInGroup(guild);
             holder.bind(guild, isInGroup);
