@@ -84,4 +84,15 @@ public class CurrencyView extends android.support.v7.widget.AppCompatTextView {
 
         this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
     }
+
+    public void setCantAfford(boolean cantAfford) {
+        if (cantAfford) {
+            this.setTextColor(ContextCompat.getColor(getContext(), R.color.red_50));
+            drawable.setAlpha(127);
+        } else {
+            drawable.setAlpha(255);
+        }
+
+        this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+    }
 }

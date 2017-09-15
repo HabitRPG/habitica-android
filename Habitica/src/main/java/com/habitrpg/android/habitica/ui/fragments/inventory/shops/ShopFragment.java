@@ -10,22 +10,16 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -33,9 +27,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-
-import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
 public class ShopFragment extends BaseFragment {
     private static final String SHOP_IDENTIFIER_KEY = "SHOP_IDENTIFIER_KEY";

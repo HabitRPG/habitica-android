@@ -52,7 +52,6 @@ import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
-import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
@@ -79,7 +78,6 @@ import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
-import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
@@ -120,7 +118,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import rx.Observable;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LEVEL_FOR_SKILLS;
@@ -550,38 +547,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     public void onEvent(OpenMenuItemCommand event) {
         if (drawer != null) {
             drawer.setSelection(event.identifier);
-        }
-    }
-
-    @Subscribe
-    public void onEvent(final BuyGemItemCommand event) {
-        if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
-            Observable<Void> observable;
-            if ((event.shopIdentifier!= null && event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(event.item.purchaseType)) {
-                if (event.item.purchaseType.equals("gear")) {
-                    observable = apiClient.purchaseMysterySet(event.item.categoryIdentifier);
-                } else {
-                    observable = apiClient.purchaseHourglassItem(event.item.purchaseType, event.item.key);
-                }
-            } else if (event.item.purchaseType.equals("quests") && event.item.getCurrency().equals("gold")) {
-                observable = apiClient.purchaseQuest(event.item.key);
-            } else if ("gold".equals(event.item.currency)) {
-                observable = apiClient.buyItem(event.item.key).flatMap(buyResponse -> Observable.just(null));
-            } else {
-                observable = apiClient.purchaseItem(event.item.purchaseType, event.item.key);
-            }
-            observable
-                    .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
-                    .flatMap(buyResponse -> userRepository.retrieveUser(false))
-                    .flatMap(user1 -> inventoryRepository.retrieveInAppRewards())
-                    .subscribe(buyResponse -> {}, throwable -> {
-                        retrofit2.HttpException error = (retrofit2.HttpException) throwable;
-                        if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
-                            openGemPurchaseFragment(null);
-                        }
-                    });
-        } else {
-            openGemPurchaseFragment(null);
         }
     }
 

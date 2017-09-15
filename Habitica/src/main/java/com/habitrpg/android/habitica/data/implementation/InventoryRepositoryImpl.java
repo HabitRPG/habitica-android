@@ -85,13 +85,15 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                                 shopItem.notes = item.notes;
                                 shopItem.value = (int)item.value;
                                 shopItem.currency = "gold";
+                                shopItem.purchaseType = item.type;
 
                                 buyableItems.add(shopItem);
                             }
                         }
                         return buyableItems;
                     })
-                    .doOnNext(localRepository::saveInAppRewards);
+                    .doOnNext(localRepository::saveInAppRewards)
+                    .first();
         }
     }
 

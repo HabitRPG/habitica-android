@@ -7,7 +7,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -15,13 +14,15 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.views.CurrencyView;
 import com.habitrpg.android.habitica.ui.views.CurrencyViews;
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,6 +33,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
 public class PurchaseDialog extends AlertDialog {
@@ -58,6 +60,7 @@ public class PurchaseDialog extends AlertDialog {
 
     private CompositeSubscription compositeSubscription;
     public String shopIdentifier;
+    private User user;
 
     public PurchaseDialog(Context context, AppComponent component, ShopItem item) {
         super(context);
@@ -77,6 +80,7 @@ public class PurchaseDialog extends AlertDialog {
     }
 
     private void setUser(User user) {
+        this.user = user;
         currencyView.setGold(user.getStats().getGp());
         currencyView.setGems(user.getGemCount());
         currencyView.setHourglasses(user.getHourglassCount());
@@ -91,6 +95,11 @@ public class PurchaseDialog extends AlertDialog {
             }
             limitedTextView.setVisibility(View.VISIBLE);
             limitedTextView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green_10));
+        }
+
+        if (shopItem != null && !shopItem.canBuy(user)) {
+            buyButton.setEnabled(false);
+            priceLabel.setCantAfford(true);
         }
     }
 
@@ -174,10 +183,39 @@ public class PurchaseDialog extends AlertDialog {
 
     @OnClick(R.id.buyButton)
     void onBuyButtonClicked() {
-        BuyGemItemCommand event = new BuyGemItemCommand();
-        event.shopIdentifier = shopIdentifier;
-        event.item = shopItem;
-        EventBus.getDefault().post(event);
+        if (shopItem.canBuy(user) || !shopItem.getCurrency().equals("gems")) {
+            Observable<Void> observable;
+            if ((shopIdentifier!= null && shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(shopItem.purchaseType)) {
+                if (shopItem.purchaseType.equals("gear")) {
+                    observable = inventoryRepository.purchaseMysterySet(shopItem.categoryIdentifier);
+                } else {
+                    observable = inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key);
+                }
+            } else if (shopItem.purchaseType.equals("quests") && shopItem.getCurrency().equals("gold")) {
+                observable = inventoryRepository.purchaseQuest(shopItem.key);
+            } else if ("gold".equals(shopItem.currency)) {
+                observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value).flatMap(buyResponse -> Observable.just(null));
+            } else {
+                observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key);
+            }
+            observable
+                    .doOnNext(aVoid -> {
+                        ShowSnackbarEvent event = new ShowSnackbarEvent();
+                        event.title = getContext().getString(R.string.successful_purchase, shopItem.text);
+                        event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL;
+                        EventBus.getDefault().post(event);
+                    })
+                    .flatMap(buyResponse -> userRepository.retrieveUser(false, true))
+                    .flatMap(user1 -> inventoryRepository.retrieveInAppRewards())
+                    .subscribe(buyResponse -> {}, throwable -> {
+                        retrofit2.HttpException error = (retrofit2.HttpException) throwable;
+                        if (error.code() == 401 && shopItem.getCurrency().equals("gems")) {
+                            EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+                        }
+                    });
+        } else {
+            EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+        }
         dismiss();
     }
 

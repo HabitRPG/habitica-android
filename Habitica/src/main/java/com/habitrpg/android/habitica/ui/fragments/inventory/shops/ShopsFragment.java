@@ -12,21 +12,12 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.user.User;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.views.CurrencyViews;
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
-
-import rx.Observable;
-
-import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
 public class ShopsFragment extends BaseMainFragment {
 
@@ -161,35 +152,5 @@ public class ShopsFragment extends BaseMainFragment {
         currencyView.setGold(user.getStats().getGp());
         currencyView.setGems(user.getGemCount());
         currencyView.setHourglasses(user.getHourglassCount());
-    }
-
-    @Subscribe
-    public void onEvent(final BuyGemItemCommand event) {
-        MainActivity activity = (MainActivity) getActivity();
-        if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
-            Observable<Void> observable;
-            if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
-                if (event.item.purchaseType.equals("gear")) {
-                    observable = inventoryRepository.purchaseMysterySet(event.item.categoryIdentifier);
-                } else {
-                    observable = inventoryRepository.purchaseHourglassItem(event.item.purchaseType, event.item.key);
-                }
-            } else if (event.item.purchaseType.equals("quests") && event.item.getCurrency().equals("gold")) {
-                observable = inventoryRepository.purchaseQuest(event.item.key);
-            } else {
-                observable = inventoryRepository.purchaseItem(event.item.purchaseType, event.item.key);
-            }
-            observable
-                    .doOnNext(aVoid -> showSnackbar(getContext(), activity.floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), HabiticaSnackbar.SnackbarDisplayType.SUCCESS))
-                    .flatMap(buyResponse -> userRepository.retrieveUser(false))
-                    .subscribe(buyResponse -> {}, throwable -> {
-                        retrofit2.HttpException error = (retrofit2.HttpException) throwable;
-                        if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
-                            activity.openGemPurchaseFragment(null);
-                        }
-                    });
-        } else {
-            activity.openGemPurchaseFragment(null);
-        }
     }
 }
