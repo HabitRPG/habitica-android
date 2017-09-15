@@ -323,7 +323,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskAttributeSpinner.setAdapter(attributeAdapter);
         taskAttributeSpinner.setSelection(0);
 
-        if (taskBasedAllocation) {
+        if (!taskBasedAllocation) {
             attributeWrapper.setVisibility(View.GONE);
         }
 
