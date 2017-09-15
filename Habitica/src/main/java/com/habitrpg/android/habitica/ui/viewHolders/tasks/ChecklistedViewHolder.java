@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import net.pherth.android.emoji_library.EmojiTextView;
 
@@ -26,6 +27,9 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implements CompoundButton.OnCheckedChangeListener {
 
@@ -98,6 +102,12 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                     EmojiTextView textView = (EmojiTextView) itemView.findViewById(R.id.checkedTextView);
                     // Populate the data into the template view using the data object
                     textView.setText(item.getText());
+
+                    Observable.just(item.getText())
+                            .map(MarkdownParser::parseMarkdown)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(textView::setText, Throwable::printStackTrace);
                     checkbox.setChecked(item.getCompleted());
                     checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                         ChecklistCheckedCommand event = new ChecklistCheckedCommand();
