@@ -37,7 +37,7 @@ public class SubscriptionPlan extends RealmObject {
 
     public boolean isActive() {
         Date today = new Date();
-        return planId != null && (this.dateTerminated == null || this.dateTerminated.after(today));
+        return customerId != null && (this.dateTerminated == null || this.dateTerminated.after(today));
     }
 
     public int totalNumberOfGems() {
