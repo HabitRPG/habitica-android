@@ -39,7 +39,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
                     return chatMessage;
                 })
                 .toList()
-                .doOnNext(localRepository::save);
+                .doOnNext(chatMessages -> localRepository.saveChatMessages(groupId, chatMessages));
     }
 
     @Override

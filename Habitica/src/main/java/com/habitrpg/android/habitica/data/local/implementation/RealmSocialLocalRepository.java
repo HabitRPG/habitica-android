@@ -157,6 +157,32 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
         });
     }
 
+    @Override
+    public void saveChatMessages(String groupId, List<ChatMessage> chatMessages) {
+        realm.executeTransaction(realm1 -> realm.insertOrUpdate(chatMessages));
+        if (groupId != null) {
+            List<ChatMessage> existingMessages = realm.where(ChatMessage.class).equalTo("GroupId", groupId).findAll();
+            List<ChatMessage> messagesToRemove = new ArrayList<>();
+            for (ChatMessage existingMember : existingMessages) {
+                boolean isStillMember = false;
+                for (ChatMessage newMessage : chatMessages) {
+                    if (existingMember.id != null && existingMember.id.equals(newMessage.id)) {
+                        isStillMember = true;
+                        break;
+                    }
+                }
+                if (!isStillMember) {
+                    messagesToRemove.add(existingMember);
+                }
+            }
+            realm.executeTransaction(realm1 -> {
+                for (ChatMessage member : messagesToRemove) {
+                    member.deleteFromRealm();
+                }
+            });
+        }
+    }
+
 
     private Observable<ChatMessage> getMessage(String id) {
         return realm.where(ChatMessage.class).equalTo("id", id)
