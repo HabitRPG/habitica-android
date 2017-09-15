@@ -1,10 +1,12 @@
 package com.habitrpg.android.habitica.models.user;
 
 
+import com.habitrpg.android.habitica.models.AvatarPreferences;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Preferences extends RealmObject {
+public class Preferences extends RealmObject implements AvatarPreferences {
 
     @PrimaryKey
     private String userId;

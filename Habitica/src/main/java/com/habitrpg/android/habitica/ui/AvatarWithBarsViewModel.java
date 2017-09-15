@@ -104,7 +104,6 @@ public class AvatarWithBarsViewModel {
                 case "healer":
                     drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfHealerDarkBg());
                     break;
-
             }
             if (drawable != null) {
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(),

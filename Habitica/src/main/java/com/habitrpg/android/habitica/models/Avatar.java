@@ -1,8 +1,10 @@
 package com.habitrpg.android.habitica.models;
 
 
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.models.user.Flags;
-import com.habitrpg.android.habitica.models.user.Preferences;
+import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.AvatarView;
 
@@ -13,8 +15,6 @@ import java.util.EnumMap;
  */
 
 public interface Avatar {
-    EnumMap<AvatarView.LayerType,String> getAvatarLayerMap();
-
     String getCurrentMount();
 
     String getCurrentPet();
@@ -25,11 +25,16 @@ public interface Avatar {
 
     Stats getStats();
 
-    Preferences getPreferences();
+    AvatarPreferences getPreferences();
 
     Flags getFlags();
 
     Integer getGemCount();
 
     Integer getHourglassCount();
+
+    @Nullable
+    Outfit getCostume();
+    @Nullable
+    Outfit getEquipped();
 }
