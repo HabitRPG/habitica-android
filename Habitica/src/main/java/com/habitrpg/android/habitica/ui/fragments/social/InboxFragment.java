@@ -74,14 +74,9 @@ public class InboxFragment extends BaseMainFragment
     }
 
     private void loadMessages() {
-        if (user != null && user.isManaged()) {
-            user.getInbox().getMessages().where()
-                    .distinct("uuid")
-                    .sort("timestamp", Sort.DESCENDING)
-                    .asObservable()
+        userRepository.getInboxOverviewList()
                     .first()
                     .subscribe(this::setInboxMessages, RxErrorHandler.handleEmptyError());
-        }
     }
 
     @Override

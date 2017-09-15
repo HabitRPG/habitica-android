@@ -100,13 +100,9 @@ public class InboxMessageListFragment extends BaseMainFragment
 
     private void loadMessages() {
         if (user != null && user.isManaged()) {
-            compositeSubscription.add(user.getInbox().getMessages().where()
-                    .equalTo("uuid", replyToUserUUID)
-                    .findAllSortedAsync("timestamp", Sort.DESCENDING)
-                    .asObservable()
-                    .filter(RealmResults::isLoaded)
+            userRepository.getInboxMessages(replyToUserUUID)
                     .first()
-                    .subscribe(chatMessages -> this.chatAdapter.updateData(chatMessages), RxErrorHandler.handleEmptyError()));
+                    .subscribe(chatMessages -> this.chatAdapter.updateData(chatMessages), RxErrorHandler.handleEmptyError());
         }
     }
 

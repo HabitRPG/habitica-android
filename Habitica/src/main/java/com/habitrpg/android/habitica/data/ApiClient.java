@@ -127,7 +127,7 @@ public interface ApiClient {
 
     Observable<User> disableClasses();
 
-    Observable<List<Void>> markPrivateMessagesRead();
+    Observable<Void> markPrivateMessagesRead();
 
     /* Group API */
 

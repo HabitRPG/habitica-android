@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -12,8 +13,8 @@ import java.util.List;
 
 import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import rx.Observable;
 
 
@@ -100,6 +101,26 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
         return realm.where(Skill.class)
                 .in("key", ownedItems.toArray(new String[0]))
                 .findAll()
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getInboxMessages(String userId, String replyToUserID) {
+        return realm.where(ChatMessage.class)
+                .equalTo("isInboxMessage", true)
+                .equalTo("uuid", replyToUserID)
+                .findAllSorted("timestamp", Sort.DESCENDING)
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getInboxOverviewList(String userId) {
+        return realm.where(ChatMessage.class)
+                .equalTo("isInboxMessage", true)
+                .distinct("uuid")
+                .sort("timestamp", Sort.DESCENDING)
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }

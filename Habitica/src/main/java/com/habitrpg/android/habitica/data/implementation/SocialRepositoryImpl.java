@@ -210,7 +210,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<List<Void>> markPrivateMessagesRead(User user) {
+    public Observable<Void> markPrivateMessagesRead(User user) {
         return apiClient.markPrivateMessagesRead()
                 .doOnNext(aVoid -> localRepository.executeTransaction(realm -> user.getInbox().setNewMessages(0)));
     }

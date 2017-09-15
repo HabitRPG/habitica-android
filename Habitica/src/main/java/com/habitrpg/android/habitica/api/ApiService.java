@@ -179,7 +179,7 @@ public interface ApiService {
     Observable<HabitResponse<User>> disableClasses();
 
     @POST("user/mark-pms-read")
-    Observable<HabitResponse<List<Void>>> markPrivateMessagesRead();
+    Observable<Void> markPrivateMessagesRead();
 
 
 

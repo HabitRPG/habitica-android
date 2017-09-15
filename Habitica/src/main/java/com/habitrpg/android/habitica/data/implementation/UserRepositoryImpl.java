@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.data.implementation;
 
-import android.content.Context;
-
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
@@ -14,6 +12,7 @@ import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -38,7 +37,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     private TaskRepository taskRepository;
 
-    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, Context context, String userId, TaskRepository taskRepository) {
+    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, String userId, TaskRepository taskRepository) {
         super(localRepository, apiClient);
         this.taskRepository = taskRepository;
         this.userId = userId;
@@ -96,6 +95,16 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
         } else {
             return getUser();
         }
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getInboxMessages(String replyToUserID) {
+        return localRepository.getInboxMessages(userId, replyToUserID);
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getInboxOverviewList() {
+        return localRepository.getInboxOverviewList(userId);
     }
 
     @Override

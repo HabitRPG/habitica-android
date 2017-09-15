@@ -40,6 +40,8 @@ public class ChatMessage extends RealmObject {
 
     public String groupId;
 
+    public boolean isInboxMessage;
+
     public int getContributorColor() {
         int rColor = android.R.color.black;
 

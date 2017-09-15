@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.invitations.Invitations;
 import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.Authentication;
@@ -50,6 +51,9 @@ public class UserDeserializer implements JsonDeserializer<User> {
         }
         if (obj.has("inbox")) {
             user.setInbox(context.deserialize(obj.get("inbox"), Inbox.class));
+            for (ChatMessage message : user.getInbox().getMessages()) {
+                message.isInboxMessage = true;
+            }
         }
         if (obj.has("preferences")) {
             user.setPreferences(context.deserialize(obj.get("preferences"), Preferences.class));

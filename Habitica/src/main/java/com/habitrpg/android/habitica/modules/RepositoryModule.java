@@ -101,8 +101,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, Context context, @Named(AppModule.NAMED_USER_ID) String userId, TaskRepository taskRepository) {
-        return new UserRepositoryImpl(localRepository, apiClient, context, userId, taskRepository);
+    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, TaskRepository taskRepository) {
+        return new UserRepositoryImpl(localRepository, apiClient, userId, taskRepository);
     }
 
     @Provides

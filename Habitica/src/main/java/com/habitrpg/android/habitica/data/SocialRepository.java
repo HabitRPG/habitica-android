@@ -57,7 +57,7 @@ public interface SocialRepository extends BaseRepository {
 
     Observable<Member> getMember(String userId);
 
-    Observable<List<Void>> markPrivateMessagesRead(User user);
+    Observable<Void> markPrivateMessagesRead(User user);
 
     Observable<RealmResults<Group>> getUserGroups();
 

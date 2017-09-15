@@ -636,8 +636,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<List<Void>> markPrivateMessagesRead() {
-        return apiService.markPrivateMessagesRead().compose(configureApiCallObserver());
+    public Observable<Void> markPrivateMessagesRead() {
+        //This is necessary, because the API call returns weird data.
+        return apiService.markPrivateMessagesRead()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(this);
     }
 
     @Override
