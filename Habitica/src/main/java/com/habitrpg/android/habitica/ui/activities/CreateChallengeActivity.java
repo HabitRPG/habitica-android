@@ -467,10 +467,10 @@ public class CreateChallengeActivity extends BaseActivity {
         bundle.putBoolean(TaskFormActivity.SHOW_CHECKLIST, false);
 
         if (user != null && user.getPreferences() != null) {
-            String allocationMode = user.getPreferences().getAllocationMode();
+            boolean allocationMode = user.getPreferences().hasTaskBasedAllocation();
 
             bundle.putString(TaskFormActivity.USER_ID_KEY, user.getId());
-            bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+            bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
         }
 
         Intent intent = new Intent(this, TaskFormActivity.class);

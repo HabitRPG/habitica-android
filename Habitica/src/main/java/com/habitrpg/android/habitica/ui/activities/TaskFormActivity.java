@@ -43,9 +43,9 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
-import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
@@ -81,8 +81,6 @@ import javax.inject.Named;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.RealmList;
-
-import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL;
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
@@ -242,12 +240,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Inject
     RemoteConfigManager remoteConfigManager;
 
-    private boolean showTagSelection;
-
-    private boolean showChecklist;
-    private boolean setIgnoreFlag;
     private Task task;
-    private String allocationMode;
+    private boolean taskBasedAllocation;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
     private List<CheckBox> repeatablesWeekDayCheckboxes = new ArrayList<>();
     private NumberPicker frequencyPicker;
@@ -260,7 +254,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private RemindersManager remindersManager;
     private FirstDayOfTheWeekHelper firstDayOfTheWeekHelper;
 
-    private boolean saveToDb;
     private String taskType;
     private String taskId;
     private EmojiPopup popup;
@@ -279,12 +272,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         taskType = bundle.getString(TASK_TYPE_KEY);
         taskId = bundle.getString(TASK_ID_KEY);
-        allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
-        showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
-        showChecklist = bundle.getBoolean(SHOW_CHECKLIST, true);
-        allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
-        saveToDb = bundle.getBoolean(SAVE_TO_DB, true);
-        setIgnoreFlag = bundle.getBoolean(SET_IGNORE_FLAG, false);
+        taskBasedAllocation = bundle.getBoolean(ALLOCATION_MODE_KEY);
+        boolean showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
         tagCheckBoxList = new ArrayList<>();
 
         tagsWrapper.setVisibility(showTagSelection ? View.VISIBLE : View.GONE);
@@ -334,7 +323,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskAttributeSpinner.setAdapter(attributeAdapter);
         taskAttributeSpinner.setSelection(0);
 
-        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
+        if (taskBasedAllocation) {
             attributeWrapper.setVisibility(View.GONE);
         }
 
@@ -1137,7 +1126,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 task.setPriority((float) 2.0);
             }
 
-            if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
+            if (!taskBasedAllocation) {
                 task.setAttribute(Task.ATTRIBUTE_STRENGTH);
             } else {
                 switch (taskAttributeSpinner.getSelectedItemPosition()) {

@@ -14,7 +14,7 @@ public class Preferences extends RealmObject implements AvatarPreferences {
     public Hair hair;
     SuppressedModals suppressModals;
     User user;
-    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader, dailyDueDefaultView;
+    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader, dailyDueDefaultView, automaticAllocation;
     private String allocationMode, shirt, skin, size, background, chair, language, sound;
     private int dayStart, timezoneOffset;
 
@@ -224,5 +224,9 @@ public class Preferences extends RealmObject implements AvatarPreferences {
         if (suppressModals != null && !suppressModals.isManaged()) {
             suppressModals.setUserId(userId);
         }
+    }
+
+    public boolean hasTaskBasedAllocation() {
+        return allocationMode.equals("taskBased") && !automaticAllocation;
     }
 }

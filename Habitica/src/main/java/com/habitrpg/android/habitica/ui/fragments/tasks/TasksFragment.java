@@ -348,15 +348,15 @@ public class TasksFragment extends BaseMainFragment {
             return;
         }
 
-        String allocationMode = "";
+        boolean allocationMode = false;
         if (user != null && user.getPreferences() != null) {
-            allocationMode = user.getPreferences().getAllocationMode();
+            allocationMode = user.getPreferences().hasTaskBasedAllocation();
         }
 
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
         bundle.putString(TaskFormActivity.USER_ID_KEY, this.user != null ? this.user.getId() : null);
-        bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+        bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
@@ -379,16 +379,16 @@ public class TasksFragment extends BaseMainFragment {
             return;
         }
 
-        String allocationMode = "";
+        boolean allocationMode = false;
         if (user != null && user.getPreferences() != null) {
-            allocationMode = user.getPreferences().getAllocationMode();
+            allocationMode = user.getPreferences().hasTaskBasedAllocation();
         }
 
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.getType());
         bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.getId());
         bundle.putString(TaskFormActivity.USER_ID_KEY, this.user != null ? this.user.getId() : null);
-        bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+        bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
