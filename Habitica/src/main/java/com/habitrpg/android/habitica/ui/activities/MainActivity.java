@@ -461,9 +461,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
         if (drawer != null) {
             IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-            if (((user.getPreferences() != null && user.getPreferences().getDisableClasses())
-                    || (user.getFlags() != null && !user.getFlags().getClassSelected()))
-                    && !hasSpecialItems) {
+            if (!user.hasClass() && !hasSpecialItems) {
                 if (item != null) {
                     drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
                 }

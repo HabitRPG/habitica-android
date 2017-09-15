@@ -57,14 +57,14 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
                         .flatMap(aVoid -> userRepository.retrieveUser(true))
                         .map(User::getStats);
             } else {
-                Pair<View, SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp);
+                Pair<View, SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.user);
                 showSnackbar(requestValues.context, requestValues.snackbarTargetView, null, null, pair.first, pair.second);
                 return Observable.just(stats);
             }
         });
     }
 
-    public static Pair<View, SnackbarDisplayType> getNotificationAndAddStatsToUser(Context context, double xp, double hp, double gold, double mp){
+    public static Pair<View, SnackbarDisplayType> getNotificationAndAddStatsToUser(Context context, double xp, double hp, double gold, double mp, User user){
 
         SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
 
@@ -84,7 +84,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
                 displayType = SnackbarDisplayType.FAILURE;
             }
         }
-        if (mp > 0) {
+        if (mp > 0 && user.hasClass()) {
             container.addView(createTextView(context, mp, HabiticaIconsHelper.imageOfMagic()));
         }
 

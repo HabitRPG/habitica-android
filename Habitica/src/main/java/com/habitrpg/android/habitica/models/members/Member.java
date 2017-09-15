@@ -24,7 +24,6 @@ public class Member extends RealmObject implements Avatar {
     private MemberPreferences preferences;
     private Profile profile;
     private UserParty party;
-    private Flags flags;
     private ContributorInfo contributor;
 
     private Outfit costume;
@@ -63,9 +62,6 @@ public class Member extends RealmObject implements Avatar {
         }
         if (profile != null && !profile.isManaged()) {
             profile.setUserId(id);
-        }
-        if (flags != null && !flags.isManaged()) {
-            flags.setUserId(id);
         }
         if (contributor != null && !contributor.isManaged()) {
             contributor.setUserId(id);
@@ -133,10 +129,6 @@ public class Member extends RealmObject implements Avatar {
         }
     }
 
-    public Flags getFlags() {
-        return flags;
-    }
-
     @Override
     public Integer getGemCount() {
         return 0;
@@ -145,13 +137,6 @@ public class Member extends RealmObject implements Avatar {
     @Override
     public Integer getHourglassCount() {
         return 0;
-    }
-
-    public void setFlags(Flags flags) {
-        this.flags = flags;
-        if (flags != null && id != null) {
-            flags.setUserId(id);
-        }
     }
 
     public Outfit getCostume() {
@@ -167,6 +152,11 @@ public class Member extends RealmObject implements Avatar {
 
     public Outfit getEquipped() {
         return equipped;
+    }
+
+    @Override
+    public boolean hasClass() {
+        return getPreferences() != null && (!getPreferences().getDisableClasses() && getStats().habitClass.length() != 0);
     }
 
     public void setEquipped(Outfit equipped) {

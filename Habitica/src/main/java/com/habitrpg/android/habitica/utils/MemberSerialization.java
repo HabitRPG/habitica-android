@@ -78,9 +78,6 @@ public class MemberSerialization implements JsonDeserializer<Member> {
                 }
             }
         }
-        if (obj.has("flags")) {
-            member.setFlags(context.deserialize(obj.get("flags"), Flags.class));
-        }
         if (obj.has("contributor")) {
             member.setContributor(context.deserialize(obj.get("contributor"), ContributorInfo.class));
         }

@@ -27,8 +27,6 @@ public interface Avatar {
 
     AvatarPreferences getPreferences();
 
-    Flags getFlags();
-
     Integer getGemCount();
 
     Integer getHourglassCount();
@@ -37,4 +35,6 @@ public interface Avatar {
     Outfit getCostume();
     @Nullable
     Outfit getEquipped();
+
+    boolean hasClass();
 }
