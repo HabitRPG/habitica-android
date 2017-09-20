@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -32,7 +33,7 @@ public class CurrencyView extends android.support.v7.widget.AppCompatTextView {
     private void setIcon(Bitmap iconBitmap) {
         drawable = new BitmapDrawable(getResources(), iconBitmap);
         this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, getContext().getResources().getDisplayMetrics());
+        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getContext().getResources().getDisplayMetrics());
         setCompoundDrawablePadding(padding);
     }
 
@@ -51,7 +52,11 @@ public class CurrencyView extends android.support.v7.widget.AppCompatTextView {
             }
         } else if ("gems".equals(currency)) {
             setIcon(HabiticaIconsHelper.imageOfGem());
-            setTextColor(ContextCompat.getColor(getContext(), R.color.green_50));
+            if (lightbackground) {
+                setTextColor(ContextCompat.getColor(getContext(), R.color.green_100));
+            } else {
+                setTextColor(ContextCompat.getColor(getContext(), R.color.green_50));
+            }
         } else if ("hourglasses".equals(currency)) {
             setIcon(HabiticaIconsHelper.imageOfHourglass());
             if (lightbackground) {
@@ -75,6 +80,9 @@ public class CurrencyView extends android.support.v7.widget.AppCompatTextView {
     }
 
     public void setLocked(boolean isLocked) {
+        if (drawable == null) {
+            return;
+        }
         if (isLocked) {
             this.setTextColor(ContextCompat.getColor(getContext(), R.color.gray_300));
             drawable.setAlpha(127);
@@ -86,6 +94,9 @@ public class CurrencyView extends android.support.v7.widget.AppCompatTextView {
     }
 
     public void setCantAfford(boolean cantAfford) {
+        if (drawable == null) {
+            return;
+        }
         if (cantAfford) {
             this.setTextColor(ContextCompat.getColor(getContext(), R.color.red_50));
             drawable.setAlpha(127);

@@ -16,8 +16,8 @@
         android:layout_height="@dimen/shop_scene_height" />
     <View
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="138dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="97dp"
         android:background="@drawable/gradient_white"/>
 
     <TextView
@@ -29,7 +29,7 @@
         android:gravity="center_vertical"
         android:textColor="@color/white"
         android:layout_marginLeft="45dp"
-        android:layout_marginTop="126dp"
+        android:layout_marginTop="83dp"
         android:textStyle="bold" />
     <TextView
         android:id="@+id/descriptionView"
@@ -37,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="156dp"
-        tools:text="Welcome to the Market! Stock up on new gear or buy rare eggs and potions. Check in periodically for new stock."
-        />
+        android:layout_marginTop="124dp"
+        tools:text="Welcome to the Market! Stock up on new gear or buy rare eggs and potions. Check in periodically for new stock." />
 </FrameLayout>

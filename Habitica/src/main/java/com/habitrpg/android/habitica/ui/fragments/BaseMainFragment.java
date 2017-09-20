@@ -157,11 +157,15 @@ public abstract class BaseMainFragment extends BaseFragment {
     }
 
     public void hideToolbar() {
-        activity.avatar_with_bars.setVisibility(View.GONE);
+        if (activity != null) {
+            activity.avatar_with_bars.setVisibility(View.GONE);
+        }
     }
 
     public void showToolbar() {
-        activity.avatar_with_bars.setVisibility(View.VISIBLE);
+        if (activity != null) {
+            activity.avatar_with_bars.setVisibility(View.VISIBLE);
+        }
     }
 
     public void disableToolbarScrolling() {

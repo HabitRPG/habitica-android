@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.views.CurrencyView;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 
@@ -26,10 +27,8 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
     SimpleDraweeView imageView;
     @BindView(R.id.buyButton)
     View buyButton;
-    @BindView(R.id.currency_icon_view)
-    ImageView currencyIconView;
     @BindView(R.id.priceLabel)
-    TextView priceLabel;
+    CurrencyView priceLabel;
 
     @BindView(R.id.item_detail_indicator)
     TextView itemDetailIndicator;
@@ -66,16 +65,8 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
 
         if (item.getUnlockCondition() == null || !item.getLocked()) {
             priceLabel.setText(String.valueOf(item.getValue()));
-            if (item.getCurrency().equals("gold")) {
-                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold());
-                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gold));
-            } else if (item.getCurrency().equals("gems")) {
-                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
-                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.green_10));
-            } else if (item.getCurrency().equals("hourglasses")) {
-                currencyIconView.setImageBitmap(HabiticaIconsHelper.imageOfHourglass());
-                priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
-            } else {
+            priceLabel.setCurrency(item.getCurrency());
+            if (item.getCurrency() == null) {
                 buyButton.setVisibility(View.GONE);
             }
         } else {
@@ -89,13 +80,10 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
             itemDetailIndicator.setVisibility(View.VISIBLE);
         }
 
+        priceLabel.setLocked(item.getLocked());
         if (item.getLocked()) {
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_300));
-            currencyIconView.setAlpha(0.5f);
             itemDetailIndicator.setBackground(lockedDrawable);
             itemDetailIndicator.setVisibility(View.VISIBLE);
-        } else {
-            currencyIconView.setAlpha(1.0f);
         }
     }
 

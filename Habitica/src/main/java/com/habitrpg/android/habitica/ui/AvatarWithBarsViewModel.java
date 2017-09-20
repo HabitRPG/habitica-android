@@ -60,7 +60,7 @@ public class AvatarWithBarsViewModel {
 
         ButterKnife.bind(this, v);
 
-        hpBar.setIcon(HabiticaIconsHelper.imageOfHeartDarkBg());
+        hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg());
         xpBar.setIcon(HabiticaIconsHelper.imageOfExperience());
         mpBar.setIcon(HabiticaIconsHelper.imageOfMagic());
 

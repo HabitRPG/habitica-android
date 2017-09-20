@@ -26,6 +26,7 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
@@ -35,17 +36,20 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> items;
     private String shopIdentifier;
-    private Map<String, Item> ownedItems;
+    private Map<String, Item> ownedItems = new HashMap<>();
 
     public void setShop(Shop shop) {
         shopIdentifier = shop.identifier;
@@ -182,7 +186,9 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         int width = Math.round(height * aspectRatio);
                         BitmapDrawable drawable = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, width, height, false));
                         drawable.setTileModeX(Shader.TileMode.REPEAT);
-                        backgroundView.setBackground(drawable);
+                        Observable.just(drawable)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(bitmapDrawable -> backgroundView.setBackground(bitmapDrawable), RxErrorHandler.handleEmptyError());
                         dataSource.close();
                     }
                 }

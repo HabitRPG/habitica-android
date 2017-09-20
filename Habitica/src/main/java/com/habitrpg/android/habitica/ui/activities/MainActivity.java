@@ -109,6 +109,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -214,7 +215,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     @Nullable
     private AccountHeader accountHeader;
     @Nullable
-    private BaseMainFragment activeFragment;
+    private WeakReference<BaseMainFragment> activeFragment;
     private AvatarWithBarsViewModel avatarInHeader;
     private AlertDialog faintDialog;
     private AvatarView sideAvatarView;
@@ -271,7 +272,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         userRepository.getUser(hostConfig.getUser())
                 .subscribe(newUser -> {
                     MainActivity.this.user = newUser;
-                    MainActivity.this.setUserData(true);
+                    MainActivity.this.setUserData();
                 }, RxErrorHandler.handleEmptyError());
 
     }
@@ -309,7 +310,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         //a state can arise in which the active fragment no longer has a
         //reference to the tabLayout (and all its adapters are null).
         //Recreate the fragment as a result.
-        if (activeFragment != null && activeFragment.tabLayout == null) {
+        if (activeFragment != null && activeFragment.get() != null && activeFragment.get().tabLayout == null) {
             activeFragment = null;
             if (drawer != null) {
                 drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
@@ -336,13 +337,13 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @SuppressLint("ObsoleteSdkInt")
     public void displayFragment(BaseMainFragment fragment) {
-        if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
+        if (this.activeFragment != null && activeFragment.get() != null && fragment.getClass() == this.activeFragment.get().getClass()) {
             return;
         }
         if (SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && this.isDestroyed()) {
             return;
         }
-        this.activeFragment = fragment;
+        this.activeFragment = new WeakReference<>(fragment);
         fragment.setArguments(getIntent().getExtras());
         fragment.setUser(user);
         fragment.setActivity(this);
@@ -362,7 +363,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         }
     }
 
-    protected void setUserData(boolean fromLocalDb) {
+    protected void setUserData() {
         if (user != null) {
 
             Preferences preferences = user.getPreferences();
@@ -374,8 +375,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             runOnUiThread(() -> {
                 updateHeader();
                 updateSidebar();
-                if (activeFragment != null) {
-                    activeFragment.updateUserData(user);
+                if (activeFragment != null && activeFragment.get() != null) {
+                    activeFragment.get().updateUserData(user);
                 } else {
                     if (drawer != null) {
                         drawer.setSelectionAtPosition(1);
@@ -421,7 +422,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             avatarInHeader.updateData(user);
         }
         if (activeFragment != null) {
-            setTranslatedFragmentTitle(activeFragment);
+            setTranslatedFragmentTitle(activeFragment.get());
         }
 
         if (drawer != null) {
@@ -489,10 +490,10 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     }
 
     public void setActiveFragment(@Nullable BaseMainFragment fragment) {
-        this.activeFragment = fragment;
+        this.activeFragment = new WeakReference<BaseMainFragment>(fragment);
         setTranslatedFragmentTitle(fragment);
-        if (this.drawer != null && this.activeFragment != null) {
-            this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
+        if (this.drawer != null && this.activeFragment != null && activeFragment.get() != null) {
+            this.drawer.setSelectionAtPosition(this.activeFragment.get().fragmentSidebarPosition, false);
         }
     }
 
@@ -515,8 +516,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             drawer.closeDrawer();
         } else {
             super.onBackPressed();
-            if (this.activeFragment != null) {
-                this.activeFragment.updateUserData(user);
+            if (this.activeFragment != null && activeFragment.get() != null) {
+                this.activeFragment.get().updateUserData(user);
             }
         }
     }

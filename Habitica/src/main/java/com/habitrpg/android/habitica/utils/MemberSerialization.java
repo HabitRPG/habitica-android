@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.members.Member;
+import com.habitrpg.android.habitica.models.members.MemberPreferences;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
 import com.habitrpg.android.habitica.models.user.Flags;
@@ -42,7 +43,7 @@ public class MemberSerialization implements JsonDeserializer<Member> {
             member.setInbox(context.deserialize(obj.get("inbox"), Inbox.class));
         }
         if (obj.has("preferences")) {
-            member.setPreferences(context.deserialize(obj.get("preferences"), Preferences.class));
+            member.setPreferences(context.deserialize(obj.get("preferences"), MemberPreferences.class));
         }
         if (obj.has("profile")) {
             member.setProfile(context.deserialize(obj.get("profile"), Profile.class));

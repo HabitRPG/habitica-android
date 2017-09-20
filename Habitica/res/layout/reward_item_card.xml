@@ -69,7 +69,7 @@
                 android:id="@+id/gold_icon"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:paddingBottom="4dp"/>
+                android:paddingBottom="8dp"/>
             <TextView
                 android:id="@id/priceLabel"
                 android:layout_width="match_parent"

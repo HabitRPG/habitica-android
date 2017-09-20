@@ -29,11 +29,7 @@
             android:layout_height="32dp"
             android:gravity="center"
             android:background="@drawable/layout_rounded_bg_shopitem_price">
-            <ImageView
-                android:id="@+id/currency_icon_view"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-            <TextView
+            <com.habitrpg.android.habitica.ui.views.CurrencyView
                 android:id="@+id/priceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
