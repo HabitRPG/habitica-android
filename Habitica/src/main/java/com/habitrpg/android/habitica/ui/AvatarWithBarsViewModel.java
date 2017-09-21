@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +16,8 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.views.CurrencyViews;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,8 +27,9 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class AvatarWithBarsViewModel implements View.OnClickListener {
+public class AvatarWithBarsViewModel {
     @BindView(R.id.hpBar)
     ValueBar hpBar;
     @BindView(R.id.xpBar)
@@ -36,18 +39,12 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     @BindView(R.id.avatarView)
     AvatarView avatarView;
 
-    private android.content.res.Resources res;
-
     private Context context;
 
     @BindView(R.id.lvl_tv)
     TextView lvlText;
-    @BindView(R.id.gold_tv)
-    TextView goldText;
-    @BindView(R.id.silver_tv)
-    TextView silverText;
-    @BindView(R.id.gems_tv)
-    TextView gemsText;
+    @BindView(R.id.currencyView)
+    CurrencyViews currencyView;
 
     private Avatar userObject;
 
@@ -55,7 +52,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     public AvatarWithBarsViewModel(Context context, View v) {
         this.context = context;
-        res = context.getResources();
 
         if (v == null) {
             Log.w("AvatarWithBarsViewModel", "View is null");
@@ -64,16 +60,13 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         ButterKnife.bind(this, v);
 
+        hpBar.setIcon(HabiticaIconsHelper.imageOfHeartDarkBg());
+        xpBar.setIcon(HabiticaIconsHelper.imageOfExperience());
+        mpBar.setIcon(HabiticaIconsHelper.imageOfMagic());
 
         setHpBarData(0, 50);
         setXpBarData(0, 1);
         setMpBarData(0, 1);
-
-        gemsText.setClickable(true);
-        gemsText.setOnClickListener(this);
-
-        avatarView.setClickable(true);
-        avatarView.setOnClickListener(this);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -83,8 +76,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         Stats stats = user.getStats();
 
         String userClass = "";
-        int gp = (stats.getGp().intValue());
-        int sp = (int) ((stats.getGp() - gp) * 100);
 
         avatarView.setAvatar(user);
 
@@ -94,28 +85,25 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         mpBar.setVisibility((stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
-        if (user.getPreferences() != null && user.getFlags() != null && (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected() || userClass.length() == 0)) {
+        if (!user.hasClass()) {
             lvlText.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
             lvlText.setCompoundDrawables(null, null, null, null);
         } else {
             lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1)));
-            Drawable drawable;
+            Drawable drawable = null;
             switch (stats.getHabitClass()) {
                 case "warrior":
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
+                    drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfWarriorDarkBg());
                     break;
                 case "rogue":
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_rogue, null);
+                    drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfRogueDarkBg());
                     break;
                 case "wizard":
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
+                    drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfMageDarkBg());
                     break;
                 case "healer":
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_healer, null);
+                    drawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfHealerDarkBg());
                     break;
-                default:
-                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
-
             }
             if (drawable != null) {
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(),
@@ -128,11 +116,9 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setXpBarData(stats.getExp().floatValue(), stats.getToNextLevel());
         setMpBarData(stats.getMp().floatValue(), stats.getMaxMP());
 
-        goldText.setText(String.valueOf(gp));
-        silverText.setText(String.valueOf(sp));
-
-        Integer gems = user.getGemCount();
-        gemsText.setText(String.valueOf(gems));
+        currencyView.setHourglasses(user.getHourglassCount());
+        currencyView.setGold(stats.getGp());
+        currencyView.setGems(user.getGemCount());
     }
 
     private void setHpBarData(float value, int valueMax) {
@@ -166,25 +152,19 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     public void onEvent(BoughtGemsEvent gemsEvent) {
         Integer gems = userObject.getGemCount();
         gems += gemsEvent.NewGemsToAdd;
-        gemsText.setText(String.valueOf(gems));
+        currencyView.setGems(gems);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view == gemsText) {
-            // Gems Clicked
-
-            EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
-        } else {
-            // Avatar overview
-            OpenMenuItemCommand event = new OpenMenuItemCommand();
-            event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;
-            EventBus.getDefault().post(event);
-        }
+    @OnClick(R.id.currencyView)
+    public void gemTextClicked() {
+        EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
     }
 
-    public void hideGems() {
-        gemsText.setVisibility(View.GONE);
+    @OnClick(R.id.avatarView)
+    public void avatarViewClicked() {
+        OpenMenuItemCommand event = new OpenMenuItemCommand();
+        event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;
+        EventBus.getDefault().post(event);
     }
 
     public void valueBarLabelsToBlack() {

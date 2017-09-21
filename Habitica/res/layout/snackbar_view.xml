@@ -3,23 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
     <LinearLayout
+        android:id="@+id/snackbar_view"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:paddingBottom="12dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:gravity="center"
-        tools:background="@color/best_50">
+        tools:background="@drawable/snackbar_background_green"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center_horizontal"
+        android:elevation="24dp">
         <TextView
             android:id="@+id/snackbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="This is the Title"
             android:gravity="center"
+            style="@style/Title2"
             android:textSize="18sp"
             android:visibility="gone"
             tools:visibility="visible"
@@ -30,7 +36,8 @@
             android:layout_height="wrap_content"
             tools:text="This is the Content"
             android:gravity="center"
-            android:textSize="12sp"
+            style="@style/Body1"
+            android:textSize="13sp"
             android:visibility="gone"
             tools:visibility="visible"
             android:textColor="@color/white_75_alpha"/>

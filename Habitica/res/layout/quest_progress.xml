@@ -16,7 +16,7 @@
         android:id="@+id/boss_health_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:barForegroundColor="@color/worse_100"
+        app:barForegroundColor="@color/red_100"
         app:lightBackground="true" />
     <LinearLayout
         android:id="@+id/collection_container"

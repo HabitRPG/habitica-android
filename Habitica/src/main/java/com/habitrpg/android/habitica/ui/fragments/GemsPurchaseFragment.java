@@ -1,12 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -14,12 +15,12 @@ import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
 import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.RequestListener;
 import org.solovyev.android.checkout.Sku;
 
 import javax.inject.Inject;
@@ -36,6 +37,9 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
     GemPurchaseOptionsView gems42View;
     @BindView(R.id.gems_84_view)
     GemPurchaseOptionsView gems84View;
+
+    @BindView(R.id.supportTextView)
+    TextView supportTextView;
 
     @Inject
     CrashlyticsProxy crashlyticsProxy;
@@ -65,6 +69,9 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
         gems21View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase21Gems));
         gems42View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase42Gems));
         gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
+
+        Drawable heartDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfHeartLarge());
+        supportTextView.setCompoundDrawables(null, heartDrawable, null, null);
 
         gems84View.seedsImageButton.setOnClickListener(v -> ((GemPurchaseActivity) this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
     }

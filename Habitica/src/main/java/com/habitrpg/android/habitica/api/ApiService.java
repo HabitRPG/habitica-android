@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
@@ -30,13 +31,13 @@ import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.User;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -66,8 +67,10 @@ public interface ApiService {
     @PUT("user/")
     Observable<HabitResponse<User>> registrationLanguage(@Header("Accept-Language") String registrationLanguage);
 
+    @GET("user/in-app-rewards")
+    Observable<HabitResponse<List<ShopItem>>> retrieveInAppRewards();
     @GET("user/inventory/buy")
-    Observable<HabitResponse<List<Equipment>>> getInventoryBuyableGear();
+    Observable<HabitResponse<List<ShopItem>>> retrieveOldGearRewards();
 
     @POST("user/equip/{type}/{key}")
     Observable<HabitResponse<Items>> equipItem(@Path("type") String type, @Path("key") String itemKey);
@@ -176,7 +179,7 @@ public interface ApiService {
     Observable<HabitResponse<User>> disableClasses();
 
     @POST("user/mark-pms-read")
-    Observable<HabitResponse<Void>> markPrivateMessagesRead();
+    Observable<Void> markPrivateMessagesRead();
 
 
 
@@ -273,7 +276,7 @@ public interface ApiService {
 
     //Push notifications
     @POST("user/push-devices")
-    Observable<HabitResponse<Void>> addPushDevice(@Body Map<String, String> pushDeviceData);
+    Observable<HabitResponse<List<Void>>> addPushDevice(@Body Map<String, String> pushDeviceData);
 
     @DELETE("user/push-devices/{regId}")
     Observable<HabitResponse<Void>> deletePushDevice(@Path("regId") String regId);
@@ -325,4 +328,10 @@ public interface ApiService {
 
     @POST("cron")
     Observable<HabitResponse<Void>> runCron();
+
+    @POST("user/reset")
+    Observable<HabitResponse<Void>> resetAccount();
+
+    @HTTP(method = "DELETE", path = "user", hasBody = true)
+    Observable<HabitResponse<Void>> deleteAccount(@Body Map<String, String> body);
 }

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -142,7 +143,6 @@ public class FullProfileActivity extends BaseActivity {
         socialRepository.getMember(this.userId).subscribe(this::updateView, RxErrorHandler.handleEmptyError());
 
         avatarWithBars = new AvatarWithBarsViewModel(this, avatar_with_bars);
-        avatarWithBars.hideGems();
         avatarWithBars.valueBarLabelsToBlack();
 
         avatar_with_bars.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
@@ -187,13 +187,12 @@ public class FullProfileActivity extends BaseActivity {
         final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     socialRepository.postPrivateMessage(userId, emojiEditText.getText().toString())
-                            .subscribe(postChatMessageResult -> showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
-                                    String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), throwable -> {
-                            });
+                            .subscribe(postChatMessageResult -> showSnackbar(FullProfileActivity.this, (ViewGroup) FullProfileActivity.this.fullprofile_scrollview.getChildAt(0),
+                                    String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
 
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    UiUtils.dismissKeyboard(this);
                 })
-                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> UiUtils.dismissKeyboard(HabiticaApplication.currentActivity))
+                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> UiUtils.dismissKeyboard(this))
 
                 .create();
 
@@ -254,7 +253,7 @@ public class FullProfileActivity extends BaseActivity {
         //mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiClient.getMemberAchievements(this.userId).subscribe(this::fillAchievements, throwable -> {});
+        socialRepository.getMemberAchievements(this.userId).subscribe(this::fillAchievements, RxErrorHandler.handleEmptyError());
     }
 
     // endregion
@@ -262,6 +261,9 @@ public class FullProfileActivity extends BaseActivity {
     // region Attributes
 
     private void fillAchievements(AchievementResult achievements) {
+        if (achievements == null) {
+            return;
+        }
         List<Object> items = new ArrayList<>();
 
         fillAchievements(achievements.basic, items);

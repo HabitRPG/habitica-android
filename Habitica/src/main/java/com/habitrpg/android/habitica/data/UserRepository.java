@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -25,6 +26,9 @@ public interface UserRepository extends BaseRepository {
 
     Observable<User> retrieveUser(Boolean withTasks);
     Observable<User> retrieveUser(Boolean withTasks, Boolean forced);
+
+    Observable<RealmResults<ChatMessage>> getInboxMessages(String replyToUserID);
+    Observable<RealmResults<ChatMessage>> getInboxOverviewList();
 
     Observable<User> revive(User user);
 
@@ -57,4 +61,7 @@ public interface UserRepository extends BaseRepository {
     Observable<User> changeCustomDayStart(int dayStartTime);
 
     Observable<User> updateLanguage(User user, String languageCode);
+
+    Observable<User> resetAccount();
+    Observable<Void> deleteAccount(String password);
 }

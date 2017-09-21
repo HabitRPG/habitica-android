@@ -2,9 +2,11 @@ package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.List;
 
+import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
@@ -21,7 +23,12 @@ public class RealmTagLocalRepository extends RealmBaseLocalRepository implements
     }
 
     @Override
-    public void removeOldTags(List<Tag> onlineTags) {
-
+    public void removeOldTags(List<Tag> onlineTags, String userID) {
+        OrderedRealmCollectionSnapshot<Tag> localTags = realm.where(Tag.class).equalTo("userId", userID).findAll().createSnapshot();
+        for (Tag localTag : localTags) {
+            if (!onlineTags.contains(localTag)) {
+                localTag.deleteFromRealm();
+            }
+        }
     }
 }

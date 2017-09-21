@@ -67,10 +67,6 @@ public class PopupNotificationsManagerTest {
     @Test
     // @TODO: Eventually, we should have a list of implemented notifications and only use those
     public void itShouldNotDisplayNotificationsThatAreNotLoginIncentives() {
-        Activity activity;
-        activity = Robolectric.buildActivity(Activity.class).create().get();
-        HabiticaApplication.currentActivity = activity;
-
         List<Notification> notifications = new ArrayList<>();
 
         Notification notification = new Notification();
@@ -89,10 +85,6 @@ public class PopupNotificationsManagerTest {
 
     @Test
     public void itShouldDisplayADialogueForANotification() {
-        Activity activity;
-        activity = Robolectric.buildActivity(Activity.class).create().get();
-        HabiticaApplication.currentActivity = activity;
-
         String testTitle = "Test Title";
 
         List<Notification> notifications = new ArrayList<>();
@@ -117,10 +109,6 @@ public class PopupNotificationsManagerTest {
 
     @Test
     public void itShouldNotDisplayANotificationTwice() {
-        Activity activity;
-        activity = Robolectric.buildActivity(Activity.class).create().get();
-        HabiticaApplication.currentActivity = activity;
-
         String testTitle = "Test Title";
 
         List<Notification> notifications = new ArrayList<>();

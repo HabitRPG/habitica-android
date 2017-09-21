@@ -60,7 +60,12 @@
                         android:persistent="false"
                         android:shouldDisableView="false"/>
             </PreferenceCategory>
-
+            <PreferenceCategory android:title="@string/danger_zone">
+                <Preference android:title="@string/reset_account"
+                    android:key="reset_account" />
+                <Preference android:title="@string/delete_account"
+                    android:key="delete_account" />
+            </PreferenceCategory>
         </PreferenceScreen>
 
         <Preference

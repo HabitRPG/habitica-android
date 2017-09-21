@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -59,6 +62,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
 
     class SkillViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private final Drawable magicDrawable;
         @BindView(R.id.skill_image)
         SimpleDraweeView skillImageView;
 
@@ -83,6 +87,8 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             context = itemView.getContext();
 
             priceButton.setOnClickListener(this);
+
+            magicDrawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfMagic());
         }
 
         public void bind(Skill skill) {
@@ -96,7 +102,8 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
                 priceButton.setCompoundDrawables(null, null, null, null);
             } else {
                 priceButton.setText(skill.mana + "");
-                priceButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_magic, 0, 0, 0);
+
+                priceButton.setCompoundDrawablesWithIntrinsicBounds(magicDrawable, null, null, null);
             }
             DataBindingUtils.loadImage(skillImageView, "shop_" + skill.key);
 

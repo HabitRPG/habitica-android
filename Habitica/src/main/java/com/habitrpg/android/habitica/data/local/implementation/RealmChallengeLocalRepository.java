@@ -54,11 +54,6 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
     }
 
     @Override
-    public void saveChallenges(User user, List<Challenge> challenges) {
-        realm.executeTransactionAsync(realm1 -> realm1.insertOrUpdate(challenges));
-    }
-
-    @Override
     public void setParticipating(Challenge challenge, boolean isParticipating) {
         realm.executeTransaction(realm1 -> challenge.isParticipating = isParticipating);
     }

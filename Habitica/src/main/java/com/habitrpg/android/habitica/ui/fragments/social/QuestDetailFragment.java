@@ -5,12 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +23,6 @@ import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
@@ -114,7 +111,11 @@ public class QuestDetailFragment extends BaseMainFragment {
         party = group;
         quest = group.quest;
         setQuestParticipants(group.quest.participants);
-        socialRepository.getMember(quest.leader).first().subscribe(member -> questLeaderView.setText(getContext().getString(R.string.quest_leader_header, member.getDisplayName())), RxErrorHandler.handleEmptyError());
+        socialRepository.getMember(quest.leader).first().subscribe(member -> {
+            if (getContext() != null && questLeaderView != null) {
+                questLeaderView.setText(getContext().getString(R.string.quest_leader_header, member.getDisplayName()));
+            }
+        }, RxErrorHandler.handleEmptyError());
 
         if (questLeaderResponseWrapper != null) {
             if (showParticipatantButtons()) {
@@ -185,10 +186,10 @@ public class QuestDetailFragment extends BaseMainFragment {
                     statusTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.gray_200));
                 } else if (participant.getParticipatesInQuest()) {
                     statusTextView.setText(R.string.accepted);
-                    statusTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.good_100));
+                    statusTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.green_100));
                 } else {
                     statusTextView.setText(R.string.declined);
-                    statusTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.worse_100));
+                    statusTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.red_100));
                 }
             } else {
                 statusTextView.setVisibility(View.GONE);
@@ -217,13 +218,13 @@ public class QuestDetailFragment extends BaseMainFragment {
 
     @OnClick(R.id.quest_accept_button)
     public void onQuestAccept() {
-        socialRepository.acceptQuest(user, partyId).subscribe(aVoid -> {}, throwable -> {});
+        socialRepository.acceptQuest(user, partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
 
     @OnClick(R.id.quest_reject_button)
     public void onQuestReject() {
-        socialRepository.rejectQuest(user, partyId).subscribe(aVoid -> {}, throwable -> {});
+        socialRepository.rejectQuest(user, partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.quest_begin_button)
@@ -231,7 +232,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_begin_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.forceStartQuest(party)
-                        .subscribe(quest -> {}, throwable -> {}))
+                        .subscribe(quest -> {}, RxErrorHandler.handleEmptyError()))
                 .setNegativeButton(R.string.no, (dialog, which) -> {});
         builder.show();
     }
@@ -241,7 +242,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_cancel_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.cancelQuest(partyId)
-                        .subscribe(aVoid -> {getActivity().getFragmentManager().popBackStack();}, throwable -> {})).setNegativeButton(R.string.no, (dialog, which) -> {});
+                        .subscribe(aVoid -> getActivity().getFragmentManager().popBackStack(), RxErrorHandler.handleEmptyError())).setNegativeButton(R.string.no, (dialog, which) -> {});
         builder.show();
     }
 
@@ -250,7 +251,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_abort_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.abortQuest(partyId)
-                        .subscribe(aVoid -> {getActivity().getFragmentManager().popBackStack();}, throwable -> {})).setNegativeButton(R.string.no, (dialog, which) -> {});
+                        .subscribe(aVoid -> getActivity().getFragmentManager().popBackStack(), RxErrorHandler.handleEmptyError())).setNegativeButton(R.string.no, (dialog, which) -> {});
         builder.show();
     }
 

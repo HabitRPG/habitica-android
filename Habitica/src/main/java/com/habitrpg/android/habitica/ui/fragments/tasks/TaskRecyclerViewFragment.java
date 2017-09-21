@@ -3,7 +3,9 @@ package com.habitrpg.android.habitica.ui.fragments.tasks;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -71,7 +73,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Inject
     TaskRepository taskRepository;
 
-    LinearLayoutManager layoutManager = null;
+    RecyclerView.LayoutManager layoutManager = null;
 
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -88,7 +90,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Nullable
     String classType;
     @Nullable
-    private User user;
+    User user;
     private View view;
     @Nullable
     private ItemTouchHelper.Callback mItemTouchCallback;
@@ -119,12 +121,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 fragment.tutorialStepIdentifier = "todos";
                 tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_todos_1),
                         context.getString(R.string.tutorial_todos_2));
-                break;
-            }
-            case Task.TYPE_REWARD: {
-                fragment.tutorialStepIdentifier = "rewards";
-                tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_rewards_1),
-                        context.getString(R.string.tutorial_rewards_2));
                 break;
             }
         }
@@ -164,7 +160,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                         return;
                     case Task.TYPE_REWARD:
                         layoutOfType = R.layout.reward_item_card;
-                        this.recyclerAdapter = new RewardsRecyclerViewAdapter(tasks, getContext(), layoutOfType, inventoryRepository, user);
+                        this.recyclerAdapter = new RewardsRecyclerViewAdapter(tasks, getContext(), layoutOfType, user);
                         break;
                 }
             });
@@ -225,8 +221,10 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 if (swipeRefreshLayout != null) {
                     swipeRefreshLayout.setEnabled(true);
                 }
-                
-                viewHolder.itemView.setBackgroundColor(Color.WHITE);
+
+                if (viewHolder != null) {
+                    viewHolder.itemView.setBackgroundColor(Color.WHITE);
+                }
                 if (mFromPosition != null) {
                     taskRepository.updateTaskPosition(viewHolder.getAdapterPosition())
                             .subscribe(taskPositions -> {
@@ -242,10 +240,10 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
             android.support.v4.app.FragmentActivity context = getActivity();
 
-            layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            layoutManager = recyclerView.getLayoutManager();
 
             if (layoutManager == null) {
-                layoutManager = new LinearLayoutManager(context);
+                layoutManager = getLayoutManager(context);
 
                 recyclerView.setLayoutManager(layoutManager);
             }
@@ -298,6 +296,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
 
         return view;
+    }
+
+    @NonNull
+    protected LinearLayoutManager getLayoutManager(FragmentActivity context) {
+        return new LinearLayoutManager(context);
     }
 
     @Override

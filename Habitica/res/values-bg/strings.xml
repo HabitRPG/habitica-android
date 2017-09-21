@@ -578,4 +578,15 @@
   <string name="welcome_back">Добре дошли отново</string>
   <string name="yesterdaililes_prompt">Свършихте ли някоя от тези ежедневни задачи вчера?</string>
   <string name="start_day">Начало на деня ми</string>
+  <string name="leave_party_confirmation">Наистина ли искате да напуснете групата?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Следващата награда ще бъде след %d отчитания</string>
+  <string name="pending">В очакване</string>
+  <string name="accepted">Приета</string>
+  <string name="declined">Отказана</string>
+  <string name="participants">Участници</string>
+  <string name="invitations">Покани</string>
+  <string name="quest_leader_header" formatted="false">Започната от %s</string>
+  <string name="quest_abort_message">Наистина ли искате да прекъснете мисията? Така тя ще приключи за всички в групата Ви и целият Ви напредък ще бъде изгубен. Свитъкът с мисията ще бъде върнат на собственика си.</string>
+  <string name="loading">Зареждане…</string>
+  <string name="reloading_content">Презареждане на съдържанието</string>
 </resources>

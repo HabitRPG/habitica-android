@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.interactors;
 
+import android.app.Activity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -43,43 +45,41 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
             SuppressedModals suppressedModals = requestValues.user.getPreferences().getSuppressModals();
             if (suppressedModals != null) {
                 if (suppressedModals.getLevelUp()) {
-                    checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null))
+                    checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null, requestValues.activity))
                             .subscribe(aVoid -> {
-                            }, throwable -> {
-                            });
+                            }, RxErrorHandler.handleEmptyError());
 
                     return Observable.just(requestValues.user.getStats());
                 }
             }
 
-            View customView = requestValues.compatActivity.getLayoutInflater().inflate(R.layout.dialog_levelup, null);
+            View customView = requestValues.activity.getLayoutInflater().inflate(R.layout.dialog_levelup, null);
             if (customView != null) {
                 TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
-                detailView.setText(requestValues.compatActivity.getString(R.string.levelup_detail, requestValues.newLevel));
+                detailView.setText(requestValues.activity.getString(R.string.levelup_detail, requestValues.newLevel));
                 AvatarView dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
                 dialogAvatarView.setAvatar(requestValues.user);
             }
 
             final ShareEvent event = new ShareEvent();
-            event.sharedMessage = requestValues.compatActivity.getString(R.string.share_levelup, requestValues.newLevel) + " https://habitica.com/social/level-up";
-            AvatarView avatarView = new AvatarView(requestValues.compatActivity, true, true, true);
+            event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel) + " https://habitica.com/social/level-up";
+            AvatarView avatarView = new AvatarView(requestValues.activity, true, true, true);
             avatarView.setAvatar(requestValues.user);
             avatarView.onAvatarImageReady(avatarImage -> event.shareImage = avatarImage);
 
-            AlertDialog alert = new AlertDialog.Builder(requestValues.compatActivity)
+            AlertDialog alert = new AlertDialog.Builder(requestValues.activity)
                     .setTitle(R.string.levelup_header)
                     .setView(customView)
-                    .setPositiveButton(R.string.levelup_button, (dialog, which) -> checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null))
+                    .setPositiveButton(R.string.levelup_button, (dialog, which) -> checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null, requestValues.activity))
                             .subscribe(aVoid -> {
-                            }, throwable -> {
-                            }))
+                            }, RxErrorHandler.handleEmptyError()))
                     .setNeutralButton(R.string.share, (dialog, which) -> {
                         EventBus.getDefault().post(event);
                         dialog.dismiss();
                     })
                     .create();
 
-            if (!requestValues.compatActivity.isFinishing()) {
+            if (!requestValues.activity.isFinishing()) {
                 alert.show();
             }
 
@@ -91,12 +91,12 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
     public static final class RequestValues implements UseCase.RequestValues {
         private User user;
         private int newLevel;
-        private AppCompatActivity compatActivity;
+        private Activity activity;
 
-        public RequestValues(User user, AppCompatActivity compatActivity) {
+        public RequestValues(User user, AppCompatActivity activity) {
             this.user = user;
             this.newLevel = user.getStats().getLvl();
-            this.compatActivity = compatActivity;
+            this.activity = activity;
         }
     }
 }

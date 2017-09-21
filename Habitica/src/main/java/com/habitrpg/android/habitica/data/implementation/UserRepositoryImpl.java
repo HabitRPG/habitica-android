@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.data.implementation;
 
-import android.content.Context;
-
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
@@ -14,6 +12,7 @@ import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -33,16 +32,14 @@ import rx.Observable;
 
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> implements UserRepository {
 
-    private final Context context;
     private Date lastSync;
     private String userId;
 
     private TaskRepository taskRepository;
 
-    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, Context context, String userId, TaskRepository taskRepository) {
+    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, String userId, TaskRepository taskRepository) {
         super(localRepository, apiClient);
         this.taskRepository = taskRepository;
-        this.context = context;
         this.userId = userId;
     }
 
@@ -96,8 +93,18 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                         }
                     });
         } else {
-            return Observable.just(null);
+            return getUser();
         }
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getInboxMessages(String replyToUserID) {
+        return localRepository.getInboxMessages(userId, replyToUserID);
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getInboxOverviewList() {
+        return localRepository.getInboxOverviewList(userId);
     }
 
     @Override
@@ -231,6 +238,17 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     public Observable<User> updateLanguage(User user, String languageCode) {
         return updateUser(user, "preferences.language", languageCode)
                 .doOnNext(user1 -> apiClient.setLanguageCode(languageCode));
+    }
+
+    @Override
+    public Observable<User> resetAccount() {
+        return apiClient.resetAccount()
+                .flatMap(aVoid -> retrieveUser(true, true));
+    }
+
+    @Override
+    public Observable<Void> deleteAccount(String password) {
+        return apiClient.deleteAccount(password);
     }
 
     @Override

@@ -100,13 +100,9 @@ public class InboxMessageListFragment extends BaseMainFragment
 
     private void loadMessages() {
         if (user != null && user.isManaged()) {
-            compositeSubscription.add(user.getInbox().getMessages().where()
-                    .equalTo("uuid", replyToUserUUID)
-                    .findAllSortedAsync("timestamp", Sort.DESCENDING)
-                    .asObservable()
-                    .filter(RealmResults::isLoaded)
+            userRepository.getInboxMessages(replyToUserUUID)
                     .first()
-                    .subscribe(chatMessages -> this.chatAdapter.updateData(chatMessages), RxErrorHandler.handleEmptyError()));
+                    .subscribe(chatMessages -> this.chatAdapter.updateData(chatMessages), RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -150,8 +146,7 @@ public class InboxMessageListFragment extends BaseMainFragment
     @Subscribe
     public void onEvent(SendNewInboxMessageCommand cmd) {
         socialRepository.postPrivateMessage(cmd.userToSendTo, cmd.message)
-                .subscribe(postChatMessageResult -> this.refreshUserInbox(), throwable -> {
-                });
+                .subscribe(postChatMessageResult -> this.refreshUserInbox(), RxErrorHandler.handleEmptyError());
         UiUtils.dismissKeyboard(getActivity());
     }
 
@@ -183,7 +178,9 @@ public class InboxMessageListFragment extends BaseMainFragment
         if (chatText.length() > 0) {
             chatEditText.setText(null);
             socialRepository.postPrivateMessage(replyToUserUUID, chatText).subscribe(postChatMessageResult -> {
-                recyclerView.scrollToPosition(0);
+                if (recyclerView != null) {
+                    recyclerView.scrollToPosition(0);
+                }
             }, RxErrorHandler.handleEmptyError());
         }
     }

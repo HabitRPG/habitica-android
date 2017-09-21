@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -53,11 +54,20 @@ public class ValueBar extends FrameLayout {
 
         Drawable iconRes = attributes.getDrawable(R.styleable.ValueBar_barIconDrawable);
         if (iconRes != null) {
-            iconView.setImageDrawable(iconRes);
-            iconView.setVisibility(View.VISIBLE);
+            setIcon(iconRes);
         }
 
         descriptionTextView.setText(attributes.getString(R.styleable.ValueBar_description));
+    }
+
+    public void setIcon(Drawable iconRes) {
+        iconView.setImageDrawable(iconRes);
+        iconView.setVisibility(View.VISIBLE);
+    }
+
+    public void setIcon(Bitmap bitmap) {
+        iconView.setImageBitmap(bitmap);
+        iconView.setVisibility(View.VISIBLE);
     }
 
     public void setBarWeight(double percent) {

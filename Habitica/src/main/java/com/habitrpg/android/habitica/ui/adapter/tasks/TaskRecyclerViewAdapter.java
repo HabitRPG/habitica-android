@@ -9,4 +9,7 @@ public interface TaskRecyclerViewAdapter {
     void updateData(OrderedRealmCollection<Task> tasks);
 
     void filter();
+
+    int getItemViewType(int position);
+
 }

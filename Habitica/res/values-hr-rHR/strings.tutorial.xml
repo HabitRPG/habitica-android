@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Izvršavaj Pozitivne navike  i tako zaradi zlato i iskustvo. Negativne navike će ozlijediti tvog avatara ako ih klikneš, tako da ih izbjegni u stvarnom životu!</string>
-  <string name="tutorial_dailies">Porazi svoje ponavljajuće svakodnevne zadatke da zaradiš zlato i iskustvo. Oprez! Dailiesi će ozlijediti tvog avatara ako ih ne dovršiš na vrijeme.</string>
-  <string name="tutorial_todos">Izvrši svoje To-Do-ove u stvarnom životu, a zatim ih označi za ZLATO i ISKUSTVO da zaradiš Nagrade i otključaš nove sadržaje!</string>
-  <string name="tutorial_rewards">Ovo su tvoje Nagrade! Zaradi zlato izvršavajući Navike, Dailiese i To-Do-ove u stvarnom svijetu. Zatim ga potroši na Nagrade u igrici ili Nagrade u stvarnom svijetu!</string>
   <string name="tutorial_equipment">Kada kupiš opremu, pojavit će se ovdje. Tvoja Ratna oprema utječe na tvoje statistike, a tvoj kostim (ako je uključen) utječe na ono što tvoj avatar nosi.</string>
   <string name="tutorial_items">Zaradi predmete izvršavanjem zadataka i prelaženjem na višu razinu. Klikni na predmet da ga iskoristiš!</string>
   <string name="tutorial_pets">Kako izvršavaš zadatke u stvarnom svijetu, sada imaš nasumičnu šansu za pronalazak jaja i napitaka. Kombiniraj ih te izlegni ljubimce</string>

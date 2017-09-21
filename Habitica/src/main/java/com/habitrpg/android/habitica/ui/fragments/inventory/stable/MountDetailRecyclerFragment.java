@@ -109,10 +109,9 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        if (isAdded()) {
-            return getString(R.string.mounts);
-        } else {
+        if (!isAdded()) {
             return "";
         }
+        return getString(R.string.mounts);
     }
 }

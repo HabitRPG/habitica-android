@@ -2,17 +2,20 @@ package com.habitrpg.android.habitica.models.shops;
 
 import com.habitrpg.android.habitica.R;
 
-public class ShopItemUnlockCondition {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class ShopItemUnlockCondition extends RealmObject {
+
+    @PrimaryKey
     String condition;
 
     public int readableUnlockConditionId() {
         switch (this.condition) {
-
             case "party invite":
                 return R.string.party_invite;
             default:
-                return 0;
+                return R.string.empty;
         }
     }
 }

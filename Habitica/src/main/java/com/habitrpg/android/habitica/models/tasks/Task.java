@@ -392,18 +392,18 @@ public class Task extends RealmObject implements Parcelable {
 
     public int getLightTaskColor() {
         if (this.value < -20)
-            return R.color.worst_100;
+            return R.color.maroon_100;
         if (this.value < -10)
-            return R.color.worse_100;
+            return R.color.red_100;
         if (this.value < -1)
-            return R.color.bad_100;
+            return R.color.orange_100;
         if (this.value < 1)
-            return R.color.neutral_100;
+            return R.color.yellow_100;
         if (this.value < 5)
-            return R.color.good_100;
+            return R.color.green_100;
         if (this.value < 10)
-            return R.color.better_100;
-        return R.color.best_100;
+            return R.color.teal_100;
+        return R.color.blue_100;
     }
 
     /**
@@ -413,19 +413,19 @@ public class Task extends RealmObject implements Parcelable {
      */
     public int getMediumTaskColor() {
         if (this.value < -20)
-            return R.color.worst_50;
+            return R.color.maroon_50;
         if (this.value < -10)
-            return R.color.worse_50;
+            return R.color.red_50;
         if (this.value < -1)
-            return R.color.bad_50;
+            return R.color.orange_50;
         if (this.value < 1)
-            return R.color.neutral_50;
+            return R.color.yellow_50;
         if (this.value < 5)
-            return R.color.good_50;
+            return R.color.green_50;
         if (this.value < 10)
-            return R.color.better_50;
+            return R.color.teal_50;
 
-        return R.color.best_50;
+        return R.color.blue_50;
     }
 
     /**
@@ -437,26 +437,25 @@ public class Task extends RealmObject implements Parcelable {
         if (this.value < -20)
             return R.color.worst_10;
         if (this.value < -10)
-            return R.color.worse_10;
+            return R.color.red_10;
         if (this.value < -1)
-            return R.color.bad_10;
+            return R.color.orange_10;
         if (this.value < 1)
-            return R.color.neutral_10;
+            return R.color.yellow_10;
         if (this.value < 5)
-            return R.color.good_10;
+            return R.color.green_10;
         if (this.value < 10)
-            return R.color.better_10;
+            return R.color.teal_10;
 
-        return R.color.best_10;
+        return R.color.blue_10;
     }
 
-    public Boolean checkIfDue(int offset) {
+    public Boolean checkIfDue() {
         if (this.getCompleted()) {
             return true;
         }
 
         Calendar today = new GregorianCalendar();
-        today.add(Calendar.HOUR, -offset);
 
         Calendar startDate = new GregorianCalendar();
         Calendar startDateAtMidnight;
@@ -489,17 +488,18 @@ public class Task extends RealmObject implements Parcelable {
         }
     }
 
-    public Boolean isDisplayedActive(int offset) {
+    public Boolean isDisplayedActive() {
         if (this.isDue != null && !this.completed) {
             return this.isDue;
         }
-        return this.checkIfDue(offset) && !this.completed;
+        return this.checkIfDue() && !this.completed;
     }
 
-    public Boolean isChecklistDisplayActive(int offset) {
-        return this.isDisplayedActive(offset) && (this.checklist.size() != this.getCompletedChecklistCount());
+    public Boolean isChecklistDisplayActive() {
+        return this.isDisplayedActive() && (this.checklist.size() != this.getCompletedChecklistCount());
     }
 
+    @Nullable
     public Date getNextReminderOccurence(Date oldTime) {
         Calendar today = Calendar.getInstance();
 
@@ -517,7 +517,7 @@ public class Task extends RealmObject implements Parcelable {
             return newTime.getTime();
         }
 
-        if (this.getFrequency().equals(FREQUENCY_DAILY)) {
+        if (FREQUENCY_DAILY.equals(this.getFrequency())) {
             Calendar startDate = new GregorianCalendar();
             startDate.setTime(this.getStartDate());
 
@@ -528,13 +528,23 @@ public class Task extends RealmObject implements Parcelable {
 
             today.add(Calendar.DATE, (int) daysUntilNextReminder);
             newTime.setTime(today.getTime());
-        } else {
+        } else if (FREQUENCY_WEEKLY.equals(this.getFrequency())) {
             int nextActiveDayOfTheWeek = newTime.get(Calendar.DAY_OF_WEEK);
-            while (!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today) || newTime.equals(today)) {
-                if (nextActiveDayOfTheWeek == 6) nextActiveDayOfTheWeek = 0;
-                nextActiveDayOfTheWeek += 1;
+            int daysChecked = 0;
+            while ((!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today) || newTime.equals(today)) && daysChecked <= 7) {
+                if (nextActiveDayOfTheWeek == 6) {
+                    nextActiveDayOfTheWeek = 0;
+                } else {
+                    nextActiveDayOfTheWeek += 1;
+                }
+                daysChecked += 1;
                 newTime.add(Calendar.DATE, 1);
             }
+            if (daysChecked > 7) {
+                return null;
+            }
+        } else {
+            return null;
         }
 
         return newTime.getTime();

@@ -14,7 +14,6 @@ buildscript {
     }
     dependencies {
         classpath 'io.fabric.tools:gradle:1.21.6'
-        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath('com.noveogroup.android:check:1.2.3') {
             exclude module: 'checkstyle'
@@ -74,7 +73,7 @@ dependencies {
     //QR Code
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
     // Emojis
-    compile 'com.github.viirus:emoji-lib:0.0.4'
+    compile 'com.github.viirus:emoji-lib:0.0.5'
     // Markdown
     compile 'com.commonsware.cwac:anddown:0.3.0'
     // About View for all dependent Libraries, we are using
@@ -156,6 +155,8 @@ android {
             applicationIdSuffix ".debug"
             debuggable true
             multiDexEnabled true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
@@ -165,7 +166,9 @@ android {
         release {
             signingConfig signingConfigs.release
             debuggable false
-            multiDexEnabled true
+            multiDexEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
             resValue "string", "app_name", "Habitica"
         }
@@ -214,8 +217,17 @@ android {
     }
 
     lintOptions {
-        disable 'UnusedResources','MissingTranslation','UnusedAttribute','InvalidPackage'
+        disable 'MissingTranslation','InvalidPackage'
         enable 'LogConditional','IconExpectedSize','MissingRegistered','TypographyQuotes'
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
+            universalApk true
+        }
     }
 }
 

@@ -1,10 +1,12 @@
 package com.habitrpg.android.habitica.models.user;
 
 
+import com.habitrpg.android.habitica.models.AvatarPreferences;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Preferences extends RealmObject {
+public class Preferences extends RealmObject implements AvatarPreferences {
 
     @PrimaryKey
     private String userId;
@@ -12,7 +14,7 @@ public class Preferences extends RealmObject {
     public Hair hair;
     SuppressedModals suppressModals;
     User user;
-    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader, dailyDueDefaultView;
+    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader, dailyDueDefaultView, automaticAllocation;
     private String allocationMode, shirt, skin, size, background, chair, language, sound;
     private int dayStart, timezoneOffset;
 
@@ -222,5 +224,9 @@ public class Preferences extends RealmObject {
         if (suppressModals != null && !suppressModals.isManaged()) {
             suppressModals.setUserId(userId);
         }
+    }
+
+    public boolean hasTaskBasedAllocation() {
+        return allocationMode.equals("taskBased") && !automaticAllocation;
     }
 }

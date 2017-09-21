@@ -31,12 +31,9 @@ abstract class ContentRepositoryImpl<T extends ContentLocalRepository> extends B
     public Observable<ContentResult> retrieveContent(boolean forced) {
         if (forced || this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 3600000) {
             lastSync = new Date();
-            return apiClient.getContent()
-                    .doOnNext(localRepository::saveContent);
+            return apiClient.getContent().doOnNext(localRepository::saveContent);
         } else {
             return Observable.just(null);
         }
-
     }
-
 }

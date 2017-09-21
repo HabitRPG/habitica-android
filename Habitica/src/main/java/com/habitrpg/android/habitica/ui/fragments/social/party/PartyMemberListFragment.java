@@ -68,7 +68,13 @@ public class PartyMemberListFragment extends BaseFragment {
     }
 
     private void refreshMembers() {
-        socialRepository.retrieveGroupMembers(partyId, true).subscribe(users -> refreshLayout.setRefreshing(false), RxErrorHandler.handleEmptyError());
+        socialRepository.retrieveGroupMembers(partyId, true).subscribe(users -> setRefreshing(false), RxErrorHandler.handleEmptyError());
+    }
+
+    private void setRefreshing(boolean isRefreshing) {
+        if (refreshLayout != null) {
+            refreshLayout.setRefreshing(isRefreshing);
+        }
     }
 
     public void setPartyId(String id) {

@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,13 +15,15 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;
 
@@ -44,7 +48,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     CrashlyticsProxy crashlyticsProxy;
 
     @Inject
-    ApiClient apiClient;
+    UserRepository userRepository;
 
     @BindView(R.id.subscribe_listitem1_box)
     View subscribeListitem1Box;
@@ -97,6 +101,9 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     @BindView(R.id.subscribeBenefitsTitle)
     TextView subscribeBenefitsTitle;
 
+    @BindView(R.id.supportTextView)
+    TextView supportTextView;
+
     @Nullable
     Sku selectedSubscriptionSku;
     List<Sku> skus;
@@ -125,8 +132,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     @Subscribe
     public void fetchUser(@Nullable UserSubscribedEvent event) {
-        apiClient.getUser().subscribe(this::setUser, throwable -> {
-                });
+        userRepository.retrieveUser(false).subscribe(this::setUser, RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -145,6 +151,9 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         this.subscribeListitem2Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem2Button, this.subscribeListItem2Description));
         this.subscribeListitem3Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description));
         this.subscribeListitem4Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description));
+
+        Drawable heartDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfHeartLarge());
+        supportTextView.setCompoundDrawables(null, heartDrawable, null, null);
     }
 
     private void toggleDescriptionView(ImageView button, TextView descriptionView) {
@@ -283,6 +292,10 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                 if (plan.isActive()) {
                     isSubscribed = true;
                 }
+            }
+
+            if (this.subscriptionDetailsView == null) {
+                return;
             }
 
             if (isSubscribed) {

@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -51,7 +52,6 @@ import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
-import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
@@ -78,7 +78,6 @@ import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
-import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
@@ -89,8 +88,8 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
@@ -119,7 +118,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import rx.Observable;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LEVEL_FOR_SKILLS;
@@ -153,6 +151,10 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     AppBarLayout appBar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbar_accessory_container)
+    FrameLayout toolbarAccessoryContainer;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitleTextView;
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.detail_tabs)
@@ -272,7 +274,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     MainActivity.this.setUserData(true);
                 }, RxErrorHandler.handleEmptyError());
 
-        EventBus.getDefault().register(this);
     }
 
     public int getStatusBarHeight() {
@@ -346,6 +347,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         fragment.setUser(user);
         fragment.setActivity(this);
         fragment.setTabLayout(detail_tabs);
+        fragment.setToolbarAccessoryContainer(toolbarAccessoryContainer);
         fragment.setCollapsingToolbar(collapsingToolbar);
         fragment.setBottomNavigation(bottomNavigation);
         fragment.setFloatingMenuWrapper(floatingMenuWrapper);
@@ -384,16 +386,12 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             displayDeathDialogIfNeeded();
             YesterdailyDialog.showDialogIfNeeded(this, user.getId(), userRepository, taskRepository);
 
-            if (!fromLocalDb) {
-                displayNewInboxMessagesBadge();
-                pushNotificationManager.setUser(user);
-                pushNotificationManager.addPushDeviceUsingStoredToken();
-            }
+            displayNewInboxMessagesBadge();
         }
     }
 
     private void displayNewInboxMessagesBadge() {
-        Integer numberOfUnreadPms = this.user.getInbox().getNewMessages();
+        int numberOfUnreadPms = this.user.getInbox().getNewMessages();
         IDrawerItem newInboxItem;
 
         if (numberOfUnreadPms <= 0) {
@@ -463,9 +461,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
         if (drawer != null) {
             IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-            if (((user.getPreferences() != null && user.getPreferences().getDisableClasses())
-                    || (user.getFlags() != null && !user.getFlags().getClassSelected()))
-                    && !hasSpecialItems) {
+            if (!user.hasClass() && !hasSpecialItems) {
                 if (item != null) {
                     drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
                 }
@@ -505,9 +501,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             return;
         }
         if (fragment != null && fragment.customTitle() != null) {
-            getSupportActionBar().setTitle(fragment.customTitle());
+            toolbarTitleTextView.setText(fragment.customTitle());
         } else if (user != null && user.getProfile() != null) {
-            getSupportActionBar().setTitle(user.getProfile().getName());
+            toolbarTitleTextView.setText(user.getProfile().getName());
         }
     }
 
@@ -539,7 +535,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);
         userRepository.close();
         tagRepository.close();
         inventoryRepository.close();
@@ -550,35 +545,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     public void onEvent(OpenMenuItemCommand event) {
         if (drawer != null) {
             drawer.setSelection(event.identifier);
-        }
-    }
-
-    @Subscribe
-    public void onEvent(final BuyGemItemCommand event) {
-        if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
-            Observable<Void> observable;
-            if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
-                if (event.item.purchaseType.equals("gear")) {
-                    observable = apiClient.purchaseMysterySet(event.item.categoryIdentifier);
-                } else {
-                    observable = apiClient.purchaseHourglassItem(event.item.purchaseType, event.item.key);
-                }
-            } else if (event.item.purchaseType.equals("quests") && event.item.getCurrency().equals("gold")) {
-                observable = apiClient.purchaseQuest(event.item.key);
-            } else {
-                observable = apiClient.purchaseItem(event.item.purchaseType, event.item.key);
-            }
-            observable
-                    .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
-                    .flatMap(buyResponse -> userRepository.retrieveUser(false))
-                    .subscribe(buyResponse -> {}, throwable -> {
-                        retrofit2.HttpException error = (retrofit2.HttpException) throwable;
-                        if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
-                            openGemPurchaseFragment(null);
-                        }
-                    });
-        } else {
-            openGemPurchaseFragment(null);
         }
     }
 
@@ -681,8 +647,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                             })
                             .create();
                     dialog.show();
-                }, throwable -> {
-                });
+                }, RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
@@ -719,8 +684,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                                 .create();
                         dialog.show();
                     }
-                }, throwable -> {
-                });
+                }, RxErrorHandler.handleEmptyError());
     }
 
     // endregion
@@ -743,13 +707,14 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             return;
         }
 
-        if (this.faintDialog == null) {
+        if (this.faintDialog == null && !this.isFinishing()) {
 
             View customView = View.inflate(this, R.layout.dialog_faint, null);
             if (customView != null) {
                 ValueBar hpBarView = (ValueBar) customView.findViewById(R.id.hpBar);
 
                 hpBarView.setLightBackground(true);
+                hpBarView.setIcon(HabiticaIconsHelper.imageOfHeartLightBg());
 
                 AvatarView dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
                 dialogAvatarView.setAvatar(user);
@@ -760,7 +725,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     .setView(customView)
                     .setPositiveButton(R.string.faint_button, (dialog, which) -> {
                         faintDialog = null;
-                        userRepository.revive(user).subscribe(user1 -> {}, throwable -> {});
+                        userRepository.revive(user).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
                     })
                     .create();
 
@@ -785,8 +750,12 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     }
 
     protected void retrieveUser() {
-        if (this.userRepository != null) {
+        if (this.userRepository != null && hostConfig.hasAuthentication()) {
             this.userRepository.retrieveUser(true)
+                    .doOnNext(user1 -> {
+                        pushNotificationManager.setUser(user1);
+                        pushNotificationManager.addPushDeviceUsingStoredToken();
+                    })
                     .flatMap(user1 -> inventoryRepository.retrieveContent(false))
                     .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         }
@@ -794,10 +763,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void displayClassSelectionActivity(SelectClassEvent event) {
-        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(user, event))
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(user, event, this))
+                .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
     }
 
     private void displayTutorialStep(TutorialStep step, String text, boolean canBeDeferred) {
@@ -836,8 +803,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(path, true);
         userRepository.updateUser(user,  updateData)
-                .subscribe(user1 -> {}, throwable -> {
-                });
+                .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         this.overlayLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
 
@@ -920,6 +886,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         this.maintenanceService.getMaintenanceStatus()
                 .compose(apiClient.configureApiCallObserver())
                 .subscribe(maintenanceResponse -> {
+                    if (maintenanceResponse == null) {
+                        return;
+                    }
                     if (maintenanceResponse.activeMaintenance) {
                         Intent intent = createMaintenanceIntent(maintenanceResponse, false);
                         startActivity(intent);
@@ -937,7 +906,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                             }
                         }
                     }
-                }, throwable -> {});
+                }, RxErrorHandler.handleEmptyError());
     }
 
     private Intent createMaintenanceIntent(MaintenanceResponse maintenanceResponse, Boolean isDeprecationNotice) {
@@ -953,7 +922,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void showSnackBarEvent(ShowSnackbarEvent event) {
-        showSnackbar(this, floatingMenuWrapper, event.title, event.text, event.type);
+        showSnackbar(this, floatingMenuWrapper, event.title, event.text, event.specialView, event.type);
     }
 
     public boolean isAppBarExpanded() {

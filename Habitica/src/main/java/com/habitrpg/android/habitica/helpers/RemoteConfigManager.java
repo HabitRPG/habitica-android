@@ -25,6 +25,7 @@ public class RemoteConfigManager {
 
     private Context context;
     private Boolean enableRepeatbles = false;
+    private Boolean enableNewShops = false;
     private String REMOTE_STRING_KEY = "remote-string";
 
     public RemoteConfigManager(Context context) {
@@ -33,8 +34,12 @@ public class RemoteConfigManager {
         new DownloadFileFromURL().execute("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/config-android.json");
     }
 
-    public Boolean repeatablesAreEnabled () {
+    public Boolean repeatablesAreEnabled() {
         return enableRepeatbles;
+    }
+
+    public Boolean newShopsEnabled() {
+        return enableNewShops;
     }
 
     private void loadFromPreferences () {
@@ -48,6 +53,9 @@ public class RemoteConfigManager {
         try {
             JSONObject obj = new JSONObject(storedPreferences);
             enableRepeatbles = obj.getBoolean("enableRepeatables");
+            if (obj.has("enableNewShops")) {
+                enableNewShops = obj.getBoolean("enableNewShops");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -122,6 +130,7 @@ public class RemoteConfigManager {
             try {
                 JSONObject obj = new JSONObject(text.toString());
                 enableRepeatbles = obj.getBoolean("enableRepeatables");
+                enableNewShops = obj.getBoolean("enableNewShops");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

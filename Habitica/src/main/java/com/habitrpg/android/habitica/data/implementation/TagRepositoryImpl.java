@@ -59,7 +59,7 @@ public class TagRepositoryImpl extends BaseRepositoryImpl<TagLocalRepository> im
     }
 
     @Override
-    public void removeOldTags(List<Tag> onlineTags) {
-        localRepository.removeOldTags(onlineTags);
+    public void removeOldTags(List<Tag> onlineTags, String userID) {
+        localRepository.removeOldTags(onlineTags, userID);
     }
 }

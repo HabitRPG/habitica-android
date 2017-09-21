@@ -21,5 +21,5 @@ public interface TagRepository extends BaseRepository {
     Observable<Tag> updateTags(Collection<Tag> tags);
     Observable<List<Void>> deleteTags(Collection<String> tagIds);
 
-    void removeOldTags(List<Tag> onlineTags);
+    void removeOldTags(List<Tag> onlineTags, String userID);
 }

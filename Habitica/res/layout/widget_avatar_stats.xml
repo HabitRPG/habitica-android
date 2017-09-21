@@ -44,8 +44,7 @@
                         android:layout_alignTop="@+id/hp_bar"
                         android:layout_alignBottom="@id/hp_bar"
                         android:scaleType="center"
-                        android:contentDescription="@string/HP_default"
-                        android:src="@drawable/ic_header_heart"/>
+                        android:contentDescription="@string/HP_default"/>
                 <ProgressBar
                         android:id="@+id/hp_bar"
                         android:layout_toRightOf="@id/ic_hp_header"
@@ -99,8 +98,7 @@
                         android:layout_alignTop="@+id/exp_bar"
                         android:layout_alignBottom="@+id/exp_bar"
                         android:scaleType="center"
-                        android:contentDescription="Bar Icon"
-                        android:src="@drawable/ic_header_exp"/>
+                        android:contentDescription="Bar Icon"/>
                 <ProgressBar
                         android:id="@+id/exp_bar"
                         android:layout_toRightOf="@id/ic_exp_header"
@@ -155,8 +153,7 @@
                         android:layout_alignTop="@+id/mp_bar"
                         android:layout_alignBottom="@+id/mp_bar"
                         android:scaleType="center"
-                        android:contentDescription="Bar Icon"
-                        android:src="@drawable/ic_header_magic" />
+                        android:contentDescription="Bar Icon" />
                 <ProgressBar
                         android:id="@+id/mp_bar"
                         android:layout_toRightOf="@id/ic_mp_header"
@@ -201,7 +198,8 @@
             android:id="@+id/detail_info_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/bar_padding_small">
+            android:paddingTop="@dimen/bar_padding_small"
+        android:gravity="center_vertical">
         <TextView
                 android:id="@+id/lvl_tv"
                 android:layout_width="wrap_content"
@@ -218,45 +216,40 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
+            <ImageView
+                android:id="@+id/hourglass_cion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/hourglasses_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorSecondaryDark"
+                style="@style/CurrencyTextView"
+                />
+
+            <ImageView
+                android:id="@+id/gem_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                     android:id="@+id/gems_tv"
-                    android:drawableLeft="@drawable/ic_header_gem"
-                    android:drawableStart="@drawable/ic_header_gem"
                     android:layout_width="wrap_content"
-                    android:gravity="center"
-                    android:drawablePadding="8dp"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
                     android:textColor="@color/textColorSecondaryDark"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
+                style="@style/CurrencyTextView"
                     />
 
+            <ImageView
+                android:id="@+id/gold_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                     android:id="@+id/gold_tv"
-                    android:drawableLeft="@drawable/ic_header_gold"
-                    android:drawableStart="@drawable/ic_header_gold"
                     android:layout_width="wrap_content"
-                    android:gravity="center"
-                    android:drawablePadding="6dp"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
                     android:textColor="@color/textColorSecondaryDark"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
-                    />
-            <TextView
-                    android:id="@+id/silver_tv"
-                    android:drawableLeft="@drawable/ic_header_silver"
-                    android:drawableStart="@drawable/ic_header_silver"
-                    android:layout_width="wrap_content"
-                    android:gravity="center"
-                    android:drawablePadding="6dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/textColorSecondaryDark"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
+                style="@style/CurrencyTextView"
                     />
         </LinearLayout>
     </LinearLayout>

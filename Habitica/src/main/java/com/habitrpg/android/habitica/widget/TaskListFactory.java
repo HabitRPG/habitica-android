@@ -39,7 +39,6 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
     TaskRepository taskRepository;
     @Inject
     UserRepository userRepository;
-    private Integer customDayStart;
     private int listItemResId;
     private int listItemTextResId;
     private String taskType;
@@ -58,17 +57,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         if (userID == null) {
             HabiticaApplication.getComponent().inject(this);
         }
-
-        if (customDayStart == null) {
-            userRepository.getUser(userID)
-                    .subscribe(habitRPGUser -> {
-                        customDayStart = habitRPGUser.getPreferences().getDayStart();
-                        this.loadData();
-                    }, throwable -> {
-                    });
-        } else {
-            this.loadData();
-        }
+        this.loadData();
     }
 
     private void loadData() {
@@ -76,7 +65,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         mainHandler.post(() -> taskRepository.getTasks(taskType, userID)
                 .first()
                 .flatMap(Observable::from)
-                .filter(task -> (task.type.equals(Task.TYPE_TODO) && !task.completed) || task.isDisplayedActive(customDayStart))
+                .filter(task -> (task.type.equals(Task.TYPE_TODO) && !task.completed) || task.isDisplayedActive())
                 .toList()
                 .flatMap(tasks -> taskRepository.getTaskCopies(tasks))
                 .subscribeOn(AndroidSchedulers.mainThread())

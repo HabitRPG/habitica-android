@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -40,7 +41,11 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         JsonObject object = json.getAsJsonObject();
 
         result.potion = context.deserialize(object.get("potion"), Equipment.class);
+        //result.potion.imageName = "shop_potion";
+        //result.potion.currency = "gold";
         result.armoire = context.deserialize(object.get("armoire"), Equipment.class);
+        //result.armoire.imageName = "shop_armoire";
+        //result.armoire.currency = "gold";
         result.gear = context.deserialize(object.get("gear"), ContentGear.class);
 
         result.quests = context.deserialize(object.get("quests"), new TypeToken<RealmList<QuestContent>>() {

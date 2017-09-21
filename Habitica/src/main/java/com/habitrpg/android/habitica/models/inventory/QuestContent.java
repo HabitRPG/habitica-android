@@ -12,11 +12,12 @@ public class QuestContent extends RealmObject implements Item {
     String key;
     String text, notes;
     int value, owned;
-    public String previous;
-    public int lvl;
-    public boolean canBuy;
-    public String category;
-    public QuestBoss boss;
+    private String previous;
+    private int lvl;
+    private boolean canBuy;
+    private String category;
+    private QuestBoss boss;
+    private QuestDrops drop;
 
     RealmList<QuestCollect> collect;
 
@@ -58,6 +59,9 @@ public class QuestContent extends RealmObject implements Item {
 
     public void setBoss(QuestBoss boss) {
         this.boss = boss;
+        if (boss != null) {
+            boss.setKey(key);
+        }
     }
 
     public RealmList<QuestCollect> getCollect() {
@@ -126,5 +130,20 @@ public class QuestContent extends RealmObject implements Item {
             }
         }
         return null;
+    }
+
+    public QuestDrops getDrop() {
+        return drop;
+    }
+
+    public void setDrop(QuestDrops drop) {
+        this.drop = drop;
+        if (drop != null) {
+            drop.setKey(key);
+        }
+    }
+
+    public boolean isBossQuest() {
+        return boss != null;
     }
 }

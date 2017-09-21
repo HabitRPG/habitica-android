@@ -19,7 +19,5 @@ public interface ChallengeLocalRepository extends BaseLocalRepository {
 
     Observable<RealmResults<Challenge>> getUserChallenges(String userId);
 
-    void saveChallenges(User user, List<Challenge> challenges);
-
     void setParticipating(Challenge challenge, boolean isParticipating);
 }

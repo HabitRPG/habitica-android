@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data;
 
+import com.habitrpg.android.habitica.models.AchievementResult;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
@@ -72,4 +73,6 @@ public interface SocialRepository extends BaseRepository {
     Observable<Void> rejectGroupInvite(String groupId);
 
     Observable<Quest> forceStartQuest(Group party);
+
+    Observable<AchievementResult> getMemberAchievements(String userId);
 }

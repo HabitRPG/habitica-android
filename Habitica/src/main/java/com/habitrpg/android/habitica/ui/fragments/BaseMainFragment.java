@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
@@ -34,6 +35,8 @@ public abstract class BaseMainFragment extends BaseFragment {
     public TabLayout tabLayout;
     @Nullable
     private CollapsingToolbarLayout collapsingToolbar;
+    @Nullable
+    protected FrameLayout toolbarAccessoryContainer;
     @Nullable
     public BottomBar bottomNavigation;
     public ViewGroup floatingMenuWrapper;
@@ -95,16 +98,6 @@ public abstract class BaseMainFragment extends BaseFragment {
             }
         }
 
-        if (tabLayout != null) {
-            if (this.usesTabLayout) {
-                tabLayout.removeAllTabs();
-                tabLayout.setVisibility(View.VISIBLE);
-                tabLayout.setTabMode(TabLayout.MODE_FIXED);
-            } else {
-                tabLayout.setVisibility(View.GONE);
-            }
-        }
-
         if (bottomNavigation != null) {
             if (this.usesBottomNavigation) {
                 bottomNavigation.removeOnTabSelectListener();
@@ -125,7 +118,21 @@ public abstract class BaseMainFragment extends BaseFragment {
             activity.setActiveFragment(this);
         }
 
+        updateTabLayoutVisibility();
+
         return null;
+    }
+
+    private void updateTabLayoutVisibility() {
+        if (tabLayout != null) {
+            if (this.usesTabLayout) {
+                tabLayout.removeAllTabs();
+                tabLayout.setVisibility(View.VISIBLE);
+                tabLayout.setTabMode(TabLayout.MODE_FIXED);
+            } else {
+                tabLayout.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -173,5 +180,9 @@ public abstract class BaseMainFragment extends BaseFragment {
 
     public void setCollapsingToolbar(@Nullable CollapsingToolbarLayout collapsingToolbar) {
         this.collapsingToolbar = collapsingToolbar;
+    }
+
+    public void setToolbarAccessoryContainer(FrameLayout toolbarAccessoryContainer) {
+        this.toolbarAccessoryContainer = toolbarAccessoryContainer;
     }
 }

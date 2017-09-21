@@ -13,12 +13,14 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -78,6 +80,9 @@ public class ChallengeDetailDialogHolder {
     }
 
     public static void showDialog(Activity activity, ChallengeRepository challengeRepository, Challenge challenge, Action1<Challenge> challengeLeftAction) {
+        if (activity == null) {
+            return;
+        }
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
         ChallengeDetailDialogHolder challengeDetailDialogHolder = new ChallengeDetailDialogHolder(dialogLayout, activity);
@@ -251,6 +256,7 @@ public class ChallengeDetailDialogHolder {
             Task task = rewards.get(i);
 
             View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_reward, tasks_layout, false);
+            ((ImageView)entry.findViewById(R.id.gold_icon)).setImageBitmap(HabiticaIconsHelper.imageOfGold());
             TextView title = (TextView) entry.findViewById(R.id.reward_title);
             title.setText(EmojiParser.parseEmojis(task.text));
             tasks_layout.addView(entry);
@@ -296,7 +302,7 @@ public class ChallengeDetailDialogHolder {
 
     @OnClick(R.id.challenge_join_btn)
     void joinChallenge() {
-        this.challengeRepository.joinChallenge(challenge).subscribe(this::changeViewsByChallenge, throwable -> {});
+        this.challengeRepository.joinChallenge(challenge).subscribe(this::changeViewsByChallenge, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.challenge_leave_btn)
@@ -311,7 +317,7 @@ public class ChallengeDetailDialogHolder {
                                         challengeLeftAction.call(challenge);
                                     }
                                     this.dialog.dismiss();
-                                }, throwable -> {})))
+                                }, RxErrorHandler.handleEmptyError())))
                 .setNegativeButton(context.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
 

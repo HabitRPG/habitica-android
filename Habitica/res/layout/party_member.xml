@@ -73,6 +73,7 @@
                             android:layout_margin="5dp"
                             android:ellipsize="middle"
                             android:lines="1"
+                            android:singleLine="true"
                             tools:text="class"
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -86,7 +87,6 @@
                 android:id="@+id/hpBar"
                 app:barForegroundColor="@color/hpColor"
                 app:description="@string/HP_default"
-                app:barIconDrawable="@drawable/ic_header_heart"
                 app:lightBackground="true"/>
         </LinearLayout>
 

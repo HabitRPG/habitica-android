@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -102,6 +104,9 @@ public class CreateChallengeActivity extends BaseActivity {
     @BindView(R.id.create_challenge_task_list)
     RecyclerView createChallengeTaskList;
 
+    @BindView(R.id.gem_icon)
+    ImageView gemIconView;
+
     @Inject
     ChallengeRepository challengeRepository;
     @Inject
@@ -134,6 +139,7 @@ public class CreateChallengeActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         userRepository.getUser(userId).subscribe(user1 -> this.user = user1, RxErrorHandler.handleEmptyError());
+        gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
     }
 
     @Override
@@ -240,8 +246,6 @@ public class CreateChallengeActivity extends BaseActivity {
             challengeId = bundle.getString(CHALLENGE_ID_KEY, null);
         }
 
-        EventBus.getDefault().register(this);
-
         fillControls();
 
         if (challengeId != null) {
@@ -254,7 +258,6 @@ public class CreateChallengeActivity extends BaseActivity {
     public void onDestroy() {
         socialRepository.close();
         challengeRepository.close();
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
@@ -391,7 +394,7 @@ public class CreateChallengeActivity extends BaseActivity {
             } else if (t.equals(addReward)) {
                 openNewTaskActivity(Task.TYPE_REWARD, null);
             }
-        });
+        }, RxErrorHandler.handleEmptyError());
 
         createChallengeTaskList.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             @Override
@@ -439,12 +442,14 @@ public class CreateChallengeActivity extends BaseActivity {
             checkPrizeAndMinimumForTavern();
 
             challengeRepository.getChallengeTasks(challengeId).subscribe(tasks -> {
-                tasks.tasks.forEach((s, task) -> addOrUpdateTaskInList(task));
-            }, Throwable::printStackTrace, () -> {
+                for (Task task : tasks.tasks.values()) {
+                    addOrUpdateTaskInList(task);
+                }
+            }, RxErrorHandler.handleEmptyError(), () -> {
                 // activate editMode to track taskChanges
                 editMode = true;
             });
-        });
+        }, RxErrorHandler.handleEmptyError());
     }
 
     private void openNewTaskActivity(String type, Task task) {
@@ -462,10 +467,10 @@ public class CreateChallengeActivity extends BaseActivity {
         bundle.putBoolean(TaskFormActivity.SHOW_CHECKLIST, false);
 
         if (user != null && user.getPreferences() != null) {
-            String allocationMode = user.getPreferences().getAllocationMode();
+            boolean allocationMode = user.getPreferences().hasTaskBasedAllocation();
 
             bundle.putString(TaskFormActivity.USER_ID_KEY, user.getId());
-            bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+            bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
         }
 
         Intent intent = new Intent(this, TaskFormActivity.class);

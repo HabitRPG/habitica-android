@@ -128,10 +128,9 @@ public class ItemsFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        if (isAdded()) {
-            return getString(R.string.sidebar_items);
-        } else {
+        if (!isAdded()) {
             return "";
         }
+        return getString(R.string.sidebar_items);
     }
 }

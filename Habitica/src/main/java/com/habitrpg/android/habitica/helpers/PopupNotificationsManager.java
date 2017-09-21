@@ -10,13 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
 import com.habitrpg.android.habitica.models.Notification;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
@@ -25,6 +22,9 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by krh12 on 12/9/2016.
@@ -62,7 +62,7 @@ public class PopupNotificationsManager {
             String youEarnedMessage = context.getString(R.string.checkInRewardEarned, notification.data.rewardText);
 
             TextView titleTextView = new TextView(context);
-            titleTextView.setBackgroundResource(R.color.best_100);
+            titleTextView.setBackgroundResource(R.color.blue_100);
             titleTextView.setTextColor(ContextCompat.getColor(context, R.color.white));
             float density = context.getResources().getDisplayMetrics().density;
             int paddingDp = (int) (16 * density);
@@ -77,7 +77,7 @@ public class PopupNotificationsManager {
             TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
             nextUnlockTextView.setText(nextUnlockText);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity, R.style.AlertDialogTheme)
+            AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme)
                     .setView(view)
                     .setCustomTitle(titleTextView)
                     .setPositiveButton(R.string.start_day, (dialog, which) -> {
@@ -89,8 +89,12 @@ public class PopupNotificationsManager {
                     })
                     .setMessage("");
 
-            final AlertDialog dialog = builder.create();
-            dialog.show();
+            Observable.just(null)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(o -> {
+                        final AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }, throwable -> {});
         } else {
             ShowSnackbarEvent event = new ShowSnackbarEvent();
             event.title = notification.data.message;
@@ -111,31 +115,22 @@ public class PopupNotificationsManager {
             return false;
         }
 
-        if (HabiticaApplication.currentActivity == null || HabiticaApplication.currentActivity.isFinishing()) {
-            return false;
+        if (this.seenNotifications == null) {
+            this.seenNotifications = new HashMap<>();
         }
 
-        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-            if (HabiticaApplication.currentActivity == null) return;
-            if ((HabiticaApplication.currentActivity).isFinishing()) return;
-
-            if (this.seenNotifications == null) {
-                this.seenNotifications = new HashMap<>();
+        for (Notification notification : notifications) {
+            if (this.seenNotifications.get(notification.getId()) != null) {
+                continue;
             }
 
-            for (Notification notification : notifications) {
-                if (this.seenNotifications.get(notification.getId()) != null) {
-                    continue;
-                }
-
-                if (!notification.getType().equals("LOGIN_INCENTIVE")) {
-                    continue;
-                }
-
-                this.displayNotification(notification);
-                this.seenNotifications.put(notification.getId(), true);
+            if (!notification.getType().equals("LOGIN_INCENTIVE")) {
+                continue;
             }
-        });
+
+            this.displayNotification(notification);
+            this.seenNotifications.put(notification.getId(), true);
+        }
 
         return true;
     }

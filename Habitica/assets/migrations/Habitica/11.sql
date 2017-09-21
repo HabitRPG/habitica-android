@@ -1,1 +1,0 @@
-ALTER TABLE HabitRPGUser ADD COLUMN flags_id varchar(255);

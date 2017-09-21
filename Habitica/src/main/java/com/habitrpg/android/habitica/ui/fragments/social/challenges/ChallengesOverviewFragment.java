@@ -126,6 +126,9 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
         return getString(R.string.challenges);
     }
 }

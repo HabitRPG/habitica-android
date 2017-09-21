@@ -28,6 +28,8 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 
+import static com.habitrpg.android.habitica.R.id.item;
+
 
 public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> implements TaskRepository {
 
@@ -116,13 +118,18 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     public Observable<Task> scoreChecklistItem(String taskId, String itemId) {
         return apiClient.scoreChecklistItem(taskId, itemId)
                 .flatMap(task -> localRepository.getTask(taskId).first())
-                .doOnNext(task -> localRepository.executeTransaction(realm -> {
+                .doOnNext(task -> {
+                    ChecklistItem updatedItem = null;
                     for (ChecklistItem item : task.getChecklist()) {
                         if (itemId.equals(item.getId())) {
-                            item.setCompleted(!item.getCompleted());
+                            updatedItem = item;
                         }
                     }
-                }));
+                    if (updatedItem != null) {
+                        ChecklistItem finalUpdatedItem = updatedItem;
+                        localRepository.executeTransaction(realm -> finalUpdatedItem.setCompleted(!finalUpdatedItem.getCompleted()));
+                    }
+                });
     }
 
     @Override
@@ -149,6 +156,10 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         if (task.getChecklist() != null && task.getChecklist().size() > 0) {
             RealmList<ChecklistItem> checklist = new RealmList<>(localRepository.getUnmanagedCopy(task.getChecklist()).toArray(new ChecklistItem[0]));
             task.setChecklist(checklist);
+        }
+        if (task.getReminders() != null && task.getReminders().size() > 0) {
+            RealmList<RemindersItem> reminders = new RealmList<>(localRepository.getUnmanagedCopy(task.getReminders()).toArray(new RemindersItem[0]));
+            task.setReminders(reminders);
         }
         return apiClient.createTask(task)
                 .map(task1 -> {

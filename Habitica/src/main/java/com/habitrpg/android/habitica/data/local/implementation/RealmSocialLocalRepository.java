@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.ChatMessageLike;
@@ -45,7 +46,7 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
     public Observable<Group> getGroup(String id) {
         return realm.where(Group.class)
                 .equalTo("id", id)
-                .findAllAsync()
+                .findAll()
                 .asObservable()
                 .filter(group -> group.isLoaded() && group.isValid() && !group.isEmpty())
                 .map(groups -> groups.first());
@@ -72,7 +73,7 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
 
     @Override
     public void deleteMessage(String id) {
-        getMessage(id).first().subscribe(chatMessage -> realm.executeTransaction(realm1 -> chatMessage.deleteFromRealm()), throwable -> {});
+        getMessage(id).first().subscribe(chatMessage -> realm.executeTransaction(realm1 -> chatMessage.deleteFromRealm()), RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -96,18 +97,18 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
         if (chatMessage.userLikesMessage(userId) == liked) {
             return;
         }
-        realm.executeTransaction(realm1 -> {
-            if (liked) {
+        if (liked) {
+            realm.executeTransaction(realm1 -> {
                 chatMessage.likes.add(new ChatMessageLike(userId));
-            } else {
-                for (ChatMessageLike like : chatMessage.likes) {
-                    if (userId.equals(like.id)) {
-                        like.deleteFromRealm();
-                        return;
-                    }
+            });
+        } else {
+            for (ChatMessageLike like : chatMessage.likes) {
+                if (userId.equals(like.id)) {
+                    realm.executeTransaction(realm1 -> like.deleteFromRealm());
+                    return;
                 }
             }
-        });
+        }
     }
 
     @Override
@@ -154,6 +155,32 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
                 party.quest.active = active;
             }
         });
+    }
+
+    @Override
+    public void saveChatMessages(String groupId, List<ChatMessage> chatMessages) {
+        realm.executeTransaction(realm1 -> realm.insertOrUpdate(chatMessages));
+        if (groupId != null) {
+            List<ChatMessage> existingMessages = realm.where(ChatMessage.class).equalTo("GroupId", groupId).findAll();
+            List<ChatMessage> messagesToRemove = new ArrayList<>();
+            for (ChatMessage existingMember : existingMessages) {
+                boolean isStillMember = false;
+                for (ChatMessage newMessage : chatMessages) {
+                    if (existingMember.id != null && existingMember.id.equals(newMessage.id)) {
+                        isStillMember = true;
+                        break;
+                    }
+                }
+                if (!isStillMember) {
+                    messagesToRemove.add(existingMember);
+                }
+            }
+            realm.executeTransaction(realm1 -> {
+                for (ChatMessage member : messagesToRemove) {
+                    member.deleteFromRealm();
+                }
+            });
+        }
     }
 
 

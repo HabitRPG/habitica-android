@@ -2,19 +2,21 @@ package com.habitrpg.android.habitica.data.implementation;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.amplitude.api.Amplitude;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.api.ApiService;
 import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.api.Server;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.models.AchievementResult;
 import com.habitrpg.android.habitica.models.ContentResult;
@@ -40,6 +42,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.ErrorResponse;
@@ -51,10 +54,10 @@ import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
@@ -84,6 +87,7 @@ import com.habitrpg.android.habitica.utils.PetMapDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
 import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDeserializer;
+import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.QuestListDeserializer;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
@@ -92,6 +96,8 @@ import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
 import com.habitrpg.android.habitica.utils.UserDeserializer;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -99,6 +105,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -111,7 +118,6 @@ import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
 import retrofit2.HttpException;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -123,6 +129,7 @@ import rx.schedulers.Schedulers;
 
 
 public class ApiClientImpl implements Action1<Throwable>, ApiClient {
+    private static final String TAG = "ApiClientImpl";
     private final GsonConverterFactory gsonConverter;
     private final HostConfig hostConfig;
     private final Retrofit retrofitAdapter;
@@ -150,6 +157,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     .doOnError(this);
     private AlertDialog displayedAlert;
     private String languageCode;
+    private String lastAPICallURL;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
@@ -187,8 +195,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent);
                     }
+                    builder = builder.addHeader("Authorization", "Basic " + BuildConfig.STAGING_KEY);
                     Request request = builder.method(original.method(), original.body())
                             .build();
+                    lastAPICallURL = original.url().toString();
                     return chain.proceed(request);
                 })
                 .build();
@@ -223,6 +233,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {}.getType();
         Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {}.getType();
         Type challengeListType = new TypeToken<List<Challenge>>() {}.getType();
+        Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {}.getType();
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -255,6 +266,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
                 .registerTypeAdapter(chatMessageListType, new ChatMessageListDeserializer())
                 .registerTypeAdapter(challengeListType, new ChallengeListDeserializer())
+                .registerTypeAdapter(questDropItemListType, new QuestDropItemsListSerialization())
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -317,18 +329,23 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
             } else {
                 showConnectionProblemDialog(R.string.internal_error_api);
             }
+        } else if (JsonSyntaxException.class.isAssignableFrom(throwableClass)) {
+            crashlyticsProxy.log("Json Error: " + lastAPICallURL + ",  " + throwable.getMessage());
         } else {
             crashlyticsProxy.logException(throwable);
         }
     }
 
     public ErrorResponse getErrorResponse(HttpException error) {
-        Response<?> response = error.response();
+        ResponseBody errorResponse = error.response().errorBody();
+        if (errorResponse == null) {
+            return new ErrorResponse();
+        }
         Converter<ResponseBody, ?> errorConverter =
                 gsonConverter
                         .responseBodyConverter(ErrorResponse.class, new Annotation[0], retrofitAdapter);
         try {
-            return (ErrorResponse) errorConverter.convert(response.errorBody());
+            return (ErrorResponse) errorConverter.convert(errorResponse);
         } catch (IOException e) {
             return new ErrorResponse();
         }
@@ -363,21 +380,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString) {
-        if (HabiticaApplication.currentActivity != null) {
-            HabiticaApplication.currentActivity.runOnUiThread(() -> {
-                if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
-                            .setTitle(resourceTitleString)
-                            .setMessage(resourceMessageString)
-                            .setNeutralButton(android.R.string.ok, (dialog, which) -> displayedAlert = null);
-
-                    if (!resourceTitleString.isEmpty()) {
-                        builder.setIcon(R.drawable.ic_warning_black);
-                    }
-
-                    displayedAlert = builder.show();
-                }
-            });
+        ShowConnectionProblemEvent event = new ShowConnectionProblemEvent(resourceTitleString, resourceMessageString);
+        EventBus.getDefault().post(event);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "showConnectionProblemDialog: " + resourceTitleString + " " + resourceMessageString);
         }
     }
 
@@ -432,24 +438,36 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<List<Equipment>> getInventoryBuyableGear() {
-        return apiService.getInventoryBuyableGear().compose(configureApiCallObserver());
+    public Observable<List<ShopItem>> retrieveInAppRewards() {
+        return apiService.retrieveInAppRewards().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<List<ShopItem>> retrieveOldGear() {
+        return apiService.retrieveOldGearRewards().compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Items> equipItem(String type, String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.equipItem(type, itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<BuyResponse> buyItem(String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.buyItem(itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseItem(String type, String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseItem(type, itemKey).compose(configureApiCallObserver());
     }
 
@@ -465,22 +483,33 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Void> purchaseHourglassItem(String type, String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseMysterySet(String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseMysterySet(itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseQuest(String key) {
+        if (key == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseQuest(key).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<User> sellItem(String itemType, String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.sellItem(itemType, itemKey).compose(configureApiCallObserver());
     }
 
@@ -608,7 +637,11 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Void> markPrivateMessagesRead() {
-        return apiService.markPrivateMessagesRead().compose(configureApiCallObserver());
+        //This is necessary, because the API call returns weird data.
+        return apiService.markPrivateMessagesRead()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(this);
     }
 
     @Override
@@ -757,7 +790,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> addPushDevice(Map<String, String> pushDeviceData) {
+    public Observable<List<Void>> addPushDevice(Map<String, String> pushDeviceData) {
         return apiService.addPushDevice(pushDeviceData).compose(configureApiCallObserver());
     }
 
@@ -841,5 +874,17 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     @Override
     public Observable<Void> runCron() {
         return apiService.runCron().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> resetAccount() {
+        return apiService.resetAccount().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> deleteAccount(String password) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("password", password);
+        return apiService.deleteAccount(updateObject).compose(configureApiCallObserver());
     }
 }

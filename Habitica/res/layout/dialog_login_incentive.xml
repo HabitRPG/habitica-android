@@ -27,6 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:id="@+id/next_unlock_message"
-        android:textColor="@color/best_10"/>
+        android:textColor="@color/blue_10"/>
 
 </LinearLayout>

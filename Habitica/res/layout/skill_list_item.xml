@@ -51,7 +51,5 @@
         android:paddingEnd="12dp"
         android:textColor="@color/white"
         tools:text="150"
-        android:textSize="15sp"
-        android:drawableLeft="@drawable/ic_header_magic"
-        android:drawableStart="@drawable/ic_header_magic" />
+        android:textSize="15sp" />
 </LinearLayout>

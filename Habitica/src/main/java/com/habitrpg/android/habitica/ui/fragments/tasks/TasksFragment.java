@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,8 +29,6 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
-import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.roughike.bottombar.BottomBarTab;
@@ -42,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import javax.inject.Inject;
 
@@ -57,7 +56,7 @@ public class TasksFragment extends BaseMainFragment {
     TagRepository tagRepository;
     MenuItem refreshItem;
     FloatingActionMenu floatingMenu;
-    SparseArray<TaskRecyclerViewFragment> viewFragmentsDictionary = new SparseArray<>();
+    Map<Integer, TaskRecyclerViewFragment> viewFragmentsDictionary = new WeakHashMap<>();
 
     private boolean displayingTaskForm;
     @Nullable
@@ -127,10 +126,11 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private boolean onFloatingMenuLongClicked(View view) {
-        int currentType = viewPager.getCurrentItem();
-        TaskRecyclerViewFragment currentFragment = viewFragmentsDictionary.get(currentType);
-        String className = currentFragment.getClassName();
-        openNewTaskActivity(className);
+        TaskRecyclerViewFragment currentFragment = getActiveFragment();
+        if (currentFragment != null) {
+            String className = currentFragment.getClassName();
+            openNewTaskActivity(className);
+        }
         return true;
     }
 
@@ -181,10 +181,10 @@ public class TasksFragment extends BaseMainFragment {
                 return;
             }
             int activePos = viewPager.getCurrentItem();
-            if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
+            if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1) != null && activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
                 viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
             }
-            if (activePos < viewPager.getAdapter().getCount()-1 && viewFragmentsDictionary.get(activePos+1).recyclerAdapter != null) {
+            if (activePos < viewPager.getAdapter().getCount()-1 && viewFragmentsDictionary.get(activePos+1) != null && viewFragmentsDictionary.get(activePos+1).recyclerAdapter != null) {
                 viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
             }
             if (getActiveFragment() != null) {
@@ -220,7 +220,7 @@ public class TasksFragment extends BaseMainFragment {
                         fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_DAILY);
                         break;
                     case 3:
-                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_REWARD);
+                        fragment = RewardsRecyclerviewFragment.newInstance(getContext(), user, Task.TYPE_REWARD);
                         break;
                     default:
                         fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_TODO);
@@ -341,19 +341,6 @@ public class TasksFragment extends BaseMainFragment {
     //region Events
     public void updateUserData(User user) {
         super.updateUserData(user);
-        if (this.user != null) {
-            for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
-                TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(index);
-                if (fragment != null) {
-                    TaskRecyclerViewAdapter adapter = fragment.recyclerAdapter;
-                    if (adapter.getClass().equals(DailiesRecyclerViewHolder.class)) {
-                        final DailiesRecyclerViewHolder dailyAdapter = (DailiesRecyclerViewHolder) fragment.recyclerAdapter;
-                        dailyAdapter.dailyResetOffset = this.user.getPreferences().getDayStart();
-                    }
-                    //AsyncTask.execute(() -> adapter.loadContent(true));
-                }
-            }
-        }
     }
 
     private void openNewTaskActivity(String type) {
@@ -361,15 +348,15 @@ public class TasksFragment extends BaseMainFragment {
             return;
         }
 
-        String allocationMode = "";
+        boolean allocationMode = false;
         if (user != null && user.getPreferences() != null) {
-            allocationMode = user.getPreferences().getAllocationMode();
+            allocationMode = user.getPreferences().hasTaskBasedAllocation();
         }
 
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
         bundle.putString(TaskFormActivity.USER_ID_KEY, this.user != null ? this.user.getId() : null);
-        bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+        bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
@@ -382,6 +369,7 @@ public class TasksFragment extends BaseMainFragment {
 
     @Nullable
     private TaskRecyclerViewFragment getActiveFragment() {
+
         return viewFragmentsDictionary.get(viewPager.getCurrentItem());
     }
 
@@ -391,16 +379,16 @@ public class TasksFragment extends BaseMainFragment {
             return;
         }
 
-        String allocationMode = "";
+        boolean allocationMode = false;
         if (user != null && user.getPreferences() != null) {
-            allocationMode = user.getPreferences().getAllocationMode();
+            allocationMode = user.getPreferences().hasTaskBasedAllocation();
         }
 
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.getType());
         bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.getId());
         bundle.putString(TaskFormActivity.USER_ID_KEY, this.user != null ? this.user.getId() : null);
-        bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+        bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);

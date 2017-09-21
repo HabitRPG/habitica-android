@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.AchievementResult;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
@@ -18,7 +19,6 @@ import java.util.Map;
 
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.functions.Action1;
 
 
 public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalRepository> implements SocialRepository {
@@ -39,7 +39,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
                     return chatMessage;
                 })
                 .toList()
-                .doOnNext(localRepository::save);
+                .doOnNext(chatMessages -> localRepository.saveChatMessages(groupId, chatMessages));
     }
 
     @Override
@@ -54,11 +54,17 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Void> flagMessage(ChatMessage chatMessage) {
+        if (chatMessage.id == null) {
+            return Observable.just(null);
+        }
         return apiClient.flagMessage(chatMessage.groupId, chatMessage.id);
     }
 
     @Override
     public Observable<ChatMessage> likeMessage(ChatMessage chatMessage) {
+        if (chatMessage.id == null) {
+            return Observable.just(null);
+        }
         boolean liked = chatMessage.userLikesMessage(userId);
         localRepository.likeMessage(chatMessage, userId, !liked);
         return apiClient.likeMessage(chatMessage.groupId, chatMessage.id)
@@ -90,22 +96,20 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Group> retrieveGroup(String id) {
-        return apiClient.getGroup(id)
-                .map(group -> {
-                    for (ChatMessage message : group.chat) {
-                        message.groupId = group.id;
-                    }
-                    return group;
-                })
-                .doOnNext(group -> {
-                    localRepository.save(group);
-                    localRepository.getGroup(group.id)
-                            .first()
-                            .subscribe(group1 -> {
-                                group.isMember = group1.isMember;
-                                localRepository.save(group);
-                            }, RxErrorHandler.handleEmptyError());
-                });
+        Observable<Group> observable = apiClient.getGroup(id);
+        if (!"party".equals(id)) {
+            observable = observable.withLatestFrom(localRepository.getGroup(id)
+                    .first(), (newGroup, oldGroup) -> {
+                newGroup.isMember = oldGroup.isMember;
+                return newGroup;
+            });
+        }
+        return observable.map(group -> {
+            for (ChatMessage message : group.chat) {
+                message.groupId = group.id;
+            }
+            return group;
+        }).doOnNext(localRepository::save);
     }
 
     @Override
@@ -116,7 +120,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     @Override
     public Observable<Group> leaveGroup(String id) {
         return apiClient.leaveGroup(id)
-                .flatMap(aVoid -> localRepository.getGroup(id))
+                .flatMap(aVoid -> localRepository.getGroup(id).first())
                 .doOnNext(group -> localRepository.executeTransaction(realm -> group.isMember = false));
     }
 
@@ -199,6 +203,9 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public Observable<Member> getMember(String userId) {
+        if (userId == null) {
+           return Observable.just(null);
+        }
         return apiClient.getMember(userId);
     }
 
@@ -251,5 +258,13 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     public Observable<Quest> forceStartQuest(Group party) {
         return apiClient.forceStartQuest(party.id, localRepository.getUnmanagedCopy(party))
                 .doOnNext(aVoid -> localRepository.setQuestActivity(party, true));
+    }
+
+    @Override
+    public Observable<AchievementResult> getMemberAchievements(String userId) {
+        if (userId == null) {
+            return Observable.just(null);
+        }
+        return apiClient.getMemberAchievements(userId);
     }
 }

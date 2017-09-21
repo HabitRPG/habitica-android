@@ -61,7 +61,7 @@ public class InboxFragment extends BaseMainFragment
         super.onCreateView(inflater, container, savedInstanceState);
 
         this.socialRepository.markPrivateMessagesRead(user)
-                .subscribe(aVoid -> {}, throwable -> {});
+                .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
 
         View v = inflater.inflate(R.layout.fragment_inbox, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -74,14 +74,9 @@ public class InboxFragment extends BaseMainFragment
     }
 
     private void loadMessages() {
-        if (user != null && user.isManaged()) {
-            user.getInbox().getMessages().where()
-                    .distinct("uuid")
-                    .sort("timestamp", Sort.DESCENDING)
-                    .asObservable()
+        userRepository.getInboxOverviewList()
                     .first()
                     .subscribe(this::setInboxMessages, RxErrorHandler.handleEmptyError());
-        }
     }
 
     @Override
@@ -144,8 +139,7 @@ public class InboxFragment extends BaseMainFragment
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
         this.userRepository.retrieveUser(true)
-                .subscribe(this::onUserReceived, throwable -> {
-                });
+                .subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError());
     }
 
     public void setInboxMessages(List<ChatMessage> messages) {
@@ -187,7 +181,9 @@ public class InboxFragment extends BaseMainFragment
 
     public void onUserReceived(User user) {
         this.user = user;
-        swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
@@ -212,10 +208,9 @@ public class InboxFragment extends BaseMainFragment
 
     @Override
     public String customTitle() {
-        if (isAdded()) {
-            return getString(R.string.sidebar_inbox);
-        } else {
+        if (!isAdded()) {
             return "";
         }
+        return getString(R.string.sidebar_inbox);
     }
 }

@@ -106,7 +106,7 @@ public class ChallengeTasksRecyclerViewAdapter
                 viewHolder = new HabitViewHolder(getContentView(parent, R.layout.habit_item_card));
                 break;
             case TYPE_DAILY:
-                viewHolder = new DailyViewHolder(getContentView(parent, R.layout.daily_item_card), dailyResetOffset);
+                viewHolder = new DailyViewHolder(getContentView(parent, R.layout.daily_item_card));
                 break;
             case TYPE_TODO:
                 viewHolder = new TodoViewHolder(getContentView(parent, R.layout.todo_item_card));

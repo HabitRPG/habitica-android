@@ -546,6 +546,8 @@
   <string name="read_community_guidelines">Перед публикацией ознакомьтесь с нашими Правилами сообщества</string>
   <string name="maintenance">Cодержание</string>
   <string name="reload_content">Обновить содержимое</string>
+  <string name="dailyDueDefaultView">Установить ежедневные задания по умолчанию на вкладку \'действующих\'</string>
+  <string name="dailyDueDefaultViewDescription">С включённом параметром, по умолчанию будут отображаться только \'действующие\' ежедневные задания вместо \'всех\'.</string>
   <string name="repeat_summary">Повторять %1$s каждые %2$s %3$s %4$s</string>
   <string name="no_billing_gems">На вашем устройстве нет поддерживаемых способов оплаты. Пожалуйста, используйте сайт habica, если вы хотите приобрести драгоценные камни.</string>
   <string name="no_billing_subscriptions">На вашем устройстве не поддерживается ни один из способов оплаты. Пожалуйста используйте наш веб-сайт если вы хотите оформить подписку.</string>
@@ -563,4 +565,27 @@
   <string name="challenge_create_error_title">Вам нужен заголовок, чтобы создать это Испытание.</string>
   <string name="description_optional">Описание (необязательное поле)</string>
   <string name="new_challenge_title">Новый заголовок для испытания</string>
+  <string name="ownership">Владение</string>
+  <string name="inn">Гостиница</string>
+  <string name="system">Система</string>
+  <string name="start_quest">Начать новый Квест</string>
+  <string name="leave_party">Покинуть команду</string>
+  <string name="party_description">Описание команды</string>
+  <string name="abort_confirmation">Вы уверены, что хотите отменить эту миссию? Это прервет её прохождение для каждого в вашей команде и весь прогресс будет потерян. Квестовый свиток останется у владельца.</string>
+  <string name="leave_quest_confirmation">Вы уверены, что хотите покинуть активный квест? Весь ваш прогресс будет потерян</string>
+  <string name="number_participants">%1$dУчастники</string>
+  <string name="welcome_back">C возвращением</string>
+  <string name="yesterdaililes_prompt">Вы вчера делали какие-нибудь из этих ежедневных заданий?</string>
+  <string name="start_day">Начать Мой День</string>
+  <string name="leave_party_confirmation">Вы уверены что хотите покинуть команду?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Следующий приз после  %d входа в игру</string>
+  <string name="pending">Ожидает</string>
+  <string name="accepted">Принято</string>
+  <string name="declined">Отклонено</string>
+  <string name="participants">Участники</string>
+  <string name="invitations">Приглашения</string>
+  <string name="quest_leader_header" formatted="false">Начато %s</string>
+  <string name="quest_abort_message">Вы уверены, что хотите отменить эту миссию? Это прервет её прохождение для каждого в вашей команде и весь прогресс будет потерян. Квестовый свиток останется у владельца.</string>
+  <string name="loading">Подключение...</string>
+  <string name="reloading_content">Обновление содержимого</string>
 </resources>

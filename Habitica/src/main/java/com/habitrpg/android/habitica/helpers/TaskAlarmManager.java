@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v7.preference.PreferenceManager;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
@@ -149,7 +150,7 @@ public class TaskAlarmManager {
         taskRepository.getTaskCopies(userId)
                 .first()
                 .flatMap(Observable::from)
-                .subscribe(this::setAlarmsForTask, crashlyticsProxy::logException);
+                .subscribe(this::setAlarmsForTask, RxErrorHandler.handleEmptyError());
 
         scheduleDailyReminder(context);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -157,9 +158,13 @@ public class TaskAlarmManager {
         editor.apply();
     }
 
+    @Nullable
     private RemindersItem setTimeForDailyReminder(RemindersItem remindersItem, Task task) {
         Date oldTime = remindersItem.getTime();
         Date newTime = task.getNextReminderOccurence(oldTime);
+        if (newTime == null) {
+            return null;
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(newTime);
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), oldTime.getHours(), oldTime.getMinutes(), 0);
@@ -167,9 +172,9 @@ public class TaskAlarmManager {
         return remindersItem;
     }
 
-    private void setAlarmForRemindersItem(Task reminderItemTask, RemindersItem remindersItem) {
+    private void setAlarmForRemindersItem(Task reminderItemTask, @Nullable RemindersItem remindersItem) {
         Date now = new Date();
-        if (remindersItem.getTime().before(now)) {
+        if (remindersItem == null || remindersItem.getTime().before(now)) {
             return;
         }
 

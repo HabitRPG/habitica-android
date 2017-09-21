@@ -43,9 +43,9 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
-import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
@@ -81,7 +81,6 @@ import javax.inject.Named;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.RealmList;
-import rx.Observable;
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
@@ -241,12 +240,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Inject
     RemoteConfigManager remoteConfigManager;
 
-    private boolean showTagSelection;
-
-    private boolean showChecklist;
-    private boolean setIgnoreFlag;
     private Task task;
-    private String allocationMode;
+    private boolean taskBasedAllocation;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
     private List<CheckBox> repeatablesWeekDayCheckboxes = new ArrayList<>();
     private NumberPicker frequencyPicker;
@@ -259,7 +254,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private RemindersManager remindersManager;
     private FirstDayOfTheWeekHelper firstDayOfTheWeekHelper;
 
-    private boolean saveToDb;
     private String taskType;
     private String taskId;
     private EmojiPopup popup;
@@ -278,12 +272,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         taskType = bundle.getString(TASK_TYPE_KEY);
         taskId = bundle.getString(TASK_ID_KEY);
-        allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
-        showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
-        showChecklist = bundle.getBoolean(SHOW_CHECKLIST, true);
-        allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
-        saveToDb = bundle.getBoolean(SAVE_TO_DB, true);
-        setIgnoreFlag = bundle.getBoolean(SET_IGNORE_FLAG, false);
+        taskBasedAllocation = bundle.getBoolean(ALLOCATION_MODE_KEY);
+        boolean showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
         tagCheckBoxList = new ArrayList<>();
 
         tagsWrapper.setVisibility(showTagSelection ? View.VISIBLE : View.GONE);
@@ -307,7 +297,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         startDateListener = new DateEditTextListener(startDatePickerText);
 
         btnDelete.setEnabled(false);
-        ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.worse_10));
+        ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.red_10));
         btnDelete.setOnClickListener(view -> new AlertDialog.Builder(view.getContext())
                 .setTitle(getString(R.string.taskform_delete_title))
                 .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), (dialog, which) -> {
@@ -333,7 +323,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskAttributeSpinner.setAdapter(attributeAdapter);
         taskAttributeSpinner.setSelection(0);
 
-        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
+        if (!taskBasedAllocation) {
             attributeWrapper.setVisibility(View.GONE);
         }
 
@@ -421,7 +411,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             @Override
             public void onKeyboardClose() {
-                if (popup.isShowing()) {
+                if (popup != null && popup.isShowing()) {
                     popup.dismiss();
                 }
             }
@@ -466,7 +456,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 .subscribe(loadedTags -> {
                             tags = loadedTags;
                             createTagsCheckBoxes();
-                        }, throwable -> {}
+                        }, RxErrorHandler.handleEmptyError()
                 );
 
         if (taskId != null) {
@@ -771,7 +761,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void changeEmojiKeyboardIcon(Boolean keyboardOpened) {
-
         if (keyboardOpened) {
             emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
             emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
@@ -825,6 +814,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         remindersRecyclerView.setAdapter(remindersAdapter);
 
         remindersRecyclerView.setLayoutManager(new WrapContentRecyclerViewLayoutManager(this));
+
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(remindersAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
@@ -942,8 +932,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             this.frequencyContainer.addView(dayRow);
         }
 
-        if (this.task != null) {
-
+        if (this.task != null && this.task.isValid()) {
             if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                 int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
                 this.weekdayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
@@ -984,6 +973,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void populate(Task task) {
+        if (!task.isValid()) {
+            return;
+        }
         taskText.setText(task.text);
         taskNotes.setText(task.notes);
         taskValue.setText(String.format(Locale.getDefault(), "%.2f", task.value));
@@ -1096,8 +1088,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         taskRepository.executeTransaction(realm -> {
-            task.text = text;
+            try {
+                task.text = text;
+                task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
+            } catch (IllegalArgumentException ignored) {
 
+            }
             if (checklistAdapter != null) {
                 if (checklistAdapter.getCheckListItems() != null) {
                     RealmList<ChecklistItem> newChecklist = new RealmList<>();
@@ -1119,7 +1115,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             taskTags.addAll(selectedTags);
             task.setTags(taskTags);
 
-            task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
 
             if (taskDifficultySpinner.getSelectedItemPosition() == 0) {
                 task.setPriority((float) 0.1);
@@ -1131,7 +1126,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 task.setPriority((float) 2.0);
             }
 
-            if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
+            if (!taskBasedAllocation) {
                 task.setAttribute(Task.ATTRIBUTE_STRENGTH);
             } else {
                 switch (taskAttributeSpinner.getSelectedItemPosition()) {
@@ -1327,6 +1322,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         View currentFocus = getCurrentFocus();
         if (currentFocus != null) {
             imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
+        if (popup != null) {
+            popup.dismiss();
+            popup = null;
         }
     }
 

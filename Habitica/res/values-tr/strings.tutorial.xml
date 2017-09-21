@@ -1,6 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="tutorial_overview">İşte geldik! İlgi alanlarına göre sana bazı işler doldurdum. Kendin de birkaç tane eklemeyi dene. Başlığa basarak işleri düzenleyebilirsin.</string>
+  <string name="tutorial_habits_1">İlk önce alışkanlıklar. Geliştirmek istediğiniz olumlu alışkanlıklar veya bırakmak istediğiniz olumsuz alışkanlıklar olabilirler.</string>
+  <string name="tutorial_habits_2">Olumlu her bir alışkanlık kazandığınızda , deneyim ve altın almak için + simgesine dokunun!</string>
+  <string name="tutorial_habits_3">Eğer hata yaparsan ve negatif bir alışkanlık yaparsan, - düğmesine basarak avatarının sağlığını azaltarak sorumluluk alabilirsin.</string>
+  <string name="tutorial_habits_4">Bi dene! Diğer görev türlerini alttaki gezinme aracıyla keşfedebilirsiniz.</string>
+  <string name="tutorial_dailies_1">Düzenli bir programda yapılması gereken, zamana duyarlı görevler için Günlükl İşler oluştur.</string>
+  <string name="tutorial_dailies_2">Dikkatli olun - eğer birini kaçırırsanız, avatarınız bir gece hasar alacaktır. Onları sürekli olarak kontrol etmek büyük ödüller getirrir!</string>
+  <string name="tutorial_todos_1">Yapmanız gereken görevleri takip etmek için To-do\'yu kullanın.</string>
+  <string name="tutorial_todos_2">Yapılacak İşin belirli bir süreyle yapılması gerekiyorsa, bir bitiş tarihi ayarla. Öyle görünüyor ki birini yapılmış olarak işaretleyebilirsin - devam et!</string>
+  <string name="tutorial_rewards_1">Kazandığınız altınla avatarınızatechizat alın!</string>
+  <string name="tutorial_rewards_2">You can also make real-world Custom Rewards based on what motivates you.</string>
+  <string name="tutorial_tasks_complete">Şimdilik bu kadar. Bir hatırlatıcıya ihtiyacınız varsa SSS bölümünü kontrol edin.</string>
   <string name="tutorial_equipment">Ekipman satın aldığında burada gözükür. Savaş Ekipmanın niteliklerini, ve Kostümün (eğer etkinse) avatarının ne giydiğini etkiler.</string>
   <string name="tutorial_items">Görevlerini tamamlayarak ve seviye yükselerek eşya kazan. Kullanmak için eşyanın üzerine tıkla!</string>
   <string name="tutorial_pets">Gerçek dünya işlerini tamamladıkça, artık rastgele yumurta ve iksir bulma şansın var. Hayvanları yumurtadan çıkarmak için o ikisini birleştir</string>

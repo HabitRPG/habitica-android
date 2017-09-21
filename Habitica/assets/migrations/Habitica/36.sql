@@ -1,1 +1,0 @@
-ALTER TABLE Customization ADD COLUMN isBuyable bool;

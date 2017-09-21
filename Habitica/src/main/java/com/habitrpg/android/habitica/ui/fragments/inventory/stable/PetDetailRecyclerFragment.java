@@ -132,10 +132,9 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
-        if (isAdded()) {
-            return getString(R.string.pets);
-        } else {
+        if (!isAdded()) {
             return "";
         }
+        return getString(R.string.pets);
     }
 }

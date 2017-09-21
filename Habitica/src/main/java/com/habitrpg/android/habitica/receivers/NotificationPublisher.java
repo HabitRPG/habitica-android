@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.WakefulBroadcastReceiver;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -24,7 +25,7 @@ import javax.inject.Named;
 
 
 //https://gist.github.com/BrandonSmith/6679223
-public class NotificationPublisher extends BroadcastReceiver {
+public class NotificationPublisher extends WakefulBroadcastReceiver {
 
     @Inject
     TaskRepository taskRepository;
@@ -48,7 +49,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             taskRepository.getTasks(Task.TYPE_DAILY, userId).subscribe(dailies -> {
                 boolean showNotifications = false;
                 for (Task task : dailies) {
-                    if (task.checkIfDue(0)) {
+                    if (task.checkIfDue()) {
                         showNotifications = true;
                         break;
                     }

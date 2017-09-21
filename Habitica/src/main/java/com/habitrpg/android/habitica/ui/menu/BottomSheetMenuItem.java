@@ -30,7 +30,7 @@ public class BottomSheetMenuItem {
         TextView textView = (TextView) menuItemView.findViewById(R.id.textView);
         textView.setText(this.title);
         if (this.isDestructive) {
-            textView.setTextColor(ContextCompat.getColor(context, R.color.worse_50));
+            textView.setTextColor(ContextCompat.getColor(context, R.color.red_50));
         }
         return menuItemView;
     }

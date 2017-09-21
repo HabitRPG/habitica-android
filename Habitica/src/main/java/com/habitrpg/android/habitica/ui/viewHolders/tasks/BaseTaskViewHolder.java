@@ -13,6 +13,8 @@ import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
+import net.pherth.android.emoji_library.EmojiTextView;
+
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindColor;
@@ -28,10 +30,10 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
     public Task task;
     protected Context context;
     @BindView(R.id.checkedTextView)
-    TextView titleTextView;
+    EmojiTextView titleTextView;
 
     @BindView(R.id.notesTextView)
-    TextView notesTextView;
+    EmojiTextView notesTextView;
 
     @Nullable
     @BindView(R.id.rightBorderView)

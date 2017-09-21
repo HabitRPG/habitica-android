@@ -17,7 +17,8 @@
             android:id="@+id/tableRowTextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:singleLine="true"
+            android:lines="1"
             android:textSize="@dimen/abc_text_size_subhead_material"
             android:ellipsize="end" />
 

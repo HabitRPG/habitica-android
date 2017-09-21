@@ -1,1 +1,0 @@
-ALTER TABLE ItemData ADD COLUMN specialClass varchar(255);

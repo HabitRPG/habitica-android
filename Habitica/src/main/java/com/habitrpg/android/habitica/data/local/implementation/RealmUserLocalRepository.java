@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -12,8 +13,8 @@ import java.util.List;
 
 import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import rx.Observable;
 
 
@@ -35,23 +36,26 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void saveUser(User user) {
-        realm.executeTransaction(realm1 -> {
-            realm1.insertOrUpdate(user);
-
-            if (user.getTags() != null) {
-                removeOldTags(user.getId(), user.getTags());
-            }
-        });
+        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(user));
+        if (user.getTags() != null) {
+            removeOldTags(user.getId(), user.getTags());
+        }
     }
 
     private void removeOldTags(String userId, List<Tag> onlineTags) {
         OrderedRealmCollectionSnapshot<Tag> tags = realm.where(Tag.class).equalTo("userId", userId).findAll().createSnapshot();
 
+        List<Tag> tagsToDelete = new ArrayList<>();
         for (Tag tag : tags) {
             if (!onlineTags.contains(tag)) {
-                tag.deleteFromRealm();
+                tagsToDelete.add(tag);
             }
         }
+        realm.executeTransaction(realm1 -> {
+            for (Tag tag : tagsToDelete) {
+                tag.deleteFromRealm();
+            }
+        });
     }
 
     @Override
@@ -97,6 +101,26 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
         return realm.where(Skill.class)
                 .in("key", ownedItems.toArray(new String[0]))
                 .findAll()
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getInboxMessages(String userId, String replyToUserID) {
+        return realm.where(ChatMessage.class)
+                .equalTo("isInboxMessage", true)
+                .equalTo("uuid", replyToUserID)
+                .findAllSorted("timestamp", Sort.DESCENDING)
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public Observable<RealmResults<ChatMessage>> getInboxOverviewList(String userId) {
+        return realm.where(ChatMessage.class)
+                .equalTo("isInboxMessage", true)
+                .distinct("uuid")
+                .sort("timestamp", Sort.DESCENDING)
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }

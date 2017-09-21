@@ -35,4 +35,9 @@ public class EmptyCrashlyticsProxy implements CrashlyticsProxy {
     public void fabricLogE(String s1, String s2, Exception e) {
         //pass
     }
+
+    @Override
+    public void log(String msg) {
+        //pass
+    }
 }

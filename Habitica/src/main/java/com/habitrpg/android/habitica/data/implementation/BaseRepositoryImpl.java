@@ -28,6 +28,11 @@ public abstract class BaseRepositoryImpl<T extends BaseLocalRepository> implemen
     }
 
     @Override
+    public boolean isClosed() {
+        return localRepository.isClosed();
+    }
+
+    @Override
     public <T extends RealmObject> T getUnmanagedCopy(T object) {
         return localRepository.getUnmanagedCopy(object);
     }

@@ -81,12 +81,12 @@ public class TaskFilterHelper {
             switch (activeFilter) {
                 case Task.FILTER_ACTIVE:
                     if (task.type.equals(Task.TYPE_DAILY)) {
-                        return task.isDisplayedActive(0);
+                        return task.isDisplayedActive();
                     } else {
                         return !task.completed;
                     }
                 case Task.FILTER_GRAY:
-                    return task.completed || !task.isDisplayedActive(0);
+                    return task.completed || !task.isDisplayedActive();
                 case Task.FILTER_WEAK:
                     return task.value < 0;
                 case Task.FILTER_STRONG:

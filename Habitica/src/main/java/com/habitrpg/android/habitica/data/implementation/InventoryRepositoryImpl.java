@@ -3,31 +3,39 @@ package com.habitrpg.android.habitica.data.implementation;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Item;
-import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.realm.RealmResults;
 import rx.Observable;
 
 public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLocalRepository> implements InventoryRepository {
 
-    public InventoryRepositoryImpl(InventoryLocalRepository localRepository, ApiClient apiClient) {
+    private final RemoteConfigManager remoteConfigManager;
+
+    public InventoryRepositoryImpl(InventoryLocalRepository localRepository, ApiClient apiClient, RemoteConfigManager remoteConfigManager) {
         super(localRepository, apiClient);
+        this.remoteConfigManager = remoteConfigManager;
     }
 
     @Override
@@ -46,8 +54,47 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<List<Equipment>> getInventoryBuyableGear() {
-        return apiClient.getInventoryBuyableGear();
+    public Observable<RealmResults<ShopItem>> getInAppRewards() {
+        return localRepository.getInAppRewards();
+    }
+
+    @Override
+    public Observable<List<ShopItem>> retrieveInAppRewards() {
+        if (remoteConfigManager.newShopsEnabled()) {
+            return apiClient.retrieveInAppRewards()
+                    .doOnNext(localRepository::saveInAppRewards);
+        } else {
+            return apiClient.retrieveOldGear()
+                    .map(items -> {
+                        List<String> itemKeys = new ArrayList<>();
+                        for (ShopItem item : items) {
+                            itemKeys.add(item.key);
+                        }
+                        itemKeys.add("potion");
+                        itemKeys.add("armoire");
+                        return itemKeys;
+                    })
+                    .flatMap(this::getItems)
+                    .map(items -> {
+                        List<ShopItem> buyableItems = new ArrayList<>();
+                        if (items != null) {
+                            for (Equipment item : items) {
+                                ShopItem shopItem = new ShopItem();
+                                shopItem.key = item.key;
+                                shopItem.text = item.text;
+                                shopItem.notes = item.notes;
+                                shopItem.value = (int)item.value;
+                                shopItem.currency = "gold";
+                                shopItem.purchaseType = item.type;
+
+                                buyableItems.add(shopItem);
+                            }
+                        }
+                        return buyableItems;
+                    })
+                    .doOnNext(localRepository::saveInAppRewards)
+                    .first();
+        }
     }
 
     @Override
@@ -61,8 +108,13 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType, User user) {
-        return localRepository.getOwnedItems(itemType, user);
+    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(Class<? extends Item> itemClass, User user) {
+        return localRepository.getOwnedItems(itemClass, user);
+    }
+
+    @Override
+    public Observable<? extends Map<String, Item>> getOwnedItems(User user) {
+        return localRepository.getOwnedItems(user);
     }
 
     @Override
@@ -217,7 +269,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     @Override
     public Observable<BuyResponse> buyItem(User user, String key, double value) {
         return apiClient.buyItem(key)
-                .doOnNext(buyResponse -> localRepository.executeTransaction(realm -> {
+                .doOnNext(buyResponse -> {
                     User copiedUser = localRepository.getUnmanagedCopy(user);
                     if (buyResponse.items != null) {
                         buyResponse.items.setUserId(user.getId());
@@ -241,6 +293,31 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                         copiedUser.getStats().setLvl(buyResponse.lvl);
                     }
                     localRepository.save(copiedUser);
-                }));
+                });
+    }
+
+    @Override
+    public Observable<Shop> fetchShopInventory(String identifier) {
+        return apiClient.fetchShopInventory(identifier);
+    }
+
+    @Override
+    public Observable<Void> purchaseMysterySet(String categoryIdentifier) {
+        return apiClient.purchaseMysterySet(categoryIdentifier);
+    }
+
+    @Override
+    public Observable<Void> purchaseHourglassItem(String purchaseType, String key) {
+        return apiClient.purchaseHourglassItem(purchaseType, key);
+    }
+
+    @Override
+    public Observable<Void> purchaseQuest(String key) {
+        return apiClient.purchaseQuest(key);
+    }
+
+    @Override
+    public Observable<Void> purchaseItem(String purchaseType, String key) {
+        return apiClient.purchaseItem(purchaseType, key);
     }
 }

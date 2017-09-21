@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,21 +16,16 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -214,6 +210,8 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
                 TextView priceLabel = (TextView) dialogContent.findViewById(R.id.priceLabel);
                 priceLabel.setText(String.valueOf(customization.getPrice()));
+
+                ((ImageView)dialogContent.findViewById(R.id.gem_icon)).setImageBitmap(HabiticaIconsHelper.imageOfGem());
 
                 AlertDialog dialog = new AlertDialog.Builder(context)
                         .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {

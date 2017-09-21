@@ -150,7 +150,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
         recyclerView.setAdapter(chatAdapter);
 
-        socialRepository.getGroupChat(groupId).first().subscribe(this::setChatMessages, throwable -> {});
+        socialRepository.getGroupChat(groupId).first().subscribe(this::setChatMessages, RxErrorHandler.handleEmptyError());
 
         if (user != null && user.getFlags() != null && user.getFlags().isCommunityGuidelinesAccepted()) {
             communityGuidelinesView.setVisibility(View.GONE);
@@ -214,8 +214,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                         .subscribe(aVoid -> {
                             MainActivity activity = (MainActivity) getActivity();
                             showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL);
-                        }, throwable -> {
-                        }))
+                        }, RxErrorHandler.handleEmptyError()))
                 .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});
         builder.show();
     }
@@ -275,7 +274,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         if (chatText.length() > 0) {
             chatEditText.setText(null);
             socialRepository.postGroupChat(groupId, chatText).subscribe(postChatMessageResult -> {
-                recyclerView.scrollToPosition(0);
+                if (recyclerView != null) {
+                    recyclerView.scrollToPosition(0);
+                }
             }, RxErrorHandler.handleEmptyError());
         }
     }

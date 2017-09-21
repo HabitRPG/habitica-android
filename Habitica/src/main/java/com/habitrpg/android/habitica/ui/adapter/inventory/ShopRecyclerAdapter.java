@@ -1,30 +1,42 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
+import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
-import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-
-import org.greenrobot.eventbus.EventBus;
+import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +45,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private List<Object> items;
     private String shopIdentifier;
+    private Map<String, Item> ownedItems;
 
     public void setShop(Shop shop) {
         shopIdentifier = shop.identifier;
@@ -59,13 +72,13 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return new ShopHeaderViewHolder(view);
         } else if (viewType == 1) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.customization_section_header, parent, false);
+                    .inflate(R.layout.shop_section_header, parent, false);
 
             return new SectionViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_shopitem, parent, false);
-            ItemViewHolder viewHolder = new ItemViewHolder(view);
+            ShopItemViewHolder viewHolder = new ShopItemViewHolder(view);
             viewHolder.shopIdentifier = shopIdentifier;
             return viewHolder;
         }
@@ -75,15 +88,15 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Object obj = this.items.get(position);
         if (obj.getClass().equals(Shop.class)) {
-            ShopHeaderViewHolder viewHolder = (ShopHeaderViewHolder) holder;
-            Shop shop = (Shop) obj;
-            DataBindingUtils.loadImage(viewHolder.imageView, shop.imageName);
-            viewHolder.descriptionView.setText(Html.fromHtml(shop.getNotes()));
+            ((ShopHeaderViewHolder) holder).bind((Shop) obj);
         } else if (obj.getClass().equals(ShopCategory.class)) {
             ((SectionViewHolder) holder).bind(((ShopCategory) obj).getText());
         } else {
-            ((ItemViewHolder) holder).bind((ShopItem) items.get(position));
-
+            ShopItem item = (ShopItem) items.get(position);
+            ((ShopItemViewHolder) holder).bind(item);
+            if (ownedItems.containsKey(item.getKey())) {
+                ((ShopItemViewHolder) holder).setItemCount(ownedItems.get(item.getKey()).getOwned());
+            }
         }
     }
 
@@ -118,136 +131,72 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyItemChanged(itemPos);
     }
 
-    static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        @BindView(R.id.imageView)
-        SimpleDraweeView imageView;
-        @BindView(R.id.titleView)
-        TextView titleView;
-        @BindView(R.id.descriptionView)
-        TextView descriptionView;
-        @BindView(R.id.buyButton)
-        Button buyButton;
-        @BindView(R.id.unlockView)
-        TextView unlockView;
-        @BindView(R.id.limitedCountText)
-        TextView limitedCountText;
-
-        String shopIdentifier;
-        ShopItem item;
-
-        Context context;
-
-        public ItemViewHolder(View itemView) {
-            super(itemView);
-
-            context = itemView.getContext();
-
-            ButterKnife.bind(this, itemView);
-
-            itemView.setOnClickListener(this);
-            itemView.setClickable(true);
-
-            buyButton.setOnClickListener(view -> {
-                String currencyString = "";
-                if (item.getCurrency().equals("gems")) {
-                    if (item.getValue() == 1) {
-                        currencyString = context.getString(R.string.gem);
-                    } else {
-                        currencyString = context.getString(R.string.gems);
-                    }
-                } else if (item.getCurrency().equals("gold")) {
-                    if (item.getValue() == 1) {
-                        currencyString = context.getString(R.string.gold_singular);
-                    } else {
-                        currencyString = context.getString(R.string.gold_plural);
-                    }
-                } else if (item.getCurrency().equals("hourglasses")) {
-                    if (item.getValue() == 1) {
-                        currencyString = context.getString(R.string.hourglass);
-                    } else {
-                        currencyString = context.getString(R.string.hourglasses);
-                    }
-                }
-                new AlertDialog.Builder(context)
-                        .setTitle(R.string.purchase_confirmation_title)
-                        .setMessage(context.getString(R.string.confirm_purchase_text, item.getText(), item.getValue().toString(), currencyString))
-                        .setPositiveButton(android.R.string.yes, (dialog, which) -> this.buyItem())
-                        .setNegativeButton(android.R.string.no, (dialog, which) -> dialog.dismiss())
-                        .show();
-            });
-        }
-
-        private void buyItem() {
-            BuyGemItemCommand command = new BuyGemItemCommand();
-            command.shopIdentifier = shopIdentifier;
-            command.item = item;
-            EventBus.getDefault().post(command);
-        }
-
-        public void bind(ShopItem item) {
-            this.item = item;
-            buyButton.setVisibility(View.VISIBLE);
-            titleView.setText(item.getText());
-            descriptionView.setText(Html.fromHtml(item.getNotes()));
-
-            DataBindingUtils.loadImage(this.imageView, item.getImageName());
-
-            if (item.getUnlockCondition() == null) {
-                buyButton.setText(item.getValue().toString());
-                if (item.getCurrency().equals("gold")) {
-                    buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gold, 0, 0, 0);
-                } else if (item.getCurrency().equals("gems")) {
-                    buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gem, 0, 0, 0);
-                } else {
-                    buyButton.setVisibility(View.GONE);
-                }
-                unlockView.setVisibility(View.GONE);
-            } else {
-                buyButton.setVisibility(View.GONE);
-                unlockView.setVisibility(View.VISIBLE);
-                unlockView.setText(item.unlockCondition.readableUnlockConditionId());
-            }
-
-            if (item.getLocked()) {
-                buyButton.setVisibility(View.GONE);
-            }
-
-            if (item.limitedNumberLeft != null) {
-                limitedCountText.setText(context.getString(R.string.limited_count, item.limitedNumberLeft));
-                limitedCountText.setVisibility(View.VISIBLE);
-            } else {
-                limitedCountText.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void onClick(View view) {
-            ItemDetailDialog dialog = new ItemDetailDialog(context);
-            dialog.setTitle(item.getText());
-            dialog.setDescription(Html.fromHtml(item.getNotes()));
-            dialog.setImage(item.getImageName());
-            if (item.getUnlockCondition() == null) {
-                dialog.setCurrency(item.getCurrency());
-                dialog.setValue(item.getValue());
-                dialog.setBuyListener((clickedDialog, which) -> this.buyItem());
-            }
-            dialog.show();
-        }
+    public void setOwnedItems(Map<String, Item> ownedItems) {
+        this.ownedItems = ownedItems;
+        this.notifyDataSetChanged();
     }
 
-    public static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
+    static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imageView)
-        public SimpleDraweeView imageView;
+        private final Context context;
+        @BindView(R.id.sceneView)
+        public SimpleDraweeView sceneView;
+        @BindView(R.id.backgroundView)
+        public ImageView backgroundView;
+
+        @BindView(R.id.name_plate)
+        public TextView namePlate;
 
         @BindView(R.id.descriptionView)
         public TextView descriptionView;
 
-        public ShopHeaderViewHolder(View itemView) {
+
+        ShopHeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
             descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+
+        public void bind(Shop shop) {
+            DataBindingUtils.loadImage(sceneView, shop.identifier+"_scene");
+
+            backgroundView.setScaleType(ImageView.ScaleType.FIT_START);
+
+            ImageRequest imageRequest = ImageRequestBuilder
+                    .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + shop.identifier+"_background.png"))
+                    .build();
+
+            ImagePipeline imagePipeline = Fresco.getImagePipeline();
+            final DataSource<CloseableReference<CloseableImage>>
+                    dataSource = imagePipeline.fetchDecodedImage(imageRequest, this);
+
+            dataSource.subscribe(new BaseBitmapDataSubscriber() {
+
+                @Override
+                public void onNewResultImpl(@Nullable Bitmap bitmap) {
+                    if (dataSource.isFinished() && bitmap != null){
+                        float aspectRatio = bitmap.getWidth() /
+                                (float) bitmap.getHeight();
+                        int height = (int) context.getResources().getDimension(R.dimen.shop_height);
+                        int width = Math.round(height * aspectRatio);
+                        BitmapDrawable drawable = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, width, height, false));
+                        drawable.setTileModeX(Shader.TileMode.REPEAT);
+                        backgroundView.setBackground(drawable);
+                        dataSource.close();
+                    }
+                }
+
+                @Override
+                public void onFailureImpl(DataSource dataSource) {
+                    if (dataSource != null) {
+                        dataSource.close();
+                    }
+                }
+            }, CallerThreadExecutor.getInstance());
+
+            descriptionView.setText(Html.fromHtml(shop.getNotes()));
+            namePlate.setText(shop.getNpcNameResource());
         }
 
     }

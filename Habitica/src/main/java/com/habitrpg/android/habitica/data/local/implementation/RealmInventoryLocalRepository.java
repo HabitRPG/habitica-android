@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.local.implementation;
 import android.content.Context;
 
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
@@ -12,16 +13,21 @@ import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import rx.Observable;
+import rx.functions.Func4;
 
 
 public class RealmInventoryLocalRepository extends RealmContentLocalRepository implements InventoryLocalRepository {
@@ -81,31 +87,13 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     }
 
     @Override
-    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType, User user) {
-        Class<? extends Item> itemClass = null;
-        switch (itemType) {
-            case "eggs":
-                itemClass = Egg.class;
-                break;
-            case "hatchingPotions":
-                itemClass = HatchingPotion.class;
-                break;
-            case "food":
-                itemClass = Food.class;
-                break;
-            case "quests":
-                itemClass = QuestContent.class;
-                break;
-            case "special":
-                itemClass = SpecialItem.class;
-                break;
-        }
+    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(Class<? extends Item> itemClass, User user) {
         if (itemClass == null) {
             return Observable.empty();
         }
 
         RealmQuery<? extends Item> query = realm.where(itemClass);
-        if ("special".equals(itemType)) {
+        if (SpecialItem.class.isAssignableFrom(itemClass)) {
             if (user != null && user.getPurchased() != null && user.getPurchased().getPlan() != null) {
                 SpecialItem mysticItem;
                 if (query.count() == 0) {
@@ -120,6 +108,32 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
             query = query.greaterThan("owned", 0);
         }
         return query.findAllAsync().asObservable().filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public Observable<? extends Map<String, Item>> getOwnedItems(User user) {
+        return Observable.combineLatest(
+                getOwnedItems(Egg.class, user),
+                getOwnedItems(HatchingPotion.class, user),
+                getOwnedItems(Food.class, user),
+                getOwnedItems(QuestContent.class, user),
+                (Func4<RealmResults<? extends Item>, RealmResults<? extends Item>, RealmResults<? extends Item>, RealmResults<? extends Item>, Map<String, Item>>) (eggs, hatchingPotions, food, quests) -> {
+                    Map<String, Item> items = new HashMap<>();
+                    for (Item item : eggs) {
+                        items.put(item.getKey(), item);
+                    }
+                    for (Item item : hatchingPotions) {
+                        items.put(item.getKey(), item);
+                    }
+                    for (Item item : food) {
+                        items.put(item.getKey(), item);
+                    }
+                    for (Item item : quests) {
+                        items.put(item.getKey(), item);
+                    }
+                    return items;
+                }
+        );
     }
 
     @Override
@@ -219,7 +233,7 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
 
     @Override
     public void changeOwnedCount(String type, String key, int amountToAdd) {
-        this.getItem(type, key).first().subscribe(item -> changeOwnedCount(item, amountToAdd));
+        this.getItem(type, key).first().subscribe(item -> changeOwnedCount(item, amountToAdd), RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -251,13 +265,36 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     @Override
     public void decrementMysteryItemCount(User user) {
         SpecialItem item = realm.where(SpecialItem.class).equalTo("isMysteryItem", true).findFirst();
-        if (item.isValid()) {
-            realm.executeTransactionAsync(realm1 -> {
-                item.setOwned(item.getOwned()-1);
-                if (user.getPurchased() != null && user.getPurchased().getPlan() != null) {
-                    user.getPurchased().getPlan().mysteryItemCount -= 1;
-                }
-            });
-        }
+        realm.executeTransactionAsync(realm1 -> {
+            if (item != null && item.isValid()) {
+                item.setOwned(item.getOwned() - 1);
+            }
+            if (user.isValid() && user.getPurchased() != null && user.getPurchased().getPlan() != null) {
+                user.getPurchased().getPlan().mysteryItemCount -= 1;
+            }
+        });
     }
+
+    @Override
+    public Observable<RealmResults<ShopItem>> getInAppRewards() {
+        return realm.where(ShopItem.class)
+                .findAllAsync()
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public void saveInAppRewards(List<ShopItem> onlineItems) {
+        OrderedRealmCollectionSnapshot<ShopItem> localItems = realm.where(ShopItem.class).findAll().createSnapshot();
+        realm.executeTransaction(realm1 -> {
+            for (ShopItem localItem : localItems) {
+                if (!onlineItems.contains(localItem)) {
+                    localItem.deleteFromRealm();
+                }
+            }
+            realm.insertOrUpdate(onlineItems);
+        });
+    }
+
+
 }

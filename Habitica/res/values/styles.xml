@@ -272,7 +272,7 @@
     </style>
 
     <style name="subscriptionBoxText.Title.Red">
-        <item name="android:textColor">@color/worse_50</item>
+        <item name="android:textColor">@color/red_50</item>
     </style>
 
     <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">
@@ -391,5 +391,18 @@
 
     <style name="HabiticaButton.Yellow" parent="HabiticaButton">
         <item name="android:background">@drawable/layout_rounded_bg_yellow</item>
+    </style>
+
+    <style name="CurrencyTextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="QuestRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/quest_difficulty_rating</item>
+        <item name="android:minHeight">12dip</item>
+        <item name="android:maxHeight">12dip</item>
     </style>
 </resources>

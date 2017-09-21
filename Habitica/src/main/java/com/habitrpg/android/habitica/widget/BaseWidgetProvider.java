@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.text.SpannableStringBuilder;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -77,7 +78,7 @@ public abstract class BaseWidgetProvider extends AppWidgetProvider {
         if (userRepository == null) {
             HabiticaApplication.getComponent().inject(this);
         }
-            Pair<SpannableStringBuilder, HabiticaSnackbar.SnackbarDisplayType> pair = NotifyUserUseCase.getNotificationAndAddStatsToUser(context, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta);
+            Pair<SpannableStringBuilder, HabiticaSnackbar.SnackbarDisplayType> pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(context, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta);
             Toast toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG);
             toast.show();
     }

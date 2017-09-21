@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -15,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
@@ -44,7 +45,7 @@ import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import net.pherth.android.emoji_library.EmojiParser;
@@ -295,7 +296,7 @@ public class ChallengeDetailActivity extends BaseActivity {
                     dialog.dismiss();
 
                     showRemoveTasksDialog(keepTasks -> this.challengeRepository.leaveChallenge(challenge, new LeaveChallengeBody(keepTasks))
-                            .subscribe(aVoid -> finish(), throwable -> {}));
+                            .subscribe(aVoid -> finish(), RxErrorHandler.handleEmptyError()));
                 })
                 .setNegativeButton(this.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
@@ -336,9 +337,6 @@ public class ChallengeDetailActivity extends BaseActivity {
         @BindView(R.id.challenge_member_count)
         TextView memberCountTextView;
 
-        @BindView(R.id.gem_prize_layout)
-        LinearLayout gem_prize_layout;
-
         @BindView(R.id.gem_amount)
         TextView gemPrizeTextView;
 
@@ -348,6 +346,9 @@ public class ChallengeDetailActivity extends BaseActivity {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            Drawable gemDrawable = new BitmapDrawable(itemView.getResources(), HabiticaIconsHelper.imageOfGem());
+            gemPrizeTextView.setCompoundDrawablesWithIntrinsicBounds(gemDrawable, null, null, null);
         }
 
         public void bind(Challenge challenge) {
@@ -361,9 +362,9 @@ public class ChallengeDetailActivity extends BaseActivity {
             memberCountTextView.setText(String.valueOf(challenge.memberCount));
 
             if (challenge.prize == 0) {
-                gem_prize_layout.setVisibility(View.GONE);
+                gemPrizeTextView.setVisibility(View.GONE);
             } else {
-                gem_prize_layout.setVisibility(View.VISIBLE);
+                gemPrizeTextView.setVisibility(View.VISIBLE);
                 gemPrizeTextView.setText(String.valueOf(challenge.prize));
             }
         }

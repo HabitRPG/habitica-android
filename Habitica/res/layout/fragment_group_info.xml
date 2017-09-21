@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <import type="com.habitrpg.android.habitica.models.social.Group" />
@@ -52,8 +51,7 @@
                     android:layout_height="wrap_content"
                     style="@style/CardView.Default"
                     android:id="@+id/invitationWrapper"
-                    android:visibility="@{invitation == null ? View.GONE : View.VISIBLE}"
-                    >
+                    android:visibility="@{invitation == null ? View.GONE : View.VISIBLE}">
 
                 <LinearLayout
                         android:orientation="vertical"
@@ -273,7 +271,7 @@
                         android:layout_width="@dimen/quest_image_width"
                         android:layout_height="@dimen/quest_image_height"
                         android:layout_marginBottom="8dp"
-                        bind:questImageName='@{"quest_"+ quest.key}'
+                        bind:imageName='@{"quest_"+ quest.key}'
                         />
 
                     <LinearLayout
@@ -282,24 +280,6 @@
                         android:orientation="vertical"
                         style="?android:buttonBarStyle"
                         android:visibility="@{group.quest.active ? View.VISIBLE : View.GONE}">
-
-                        <com.habitrpg.android.habitica.ui.views.ValueBar
-                            android:layout_height="wrap_content"
-                            android:layout_width="match_parent"
-                            android:id="@+id/bossHpBar"
-                            layout="@layout/value_bar"
-                            app:barForegroundColor="@color/hpColor"
-                            app:description="@string/boss_health"
-                            app:barIconDrawable="@drawable/ic_header_heart" />
-
-                        <com.habitrpg.android.habitica.ui.views.ValueBar
-                            android:layout_height="wrap_content"
-                            android:layout_width="match_parent"
-                            android:id="@+id/bossRageBar"
-                            layout="@layout/value_bar"
-                            app:barForegroundColor="@color/mpColor"
-                            app:description="@string/boss_rage"
-                            app:barIconDrawable="@drawable/ic_header_magic" />
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/collectionStats"

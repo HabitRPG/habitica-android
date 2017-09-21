@@ -165,8 +165,11 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
 
     @Override
     public void inAppMessageClicked(String messageId) {
-        GemsPurchaseFragment fragment = (GemsPurchaseFragment) getSupportFragmentManager().getFragments().get(0);
-        fragment.purchaseGems(PurchaseTypes.Purchase84Gems);
+        for (CheckoutFragment fragment : fragments) {
+            if (fragment.getClass().isAssignableFrom(GemsPurchaseFragment.class)) {
+                ((GemsPurchaseFragment)fragment).purchaseGems(PurchaseTypes.Purchase84Gems);
+            }
+        }
     }
 
     @Override

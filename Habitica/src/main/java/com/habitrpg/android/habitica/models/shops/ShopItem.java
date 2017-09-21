@@ -4,23 +4,32 @@ import android.content.res.Resources;
 
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 
-public class ShopItem {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class ShopItem extends RealmObject {
 
     public static final String GEM_FOR_GOLD = "gem";
+    @PrimaryKey
     public String key;
     public String text;
     public String notes;
     @SerializedName("class")
     public String imageName;
     public Integer value;
-    public Boolean locked;
+    public boolean locked;
+    public boolean limited;
     public String currency;
     public String purchaseType;
     public String categoryIdentifier;
     public Integer limitedNumberLeft;
     public ShopItemUnlockCondition unlockCondition;
+    public String path;
+    public String isSuggested;
+    public String pinType;
 
     public static ShopItem makeGemItem(Resources res) {
         ShopItem item = new ShopItem();
@@ -60,7 +69,11 @@ public class ShopItem {
 
     public String getImageName() {
         if (imageName != null) {
-            return imageName;
+            if (imageName.contains(" ")) {
+                return imageName.split(" ")[1];
+            } else {
+                return imageName;
+            }
         } else {
             return "shop_" + key;
         }
@@ -79,9 +92,6 @@ public class ShopItem {
     }
 
     public Boolean getLocked() {
-        if (locked == null) {
-            return false;
-        }
         return locked;
     }
 
@@ -90,6 +100,9 @@ public class ShopItem {
     }
 
     public String getCurrency() {
+        if (currency == null) {
+            return "";
+        }
         return currency;
     }
 
@@ -137,5 +150,34 @@ public class ShopItem {
         } else {
             return false;
         }
+    }
+
+    public boolean isLimited() {
+        return limited;
+    }
+
+    public boolean isTypeItem() {
+        return "eggs".equals(purchaseType) || "hatchingPotions".equals(purchaseType) || "food".equals(purchaseType);
+    }
+
+    public boolean isTypeQuest() {
+        return "quests".equals(purchaseType);
+    }
+
+    public boolean isTypeGear() {
+        return "gear".equals(purchaseType);
+    }
+
+    public boolean isTypeAnimal() {
+        return "pets".equals(purchaseType) || "mounts".equals(purchaseType);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (ShopItem.class.isAssignableFrom(obj.getClass())) {
+            ShopItem otherItem = (ShopItem) obj;
+            return this.key.equals(otherItem.key);
+        }
+        return super.equals(obj);
     }
 }

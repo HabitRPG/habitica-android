@@ -58,7 +58,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         setViewPagerAdapter();
 
         if (guildId != null && this.socialRepository != null) {
-            compositeSubscription.add(socialRepository.getGroup(this.guildId).subscribe(this, throwable -> {}, () -> Log.e("Party", "Completed")));
+            compositeSubscription.add(socialRepository.getGroup(this.guildId).subscribe(this, RxErrorHandler.handleEmptyError(), () -> Log.e("Party", "Completed")));
             socialRepository.retrieveGroup(this.guildId).subscribe(group -> {}, RxErrorHandler.handleEmptyError());
         }
 
@@ -88,8 +88,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         super.onViewCreated(view, savedInstanceState);
         if (this.socialRepository != null && this.guild != null) {
             socialRepository.retrieveGroup(this.guild.id)
-                    .subscribe(this, throwable -> {
-                    });
+                    .subscribe(this, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -116,8 +115,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         switch (id) {
             case R.id.menu_guild_join:
                 this.socialRepository.joinGroup(this.guild.id)
-                        .subscribe(this, throwable -> {
-                        });
+                        .subscribe(this, RxErrorHandler.handleEmptyError());
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
@@ -126,8 +124,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
                             if (this.activity != null) {
                                 this.activity.supportInvalidateOptionsMenu();
                             }
-                        }, throwable -> {
-                        });
+                        }, RxErrorHandler.handleEmptyError());
                 this.isMember = false;
                 return true;
             case R.id.menu_guild_edit:
@@ -234,7 +231,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
                             bundle.getString("description"),
                             bundle.getString("leader"),
                             bundle.getString("privacy"))
-                            .subscribe(aVoid -> {}, throwable -> {});
+                            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
                 }
                 break;
             }
@@ -261,10 +258,9 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
     @Override
     public String customTitle() {
-        if (isAdded()) {
-            return getString(R.string.guild);
-        } else {
+        if (!isAdded()) {
             return "";
         }
+        return getString(R.string.guild);
     }
 }

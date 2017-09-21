@@ -16,9 +16,9 @@ public class Equipment extends RealmObject {
     public String index;
     public String text;
     public String notes;
-    public float con, str, per;
+    public int con, str, per;
     @SerializedName("int")
-    public float _int;
+    public int _int;
     public Boolean owned;
 
     public Equipment() {
@@ -89,35 +89,35 @@ public class Equipment extends RealmObject {
         this.notes = notes;
     }
 
-    public float getCon() {
+    public int getCon() {
         return con;
     }
 
-    public void setCon(float con) {
+    public void setCon(int con) {
         this.con = con;
     }
 
-    public float getStr() {
+    public int getStr() {
         return str;
     }
 
-    public void setStr(float str) {
+    public void setStr(int str) {
         this.str = str;
     }
 
-    public float getPer() {
+    public int getPer() {
         return per;
     }
 
-    public void setPer(float per) {
+    public void setPer(int per) {
         this.per = per;
     }
 
-    public float get_int() {
+    public int get_int() {
         return _int;
     }
 
-    public void set_int(float _int) {
+    public void set_int(int _int) {
         this._int = _int;
     }
 

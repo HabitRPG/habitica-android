@@ -30,6 +30,7 @@ public class MemberSerialization implements JsonDeserializer<Member> {
         Member member = realm.where(Member.class).equalTo("id", id).findFirst();
         if (member == null) {
             member = new Member();
+            member.setId(id);
         } else {
             member = realm.copyFromRealm(member);
         }
@@ -76,9 +77,6 @@ public class MemberSerialization implements JsonDeserializer<Member> {
                     member.setEquipped(context.deserialize(gear.get("equipped"), Outfit.class));
                 }
             }
-        }
-        if (obj.has("flags")) {
-            member.setFlags(context.deserialize(obj.get("flags"), Flags.class));
         }
         if (obj.has("contributor")) {
             member.setContributor(context.deserialize(obj.get("contributor"), ContributorInfo.class));
