@@ -20,7 +20,7 @@
             android:layout_width="@dimen/shopitem_image_size"
             android:layout_height="@dimen/shopitem_image_size"
             android:layout_margin="4dp"
-            android:scaleType="center"
+            fresco:actualImageScaleType="fitCenter"
             android:layout_marginRight="@dimen/row_padding"
             android:layout_gravity="center_horizontal"/>
         <LinearLayout
@@ -49,6 +49,7 @@
         android:layout_alignRight="@id/container"
         android:gravity="center"
         android:textColor="@color/white"
-        android:layout_marginRight="-4dp"/>
+        android:layout_marginRight="-4dp"
+        android:textSize="12sp" />
 
 </RelativeLayout>

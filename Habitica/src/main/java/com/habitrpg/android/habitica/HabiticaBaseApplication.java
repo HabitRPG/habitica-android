@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica;
 
-import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
@@ -39,16 +38,13 @@ import org.solovyev.android.checkout.Cache;
 import org.solovyev.android.checkout.Checkout;
 import org.solovyev.android.checkout.PurchaseVerifier;
 
-import java.lang.reflect.Field;
-
 import javax.inject.Inject;
 
-import dagger.Lazy;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
-public abstract class HabiticaBaseApplication extends MultiDexApplication {
+public abstract class HabiticaBaseApplication extends Application {
 
     private static AppComponent component;
     public RefWatcher refWatcher;

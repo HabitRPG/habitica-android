@@ -19,7 +19,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="12dp"
             android:scaleType="center"
-            android:src="@drawable/custom_reward" />
+            android:src="@drawable/icon_custom_reward" />
 
         <LinearLayout
             android:id="@+id/textReward"

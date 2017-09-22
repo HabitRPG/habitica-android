@@ -10,6 +10,23 @@ buildscript {
     }
 }
 
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url 'https://maven.fabric.io/public' }
+
+    // Material View Pager
+    maven { url "http://dl.bintray.com/florent37/maven" }
+
+    // Markdown
+    maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+
+    maven { url "https://jitpack.io" }
+
+    maven { url "https://maven.google.com" }
+}
+
 android {
     compileSdkVersion 25
 
@@ -47,9 +64,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'org.glassfish:javax.json:1.0.4'
-    compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.google.android.gms:play-services:11.4.0'
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.android.support:multidex:1.0.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'org.solovyev.android:checkout:0.9.1@aar'
     androidTestCompile 'org.mockito:mockito-core:1.9.5'

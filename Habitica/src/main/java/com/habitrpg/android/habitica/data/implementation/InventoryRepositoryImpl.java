@@ -85,7 +85,13 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                                 shopItem.notes = item.notes;
                                 shopItem.value = (int)item.value;
                                 shopItem.currency = "gold";
-                                shopItem.purchaseType = item.type;
+                                if ("potion".equals(item.key)) {
+                                    shopItem.purchaseType = "potion";
+                                } else if ("armoire".equals(item.key)) {
+                                    shopItem.purchaseType = "armoire";
+                                } else {
+                                    shopItem.purchaseType = "gear";
+                                }
 
                                 buyableItems.add(shopItem);
                             }

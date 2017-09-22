@@ -11,13 +11,18 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,16 +124,18 @@ public class PurchaseDialogQuestContent extends PurchaseDialogContent {
 
             if (questContent.getDrop().exp > 0) {
                 ViewGroup view = (ViewGroup) inflater.inflate(R.layout.row_quest_reward, rewardsList, false);
-                SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
-                TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
+                SimpleDraweeView imageView = view.findViewById(R.id.imageView);
+                imageView.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward());
+                TextView titleTextView = view.findViewById(R.id.titleTextView);
                 titleTextView.setText(getContext().getString(R.string.experience_reward, questContent.getDrop().exp));
                 rewardsList.addView(view);
             }
 
             if (questContent.getDrop().gp > 0) {
                 ViewGroup view = (ViewGroup) inflater.inflate(R.layout.row_quest_reward, rewardsList, false);
-                SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
-                TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
+                SimpleDraweeView imageView = view.findViewById(R.id.imageView);
+                imageView.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward());
+                TextView titleTextView = view.findViewById(R.id.titleTextView);
                 titleTextView.setText(getContext().getString(R.string.gold_reward, questContent.getDrop().gp));
                 rewardsList.addView(view);
             }
