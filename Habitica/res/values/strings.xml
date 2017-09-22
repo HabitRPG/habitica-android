@@ -397,6 +397,8 @@
     <string name="seasonalShop">Seasonal Shop</string>
     <string name="empty_inbox">You don\'t have any Inbox messages. You can send a user a new message from their public chat messages!</string>
     <string name="party_invite">Unlock by inviting friends</string>
+    <string name="login_incentive">Unlock by logging into Habitica regularly</string>
+    <string name="create_account">Unlock by creating an account</string>
     <string name="no_gold">Not enough Gold</string>
     <string name="no_potion">You don\'t need to buy an health potion</string>
     <string name="successful_purchase" >Purchased %1$s</string>
