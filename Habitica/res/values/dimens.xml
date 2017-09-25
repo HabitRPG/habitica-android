@@ -116,4 +116,5 @@
     <dimen name="currency_icon_size">24dp</dimen>
     <dimen name="shopitem_dialog_content_inset">24dp</dimen>
     <dimen name="reward_width">84dp</dimen>
+    <dimen name="task_min_height">60dp</dimen>
 </resources>

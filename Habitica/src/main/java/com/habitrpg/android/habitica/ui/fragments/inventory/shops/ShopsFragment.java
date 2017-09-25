@@ -91,11 +91,11 @@ public class ShopsFragment extends BaseMainFragment {
                         break;
                     }
                     case 2: {
-                        fragment.shopIdentifier = Shop.TIME_TRAVELERS_SHOP;
+                        fragment.shopIdentifier = Shop.SEASONAL_SHOP;
                         break;
                     }
                     case 3: {
-                        fragment.shopIdentifier = Shop.SEASONAL_SHOP;
+                        fragment.shopIdentifier = Shop.TIME_TRAVELERS_SHOP;
                         break;
                     }
                 }
@@ -117,9 +117,9 @@ public class ShopsFragment extends BaseMainFragment {
                     case 1:
                         return getContext().getString(R.string.quests);
                     case 2:
-                        return getContext().getString(R.string.timeTravelers);
-                    case 3:
                         return getContext().getString(R.string.seasonalShop);
+                    case 3:
+                        return getContext().getString(R.string.timeTravelers);
                 }
                 return "";
             }

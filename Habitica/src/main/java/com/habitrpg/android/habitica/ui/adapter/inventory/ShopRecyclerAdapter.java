@@ -177,7 +177,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             backgroundView.setScaleType(ImageView.ScaleType.FIT_START);
 
             ImageRequest imageRequest = ImageRequestBuilder
-                    .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + shop.identifier+"_background.png"+shopSpriteSuffix))
+                    .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + shop.identifier+"_background"+shopSpriteSuffix+".png"))
                     .build();
 
             ImagePipeline imagePipeline = Fresco.getImagePipeline();
