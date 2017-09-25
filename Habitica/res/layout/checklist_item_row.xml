@@ -6,7 +6,7 @@
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:minHeight="@dimen/checklist_item_min_height">
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/checkBoxHolder"
             android:layout_width="@dimen/button_width"
             android:layout_height="match_parent">
@@ -14,11 +14,10 @@
             android:id="@+id/checkBox"
             android:layout_width="@dimen/checkbox_size"
             android:layout_height="@dimen/checkbox_size"
-            android:layout_centerInParent="true"
             android:gravity="center"
             android:button="@drawable/checklist_checkbox"
-            android:layout_gravity="center_horizontal" />
-        </RelativeLayout>
+            android:layout_gravity="center" />
+        </FrameLayout>
         <net.pherth.android.emoji_library.EmojiTextView
             android:id="@+id/checkedTextView"
             style="@style/Body2"
