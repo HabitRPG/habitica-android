@@ -17,15 +17,12 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by keith holliday on 4/7/2017.
- */
-
 public class RemoteConfigManager {
 
     private Context context;
     private Boolean enableRepeatbles = false;
     private Boolean enableNewShops = false;
+    private String shopSpriteSuffix = "";
     private String REMOTE_STRING_KEY = "remote-string";
 
     public RemoteConfigManager(Context context) {
@@ -42,6 +39,10 @@ public class RemoteConfigManager {
         return enableNewShops;
     }
 
+    public String shopSpriteSuffix() {
+        return shopSpriteSuffix;
+    }
+
     private void loadFromPreferences () {
         String storedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(REMOTE_STRING_KEY, "");
@@ -50,11 +51,18 @@ public class RemoteConfigManager {
             return;
         }
 
+        parseConfig(storedPreferences);
+    }
+
+    private void parseConfig(String jsonString) {
         try {
-            JSONObject obj = new JSONObject(storedPreferences);
+            JSONObject obj = new JSONObject(jsonString);
             enableRepeatbles = obj.getBoolean("enableRepeatables");
             if (obj.has("enableNewShops")) {
                 enableNewShops = obj.getBoolean("enableNewShops");
+            }
+            if (obj.has("shopSpriteSuffix")) {
+                shopSpriteSuffix = obj.getString("shopSpriteSuffix");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -127,13 +135,7 @@ public class RemoteConfigManager {
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit().putString(REMOTE_STRING_KEY, text.toString()).apply();
 
-            try {
-                JSONObject obj = new JSONObject(text.toString());
-                enableRepeatbles = obj.getBoolean("enableRepeatables");
-                enableNewShops = obj.getBoolean("enableNewShops");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            parseConfig(text.toString());
         }
 
     }

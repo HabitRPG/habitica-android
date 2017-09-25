@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
@@ -43,6 +44,9 @@ public class ShopFragment extends BaseFragment {
     InventoryRepository inventoryRepository;
     @Inject
     UserRepository userRepository;
+    @Inject
+    RemoteConfigManager configManager;
+
     private View view;
 
     private GridLayoutManager layoutManager;
@@ -86,7 +90,7 @@ public class ShopFragment extends BaseFragment {
         if (shop == null) {
             loadShopInventory();
         } else {
-            adapter.setShop(shop);
+            adapter.setShop(shop, configManager.shopSpriteSuffix());
         }
 
         return view;
@@ -139,7 +143,7 @@ public class ShopFragment extends BaseFragment {
                 })
                 .subscribe(shop -> {
                     this.shop = shop;
-                    this.adapter.setShop(shop);
+                    this.adapter.setShop(shop, configManager.shopSpriteSuffix());
                 }, RxErrorHandler.handleEmptyError());
 
         compositeSubscription.add(this.inventoryRepository.getOwnedItems(user)

@@ -50,8 +50,10 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<Object> items;
     private String shopIdentifier;
     private Map<String, Item> ownedItems = new HashMap<>();
+    private String shopSpriteSuffix;
 
-    public void setShop(Shop shop) {
+    public void setShop(Shop shop, String shopSpriteSuffix) {
+        this.shopSpriteSuffix = shopSpriteSuffix;
         shopIdentifier = shop.identifier;
         items = new ArrayList<>();
         items.add(shop);
@@ -92,7 +94,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Object obj = this.items.get(position);
         if (obj.getClass().equals(Shop.class)) {
-            ((ShopHeaderViewHolder) holder).bind((Shop) obj);
+            ((ShopHeaderViewHolder) holder).bind((Shop) obj, shopSpriteSuffix);
         } else if (obj.getClass().equals(ShopCategory.class)) {
             ((SectionViewHolder) holder).bind(((ShopCategory) obj).getText());
         } else {
@@ -162,13 +164,13 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
-        public void bind(Shop shop) {
-            DataBindingUtils.loadImage(sceneView, shop.identifier+"_scene");
+        public void bind(Shop shop, String shopSpriteSuffix) {
+            DataBindingUtils.loadImage(sceneView, shop.identifier+"_scene"+shopSpriteSuffix);
 
             backgroundView.setScaleType(ImageView.ScaleType.FIT_START);
 
             ImageRequest imageRequest = ImageRequestBuilder
-                    .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + shop.identifier+"_background.png"))
+                    .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + shop.identifier+"_background.png"+shopSpriteSuffix))
                     .build();
 
             ImagePipeline imagePipeline = Fresco.getImagePipeline();
