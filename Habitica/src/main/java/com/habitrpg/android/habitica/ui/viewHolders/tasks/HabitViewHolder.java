@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
@@ -29,6 +30,9 @@ public class HabitViewHolder extends BaseTaskViewHolder {
     ImageView btnMinusIconView;
     @BindView(R.id.btnMinus)
     Button btnMinus;
+
+    @BindView(R.id.streakTextView)
+    TextView streakTextView;
 
     public HabitViewHolder(View itemView) {
         super(itemView);
@@ -69,6 +73,21 @@ public class HabitViewHolder extends BaseTaskViewHolder {
             this.btnMinus.setVisibility(View.GONE);
             this.btnMinus.setClickable(false);
         }
+
+        String streakString = "";
+        if (task.counterUp > 0 && task.counterDown > 0) {
+            streakString = streakString + "+" + String.valueOf(task.counterUp) + " | -" + String.valueOf(task.counterDown);
+        } else if (task.counterUp > 0) {
+            streakString = streakString + "+" + String.valueOf(task.counterUp);
+        } else if (task.counterUp > 0) {
+            streakString = streakString + "-" + String.valueOf(task.counterDown);
+        }
+        if (streakString.length() > 0) {
+            streakTextView.setText(streakString);
+            streakTextView.setVisibility(View.VISIBLE);
+        } else {
+            streakTextView.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.btnPlus)
@@ -93,5 +112,14 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
         this.btnPlus.setEnabled(!taskActionsDisabled);
         this.btnMinus.setEnabled(!taskActionsDisabled);
+    }
+
+    @Override
+    protected Boolean getTaskIconWrapperIsVisible() {
+        Boolean isVisible = super.getTaskIconWrapperIsVisible();
+        if (this.streakTextView.getVisibility() == View.VISIBLE) {
+            isVisible = true;
+        }
+        return isVisible;
     }
 }

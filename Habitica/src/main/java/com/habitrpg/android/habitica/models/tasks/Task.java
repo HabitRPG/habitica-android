@@ -54,6 +54,7 @@ public class Task extends RealmObject implements Parcelable {
     public TaskGroupPlan group;
     //Habits
     public Boolean up, down;
+    public int counterUp, counterDown;
     //todos/dailies
     public boolean completed;
     public RealmList<ChecklistItem> checklist;
