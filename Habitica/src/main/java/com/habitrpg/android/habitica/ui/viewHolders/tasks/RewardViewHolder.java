@@ -89,4 +89,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
         this.buyButton.setEnabled(!taskActionsDisabled);
     }
 
+    public void bindHolder(Task reward, int position, boolean canBuy) {
+
+    }
 }

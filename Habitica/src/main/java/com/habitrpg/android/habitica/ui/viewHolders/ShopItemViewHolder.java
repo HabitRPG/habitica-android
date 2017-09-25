@@ -3,10 +3,8 @@ package com.habitrpg.android.habitica.ui.viewHolders;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -57,7 +55,7 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
         countDrawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfItemIndicatorNumber());
     }
 
-    public void bind(ShopItem item) {
+    public void bind(ShopItem item, boolean canBuy) {
         this.item = item;
         buyButton.setVisibility(View.VISIBLE);
 
@@ -80,7 +78,7 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
             itemDetailIndicator.setVisibility(View.VISIBLE);
         }
 
-        priceLabel.setLocked(item.getLocked());
+        priceLabel.setLocked(item.getLocked() || !canBuy);
         if (item.getLocked()) {
             itemDetailIndicator.setBackground(lockedDrawable);
             itemDetailIndicator.setVisibility(View.VISIBLE);

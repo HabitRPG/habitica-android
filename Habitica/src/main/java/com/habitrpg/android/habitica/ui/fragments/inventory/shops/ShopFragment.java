@@ -92,6 +92,7 @@ public class ShopFragment extends BaseFragment {
         } else {
             adapter.setShop(shop, configManager.shopSpriteSuffix());
         }
+        adapter.setUser(user);
 
         return view;
     }

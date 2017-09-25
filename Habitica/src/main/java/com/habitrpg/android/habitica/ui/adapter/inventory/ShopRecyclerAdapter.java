@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder;
@@ -51,6 +52,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private String shopIdentifier;
     private Map<String, Item> ownedItems = new HashMap<>();
     private String shopSpriteSuffix;
+    private User user;
 
     public void setShop(Shop shop, String shopSpriteSuffix) {
         this.shopSpriteSuffix = shopSpriteSuffix;
@@ -99,7 +101,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((SectionViewHolder) holder).bind(((ShopCategory) obj).getText());
         } else {
             ShopItem item = (ShopItem) items.get(position);
-            ((ShopItemViewHolder) holder).bind(item);
+            ((ShopItemViewHolder) holder).bind(item, item.canBuy(user));
             if (ownedItems.containsKey(item.getKey())) {
                 ((ShopItemViewHolder) holder).setItemCount(ownedItems.get(item.getKey()).getOwned());
             }
@@ -139,6 +141,11 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setOwnedItems(Map<String, Item> ownedItems) {
         this.ownedItems = ownedItems;
+        this.notifyDataSetChanged();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
         this.notifyDataSetChanged();
     }
 

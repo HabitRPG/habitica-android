@@ -53,9 +53,11 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (customRewards != null && position < customRewards.size()) {
-            ((RewardViewHolder)holder).bindHolder(customRewards.get(position), position);
+            Task reward = customRewards.get(position);
+            ((RewardViewHolder)holder).bindHolder(reward, position, reward.value < user.getStats().getGp());
         } else if (inAppRewards != null) {
-            ((ShopItemViewHolder)holder).bind(inAppRewards.get(position-getCustomRewardCount()));
+            ShopItem item = inAppRewards.get(position-getCustomRewardCount());
+            ((ShopItemViewHolder)holder).bind(item, item.canBuy(user));
         }
     }
 

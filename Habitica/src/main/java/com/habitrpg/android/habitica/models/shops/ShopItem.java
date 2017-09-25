@@ -157,7 +157,7 @@ public class ShopItem extends RealmObject {
     }
 
     public boolean isTypeItem() {
-        return "eggs".equals(purchaseType) || "hatchingPotions".equals(purchaseType) || "food".equals(purchaseType);
+        return "eggs".equals(purchaseType) || "hatchingPotions".equals(purchaseType) || "food".equals(purchaseType) || "armoire".equals(purchaseType) || "potion".equals(purchaseType);
     }
 
     public boolean isTypeQuest() {
