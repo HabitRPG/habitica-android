@@ -44,7 +44,8 @@
         android:id="@+id/checklistDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_500" />
+        android:background="@color/gray_500"
+        android:visibility="gone"/>
     <LinearLayout
         android:id="@id/checklistView"
         android:layout_width="match_parent"

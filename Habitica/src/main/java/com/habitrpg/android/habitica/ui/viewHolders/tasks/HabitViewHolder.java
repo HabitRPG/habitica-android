@@ -40,11 +40,9 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
     @Override
     public void bindHolder(Task newTask, int position) {
-        super.bindHolder(newTask, position);
-
-        if (this.task.up) {
-            this.btnPlusWrapper.setBackgroundResource(this.task.getLightTaskColor());
-            if (this.task.getLightTaskColor() == R.color.yellow_100) {
+        if (newTask.up) {
+            this.btnPlusWrapper.setBackgroundResource(newTask.getLightTaskColor());
+            if (newTask.getLightTaskColor() == R.color.yellow_100) {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus_yellow);
             } else {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus);
@@ -58,9 +56,9 @@ public class HabitViewHolder extends BaseTaskViewHolder {
             this.btnPlus.setClickable(false);
         }
 
-        if (this.task.down) {
-            this.btnMinusWrapper.setBackgroundResource(this.task.getLightTaskColor());
-            if (this.task.getLightTaskColor() == R.color.yellow_100) {
+        if (newTask.down) {
+            this.btnMinusWrapper.setBackgroundResource(newTask.getLightTaskColor());
+            if (newTask.getLightTaskColor() == R.color.yellow_100) {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus_yellow);
             } else {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus);
@@ -75,11 +73,11 @@ public class HabitViewHolder extends BaseTaskViewHolder {
         }
 
         String streakString = "";
-        if (task.counterUp > 0 && task.counterDown > 0) {
+        if (newTask.counterUp > 0 && newTask.counterDown > 0) {
             streakString = streakString + "+" + String.valueOf(task.counterUp) + " | -" + String.valueOf(task.counterDown);
-        } else if (task.counterUp > 0) {
+        } else if (newTask.counterUp > 0) {
             streakString = streakString + "+" + String.valueOf(task.counterUp);
-        } else if (task.counterUp > 0) {
+        } else if (newTask.counterUp > 0) {
             streakString = streakString + "-" + String.valueOf(task.counterDown);
         }
         if (streakString.length() > 0) {
@@ -88,6 +86,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
         } else {
             streakTextView.setVisibility(View.GONE);
         }
+        super.bindHolder(newTask, position);
     }
 
     @OnClick(R.id.btnPlus)

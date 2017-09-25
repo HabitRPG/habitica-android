@@ -59,37 +59,35 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
 
     @Override
     public void bindHolder(Task newTask, int position) {
-        super.bindHolder(newTask, position);
-
-        boolean completed = this.task.completed;
-        if (task.isPendingApproval()) {
+        boolean completed = newTask.completed;
+        if (newTask.isPendingApproval()) {
             completed = false;
         }
         this.checkbox.setChecked(completed);
-        if (this.shouldDisplayAsActive() && !task.isPendingApproval()) {
-            this.checkboxHolder.setBackgroundResource(this.task.getLightTaskColor());
+        if (this.shouldDisplayAsActive(newTask) && !newTask.isPendingApproval()) {
+            this.checkboxHolder.setBackgroundResource(newTask.getLightTaskColor());
         } else {
             this.checkboxHolder.setBackgroundColor(this.taskGray);
         }
-        this.checklistCompletedTextView.setText(String.valueOf(task.getCompletedChecklistCount()));
-        this.checklistAllTextView.setText(String.valueOf(task.getChecklist().size()));
+        this.checklistCompletedTextView.setText(String.valueOf(newTask.getCompletedChecklistCount()));
+        this.checklistAllTextView.setText(String.valueOf(newTask.getChecklist().size()));
 
         this.checklistView.removeAllViews();
         this.updateChecklistDisplay();
 
-        this.checklistIndicatorWrapper.setVisibility(task.checklist.size() == 0 ? View.GONE : View.VISIBLE);
+        this.checklistIndicatorWrapper.setVisibility(newTask.checklist.size() == 0 ? View.GONE : View.VISIBLE);
         if (this.rightBorderView != null) {
-            this.rightBorderView.setVisibility(task.checklist.size() == 0 ? View.VISIBLE : View.GONE);
-            if (this.task.getCompleted()) {
-                this.rightBorderView.setBackgroundResource(this.task.getLightTaskColor());
+            this.rightBorderView.setVisibility(newTask.checklist.size() == 0 ? View.VISIBLE : View.GONE);
+            if (newTask.getCompleted()) {
+                this.rightBorderView.setBackgroundResource(newTask.getLightTaskColor());
             } else {
                 this.rightBorderView.setBackgroundColor(this.taskGray);
             }
         }
-
+        super.bindHolder(newTask, position);
     }
 
-    abstract public Boolean shouldDisplayAsActive();
+    abstract public Boolean shouldDisplayAsActive(Task newTask);
 
     public void updateChecklistDisplay() {
         //This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
@@ -115,7 +113,7 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                         event.item = item;
                         EventBus.getDefault().post(event);
                     });
-                    RelativeLayout checkboxHolder = (RelativeLayout) itemView.findViewById(R.id.checkBoxHolder);
+                    ViewGroup checkboxHolder = (ViewGroup) itemView.findViewById(R.id.checkBoxHolder);
                     expandCheckboxTouchArea(checkboxHolder, checkbox);
                     this.checklistView.addView(itemView);
                 }

@@ -89,6 +89,7 @@ public class YesterdailyDialog extends AlertDialog {
 
             if (task.checklist.size() > 0) {
                 View checklistDivider = taskView.findViewById(R.id.checklistDivider);
+                checklistDivider.setVisibility(View.VISIBLE);
                 ViewGroup checklistContainer = taskView.findViewById(R.id.checklistView);
                 for (ChecklistItem item : task.checklist) {
                     View checklistView = inflater.inflate(R.layout.checklist_item_row, yesterdailiesList, false);

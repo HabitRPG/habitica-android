@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,12 +38,6 @@ public class RewardViewHolder extends BaseTaskViewHolder {
         goldIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold());
     }
 
-    @Override
-    public void bindHolder(Task newTask, int position) {
-        super.bindHolder(newTask, position);
-
-        this.priceLabel.setText(NumberAbbreviator.abbreviate(itemView.getContext(), this.task.value));
-    }
 
     private boolean isItem() {
         return this.task.specialTag != null && this.task.specialTag.equals("item");
@@ -90,6 +85,15 @@ public class RewardViewHolder extends BaseTaskViewHolder {
     }
 
     public void bindHolder(Task reward, int position, boolean canBuy) {
+        super.bindHolder(reward, position);
+        this.priceLabel.setText(NumberAbbreviator.abbreviate(itemView.getContext(), this.task.value));
 
+        if (canBuy) {
+            goldIconView.setAlpha(1.0f);
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.yellow_50));
+        } else {
+            goldIconView.setAlpha(0.4f);
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_500));
+        }
     }
 }
