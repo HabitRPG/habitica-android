@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.helpers.NavbarUtils;
 
 import javax.annotation.Resource;
 
@@ -34,6 +36,13 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
     private static HabiticaSnackbar make(@NonNull ViewGroup parent, int duration) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View content = inflater.inflate(R.layout.snackbar_view, parent, false);
+        if (NavbarUtils.hasSoftKeys(parent.getContext())) {
+            int[] parentLocation = new int[2];
+            parent.getLocationInWindow(parentLocation);
+            if (NavbarUtils.isBehindNavbar(parentLocation, parent.getContext())) {
+                content.setPadding(0, 0, 0, NavbarUtils.getNavbarHeight(parent.getContext()));
+            }
+        }
         final ContentViewCallback viewCallback = new ContentViewCallback(content);
         final HabiticaSnackbar customSnackbar = new HabiticaSnackbar(parent, content, viewCallback);
         customSnackbar.setDuration(duration);
@@ -84,13 +93,13 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
 
         @Override
         public void animateContentIn(int delay, int duration) {
-            ViewCompat.setScaleY(content, 0f);
+            content.setScaleY(0f);
             ViewCompat.animate(content).scaleY(1f).setDuration(duration).setStartDelay(delay);
         }
 
         @Override
         public void animateContentOut(int delay, int duration) {
-            ViewCompat.setScaleY(content, 1f);
+            content.setScaleY(1);
             ViewCompat.animate(content).scaleY(0f).setDuration(duration).setStartDelay(delay);
         }
     }

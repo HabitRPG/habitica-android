@@ -17,6 +17,7 @@ public class TodoViewHolder extends ChecklistedViewHolder {
 
     @Override
     public void bindHolder(Task newTask, int position) {
+        this.task = newTask;
         if (newTask.getCompleted()) {
             this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray);
         } else {

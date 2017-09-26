@@ -2,6 +2,8 @@ package com.habitrpg.android.habitica.ui.helpers;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -39,7 +41,7 @@ public class NavbarUtils {
     /**
      * http://stackoverflow.com/a/14871974
      */
-    private static boolean hasSoftKeys(@NonNull Context context) {
+    public static boolean hasSoftKeys(@NonNull Context context) {
         boolean hasSoftwareKeys = true;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -65,5 +67,13 @@ public class NavbarUtils {
         }
 
         return hasSoftwareKeys;
+    }
+
+    public static boolean isBehindNavbar(int[] parentLocation, Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return parentLocation[1] > (size.y - getNavbarHeight(context));
     }
 }

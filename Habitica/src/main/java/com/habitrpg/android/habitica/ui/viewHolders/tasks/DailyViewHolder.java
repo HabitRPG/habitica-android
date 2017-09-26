@@ -19,6 +19,7 @@ public class DailyViewHolder extends ChecklistedViewHolder {
 
     @Override
     public void bindHolder(Task newTask, int position) {
+        this.task = newTask;
         if (newTask.isChecklistDisplayActive()) {
             this.checklistIndicatorWrapper.setBackgroundResource(newTask.getLightTaskColor());
         } else {

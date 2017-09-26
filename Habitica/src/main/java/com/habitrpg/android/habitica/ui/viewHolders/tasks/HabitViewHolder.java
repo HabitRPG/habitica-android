@@ -40,6 +40,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
     @Override
     public void bindHolder(Task newTask, int position) {
+        this.task = newTask;
         if (newTask.up) {
             this.btnPlusWrapper.setBackgroundResource(newTask.getLightTaskColor());
             if (newTask.getLightTaskColor() == R.color.yellow_100) {
