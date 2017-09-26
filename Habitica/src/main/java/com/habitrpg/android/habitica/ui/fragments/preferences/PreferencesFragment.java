@@ -68,7 +68,9 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     @Override
     public void onDestroy() {
         userRepository.close();
-        subscription.unsubscribe();
+        if (subscription != null) {
+            subscription.unsubscribe();
+        }
         super.onDestroy();
     }
 

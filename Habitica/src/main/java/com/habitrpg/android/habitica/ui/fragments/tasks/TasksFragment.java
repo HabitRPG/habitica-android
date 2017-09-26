@@ -335,6 +335,7 @@ public class TasksFragment extends BaseMainFragment {
                 }
             }
         }, RxErrorHandler.handleEmptyError());
+        BottomBarTab tab = bottomNavigation.getTabWithId(R.id.tab_dailies);
     }
     // endregion
 
