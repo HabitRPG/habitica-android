@@ -204,7 +204,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         ClipData messageText = ClipData.newPlainText("Chat message", chatMessage.text);
         clipMan.setPrimaryClip(messageText);
         MainActivity activity = (MainActivity) getActivity();
-        showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL);
+        showSnackbar(activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL);
     }
 
     public void showFlagConfirmationDialog(ChatMessage chatMessage) {
@@ -213,7 +213,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                 .setPositiveButton(R.string.flag_confirm, (dialog, id) -> socialRepository.flagMessage(chatMessage)
                         .subscribe(aVoid -> {
                             MainActivity activity = (MainActivity) getActivity();
-                            showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL);
+                            showSnackbar(activity.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL);
                         }, RxErrorHandler.handleEmptyError()))
                 .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});
         builder.show();

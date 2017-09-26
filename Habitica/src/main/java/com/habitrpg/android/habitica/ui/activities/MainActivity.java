@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -554,7 +555,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         final String rewardKey = event.Reward.getId();
 
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            showSnackbar(this, floatingMenuWrapper, getString(R.string.no_gold), SnackbarDisplayType.FAILURE);
+            showSnackbar(floatingMenuWrapper, getString(R.string.no_gold), SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -563,7 +564,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             int maxHp = user.getStats().getMaxHealth();
 
             if (currentHp == maxHp) {
-                showSnackbar(this, floatingMenuWrapper, getString(R.string.no_potion), SnackbarDisplayType.FAILURE_BLUE);
+                showSnackbar(floatingMenuWrapper, getString(R.string.no_potion), SnackbarDisplayType.FAILURE_BLUE);
                 return;
             }
         }
@@ -582,11 +583,15 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                                     }
                                     soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                                 }
-                                showSnackbar(MainActivity.this, floatingMenuWrapper, snackbarMessage, SnackbarDisplayType.NORMAL);
+                                showSnackbar(floatingMenuWrapper, null, snackbarMessage, new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()), ContextCompat.getColor(this, R.color.yellow_10), "-"+event.Reward.value, SnackbarDisplayType.NORMAL);
                             }, RxErrorHandler.handleEmptyError());
         } else {
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
-                    .subscribe(res -> showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), SnackbarDisplayType.NORMAL), error -> {});
+                    .subscribe(res -> showSnackbar(floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
+                            new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()),
+                            ContextCompat.getColor(this, R.color.yellow_10),
+                            "-"+ ((int) event.Reward.value),
+                            SnackbarDisplayType.DROP), error -> {});
         }
     }
 
@@ -659,7 +664,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         final Pet pet = event.usingPet;
         this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
                 .subscribe(feedResponse -> {
-                    showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
+                    showSnackbar(floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
                         FrameLayout mountWrapper = (FrameLayout) View.inflate(this, R.layout.pet_imageview, null);
                         SimpleDraweeView mountImageView = (SimpleDraweeView) mountWrapper.findViewById(R.id.pet_imageview);
@@ -923,7 +928,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void showSnackBarEvent(ShowSnackbarEvent event) {
-        showSnackbar(this, floatingMenuWrapper, event.title, event.text, event.specialView, event.type);
+        showSnackbar(floatingMenuWrapper, event.leftImage, event.title, event.text, event.specialView, event.rightIcon, event.rightTextColor, event.rightText, event.type);
     }
 
     public boolean isAppBarExpanded() {

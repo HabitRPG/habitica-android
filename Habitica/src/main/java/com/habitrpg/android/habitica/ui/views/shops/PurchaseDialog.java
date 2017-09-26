@@ -175,7 +175,6 @@ public class PurchaseDialog extends AlertDialog {
 
     }
 
-
     @OnClick(R.id.closeButton)
     void onCloseClicked() {
         dismiss();
@@ -203,6 +202,9 @@ public class PurchaseDialog extends AlertDialog {
                         ShowSnackbarEvent event = new ShowSnackbarEvent();
                         event.title = getContext().getString(R.string.successful_purchase, shopItem.text);
                         event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL;
+                        event.rightIcon = priceLabel.getCompoundDrawables()[0];
+                        event.rightTextColor = priceLabel.getCurrentTextColor();
+                        event.rightText = "-"+priceLabel.getText();
                         EventBus.getDefault().post(event);
                     })
                     .flatMap(buyResponse -> userRepository.retrieveUser(false, true))

@@ -3,8 +3,10 @@ package com.habitrpg.android.habitica.ui.fragments.skills;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -130,24 +133,17 @@ public class SkillsFragment extends BaseMainFragment {
     public void displaySkillResult(Skill usedSkill, SkillResponse response) {
         removeProgressDialog();
         adapter.setMana(response.user.getStats().mp);
-        StringBuilder message = new StringBuilder();
+        if (activity == null) {
+            return;
+        }
         if ("special".equals(usedSkill.habitClass)) {
-            message.append(getContext().getString(R.string.used_skill_without_mana, usedSkill.text));
+            showSnackbar(activity.getFloatingMenuWrapper(), getContext().getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE);
         } else {
-            message.append(getContext().getString(R.string.used_skill, usedSkill.text, usedSkill.mana));
-        }
-
-        if (response.expDiff != 0) {
-            message.append(" + ").append(round(response.expDiff, 2)).append(" XP");
-        }
-        if (response.hpDiff != 0) {
-            message.append(" + ").append(round(response.hpDiff, 2)).append(" HP");
-        }
-        if (response.goldDiff != 0) {
-            message.append(" + ").append(round(response.goldDiff, 2)).append(" GP");
-        }
-        if (activity != null) {
-            showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), HabiticaSnackbar.SnackbarDisplayType.NORMAL);
+            showSnackbar(activity.getFloatingMenuWrapper(), null,
+                    getContext().getString(R.string.used_skill_without_mana, usedSkill.text),
+                    new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfMagic()),
+                    ContextCompat.getColor(getContext(), R.color.blue_10), "-"+usedSkill.mana,
+                    HabiticaSnackbar.SnackbarDisplayType.BLUE);
         }
         userRepository.retrieveUser(false).subscribe(habitRPGUser -> {}, RxErrorHandler.handleEmptyError());
     }

@@ -413,7 +413,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     @Subscribe
     public void onEvent(final BuyRewardCommand event) {
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            HabiticaSnackbar.showSnackbar(this, floatingMenuWrapper, getString(R.string.no_gold), HabiticaSnackbar.SnackbarDisplayType.FAILURE);
+            HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.no_gold), HabiticaSnackbar.SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -421,7 +421,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         if (event.Reward.specialTag == null || !event.Reward.specialTag.equals("item")) {
 
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
-                    .subscribe(res -> HabiticaSnackbar.showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), HabiticaSnackbar.SnackbarDisplayType.NORMAL), error -> {});
+                    .subscribe(res -> HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_purchase_reward), HabiticaSnackbar.SnackbarDisplayType.NORMAL), error -> {});
         }
 
     }

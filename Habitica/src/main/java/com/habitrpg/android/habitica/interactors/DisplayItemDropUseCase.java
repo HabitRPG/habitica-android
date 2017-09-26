@@ -32,7 +32,7 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
             if (data != null) {
                 if (data.drop != null) {
                     new Handler().postDelayed(() -> {
-                        HabiticaSnackbar.showSnackbar(requestValues.context, requestValues.snackbarTargetView,
+                        HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView,
                                 data.drop.getDialog(), HabiticaSnackbar.SnackbarDisplayType.DROP);
                         soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                     }, 3000L);

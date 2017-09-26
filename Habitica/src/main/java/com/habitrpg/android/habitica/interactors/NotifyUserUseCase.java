@@ -58,7 +58,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
                         .map(User::getStats);
             } else {
                 Pair<View, SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.user);
-                showSnackbar(requestValues.context, requestValues.snackbarTargetView, null, null, pair.first, pair.second);
+                showSnackbar(requestValues.snackbarTargetView, null, null, pair.first, pair.second);
                 return Observable.just(stats);
             }
         });
@@ -66,7 +66,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
 
     public static Pair<View, SnackbarDisplayType> getNotificationAndAddStatsToUser(Context context, double xp, double hp, double gold, double mp, User user){
 
-        SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
+        SnackbarDisplayType displayType = SnackbarDisplayType.SUCCESS;
 
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.HORIZONTAL);

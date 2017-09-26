@@ -337,7 +337,8 @@
     <string name="close">Close</string>
     <string name="share">Share</string>
     <string name="notification_pet_fed" >You fed your %1$s %2$s!</string>
-    <string name="notification_purchase" >%s was purchased</string>
+    <string name="notification_purchase" >You purchased %s</string>
+    <string name="notification_purchase_reward" >You purchased a reward</string>
     <string name="sectionpets">Base Pets</string>
     <string name="sectionpremiumPets">Magic Potion Pets</string>
     <string name="sectionquestPets">Quest Pets</string>

@@ -1,7 +1,10 @@
 package com.habitrpg.android.habitica.ui.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -12,6 +15,7 @@ import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,6 +67,29 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
         return this;
     }
 
+    public HabiticaSnackbar setRightDiff(Drawable icon, int textColor, String text) {
+        if (icon == null) {
+            return this;
+        }
+        View rightView = getView().findViewById(R.id.rightView);
+        rightView.setVisibility(View.VISIBLE);
+        ImageView rightIconView = getView().findViewById(R.id.rightIconView);
+        rightIconView.setImageDrawable(icon);
+        TextView rightTextView = getView().findViewById(R.id.rightTextView);
+        rightTextView.setTextColor(textColor);
+        rightTextView.setText(text);
+        return this;
+    }
+
+    public HabiticaSnackbar setLeftIcon(Drawable image) {
+        if (image == null) {
+            return this;
+        }
+        ImageView imageView = getView().findViewById(R.id.leftImageView);
+        imageView.setImageDrawable(image);
+        return this;
+    }
+
     public HabiticaSnackbar setBackgroundColor(@ColorInt int color) {
         getView().setBackgroundColor(color);
         return this;
@@ -77,7 +104,7 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
 
     private HabiticaSnackbar setSpecialView(View specialView) {
         if (specialView != null) {
-            LinearLayout snackbarView = (LinearLayout) getView().findViewById(R.id.snackbar_view);
+            LinearLayout snackbarView = (LinearLayout) getView().findViewById(R.id.content_container);
             snackbarView.addView(specialView);
         }
         return this;
@@ -95,38 +122,42 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
         public void animateContentIn(int delay, int duration) {
             content.setScaleY(0f);
             ViewCompat.animate(content).scaleY(1f).setDuration(duration).setStartDelay(delay);
+            ViewCompat.animate(content).alpha(1f).setDuration(duration).setStartDelay(delay);
         }
 
         @Override
         public void animateContentOut(int delay, int duration) {
             content.setScaleY(1);
             ViewCompat.animate(content).scaleY(0f).setDuration(duration).setStartDelay(delay);
+            ViewCompat.animate(content).alpha(0f).setDuration(duration).setStartDelay(delay);
         }
     }
 
-    /**
-     * Shows snackbar in given container.
-     *
-     * @param context   Context.
-     * @param container Parent view where Snackbar will appear.
-     * @param content   message.
-     */
-    public static void showSnackbar(Context context, ViewGroup container, CharSequence content, SnackbarDisplayType displayType) {
-        showSnackbar(context, container, null, content, null, displayType);
+
+    public static void showSnackbar(ViewGroup container, CharSequence content, SnackbarDisplayType displayType) {
+        showSnackbar(container, null, null, content, null, null, 0, null, displayType);
     }
 
-    /**
-     * Shows snackbar in given container.
-     *
-     * @param context   Context.
-     * @param container Parent view where Snackbar will appear.
-     * @param content   message.
-     */
-    public static void showSnackbar(Context context, ViewGroup container, CharSequence title, CharSequence content, View specialView, SnackbarDisplayType displayType) {
+    public static void showSnackbar(ViewGroup container, Drawable leftImage, CharSequence title, CharSequence content, SnackbarDisplayType displayType) {
+        showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType);
+    }
+
+
+    public static void showSnackbar(ViewGroup container, CharSequence title, CharSequence content, Drawable rightIcon, int rightTextColor, String rightText, SnackbarDisplayType displayType) {
+        showSnackbar(container, null, title, content, null, rightIcon, rightTextColor, rightText, displayType);
+    }
+
+    public static void showSnackbar(ViewGroup container, CharSequence title, CharSequence content, View specialView, SnackbarDisplayType displayType) {
+        showSnackbar(container, null, title, content, specialView, null, 0, null, displayType);
+    }
+
+    public static void showSnackbar(ViewGroup container, Drawable leftImage, CharSequence title, CharSequence content, View specialView, Drawable rightIcon, int rightTextColor, String rightText, SnackbarDisplayType displayType) {
         HabiticaSnackbar snackbar = HabiticaSnackbar.make(container, Snackbar.LENGTH_LONG)
                 .setTitle(title)
                 .setText(content)
-                .setSpecialView(specialView);
+                .setSpecialView(specialView)
+                .setLeftIcon(leftImage)
+                .setRightDiff(rightIcon, rightTextColor, rightText);
 
         switch (displayType) {
             case FAILURE:
@@ -134,10 +165,12 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
                 break;
             case FAILURE_BLUE:
             case BLUE:
-            case DROP:
                 snackbar.setBackgroundResource(R.drawable.snackbar_background_blue);
                 break;
+            case DROP:
             case NORMAL:
+                snackbar.setBackgroundResource(R.drawable.snackbar_background_gray);
+                break;
             case SUCCESS:
                 snackbar.setBackgroundResource(R.drawable.snackbar_background_green);
                 break;
@@ -149,5 +182,4 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
     public enum SnackbarDisplayType {
         NORMAL, FAILURE, FAILURE_BLUE, DROP, SUCCESS, BLUE
     }
-
 }

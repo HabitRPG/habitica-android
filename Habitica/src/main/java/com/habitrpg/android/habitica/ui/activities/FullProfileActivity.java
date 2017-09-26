@@ -187,7 +187,7 @@ public class FullProfileActivity extends BaseActivity {
         final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     socialRepository.postPrivateMessage(userId, emojiEditText.getText().toString())
-                            .subscribe(postChatMessageResult -> showSnackbar(FullProfileActivity.this, (ViewGroup) FullProfileActivity.this.fullprofile_scrollview.getChildAt(0),
+                            .subscribe(postChatMessageResult -> showSnackbar((ViewGroup) FullProfileActivity.this.fullprofile_scrollview.getChildAt(0),
                                     String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
 
                     UiUtils.dismissKeyboard(this);
