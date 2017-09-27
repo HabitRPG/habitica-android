@@ -655,4 +655,9 @@
     <string name="nevermind">Nevermind</string>
     <string name="resetting_account">Resetting Account</string>
     <string name="deleting_account">Deleting Account</string>
+    <string name="insufficientGold">You need to complete more tasks before you can afford this item!</string>
+    <string name="insufficientGems">You\'ll need more Gems to buy this item!</string>
+    <string name="purchase_gems">Purchase gems</string>
+    <string name="insufficientHourglasses">You\'ll need more Mystic Hourglasses to buy this item!</string>
+    <string name="get_hourglasses">Get hourglasses</string>
 </resources>

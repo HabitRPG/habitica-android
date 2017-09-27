@@ -420,4 +420,17 @@ public class HabiticaIconsHelper {
 
         return imageOfMageLightBg;
     }
+
+    private static Bitmap imageOfHourglassShop = null;
+    public static Bitmap imageOfHourglassShop() {
+        if (imageOfHourglassShop != null)
+            return imageOfHourglassShop;
+
+        imageOfHourglassShop = Bitmap.createBitmap(scaleSize(42), scaleSize(53), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfHourglassShop);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawHourglassShop(canvas);
+
+        return imageOfHourglassShop;
+    }
 }

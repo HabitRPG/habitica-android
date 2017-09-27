@@ -26,6 +26,10 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView;
 import com.habitrpg.android.habitica.ui.views.CurrencyViews;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientCurrencyDialog;
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog;
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog;
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -110,7 +114,6 @@ public class PurchaseDialog extends AlertDialog {
         }
 
         if (shopItem != null && !shopItem.canBuy(user)) {
-            buyButton.setEnabled(false);
             priceLabel.setCantAfford(true);
         }
     }
@@ -202,7 +205,7 @@ public class PurchaseDialog extends AlertDialog {
 
     @OnClick(R.id.buyButton)
     void onBuyButtonClicked() {
-        if (shopItem.canBuy(user) || !shopItem.getCurrency().equals("gems")) {
+        if (shopItem.canBuy(user)) {
             Observable<Void> observable;
             if ((shopIdentifier!= null && shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(shopItem.purchaseType)) {
                 if (shopItem.purchaseType.equals("gear")) {
@@ -236,7 +239,17 @@ public class PurchaseDialog extends AlertDialog {
                         }
                     });
         } else {
-            EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+            InsufficientCurrencyDialog dialog = null;
+            if ("gold".equals(shopItem.currency)) {
+                dialog = new InsufficientGoldDialog(getContext());
+            } else if ("gems".equals(shopItem.currency)) {
+                dialog = new InsufficientGemsDialog(getContext());
+            } else if ("hourglasses".equals(shopItem.currency)) {
+                dialog = new InsufficientHourglassesDialog(getContext());
+            }
+            if (dialog != null) {
+                dialog.show();
+            }
         }
         dismiss();
     }
