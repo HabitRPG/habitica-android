@@ -326,4 +326,10 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     public Observable<Void> purchaseItem(String purchaseType, String key) {
         return apiClient.purchaseItem(purchaseType, key);
     }
+
+    @Override
+    public Observable<List<ShopItem>> togglePinnedItem(ShopItem item) {
+        return apiClient.togglePinnedItem(item.pinType, item.path)
+                .flatMap(aVoid -> retrieveInAppRewards());
+    }
 }

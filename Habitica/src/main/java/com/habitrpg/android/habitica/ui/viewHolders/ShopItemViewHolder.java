@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -31,8 +32,12 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
     @BindView(R.id.item_detail_indicator)
     TextView itemDetailIndicator;
 
+    @BindView(R.id.pin_indicator)
+    ImageView pinIndicator;
+
     public String shopIdentifier;
     private ShopItem item;
+    private boolean isPinned;
 
     private Context context;
 
@@ -53,6 +58,7 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
         lockedDrawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfItemIndicatorLocked());
         limitedDrawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfItemIndicatorLimited());
         countDrawable = new BitmapDrawable(context.getResources(), HabiticaIconsHelper.imageOfItemIndicatorNumber());
+        pinIndicator.setImageBitmap(HabiticaIconsHelper.imageOfPinnedItem());
     }
 
     public void bind(ShopItem item, boolean canBuy) {
@@ -93,10 +99,16 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
         }
     }
 
+    public void setIsPinned(boolean isPinned) {
+        this.isPinned = isPinned;
+        pinIndicator.setVisibility(isPinned ? View.VISIBLE : View.GONE);
+    }
+
     @Override
     public void onClick(View view) {
         PurchaseDialog dialog = new PurchaseDialog(context, HabiticaBaseApplication.getComponent(), item);
         dialog.shopIdentifier = shopIdentifier;
+        dialog.setIsPinned(isPinned);
         dialog.show();
     }
 }

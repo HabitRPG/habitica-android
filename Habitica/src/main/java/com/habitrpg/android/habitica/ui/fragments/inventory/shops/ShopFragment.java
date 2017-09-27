@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -149,6 +150,15 @@ public class ShopFragment extends BaseFragment {
 
         compositeSubscription.add(this.inventoryRepository.getOwnedItems(user)
                 .subscribe(ownedItems -> adapter.setOwnedItems(ownedItems), RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(this.inventoryRepository.getInAppRewards()
+                .map(shopItems -> {
+                    List<String> itemKeys = new ArrayList<>();
+                    for (ShopItem item : shopItems) {
+                        itemKeys.add(item.getKey());
+                    }
+                    return itemKeys;
+                })
+                .subscribe(pinnedItems -> adapter.setPinnedItemKeys(pinnedItems), RxErrorHandler.handleEmptyError()));
     }
 
     @Override

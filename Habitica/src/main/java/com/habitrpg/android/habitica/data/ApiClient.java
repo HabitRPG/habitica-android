@@ -237,4 +237,6 @@ public interface ApiClient {
 
     Observable<Void> resetAccount();
     Observable<Void> deleteAccount(String password);
+
+    Observable<Void> togglePinnedItem(String pinType, String path);
 }

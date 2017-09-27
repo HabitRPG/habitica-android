@@ -43,6 +43,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -53,6 +54,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Map<String, Item> ownedItems = new HashMap<>();
     private String shopSpriteSuffix;
     private User user;
+    private List<String> pinnedItemKeys;
 
     public void setShop(Shop shop, String shopSpriteSuffix) {
         this.shopSpriteSuffix = shopSpriteSuffix;
@@ -105,6 +107,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (ownedItems.containsKey(item.getKey())) {
                 ((ShopItemViewHolder) holder).setItemCount(ownedItems.get(item.getKey()).getOwned());
             }
+            ((ShopItemViewHolder) holder).setIsPinned(pinnedItemKeys.contains(item.getKey()));
         }
     }
 
@@ -124,21 +127,6 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return items != null ? items.size() : 0;
     }
 
-    public void updateGoldGemCount(int numberLeft) {
-        int itemPos = 0;
-        for (Object obj : items) {
-            if (obj.getClass().equals(ShopItem.class)) {
-                ShopItem item = (ShopItem) obj;
-                if (item.key.equals(ShopItem.GEM_FOR_GOLD)) {
-                    item.limitedNumberLeft = numberLeft;
-                    break;
-                }
-            }
-            itemPos++;
-        }
-        notifyItemChanged(itemPos);
-    }
-
     public void setOwnedItems(Map<String, Item> ownedItems) {
         this.ownedItems = ownedItems;
         this.notifyDataSetChanged();
@@ -146,6 +134,11 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setUser(User user) {
         this.user = user;
+        this.notifyDataSetChanged();
+    }
+
+    public void setPinnedItemKeys(List<String> pinnedItemKeys) {
+        this.pinnedItemKeys = pinnedItemKeys;
         this.notifyDataSetChanged();
     }
 

@@ -84,4 +84,6 @@ public interface InventoryRepository extends ContentRepository {
     Observable<Void> purchaseQuest(String key);
 
     Observable<Void> purchaseItem(String purchaseType, String key);
+
+    Observable<List<ShopItem>> togglePinnedItem(ShopItem item);
 }

@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -16,12 +17,14 @@ import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.views.CurrencyView;
 import com.habitrpg.android.habitica.ui.views.CurrencyViews;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,6 +45,8 @@ public class PurchaseDialog extends AlertDialog {
     UserRepository userRepository;
     @Inject
     InventoryRepository inventoryRepository;
+    @Inject
+    RemoteConfigManager configManager;
 
     @BindView(R.id.currencyView)
     CurrencyViews currencyView;
@@ -51,6 +56,8 @@ public class PurchaseDialog extends AlertDialog {
     CurrencyView priceLabel;
     @BindView(R.id.buyButton)
     View buyButton;
+    @BindView(R.id.pinButton)
+    ImageButton pinButton;
     @BindView(R.id.content_container)
     ViewGroup contentContainer;
     @BindView(R.id.scrollView)
@@ -61,6 +68,7 @@ public class PurchaseDialog extends AlertDialog {
     private CompositeSubscription compositeSubscription;
     public String shopIdentifier;
     private User user;
+    private boolean isPinned;
 
     public PurchaseDialog(Context context, AppComponent component, ShopItem item) {
         super(context);
@@ -77,6 +85,10 @@ public class PurchaseDialog extends AlertDialog {
         setShopItem(item);
 
         compositeSubscription.add(userRepository.getUser().subscribe(this::setUser, RxErrorHandler.handleEmptyError()));
+
+        if (!this.configManager.newShopsEnabled()) {
+            pinButton.setVisibility(View.GONE);
+        }
     }
 
     private void setUser(User user) {
@@ -172,7 +184,15 @@ public class PurchaseDialog extends AlertDialog {
                 }
             }
         });
+    }
 
+    public void setIsPinned(boolean isPinned) {
+        this.isPinned = isPinned;
+        if (isPinned) {
+            pinButton.setImageBitmap(HabiticaIconsHelper.imageOfUnpinItem());
+        } else {
+            pinButton.setImageBitmap(HabiticaIconsHelper.imageOfPinItem());
+        }
     }
 
     @OnClick(R.id.closeButton)
@@ -219,6 +239,11 @@ public class PurchaseDialog extends AlertDialog {
             EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
         }
         dismiss();
+    }
+
+    @OnClick(R.id.pinButton)
+    void onPinButtonClicked() {
+        inventoryRepository.togglePinnedItem(shopItem).subscribe(shopItems -> this.setIsPinned(!this.isPinned), RxErrorHandler.handleEmptyError());
     }
 
     private void setBuyButtonEnabled(boolean enabled) {

@@ -39,6 +39,17 @@
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
+    <ImageView
+        android:id="@+id/pin_indicator"
+        android:layout_width="@dimen/shopitem_status_size"
+        android:layout_height="@dimen/shopitem_status_size"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_alignLeft="@id/container"
+        android:layout_alignTop="@id/container"
+        android:gravity="center"
+        android:scaleType="center"
+        android:textColor="@color/white" />
     <TextView
         android:id="@+id/item_detail_indicator"
         android:layout_width="@dimen/shopitem_status_size"

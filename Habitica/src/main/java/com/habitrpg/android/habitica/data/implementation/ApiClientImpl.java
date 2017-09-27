@@ -887,4 +887,9 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         updateObject.put("password", password);
         return apiService.deleteAccount(updateObject).compose(configureApiCallObserver());
     }
+
+    @Override
+    public Observable<Void> togglePinnedItem(String pinType, String path) {
+        return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver());
+    }
 }

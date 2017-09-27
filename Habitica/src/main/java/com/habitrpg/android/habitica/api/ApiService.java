@@ -334,4 +334,7 @@ public interface ApiService {
 
     @HTTP(method = "DELETE", path = "user", hasBody = true)
     Observable<HabitResponse<Void>> deleteAccount(@Body Map<String, String> body);
+
+    @GET("user/toggle-pinned-item/{pinType}/{path}")
+    Observable<HabitResponse<Void>> togglePinnedItem(@Path("pinType") String pinType,@Path("path") String path);
 }
