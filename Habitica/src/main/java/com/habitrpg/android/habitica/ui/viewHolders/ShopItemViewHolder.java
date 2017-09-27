@@ -33,6 +33,7 @@ public class ShopItemViewHolder extends RecyclerView.ViewHolder implements View.
     TextView itemDetailIndicator;
 
     @BindView(R.id.pin_indicator)
+    public
     ImageView pinIndicator;
 
     public String shopIdentifier;

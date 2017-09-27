@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 
 import com.habitrpg.android.habitica.R;
@@ -35,6 +36,7 @@ public class CurrencyView extends android.support.v7.widget.AppCompatTextView {
         this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getContext().getResources().getDisplayMetrics());
         setCompoundDrawablePadding(padding);
+        this.setGravity(Gravity.CENTER_VERTICAL);
     }
 
     public String getCurrency() {

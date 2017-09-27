@@ -21,6 +21,7 @@ import com.amplitude.api.Amplitude;
 import com.amplitude.api.Identify;
 import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
@@ -132,7 +133,10 @@ public abstract class HabiticaBaseApplication extends Application {
             } catch (Resources.NotFoundException ignored) {
             }
         }
-        Fresco.initialize(this);
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
+                .setDownsampleEnabled(true)
+                .build();
+        Fresco.initialize(this, config);
 
         RxErrorHandler.init(crashlyticsProxy);
 

@@ -10,8 +10,8 @@
         android:id="@+id/container"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
-        android:layout_width="78dp"
-        android:layout_height="108dp"
+        android:layout_width="80dp"
+        android:layout_height="112dp"
         android:orientation="vertical"
         android:background="@drawable/layout_rounded_bg_shopitem"
         android:layout_centerInParent="true">
@@ -19,9 +19,7 @@
             android:id="@+id/imageView"
             android:layout_width="@dimen/shopitem_image_size"
             android:layout_height="@dimen/shopitem_image_size"
-            android:layout_margin="4dp"
-            fresco:actualImageScaleType="fitCenter"
-            android:layout_marginRight="@dimen/row_padding"
+            android:layout_margin="6dp"
             android:layout_gravity="center_horizontal"/>
         <LinearLayout
             android:id="@+id/buyButton"

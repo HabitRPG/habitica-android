@@ -10,7 +10,7 @@
         android:id="@id/imageView"
         android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"
-        android:scaleType="fitEnd"
+        bind:actualImageScaleType="fitCenter"
         android:layout_marginRight="@dimen/row_padding"/>
     <LinearLayout
         android:layout_width="match_parent"
