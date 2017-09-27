@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
@@ -74,7 +75,7 @@ public class ShopFragment extends BaseFragment {
             layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    if (adapter.getItemViewType(position) < 2) {
+                    if (adapter.getItemViewType(position) < 3) {
                         return layoutManager.getSpanCount();
                     } else {
                         return 1;

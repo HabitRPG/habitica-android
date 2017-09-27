@@ -660,4 +660,9 @@
     <string name="purchase_gems">Purchase gems</string>
     <string name="insufficientHourglasses">You\'ll need more Mystic Hourglasses to buy this item!</string>
     <string name="get_hourglasses">Get hourglasses</string>
+    <string name="subscribe_for_hourglasses">Subscribe for Hourglasses</string>
+    <string name="timetravelers_closed_description">Earn one Mystic Hourglass for every three months of consecutive subscription, then use them to unlock limited edition items, pets, and mounts from the past… and future!</string>
+    <string name="want_to_subscribe">I want to Subscribe</string>
+    <string name="seasonal_closed_description">The Grand Galas happen close to the solstices and equinoxes, so check back then to find a fun assortment of special seasonal items!</string>
+    <string name="come_back_soon">Come back soon!</string>
 </resources>

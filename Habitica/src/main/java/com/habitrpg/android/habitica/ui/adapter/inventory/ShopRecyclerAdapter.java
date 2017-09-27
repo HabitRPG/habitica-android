@@ -12,6 +12,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.shops.Shop;
@@ -35,6 +37,8 @@ import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,6 +89,10 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     .inflate(R.layout.shop_section_header, parent, false);
 
             return new SectionViewHolder(view);
+        } else if (viewType == 2) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(getEmptyViewResource(), parent, false);
+            return new EmptyStateViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_shopitem, parent, false);
@@ -94,14 +102,26 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    private int getEmptyViewResource() {
+        if (Shop.SEASONAL_SHOP.equals(this.shopIdentifier)) {
+            return R.layout.empty_view_seasonal_shop;
+        } else if (Shop.TIME_TRAVELERS_SHOP.equals(this.shopIdentifier)) {
+            return R.layout.empty_view_timetravelers;
+        }
+        return R.layout.simple_textview;
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (position > (this.items.size()-1)) {
+            return;
+        }
         Object obj = this.items.get(position);
         if (obj.getClass().equals(Shop.class)) {
             ((ShopHeaderViewHolder) holder).bind((Shop) obj, shopSpriteSuffix);
         } else if (obj.getClass().equals(ShopCategory.class)) {
             ((SectionViewHolder) holder).bind(((ShopCategory) obj).getText());
-        } else {
+        } else if (obj.getClass().equals(ShopItem.class)) {
             ShopItem item = (ShopItem) items.get(position);
             ((ShopItemViewHolder) holder).bind(item, item.canBuy(user));
             if (ownedItems.containsKey(item.getKey())) {
@@ -113,18 +133,24 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if (this.items.get(position).getClass().equals(Shop.class)) {
+        if (position > (this.items.size()-1)) {
+            return 2;
+        } else if (this.items.get(position).getClass().equals(Shop.class)) {
             return 0;
         } else if (this.items.get(position).getClass().equals(ShopCategory.class)) {
             return 1;
         } else {
-            return 2;
+            return 3;
         }
     }
 
     @Override
     public int getItemCount() {
-        return items != null ? items.size() : 0;
+        int size = items != null ? items.size() : 0;
+        if (size == 1) {
+            return 2;
+        }
+        return size;
     }
 
     public void setOwnedItems(Map<String, Item> ownedItems) {
@@ -207,5 +233,20 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             namePlate.setText(shop.getNpcNameResource());
         }
 
+    }
+
+    public static class EmptyStateViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.subscribeButton)
+        @Nullable
+        Button subscribeButton;
+
+        public EmptyStateViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+
+            if (subscribeButton != null) {
+                subscribeButton.setOnClickListener(view1 -> EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand()));
+            }
+        }
     }
 }
