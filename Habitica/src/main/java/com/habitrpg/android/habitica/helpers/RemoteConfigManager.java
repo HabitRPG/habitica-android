@@ -60,7 +60,6 @@ public class RemoteConfigManager {
             enableRepeatbles = obj.getBoolean("enableRepeatables");
             if (obj.has("enableNewShops")) {
                 enableNewShops = obj.getBoolean("enableNewShops");
-                enableNewShops = true;
             }
             if (obj.has("shopSpriteSuffix")) {
                 shopSpriteSuffix = obj.getString("shopSpriteSuffix");
