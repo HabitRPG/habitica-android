@@ -215,7 +215,7 @@ public class PurchaseDialog extends AlertDialog {
                 }
             } else if (shopItem.purchaseType.equals("quests") && shopItem.getCurrency().equals("gold")) {
                 observable = inventoryRepository.purchaseQuest(shopItem.key);
-            } else if ("gold".equals(shopItem.currency)) {
+            } else if ("gold".equals(shopItem.currency) && !"gem".equals(shopItem.key)) {
                 observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value).flatMap(buyResponse -> Observable.just(null));
             } else {
                 observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key);
