@@ -651,106 +651,169 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Group> getGroup(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.getGroup(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> updateGroup(String id, Group item) {
+        if (id == null) {
+            return Observable.just(null);
+        }
         return apiService.updateGroup(id, item).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<List<ChatMessage>> listGroupChat(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.listGroupChat(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Group> joinGroup(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.joinGroup(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> leaveGroup(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.leaveGroup(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<PostChatMessageResult> postGroupChat(String groupId, Map<String, String> message) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.postGroupChat(groupId, message).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> deleteMessage(String groupId, String messageId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.deleteMessage(groupId, messageId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.getGroupMembers(groupId, includeAllPublicFields).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.getGroupMembers(groupId, includeAllPublicFields, lastId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<ChatMessage> likeMessage(String groupId, String mid) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.likeMessage(groupId, mid).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> flagMessage(String groupId, String mid) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.flagMessage(groupId, mid).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> seenMessages(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.seenMessages(groupId).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<Void> inviteToGroup(String groupId, Map<String, Object> inviteData) {
+    public Observable<List<Void>> inviteToGroup(String groupId, Map<String, Object> inviteData) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.inviteToGroup(groupId, inviteData).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> rejectGroupInvite(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.rejectGroupInvite(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> acceptQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.acceptQuest(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> rejectQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.rejectQuest(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> cancelQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.cancelQuest(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Quest> forceStartQuest(String groupId, Group group) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.forceStartQuest(groupId, group).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Quest> inviteToQuest(String groupId, String questKey) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.inviteToQuest(groupId, questKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Quest> abortQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.abortQuest(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> leaveQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.leaveQuest(groupId).compose(configureApiCallObserver());
     }
 
@@ -795,7 +858,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> deletePushDevice(String regId) {
+    public Observable<List<Void>> deletePushDevice(String regId) {
         return apiService.deletePushDevice(regId).compose(configureApiCallObserver());
     }
 
@@ -828,12 +891,6 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     @Override
     public Observable<Challenge> createChallenge(Challenge challenge) {
         return apiService.createChallenge(challenge).compose(configureApiCallObserver());
-    }
-
-
-    @Override
-    public Observable<Task> createChallengeTask(String challengeId, Task task) {
-        return apiService.createChallengeTask(challengeId, task).compose(configureApiCallObserver());
     }
 
     @Override

@@ -64,12 +64,8 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
         return tasksOrder;
     }
 
-    private Observable addChallengeTasks(String challengeId, List<Task> addedTaskList) {
-        if (addedTaskList.size() == 1) {
-            return apiClient.createChallengeTask(challengeId, addedTaskList.get(0));
-        } else {
-            return apiClient.createChallengeTasks(challengeId, addedTaskList);
-        }
+    private Observable<List<Task>> addChallengeTasks(String challengeId, List<Task> addedTaskList) {
+        return apiClient.createChallengeTasks(challengeId, addedTaskList);
     }
 
     @Override
@@ -81,9 +77,9 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
                 addChallengeTasks(challenge1.id, taskList).subscribe(task -> {
                     subscriber.onNext(challenge1);
                     subscriber.onCompleted();
-                }, throwable -> subscriber.onError((Throwable) throwable));
+                }, subscriber::onError);
 
-            }, throwable -> subscriber.onError(throwable));
+            }, subscriber::onError);
         });
     }
 
@@ -129,12 +125,18 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
 
     @Override
     public Observable<Void> leaveChallenge(Challenge challenge, LeaveChallengeBody leaveChallengeBody) {
+        if (challenge == null) {
+            return Observable.just(null);
+        }
         return apiClient.leaveChallenge(challenge.id, leaveChallengeBody)
                 .doOnNext(aVoid -> localRepository.setParticipating(challenge, false));
     }
 
     @Override
     public Observable<Challenge> joinChallenge(Challenge challenge) {
+        if (challenge == null) {
+            return Observable.just(null);
+        }
         return apiClient.joinChallenge(challenge.id)
                 .doOnNext(aVoid -> localRepository.setParticipating(challenge, true));
     }

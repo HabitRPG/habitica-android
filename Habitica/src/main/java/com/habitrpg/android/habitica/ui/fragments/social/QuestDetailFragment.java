@@ -112,7 +112,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         quest = group.quest;
         setQuestParticipants(group.quest.participants);
         socialRepository.getMember(quest.leader).first().subscribe(member -> {
-            if (getContext() != null && questLeaderView != null) {
+            if (getContext() != null && questLeaderView != null && member != null) {
                 questLeaderView.setText(getContext().getString(R.string.quest_leader_header, member.getDisplayName()));
             }
         }, RxErrorHandler.handleEmptyError());
@@ -157,7 +157,7 @@ public class QuestDetailFragment extends BaseMainFragment {
 
 
     private void updateQuestContent(QuestContent questContent) {
-        if (questTitleView == null) {
+        if (questTitleView == null || !questContent.isManaged()) {
             return;
         }
         questTitleView.setText(questContent.getText());

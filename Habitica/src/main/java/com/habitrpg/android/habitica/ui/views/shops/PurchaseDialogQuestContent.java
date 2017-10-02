@@ -103,7 +103,7 @@ public class PurchaseDialogQuestContent extends PurchaseDialogContent {
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (questContent.getDrop().getItems() != null) {
+        if (questContent.getDrop() != null && questContent.getDrop().getItems() != null) {
             for (QuestDropItem item : questContent.getDrop().getItems()) {
                 if (!item.isOnlyOwner()) {
                     addRewardsRow(inflater, item, rewardsList);

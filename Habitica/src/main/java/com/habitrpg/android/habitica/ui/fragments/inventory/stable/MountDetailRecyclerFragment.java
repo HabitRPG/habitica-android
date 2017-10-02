@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import javax.inject.Inject;
 
@@ -51,6 +52,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
                 adapter.context = this.getActivity();
                 adapter.itemType = this.animalType;
                 recyclerView.setAdapter(adapter);
+                recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
                 this.loadItems();
 
                 compositeSubscription.add(adapter.getEquipEvents()
@@ -92,10 +94,13 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
 
 
     private void setGridSpanCount(int width) {
-        float itemWidth;
-        itemWidth = getContext().getResources().getDimension(R.dimen.pet_width);
+        int spanCount = 0;
+        if (getContext() != null && getContext().getResources() != null) {
+            float itemWidth;
+            itemWidth = getContext().getResources().getDimension(R.dimen.pet_width);
 
-        int spanCount = (int) (width / itemWidth);
+            spanCount = (int) (width / itemWidth);
+        }
         if (spanCount == 0) {
             spanCount = 1;
         }

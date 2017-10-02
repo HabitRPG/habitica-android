@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
@@ -105,7 +106,7 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
                         .subscribe(parsedText -> {
                             this.task.parsedText = parsedText;
                             this.titleTextView.setText(this.task.parsedText);
-                        }, Throwable::printStackTrace);
+                        }, RxErrorHandler.handleEmptyError());
                 Observable.just(this.task.getNotes())
                         .map(MarkdownParser::parseMarkdown)
                         .subscribeOn(Schedulers.io())
@@ -113,7 +114,7 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
                         .subscribe(parsedNotes -> {
                             this.task.parsedNotes = parsedNotes;
                             this.notesTextView.setText(this.task.parsedNotes);
-                        }, Throwable::printStackTrace);
+                        }, RxErrorHandler.handleEmptyError());
             }
         } else {
             this.titleTextView.setText(this.task.getText());

@@ -519,6 +519,9 @@ public class Task extends RealmObject implements Parcelable {
         }
 
         if (FREQUENCY_DAILY.equals(this.getFrequency())) {
+            if (this.everyX == 0) {
+                return null;
+            }
             Calendar startDate = new GregorianCalendar();
             startDate.setTime(this.getStartDate());
 

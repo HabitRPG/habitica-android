@@ -158,7 +158,7 @@ public interface ApiClient {
 
     Observable<Void> seenMessages(String groupId);
 
-    Observable<Void> inviteToGroup(String groupId, Map<String, Object> inviteData);
+    Observable<List<Void>> inviteToGroup(String groupId, Map<String, Object> inviteData);
 
     Observable<Void> rejectGroupInvite(String groupId);
 
@@ -192,7 +192,7 @@ public interface ApiClient {
     //Push notifications
     Observable<List<Void>> addPushDevice(Map<String, String> pushDeviceData);
 
-    Observable<Void> deletePushDevice(String regId);
+    Observable<List<Void>> deletePushDevice(String regId);
 
     /* challenges api */
 
@@ -209,7 +209,6 @@ public interface ApiClient {
 
     Observable<Challenge> createChallenge(Challenge challenge);
 
-    Observable<Task> createChallengeTask(String challengeId, Task task);
     Observable<List<Task>> createChallengeTasks(String challengeId, List<Task> tasks);
     Observable<Challenge> updateChallenge(Challenge challenge);
     Observable<Void> deleteChallenge(String challengeId);

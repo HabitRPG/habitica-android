@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.common.api.Response;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
@@ -18,6 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.solovyev.android.checkout.BasePurchaseVerifier;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.RequestListener;
+import org.solovyev.android.checkout.ResponseCodes;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -89,7 +91,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                                 }
                             }
                         }
-                        requestListener.onError(purchases.indexOf(purchase), new Exception());
+                        requestListener.onError(ResponseCodes.ERROR, new Exception());
                     });
                 } else if (PurchaseTypes.allSubscriptionTypes.contains(purchase.sku)) {
                     SubscriptionValidationRequest validationRequest = new SubscriptionValidationRequest();
@@ -120,7 +122,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                                 }
                             }
                         }
-                        requestListener.onError(purchases.indexOf(purchase), new Exception());
+                        requestListener.onError(ResponseCodes.ERROR, new Exception());
                     });
                 }
             }

@@ -127,7 +127,11 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (ownedItems.containsKey(item.getKey())) {
                 ((ShopItemViewHolder) holder).setItemCount(ownedItems.get(item.getKey()).getOwned());
             }
-            ((ShopItemViewHolder) holder).setIsPinned(pinnedItemKeys.contains(item.getKey()));
+            if (pinnedItemKeys != null) {
+                ((ShopItemViewHolder) holder).setIsPinned(pinnedItemKeys.contains(item.getKey()));
+            } else {
+                ((ShopItemViewHolder) holder).setIsPinned(false);
+            }
         }
     }
 

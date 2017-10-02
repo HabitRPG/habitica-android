@@ -94,7 +94,7 @@ public class PopupNotificationsManager {
                     .subscribe(o -> {
                         final AlertDialog dialog = builder.create();
                         dialog.show();
-                    }, throwable -> {});
+                    }, RxErrorHandler.handleEmptyError());
         } else {
             ShowSnackbarEvent event = new ShowSnackbarEvent();
             event.title = notification.data.message;

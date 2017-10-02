@@ -5,6 +5,7 @@ import android.util.Log;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
+import java.io.EOFException;
 import java.io.IOException;
 
 import cz.msebera.android.httpclient.HttpException;
@@ -39,7 +40,10 @@ public class RxErrorHandler {
                 Log.e("ObservableError", Log.getStackTraceString(throwable));
             } catch (Exception ignored) {}
         } else {
-            if (!IOException.class.isAssignableFrom(throwable.getClass()) && !HttpException.class.isAssignableFrom(throwable.getClass()) && !retrofit2.HttpException.class.isAssignableFrom(throwable.getClass())) {
+            if (!IOException.class.isAssignableFrom(throwable.getClass())
+                    && !HttpException.class.isAssignableFrom(throwable.getClass())
+                    && !retrofit2.HttpException.class.isAssignableFrom(throwable.getClass())
+                    && !EOFException.class.isAssignableFrom(throwable.getClass())) {
                 instance.crashlyticsProxy.logException(throwable);
             }
         }

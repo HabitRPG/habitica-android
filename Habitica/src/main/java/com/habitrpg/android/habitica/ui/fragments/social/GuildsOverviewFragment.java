@@ -76,7 +76,9 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
 
     @Override
     public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
         fetchGuilds();
     }
 

@@ -143,6 +143,9 @@ public class ShopItem extends RealmObject {
     }
 
     public boolean canBuy(User user) {
+        if (user == null || user.getStats() == null) {
+            return false;
+        }
         if (getCurrency().equals("gold")) {
             return getValue() <= user.getStats().getGp();
         } else if (getCurrency().equals("gems")) {

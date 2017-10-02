@@ -46,8 +46,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
             if (suppressedModals != null) {
                 if (suppressedModals.getLevelUp()) {
                     checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null, requestValues.activity))
-                            .subscribe(aVoid -> {
-                            }, RxErrorHandler.handleEmptyError());
+                            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
 
                     return Observable.just(requestValues.user.getStats());
                 }
@@ -71,8 +70,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
                     .setTitle(R.string.levelup_header)
                     .setView(customView)
                     .setPositiveButton(R.string.levelup_button, (dialog, which) -> checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null, requestValues.activity))
-                            .subscribe(aVoid -> {
-                            }, RxErrorHandler.handleEmptyError()))
+                            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError()))
                     .setNeutralButton(R.string.share, (dialog, which) -> {
                         EventBus.getDefault().post(event);
                         dialog.dismiss();

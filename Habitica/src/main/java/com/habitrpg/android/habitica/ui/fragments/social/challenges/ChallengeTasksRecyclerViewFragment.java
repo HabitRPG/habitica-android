@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -107,6 +108,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
             if (recyclerView.getAdapter() == null) {
                 this.setInnerAdapter();
             }
+            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
         }
 
         return view;

@@ -121,12 +121,16 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
         } else {
             return;
         }
-        matchingView.setPurchaseButtonText(price);
-        matchingView.setSku(sku);
+        if (matchingView != null) {
+            matchingView.setPurchaseButtonText(price);
+            matchingView.setSku(sku);
+        }
     }
 
     public void purchaseGems(String sku) {
-        final ActivityCheckout checkout = listener.getActivityCheckout();
-        billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
+        if (listener != null) {
+            final ActivityCheckout checkout = listener.getActivityCheckout();
+            billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
+        }
     }
 }

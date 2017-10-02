@@ -92,7 +92,9 @@ public class HabitButtonWidgetService extends Service {
                 remoteViews.setInt(R.id.btnMinus, "setBackgroundColor", ContextCompat.getColor(context, task.getMediumTaskColor()));
                 remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, getPendingIntent(task.getId(), TaskDirection.down.toString(), taskMapping.get(task.getId())));
             }
-            appWidgetManager.updateAppWidget(taskMapping.get(task.getId()), remoteViews);
+            if (taskMapping.get(task.getId()) != null && remoteViews != null) {
+                appWidgetManager.updateAppWidget(taskMapping.get(task.getId()), remoteViews);
+            }
         }
     }
 

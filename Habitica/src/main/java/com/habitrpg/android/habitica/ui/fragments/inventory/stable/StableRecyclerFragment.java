@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,7 @@ public class StableRecyclerFragment extends BaseFragment {
             adapter.activity = (MainActivity) this.getActivity();
             adapter.itemType = this.itemType;
             recyclerView.setAdapter(adapter);
+            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
         }
 
         if (savedInstanceState != null) {
@@ -122,10 +124,13 @@ public class StableRecyclerFragment extends BaseFragment {
 
 
     private void setGridSpanCount(int width) {
-        float itemWidth;
-        itemWidth = getContext().getResources().getDimension(R.dimen.pet_width);
+        int spanCount = 0;
+        if (getContext() != null && getContext().getResources() != null) {
+            float itemWidth;
+            itemWidth = getContext().getResources().getDimension(R.dimen.pet_width);
 
-        int spanCount = (int) (width / itemWidth);
+            spanCount = (int) (width / itemWidth);
+        }
         if (spanCount == 0) {
             spanCount = 1;
         }

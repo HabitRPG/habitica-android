@@ -155,8 +155,7 @@ public class ChallengeDetailDialogHolder {
                             if (rewards.size() > 0) {
                                 addRewards(rewards);
                             }
-                        }
-                        , Throwable::printStackTrace);
+                        }, RxErrorHandler.handleEmptyError());
     }
 
     private void addHabits(ArrayList<Task> habits) {

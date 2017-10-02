@@ -363,6 +363,9 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        if (taskType == null) {
+            return;
+        }
         if (checkedId == R.id.all_task_filter) {
             if (!taskType.equals(Task.TYPE_TODO)) {
                 filterType = Task.FILTER_ALL;

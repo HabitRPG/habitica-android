@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -56,6 +57,7 @@ import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -640,6 +642,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         generateSummary();
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
+
     private void generateSummary () {
         String frequency = repeatablesFrequencySpinner.getSelectedItem().toString();
         String everyX = String.valueOf(repeatablesEveryXSpinner.getValue());
@@ -878,7 +884,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             String title = "";
 
-            if (task != null) {
+            if (task != null && task.isValid()) {
                 title = getResources().getString(R.string.action_edit) + " " + task.getText();
             } else {
                 switch (taskType) {
@@ -1145,7 +1151,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 }
             }
 
-            switch (task.type) {
+            switch (task.type != null ? task.type : "") {
                 case "habit": {
                     task.setUp(positiveCheckBox.isChecked());
                     task.setDown(negativeCheckBox.isChecked());
@@ -1311,10 +1317,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void finishWithSuccess() {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, taskType);
-        setResult(RESULT_OK, resultIntent);
-        finish();
+        Handler mainHandler = new Handler(this.getMainLooper());
+        mainHandler.postDelayed(() -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, taskType);
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        }, 500);
     }
 
     private void dismissKeyboard() {

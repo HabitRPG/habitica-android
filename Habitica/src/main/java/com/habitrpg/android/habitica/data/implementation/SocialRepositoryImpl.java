@@ -192,7 +192,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<Void> inviteToGroup(String id, Map<String, Object> inviteData) {
+    public Observable<List<Void>> inviteToGroup(String id, Map<String, Object> inviteData) {
         return apiClient.inviteToGroup(id, inviteData);
     }
 
@@ -212,7 +212,11 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     @Override
     public Observable<Void> markPrivateMessagesRead(User user) {
         return apiClient.markPrivateMessagesRead()
-                .doOnNext(aVoid -> localRepository.executeTransaction(realm -> user.getInbox().setNewMessages(0)));
+                .doOnNext(aVoid -> {
+                    if (user != null && user.isManaged()) {
+                        localRepository.executeTransaction(realm -> user.getInbox().setNewMessages(0));
+                    }
+                });
     }
 
     @Override

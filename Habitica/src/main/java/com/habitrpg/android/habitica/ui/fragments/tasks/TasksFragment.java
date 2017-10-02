@@ -424,7 +424,9 @@ public class TasksFragment extends BaseMainFragment {
                 this.displayingTaskForm = false;
                 break;
         }
-        floatingMenu.close(true);
+        if (floatingMenu != null) {
+            floatingMenu.close(true);
+        }
     }
 
     private void onTaskCreatedResult(int resultCode, Intent data) {

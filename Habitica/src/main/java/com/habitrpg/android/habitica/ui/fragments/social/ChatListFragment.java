@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import javax.inject.Inject;
 
@@ -149,6 +150,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         compositeSubscription.add(chatAdapter.getLikeMessageEvents().flatMap(socialRepository::likeMessage).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError()));
 
         recyclerView.setAdapter(chatAdapter);
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
 
         socialRepository.getGroupChat(groupId).first().subscribe(this::setChatMessages, RxErrorHandler.handleEmptyError());
 

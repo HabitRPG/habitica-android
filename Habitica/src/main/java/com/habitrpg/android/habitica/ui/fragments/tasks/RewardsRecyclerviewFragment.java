@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +64,7 @@ public class RewardsRecyclerviewFragment extends TaskRecyclerViewFragment {
         final View finalView = view;
         finalView.post(() -> setGridSpanCount(finalView.getWidth()));
         recyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
 
         inventoryRepository.getInAppRewards().subscribe(shopItems -> {
             if (recyclerAdapter != null) {
@@ -86,15 +88,18 @@ public class RewardsRecyclerviewFragment extends TaskRecyclerViewFragment {
                     if (swipeRefreshLayout != null) {
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                })
-                .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
+                }).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
     }
 
     private void setGridSpanCount(int width) {
-        float itemWidth;
-        itemWidth = getContext().getResources().getDimension(R.dimen.reward_width);
+        int spanCount = 0;
+        if (getContext() != null && getContext().getResources() != null) {
+            float itemWidth;
+            itemWidth = getContext().getResources().getDimension(R.dimen.reward_width);
 
-        int spanCount = (int) (width / itemWidth);
+            spanCount = (int) (width / itemWidth);
+        }
+
         if (spanCount == 0) {
             spanCount = 1;
         }

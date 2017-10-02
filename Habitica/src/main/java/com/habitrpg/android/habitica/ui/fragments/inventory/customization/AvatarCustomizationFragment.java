@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         recyclerView.addItemDecoration(new MarginDecoration(getContext()));
 
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
         this.loadCustomizations();
 
         this.updateActiveCustomization();
@@ -114,13 +116,15 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
 
     private void setGridSpanCount(int width) {
         float itemWidth;
-        if (this.type != null && this.type.equals("background")) {
-            itemWidth = getContext().getResources().getDimension(R.dimen.avatar_width);
-        } else {
-            itemWidth = getContext().getResources().getDimension(R.dimen.customization_width);
+        int spanCount = 0;
+        if (getContext() != null && getContext().getResources() != null) {
+            if (this.type != null && this.type.equals("background")) {
+                itemWidth = getContext().getResources().getDimension(R.dimen.avatar_width);
+            } else {
+                itemWidth = getContext().getResources().getDimension(R.dimen.customization_width);
+            }
+            spanCount = (int) (width / itemWidth);
         }
-
-        int spanCount = (int) (width / itemWidth);
         if (spanCount == 0) {
             spanCount = 1;
         }
@@ -130,20 +134,22 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
     @Override
     public void updateUserData(User user) {
         super.updateUserData(user);
-        this.adapter.gemBalance = user.getBalance() * 4;
-        this.updateActiveCustomization();
-        if (adapter.getCustomizationList() != null) {
-            List<String> ownedCustomizations = new ArrayList<>();
-            if (user.getPurchased() != null && user.getPurchased().customizations != null) {
-                for (Customization customization : user.getPurchased().customizations) {
-                    if (customization.getType().equals(this.type)) {
-                        ownedCustomizations.add(customization.getId());
+        if (adapter != null) {
+            this.adapter.gemBalance = user.getBalance() * 4;
+            this.updateActiveCustomization();
+            if (adapter.getCustomizationList() != null) {
+                List<String> ownedCustomizations = new ArrayList<>();
+                if (user.getPurchased() != null && user.getPurchased().customizations != null) {
+                    for (Customization customization : user.getPurchased().customizations) {
+                        if (customization.getType().equals(this.type)) {
+                            ownedCustomizations.add(customization.getId());
+                        }
                     }
                 }
+                adapter.updateOwnership(ownedCustomizations);
+            } else {
+                this.loadCustomizations();
             }
-            adapter.updateOwnership(ownedCustomizations);
-        } else {
-            this.loadCustomizations();
         }
     }
 

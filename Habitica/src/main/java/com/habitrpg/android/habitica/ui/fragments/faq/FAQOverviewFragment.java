@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.data.FAQRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import javax.inject.Inject;
 
@@ -42,6 +43,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
         this.loadArticles();
 
         return view;

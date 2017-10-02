@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -70,7 +71,7 @@ public class SkillTasksRecyclerViewFragment extends BaseFragment {
 
             recyclerView.setLayoutManager(layoutManager);
         }
-
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
     }
 
     public Observable<Task> getTaskSelectionEvents() {

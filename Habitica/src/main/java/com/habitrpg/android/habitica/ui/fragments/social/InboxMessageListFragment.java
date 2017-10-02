@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -82,6 +83,7 @@ public class InboxMessageListFragment extends BaseMainFragment
         chatAdapter = new ChatRecyclerViewAdapter(null, true, user);
         chatAdapter.setSendingUser(this.user);
         recyclerView.setAdapter(chatAdapter);
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
         compositeSubscription.add(chatAdapter.getUserLabelClickEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
 
         loadMessages();

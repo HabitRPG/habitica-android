@@ -140,8 +140,14 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             return true;
         } else if (preference.getKey().equals("reload_content")) {
             ProgressDialog dialog = ProgressDialog.show(context, context.getString(R.string.reloading_content), null, true);
-            inventoryRepository.retrieveContent(true).subscribe(contentResult -> dialog.dismiss(), throwable -> {
-                dialog.dismiss();
+            inventoryRepository.retrieveContent(true).subscribe(contentResult -> {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }, throwable -> {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 RxErrorHandler.reportError(throwable);
             });
         }

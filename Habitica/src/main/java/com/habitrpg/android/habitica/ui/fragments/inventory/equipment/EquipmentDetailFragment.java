@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import javax.inject.Inject;
 
@@ -56,6 +57,7 @@ public class EquipmentDetailFragment extends BaseMainFragment {
         this.recyclerView.setAdapter(this.adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
 
         inventoryRepository.getOwnedEquipment(type).first().subscribe(this.adapter::updateData, RxErrorHandler.handleEmptyError());
         return v;

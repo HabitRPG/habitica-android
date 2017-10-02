@@ -268,7 +268,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     private User mergeUser(User oldUser, User newUser) {
-        if (!oldUser.isValid()) {
+        if (oldUser == null || !oldUser.isValid()) {
             return oldUser;
         }
         User copiedUser;

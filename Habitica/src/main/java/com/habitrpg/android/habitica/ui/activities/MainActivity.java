@@ -591,7 +591,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                             new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()),
                             ContextCompat.getColor(this, R.color.yellow_10),
                             "-"+ ((int) event.Reward.value),
-                            SnackbarDisplayType.DROP), error -> {});
+                            SnackbarDisplayType.DROP), RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -863,14 +863,12 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         switch (event.Task.type) {
             case Task.TYPE_DAILY: {
                 dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
-                        .subscribe(this::displayTaskScoringResponse, error -> {
-                        });
+                        .subscribe(this::displayTaskScoringResponse, RxErrorHandler.handleEmptyError());
             }
             break;
             case Task.TYPE_TODO: {
                 todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
-                        .subscribe(this::displayTaskScoringResponse, error -> {
-                        });
+                        .subscribe(this::displayTaskScoringResponse, RxErrorHandler.handleEmptyError());
             }
             break;
         }
@@ -884,8 +882,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
         habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(user, event.habit, event.Up))
-                .subscribe(this::displayTaskScoringResponse, error -> {
-                });
+                .subscribe(this::displayTaskScoringResponse, RxErrorHandler.handleEmptyError());
     }
 
     private void checkMaintenance() {

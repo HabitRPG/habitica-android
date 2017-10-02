@@ -10,6 +10,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckedTextView;
@@ -136,13 +137,6 @@ public class CreateChallengeActivity extends BaseActivity {
     private User user;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        userRepository.getUser(userId).subscribe(user1 -> this.user = user1, RxErrorHandler.handleEmptyError());
-        gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.activity_create_challenge;
     }
@@ -182,6 +176,7 @@ public class CreateChallengeActivity extends BaseActivity {
             }, throwable ->  {
                 dialog.dismiss();
                 savingInProgress = false;
+                RxErrorHandler.reportError(throwable);
             });
         } else if(item.getItemId() == android.R.id.home){
             finish();
@@ -251,6 +246,9 @@ public class CreateChallengeActivity extends BaseActivity {
         if (challengeId != null) {
             fillControlsByChallenge();
         }
+
+        userRepository.getUser(userId).subscribe(user1 -> this.user = user1, RxErrorHandler.handleEmptyError());
+        gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
     }
 
 
@@ -268,21 +266,28 @@ public class CreateChallengeActivity extends BaseActivity {
 
     @OnClick(R.id.challenge_add_gem_btn)
     public void onAddGem() {
-        int currentVal = Integer.parseInt(createChallengePrize.getText().toString());
+        String stringValue = createChallengePrize.getText().toString();
+        if (stringValue.length() == 0) {
+            stringValue = "0";
+        }
+        int currentVal = Integer.parseInt(stringValue);
         currentVal++;
 
-        createChallengePrize.setText("" + currentVal);
+        createChallengePrize.setText(String.valueOf(currentVal));
 
         checkPrizeAndMinimumForTavern();
     }
 
     @OnClick(R.id.challenge_remove_gem_btn)
     public void onRemoveGem() {
-
-        int currentVal = Integer.parseInt(createChallengePrize.getText().toString());
+        String stringValue = createChallengePrize.getText().toString();
+        if (stringValue.length() == 0) {
+            stringValue = "0";
+        }
+        int currentVal = Integer.parseInt(stringValue);
         currentVal--;
 
-        createChallengePrize.setText("" + currentVal);
+        createChallengePrize.setText(String.valueOf(currentVal));
 
         checkPrizeAndMinimumForTavern();
     }
@@ -334,7 +339,7 @@ public class CreateChallengeActivity extends BaseActivity {
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
 
             supportActionBar.setTitle("");
-            supportActionBar.setBackgroundDrawable(new ColorDrawable(resources.getColor(R.color.brand_200)));
+            supportActionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.brand_200)));
             supportActionBar.setElevation(0);
         }
 
@@ -489,7 +494,9 @@ public class CreateChallengeActivity extends BaseActivity {
             c.id = challengeId;
         }
 
-        c.groupId = locationGroup.id;
+        if (locationGroup != null) {
+            c.groupId = locationGroup.id;
+        }
         c.name = createChallengeTitle.getText().toString();
         c.description = createChallengeDescription.getText().toString();
         c.shortName = createChallengeTag.getText().toString();
@@ -568,7 +575,7 @@ public class CreateChallengeActivity extends BaseActivity {
 
         @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             AppCompatTextView checkedTextView = (AppCompatTextView) super.getView(position, convertView, parent);
             checkedTextView.setText(getItem(position).name);
             return checkedTextView;

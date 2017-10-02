@@ -64,7 +64,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_equipment_overview, container, false);
 
-        if (this.user == null) {
+        if (this.user == null || this.user.isManaged()) {
             return v;
         }
 
@@ -112,9 +112,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
         costumeWeaponView.setOnClickListener(v1 -> displayEquipmentDetailList("weapon", user.getItems().getGear().getCostume().getWeapon(), true));
         costumeShieldView.setOnClickListener(v1 -> displayEquipmentDetailList("shield", user.getItems().getGear().getCostume().getShield(), true));
 
-        this.costumeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
-        });
+        this.costumeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError()));
 
         if (this.nameMapping == null) {
             inventoryRepository.getOwnedEquipment().subscribe(items -> {

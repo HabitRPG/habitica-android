@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
@@ -94,28 +95,30 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
         if (this.checklistView != null) {
             if (this.shouldDisplayExpandedChecklist() && this.task.checklist != null) {
                 LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                for (ChecklistItem item : this.task.checklist) {
-                    LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView, false);
-                    CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
-                    EmojiTextView textView = (EmojiTextView) itemView.findViewById(R.id.checkedTextView);
-                    // Populate the data into the template view using the data object
-                    textView.setText(item.getText());
+                if (this.task.checklist.isValid()) {
+                    for (ChecklistItem item : this.task.checklist) {
+                        LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView, false);
+                        CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
+                        EmojiTextView textView = (EmojiTextView) itemView.findViewById(R.id.checkedTextView);
+                        // Populate the data into the template view using the data object
+                        textView.setText(item.getText());
 
-                    Observable.just(item.getText())
-                            .map(MarkdownParser::parseMarkdown)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(textView::setText, Throwable::printStackTrace);
-                    checkbox.setChecked(item.getCompleted());
-                    checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                        ChecklistCheckedCommand event = new ChecklistCheckedCommand();
-                        event.task = task;
-                        event.item = item;
-                        EventBus.getDefault().post(event);
-                    });
-                    ViewGroup checkboxHolder = (ViewGroup) itemView.findViewById(R.id.checkBoxHolder);
-                    expandCheckboxTouchArea(checkboxHolder, checkbox);
-                    this.checklistView.addView(itemView);
+                        Observable.just(item.getText())
+                                .map(MarkdownParser::parseMarkdown)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(textView::setText, RxErrorHandler.handleEmptyError());
+                        checkbox.setChecked(item.getCompleted());
+                        checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                            ChecklistCheckedCommand event = new ChecklistCheckedCommand();
+                            event.task = task;
+                            event.item = item;
+                            EventBus.getDefault().post(event);
+                        });
+                        ViewGroup checkboxHolder = (ViewGroup) itemView.findViewById(R.id.checkBoxHolder);
+                        expandCheckboxTouchArea(checkboxHolder, checkbox);
+                        this.checklistView.addView(itemView);
+                    }
                 }
                 this.checklistView.setVisibility(View.VISIBLE);
                 this.checklistBottomSpace.setVisibility(View.VISIBLE);

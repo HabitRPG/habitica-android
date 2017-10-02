@@ -168,11 +168,10 @@ public class YesterdailyDialog extends AlertDialog {
     }
 
     private static void showDialog(Activity activity, UserRepository userRepository, TaskRepository taskRepository, List<Task> tasks) {
-        if (activity.isFinishing()) {
-            return;
-        }
         YesterdailyDialog dialog = new YesterdailyDialog(activity, userRepository, taskRepository, tasks);
-        dialog.show();
-        isDisplaying = true;
+        if (!activity.isFinishing()) {
+            dialog.show();
+            isDisplaying = true;
+        }
     }
 }

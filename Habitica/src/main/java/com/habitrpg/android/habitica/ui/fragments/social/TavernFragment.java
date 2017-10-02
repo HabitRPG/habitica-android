@@ -75,7 +75,7 @@ public class TavernFragment extends BaseMainFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (this.socialRepository != null) {
-            socialRepository.getGroup("habitrpg")
+            compositeSubscription.add(socialRepository.getGroup("habitrpg")
                     .subscribe(group -> {
                         TavernFragment.this.tavern = group;
                         if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {
@@ -85,13 +85,13 @@ public class TavernFragment extends BaseMainFragment {
                                 TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
                             }
 
-                            inventoryRepository.getQuestContent(group.quest.key).subscribe(content -> {
+                            inventoryRepository.getQuestContent(group.quest.key).first().subscribe(content -> {
                                 if (questInfoFragment != null) {
                                     questInfoFragment.setQuestContent(content);
                                 }
                             }, RxErrorHandler.handleEmptyError());
                         }
-                    }, RxErrorHandler.handleEmptyError());
+                    }, RxErrorHandler.handleEmptyError()));
         }
     }
 

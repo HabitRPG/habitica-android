@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import javax.inject.Inject;
 
@@ -61,6 +62,7 @@ public class PartyMemberListFragment extends BaseFragment {
         adapter = new PartyMemberRecyclerViewAdapter(null, true, getContext());
         compositeSubscription.add(adapter.getUserClickedEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
 
         refreshLayout.setOnRefreshListener(this::refreshMembers);
 
@@ -68,7 +70,8 @@ public class PartyMemberListFragment extends BaseFragment {
     }
 
     private void refreshMembers() {
-        socialRepository.retrieveGroupMembers(partyId, true).subscribe(users -> setRefreshing(false), RxErrorHandler.handleEmptyError());
+        setRefreshing(true);
+        socialRepository.retrieveGroupMembers(partyId, true).subscribe(users -> {}, RxErrorHandler.handleEmptyError(), () -> setRefreshing(false));
     }
 
     private void setRefreshing(boolean isRefreshing) {

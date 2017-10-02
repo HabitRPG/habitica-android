@@ -11,6 +11,7 @@ import android.widget.RemoteViews;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.modules.AppModule;
 
@@ -78,8 +79,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
                 userRepository.getUser(userId).flatMap(user -> taskRepository.taskChecked(user, taskId, TaskDirection.up.toString().equals(direction), false))
                         .subscribe(taskDirectionData -> {
                             showToastForTaskDirection(context, taskDirectionData, userId);
-                            this.onUpdate(context, mgr, ids);
-                        }, throwable -> this.onUpdate(context, mgr, ids));
+                        }, RxErrorHandler.handleEmptyError(), () -> this.onUpdate(context, mgr, ids));
             }
         }
         super.onReceive(context, intent);

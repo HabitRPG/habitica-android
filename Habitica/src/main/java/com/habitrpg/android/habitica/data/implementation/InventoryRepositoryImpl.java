@@ -329,6 +329,9 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
 
     @Override
     public Observable<List<ShopItem>> togglePinnedItem(ShopItem item) {
+        if (!item.isValid()) {
+            return Observable.just(null);
+        }
         return apiClient.togglePinnedItem(item.pinType, item.path)
                 .flatMap(aVoid -> retrieveInAppRewards());
     }

@@ -226,7 +226,7 @@ public interface ApiService {
     Observable<HabitResponse<Void>> seenMessages(@Path("gid") String groupId);
 
     @POST("groups/{gid}/invite")
-    Observable<HabitResponse<Void>> inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData);
+    Observable<HabitResponse<List<Void>>> inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData);
 
     @POST("groups/{gid}/reject-invite")
     Observable<HabitResponse<Void>> rejectGroupInvite(@Path("gid") String groupId);
@@ -279,7 +279,7 @@ public interface ApiService {
     Observable<HabitResponse<List<Void>>> addPushDevice(@Body Map<String, String> pushDeviceData);
 
     @DELETE("user/push-devices/{regId}")
-    Observable<HabitResponse<Void>> deletePushDevice(@Path("regId") String regId);
+    Observable<HabitResponse<List<Void>>> deletePushDevice(@Path("regId") String regId);
 
     /* challenges api */
 
@@ -300,9 +300,6 @@ public interface ApiService {
 
     @POST("challenges")
     Observable<HabitResponse<Challenge>> createChallenge(@Body Challenge challenge);
-
-    @POST("tasks/challenge/{challengeId}")
-    Observable<HabitResponse<Task>> createChallengeTask(@Path("challengeId") String challengeId, @Body Task task);
 
     @POST("tasks/challenge/{challengeId}")
     Observable<HabitResponse<List<Task>>> createChallengeTasks(@Path("challengeId") String challengeId, @Body List<Task> tasks);

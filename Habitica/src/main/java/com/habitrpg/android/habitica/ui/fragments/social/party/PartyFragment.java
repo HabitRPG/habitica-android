@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -68,6 +69,9 @@ public class PartyFragment extends BaseMainFragment {
         if (userHasParty()) {
             if (user != null) {
                 compositeSubscription.add(socialRepository.getGroup(user.getParty().getId())
+                        .first()
+                        //delay, so that realm can save party first
+                        .delay(500, TimeUnit.MILLISECONDS)
                         .subscribe(group -> {
                             PartyFragment.this.group = group;
                             updateGroupUI();
@@ -226,8 +230,7 @@ public class PartyFragment extends BaseMainFragment {
                     }
                     if (this.group != null) {
                         this.socialRepository.inviteToGroup(this.group.id, inviteData)
-                                .subscribe(aVoid -> {
-                                }, RxErrorHandler.handleEmptyError());
+                                .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
                     }
                 }
             }

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
@@ -69,10 +70,10 @@ public class HabitButtonWidgetActivity extends BaseActivity {
         }
 
         adapter = new SkillTasksRecyclerViewAdapter(null, true);
-        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe(task -> taskSelected(task.getId())));
+        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe(task -> taskSelected(task.getId()), RxErrorHandler.handleEmptyError()));
         recyclerView.setAdapter(adapter);
 
-        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(adapter::updateData);
+        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
     }
 
     public void taskSelected(String taskId) {

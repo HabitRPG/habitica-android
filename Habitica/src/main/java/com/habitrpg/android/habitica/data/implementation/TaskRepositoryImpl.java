@@ -28,8 +28,6 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 
-import static com.habitrpg.android.habitica.R.id.item;
-
 
 public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> implements TaskRepository {
 
@@ -172,7 +170,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     @Override
     public Observable<Task> updateTask(Task task) {
         long now = new Date().getTime();
-        if (lastTaskAction > now-500) {
+        if (lastTaskAction > now-500 || !task.isValid()) {
             return Observable.just(task);
         }
         lastTaskAction = now;

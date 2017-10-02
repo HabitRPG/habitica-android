@@ -265,7 +265,7 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     @Override
     public void decrementMysteryItemCount(User user) {
         SpecialItem item = realm.where(SpecialItem.class).equalTo("isMysteryItem", true).findFirst();
-        realm.executeTransactionAsync(realm1 -> {
+        realm.executeTransaction(realm1 -> {
             if (item != null && item.isValid()) {
                 item.setOwned(item.getOwned() - 1);
             }

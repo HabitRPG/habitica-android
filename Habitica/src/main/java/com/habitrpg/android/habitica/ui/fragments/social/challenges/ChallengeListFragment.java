@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -84,6 +85,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         }
 
         recyclerView.setEmptyView(emptyView);
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
 
         loadLocalChallenges();
         return v;
@@ -125,7 +127,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     private void fetchOnlineChallenges() {
         setRefreshing(true);
-        challengeRepository.retrieveChallenges(user).subscribe(challenges -> setRefreshing(false), throwable -> setRefreshing(false));
+        challengeRepository.retrieveChallenges(user).subscribe(challenges -> {}, RxErrorHandler.handleEmptyError(), () -> setRefreshing(false));
     }
 
     @Override

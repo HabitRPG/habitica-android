@@ -209,6 +209,10 @@ public class AvatarView extends View {
     public EnumMap<AvatarView.LayerType, String> getAvatarLayerMap(Avatar avatar) {
         EnumMap<AvatarView.LayerType, String> layerMap = new EnumMap<>(AvatarView.LayerType.class);
 
+        if (!avatar.isValid()) {
+            return layerMap;
+        }
+
         AvatarPreferences prefs = avatar.getPreferences();
         if (prefs == null) {
             return layerMap;

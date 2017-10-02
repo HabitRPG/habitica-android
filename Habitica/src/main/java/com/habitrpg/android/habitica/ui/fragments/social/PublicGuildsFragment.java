@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
             viewAdapter.setMemberGuildIDs(this.memberGuildIDs);
             viewAdapter.apiClient = this.apiClient;
             recyclerView.setAdapter(viewAdapter);
+            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
             this.fetchGuilds();
         }
         return view;

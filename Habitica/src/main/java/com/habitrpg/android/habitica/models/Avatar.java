@@ -37,4 +37,6 @@ public interface Avatar {
     Outfit getEquipped();
 
     boolean hasClass();
+
+    boolean isValid();
 }

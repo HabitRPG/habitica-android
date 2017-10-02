@@ -230,7 +230,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
 
                         fullList.addAll(resultList);
-                    }, Throwable::printStackTrace);
+                    }, RxErrorHandler.handleEmptyError());
         }
 
         if (challengeId != null) {
@@ -238,7 +238,7 @@ public class ChallengeDetailActivity extends BaseActivity {
                 ChallengeDetailActivity.this.challenge = challenge;
                 ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
                 challengeViewHolder.bind(challenge);
-            });
+            }, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -383,14 +383,12 @@ public class ChallengeDetailActivity extends BaseActivity {
         switch (event.Task.type) {
             case Task.TYPE_DAILY: {
                 dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
-                        .subscribe(this::onTaskDataReceived, error -> {
-                        });
+                        .subscribe(this::onTaskDataReceived, RxErrorHandler.handleEmptyError());
             }
             break;
             case Task.TYPE_TODO: {
                 todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
-                        .subscribe(this::onTaskDataReceived, error -> {
-                        });
+                        .subscribe(this::onTaskDataReceived, RxErrorHandler.handleEmptyError());
             }
             break;
         }
@@ -399,15 +397,13 @@ public class ChallengeDetailActivity extends BaseActivity {
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
         checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId()))
-                .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.task)), error -> {
-                });
+                .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.task)), RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
         habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(user, event.habit, event.Up))
-                .subscribe(this::onTaskDataReceived, error -> {
-                });
+                .subscribe(this::onTaskDataReceived, RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
@@ -421,7 +417,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         if (event.Reward.specialTag == null || !event.Reward.specialTag.equals("item")) {
 
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
-                    .subscribe(res -> HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_purchase_reward), HabiticaSnackbar.SnackbarDisplayType.NORMAL), error -> {});
+                    .subscribe(res -> HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_purchase_reward), HabiticaSnackbar.SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
         }
 
     }

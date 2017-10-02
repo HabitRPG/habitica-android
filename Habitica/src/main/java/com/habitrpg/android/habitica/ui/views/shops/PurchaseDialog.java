@@ -233,9 +233,11 @@ public class PurchaseDialog extends AlertDialog {
                     .flatMap(buyResponse -> userRepository.retrieveUser(false, true))
                     .flatMap(user1 -> inventoryRepository.retrieveInAppRewards())
                     .subscribe(buyResponse -> {}, throwable -> {
-                        retrofit2.HttpException error = (retrofit2.HttpException) throwable;
-                        if (error.code() == 401 && shopItem.getCurrency().equals("gems")) {
-                            EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+                        if (throwable.getClass().isAssignableFrom(retrofit2.HttpException.class)) {
+                            retrofit2.HttpException error = (retrofit2.HttpException) throwable;
+                            if (error.code() == 401 && shopItem.getCurrency().equals("gems")) {
+                                EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+                            }
                         }
                     });
         } else {

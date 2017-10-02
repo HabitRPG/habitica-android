@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
@@ -126,7 +127,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .toList()
-                    .subscribe(this::setTasks, crashlyticsProxy::logException);
+                    .subscribe(this::setTasks, RxErrorHandler.handleEmptyError());
         }
     }
 

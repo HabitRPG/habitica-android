@@ -87,6 +87,9 @@ public class ItemsFragment extends BaseMainFragment {
 
             @Override
             public CharSequence getPageTitle(int position) {
+                if (activity == null) {
+                    return "";
+                }
                 switch (position) {
                     case 0:
                         return activity.getString(R.string.eggs);
@@ -97,7 +100,7 @@ public class ItemsFragment extends BaseMainFragment {
                     case 3:
                         return activity.getString(R.string.quests);
                     case 4:
-                        return getString(R.string.special);
+                        return activity.getString(R.string.special);
                 }
                 return "";
             }

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -37,6 +38,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -163,7 +165,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                         this.recyclerAdapter = new RewardsRecyclerViewAdapter(tasks, getContext(), layoutOfType, user);
                         break;
                 }
-            });
+            }, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -227,8 +229,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 }
                 if (mFromPosition != null) {
                     taskRepository.updateTaskPosition(viewHolder.getAdapterPosition())
-                            .subscribe(taskPositions -> {
-                            }, RxErrorHandler.handleEmptyError());
+                            .subscribe(taskPositions -> {}, RxErrorHandler.handleEmptyError());
                 }
             }
         };
@@ -253,6 +254,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
             int bottomPadding = (int) (recyclerView.getPaddingBottom() + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics()));
             recyclerView.setPadding(0, 0, 0, bottomPadding);
+            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
 
             swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -364,8 +366,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                     if (swipeRefreshLayout != null) {
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                })
-                .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
+                }).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
     }
 
     public void setActiveFilter(String activeFilter) {

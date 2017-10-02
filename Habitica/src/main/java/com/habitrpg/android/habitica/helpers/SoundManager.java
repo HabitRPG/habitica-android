@@ -80,7 +80,7 @@ public class SoundManager {
                 loadedSoundFiles.put(type, file);
                 file.play();
 
-            }, Throwable::printStackTrace);
+            }, RxErrorHandler.handleEmptyError());
         }
     }
 

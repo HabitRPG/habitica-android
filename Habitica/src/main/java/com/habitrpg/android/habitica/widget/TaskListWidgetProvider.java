@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -59,8 +60,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
                         .subscribe(taskDirectionData -> {
                             taskRepository.markTaskCompleted(taskId, true);
                             showToastForTaskDirection(context, taskDirectionData, userId);
-                            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
-                        }, throwable -> AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view));
+                        }, RxErrorHandler.handleEmptyError(), () -> AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view));
             }
         }
         super.onReceive(context, intent);

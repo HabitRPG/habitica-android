@@ -130,11 +130,7 @@ public class PartyDetailFragment extends BaseFragment {
     private void refreshParty() {
         socialRepository.retrieveGroup("party")
                 .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.id, true))
-                .subscribe(members -> {
-                    if (refreshLayout != null) {
-                        refreshLayout.setRefreshing(false);
-                    }
-                }, throwable -> {
+                .subscribe(members -> {}, RxErrorHandler.handleEmptyError(), () -> {
                     if (refreshLayout != null) {
                         refreshLayout.setRefreshing(false);
                     }
@@ -195,7 +191,7 @@ public class PartyDetailFragment extends BaseFragment {
     }
 
     private void updateQuestContent(QuestContent questContent) {
-        if (questTitleView == null && questContent.isManaged()) {
+        if (questTitleView == null || !questContent.isManaged()) {
             return;
         }
         questTitleView.setText(questContent.getText());

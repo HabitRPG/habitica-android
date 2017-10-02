@@ -420,7 +420,11 @@ public class LoginActivity extends BaseActivity
     }
 
     private void hideProgress() {
-        mProgressBar.setVisibility(View.GONE);
+        runOnUiThread(() -> {
+            if (mProgressBar != null) {
+                mProgressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void showValidationError(int resourceMessageString) {

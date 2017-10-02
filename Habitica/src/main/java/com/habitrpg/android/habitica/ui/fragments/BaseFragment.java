@@ -78,6 +78,7 @@ public abstract class BaseFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         injectFragment(HabiticaBaseApplication.getComponent());
         compositeSubscription = new CompositeSubscription();
+        this.setShowsDialog(false);
         super.onCreate(savedInstanceState);
     }
 

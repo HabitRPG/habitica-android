@@ -56,10 +56,12 @@ class PurchaseDialogGearContent extends PurchaseDialogContent {
     }
 
     public void setEquipment(Equipment equipment) {
-        configureFieldsForValue(strLabel, strValueTextView, equipment.str);
-        configureFieldsForValue(perLabel, perValueTextView, equipment.per);
-        configureFieldsForValue(conLabel, conValueTextView, equipment.con);
-        configureFieldsForValue(intLabel, intValueTextView, equipment._int);
+        if (equipment.isManaged()) {
+            configureFieldsForValue(strLabel, strValueTextView, equipment.str);
+            configureFieldsForValue(perLabel, perValueTextView, equipment.per);
+            configureFieldsForValue(conLabel, conValueTextView, equipment.con);
+            configureFieldsForValue(intLabel, intValueTextView, equipment._int);
+        }
     }
 
     private void configureFieldsForValue(TextView labelView, TextView valueTextView, int value) {
