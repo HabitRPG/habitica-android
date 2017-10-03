@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/PS_contact_title" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/PS_contact_title">
 
     <PreferenceCategory
         android:title="@string/pref_account_header"
@@ -95,6 +96,9 @@
             android:order="6"
             android:summary="@string/dailyDueDefaultViewDescription"
             />
+        <Preference android:title="@string/fix_character_values"
+            app:key="fixCharacterValues"
+            android:order="7"/>
         <Preference android:title="@string/logout"
             android:key="logout"
             android:summary="@string/logout_description"

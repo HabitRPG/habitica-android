@@ -47,6 +47,13 @@
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
+            android:name=".ui.activities.FixCharacterValuesActivity"
+            android:parentActivityName=".ui.activities.PrefsActivity"
+            android:label="@string/PS_settings_title"
+            android:screenOrientation="portrait"
+            tools:ignore="UnusedAttribute">
+        </activity>
+        <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/LoginActivityName"
             android:theme="@style/AppTheme.NoActionBar.Transparent"

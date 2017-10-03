@@ -59,6 +59,7 @@ public class User extends RealmObject implements Avatar {
     private Date lastCron;
     private Boolean needsCron;
     private int loginIncentives;
+    private int streakCount;
 
     public Preferences getPreferences() {
         return preferences;
@@ -363,5 +364,13 @@ public class User extends RealmObject implements Avatar {
             return contributor.getContributorColor();
         }
         return android.R.color.black;
+    }
+
+    public void setStreakCount(int streakCount) {
+        this.streakCount = streakCount;
+    }
+
+    public int getStreakCount() {
+        return streakCount;
     }
 }
