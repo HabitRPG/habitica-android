@@ -57,7 +57,6 @@ import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -958,7 +957,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_task_form, menu);
+        getMenuInflater().inflate(R.menu.menu_save, menu);
         return true;
     }
 

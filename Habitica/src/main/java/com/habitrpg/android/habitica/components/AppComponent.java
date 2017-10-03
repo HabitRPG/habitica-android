@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
+import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
@@ -92,6 +93,8 @@ import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
 import com.habitrpg.android.habitica.widget.TaskListFactory;
 import com.habitrpg.android.habitica.widget.TaskListWidgetProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
 
@@ -277,4 +280,6 @@ public interface AppComponent {
     void inject(QuestDetailFragment questDetailFragment);
 
     void inject(PurchaseDialog purchaseDialog);
+
+    void inject(@NotNull FixCharacterValuesActivity fixCharacterValuesActivity);
 }

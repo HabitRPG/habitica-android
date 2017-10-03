@@ -665,4 +665,10 @@
     <string name="want_to_subscribe">I want to Subscribe</string>
     <string name="seasonal_closed_description">The Grand Galas happen close to the solstices and equinoxes, so check back then to find a fun assortment of special seasonal items!</string>
     <string name="come_back_soon">Come back soon!</string>
+    <string name="level">Level</string>
+    <string name="streak_label">21-Day Streaks</string>
+    <string name="stats">Stats</string>
+    <string name="fix_character_description">If you\'ve encountered a bug or made a mistake that unfairly changed your character (damage you shouldn\'t have taken, Gold you didn\'t really earn, etc.), you can manually correct your numbers here. Yes, this makes it possible to cheat: use this feature wisely, or you\'ll sabotage your own habit-building!</string>
+    <string name="fix_character_values">Fix Character Values</string>
+    <string name="saving">Saving</string>
 </resources>

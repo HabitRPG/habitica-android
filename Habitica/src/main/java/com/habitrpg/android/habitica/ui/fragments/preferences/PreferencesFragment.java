@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
+import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 
 import java.util.HashMap;
@@ -33,6 +34,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import rx.Subscription;
+
+import static com.habitrpg.android.habitica.ui.activities.MainActivity.SELECT_CLASS_RESULT;
 
 public class PreferencesFragment extends BasePreferencesFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
@@ -150,6 +153,9 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 }
                 RxErrorHandler.reportError(throwable);
             });
+        } else if (preference.getKey().equals("fixCharacterValues")) {
+            Intent intent = new Intent(getActivity(), FixCharacterValuesActivity.class);
+            getActivity().startActivity(intent);
         }
         return super.onPreferenceTreeClick(preference);
     }

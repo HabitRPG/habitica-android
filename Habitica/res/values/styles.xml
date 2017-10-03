@@ -405,4 +405,8 @@
         <item name="android:minHeight">12dip</item>
         <item name="android:maxHeight">12dip</item>
     </style>
+
+    <style name="TableHeader" parent="Title1">
+        <item name="android:layout_marginTop">@dimen/content_section_spacing</item>
+    </style>
 </resources>

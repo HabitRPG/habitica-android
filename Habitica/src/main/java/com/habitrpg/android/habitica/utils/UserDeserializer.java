@@ -129,6 +129,12 @@ public class UserDeserializer implements JsonDeserializer<User> {
             user.setNeedsCron(obj.get("needsCron").getAsBoolean());
         }
 
+        if (obj.has("achievements")) {
+            if (obj.getAsJsonObject("achievements").has("streak")) {
+                user.setStreakCount(obj.getAsJsonObject("achievements").get("streak").getAsInt());
+            }
+        }
+
         return user;
     }
 }
