@@ -145,8 +145,8 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
             setLikeProperties();
 
             if (userBackground != null) {
-                if (msg.sent != null && msg.sent.equals("true")) {
-                    DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributor().getContributorColor());
+                if (msg.sent != null && msg.sent.equals("true") && sendingUser != null) {
+                    DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributorColor());
                 } else {
                     DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
                 }

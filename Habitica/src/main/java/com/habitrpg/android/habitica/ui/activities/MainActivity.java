@@ -696,7 +696,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     // endregion
 
     public void displayTaskScoringResponse(TaskScoringResult data) {
-        if (user != null) {
+        if (user != null && data != null) {
             notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
                     user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.hasLeveledUp))
                     .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());

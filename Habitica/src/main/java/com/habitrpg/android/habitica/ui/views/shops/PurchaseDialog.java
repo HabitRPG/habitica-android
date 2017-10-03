@@ -205,52 +205,55 @@ public class PurchaseDialog extends AlertDialog {
 
     @OnClick(R.id.buyButton)
     void onBuyButtonClicked() {
-        if (shopItem.canBuy(user)) {
-            Observable<Void> observable;
-            if ((shopIdentifier!= null && shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(shopItem.purchaseType)) {
-                if (shopItem.purchaseType.equals("gear")) {
-                    observable = inventoryRepository.purchaseMysterySet(shopItem.categoryIdentifier);
+        if (shopItem.isValid()) {
+            if (shopItem.canBuy(user)) {
+                Observable<Void> observable;
+                if ((shopIdentifier != null && shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(shopItem.purchaseType)) {
+                    if (shopItem.purchaseType.equals("gear")) {
+                        observable = inventoryRepository.purchaseMysterySet(shopItem.categoryIdentifier);
+                    } else {
+                        observable = inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key);
+                    }
+                } else if (shopItem.purchaseType.equals("quests") && shopItem.getCurrency().equals("gold")) {
+                    observable = inventoryRepository.purchaseQuest(shopItem.key);
+                } else if ("gold".equals(shopItem.currency) && !"gem".equals(shopItem.key)) {
+                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value).flatMap(buyResponse -> Observable.just(null));
                 } else {
-                    observable = inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key);
+                    observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key);
                 }
-            } else if (shopItem.purchaseType.equals("quests") && shopItem.getCurrency().equals("gold")) {
-                observable = inventoryRepository.purchaseQuest(shopItem.key);
-            } else if ("gold".equals(shopItem.currency) && !"gem".equals(shopItem.key)) {
-                observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value).flatMap(buyResponse -> Observable.just(null));
-            } else {
-                observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key);
-            }
-            observable
-                    .doOnNext(aVoid -> {
-                        ShowSnackbarEvent event = new ShowSnackbarEvent();
-                        event.title = getContext().getString(R.string.successful_purchase, shopItem.text);
-                        event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL;
-                        event.rightIcon = priceLabel.getCompoundDrawables()[0];
-                        event.rightTextColor = priceLabel.getCurrentTextColor();
-                        event.rightText = "-"+priceLabel.getText();
-                        EventBus.getDefault().post(event);
-                    })
-                    .flatMap(buyResponse -> userRepository.retrieveUser(false, true))
-                    .flatMap(user1 -> inventoryRepository.retrieveInAppRewards())
-                    .subscribe(buyResponse -> {}, throwable -> {
-                        if (throwable.getClass().isAssignableFrom(retrofit2.HttpException.class)) {
-                            retrofit2.HttpException error = (retrofit2.HttpException) throwable;
-                            if (error.code() == 401 && shopItem.getCurrency().equals("gems")) {
-                                EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+                observable
+                        .doOnNext(aVoid -> {
+                            ShowSnackbarEvent event = new ShowSnackbarEvent();
+                            event.title = getContext().getString(R.string.successful_purchase, shopItem.text);
+                            event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL;
+                            event.rightIcon = priceLabel.getCompoundDrawables()[0];
+                            event.rightTextColor = priceLabel.getCurrentTextColor();
+                            event.rightText = "-" + priceLabel.getText();
+                            EventBus.getDefault().post(event);
+                        })
+                        .flatMap(buyResponse -> userRepository.retrieveUser(false, true))
+                        .flatMap(user1 -> inventoryRepository.retrieveInAppRewards())
+                        .subscribe(buyResponse -> {
+                        }, throwable -> {
+                            if (throwable.getClass().isAssignableFrom(retrofit2.HttpException.class)) {
+                                retrofit2.HttpException error = (retrofit2.HttpException) throwable;
+                                if (error.code() == 401 && shopItem.getCurrency().equals("gems")) {
+                                    EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+                                }
                             }
-                        }
-                    });
-        } else {
-            InsufficientCurrencyDialog dialog = null;
-            if ("gold".equals(shopItem.currency)) {
-                dialog = new InsufficientGoldDialog(getContext());
-            } else if ("gems".equals(shopItem.currency)) {
-                dialog = new InsufficientGemsDialog(getContext());
-            } else if ("hourglasses".equals(shopItem.currency)) {
-                dialog = new InsufficientHourglassesDialog(getContext());
-            }
-            if (dialog != null) {
-                dialog.show();
+                        });
+            } else {
+                InsufficientCurrencyDialog dialog = null;
+                if ("gold".equals(shopItem.currency)) {
+                    dialog = new InsufficientGoldDialog(getContext());
+                } else if ("gems".equals(shopItem.currency)) {
+                    dialog = new InsufficientGemsDialog(getContext());
+                } else if ("hourglasses".equals(shopItem.currency)) {
+                    dialog = new InsufficientHourglassesDialog(getContext());
+                }
+                if (dialog != null) {
+                    dialog.show();
+                }
             }
         }
         dismiss();

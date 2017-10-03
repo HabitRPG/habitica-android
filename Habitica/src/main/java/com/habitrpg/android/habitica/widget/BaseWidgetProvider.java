@@ -78,9 +78,11 @@ public abstract class BaseWidgetProvider extends AppWidgetProvider {
         if (userRepository == null) {
             HabiticaApplication.getComponent().inject(this);
         }
+        if (data != null) {
             Pair<SpannableStringBuilder, HabiticaSnackbar.SnackbarDisplayType> pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(context, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta);
             Toast toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG);
             toast.show();
+        }
     }
 
     abstract public int layoutResourceId();

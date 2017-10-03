@@ -37,6 +37,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
+
 
 public class PartyFragment extends BaseMainFragment {
 
@@ -72,6 +74,7 @@ public class PartyFragment extends BaseMainFragment {
                         .first()
                         //delay, so that realm can save party first
                         .delay(500, TimeUnit.MILLISECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(group -> {
                             PartyFragment.this.group = group;
                             updateGroupUI();

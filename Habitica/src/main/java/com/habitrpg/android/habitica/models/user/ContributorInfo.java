@@ -78,8 +78,7 @@ public class ContributorInfo extends RealmObject {
     }
 
     public int getContributorForegroundColor() {
-        int rColor = android.R.color.white;
-        return rColor;
+        return android.R.color.white;
     }
 
     public String getUserId() {

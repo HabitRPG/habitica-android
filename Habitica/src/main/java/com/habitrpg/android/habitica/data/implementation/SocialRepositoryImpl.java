@@ -81,10 +81,16 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     public Observable<PostChatMessageResult> postGroupChat(String groupId, HashMap<String, String> messageObject) {
         return apiClient.postGroupChat(groupId, messageObject)
                 .map(postChatMessageResult -> {
-                    postChatMessageResult.message.groupId = groupId;
+                    if (postChatMessageResult != null) {
+                        postChatMessageResult.message.groupId = groupId;
+                    }
                     return postChatMessageResult;
                 })
-                .doOnNext(postChatMessageResult -> localRepository.save(postChatMessageResult.message));
+                .doOnNext(postChatMessageResult -> {
+                    if (postChatMessageResult != null) {
+                        localRepository.save(postChatMessageResult.message);
+                    }
+                });
     }
 
     @Override

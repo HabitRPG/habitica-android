@@ -357,4 +357,11 @@ public class User extends RealmObject implements Avatar {
     public void setLoginIncentives(int loginIncentives) {
         this.loginIncentives = loginIncentives;
     }
+
+    public int getContributorColor() {
+        if (contributor != null) {
+            return contributor.getContributorColor();
+        }
+        return android.R.color.black;
+    }
 }
