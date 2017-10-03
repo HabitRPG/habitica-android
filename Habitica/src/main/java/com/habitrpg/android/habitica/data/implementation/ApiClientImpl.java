@@ -949,4 +949,11 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     public Observable<Void> togglePinnedItem(String pinType, String path) {
         return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver());
     }
+
+    @Override
+    public Observable<Void> sendPasswordResetEmail(String email) {
+        Map<String, String> data = new HashMap<>();
+        data.put("email", email);
+        return apiService.sendPasswordResetEmail(data).compose(configureApiCallObserver());
+    }
 }

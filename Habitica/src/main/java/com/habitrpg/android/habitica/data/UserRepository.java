@@ -64,4 +64,6 @@ public interface UserRepository extends BaseRepository {
 
     Observable<User> resetAccount();
     Observable<Void> deleteAccount(String password);
+
+    Observable<Void> sendPasswordResetEmail(String email);
 }
