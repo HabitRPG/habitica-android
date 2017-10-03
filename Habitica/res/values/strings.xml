@@ -62,7 +62,6 @@
 
     <string name="logout">Logout</string>
     <string name="logout_description">Log out of your account</string>
-    <string name="account_details_sum">Check your account details</string>
     <string name="account_details">Account Details</string>
     <string name="LoginActivityName">Welcome</string>
 
@@ -674,4 +673,14 @@
     <string name="forgot_password_description">Enter the email address you used to register your Habitica account.</string>
     <string name="forgot_password_confirmation">If we have your email on file, instructions for setting a new password have been sent to your email.</string>
     <string name="ok">OK</string>
+    <string name="profile">Profile</string>
+    <string name="profile_summary">Edit your public profile.</string>
+    <string name="display_name">Display Name</string>
+    <string name="photo_url">Photo URL</string>
+    <string name="login_name">Login Name</string>
+    <string name="about">About</string>
+    <string name="app_settings">App Settings</string>
+    <string name="authentication">Authentication</string>
+    <string name="authentication_summary">Change your authentication options.</string>
+    <string name="change_password">Change Password</string>
 </resources>
