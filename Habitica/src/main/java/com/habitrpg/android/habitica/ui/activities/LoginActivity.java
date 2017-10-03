@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceManager;
+import android.text.InputType;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -85,6 +87,8 @@ import rx.exceptions.Exceptions;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+import static com.habitrpg.android.habitica.R.id.password;
+
 /**
  * @author Mickael Goubin
  */
@@ -133,14 +137,14 @@ public class LoginActivity extends BaseActivity
     ProgressBar mProgressBar;
     @BindView(R.id.username)
     EditText mUsernameET;
-    @BindView(R.id.password)
+    @BindView(password)
     EditText mPasswordET;
     @BindView(R.id.email)
     EditText mEmail;
     @BindView(R.id.confirm_password)
     EditText mConfirmPassword;
-    @BindView(R.id.forgot_pw_tv)
-    TextView mForgotPWTV;
+    @BindView(R.id.forgot_password)
+    Button forgotPasswordButton;
     private CallbackManager callbackManager;
     private String googleEmail;
     private LoginManager loginManager;
@@ -165,10 +169,9 @@ public class LoginActivity extends BaseActivity
 
         mLoginNormalBtn.setOnClickListener(mLoginNormalClick);
 
-        mForgotPWTV.setOnClickListener(mForgotPWClick);
-        SpannableString content = new SpannableString(mForgotPWTV.getText());
+        SpannableString content = new SpannableString(forgotPasswordButton.getText());
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        mForgotPWTV.setText(content);
+        forgotPasswordButton.setText(content);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -639,5 +642,39 @@ public class LoginActivity extends BaseActivity
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation);
         showAnimation.start();
         UiUtils.dismissKeyboard(this);
+    }
+
+    @OnClick(R.id.forgot_password)
+    public void onForgotPasswordClicked() {
+        final EditText input = new EditText(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS);
+        }
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.forgot_password_title)
+                .setMessage(R.string.forgot_password_description)
+                .setView(input)
+                .setPositiveButton(R.string.send, (dialog, which) -> {
+                    dialog.dismiss();
+                    userRepository.sendPasswordResetEmail(input.getText().toString()).subscribe(aVoid -> {
+                        showPasswordEmailConfirmation();
+                    }, RxErrorHandler.handleEmptyError());
+                }).setNegativeButton(R.string.action_cancel, (dialog, which) -> {
+                    dialog.dismiss();
+                });
+
+        alertDialog.show();
+    }
+
+    private void showPasswordEmailConfirmation() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.forgot_password_confirmation)
+                .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                .show();
     }
 }

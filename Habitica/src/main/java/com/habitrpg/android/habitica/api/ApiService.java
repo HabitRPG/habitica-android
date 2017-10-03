@@ -334,4 +334,7 @@ public interface ApiService {
 
     @GET("user/toggle-pinned-item/{pinType}/{path}")
     Observable<HabitResponse<Void>> togglePinnedItem(@Path("pinType") String pinType,@Path("path") String path);
+
+    @POST("user/reset-password")
+    Observable<HabitResponse<Void>> sendPasswordResetEmail(@Body Map<String, String> data);
 }

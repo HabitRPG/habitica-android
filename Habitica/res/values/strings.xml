@@ -165,7 +165,6 @@
     <string name="unlock_lvl_11">Unlock at lvl 11</string>
     <string name="no_party_message">You are not in a party. To join a party, please visit the website.</string>
     <string name="forgot_pw_btn">Forgot Password</string>
-    <string name="forgot_pw_tv">Forgot Password? Please use the mobile Website.</string>
     <string name="tavern.inn.checkOut">Reactivate your Dailies</string>
     <string name="tavern.inn.rest">Pause your Dailies</string>
     <string name="reward.dialog.buy">Buy</string>
@@ -671,4 +670,8 @@
     <string name="fix_character_description">If you\'ve encountered a bug or made a mistake that unfairly changed your character (damage you shouldn\'t have taken, Gold you didn\'t really earn, etc.), you can manually correct your numbers here. Yes, this makes it possible to cheat: use this feature wisely, or you\'ll sabotage your own habit-building!</string>
     <string name="fix_character_values">Fix Character Values</string>
     <string name="saving">Saving</string>
+    <string name="forgot_password_title">Email a Password Reset Link</string>
+    <string name="forgot_password_description">Enter the email address you used to register your Habitica account.</string>
+    <string name="forgot_password_confirmation">If we have your email on file, instructions for setting a new password have been sent to your email.</string>
+    <string name="ok">OK</string>
 </resources>
