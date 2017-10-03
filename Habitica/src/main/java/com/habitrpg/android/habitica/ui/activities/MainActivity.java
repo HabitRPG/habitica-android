@@ -27,7 +27,9 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -52,6 +54,7 @@ import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
+import com.habitrpg.android.habitica.events.ShowCheckinDialog;
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
@@ -120,6 +123,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LEVEL_FOR_SKILLS;
@@ -930,5 +935,54 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     public boolean isAppBarExpanded() {
         return (appBar.getHeight() - appBar.getBottom()) == 0;
+    }
+
+    @Subscribe
+    public void showCheckinDialog(ShowCheckinDialog event) {
+        String title = event.notification.data.message;
+
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View view = factory.inflate(R.layout.dialog_login_incentive, null);
+
+        SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
+        String imageKey = event.notification.data.rewardKey.get(0);
+        DataBindingUtils.loadImage(imageView, imageKey);
+
+        String youEarnedMessage = this.getString(R.string.checkInRewardEarned, event.notification.data.rewardText);
+
+        TextView titleTextView = new TextView(this);
+        titleTextView.setBackgroundResource(R.color.blue_100);
+        titleTextView.setTextColor(ContextCompat.getColor(this, R.color.white));
+        float density = this.getResources().getDisplayMetrics().density;
+        int paddingDp = (int) (16 * density);
+        titleTextView.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
+        titleTextView.setTextSize(18);
+        titleTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+        titleTextView.setText(title);
+
+        TextView youEarnedTexView = (TextView) view.findViewById(R.id.you_earned_message);
+        youEarnedTexView.setText(youEarnedMessage);
+
+        TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
+        nextUnlockTextView.setText(event.nextUnlockText);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                .setView(view)
+                .setCustomTitle(titleTextView)
+                .setPositiveButton(R.string.start_day, (dialog, which) -> {
+                    if (apiClient != null) {
+                        // @TODO: This should be handled somewhere else? MAybe we notifiy via event
+                        apiClient.readNotification(event.notification.getId())
+                                .subscribe(next -> {}, RxErrorHandler.handleEmptyError());
+                    }
+                })
+                .setMessage("");
+
+        Observable.just(null)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+                }, RxErrorHandler.handleEmptyError());
     }
 }
