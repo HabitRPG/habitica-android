@@ -1,19 +1,39 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.1.51'
     repositories {
         jcenter()
-        google()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
+        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.databinding:dataBinder:1.0-rc4'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        classpath "io.realm:realm-gradle-plugin:3.7.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC4-3"
     }
+
+    // Exclude the version that the android plugin depends on.
+    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }
+
+apply plugin: 'io.gitlab.arturbosch.detekt'
 
 allprojects {
     repositories {
         jcenter()
-        google()
+    }
+}
+
+detekt {
+    profile("main") {
+        input = "$projectDir/Habitica/src/main/java"
+        config = "$projectDir/detekt.yml"
+        output = "$projectDir/reports/detekt"
     }
 }
