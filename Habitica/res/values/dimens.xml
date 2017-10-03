@@ -118,4 +118,6 @@
     <dimen name="reward_width">84dp</dimen>
     <dimen name="task_min_height">60dp</dimen>
 	<dimen name="snackbar_image_size">46dp</dimen>
+	<dimen name="setup_vertical_spacing">28dp</dimen>
+	<dimen name="content_inset">21dp</dimen>
 </resources>
