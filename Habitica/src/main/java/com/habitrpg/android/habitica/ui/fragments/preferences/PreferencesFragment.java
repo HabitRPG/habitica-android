@@ -57,9 +57,9 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        HabiticaBaseApplication.getComponent().inject(this);
         super.onCreate(savedInstanceState);
 
-        HabiticaBaseApplication.getComponent().inject(this);
         context = getActivity();
 
         String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);

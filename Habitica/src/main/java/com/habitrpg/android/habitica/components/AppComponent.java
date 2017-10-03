@@ -57,8 +57,10 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRe
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableRecyclerFragment;
-import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.APIPreferenceFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.AuthenticationPreferenceFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.ProfilePreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
@@ -262,10 +264,7 @@ public interface AppComponent {
 
     void inject(HabiticaFirebaseMessagingService habiticaFirebaseMessagingService);
 
-    void inject(AccountDetailsFragment accountDetailsFragment);
-
     void inject(BaseWidgetProvider baseWidgetProvider);
-
 
     void inject(NotificationPublisher notificationPublisher);
 
@@ -282,4 +281,10 @@ public interface AppComponent {
     void inject(PurchaseDialog purchaseDialog);
 
     void inject(@NotNull FixCharacterValuesActivity fixCharacterValuesActivity);
+
+    void inject(@NotNull AuthenticationPreferenceFragment authenticationPreferenceFragment);
+
+    void inject(@NotNull ProfilePreferencesFragment profilePreferencesFragment);
+
+    void inject(@NotNull APIPreferenceFragment apiPreferenceFragment);
 }
