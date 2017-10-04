@@ -11,6 +11,8 @@ import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Map;
 
@@ -66,4 +68,8 @@ public interface UserRepository extends BaseRepository {
     Observable<Void> deleteAccount(String password);
 
     Observable<Void> sendPasswordResetEmail(String email);
+
+    Observable<Void> updateLoginName(@NotNull String newLoginName, @NotNull String password);
+    Observable<Void> updateEmail(@NotNull String newEmail, @NotNull String password);
+    Observable<Void> updatePassword(@NotNull String newPassword, @NotNull String oldPassword, String oldPasswordConfirmation);
 }

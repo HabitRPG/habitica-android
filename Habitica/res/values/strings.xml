@@ -685,4 +685,7 @@
     <string name="authentication">Authentication</string>
     <string name="authentication_summary">Change your authentication options.</string>
     <string name="change_password">Change Password</string>
+    <string name="change_email">Change Email Address</string>
+    <string name="change_login_name">Change Login Name</string>
+    <string name="change">Change</string>
 </resources>
