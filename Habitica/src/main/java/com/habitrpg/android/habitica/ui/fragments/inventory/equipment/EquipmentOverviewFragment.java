@@ -64,7 +64,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_equipment_overview, container, false);
 
-        if (this.user == null || this.user.isManaged()) {
+        if (this.user == null || !this.user.isManaged()) {
             return v;
         }
 
