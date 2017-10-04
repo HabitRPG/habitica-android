@@ -956,4 +956,29 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         data.put("email", email);
         return apiService.sendPasswordResetEmail(data).compose(configureApiCallObserver());
     }
+
+    @Override
+    public Observable<Void> updateLoginName(String newLoginName, String password) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("username", newLoginName);
+        updateObject.put("password", password);
+        return apiService.updateLoginName(updateObject).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> updateEmail(String newEmail, String password) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("newEmail", newEmail);
+        updateObject.put("password", password);
+        return apiService.updateEmail(updateObject).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> updatePassword(String newPassword, String oldPassword, String oldPasswordConfirmation) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("newPassword", newPassword);
+        updateObject.put("password", oldPassword);
+        updateObject.put("confirmPassowrd", oldPasswordConfirmation);
+        return apiService.updatePassword(updateObject).compose(configureApiCallObserver());
+    }
 }

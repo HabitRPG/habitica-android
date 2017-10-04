@@ -37,13 +37,6 @@
                     android:selectable="true"
                     android:persistent="false"
                     android:shouldDisableView="false"/>
-
-                <Preference
-                    android:key="password"
-                    android:title="@string/change_password"
-                    android:selectable="true"
-                    android:persistent="false"
-                    android:shouldDisableView="false" />
                 <Preference
                         android:key="subscription_status"
                         android:title="@string/subscription_status"

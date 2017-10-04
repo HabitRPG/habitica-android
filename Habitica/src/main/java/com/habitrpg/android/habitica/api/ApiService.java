@@ -337,4 +337,13 @@ public interface ApiService {
 
     @POST("user/reset-password")
     Observable<HabitResponse<Void>> sendPasswordResetEmail(@Body Map<String, String> data);
+
+    @PUT("user/auth/update-username")
+    Observable<HabitResponse<Void>> updateLoginName(@Body Map<String, String> data);
+
+    @PUT("user/auth/update-email")
+    Observable<HabitResponse<Void>> updateEmail(@Body Map<String, String> data);
+
+    @PUT("user/auth/update-password")
+    Observable<HabitResponse<Void>> updatePassword(@Body Map<String, String> data);
 }

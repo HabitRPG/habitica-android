@@ -16,6 +16,8 @@ import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.User;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -254,6 +256,21 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public Observable<Void> sendPasswordResetEmail(String email) {
         return apiClient.sendPasswordResetEmail(email);
+    }
+
+    @Override
+    public Observable<Void> updateLoginName(@NotNull String newLoginName, @NotNull String password) {
+        return apiClient.updateLoginName(newLoginName, password);
+    }
+
+    @Override
+    public Observable<Void> updateEmail(@NotNull String newEmail, @NotNull String password) {
+        return apiClient.updateEmail(newEmail, password);
+    }
+
+    @Override
+    public Observable<Void> updatePassword(@NotNull String newPassword, @NotNull String oldPassword, String oldPasswordConfirmation) {
+        return apiClient.updatePassword(newPassword, oldPassword, oldPasswordConfirmation);
     }
 
     @Override

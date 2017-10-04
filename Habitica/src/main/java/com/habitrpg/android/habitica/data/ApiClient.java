@@ -240,4 +240,10 @@ public interface ApiClient {
     Observable<Void> togglePinnedItem(String pinType, String path);
 
     Observable<Void> sendPasswordResetEmail(String email);
+
+    Observable<Void> updateLoginName(String newLoginName, String password);
+
+    Observable<Void> updateEmail(String newEmail, String password);
+
+    Observable<Void> updatePassword(String newPassword, String oldPassword, String oldPasswordConfirmation);
 }
