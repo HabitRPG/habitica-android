@@ -58,8 +58,7 @@
                     style="@style/Subheader3"
                     android:textColor="#000"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
                     tools:text="Daily Title" />
 
                 <net.pherth.android.emoji_library.EmojiTextView
