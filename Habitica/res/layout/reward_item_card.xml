@@ -71,7 +71,7 @@
                 android:layout_height="22dp"
                 android:paddingBottom="8dp"/>
             <TextView
-                android:id="@id/priceLabel"
+                android:id="@+id/priceLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow_10"

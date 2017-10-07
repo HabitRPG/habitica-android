@@ -47,7 +47,7 @@
         android:background="@color/gray_500"
         android:visibility="gone"/>
     <LinearLayout
-        android:id="@id/checklistView"
+        android:id="@+id/checklistView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"/>

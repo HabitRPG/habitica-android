@@ -19,7 +19,7 @@
         android:contentDescription="Bar Icon"
         android:visibility="gone"/>
     <LinearLayout
-        android:id="@id/bar_full"
+        android:id="@+id/bar_full"
         android:layout_toRightOf="@id/ic_header"
         android:layout_toEndOf="@id/ic_header"
         android:layout_width="match_parent"
