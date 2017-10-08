@@ -138,8 +138,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion sdk_version
+    buildToolsVersion build_tools_version
 
     defaultConfig {
         applicationId "com.habitrpg.android.habitica"
@@ -181,6 +181,7 @@ android {
     productFlavors {
         dev {
             minSdkVersion 21
+            buildConfigField "String", "STAGING_KEY", "\"1dcf9ed3-3b14-45b3-9e7e-acdfff68a368\""
         }
 
         prod {
