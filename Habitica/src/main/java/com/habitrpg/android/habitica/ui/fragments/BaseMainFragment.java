@@ -145,7 +145,7 @@ public abstract class BaseMainFragment extends BaseFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (user != null) {
+        if (user != null && user.isValid()) {
             outState.putString("userId", user.getId());
         }
 

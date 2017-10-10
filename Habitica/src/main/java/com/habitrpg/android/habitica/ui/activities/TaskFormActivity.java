@@ -1285,7 +1285,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             this.task.setType(taskType);
         }
 
-        if (this.saveTask(this.task)) {
+        if (this.saveTask(this.task) && task.isValid()) {
             //send back to other elements.
             if (TaskFormActivity.this.task.getId() == null) {
                 taskRepository.createTaskInBackground(task);

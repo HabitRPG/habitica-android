@@ -109,7 +109,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
 
     @Override
     public Observable<TaskScoringResult> taskChecked(User user, String taskId, boolean up, boolean force) {
-        return localRepository.getTask(taskId)
+        return localRepository.getTask(taskId).first()
                 .flatMap(task -> taskChecked(user, task, up, force));
     }
 
