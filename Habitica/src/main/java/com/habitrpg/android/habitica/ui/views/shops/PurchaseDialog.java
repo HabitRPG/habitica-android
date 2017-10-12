@@ -205,6 +205,7 @@ public class PurchaseDialog extends AlertDialog {
 
     @OnClick(R.id.buyButton)
     void onBuyButtonClicked() {
+        final String[] snackbarText = {""};
         if (shopItem.isValid()) {
             if (shopItem.canBuy(user)) {
                 Observable<Void> observable;
@@ -217,7 +218,18 @@ public class PurchaseDialog extends AlertDialog {
                 } else if (shopItem.purchaseType.equals("quests") && shopItem.getCurrency().equals("gold")) {
                     observable = inventoryRepository.purchaseQuest(shopItem.key);
                 } else if ("gold".equals(shopItem.currency) && !"gem".equals(shopItem.key)) {
-                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value).flatMap(buyResponse -> Observable.just(null));
+                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value).flatMap(buyResponse -> {
+                        if (shopItem.key.equals("armoire")) {
+                            if (buyResponse.armoire.get("type").equals("gear")) {
+                                snackbarText[0] = getContext().getString(R.string.armoireEquipment, buyResponse.armoire.get("dropText"));
+                            } else if (buyResponse.armoire.get("type").equals("food")) {
+                                snackbarText[0] = getContext().getString(R.string.armoireFood, buyResponse.armoire.get("dropArticle"), buyResponse.armoire.get("dropText"));
+                            } else {
+                                snackbarText[0] = getContext().getString(R.string.armoireExp);
+                            }
+                        }
+                        return Observable.just(null);
+                    });
                 } else {
                     observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key);
                 }
@@ -225,6 +237,9 @@ public class PurchaseDialog extends AlertDialog {
                         .doOnNext(aVoid -> {
                             ShowSnackbarEvent event = new ShowSnackbarEvent();
                             event.title = getContext().getString(R.string.successful_purchase, shopItem.text);
+                            if (snackbarText[0].length() > 0) {
+                                event.text = snackbarText[0];
+                            }
                             event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL;
                             event.rightIcon = priceLabel.getCompoundDrawables()[0];
                             event.rightTextColor = priceLabel.getCurrentTextColor();
