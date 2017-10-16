@@ -46,6 +46,6 @@
         <attr name="fixIconName" format="string" />
         <attr name="title" format="string" />
         <attr name="iconBgColor" format="color" />
-        <attr name="hintStyle" format="integer" />
+        <attr name="hintStyle" format="reference" />
     </declare-styleable>
 </resources>
