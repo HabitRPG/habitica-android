@@ -666,7 +666,7 @@
     <string name="level">Level</string>
     <string name="streak_label">21-Day Streaks</string>
     <string name="stats">Stats</string>
-    <string name="fix_character_description">If you\'ve encountered a bug or made a mistake that unfairly changed your character (damage you shouldn\'t have taken, Gold you didn\'t really earn, etc.), you can manually correct your numbers here. Yes, this makes it possible to cheat: use this feature wisely, or you\'ll sabotage your own habit-building!</string>
+    <string name="fix_character_description">If you’ve encountered a bug or made a mistake that unfairly changed your character, you can manually correct those values here.</string>
     <string name="fix_character_values">Fix Character Values</string>
     <string name="saving">Saving</string>
     <string name="forgot_password_title">Email a Password Reset Link</string>
@@ -686,4 +686,5 @@
     <string name="change_email">Change Email Address</string>
     <string name="change_login_name">Change Login Name</string>
     <string name="change">Change</string>
+    <string name="character_level">Character Level</string>
 </resources>

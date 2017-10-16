@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
 import kotlinx.android.synthetic.main.activity_fixcharacter.*
 import rx.functions.Action0
 import rx.functions.Action1
@@ -78,16 +79,16 @@ class FixCharacterValuesActivity: BaseActivity() {
     }
 
     private fun updateFields(user: User) {
-        healthEditText.setText(user.stats?.hp.toString())
-        experienceEditText.setText(user.stats?.exp.toString())
-        goldEditText.setText(user.stats?.gp.toString())
-        manaEditText.setText(user.stats?.mp.toString())
-        levelEditText.setText(user.stats?.lvl.toString())
-        streakEditText.setText(user.streakCount.toString())
+        healthEditText.text = user.stats?.hp.toString()
+        experienceEditText.text = user.stats?.exp.toString()
+        goldEditText.text = user.stats?.gp.toString()
+        manaEditText.text = user.stats?.mp.toString()
+        levelEditText.text = user.stats?.lvl.toString()
+        streakEditText.text = user.streakCount.toString()
     }
 
-    fun EditText.getDoubleValue(): Double {
-        val stringValue = this.text.toString()
+    fun FixValuesEditText.getDoubleValue(): Double {
+        val stringValue = this.text
         return stringValue.toDouble()
     }
 
