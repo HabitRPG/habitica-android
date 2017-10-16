@@ -22,12 +22,15 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:background="@drawable/layout_rounded_bg_gray_700">
+            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:paddingTop="8dp"
+            android:paddingLeft="16dp">
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number" />
+                android:inputType="number"
+                android:background="@android:color/transparent"/>
         </android.support.design.widget.TextInputLayout>
         <ImageView
             android:id="@+id/iconView"
@@ -35,4 +38,10 @@
             android:layout_height="56dp"
             android:scaleType="center"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_gravity="bottom"
+        android:background="@color/gray_500"
+        android:layout_marginRight="56dp"/>
 </merge>

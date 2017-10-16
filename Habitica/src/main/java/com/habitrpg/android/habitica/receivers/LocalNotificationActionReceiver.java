@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
@@ -19,6 +20,8 @@ import javax.inject.Inject;
 public class LocalNotificationActionReceiver extends BroadcastReceiver {
     @Inject
     public UserRepository userRepository;
+    @Inject
+    public SocialRepository socialRepository;
     @Inject
     ApiClient apiClient;
 
@@ -54,29 +57,29 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver {
         if (action.equals(this.resources.getString(R.string.accept_party_invite))) {
             if (this.user.getInvitations().getParty() == null) return;
             String partyId = this.user.getInvitations().getParty().getId();
-            apiClient.joinGroup(partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+            socialRepository.joinGroup(partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
         } else if (action.equals(this.resources.getString(R.string.reject_party_invite))) {
             if (this.user.getInvitations().getParty() == null) return;
             String partyId = this.user.getInvitations().getParty().getId();
-            apiClient.rejectGroupInvite(partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+            socialRepository.rejectGroupInvite(partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
         } else if (action.equals(this.resources.getString(R.string.accept_quest_invite))) {
             if (this.user.getParty() == null) return;
             String partyId = this.user.getParty().getId();
-            apiClient.acceptQuest(partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+            socialRepository.acceptQuest(user, partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
         } else if (action.equals(this.resources.getString(R.string.reject_quest_invite))) {
             if (this.user.getParty() == null) return;
             String partyId = this.user.getParty().getId();
-            apiClient.rejectQuest(partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+            socialRepository.rejectQuest(user, partyId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
         } else if (action.equals(this.resources.getString(R.string.accept_guild_invite))) {
             Bundle extras = this.intent.getExtras();
             String guildId = extras.getString("groupID");
             if (guildId == null) return;
-            apiClient.joinGroup(guildId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+            socialRepository.joinGroup(guildId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
         } else if (action.equals(this.resources.getString(R.string.reject_guild_invite))) {
             Bundle extras = this.intent.getExtras();
             String guildId = extras.getString("groupID");
             if (guildId == null) return;
-            apiClient.rejectGroupInvite(guildId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
+            socialRepository.rejectGroupInvite(guildId).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
         }
     }
 }

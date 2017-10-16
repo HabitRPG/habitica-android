@@ -37,7 +37,7 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
 
         editText.hint = attributes.getString(R.styleable.FixValuesEditText_title)
         editTextWrapper.hint = editText.hint
-        editTextWrapper.setHintTextAppearance(attributes.getInteger(R.styleable.FixValuesEditText_hintStyle, R.style.PurpleTextLabel))
+        editTextWrapper.setHintTextAppearance(attributes.getResourceId(R.styleable.FixValuesEditText_hintStyle, R.style.PurpleTextLabel))
         val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
         backgroundDrawable.setColorFilter(attributes.getColor(R.styleable.FixValuesEditText_iconBgColor, 0), PorterDuff.Mode.MULTIPLY)
         backgroundDrawable.alpha = 50
@@ -45,17 +45,13 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
         iconBackgroundView.background = backgroundDrawable
 
         val iconName = attributes.getString(R.styleable.FixValuesEditText_fixIconName)
-        if (iconName == "health") {
-            iconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartLightBg())
-        } else if (iconName == "experience") {
-            iconView.setImageBitmap(HabiticaIconsHelper.imageOfExperience())
-        } else if (iconName == "mana") {
-            iconView.setImageBitmap(HabiticaIconsHelper.imageOfMagic())
-        } else if (iconName == "gold") {
-            iconView.setImageBitmap(HabiticaIconsHelper.imageOfGold())
-        } else if (iconName == "level") {
-            iconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
-        } else if (iconName == "streak") {
+        when (iconName) {
+            "health" -> iconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartLightBg())
+            "experience" -> iconView.setImageBitmap(HabiticaIconsHelper.imageOfExperience())
+            "mana" -> iconView.setImageBitmap(HabiticaIconsHelper.imageOfMagic())
+            "gold" -> iconView.setImageBitmap(HabiticaIconsHelper.imageOfGold())
+            "level" -> iconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
+            "streak" -> iconView.setImageResource(R.drawable.achievement_thermometer)
         }
     }
 }
