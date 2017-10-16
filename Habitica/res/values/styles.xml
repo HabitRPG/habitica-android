@@ -409,4 +409,18 @@
     <style name="TableHeader" parent="Title1">
         <item name="android:layout_marginTop">@dimen/content_section_spacing</item>
     </style>
+
+    <style name="RedTextLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/red_10</item>
+    </style>
+    <style name="YellowTextLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/yellow_10</item>
+    </style>
+    <style name="BlueTextLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/blue_10</item>
+    </style>
+    <style name="PurpleTextLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/brand_300</item>
+    </style>
+
 </resources>

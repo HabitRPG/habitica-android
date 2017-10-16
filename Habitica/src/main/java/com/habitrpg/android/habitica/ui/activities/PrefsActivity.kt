@@ -14,11 +14,9 @@ import butterknife.BindView
 import com.habitrpg.android.habitica.ui.fragments.preferences.APIPreferenceFragment
 import com.habitrpg.android.habitica.ui.fragments.preferences.AuthenticationPreferenceFragment
 import com.habitrpg.android.habitica.ui.fragments.preferences.ProfilePreferencesFragment
+import kotlinx.android.synthetic.main.activity_prefs.*
 
 class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
-
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
 
     override fun getLayoutResId(): Int = R.layout.activity_prefs
 
