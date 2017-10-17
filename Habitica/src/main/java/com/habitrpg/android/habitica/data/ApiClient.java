@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
@@ -246,4 +247,6 @@ public interface ApiClient {
     Observable<Void> updateEmail(String newEmail, String password);
 
     Observable<Void> updatePassword(String newPassword, String oldPassword, String oldPasswordConfirmation);
+
+    Observable<Stats> allocatePoint(String stat);
 }

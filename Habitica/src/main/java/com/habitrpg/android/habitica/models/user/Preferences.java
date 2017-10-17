@@ -229,4 +229,12 @@ public class Preferences extends RealmObject implements AvatarPreferences {
     public boolean hasTaskBasedAllocation() {
         return allocationMode.equals("taskBased") && !automaticAllocation;
     }
+
+    public boolean getAutomaticAllocation() {
+        return this.automaticAllocation;
+    }
+
+    public void setAutomaticAllocation(boolean automaticAllocation) {
+        this.automaticAllocation = automaticAllocation;
+    }
 }

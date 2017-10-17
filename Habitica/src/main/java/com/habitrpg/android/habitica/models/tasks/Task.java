@@ -3,15 +3,19 @@ package com.habitrpg.android.habitica.models.tasks;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +33,11 @@ public class Task extends RealmObject implements Parcelable {
     public static final String TYPE_TODO = "todo";
     public static final String TYPE_DAILY = "daily";
     public static final String TYPE_REWARD = "reward";
+
+    @StringDef({TYPE_HABIT, TYPE_DAILY, TYPE_TODO, TYPE_REWARD})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface TaskTypes {}
+
     public static final String FILTER_ALL = "all";
     public static final String FILTER_WEAK = "weak";
     public static final String FILTER_STRONG = "strong";
@@ -38,15 +47,13 @@ public class Task extends RealmObject implements Parcelable {
     public static final String FILTER_COMPLETED = "completed";
     public static final String FREQUENCY_WEEKLY = "weekly";
     public static final String FREQUENCY_DAILY = "daily";
-    public static final String ATTRIBUTE_STRENGTH = "str";
-    public static final String ATTRIBUTE_CONSTITUTION = "con";
-    public static final String ATTRIBUTE_INTELLIGENCE = "int";
-    public static final String ATTRIBUTE_PERCEPTION = "per";
 
 
     public String userId;
     public float priority;
-    public String text, notes, attribute, type;
+    public String text, notes;
+    @TaskTypes public String type;
+    @Stats.StatsTypes public String attribute;
     public double value;
     public RealmList<Tag> tags;
     public Date dateCreated;

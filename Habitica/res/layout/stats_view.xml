@@ -10,7 +10,8 @@
     <LinearLayout
         android:id="@+id/titleWrapper"
         android:layout_width="match_parent"
-        android:layout_height="43dp">
+        android:layout_height="43dp"
+        tools:background="@drawable/layout_rounded_bg_green">
         <TextView
             android:id="@id/titleTextView"
             android:layout_width="0dp"
@@ -29,6 +30,7 @@
             tools:text="130"
             android:gravity="center_vertical"
             style="@style/Headline"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_marginRight="12dp"/>
     </LinearLayout>
@@ -45,7 +47,8 @@
                 android:id="@+id/levelValueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Title1"
+                style="@style/Subheader2"
+                android:textSize="20sp"
                 tools:text="20"
                 android:gravity="center_horizontal"/>
             <TextView
@@ -66,7 +69,8 @@
                 android:id="@+id/equipmentValueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Title1"
+                style="@style/Subheader2"
+                android:textSize="20sp"
                 tools:text="20"
                 android:gravity="center_horizontal"/>
             <TextView
@@ -87,7 +91,8 @@
                 android:id="@+id/buffValueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Title1"
+                style="@style/Subheader2"
+                android:textSize="20sp"
                 tools:text="20"
                 android:gravity="center_horizontal"/>
             <TextView
@@ -109,10 +114,12 @@
                     android:id="@+id/allocatedValueTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Title1"
+                    style="@style/Subheader2"
+                    android:textSize="20sp"
                     tools:text="20"
                     android:gravity="center_horizontal"/>
                 <TextView
+                    android:id="@+id/allocatedLabelView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/allocated"

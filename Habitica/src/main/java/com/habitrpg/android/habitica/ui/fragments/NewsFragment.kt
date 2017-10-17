@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
 
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -21,6 +22,7 @@ class NewsFragment : BaseMainFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val address = if (BuildConfig.DEBUG) BuildConfig.BASE_URL else context.getString(R.string.base_url)
+        newsWebview.webChromeClient = WebChromeClient()
         newsWebview.loadUrl(address + "/static/new-stuff")
     }
 

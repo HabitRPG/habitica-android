@@ -13,25 +13,51 @@ class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context,
 
     var levelValue: Int = 0
         set(value) {
+            field = value
             levelValueTextView.text = value.toString()
         }
     var equipmentValue: Int = 0
         set(value) {
+            field = value
             equipmentValueTextView.text = value.toString()
         }
     var buffValue: Int = 0
         set(value) {
+            field = value
             buffValueTextView.text = value.toString()
         }
     var allocatedValue: Int = 0
         set(value) {
+            field = value
             allocatedValueTextView.text = value.toString()
         }
 
     var totalValue: Int = 0
         set(value) {
+            field = value
             totalValueTextView.text = value.toString()
         }
+
+    var canDistributePoints: Boolean = false
+        set(value) {
+            field = value
+            allocateButton.visibility = if (value) View.VISIBLE else View.GONE
+            if (value) {
+                allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600_30))
+                allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_600_30))
+                allocatedValueTextView.setTextColor(statColor)
+                allocatedLabelView.setTextColor(statColor)
+            } else {
+                allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_700))
+                allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_700))
+                allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_50))
+                allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
+            }
+        }
+
+    var allocateAction: (() -> Unit)? = null
+
+    private var statColor: Int = 0
 
     init {
         View.inflate(context, R.layout.stats_view, this)
@@ -43,10 +69,16 @@ class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context,
 
         val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg)
         if (attributes != null) {
+            statColor = attributes.getColor(R.styleable.StatsView_statsColor, 0)
             backgroundDrawable.setColorFilter(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
             titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
         }
         titleWrapper.background = backgroundDrawable
-    }
 
+        allocateButton.setOnClickListener {
+            allocateAction?.invoke()
+        }
+
+        allocateButton.setImageBitmap(HabiticaIconsHelper.imageOfAttributeAllocateButton())
+    }
 }
