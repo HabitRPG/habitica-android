@@ -62,6 +62,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Purchases;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
@@ -980,5 +981,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         updateObject.put("password", oldPassword);
         updateObject.put("confirmPassowrd", oldPasswordConfirmation);
         return apiService.updatePassword(updateObject).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Stats> allocatePoint(String stat) {
+        return apiService.allocatePoint(stat).compose(configureApiCallObserver());
     }
 }

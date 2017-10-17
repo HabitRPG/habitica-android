@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data;
 
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.inventory.Customization;
@@ -9,6 +10,7 @@ import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,8 +25,8 @@ public interface UserRepository extends BaseRepository {
 
     Observable<User> getUser(String userID);
     Observable<User> getUser();
-    Observable<User> updateUser(User user, Map<String, Object> updateData);
-    Observable<User> updateUser(User user, String key, Object value);
+    Observable<User> updateUser(@Nullable User user, Map<String, Object> updateData);
+    Observable<User> updateUser(@Nullable User user, String key, Object value);
 
     Observable<User> retrieveUser(Boolean withTasks);
     Observable<User> retrieveUser(Boolean withTasks, Boolean forced);
@@ -72,4 +74,7 @@ public interface UserRepository extends BaseRepository {
     Observable<Void> updateLoginName(@NotNull String newLoginName, @NotNull String password);
     Observable<Void> updateEmail(@NotNull String newEmail, @NotNull String password);
     Observable<Void> updatePassword(@NotNull String newPassword, @NotNull String oldPassword, String oldPasswordConfirmation);
+
+    @NotNull
+    Observable<Stats> allocatePoint(@Nullable User user, @Stats.StatsTypes String s);
 }

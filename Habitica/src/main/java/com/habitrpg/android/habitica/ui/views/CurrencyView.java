@@ -48,7 +48,7 @@ public class CurrencyView extends android.support.v7.widget.AppCompatTextView {
         if ("gold".equals(currency)) {
             setIcon(HabiticaIconsHelper.imageOfGold());
             if (lightbackground) {
-                setTextColor(ContextCompat.getColor(getContext(), R.color.yellow_10));
+                setTextColor(ContextCompat.getColor(getContext(), R.color.yellow_5));
             } else {
                 setTextColor(ContextCompat.getColor(getContext(), R.color.yellow_100));
             }

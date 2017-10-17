@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,10 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
+import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import kotlinx.android.synthetic.main.fragment_stats.*
 import rx.functions.Action1
 import java.util.ArrayList
@@ -52,10 +56,81 @@ class StatsFragment: BaseMainFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        leftSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
+        rightSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesRight())
+
         compositeSubscription.add(userRepository.getUser(userId).subscribe(Action1 {
             user = it
             updateStats()
+            updateAttributePoints()
         }, RxErrorHandler.handleEmptyError()))
+
+        autoAllocationModeWrapper.setOnCheckedChangeListener { _, checkedId ->
+            val allocationMode = when (checkedId) {
+                R.id.distributeEvenlyButton -> "flat"
+                R.id.distributeClassButton -> "classbased"
+                R.id.distributeTaskButton -> "taskbased"
+                else -> ""
+            }
+            userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
+        }
+        automaticAllocationSwitch.setOnCheckedChangeListener{ _, isChecked ->
+            userRepository.updateUser(user, "preferences.automaticAllocation", isChecked).subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
+        }
+
+        strengthStatsView.allocateAction = {
+            allocatePoint(Stats.STRENGTH)
+        }
+        intelligenceStatsView.allocateAction = {
+            allocatePoint(Stats.INTELLIGENCE)
+        }
+        constitutionStatsView.allocateAction = {
+            allocatePoint(Stats.CONSTITUTION)
+        }
+        perceptionStatsView.allocateAction = {
+            allocatePoint(Stats.PERCEPTION)
+        }
+    }
+
+    private fun allocatePoint(@Stats.StatsTypes stat: String) {
+        userRepository.allocatePoint(user, stat).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+    }
+
+    private fun updateAttributePoints() {
+        val automaticAllocation = user?.preferences?.automaticAllocation ?: false
+        automaticAllocationSwitch.isChecked = automaticAllocation
+        autoAllocationModeWrapper.visibility = if (automaticAllocation) View.VISIBLE else View.GONE
+        when (user?.preferences?.allocationMode ?: "") {
+            "flat" -> distributeEvenlyButton.isChecked = true
+            "classbased" -> distributeClassButton.isChecked = true
+            "taskbased" -> distributeTaskButton.isChecked = true
+        }
+
+        val canDistributePoints = !automaticAllocation && 0 < (user?.stats?.points ?: 0)
+        strengthStatsView.canDistributePoints = canDistributePoints
+        intelligenceStatsView.canDistributePoints = canDistributePoints
+        constitutionStatsView.canDistributePoints = canDistributePoints
+        perceptionStatsView.canDistributePoints = canDistributePoints
+        numberOfPointsTextView.visibility = View.VISIBLE
+        if (canDistributePoints) {
+            val points = user?.stats?.points ?: 0
+            numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)
+            numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
+            numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.pill_bg_gray_100)
+            leftSparklesView.visibility = View.VISIBLE
+            rightSparklesView.visibility = View.VISIBLE
+        } else {
+            if (automaticAllocation) {
+                numberOfPointsTextView.visibility = View.GONE
+            }
+            numberOfPointsTextView.text = getString(R.string.no_points_to_allocate)
+            numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
+            numberOfPointsTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
+            leftSparklesView.visibility = View.GONE
+            rightSparklesView.visibility = View.GONE
+        }
+        numberOfPointsTextView.setScaledPadding(context, 18, 4, 18, 4)
     }
 
     override fun injectFragment(component: AppComponent) {
@@ -128,10 +203,10 @@ class StatsFragment: BaseMainFragment() {
             totalIntelligence += intelligence
             totalConstitution += constitution
             totalPerception += perception
-            strengthStatsView.equipmentValue += strength
-            intelligenceStatsView.equipmentValue += intelligence
-            constitutionStatsView.equipmentValue += constitution
-            perceptionStatsView.equipmentValue += perception
+            strengthStatsView.equipmentValue = strength
+            intelligenceStatsView.equipmentValue = intelligence
+            constitutionStatsView.equipmentValue = constitution
+            perceptionStatsView.equipmentValue = perception
 
         }, RxErrorHandler.handleEmptyError())
     }

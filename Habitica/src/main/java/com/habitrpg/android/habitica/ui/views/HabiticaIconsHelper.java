@@ -433,4 +433,43 @@ public class HabiticaIconsHelper {
 
         return imageOfHourglassShop;
     }
+
+    private static Bitmap imageOfAttributeSparklesLeft = null;
+    public static Bitmap imageOfAttributeSparklesLeft() {
+        if (imageOfAttributeSparklesLeft != null)
+            return imageOfAttributeSparklesLeft;
+
+        imageOfAttributeSparklesLeft = Bitmap.createBitmap(scaleSize(77), scaleSize(24), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfAttributeSparklesLeft);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawAttributeSparklesLeft(canvas);
+
+        return imageOfAttributeSparklesLeft;
+    }
+
+    private static Bitmap imageOfAttributeSparklesRight = null;
+    public static Bitmap imageOfAttributeSparklesRight() {
+        if (imageOfAttributeSparklesRight != null)
+            return imageOfAttributeSparklesRight;
+
+        imageOfAttributeSparklesRight = Bitmap.createBitmap(scaleSize(77), scaleSize(24), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfAttributeSparklesRight);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawAttributeSparklesRight(canvas);
+
+        return imageOfAttributeSparklesRight;
+    }
+
+    private static Bitmap imageOfAttributeAllocateButton = null;
+    public static Bitmap imageOfAttributeAllocateButton() {
+        if (imageOfAttributeAllocateButton != null)
+            return imageOfAttributeAllocateButton;
+
+        imageOfAttributeAllocateButton = Bitmap.createBitmap(scaleSize(24), scaleSize(15), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfAttributeAllocateButton);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawAttributeAllocateButton(canvas);
+
+        return imageOfAttributeAllocateButton;
+    }
 }

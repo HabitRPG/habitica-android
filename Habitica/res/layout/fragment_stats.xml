@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/md_grey_500"
     android:scrollbars="vertical"
@@ -14,12 +15,36 @@
         android:layout_height="match_parent"
         android:paddingTop="12dp"
         android:paddingBottom="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/leftSparklesView"
+                android:layout_width="77dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"/>
+            <TextView
+                android:id="@+id/numberOfPointsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="24dp"/>
+            <ImageView
+                android:id="@+id/rightSparklesView"
+                android:layout_width="77dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"/>
+        </LinearLayout>
         <com.habitrpg.android.habitica.ui.views.StatsView
             android:id="@+id/strengthStatsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:statsTitle="@string/strength"
             app:titleBackgroundColor="@color/red_50"
+            app:statsColor="@color/red_10"
             android:layout_marginBottom="12dp"/>
         <com.habitrpg.android.habitica.ui.views.StatsView
             android:id="@+id/intelligenceStatsView"
@@ -27,6 +52,7 @@
             android:layout_height="wrap_content"
             app:statsTitle="@string/intelligence"
             app:titleBackgroundColor="@color/blue_50"
+            app:statsColor="@color/blue_10"
             android:layout_marginBottom="12dp"/>
         <com.habitrpg.android.habitica.ui.views.StatsView
             android:id="@+id/constitutionStatsView"
@@ -34,6 +60,7 @@
             android:layout_height="wrap_content"
             app:statsTitle="@string/constitution"
             app:titleBackgroundColor="@color/yellow_10"
+            app:statsColor="@color/yellow_5"
             android:layout_marginBottom="12dp"/>
         <com.habitrpg.android.habitica.ui.views.StatsView
             android:id="@+id/perceptionStatsView"
@@ -41,19 +68,47 @@
             android:layout_height="wrap_content"
             app:statsTitle="@string/perception"
             app:titleBackgroundColor="@color/brand_300"
+            app:statsColor="@color/brand_300"
             android:layout_marginBottom="12dp"/>
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/automaticAllocationSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/auto_allocate_points"
             android:layout_marginLeft="@dimen/content_border"
-            android:layout_marginRight="@dimen/content_border"/>
+            android:layout_marginRight="@dimen/content_border"
+            android:layout_marginBottom="20dp"/>
+        <RadioGroup
+            android:id="@+id/autoAllocationModeWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/content_border"
+            android:paddingRight="@dimen/content_border"
+            android:background="@color/gray_700"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
+            <RadioButton
+                android:id="@+id/distributeEvenlyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distribute_evenly"
+                android:layout_marginBottom="4dp"/>
+            <RadioButton
+                android:id="@+id/distributeClassButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distribute_class"
+                android:layout_marginBottom="4dp"/>
+            <RadioButton
+                android:id="@+id/distributeTaskButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distribute_task"/>
+        </RadioGroup>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gray_600"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"

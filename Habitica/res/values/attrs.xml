@@ -51,5 +51,6 @@
     <declare-styleable name="StatsView">
         <attr name="titleBackgroundColor" format="color" />
         <attr name="statsTitle" format="string" />
+        <attr name="statsColor" format="color" />
     </declare-styleable>
 </resources>

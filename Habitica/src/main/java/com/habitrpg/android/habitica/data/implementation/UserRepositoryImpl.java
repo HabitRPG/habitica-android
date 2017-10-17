@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation;
 
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
@@ -14,6 +16,7 @@ import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
 import org.jetbrains.annotations.NotNull;
@@ -56,13 +59,16 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     @Override
-    public Observable<User> updateUser(User user, Map<String, Object> updateData) {
+    public Observable<User> updateUser(@Nullable User user, Map<String, Object> updateData) {
+        if (user == null) {
+            return Observable.just(null);
+        }
         return apiClient.updateUser(updateData)
                 .map(newUser -> mergeUser(user, newUser));
     }
 
     @Override
-    public Observable<User> updateUser(User user, String key, Object value) {
+    public Observable<User> updateUser(@Nullable User user, String key, Object value) {
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(key, value);
         return updateUser(user, updateData);
@@ -271,6 +277,27 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public Observable<Void> updatePassword(@NotNull String newPassword, @NotNull String oldPassword, String oldPasswordConfirmation) {
         return apiClient.updatePassword(newPassword, oldPassword, oldPasswordConfirmation);
+    }
+
+    @NotNull
+    @Override
+    public Observable<Stats> allocatePoint(@Nullable User user, String stat) {
+        if (user != null && user.isManaged()) {
+            localRepository.executeTransaction(realm -> user.getStats().points -= 1);
+        }
+        return apiClient.allocatePoint(stat)
+                .doOnNext(stats -> {
+                    if (user != null && user.isManaged()) {
+                        localRepository.executeTransaction(realm -> {
+                            user.getStats().str = stats.str;
+                            user.getStats().con = stats.con;
+                            user.getStats().per = stats.per;
+                            user.getStats()._int = stats._int;
+                            user.getStats().points = stats.points;
+                            user.getStats().mp = stats.mp;
+                        });
+                    }
+                });
     }
 
     @Override
