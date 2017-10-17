@@ -114,7 +114,7 @@ public class ItemRecyclerFragment extends BaseFragment {
                     .flatMap(quest -> inventoryRepository.inviteToQuest(quest))
                             .subscribe(group -> {
                                 OpenMenuItemCommand event1 = new OpenMenuItemCommand();
-                                event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
+                                event1.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_PARTY();
                                 EventBus.getDefault().post(event1);
                             }, RxErrorHandler.handleEmptyError()));
         }
@@ -224,7 +224,7 @@ public class ItemRecyclerFragment extends BaseFragment {
 
     private void openMarket() {
         OpenMenuItemCommand command = new OpenMenuItemCommand();
-        command.identifier = MainDrawerBuilder.SIDEBAR_SHOPS;
+        command.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_SHOPS();
         EventBus.getDefault().post(command);
     }
 }

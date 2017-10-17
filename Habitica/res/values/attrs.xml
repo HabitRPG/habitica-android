@@ -48,4 +48,8 @@
         <attr name="iconBgColor" format="color" />
         <attr name="hintStyle" format="reference" />
     </declare-styleable>
+    <declare-styleable name="StatsView">
+        <attr name="titleBackgroundColor" format="color" />
+        <attr name="statsTitle" format="string" />
+    </declare-styleable>
 </resources>

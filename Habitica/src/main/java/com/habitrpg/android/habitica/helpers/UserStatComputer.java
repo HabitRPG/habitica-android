@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.members.Member;
 
@@ -30,7 +31,7 @@ public class UserStatComputer {
         public String stats;
     }
 
-    public List<StatsRow> computeClassBonus (List<Equipment> equipmentList, Member user) {
+    public List<StatsRow> computeClassBonus (List<Equipment> equipmentList, Avatar user) {
         List<StatsRow> skillRows = new ArrayList<>();
 
         float strAttributes = 0;
@@ -45,10 +46,10 @@ public class UserStatComputer {
 
         // Summarize stats and fill equipment table
         for (Equipment i : equipmentList) {
-            int str_ = (int) i.getStr();
-            int int_ = (int) i.get_int();
-            int con_ = (int) i.getCon();
-            int per_ = (int) i.getPer();
+            int str_ = i.getStr();
+            int int_ = i.get_int();
+            int con_ = i.getCon();
+            int per_ = i.getPer();
 
             strAttributes += str_;
             intAttributes += int_;
@@ -98,27 +99,27 @@ public class UserStatComputer {
 
             if (!userClassMatchesGearClass && !userClassMatchesGearSpecialClass) classBonus = 0;
 
-            if (itemClass == null || itemClass.isEmpty()) {
+            if (itemClass == null || itemClass.isEmpty() || itemClass.equals("special")) {
                 itemClass = itemSpecialClass;
             }
 
             if (itemClass != null) {
                 switch (itemClass) {
                     case "rogue":
-                        strClassBonus = str_ * classBonus;
-                        perClassBonus = per_ * classBonus;
+                        strClassBonus += str_ * classBonus;
+                        perClassBonus += per_ * classBonus;
                         break;
                     case "healer":
-                        conClassBonus = con_ * classBonus;
-                        intClassBonus = int_ * classBonus;
+                        conClassBonus += con_ * classBonus;
+                        intClassBonus += int_ * classBonus;
                         break;
                     case "warrior":
-                        strClassBonus = str_ * classBonus;
-                        conClassBonus = con_ * classBonus;
+                        strClassBonus += str_ * classBonus;
+                        conClassBonus += con_ * classBonus;
                         break;
                     case "wizard":
-                        intClassBonus = int_ * classBonus;
-                        perClassBonus = per_ * classBonus;
+                        intClassBonus += int_ * classBonus;
+                        perClassBonus += per_ * classBonus;
                         break;
                 }
             }
