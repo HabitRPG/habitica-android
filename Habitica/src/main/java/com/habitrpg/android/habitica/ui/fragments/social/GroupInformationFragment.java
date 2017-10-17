@@ -102,10 +102,12 @@ public class GroupInformationFragment extends BaseFragment {
         return view;
     }
 
-    private void setUser(User user) {
+    private void setUser(@Nullable User user) {
         viewBinding.setUser(user);
-        if (user.getInvitations() != null) {
+        if (group == null && user != null && user.getInvitations() != null && user.getInvitations().getParty().getId() != null) {
             viewBinding.setInvitation(user.getInvitations().getParty());
+        } else {
+            viewBinding.setInvitation(null);
         }
     }
 
