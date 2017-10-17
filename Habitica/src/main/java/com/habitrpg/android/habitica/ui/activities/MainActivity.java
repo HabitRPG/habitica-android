@@ -258,8 +258,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         setupToolbar(toolbar);
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
-        accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
-        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, sharedPreferences, toolbar, accountHeader)
+        accountHeader = MainDrawerBuilder.INSTANCE.CreateDefaultAccountHeader(this).build();
+        drawer = MainDrawerBuilder.INSTANCE.CreateDefaultBuilderSettings(this, sharedPreferences, toolbar, accountHeader)
                 .build();
         drawer.setSelectionAtPosition(1, false);
         sideAvatarView = new AvatarView(this, true, false, false);
@@ -404,7 +404,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         if (numberOfUnreadPms <= 0) {
             newInboxItem = new PrimaryDrawerItem()
                     .withName(this.getString(R.string.sidebar_inbox))
-                    .withIdentifier(MainDrawerBuilder.SIDEBAR_INBOX);
+                    .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_INBOX());
         } else {
             String numberOfUnreadPmsLabel = String.valueOf(numberOfUnreadPms);
             BadgeStyle badgeStyle = new BadgeStyle()
@@ -413,13 +413,13 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
             newInboxItem = new PrimaryDrawerItem()
                     .withName(this.getString(R.string.sidebar_inbox))
-                    .withIdentifier(MainDrawerBuilder.SIDEBAR_INBOX)
+                    .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_INBOX())
                     .withBadge(numberOfUnreadPmsLabel)
                     .withBadgeStyle(badgeStyle);
         }
 
         if (this.drawer != null) {
-            this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.SIDEBAR_INBOX));
+            this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.INSTANCE.getSIDEBAR_INBOX()));
         }
     }
 
@@ -467,10 +467,10 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         }
 
         if (drawer != null) {
-            IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
+            IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
             if (!user.hasClass() && !hasSpecialItems) {
                 if (item != null) {
-                    drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
+                    drawer.removeItem(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
                 }
             } else {
                 IDrawerItem newItem;
@@ -479,11 +479,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                             .withName(this.getString(R.string.sidebar_skills))
                             .withEnabled(false)
                             .withBadge(this.getString(R.string.unlock_lvl_11))
-                            .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+                            .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
                 } else {
                     newItem = new PrimaryDrawerItem()
                             .withName(this.getString(R.string.sidebar_skills))
-                            .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+                            .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
                 }
                 if (item == null) {
                     drawer.addItemAtPosition(newItem, 1);
@@ -610,7 +610,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     @Subscribe
     public void openGemPurchaseFragment(@Nullable OpenGemPurchaseFragmentCommand cmd) {
         if (drawer != null) {
-            drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
+            drawer.setSelection(MainDrawerBuilder.INSTANCE.getSIDEBAR_PURCHASE());
         }
     }
 

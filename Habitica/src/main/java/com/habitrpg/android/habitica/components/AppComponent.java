@@ -42,6 +42,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
+import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
@@ -287,4 +288,6 @@ public interface AppComponent {
     void inject(@NotNull ProfilePreferencesFragment profilePreferencesFragment);
 
     void inject(@NotNull APIPreferenceFragment apiPreferenceFragment);
+
+    void inject(@NotNull StatsFragment statsFragment);
 }

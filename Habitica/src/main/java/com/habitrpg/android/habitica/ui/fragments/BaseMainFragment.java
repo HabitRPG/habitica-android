@@ -27,8 +27,7 @@ public abstract class BaseMainFragment extends BaseFragment {
     @Inject
     public ApiClient apiClient;
     @Inject
-    protected
-    UserRepository userRepository;
+    protected UserRepository userRepository;
     @Nullable
     public MainActivity activity;
     @Nullable

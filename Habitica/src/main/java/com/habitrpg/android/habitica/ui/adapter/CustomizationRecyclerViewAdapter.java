@@ -217,7 +217,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                         .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {
                             if (customization.getPrice() > gemBalance) {
                                 OpenMenuItemCommand event = new OpenMenuItemCommand();
-                                event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
+                                event.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_PURCHASE();
                                 EventBus.getDefault().post(event);
                                 return;
                             }
@@ -276,7 +276,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                     .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {
                         if (set.price > gemBalance) {
                             OpenMenuItemCommand event = new OpenMenuItemCommand();
-                            event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
+                            event.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_PURCHASE();
                             EventBus.getDefault().post(event);
                             return;
                         }

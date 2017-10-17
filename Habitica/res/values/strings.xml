@@ -689,4 +689,18 @@
     <string name="change_login_name">Change Login Name</string>
     <string name="change">Change</string>
     <string name="character_level">Character Level</string>
+    <string name="auto_allocate_points">Auto Allocate Points</string>
+    <string name="stat_guide">Stat Guide</string>
+    <string name="character_build">Character Build</string>
+    <string name="character_build_description">Each level earns you one point to assign to an attribute of your choice. You can do so manually, or let the game decide for you using one of the Automatic Allocation options.</string>
+    <string name="strength">Strength</string>
+    <string name="strength_description">Increases the bonus of critical hits and makes them more likely when scoring a task. Also increases damage dealt to bosses.</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="intelligence_description">Increases EXP earned from completing tasks. Also increases your mana cap and how fast mana regenerates over time.</string>
+    <string name="constitution">Constitution</string>
+    <string name="constitution_description">Decreases the amount of damage taken from your tasks. Does not decrease the damage received from bosses.</string>
+    <string name="perception">Perception</string>
+    <string name="perception_description">Increases the likelihood of finding drops when completing Tasks, the daily drop-cap, Streak Bonuses, and the amount of gold awarded for Tasks.</string>
+    <string name="buffs">Buffs</string>
+    <string name="allocated">Allocated</string>
 </resources>

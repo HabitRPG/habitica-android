@@ -22,7 +22,7 @@ import javax.inject.Named
 class FixCharacterValuesActivity: BaseActivity() {
 
     @Inject
-    public lateinit var repository: UserRepository
+    lateinit var repository: UserRepository
 
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
