@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.habitrpg.android.habitica.R;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class NumberAbbreviator {
@@ -16,6 +17,7 @@ public class NumberAbbreviator {
         }
 
         DecimalFormat formatter = new DecimalFormat("###.##"+abbreviationForCounter(context, counter));
+        formatter.setRoundingMode(RoundingMode.FLOOR);
         return formatter.format(number);
     }
 
