@@ -283,7 +283,18 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public Observable<Stats> allocatePoint(@Nullable User user, String stat) {
         if (user != null && user.isManaged()) {
-            localRepository.executeTransaction(realm -> user.getStats().points -= 1);
+            localRepository.executeTransaction(realm -> {
+                if (Stats.STRENGTH.equals(stat)) {
+                    user.getStats().str += 1;
+                } else if (Stats.INTELLIGENCE.equals(stat)) {
+                    user.getStats()._int += 1;
+                } else if (Stats.CONSTITUTION.equals(stat)) {
+                    user.getStats().con += 1;
+                } else if (Stats.PERCEPTION.equals(stat)) {
+                    user.getStats().per += 1;
+                }
+                user.getStats().points -= 1;
+            });
         }
         return apiClient.allocatePoint(stat)
                 .doOnNext(stats -> {

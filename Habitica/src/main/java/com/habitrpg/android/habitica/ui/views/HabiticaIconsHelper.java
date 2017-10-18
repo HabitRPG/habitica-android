@@ -472,4 +472,18 @@ public class HabiticaIconsHelper {
 
         return imageOfAttributeAllocateButton;
     }
+
+    private static Bitmap imageOfInfoIcon = null;
+    public static Bitmap imageOfInfoIcon() {
+        if (imageOfInfoIcon != null)
+            return imageOfInfoIcon;
+
+        int size = scaleSize(20);
+        imageOfInfoIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfInfoIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawInfoIcon(canvas);
+
+        return imageOfInfoIcon;
+    }
 }

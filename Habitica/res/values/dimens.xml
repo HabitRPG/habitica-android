@@ -120,4 +120,5 @@
 	<dimen name="snackbar_image_size">46dp</dimen>
 	<dimen name="setup_vertical_spacing">28dp</dimen>
 	<dimen name="content_inset">21dp</dimen>
+    <dimen name="header_border_spacing">16dp</dimen>
 </resources>
