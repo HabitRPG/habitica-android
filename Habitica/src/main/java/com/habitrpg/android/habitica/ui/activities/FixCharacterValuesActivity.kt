@@ -73,6 +73,7 @@ class FixCharacterValuesActivity: BaseActivity() {
 
     private var user: User? = null
     set(value) {
+        field = value
         if (value != null) {
             updateFields(value)
         }
