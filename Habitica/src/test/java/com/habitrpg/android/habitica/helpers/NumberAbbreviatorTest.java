@@ -52,4 +52,9 @@ public class NumberAbbreviatorTest {
         assertEquals("1.5k", NumberAbbreviator.abbreviate(context, 1500));
     }
 
+    @Test
+    public void voidtestThatitRoundsCorrectly() {
+        assertEquals("9.99k", NumberAbbreviator.abbreviate(context, 9999));
+    }
+
 }
