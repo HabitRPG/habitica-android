@@ -101,7 +101,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setProgressBar(R.id.mp_bar, stats.getMaxMP(), stats.getMp().intValue(), false);
             remoteViews.setViewVisibility(R.id.mp_wrapper, (stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
-            remoteViews.setTextViewText(R.id.gold_tv, NumberAbbreviator.abbreviate(context, stats.getGp()));
+            remoteViews.setTextViewText(R.id.gold_tv, NumberAbbreviator.INSTANCE.abbreviate(context, stats.getGp()));
             remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
             int hourGlassCount = user.getHourglassCount();
             if (hourGlassCount == 0) {
