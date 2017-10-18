@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.setOkButton
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
@@ -51,7 +53,18 @@ class StatsFragment: BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        hideToolbar()
         return inflater?.inflate(R.layout.fragment_stats, container, false)
+    }
+
+    override fun onDestroyView() {
+        showToolbar()
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        inventoryRepository.close()
+        super.onDestroy()
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -59,6 +72,9 @@ class StatsFragment: BaseMainFragment() {
 
         leftSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
         rightSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesRight())
+        distributeEvenlyHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
+        distributeClassHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
+        distributeTaskHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
 
         compositeSubscription.add(userRepository.getUser(userId).subscribe(Action1 {
             user = it
@@ -66,31 +82,49 @@ class StatsFragment: BaseMainFragment() {
             updateAttributePoints()
         }, RxErrorHandler.handleEmptyError()))
 
-        autoAllocationModeWrapper.setOnCheckedChangeListener { _, checkedId ->
-            val allocationMode = when (checkedId) {
-                R.id.distributeEvenlyButton -> "flat"
-                R.id.distributeClassButton -> "classbased"
-                R.id.distributeTaskButton -> "taskbased"
-                else -> ""
+        distributeEvenlyButton.setOnCheckedChangeListener { button, isChecked ->
+            if (isChecked) {
+                changeAutoAllocationMode(Stats.AUTO_ALLOCATE_FLAT)
             }
-            userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
         }
+        distributeClassButton.setOnCheckedChangeListener { button, isChecked ->
+            if (isChecked) {
+                changeAutoAllocationMode(Stats.AUTO_ALLOCATE_CLASSBASED)
+            }
+        }
+        distributeTaskButton.setOnCheckedChangeListener { button, isChecked ->
+            if (isChecked) {
+                changeAutoAllocationMode(Stats.AUTO_ALLOCATE_TASKBASED)
+            }
+        }
+
         automaticAllocationSwitch.setOnCheckedChangeListener{ _, isChecked ->
             userRepository.updateUser(user, "preferences.automaticAllocation", isChecked).subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
         }
 
-        strengthStatsView.allocateAction = {
-            allocatePoint(Stats.STRENGTH)
-        }
-        intelligenceStatsView.allocateAction = {
-            allocatePoint(Stats.INTELLIGENCE)
-        }
-        constitutionStatsView.allocateAction = {
-            allocatePoint(Stats.CONSTITUTION)
-        }
-        perceptionStatsView.allocateAction = {
-            allocatePoint(Stats.PERCEPTION)
-        }
+        strengthStatsView.allocateAction = { allocatePoint(Stats.STRENGTH) }
+        intelligenceStatsView.allocateAction = { allocatePoint(Stats.INTELLIGENCE) }
+        constitutionStatsView.allocateAction = { allocatePoint(Stats.CONSTITUTION) }
+        perceptionStatsView.allocateAction = { allocatePoint(Stats.PERCEPTION) }
+
+        distributeEvenlyHelpButton.setOnClickListener { showHelpAlert(R.string.distribute_evenly_help) }
+        distributeClassHelpButton.setOnClickListener { showHelpAlert(R.string.distribute_class_help) }
+        distributeTaskHelpButton.setOnClickListener { showHelpAlert(R.string.distribute_task_help) }
+    }
+
+    private fun changeAutoAllocationMode(@Stats.AutoAllocationTypes allocationMode: String) {
+        userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
+        distributeEvenlyButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
+        distributeClassButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
+        distributeTaskButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
+
+    }
+
+    private fun showHelpAlert(resourceId: Int) {
+        val builder = AlertDialog.Builder(context)
+                .setMessage(resourceId)
+                .setOkButton()
+        builder.show()
     }
 
     private fun allocatePoint(@Stats.StatsTypes stat: String) {
@@ -101,18 +135,17 @@ class StatsFragment: BaseMainFragment() {
         val automaticAllocation = user?.preferences?.automaticAllocation ?: false
         automaticAllocationSwitch.isChecked = automaticAllocation
         autoAllocationModeWrapper.visibility = if (automaticAllocation) View.VISIBLE else View.GONE
-        when (user?.preferences?.allocationMode ?: "") {
-            "flat" -> distributeEvenlyButton.isChecked = true
-            "classbased" -> distributeClassButton.isChecked = true
-            "taskbased" -> distributeTaskButton.isChecked = true
-        }
 
-        val canDistributePoints = !automaticAllocation && 0 < (user?.stats?.points ?: 0)
+        val allocationMode = user?.preferences?.allocationMode ?: ""
+        distributeEvenlyButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
+        distributeClassButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
+        distributeTaskButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
+
+        val canDistributePoints =0 < (user?.stats?.points ?: 0)
         strengthStatsView.canDistributePoints = canDistributePoints
         intelligenceStatsView.canDistributePoints = canDistributePoints
         constitutionStatsView.canDistributePoints = canDistributePoints
         perceptionStatsView.canDistributePoints = canDistributePoints
-        numberOfPointsTextView.visibility = View.VISIBLE
         if (canDistributePoints) {
             val points = user?.stats?.points ?: 0
             numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)
@@ -121,9 +154,6 @@ class StatsFragment: BaseMainFragment() {
             leftSparklesView.visibility = View.VISIBLE
             rightSparklesView.visibility = View.VISIBLE
         } else {
-            if (automaticAllocation) {
-                numberOfPointsTextView.visibility = View.GONE
-            }
             numberOfPointsTextView.text = getString(R.string.no_points_to_allocate)
             numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
             numberOfPointsTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))

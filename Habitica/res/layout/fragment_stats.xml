@@ -18,7 +18,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="18dp">
             <ImageView
                 android:id="@+id/leftSparklesView"
                 android:layout_width="77dp"
@@ -28,10 +30,8 @@
                 android:id="@+id/numberOfPointsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginRight="12dp"/>
             <ImageView
                 android:id="@+id/rightSparklesView"
                 android:layout_width="77dp"
@@ -78,7 +78,7 @@
             android:layout_marginLeft="@dimen/content_border"
             android:layout_marginRight="@dimen/content_border"
             android:layout_marginBottom="20dp"/>
-        <RadioGroup
+        <LinearLayout
             android:id="@+id/autoAllocationModeWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,25 +86,59 @@
             android:paddingRight="@dimen/content_border"
             android:background="@color/gray_700"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp">
-            <RadioButton
-                android:id="@+id/distributeEvenlyButton"
+            android:paddingBottom="16dp"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/distribute_evenly"
-                android:layout_marginBottom="4dp"/>
-            <RadioButton
-                android:id="@+id/distributeClassButton"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical">
+                <RadioButton
+                    android:id="@+id/distributeEvenlyButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distribute_evenly"/>
+                <ImageButton
+                    android:id="@+id/distributeEvenlyHelpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                    android:layout_marginLeft="12dp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/distribute_class"
-                android:layout_marginBottom="4dp"/>
-            <RadioButton
-                android:id="@+id/distributeTaskButton"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical">
+                <RadioButton
+                    android:id="@+id/distributeClassButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distribute_class"/>
+                <ImageButton
+                    android:id="@+id/distributeClassHelpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                    android:layout_marginLeft="12dp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/distribute_task"/>
-        </RadioGroup>
+                android:gravity="center_vertical">
+                <RadioButton
+                    android:id="@+id/distributeTaskButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distribute_task"/>
+                <ImageButton
+                    android:id="@+id/distributeTaskHelpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                    android:layout_marginLeft="12dp"/>
+            </LinearLayout>
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
