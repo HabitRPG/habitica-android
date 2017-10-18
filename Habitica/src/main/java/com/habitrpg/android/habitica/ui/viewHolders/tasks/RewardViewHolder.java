@@ -87,7 +87,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
     public void bindHolder(Task reward, int position, boolean canBuy) {
         this.task = reward;
         super.bindHolder(reward, position);
-        this.priceLabel.setText(NumberAbbreviator.abbreviate(itemView.getContext(), this.task.value));
+        this.priceLabel.setText(NumberAbbreviator.INSTANCE.abbreviate(itemView.getContext(), this.task.value));
 
         if (canBuy) {
             goldIconView.setAlpha(1.0f);

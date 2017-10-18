@@ -12,9 +12,6 @@ import java.util.Map;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmQuery;
 
-/**
- * Created by magicmicky on 02/10/15.
- */
 public class TaskFilterHelper {
     private List<String> tagsId;
     private Map<String, String> activeFilters = new HashMap<>();
