@@ -218,4 +218,18 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
                     return dailies;
                 });
     }
+
+    @Override
+    public void updateTaskPositions(List<String> taskOrder) {
+        if (taskOrder.size() > 0) {
+            RealmResults<Task> tasks = realm.where(Task.class).in("id", taskOrder.toArray(new String[0])).findAll();
+            realm.executeTransaction(realm1 -> {
+                for (Task task : tasks) {
+                    if (taskOrder.contains(task.getId())) {
+                        task.position = taskOrder.indexOf(task.getId());
+                    }
+                }
+            });
+        }
+    }
 }

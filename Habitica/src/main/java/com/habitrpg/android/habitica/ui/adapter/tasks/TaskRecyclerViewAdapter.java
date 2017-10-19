@@ -10,6 +10,10 @@ public interface TaskRecyclerViewAdapter {
 
     void filter();
 
+    void notifyItemMoved(int adapterPosition, int adapterPosition1);
     int getItemViewType(int position);
+
+    void setIgnoreUpdates(boolean ignoreUpdates);
+    boolean getIgnoreUpdates();
 
 }

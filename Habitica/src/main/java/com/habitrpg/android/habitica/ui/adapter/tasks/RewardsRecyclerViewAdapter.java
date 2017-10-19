@@ -77,6 +77,16 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
+    public void setIgnoreUpdates(boolean ignoreUpdates) {
+
+    }
+
+    @Override
+    public boolean getIgnoreUpdates() {
+        return false;
+    }
+
+    @Override
     public int getItemCount() {
         int rewardCount = getCustomRewardCount();
         rewardCount += getInAppRewardCount();

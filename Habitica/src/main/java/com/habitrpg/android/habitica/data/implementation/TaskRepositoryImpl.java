@@ -219,14 +219,16 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         localRepository.swapTaskPosition(firstPosition, secondPosition);
     }
 
-    public Observable<List<String>> updateTaskPosition(int currentPosition) {
-        return localRepository.getTaskAtPosition(currentPosition).first()
+    public Observable<List<String>> updateTaskPosition(int oldPosition, int newPosition) {
+        return localRepository.getTaskAtPosition(oldPosition)
+                .first()
                 .flatMap(task -> {
                     if (task.isValid()) {
-                        return apiClient.postTaskNewPosition(task.getId(), currentPosition);
+                        return apiClient.postTaskNewPosition(task.getId(), newPosition);
                     }
                     return Observable.just(null);
-                });
+                })
+                .doOnNext(localRepository::updateTaskPositions);
     }
 
     @Override
