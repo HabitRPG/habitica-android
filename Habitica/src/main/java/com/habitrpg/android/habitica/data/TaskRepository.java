@@ -47,7 +47,7 @@ public interface TaskRepository extends BaseRepository  {
 
     void swapTaskPosition(int firstPosition, int secondPosition);
 
-    Observable<List<String>> updateTaskPosition(int currentPosition);
+    Observable<List<String>> updateTaskPosition(int oldPosition, int newPosition);
 
     Observable<Task> getUnmanagedTask(String taskid);
 
