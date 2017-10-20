@@ -12,7 +12,7 @@ object NumberAbbreviator {
     fun abbreviate(context: Context, number: Double): String {
         var usedNumber = number
         var counter = 0
-        while (number >= 1000) {
+        while (usedNumber >= 1000) {
             counter++
             usedNumber /= 1000
         }
