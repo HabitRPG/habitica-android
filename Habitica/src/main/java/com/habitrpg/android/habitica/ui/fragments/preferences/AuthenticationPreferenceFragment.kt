@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.app.ProgressDialog
+import android.app.Service
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -12,6 +13,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.preference.EditTextPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceCategory
+import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -19,6 +21,7 @@ import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.QrCodeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -42,14 +45,11 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun updateUserFields() {
-        configurePreference(findPreference("display_name"), user?.profile?.name)
-        configurePreference(findPreference("photo_url"), user?.profile?.imageUrl)
-        configurePreference(findPreference("about"), user?.profile?.blurb)
+        configurePreference(findPreference("login_name"), user?.authentication?.localAuthentication?.username)
+        configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email)
     }
 
     private fun configurePreference(preference: Preference?, value: String?) {
-        val editPreference = preference as? EditTextPreference
-        editPreference?.text = value
         preference?.summary = value
     }
 
@@ -59,6 +59,9 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
+            "login_name" -> showLoginNameDialog()
+            "email" -> showEmailDialog()
+            "change_password" -> showChangePasswordDialog()
             "subscription_status" -> {
                 if (user != null && user!!.purchased != null && user!!.purchased.plan != null) {
                     val plan = user!!.purchased.plan
@@ -78,6 +81,52 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             }
         }
         return super.onPreferenceTreeClick(preference)
+    }
+
+    private fun showChangePasswordDialog() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun showEmailDialog() {
+        val inflater = context.layoutInflater
+        val view = inflater.inflate(R.layout.dialog_edittext_confirm_pw, null)
+        val emailEditText = view.findViewById<EditText>(R.id.editText)
+        emailEditText.setText(user?.authentication?.localAuthentication?.email)
+        val passwordEditText = view.findViewById<EditText>(R.id.passwordEditText)
+        val dialog = AlertDialog.Builder(context)
+                .setTitle(R.string.change_email)
+                .setPositiveButton(R.string.change) { thisDialog, _ ->
+                    thisDialog.dismiss()
+                    userRepository.updateEmail(emailEditText.text.toString(), passwordEditText.text.toString())
+                            .subscribe(Action1 {
+                                configurePreference(findPreference("email"), emailEditText.text.toString())
+                            }, RxErrorHandler.handleEmptyError())
+                }
+                .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
+                .create()
+        dialog.setView(view)
+        dialog.show()
+    }
+
+    private fun showLoginNameDialog() {
+        val inflater = context.layoutInflater
+        val view = inflater.inflate(R.layout.dialog_edittext_confirm_pw, null)
+        val loginNameEditText = view.findViewById<EditText>(R.id.editText)
+        loginNameEditText.setText(user?.authentication?.localAuthentication?.username)
+        val passwordEditText = view.findViewById<EditText>(R.id.passwordEditText)
+        val dialog = AlertDialog.Builder(context)
+                .setTitle(R.string.change_login_name)
+                .setPositiveButton(R.string.change) { thisDialog, _ ->
+                    thisDialog.dismiss()
+                    userRepository.updateLoginName(loginNameEditText.text.toString(), passwordEditText.text.toString())
+                            .subscribe(Action1 {
+                                configurePreference(findPreference("login_name"), loginNameEditText.text.toString())
+                            }, RxErrorHandler.handleEmptyError())
+                }
+                .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
+                .create()
+        dialog.setView(view)
+        dialog.show()
     }
 
     private fun showAccountDeleteConfirmation() {

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity">
+    tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity"
+    android:background="@color/white">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,152 +31,77 @@
                         android:id="@+id/textView5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/outer_inset"
-                        android:text="@string/fix_character_description" />
+                        android:padding="@dimen/outer_inset"
+                        android:text="@string/fix_character_description"
+                        android:background="@color/gray_700"
+                        android:layout_marginBottom="16dp"
+                        />
 
-                    <TableLayout
+                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
+                        android:id="@+id/healthEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/outer_inset"
-                        android:layout_marginRight="@dimen/outer_inset">
-                        <TableRow>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/stats"
-                                style="@style/TableHeader"
-                                />
-                        </TableRow>
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/HP_default"
-                                android:labelFor="@+id/healthEditText"/>
-
-                            <EditText
-                                android:id="@+id/healthEditText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:inputType="number" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/XP_default"
-                                android:labelFor="@+id/experienceEditText" />
-
-                            <EditText
-                                android:id="@+id/experienceEditText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:inputType="number" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/gold_singular"
-                                android:labelFor="@+id/goldEditText"/>
-
-                            <EditText
-                                android:id="@+id/goldEditText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:inputType="number" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/MP_default"
-                                android:labelFor="@+id/manaEditText"/>
-
-                            <EditText
-                                android:id="@+id/manaEditText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:inputType="number" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/level"
-                                android:labelFor="@+id/levelEditText"/>
-
-                            <EditText
-                                android:id="@+id/levelEditText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:inputType="number" />
-                        </TableRow>
-
-                        <TableRow>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/profile_achievements"
-                                style="@style/TableHeader"
-                                />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" >
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/streak_label"
-                                android:labelFor="@+id/streakEditText"/>
-
-                            <EditText
-                                android:id="@+id/streakEditText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:inputType="number" />
-                        </TableRow>
-
-                    </TableLayout>
+                        android:layout_height="wrap_content"
+                        app:title="@string/HP_default"
+                        app:fixIconName="health"
+                        app:hintStyle="@style/RedTextLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="12dp"
+                        app:iconBgColor="@color/red_500"/>
+                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
+                        android:id="@+id/experienceEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/XP_default"
+                        app:fixIconName="experience"
+                        app:hintStyle="@style/YellowTextLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="12dp"
+                        app:iconBgColor="@color/yellow_500"/>
+                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
+                        android:id="@+id/manaEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/MP_default"
+                        app:fixIconName="mana"
+                        app:hintStyle="@style/BlueTextLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="12dp"
+                        app:iconBgColor="@color/blue_500"/>
+                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
+                        android:id="@+id/goldEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/gold_plural"
+                        app:fixIconName="gold"
+                        app:hintStyle="@style/YellowTextLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="12dp"
+                        app:iconBgColor="@color/yellow_500"/>
+                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
+                        android:id="@+id/levelEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/character_level"
+                        app:fixIconName="level"
+                        app:hintStyle="@style/PurpleTextLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="12dp"
+                        app:iconBgColor="@color/brand_300"/>
+                    <com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
+                        android:id="@+id/streakEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="@string/streak_label"
+                        app:fixIconName="streak"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="12dp"
+                        app:iconBgColor="@color/gray_400"/>
                 </LinearLayout>
             </ScrollView>
 </LinearLayout>

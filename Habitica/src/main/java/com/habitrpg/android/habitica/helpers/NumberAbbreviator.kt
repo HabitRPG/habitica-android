@@ -1,0 +1,31 @@
+package com.habitrpg.android.habitica.helpers
+
+import android.content.Context
+
+import com.habitrpg.android.habitica.R
+
+import java.math.RoundingMode
+import java.text.DecimalFormat
+
+object NumberAbbreviator {
+
+    fun abbreviate(context: Context, number: Double): String {
+        var usedNumber = number
+        var counter = 0
+        while (usedNumber >= 1000) {
+            counter++
+            usedNumber /= 1000
+        }
+
+        val formatter = DecimalFormat("###.##" + abbreviationForCounter(context, counter))
+        formatter.roundingMode = RoundingMode.FLOOR
+        return formatter.format(usedNumber)
+    }
+
+    private fun abbreviationForCounter(context: Context, counter: Int): String = when (counter) {
+        1 -> context.getString(R.string.thousand_abbrev)
+        2 -> context.getString(R.string.million_abbrev)
+        3 -> context.getString(R.string.billion_abbrev)
+        else -> ""
+    }
+}

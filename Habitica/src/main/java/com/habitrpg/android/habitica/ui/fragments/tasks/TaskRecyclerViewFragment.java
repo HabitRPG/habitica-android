@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -36,7 +37,6 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
@@ -45,6 +45,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -185,13 +186,16 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
 
         mItemTouchCallback = new ItemTouchHelper.Callback() {
-            private Integer mFromPosition = null;
+            private Integer fromPosition = null;
 
             @Override
             public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
                 super.onSelectedChanged(viewHolder, actionState);
                 if (viewHolder != null) {
                     viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
+                    if (fromPosition == null) {
+                        fromPosition = viewHolder.getAdapterPosition();
+                    }
                 }
                 if (swipeRefreshLayout != null) {
                     swipeRefreshLayout.setEnabled(false);
@@ -199,10 +203,8 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             }
 
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                if (mFromPosition == null) {
-                    mFromPosition = viewHolder.getAdapterPosition();
-                }
-                taskRepository.swapTaskPosition(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                recyclerAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                //taskRepository.swapTaskPosition(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
 
@@ -218,18 +220,28 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             }
 
             @Override
+            public boolean isItemViewSwipeEnabled() {
+                return false;
+            }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                return true;
+            }
+
+            @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
                 if (swipeRefreshLayout != null) {
                     swipeRefreshLayout.setEnabled(true);
                 }
 
-                if (viewHolder != null) {
-                    viewHolder.itemView.setBackgroundColor(Color.WHITE);
-                }
-                if (mFromPosition != null) {
-                    taskRepository.updateTaskPosition(viewHolder.getAdapterPosition())
-                            .subscribe(taskPositions -> {}, RxErrorHandler.handleEmptyError());
+                if (fromPosition != null) {
+                    recyclerAdapter.setIgnoreUpdates(true);
+                    taskRepository.updateTaskPosition(fromPosition, viewHolder.getAdapterPosition())
+                            .delay(2, TimeUnit.SECONDS)
+                            .subscribe(taskPositions -> recyclerAdapter.setIgnoreUpdates(false), RxErrorHandler.handleEmptyError());
+                    fromPosition = null;
                 }
             }
         };

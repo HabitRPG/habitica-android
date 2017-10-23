@@ -1,16 +1,34 @@
 package com.habitrpg.android.habitica.models.user;
 
 import android.content.Context;
+import android.support.annotation.StringDef;
 
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.HabitRpgClass;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
 public class Stats extends RealmObject {
+    public static final String STRENGTH = "str";
+    public static final String INTELLIGENCE = "int";
+    public static final String CONSTITUTION = "con";
+    public static final String PERCEPTION = "per";
+    @StringDef({Stats.STRENGTH, Stats.INTELLIGENCE, Stats.CONSTITUTION, Stats.PERCEPTION})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface StatsTypes {}
+
+    public static final String AUTO_ALLOCATE_FLAT = "flat";
+    public static final String AUTO_ALLOCATE_CLASSBASED = "classbased";
+    public static final String AUTO_ALLOCATE_TASKBASED = "taskbased";
+    @StringDef({Stats.AUTO_ALLOCATE_FLAT, Stats.AUTO_ALLOCATE_CLASSBASED, Stats.AUTO_ALLOCATE_TASKBASED})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface AutoAllocationTypes {}
 
     @PrimaryKey
     private String userId;

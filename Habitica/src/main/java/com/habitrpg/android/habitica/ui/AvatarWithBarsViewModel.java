@@ -163,7 +163,7 @@ public class AvatarWithBarsViewModel {
     @OnClick(R.id.avatarView)
     public void avatarViewClicked() {
         OpenMenuItemCommand event = new OpenMenuItemCommand();
-        event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;
+        event.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_AVATAR();
         EventBus.getDefault().post(event);
     }
 

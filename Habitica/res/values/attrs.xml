@@ -42,4 +42,15 @@
     <declare-styleable name="CurrencyViews">
         <attr name="hasLightBackground" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="FixValuesEditText">
+        <attr name="fixIconName" format="string" />
+        <attr name="title" format="string" />
+        <attr name="iconBgColor" format="color" />
+        <attr name="hintStyle" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="StatsView">
+        <attr name="titleBackgroundColor" format="color" />
+        <attr name="statsTitle" format="string" />
+        <attr name="statsColor" format="color" />
+    </declare-styleable>
 </resources>

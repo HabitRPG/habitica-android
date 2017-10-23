@@ -134,8 +134,10 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     public Observable<Group> joinGroup(String id) {
         return apiClient.joinGroup(id)
                 .doOnNext(group -> {
-                    group.isMember = true;
-                    localRepository.save(group);
+                    if (group != null) {
+                        group.isMember = true;
+                        localRepository.save(group);
+                    }
                 });
     }
 

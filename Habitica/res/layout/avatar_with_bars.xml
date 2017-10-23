@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
@@ -12,10 +11,10 @@
               android:focusableInTouchMode="true"
               android:orientation="vertical"
               android:background="@color/brand"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp"
-              android:paddingStart="16dp"
-              android:paddingEnd="16dp">
+              android:paddingLeft="@dimen/header_border_spacing"
+              android:paddingRight="@dimen/header_border_spacing"
+              android:paddingStart="@dimen/header_border_spacing"
+              android:paddingEnd="@dimen/header_border_spacing">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

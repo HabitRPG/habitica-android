@@ -27,8 +27,7 @@ public abstract class BaseMainFragment extends BaseFragment {
     @Inject
     public ApiClient apiClient;
     @Inject
-    protected
-    UserRepository userRepository;
+    protected UserRepository userRepository;
     @Nullable
     public MainActivity activity;
     @Nullable
@@ -145,7 +144,7 @@ public abstract class BaseMainFragment extends BaseFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (user != null) {
+        if (user != null && user.isValid()) {
             outState.putString("userId", user.getId());
         }
 

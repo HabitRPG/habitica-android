@@ -1,33 +1,32 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class GroupInformationFragment extends BaseFragment {
 
@@ -36,6 +35,8 @@ public class GroupInformationFragment extends BaseFragment {
 
     @Inject
     ApiClient apiClient;
+    @Inject
+    SocialRepository socialRepository;
     @Inject
     UserRepository userRepository;
 
@@ -79,7 +80,12 @@ public class GroupInformationFragment extends BaseFragment {
         viewBinding.setHideParticipantCard(false);
 
         if (user != null) {
-            viewBinding.setUser(user);
+            setUser(user);
+        } else {
+            compositeSubscription.add(userRepository.getUser().subscribe(user1 -> {
+                user = user1;
+                setUser(user);
+            }, RxErrorHandler.handleEmptyError()));
         }
 
         if (group != null) {
@@ -96,9 +102,19 @@ public class GroupInformationFragment extends BaseFragment {
         return view;
     }
 
+    private void setUser(@Nullable User user) {
+        viewBinding.setUser(user);
+        if (group == null && user != null && user.getInvitations() != null && user.getInvitations().getParty().getId() != null) {
+            viewBinding.setInvitation(user.getInvitations().getParty());
+        } else {
+            viewBinding.setInvitation(null);
+        }
+    }
+
     @Override
     public void onDestroy() {
         userRepository.close();
+        socialRepository.close();
         super.onDestroy();
     }
 
@@ -150,4 +166,28 @@ public class GroupInformationFragment extends BaseFragment {
             viewBinding.setHideParticipantCard(true);
         }
     }
+
+
+    @OnClick(R.id.btnPartyInviteAccept)
+    public void onPartyInviteAccepted() {
+        if (user != null) {
+            socialRepository.joinGroup(user.getInvitations().getParty().getId())
+                    .doOnNext(group1 -> viewBinding.setInvitation(null))
+                    .flatMap(group1 -> userRepository.retrieveUser(false))
+                    .flatMap(user -> socialRepository.retrieveGroup("party"))
+                    .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.id, true))
+                    .subscribe(members -> {}, RxErrorHandler.handleEmptyError());
+        }
+    }
+
+    @OnClick(R.id.btnPartyInviteReject)
+    public void onPartyInviteRejected() {
+        if (user != null) {
+            socialRepository.rejectGroupInvite(user.getInvitations().getParty().getId())
+                    .subscribe(aVoid -> {
+                        viewBinding.setInvitation(null);
+                    }, RxErrorHandler.handleEmptyError());
+        }
+    }
+
 }
