@@ -12,3 +12,4 @@ PORT=80
 
 # Production
 BASE_URL=https://habitica.com
+STAGING_KEY=the-key
