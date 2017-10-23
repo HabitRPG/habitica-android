@@ -7,7 +7,7 @@
     style="@style/RowWrapper"
     android:clickable="true">
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@id/imageView"
+        android:id="@+id/imageView"
         android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"
         bind:actualImageScaleType="fitCenter"
@@ -18,13 +18,13 @@
         android:orientation="vertical"
         android:layout_gravity="center_vertical">
         <TextView
-            android:id="@id/titleTextView"
+            android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Title"
             style="@style/RowTitle"/>
         <TextView
-            android:id="@id/ownedTextView"
+            android:id="@+id/ownedTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Value"
