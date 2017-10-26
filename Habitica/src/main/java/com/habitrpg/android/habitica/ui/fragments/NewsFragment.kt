@@ -14,14 +14,14 @@ import kotlinx.android.synthetic.main.fragment_news.*
 
 class NewsFragment : BaseMainFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater?.inflate(R.layout.fragment_news, container, false)
+        return inflater.inflate(R.layout.fragment_news, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val address = if (BuildConfig.DEBUG) BuildConfig.BASE_URL else context.getString(R.string.base_url)
+        val address = if (BuildConfig.DEBUG) BuildConfig.BASE_URL else context?.getString(R.string.base_url)
         newsWebview.webChromeClient = WebChromeClient()
         newsWebview.loadUrl(address + "/static/new-stuff")
     }

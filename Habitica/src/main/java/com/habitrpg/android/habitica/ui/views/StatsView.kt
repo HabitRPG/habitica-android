@@ -67,13 +67,15 @@ class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context,
                 R.styleable.StatsView,
                 0, 0)
 
-        val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg)
-        if (attributes != null) {
-            statColor = attributes.getColor(R.styleable.StatsView_statsColor, 0)
-            backgroundDrawable.setColorFilter(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
-            titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
+        if (context != null) {
+            val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg)
+            if (attributes != null) {
+                statColor = attributes.getColor(R.styleable.StatsView_statsColor, 0)
+                backgroundDrawable?.setColorFilter(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
+                titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
+            }
+            titleWrapper.background = backgroundDrawable
         }
-        titleWrapper.background = backgroundDrawable
 
         allocateButton.setOnClickListener {
             allocateAction?.invoke()

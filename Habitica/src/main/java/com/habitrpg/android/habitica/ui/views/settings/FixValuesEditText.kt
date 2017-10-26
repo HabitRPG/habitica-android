@@ -39,8 +39,8 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
         editTextWrapper.hint = editText.hint
         editTextWrapper.setHintTextAppearance(attributes.getResourceId(R.styleable.FixValuesEditText_hintStyle, R.style.PurpleTextLabel))
         val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
-        backgroundDrawable.setColorFilter(attributes.getColor(R.styleable.FixValuesEditText_iconBgColor, 0), PorterDuff.Mode.MULTIPLY)
-        backgroundDrawable.alpha = 50
+        backgroundDrawable?.setColorFilter(attributes.getColor(R.styleable.FixValuesEditText_iconBgColor, 0), PorterDuff.Mode.MULTIPLY)
+        backgroundDrawable?.alpha = 50
 
         iconBackgroundView.background = backgroundDrawable
 
