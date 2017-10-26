@@ -1,1 +1,0 @@
-ALTER TABLE QuestContent ADD COLUMN 'owned' INTEGER DEFAULT 0;

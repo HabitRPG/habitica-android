@@ -38,7 +38,7 @@
     <dimen name="btn_height_reward">50dp</dimen>
 
     <dimen name="quest_image_width">128dp</dimen>
-    <dimen name="quest_image_height">128dp</dimen>
+    <dimen name="quest_image_height">200dp</dimen>
 
     <!-- Widget -->
     <dimen name="widget_bar_horizontal_margin">20dp</dimen>
@@ -64,7 +64,7 @@
 	<dimen name="avatar_compact_width">114dp</dimen>
 	<dimen name="avatar_compact_height">114dp</dimen>
 	<dimen name="customization_width">100dp</dimen>
-	<dimen name="gear_image_size">60dp</dimen>
+	<dimen name="gear_image_size">68dp</dimen>
 	<dimen name="row_padding">12dp</dimen>
     <dimen name="row_title_size">16sp</dimen>
     <dimen name="row_text_size">14sp</dimen>
@@ -75,8 +75,7 @@
 	<dimen name="bottom_menu_padding">18dp</dimen>
 	<dimen name="pet_image_width">81dp</dimen>
 	<dimen name="pet_image_height">99dp</dimen>
-	<dimen name="shop_width">162dp</dimen>
-	<dimen name="shop_height">138dp</dimen>
+	<dimen name="shop_height">124dp</dimen>
 	<dimen name="bar_icon_padding">10dp</dimen>
 	<dimen name="task_text_padding">16dp</dimen>
 	<dimen name="task_text_compactpadding">4dp</dimen>
@@ -105,4 +104,21 @@
     <dimen name="login_intro_button_size">126dp</dimen>
 	<dimen name="diamond_button_height">40dp</dimen>
     <dimen name="setup_customization_size">56dp</dimen>
+    <dimen name="outer_inset">16dp</dimen>
+	<dimen name="rounded_button_radius">6dp</dimen>
+    <dimen name="content_border">18dp</dimen>
+	<dimen name="content_section_spacing">21dp</dimen>
+	<dimen name="header_spacing">6dp</dimen>
+    <dimen name="shopitem_width">84dp</dimen>
+    <dimen name="shopitem_status_size">24dp</dimen>
+	<dimen name="shopitem_image_size">68dp</dimen>
+    <dimen name="shop_scene_height">124dp</dimen>
+    <dimen name="currency_icon_size">24dp</dimen>
+    <dimen name="shopitem_dialog_content_inset">24dp</dimen>
+    <dimen name="reward_width">84dp</dimen>
+    <dimen name="task_min_height">60dp</dimen>
+	<dimen name="snackbar_image_size">46dp</dimen>
+	<dimen name="setup_vertical_spacing">28dp</dimen>
+	<dimen name="content_inset">21dp</dimen>
+    <dimen name="header_border_spacing">16dp</dimen>
 </resources>

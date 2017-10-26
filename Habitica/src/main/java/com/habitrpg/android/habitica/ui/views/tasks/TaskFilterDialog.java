@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TagRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
@@ -132,7 +133,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
     }
 
     public void setTags(List<Tag> tags) {
-        this.tags = tags;
+        this.tags = repository.getUnmanagedCopy(tags);
         createTagViews();
     }
 
@@ -212,16 +213,18 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         if (this.getWindow() != null) {
             this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
-        repository.updateTags(editedTags.values()).subscribe(tag -> editedTags.remove(tag.getId()), throwable -> {});
-        repository.createTags(createdTags.values()).subscribe(tag -> createdTags.remove(tag.getId()), throwable -> {});
-        repository.deleteTags(deletedTags).subscribe(tags1 -> deletedTags.clear(), throwable -> {});
+        repository.updateTags(editedTags.values()).subscribe(tag -> editedTags.remove(tag.getId()), RxErrorHandler.handleEmptyError());
+        repository.createTags(createdTags.values()).subscribe(tag -> createdTags.remove(tag.getId()), RxErrorHandler.handleEmptyError());
+        repository.deleteTags(deletedTags).subscribe(tags1 -> deletedTags.clear(), RxErrorHandler.handleEmptyError());
     }
 
     private void createTagEditViews() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        for (int index = 0; index < tags.size(); index++) {
-            Tag tag = tags.get(index);
-            createTagEditView(inflater, index, tag);
+        if (tags != null) {
+            for (int index = 0; index < tags.size(); index++) {
+                Tag tag = tags.get(index);
+                createTagEditView(inflater, index, tag);
+            }
         }
         createAddTagButton();
     }
@@ -360,6 +363,9 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        if (taskType == null) {
+            return;
+        }
         if (checkedId == R.id.all_task_filter) {
             if (!taskType.equals(Task.TYPE_TODO)) {
                 filterType = Task.FILTER_ALL;

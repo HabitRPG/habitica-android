@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Group;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,9 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
 import javax.inject.Inject;
 
 public class TavernFragment extends BaseMainFragment {
+
+    @Inject
+    SocialRepository socialRepository;
 
     public ViewPager viewPager;
     Group tavern;
@@ -25,11 +30,14 @@ public class TavernFragment extends BaseMainFragment {
     GroupInformationFragment questInfoFragment;
 
     @Inject
-    ContentCache contentCache;
+    InventoryRepository inventoryRepository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.usesTabLayout = true;
+        hideToolbar();
+        disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
@@ -46,6 +54,19 @@ public class TavernFragment extends BaseMainFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        showToolbar();
+        enableToolbarScrolling();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
@@ -53,8 +74,8 @@ public class TavernFragment extends BaseMainFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.apiClient != null) {
-            apiClient.getGroup("habitrpg")
+        if (this.socialRepository != null) {
+            compositeSubscription.add(socialRepository.getGroup("habitrpg")
                     .subscribe(group -> {
                         TavernFragment.this.tavern = group;
                         if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {
@@ -64,14 +85,13 @@ public class TavernFragment extends BaseMainFragment {
                                 TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
                             }
 
-                            contentCache.getQuestContent(group.quest.key, content -> {
+                            inventoryRepository.getQuestContent(group.quest.key).first().subscribe(content -> {
                                 if (questInfoFragment != null) {
                                     questInfoFragment.setQuestContent(content);
                                 }
-                            });
+                            }, RxErrorHandler.handleEmptyError());
                         }
-                    }, throwable -> {
-                    });
+                    }, RxErrorHandler.handleEmptyError()));
         }
     }
 
@@ -90,12 +110,16 @@ public class TavernFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
+                        fragment = new TavernDetailFragment();
+                        break;
+                    }
+                    case 1: {
                         chatListFragment = new ChatListFragment();
                         chatListFragment.configure("habitrpg", user, true);
                         fragment = chatListFragment;
                         break;
                     }
-                    case 1: {
+                    case 2: {
                         fragment = questInfoFragment = GroupInformationFragment.newInstance(tavern, user);
                         break;
                     }
@@ -109,18 +133,20 @@ public class TavernFragment extends BaseMainFragment {
             @Override
             public int getCount() {
                 if (tavern != null && tavern.quest != null && tavern.quest.key != null) {
-                    return 2;
+                    return 3;
                 }
-                return 1;
+                return 2;
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return activity.getString(R.string.chat);
+                        return getContext().getString(R.string.inn);
                     case 1:
-                        return activity.getString(R.string.world_quest);
+                        return getContext().getString(R.string.chat);
+                    case 2:
+                        return getContext().getString(R.string.world_quest);
                 }
                 return "";
             }
@@ -133,6 +159,9 @@ public class TavernFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
         return getString(R.string.sidebar_tavern);
     }
 }

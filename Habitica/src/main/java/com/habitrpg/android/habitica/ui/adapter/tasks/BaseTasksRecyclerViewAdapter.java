@@ -11,10 +11,11 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +127,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .toList()
-                    .subscribe(this::setTasks, crashlyticsProxy::logException);
+                    .subscribe(this::setTasks, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -174,5 +175,9 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
             content.remove(taskToDelete);
             filter();
         }
+    }
+
+    public void setDailyResetOffset(int dayStart) {
+
     }
 }

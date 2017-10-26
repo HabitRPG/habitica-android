@@ -5,14 +5,15 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-
 import com.habitrpg.android.habitica.models.social.Backer;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.social.Contributor;
+import com.habitrpg.android.habitica.models.social.ChatMessageLike;
+import com.habitrpg.android.habitica.models.user.ContributorInfo;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.Map;
+
+import io.realm.RealmList;
 
 public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
     @Override
@@ -29,8 +30,12 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
             message.timestamp = obj.get("timestamp").getAsLong();
         }
         if (obj.has("likes")) {
-            message.likes = context.deserialize(obj.get("likes"), new TypeToken<HashMap<String, Boolean>>() {
-            }.getType());
+            message.likes = new RealmList<>();
+            for (Map.Entry<String, JsonElement> likeEntry : obj.getAsJsonObject("likes").entrySet()) {
+                if (likeEntry.getValue().getAsBoolean()) {
+                    message.likes.add(new ChatMessageLike(likeEntry.getKey()));
+                }
+            }
         }
         if (obj.has("flagCount")) {
             message.flagCount = obj.get("flagCount").getAsInt();
@@ -43,12 +48,13 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
         if (obj.has("contributor")) {
             if (!obj.get("contributor").isJsonNull()) {
                 if (obj.get("contributor").isJsonObject()) {
-                    message.contributor = context.deserialize(obj.get("contributor"), Contributor.class);
+                    message.contributor = context.deserialize(obj.get("contributor"), ContributorInfo.class);
                 } else {
-                    Contributor contributor = new Contributor();
-                    contributor.text = obj.get("contributor").getAsString();
+                    ContributorInfo contributor = new ContributorInfo();
+                    contributor.setText(obj.get("contributor").getAsString());
                     message.contributor = contributor;
                 }
+                message.contributor.setUserId(message.id);
             }
         }
 

@@ -1,15 +1,14 @@
 package com.habitrpg.android.habitica.modules;
 
-import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
-import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.api.MaintenanceApiService;
-
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.habitrpg.android.habitica.api.HostConfig;
+import com.habitrpg.android.habitica.api.MaintenanceApiService;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
+import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
 import javax.inject.Singleton;
 
@@ -43,12 +42,6 @@ public class ApiModule {
     @Singleton
     public ApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy, PopupNotificationsManager popupNotificationsManager, Context context) {
         return new ApiClientImpl(gsonConverter, hostConfig, crashlyticsProxy, popupNotificationsManager, context);
-    }
-
-    @Provides
-    @Singleton
-    public ContentCache providesContentCache(ApiClient client){
-        return new ContentCache(client);
     }
 
     @Provides

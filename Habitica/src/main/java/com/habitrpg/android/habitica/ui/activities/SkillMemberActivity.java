@@ -1,19 +1,19 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
-import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
@@ -25,7 +25,9 @@ public class SkillMemberActivity extends BaseActivity {
     private PartyMemberRecyclerViewAdapter viewAdapter;
 
     @Inject
-    public ApiClient apiClient;
+    public SocialRepository socialRepository;
+    @Inject
+    public UserRepository userRepository;
 
     @Override
     protected int getLayoutResId() {
@@ -39,40 +41,23 @@ public class SkillMemberActivity extends BaseActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        EventBus.getDefault().register(this);
-
         loadMemberList();
     }
 
     private void loadMemberList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        viewAdapter = new PartyMemberRecyclerViewAdapter();
-        viewAdapter.context = this;
+        viewAdapter = new PartyMemberRecyclerViewAdapter(null, true, this);
+        viewAdapter.getUserClickedEvents().subscribe(userId -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("member_id", userId);
+            setResult(Activity.RESULT_OK, resultIntent);
+            finish();
+        }, RxErrorHandler.handleEmptyError());
         recyclerView.setAdapter(viewAdapter);
 
-        apiClient.getGroup("party")
-                .subscribe(group -> {
-                            if (group == null) {
-                                return;
-                            }
-
-                            apiClient.getGroupMembers(group.id, true)
-                                    .subscribe(members -> {
-                                                viewAdapter.setMemberList(members, true);
-                                            },
-                                            throwable -> {
-                                            });
-                        },
-                        throwable -> {
-                        });
-    }
-
-    @Subscribe
-    public void onEvent(SelectMemberCommand evt) {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("member_id", evt.MemberId);
-        setResult(Activity.RESULT_OK, resultIntent);
-        finish();
+        userRepository.getUser()
+                .first()
+                .flatMap(user -> socialRepository.getGroupMembers(user.getParty().id))
+                .subscribe(viewAdapter::updateData, RxErrorHandler.handleEmptyError());
     }
 }

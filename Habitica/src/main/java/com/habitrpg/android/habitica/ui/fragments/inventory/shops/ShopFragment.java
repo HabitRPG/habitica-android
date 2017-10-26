@@ -1,29 +1,31 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.UpdateGoldGemsPurchasedevent;
-import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.shops.Shop;
-import com.habitrpg.android.habitica.models.shops.ShopCategory;
-import com.habitrpg.android.habitica.models.shops.ShopItem;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopCategory;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,38 +41,49 @@ public class ShopFragment extends BaseFragment {
     public TextView emptyView;
     public ShopRecyclerAdapter adapter;
     public String shopIdentifier;
-    public HabitRPGUser user;
+    public User user;
     public Shop shop;
     @Inject
-    ApiClient apiClient;
+    InventoryRepository inventoryRepository;
+    @Inject
+    UserRepository userRepository;
+    @Inject
+    RemoteConfigManager configManager;
+
     private View view;
+
+    private GridLayoutManager layoutManager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        boolean setupViews = false;
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-            setupViews = true;
         }
 
         unbinder = ButterKnife.bind(this, view);
 
-        if (setupViews) {
-            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        }
-
+        recyclerView.setBackgroundResource(R.color.white);
 
         adapter = (ShopRecyclerAdapter) recyclerView.getAdapter();
         if (adapter == null) {
             adapter = new ShopRecyclerAdapter();
             recyclerView.setAdapter(adapter);
+            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
         }
-        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         if (layoutManager == null) {
-            layoutManager = new LinearLayoutManager(getContext());
-
+            layoutManager = new GridLayoutManager(getContext(), 2);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (adapter.getItemViewType(position) < 3) {
+                        return layoutManager.getSpanCount();
+                    } else {
+                        return 1;
+                    }
+                }
+            });
             recyclerView.setLayoutManager(layoutManager);
         }
 
@@ -81,10 +94,25 @@ public class ShopFragment extends BaseFragment {
         if (shop == null) {
             loadShopInventory();
         } else {
-            adapter.setShop(shop);
+            adapter.setShop(shop, configManager.shopSpriteSuffix());
         }
+        adapter.setUser(user);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        userRepository.close();
+        inventoryRepository.close();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final View finalView = view;
+        finalView.post(() -> setGridSpanCount(finalView.getWidth()));
     }
 
     private void loadShopInventory() {
@@ -103,10 +131,10 @@ public class ShopFragment extends BaseFragment {
                 shopUrl = "seasonal";
                 break;
         }
-        this.apiClient.fetchShopInventory(shopUrl)
+        this.inventoryRepository.fetchShopInventory(shopUrl)
                 .map(shop1 -> {
                     if (shop1.identifier.equals(Shop.MARKET)) {
-                        if (user.getPurchased().getPlan().isActive()) {
+                        if (user != null && user.isValid() && user.getPurchased().getPlan().isActive()) {
                             ShopCategory specialCategory = new ShopCategory();
                             specialCategory.text = getString(R.string.special);
                             specialCategory.items = new ArrayList<>();
@@ -120,9 +148,20 @@ public class ShopFragment extends BaseFragment {
                 })
                 .subscribe(shop -> {
                     this.shop = shop;
-                    this.adapter.setShop(shop);
-                }, throwable -> {
-                });
+                    this.adapter.setShop(shop, configManager.shopSpriteSuffix());
+                }, RxErrorHandler.handleEmptyError());
+
+        compositeSubscription.add(this.inventoryRepository.getOwnedItems(user)
+                .subscribe(ownedItems -> adapter.setOwnedItems(ownedItems), RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(this.inventoryRepository.getInAppRewards()
+                .map(shopItems -> {
+                    List<String> itemKeys = new ArrayList<>();
+                    for (ShopItem item : shopItems) {
+                        itemKeys.add(item.getKey());
+                    }
+                    return itemKeys;
+                })
+                .subscribe(pinnedItems -> adapter.setPinnedItemKeys(pinnedItems), RxErrorHandler.handleEmptyError()));
     }
 
     @Override
@@ -136,8 +175,19 @@ public class ShopFragment extends BaseFragment {
         outState.putString(SHOP_IDENTIFIER_KEY, this.shopIdentifier);
     }
 
-    @Subscribe
-    public void updateGoldGemCount(UpdateGoldGemsPurchasedevent event) {
-        this.adapter.updateGoldGemCount(event.numberLeft);
+    private void setGridSpanCount(int width) {
+        int spanCount = 0;
+        if (getContext() != null && getContext().getResources() != null) {
+            float itemWidth;
+            itemWidth = getContext().getResources().getDimension(R.dimen.pet_width);
+
+            spanCount = (int) (width / itemWidth);
+        }
+        if (spanCount == 0) {
+            spanCount = 1;
+        }
+        layoutManager.setSpanCount(spanCount);
+        layoutManager.requestLayout();
     }
+
 }

@@ -7,65 +7,39 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.underscore.$;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmQuery;
+import io.realm.RealmRecyclerViewAdapter;
 
-import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
-
-public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesListViewAdapter.ChallengeViewHolder> {
-    private List<Challenge> challenges = new ArrayList<>();
-    private List<Challenge> challengesSource = new ArrayList<>();
+public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder> {
 
     private boolean viewUserChallengesOnly;
-    @Nullable
-    private HabitRPGUser user;
+    private OrderedRealmCollection<Challenge> unfilteredData;
+    private final String userId;
 
-    public ChallengesListViewAdapter(boolean viewUserChallengesOnly, @Nullable HabitRPGUser user) {
+    public ChallengesListViewAdapter(@Nullable OrderedRealmCollection<Challenge> data, boolean autoUpdate, boolean viewUserChallengesOnly, String userId) {
+        super(data, autoUpdate);
         this.viewUserChallengesOnly = viewUserChallengesOnly;
-        this.user = user;
-    }
-
-    public void setChallenges(List<Challenge> challenges) {
-        this.challengesSource = challenges;
-        this.challenges = new ArrayList<>(challengesSource);
-        this.notifyDataSetChanged();
-    }
-
-    public void setFilterByGroups(ChallengeFilterOptions filterOptions){
-        this.challenges = $.filter(challengesSource, arg -> {
-            boolean showChallenge = $.find(filterOptions.showByGroups, g -> g.id.contains(arg.groupId)).isPresent();
-
-            boolean showByOwnership = true;
-            if(filterOptions.showOwned == filterOptions.notOwned && this.user != null){
-                if (filterOptions.showOwned) {
-                    showByOwnership = arg.leaderId.equals(this.user.getId());
-                } else {
-                    showByOwnership = !arg.leaderId.equals(this.user.getId());
-                }
-            }
-
-            return showChallenge && showByOwnership;
-        });
-        this.notifyDataSetChanged();
+        this.userId = userId;
     }
 
     @Override
@@ -78,39 +52,46 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
 
     @Override
     public void onBindViewHolder(ChallengeViewHolder holder, int position) {
-        holder.bind(challenges.get(position));
+        if (getData() != null) {
+            holder.bind(getData().get(position));
+        }
     }
 
-    @Override
-    public int getItemCount() {
-        return challenges.size();
+    public void updateUnfilteredData(@Nullable OrderedRealmCollection<Challenge> data) {
+        super.updateData(data);
+        unfilteredData = data;
     }
 
-    public void addChallenge(Challenge challenge) {
-        challenges.add(challenge);
-        notifyDataSetChanged();
-    }
+    public void filter(ChallengeFilterOptions filterOptions) {
+        if (unfilteredData == null) {
+            return;
+        }
 
-    public void replaceChallenge(Challenge challenge) {
-        int index = challenges.indexOf(challenge);
+        RealmQuery<Challenge> query = unfilteredData.where();
 
-        if (index == -1) {
-            for (int i = 0; i < challenges.size(); i++) {
-                if (challenges.get(i).id.equals(challenge.id)) {
-                    index = i;
+        if (filterOptions.showByGroups != null && filterOptions.showByGroups.size() > 0) {
+            String[] groupIds = new String[filterOptions.showByGroups.size()];
+            int index = 0;
+            for (Group group : filterOptions.showByGroups) {
+                groupIds[index] = group.id;
+                index += 1;
+            }
+            query = query.in("groupId", groupIds);
+        }
 
-                    break;
-                }
+        if (filterOptions.showOwned != filterOptions.notOwned) {
+            if (filterOptions.showOwned) {
+                query = query.equalTo("leaderId", userId);
+            } else {
+                query = query.notEqualTo("leaderId", userId);
             }
         }
 
-        if (index != -1) {
-            challenges.set(index, challenge);
-            notifyItemChanged(index);
-        }
+        this.updateData(query.findAll());
     }
 
     public static class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final Context context;
         @BindView(R.id.challenge_name)
         EmojiTextView challengeName;
 
@@ -142,31 +123,24 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         @BindView(R.id.gemPrizeTextView)
         TextView gemPrizeTextView;
 
+        @BindView(R.id.gem_icon)
+        ImageView gemIconView;
+
         private Challenge challenge;
         private boolean viewUserChallengesOnly;
 
         ChallengeViewHolder(View itemView, boolean viewUserChallengesOnly) {
             super(itemView);
             this.viewUserChallengesOnly = viewUserChallengesOnly;
-
             ButterKnife.bind(this, itemView);
 
+            context = itemView.getContext();
             itemView.setOnClickListener(this);
 
-            if (!viewUserChallengesOnly) {
-                challengeName.setTextColor(ContextCompat.getColor(getContext(), R.color.brand_200));
-            }
-        }
+            gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
 
-        public static String getLabelByTypeAndCount(Context context, String type, int count) {
-            if (Challenge.TASK_ORDER_DAILYS.equals(type)) {
-                return context.getString(count == 1 ? R.string.daily : R.string.dailies);
-            } else if (Challenge.TASK_ORDER_HABITS.equals(type)) {
-                return context.getString(count == 1 ? R.string.habit : R.string.habits);
-            } else if (Challenge.TASK_ORDER_REWARDS.equals(type)) {
-                return context.getString(count == 1 ? R.string.reward : R.string.rewards);
-            } else {
-                return context.getString(count == 1 ? R.string.todo : R.string.todos);
+            if (!viewUserChallengesOnly) {
+                challengeName.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.brand_200));
             }
         }
 
@@ -177,16 +151,15 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             challengeDescription.setText(challenge.groupName);
 
             officialChallengeLayout.setVisibility(challenge.official ? View.VISIBLE : View.GONE);
-            boolean userIdExists = challenge.user_id != null && !challenge.user_id.isEmpty();
 
             if (viewUserChallengesOnly) {
                 leaderParticipantLayout.setVisibility(View.GONE);
                 challengeParticipatingTextView.setVisibility(View.GONE);
                 arrowImage.setVisibility(View.VISIBLE);
             } else {
-                challengeParticipatingTextView.setVisibility(userIdExists ? View.VISIBLE : View.GONE);
+                challengeParticipatingTextView.setVisibility(challenge.isParticipating ? View.VISIBLE : View.GONE);
 
-                leaderName.setText(getContext().getString(R.string.byLeader, challenge.leaderName));
+                leaderName.setText(context.getString(R.string.byLeader, challenge.leaderName));
                 participantCount.setText(String.valueOf(challenge.memberCount));
                 leaderParticipantLayout.setVisibility(View.VISIBLE);
                 arrowImage.setVisibility(View.GONE);

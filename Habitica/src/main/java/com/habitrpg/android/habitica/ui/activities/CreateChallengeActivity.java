@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckedTextView;
@@ -25,21 +27,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.underscore.$;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +56,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -98,8 +105,18 @@ public class CreateChallengeActivity extends BaseActivity {
     @BindView(R.id.create_challenge_task_list)
     RecyclerView createChallengeTaskList;
 
+    @BindView(R.id.gem_icon)
+    ImageView gemIconView;
+
     @Inject
     ChallengeRepository challengeRepository;
+    @Inject
+    SocialRepository socialRepository;
+    @Inject
+    UserRepository userRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     private ChallengeTasksRecyclerViewAdapter challengeTasks;
 
@@ -116,6 +133,8 @@ public class CreateChallengeActivity extends BaseActivity {
     Task addDaily;
     Task addTodo;
     Task addReward;
+    @Nullable
+    private User user;
 
     @Override
     protected int getLayoutResId() {
@@ -157,6 +176,7 @@ public class CreateChallengeActivity extends BaseActivity {
             }, throwable ->  {
                 dialog.dismiss();
                 savingInProgress = false;
+                RxErrorHandler.reportError(throwable);
             });
         } else if(item.getItemId() == android.R.id.home){
             finish();
@@ -221,38 +241,22 @@ public class CreateChallengeActivity extends BaseActivity {
             challengeId = bundle.getString(CHALLENGE_ID_KEY, null);
         }
 
-        EventBus.getDefault().register(this);
-
         fillControls();
 
         if (challengeId != null) {
             fillControlsByChallenge();
         }
+
+        userRepository.getUser(userId).subscribe(user1 -> this.user = user1, RxErrorHandler.handleEmptyError());
+        gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem());
     }
 
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);
+        socialRepository.close();
+        challengeRepository.close();
         super.onDestroy();
-    }
-
-    @Subscribe
-    public void onEvent(DeleteTaskCommand deleteTask) {
-        String taskIdToDelete = deleteTask.TaskIdToDelete;
-        challengeTasks.removeTask(taskIdToDelete);
-
-        if (editMode) {
-            if (addedTasks.containsKey(taskIdToDelete)) {
-                addedTasks.remove(taskIdToDelete);
-            } else {
-                removedTasks.put(taskIdToDelete, null);
-
-                if (updatedTasks.containsKey(taskIdToDelete)) {
-                    updatedTasks.remove(taskIdToDelete);
-                }
-            }
-        }
     }
 
     @Subscribe
@@ -260,33 +264,30 @@ public class CreateChallengeActivity extends BaseActivity {
         openNewTaskActivity(null, tappedEvent.Task);
     }
 
-    @Subscribe
-    public void onEvent(TaskSaveEvent saveEvent) {
-
-        if (saveEvent.task.getId() == null) {
-            saveEvent.task.setId(UUID.randomUUID().toString());
-        }
-
-        addOrUpdateTaskInList(saveEvent.task);
-    }
-
     @OnClick(R.id.challenge_add_gem_btn)
     public void onAddGem() {
-        int currentVal = Integer.parseInt(createChallengePrize.getText().toString());
+        String stringValue = createChallengePrize.getText().toString();
+        if (stringValue.length() == 0) {
+            stringValue = "0";
+        }
+        int currentVal = Integer.parseInt(stringValue);
         currentVal++;
 
-        createChallengePrize.setText("" + currentVal);
+        createChallengePrize.setText(String.valueOf(currentVal));
 
         checkPrizeAndMinimumForTavern();
     }
 
     @OnClick(R.id.challenge_remove_gem_btn)
     public void onRemoveGem() {
-
-        int currentVal = Integer.parseInt(createChallengePrize.getText().toString());
+        String stringValue = createChallengePrize.getText().toString();
+        if (stringValue.length() == 0) {
+            stringValue = "0";
+        }
+        int currentVal = Integer.parseInt(stringValue);
         currentVal--;
 
-        createChallengePrize.setText("" + currentVal);
+        createChallengePrize.setText(String.valueOf(currentVal));
 
         checkPrizeAndMinimumForTavern();
     }
@@ -305,7 +306,10 @@ public class CreateChallengeActivity extends BaseActivity {
         // 0 is Tavern
         int selectedLocation = challengeLocationSpinner.getSelectedItemPosition();
 
-        double gemCount = HabiticaApplication.User.getGemCount();
+        double gemCount = 0;
+        if (user != null) {
+            gemCount = user.getGemCount();
+        }
 
         if (selectedLocation == 0 && currentVal == 0) {
             createChallengeGemError.setVisibility(View.VISIBLE);
@@ -335,21 +339,23 @@ public class CreateChallengeActivity extends BaseActivity {
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
 
             supportActionBar.setTitle("");
-            supportActionBar.setBackgroundDrawable(new ColorDrawable(resources.getColor(R.color.brand_200)));
+            supportActionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.brand_200)));
             supportActionBar.setElevation(0);
         }
 
         locationAdapter = new GroupArrayAdapter(this);
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        challengeRepository.getLocalGroups().subscribe(groups -> {
+        socialRepository.getGroups("guild").subscribe(groups -> {
             Group tavern = new Group();
             tavern.id = "00000000-0000-4000-A000-000000000000";
             tavern.name = getString(R.string.sidebar_tavern);
 
             locationAdapter.add(tavern);
 
-            groups.forEach(group -> locationAdapter.add(group));
-        }, Throwable::printStackTrace);
+            for (Group group : groups) {
+                locationAdapter.add(group);
+            }
+        }, RxErrorHandler.handleEmptyError());
 
         challengeLocationSpinner.setAdapter(locationAdapter);
         challengeLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -393,7 +399,7 @@ public class CreateChallengeActivity extends BaseActivity {
             } else if (t.equals(addReward)) {
                 openNewTaskActivity(Task.TYPE_REWARD, null);
             }
-        });
+        }, RxErrorHandler.handleEmptyError());
 
         createChallengeTaskList.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             @Override
@@ -427,12 +433,12 @@ public class CreateChallengeActivity extends BaseActivity {
             createChallengeTitle.setText(challenge.name);
             createChallengeDescription.setText(challenge.description);
             createChallengeTag.setText(challenge.shortName);
-            createChallengePrize.setText(challenge.prize + "");
+            createChallengePrize.setText(String.valueOf(challenge.prize));
 
             for (int i = 0; i < locationAdapter.getCount(); i++) {
                 Group group = locationAdapter.getItem(i);
 
-                if (group.id == challenge.groupId) {
+                if (group != null && challenge.groupId.equals(group.id)) {
                     challengeLocationSpinner.setSelection(i);
                     break;
                 }
@@ -441,12 +447,14 @@ public class CreateChallengeActivity extends BaseActivity {
             checkPrizeAndMinimumForTavern();
 
             challengeRepository.getChallengeTasks(challengeId).subscribe(tasks -> {
-                tasks.tasks.forEach((s, task) -> addOrUpdateTaskInList(task));
-            }, Throwable::printStackTrace, () -> {
+                for (Task task : tasks.tasks.values()) {
+                    addOrUpdateTaskInList(task);
+                }
+            }, RxErrorHandler.handleEmptyError(), () -> {
                 // activate editMode to track taskChanges
                 editMode = true;
             });
-        });
+        }, RxErrorHandler.handleEmptyError());
     }
 
     private void openNewTaskActivity(String type, Task task) {
@@ -463,11 +471,11 @@ public class CreateChallengeActivity extends BaseActivity {
         bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
         bundle.putBoolean(TaskFormActivity.SHOW_CHECKLIST, false);
 
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
-            String allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        if (user != null && user.getPreferences() != null) {
+            boolean allocationMode = user.getPreferences().hasTaskBasedAllocation();
 
-            bundle.putString(TaskFormActivity.USER_ID_KEY, HabiticaApplication.User.getId());
-            bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+            bundle.putString(TaskFormActivity.USER_ID_KEY, user.getId());
+            bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
         }
 
         Intent intent = new Intent(this, TaskFormActivity.class);
@@ -486,7 +494,9 @@ public class CreateChallengeActivity extends BaseActivity {
             c.id = challengeId;
         }
 
-        c.groupId = locationGroup.id;
+        if (locationGroup != null) {
+            c.groupId = locationGroup.id;
+        }
         c.name = createChallengeTitle.getText().toString();
         c.description = createChallengeDescription.getText().toString();
         c.shortName = createChallengeTag.getText().toString();
@@ -559,13 +569,13 @@ public class CreateChallengeActivity extends BaseActivity {
     }
 
     private class GroupArrayAdapter extends ArrayAdapter<Group> {
-        public GroupArrayAdapter(@NonNull Context context) {
+        GroupArrayAdapter(@NonNull Context context) {
             super(context, android.R.layout.simple_spinner_item);
         }
 
         @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             AppCompatTextView checkedTextView = (AppCompatTextView) super.getView(position, convertView, parent);
             checkedTextView.setText(getItem(position).name);
             return checkedTextView;

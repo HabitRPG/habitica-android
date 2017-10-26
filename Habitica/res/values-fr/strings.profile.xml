@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile_pets_and_mounts">Familiers &amp; Montures</string>
+    <string name="profile_pets_and_mounts">Familiers &amp; montures</string>
     <string name="profile_pets_found">Familiers trouvés</string>
     <string name="profile_mounts_tamed">Montures dressées</string>
     <string name="profile_loading_data">chargement des données de membre.</string>
@@ -13,4 +13,6 @@
     <string name="profile_private_message">Message privé</string>
     <string name="profile_achievements">Succès</string>
     <string name="profile_achievement_ok">Ok</string>
-    </resources>
+    <string name="profile_qrcode_close">Fermer</string>
+
+</resources>

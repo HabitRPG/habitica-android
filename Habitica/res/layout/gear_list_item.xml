@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/RowWrapper"
     android:id="@+id/gear_container">
@@ -9,7 +11,8 @@
         android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"
         android:id="@+id/gear_image"
-        android:layout_marginRight="@dimen/row_padding" />
+        android:layout_marginRight="@dimen/row_padding"
+        app:actualImageScaleType="fitCenter"/>
 
     <LinearLayout
         android:orientation="vertical"

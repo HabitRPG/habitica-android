@@ -1,19 +1,5 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Stats;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -24,28 +10,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.NumberAbbreviator;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
+
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
-    private static final String LOG = AvatarStatsWidgetProvider.class.getName();
 
     private AppWidgetManager appWidgetManager;
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser user) {
-            updateData(user);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
-            return true;
-        }
-    };
 
     @Override
     public int layoutResourceId() {
@@ -53,27 +35,24 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     }
 
     @Inject
-    ApiClient apiClient;
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
     @Inject
-    HostConfig hostConfig;
+    UserRepository userRepository;
 
-    private void setUp(Context context) {
-        if (apiClient == null) {
-            HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
-            application.getComponent().inject(this);
+    private void setUp() {
+        if (userRepository == null) {
+            HabiticaBaseApplication.getComponent().inject(this);
         }
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        this.setUp(context);
+        this.setUp();
         this.appWidgetManager = appWidgetManager;
         this.context = context;
-        ComponentName thisWidget = new ComponentName(context,
-                AvatarStatsWidgetProvider.class);
-        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
-        new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
+        userRepository.getUser(userId).subscribe(this::updateData, RxErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -95,7 +74,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         return remoteViews;
     }
 
-    private void updateData(HabitRPGUser user) {
+    private void updateData(User user) {
         if (user == null || user.getStats() == null) {
             return;
         }
@@ -113,21 +92,32 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setTextViewText(R.id.exp_TV_value, expValueString);
             remoteViews.setTextViewText(R.id.mp_TV_value, mpValueString);
 
+            remoteViews.setImageViewBitmap(R.id.ic_hp_header, HabiticaIconsHelper.imageOfHeartDarkBg());
+            remoteViews.setImageViewBitmap(R.id.ic_exp_header, HabiticaIconsHelper.imageOfExperience());
+            remoteViews.setImageViewBitmap(R.id.ic_mp_header, HabiticaIconsHelper.imageOfMagic());
+
             remoteViews.setProgressBar(R.id.hp_bar, stats.getMaxHealth(), stats.getHp().intValue(), false);
             remoteViews.setProgressBar(R.id.exp_bar, stats.getToNextLevel(), stats.getExp().intValue(), false);
             remoteViews.setProgressBar(R.id.mp_bar, stats.getMaxMP(), stats.getMp().intValue(), false);
-            remoteViews.setViewVisibility(R.id.mp_wrapper, (stats.get_class() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
+            remoteViews.setViewVisibility(R.id.mp_wrapper, (stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
-            int gp = (stats.getGp().intValue());
-            int sp = (int) ((stats.getGp() - gp) * 100);
-            remoteViews.setTextViewText(R.id.gold_tv, String.valueOf(gp));
-            remoteViews.setTextViewText(R.id.silver_tv, String.valueOf(sp));
-            remoteViews.setTextViewText(R.id.gems_tv, String.valueOf(user.getGemCount()));
+            remoteViews.setTextViewText(R.id.gold_tv, NumberAbbreviator.INSTANCE.abbreviate(context, stats.getGp()));
+            remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
+            int hourGlassCount = user.getHourglassCount();
+            if (hourGlassCount == 0) {
+                remoteViews.setViewVisibility(R.id.hourglasses_tv, View.GONE);
+            } else {
+                remoteViews.setTextViewText(R.id.hourglasses_tv, String.valueOf(hourGlassCount));
+                remoteViews.setViewVisibility(R.id.hourglasses_tv, View.VISIBLE);
+            }
+            remoteViews.setImageViewBitmap(R.id.hourglass_cion, HabiticaIconsHelper.imageOfHourglass());
+            remoteViews.setImageViewBitmap(R.id.gem_icon, HabiticaIconsHelper.imageOfGem());
+            remoteViews.setImageViewBitmap(R.id.gold_icon, HabiticaIconsHelper.imageOfGold());
             remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl()));
 
             AvatarView avatarView = new AvatarView(context, true, true, true);
-            ;
-            avatarView.setUser(user);
+
+            avatarView.setAvatar(user);
             RemoteViews finalRemoteViews = remoteViews;
             avatarView.onAvatarImageReady(bitmap -> {
                 finalRemoteViews.setImageViewBitmap(R.id.avatar_view, bitmap);

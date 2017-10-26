@@ -1,17 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Group;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,32 +14,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
+import javax.inject.Inject;
+
 import rx.functions.Action1;
 
 public class GuildFragment extends BaseMainFragment implements Action1<Group> {
+
+    @Inject
+    SocialRepository socialRepository;
 
     public boolean isMember;
     public ViewPager viewPager;
     private Group guild;
     private GroupInformationFragment guildInformationFragment;
     private ChatListFragment chatListFragment;
+    private String guildId;
 
-    public void setGuild(Group guild) {
-        this.guild = guild;
-        if (this.guildInformationFragment != null) {
-            this.guildInformationFragment.setGroup(guild);
-        }
-        if (this.guild.chat == null && this.apiClient != null) {
-            apiClient.getGroup(this.guild.id)
-                    .subscribe(this, throwable -> {
-                    });
-        }
+    public void setGuildId(String guildId) {
+        this.guildId = guildId;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
+        hideToolbar();
+        disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
@@ -54,7 +57,25 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
         setViewPagerAdapter();
 
+        if (guildId != null && this.socialRepository != null) {
+            compositeSubscription.add(socialRepository.getGroup(this.guildId).subscribe(this, RxErrorHandler.handleEmptyError()));
+            socialRepository.retrieveGroup(this.guildId).subscribe(group -> {}, RxErrorHandler.handleEmptyError());
+        }
+
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        showToolbar();
+        enableToolbarScrolling();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -65,23 +86,24 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.apiClient != null && this.guild != null) {
-            apiClient.getGroup(this.guild.id)
-                    .subscribe(this, throwable -> {
-                    });
+        if (this.socialRepository != null && this.guild != null) {
+            socialRepository.retrieveGroup(this.guild.id)
+                    .subscribe(this, RxErrorHandler.handleEmptyError());
         }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (this.isMember) {
-            if (this.user != null && this.user.getId().equals(this.guild.leaderID)) {
-                this.activity.getMenuInflater().inflate(R.menu.guild_admin, menu);
+        if (this.activity != null && this.guild != null) {
+            if (this.isMember) {
+                if (this.user != null && this.user.getId().equals(this.guild.leaderID)) {
+                    this.activity.getMenuInflater().inflate(R.menu.guild_admin, menu);
+                } else {
+                    this.activity.getMenuInflater().inflate(R.menu.guild_member, menu);
+                }
             } else {
-                this.activity.getMenuInflater().inflate(R.menu.guild_member, menu);
+                this.activity.getMenuInflater().inflate(R.menu.guild_nonmember, menu);
             }
-        } else {
-            this.activity.getMenuInflater().inflate(R.menu.guild_nonmember, menu);
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -92,15 +114,17 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
         switch (id) {
             case R.id.menu_guild_join:
-                this.apiClient.joinGroup(this.guild.id)
-                        .subscribe(this, throwable -> {
-                        });
+                this.socialRepository.joinGroup(this.guild.id)
+                        .subscribe(this, RxErrorHandler.handleEmptyError());
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
-                this.apiClient.leaveGroup(this.guild.id)
-                        .subscribe(aVoid -> this.activity.supportInvalidateOptionsMenu(), throwable -> {
-                        });
+                this.socialRepository.leaveGroup(this.guild.id)
+                        .subscribe(aVoid -> {
+                            if (this.activity != null) {
+                                this.activity.supportInvalidateOptionsMenu();
+                            }
+                        }, RxErrorHandler.handleEmptyError());
                 this.isMember = false;
                 return true;
             case R.id.menu_guild_edit:
@@ -127,7 +151,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
                     }
                     case 1: {
                         chatListFragment = new ChatListFragment();
-                        chatListFragment.configure(GuildFragment.this.guild.id, user, false);
+                        chatListFragment.configure(GuildFragment.this.guildId, user, false);
                         fragment = chatListFragment;
                         break;
                     }
@@ -147,9 +171,9 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return activity.getString(R.string.guild);
+                        return getContext().getString(R.string.guild);
                     case 1:
-                        return activity.getString(R.string.chat);
+                        return getContext().getString(R.string.chat);
                 }
                 return "";
             }
@@ -201,32 +225,13 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         switch (requestCode) {
             case (GroupFormActivity.GROUP_FORM_ACTIVITY): {
                 if (resultCode == Activity.RESULT_OK) {
-                    boolean needsSaving = false;
                     Bundle bundle = data.getExtras();
-                    if (this.guild.name != null && !this.guild.name.equals(bundle.getString("name"))) {
-                        this.guild.name = bundle.getString("name");
-                        needsSaving = true;
-                    }
-                    if (this.guild.description != null && !this.guild.description.equals(bundle.getString("description"))) {
-                        this.guild.description = bundle.getString("description");
-                        needsSaving = true;
-                    }
-                    if (this.guild.leaderID != null && !this.guild.leaderID.equals(bundle.getString("leader"))) {
-                        this.guild.leaderID = bundle.getString("leader");
-                        needsSaving = true;
-                    }
-                    if (this.guild.privacy != null && !this.guild.privacy.equals(bundle.getString("privacy"))) {
-                        this.guild.privacy = bundle.getString("privacy");
-                        needsSaving = true;
-                    }
-                    if (needsSaving) {
-                        this.apiClient.updateGroup(this.guild.id, this.guild)
-
-                                .subscribe(aVoid -> {
-                                }, throwable -> {
-                                });
-                        this.guildInformationFragment.setGroup(guild);
-                    }
+                    this.socialRepository.updateGroup(this.guild,
+                            bundle.getString("name"),
+                            bundle.getString("description"),
+                            bundle.getString("leader"),
+                            bundle.getString("privacy"))
+                            .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
                 }
                 break;
             }
@@ -246,11 +251,16 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
             this.guild = group;
         }
-        this.activity.supportInvalidateOptionsMenu();
+        if (this.activity != null) {
+            this.activity.supportInvalidateOptionsMenu();
+        }
     }
 
     @Override
     public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
         return getString(R.string.guild);
     }
 }

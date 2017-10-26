@@ -1,71 +1,52 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-/**
- * Created by keithholliday on 6/20/16.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class Inbox extends BaseModel {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
-    @Column
+public class Inbox extends RealmObject {
+
     @PrimaryKey
-//    @NotNull
-            String user_Id;
+    private String userId;
 
-    @SerializedName("optOut")
-    @Expose
-    private Boolean optOut;
-
-    @SerializedName("messages")
-    @Expose
-    private Map<String, ChatMessage> messages;
-
-    @SerializedName("blocks")
-    @Expose
-    private List<Object> blocks = new ArrayList<Object>();
-
-    @SerializedName("newMessages")
-    @Expose
-    private Integer newMessages;
+    User user;
+    private boolean optOut;
+    private RealmList<ChatMessage> messages;
+    @Ignore
+    private List<Object> blocks = new ArrayList<>();
+    private int newMessages;
 
     /**
      * @return The optOut
      */
-    public Boolean getOptOut() {
+    public boolean getOptOut() {
         return optOut;
     }
 
     /**
      * @param optOut The optOut
      */
-    public void setOptOut(Boolean optOut) {
+    public void setOptOut(boolean optOut) {
         this.optOut = optOut;
     }
 
     /**
      * @return The messages
      */
-    public Map<String, ChatMessage> getMessages() {
+    public RealmList<ChatMessage> getMessages() {
         return messages;
     }
 
     /**
      * @param messages The messages
      */
-    public void setMessages(Map<String, ChatMessage> messages) {
+    public void setMessages(RealmList<ChatMessage> messages) {
         this.messages = messages;
     }
 
@@ -86,15 +67,22 @@ public class Inbox extends BaseModel {
     /**
      * @return The newMessages
      */
-    public Integer getNewMessages() {
+    public int getNewMessages() {
         return newMessages;
     }
 
     /**
      * @param newMessages The newMessages
      */
-    public void setNewMessages(Integer newMessages) {
+    public void setNewMessages(int newMessages) {
         this.newMessages = newMessages;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

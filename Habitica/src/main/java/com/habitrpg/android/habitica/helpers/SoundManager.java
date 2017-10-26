@@ -64,7 +64,7 @@ public class SoundManager {
     }
 
     public void loadAndPlayAudio(String type) {
-        if (soundTheme.equals("off")) {
+        if ("off".equals(soundTheme) || soundTheme == null) {
             return;
         }
 
@@ -80,7 +80,7 @@ public class SoundManager {
                 loadedSoundFiles.put(type, file);
                 file.play();
 
-            }, Throwable::printStackTrace);
+            }, RxErrorHandler.handleEmptyError());
         }
     }
 

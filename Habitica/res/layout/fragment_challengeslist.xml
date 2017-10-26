@@ -1,82 +1,29 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/challenge_filter_layout"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f9f9f9"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/action_filter_icon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginRight="13dp"
-            android:src="@drawable/ic_action_filter_list"
-            android:tint="#80000000"
-            android:contentDescription="filter icon" />
-
-        <TextView
-            style="@style/Caption2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter"
-            android:textAllCaps="true" />
-
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/ic_arrow_drop_down_80000000_24dp"
-            android:contentDescription="filter icon" />
-
-    </LinearLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/challenges.refresh.layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:visibility="gone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/challenges.list"
+        android:layout_height="match_parent">
+        <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:divider="@null"
             android:scrollbars="vertical"
             android:paddingBottom="?attr/actionBarSize" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/challenges_refresh_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false">
-
         <LinearLayout
-            android:id="@+id/challenges.list.empty"
+            android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="48dp"
             android:layout_marginRight="48dp"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="32dp"
             android:orientation="vertical">
 
             <TextView
@@ -100,7 +47,6 @@
                 android:textColor="#66000000" />
 
             <TextView
-                android:id="@+id/textView5"
                 style="@style/Body2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -111,9 +57,5 @@
                 android:textColor="#66000000" />
 
         </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-
-</FrameLayout>
+    </FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -67,6 +67,7 @@
   <string name="about.give_us_feedback">Prześlij nam opinię!</string>
   <string name="about.bugreport">Zgłoś błąd</string>
   <string name="about.source_code">Kod źródłowy</string>
+  <string name="repeatEvery">Powtarzaj co</string>
   <!--Network Errors-->
   <string name="network_error_title">Błąd połączenia</string>
   <string name="network_error_no_network_body">Nie masz połączenia z internetem.</string>
@@ -99,6 +100,15 @@
   <string name="frequency">Częstotliwość</string>
   <string name="frequency_weekly">W konkretne dni tygodnia</string>
   <string name="frequency_daily">Co X dni</string>
+  <string name="repeatables_summary_title">Podsumowanie</string>
+  <string name="repeatables_title">Powtórzenia</string>
+  <string name="repeatables_on_title">Powtarza się</string>
+  <string name="repeatables_frequency_daily">Codzienny</string>
+  <string name="repeatables_frequency_weekly">Cotygodniowy</string>
+  <string name="repeatables_frequency_monthly">Co miesiąc </string>
+  <string name="repeatables_frequency_yearly">Co rok</string>
+  <string name="repeatables_frequency_day_of_month">Dzień miesiąca</string>
+  <string name="repeatables_frequency_day_of_week">Dzień tygodnia</string>
   <string name="monday">Poniedziałek</string>
   <string name="tuesday">Wtorek</string>
   <string name="wednesday">Środa</string>
@@ -186,6 +196,7 @@
   <string name="intro_2_subtitle">Postęp w grze</string>
   <string name="intro_2_title">Postęp w życiu</string>
   <string name="intro_2_description">Odblokuj cechy w grze przez wykonywanie twoich zadań z realnego życia. Zdobywaj broń, chowańce i znacznie więcej za realizacje swoich celów.</string>
+  <string name="intro_3_subtitle">Walcz z potworami</string>
   <string name="intro_3_description">Zmierzaj do swoich celów z pomocą przyjaciół. Wspierajcie się wzajemnie w życiu i w walce, aby wspólnie się udoskonalać!</string>
   <string name="intro_finish_button">Zaczynajmy!</string>
   <string name="previous_button">Poprzedni</string>
@@ -236,6 +247,7 @@
   <string name="delete">Usuń</string>
   <string name="name">Nazwa</string>
   <string name="description">Opis</string>
+  <string name="add_tag">Dodaj nowy tag</string>
   <string name="privacy">Prywatność</string>
   <string name="write_message">Napisz wiadomość</string>
   <string name="post">Wyślij</string>
@@ -498,9 +510,11 @@
   <string name="avatar_wheelchair">Wózek</string>
   <string name="weak">Słaby</string>
   <string name="strong">Silny</string>
+  <string name="gray">Szary</string>
   <string name="dated">Przestarzały</string>
   <string name="completed">Ukończone</string>
   <string name="setuP_group_other">Pozostałe</string>
+  <string name="clear">Jasny</string>
   <string name="empty_title_habits">Nie posiadasz żadnych nawyków</string>
   <string name="empty_description_habits">Nawyki są zadaniami nie posiadającymi sztywnego harmonogramu. Możesz je odhaczać wiele razy dziennie, lub w ogóle.</string>
   <string name="empty_title_dailies">Nie posiadasz żadnych codziennych</string>
@@ -508,7 +522,25 @@
   <string name="empty_title_todos">Nie posiadasz żadnych Do-Zrobienia</string>
   <string name="empty_description_todos">Do-Zrobienia są jednokrotnymi zadaniami. Dodaj listy kontrolne do swoich Do-Zrobienia, aby zwiększyć ich wartość.</string>
   <string name="empty_title_rewards">Nie posiadasz żadnych nagród</string>
+  <string name="reset_walkthrough">Zresetuj przewodnik Justina</string>
   <string name="read_community_guidelines">Prosimy, przeczytaj Wytyczne Społeczności zanim umieścisz posta</string>
   <string name="maintenance">Utrzymanie</string>
   <string name="reload_content">Odśwież zawartość</string>
+  <string name="repeat_summary">Powtarzaj %1$sco %2$s%3$s%4$s</string>
+  <string name="no_billing_gems">Twoje urządzenie nie posiada żadnych wspieranych metod płatności. Aby kupić klejnoty, użyj strony internetowej Habitiki.</string>
+  <string name="no_billing_subscriptions">Twoje urządzenie nie posiada żadnych wspieranych metod płatności. Aby wykupić subskrypcję, użyj strony internetowej Habitiki.</string>
+  <string name="save">Zapisz</string>
+  <string name="location">Lokalizacja</string>
+  <string name="gem_reward">Klejnot nagrody</string>
+  <string name="tasks">Zadania</string>
+  <string name="create_challenge">Stwórz wyzwanie</string>
+  <string name="edit_challenge">Edytuj wyzwanie</string>
+  <string name="challenge_create_error_tavern_one_gem">Potrzebujesz co najmniej 1 klejnotu, aby stworzyć wyzwanie w Karczmie.</string>
+  <string name="challenge_create_error_enough_gems">Nie masz wystarczającej ilości klejnotów, aby stworzyć wyzwanie.</string>
+  <string name="identify_your_challenge_with_a_tag">Identyfikuj swoje wyzwanie z tagiem ..</string>
+  <string name="challenge_create_error_tag">Potrzebujesz taga, aby stworzyć to wyzwanie.</string>
+  <string name="challenge_create_error_no_tasks">Musisz dodać co najmniej jedno zadanie, aby stworzyć to wyzwanie.</string>
+  <string name="challenge_create_error_title">Potrzebujesz tytułu, aby stworzyć to wyzwanie.</string>
+  <string name="description_optional">Opis (opcjonalne)</string>
+  <string name="new_challenge_title">Tytuł nowego wyzwania</string>
 </resources>

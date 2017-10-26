@@ -11,7 +11,8 @@
         android:background="@color/white"
         android:baselineAligned="false"
         android:foreground="?selectableItemBackground"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:minHeight="@dimen/task_min_height">
 
         <FrameLayout
             android:id="@+id/btnPlusWrapper"
@@ -92,6 +93,19 @@
                     android:layout_weight="1"
                     android:textColor="@color/task_secondary_text"
                     tools:text="special" />
+
+                <TextView
+                    android:id="@+id/streakTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/task_icon_size"
+                    android:layout_marginStart="@dimen/task_icon_space"
+                    android:layout_marginLeft="@dimen/task_icon_space"
+                    android:drawableStart="@drawable/task_icon_streak"
+                    android:drawableLeft="@drawable/task_icon_streak"
+                    android:textColor="@color/task_secondary_text"
+                    tools:text="10"
+                    android:gravity="center_vertical"
+                    style="@style/Caption3" />
 
                 <ImageView
                     android:id="@+id/iconviewChallenge"

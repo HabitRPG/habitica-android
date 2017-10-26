@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.data.implementation;
 
+import android.content.Context;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.SetupCustomization;
-
-import android.content.Context;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,12 +24,12 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
     }
 
     @Override
-    public List<SetupCustomization> getCustomizations(String category, HabitRPGUser user) {
+    public List<SetupCustomization> getCustomizations(String category, User user) {
         return getCustomizations(category, null, user);
     }
 
     @Override
-    public List<SetupCustomization> getCustomizations(String category, String subcategory, HabitRPGUser user) {
+    public List<SetupCustomization> getCustomizations(String category, String subcategory, User user) {
         switch (category) {
             case "body": {
                 switch (subcategory) {
@@ -85,7 +85,8 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
                 SetupCustomization.createGlasses("eyewear_special_greenTopFrame", R.drawable.creator_eyewear_special_greentopframe),
                 SetupCustomization.createGlasses("eyewear_special_pinkTopFrame", R.drawable.creator_eyewear_special_pinktopframe),
                 SetupCustomization.createGlasses("eyewear_special_redTopFrame", R.drawable.creator_eyewear_special_redtopframe),
-                SetupCustomization.createGlasses("eyewear_special_yellowTopFrame", R.drawable.creator_eyewear_special_yellowtopframe)
+                SetupCustomization.createGlasses("eyewear_special_yellowTopFrame", R.drawable.creator_eyewear_special_yellowtopframe),
+                SetupCustomization.createGlasses("eyewear_special_whiteTopFrame", R.drawable.creator_eyewear_special_whitetopframe)
         );
     }
 

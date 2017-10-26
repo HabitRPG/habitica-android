@@ -1,23 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
-import android.content.Context;
 import android.databinding.ObservableList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,7 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,18 +27,16 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     public RecyclerView recyclerView;
     public BaseTasksRecyclerViewAdapter recyclerAdapter;
     @Inject
-    @Named("UserID")
+    @Named(AppModule.NAMED_USER_ID)
     String userID;
-    @Inject
-    ApiClient apiClient;
 
     ObservableList<Task> tasksOnInitialize;
 
     LinearLayoutManager layoutManager = null;
-    private HabitRPGUser user;
+    private User user;
     private View view;
 
-    public static ChallengeTasksRecyclerViewFragment newInstance(HabitRPGUser user, ObservableList<Task> tasks) {
+    public static ChallengeTasksRecyclerViewFragment newInstance(User user, ObservableList<Task> tasks) {
         ChallengeTasksRecyclerViewFragment fragment = new ChallengeTasksRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
@@ -87,10 +77,11 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     }
 
     public void setInnerAdapter() {
-        ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter = new ChallengeTasksRecyclerViewAdapter(null, 0, getContext(), userID, null, true, true);
-        this.recyclerAdapter = challengeTasksRecyclerViewAdapter;
+        this.recyclerAdapter = new ChallengeTasksRecyclerViewAdapter(null, 0, getContext(), userID, null, true, true);
 
-        challengeTasksRecyclerViewAdapter.setDailyResetOffset(user.getPreferences().getDayStart());
+        if (user != null && user.getPreferences() != null) {
+            this.recyclerAdapter.setDailyResetOffset(user.getPreferences().getDayStart());
+        }
 
         if (tasksOnInitialize != null && tasksOnInitialize.size() != 0 && recyclerAdapter != null && recyclerAdapter.getItemCount() == 0) {
             recyclerAdapter.setTasks(tasksOnInitialize);
@@ -117,6 +108,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
             if (recyclerView.getAdapter() == null) {
                 this.setInnerAdapter();
             }
+            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
         }
 
         return view;
@@ -140,9 +132,5 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
 
 
     // region Challenge specific RecyclerViewAdapters
-
-
-
-
     // endregion
 }

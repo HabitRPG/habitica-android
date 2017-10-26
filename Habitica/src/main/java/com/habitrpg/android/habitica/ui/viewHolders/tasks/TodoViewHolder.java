@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.view.View;
+
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.text.DateFormat;
 
@@ -17,13 +17,13 @@ public class TodoViewHolder extends ChecklistedViewHolder {
 
     @Override
     public void bindHolder(Task newTask, int position) {
-        super.bindHolder(newTask, position);
-        if (this.task.getCompleted()) {
+        this.task = newTask;
+        if (newTask.getCompleted()) {
             this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray);
         } else {
-            this.checklistIndicatorWrapper.setBackgroundResource(this.task.getLightTaskColor());
+            this.checklistIndicatorWrapper.setBackgroundResource(newTask.getLightTaskColor());
         }
-
+        super.bindHolder(newTask, position);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class TodoViewHolder extends ChecklistedViewHolder {
     }
 
     @Override
-    public Boolean shouldDisplayAsActive() {
-        return !this.task.getCompleted();
+    public Boolean shouldDisplayAsActive(Task newTask) {
+        return !newTask.getCompleted();
     }
 }

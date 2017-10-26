@@ -12,14 +12,14 @@
         android:clickable="false"
         android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/rewardImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_margin="12dp"
             android:scaleType="center"
-            tools:src="@drawable/custom_reward"/>
+            android:src="@drawable/icon_custom_reward" />
 
         <LinearLayout
             android:id="@+id/textReward"
@@ -58,26 +58,27 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnReward"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:minWidth="64dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:gravity="left|center_vertical"
-            android:drawablePadding="5dp"
-            android:background="@drawable/rounded_purple_square"
-            android:drawableLeft="@drawable/ic_header_gold"
-            android:drawableStart="@drawable/ic_header_gold"
-            android:paddingLeft="12dp"
-            android:paddingStart="12dp"
-            android:paddingRight="12dp"
-            android:paddingEnd="12dp"
-            android:textColor="@color/white"
-            tools:text="150"
-            android:textSize="15sp" />
+        <LinearLayout
+            android:id="@+id/buyButton"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="@color/reward_buy_button_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/gold_icon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:paddingBottom="8dp"/>
+            <TextView
+                android:id="@+id/priceLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/yellow_10"
+                android:gravity="center_horizontal"
+                tools:text="150"
+                style="@style/Body1"/>
+        </LinearLayout>
     </LinearLayout>
 
     <View

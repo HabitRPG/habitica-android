@@ -9,12 +9,14 @@
     android:paddingRight="24dip">
 
 
-    <include
+    <com.habitrpg.android.habitica.ui.views.ValueBar
         android:id="@+id/hpBar"
         layout="@layout/value_bar"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp" />
+        android:layout_marginBottom="@dimen/header_bar_spacing"
+        app:barForegroundColor="@color/hpColor"
+        app:description="@string/HP_default" />
 
     <com.habitrpg.android.habitica.ui.AvatarView
         android:layout_width="@dimen/avatar_small_width"

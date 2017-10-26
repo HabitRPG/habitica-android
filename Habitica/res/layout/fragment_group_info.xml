@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -7,7 +6,7 @@
         <import type="com.habitrpg.android.habitica.models.social.Group" />
         <import type="com.habitrpg.android.habitica.models.inventory.QuestContent" />
         <import type="com.habitrpg.android.habitica.models.invitations.PartyInvite" />
-        <import type="com.habitrpg.android.habitica.models.user.HabitRPGUser" />
+        <import type="com.habitrpg.android.habitica.models.user.User" />
         <import type="android.view.View" />
         <import type="android.text.Html"/>
 
@@ -21,7 +20,7 @@
 
         <variable
             name="user"
-            type="HabitRPGUser" />
+            type="User" />
 
         <variable
             name="hideParticipantCard"
@@ -44,15 +43,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="?android:actionBarSize">
 
             <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CardView.Default"
                     android:id="@+id/invitationWrapper"
-                    android:visibility="@{invitation == null ? View.GONE : View.VISIBLE}"
-                    >
+                    android:visibility="@{invitation == null ? View.GONE : View.VISIBLE}">
 
                 <LinearLayout
                         android:orientation="vertical"
@@ -272,7 +271,7 @@
                         android:layout_width="@dimen/quest_image_width"
                         android:layout_height="@dimen/quest_image_height"
                         android:layout_marginBottom="8dp"
-                        bind:questImageName='@{"quest_"+ quest.key}'
+                        bind:imageName='@{"quest_"+ quest.key}'
                         />
 
                     <LinearLayout
@@ -280,27 +279,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         style="?android:buttonBarStyle"
-                        android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}">
-
-                        <include
-                            android:id="@+id/bossHpBar"
-                            layout="@layout/value_bar"
-                            bind:barForegroundColor="@{@color/hpColor}"
-                            bind:description='@{String.format("%.0f",Math.ceil(group.quest.getProgress().hp))+" / "+String.format("%.0f",Math.ceil(quest.boss.hp))}'
-                            bind:icon="@drawable/ic_header_heart"
-                            bind:partyMembers="@{true}"
-                            bind:text='@{"Boss Health"}'
-                            bind:weightToShow="@{(float)(group.quest.getProgress().hp / quest.boss.hp)}" />
-
-                        <include
-                            android:id="@+id/bossRageBar"
-                            layout="@layout/value_bar"
-                            bind:barForegroundColor="@{@color/mpColor}"
-                            bind:description='@{String.format("%.0f",Math.ceil(group.quest.getProgress().rage))+" / "+String.format("%.0f",Math.ceil(quest.boss.rage_value))}'
-                            bind:icon="@drawable/ic_header_magic"
-                            bind:partyMembers="@{true}"
-                            bind:text='@{"Rage"}'
-                            bind:weightToShow="@{(float)(group.quest.getProgress().rage / quest.boss.rage_value)}" />
+                        android:visibility="@{group.quest.active ? View.VISIBLE : View.GONE}">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/collectionStats"
@@ -314,7 +293,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{quest.notes != null ? Html.fromHtml(quest.notes) : null}"
                         style="@style/CardText"
                         />
 
@@ -349,34 +327,6 @@
                         android:divider="?android:listDivider"
                         android:showDividers="middle"
                         style="@style/CardContent"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        style="?android:buttonBarStyle"
-                        android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}"
-                        android:layout_gravity="right">
-
-                        <Button
-                            android:id="@+id/btnQuestAbort"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quest.abort"
-                            android:textColor="@color/btn_danger"
-                            style="?android:buttonBarButtonStyle"
-                            android:visibility="@{(group.quest != null &amp;&amp; user.getId().equals(group.quest.leader))? View.VISIBLE : View.GONE}" />
-
-                        <Button
-                            android:id="@+id/btnQuestLeave"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quest.leave"
-                            android:textColor="@color/btn_warning"
-                            style="?android:buttonBarButtonStyle"
-                            android:visibility="@{(!user.getId().equals(group.quest.leader) &amp;&amp; group.quest.members.containsKey(user.getId()))? View.VISIBLE : View.GONE}" />
-
-                    </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

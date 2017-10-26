@@ -1,20 +1,18 @@
 package com.habitrpg.android.habitica.ui;
 
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.views.Typewriter;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.views.Typewriter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +40,6 @@ public class SpeechBubbleView extends FrameLayout implements View.OnClickListene
 
         inflate(context, R.layout.speechbubble, this);
         ButterKnife.bind(this);
-
 
         TypedArray attributes = context.getTheme().obtainStyledAttributes(
                 attrs,

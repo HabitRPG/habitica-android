@@ -1,21 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.SpeechBubbleView;
-import com.habitrpg.android.habitica.ui.activities.SetupActivity;
-import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.SetupCustomization;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +13,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.SpeechBubbleView;
+import com.habitrpg.android.habitica.ui.activities.SetupActivity;
+import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -74,7 +74,7 @@ public class AvatarSetupFragment extends BaseFragment {
     @Inject
     ApiClient apiClient;
 
-    private HabitRPGUser user;
+    private User user;
     private List<String> subcategories;
     private AvatarCategoryView activeButton;
     private String activeCategory;
@@ -155,7 +155,7 @@ public class AvatarSetupFragment extends BaseFragment {
         this.adapter.setCustomizationList(customizationRepository.getCustomizations(activeCategory, activeSubCategory, user));
     }
 
-    public void setUser(@Nullable HabitRPGUser user) {
+    public void setUser(@Nullable User user) {
         this.user = user;
         if (avatarView != null) {
             updateAvatar();
@@ -167,7 +167,7 @@ public class AvatarSetupFragment extends BaseFragment {
     }
 
     private void updateAvatar() {
-        avatarView.setUser(user);
+        avatarView.setAvatar(user);
     }
 
 

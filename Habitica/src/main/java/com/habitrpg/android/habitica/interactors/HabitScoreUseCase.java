@@ -5,13 +5,15 @@ import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
 
 import javax.inject.Inject;
 
 import rx.Observable;
 
-public class HabitScoreUseCase extends UseCase<HabitScoreUseCase.RequestValues, TaskDirectionData> {
+public class HabitScoreUseCase extends UseCase<HabitScoreUseCase.RequestValues, TaskScoringResult> {
 
     private TaskRepository taskRepository;
     private SoundManager soundManager;
@@ -25,20 +27,21 @@ public class HabitScoreUseCase extends UseCase<HabitScoreUseCase.RequestValues, 
     }
 
     @Override
-    protected Observable<TaskDirectionData> buildUseCaseObservable(RequestValues requestValues) {
-        return taskRepository.taskChecked(requestValues.habit, requestValues.up).doOnNext(res -> {
-
-            soundManager.loadAndPlayAudio(requestValues.up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
-        });
+    protected Observable<TaskScoringResult> buildUseCaseObservable(RequestValues requestValues) {
+        return taskRepository
+                .taskChecked(requestValues.user, requestValues.habit, requestValues.up, false)
+                .doOnNext(res -> soundManager.loadAndPlayAudio(requestValues.up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit));
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
 
+        private final User user;
         protected boolean up = false;
 
         protected final Task habit;
 
-        public RequestValues(Task habit, boolean up) {
+        public RequestValues(User user, Task habit, boolean up) {
+            this.user = user;
             this.habit = habit;
             this.up = up;
         }

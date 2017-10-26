@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.responses.TaskDirection;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -19,55 +9,56 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.IBinder;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+
+import net.pherth.android.emoji_library.EmojiHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class HabitButtonWidgetService extends Service {
     @Inject
-    public HostConfig hostConfig;
+    @Named(AppModule.NAMED_USER_ID)
+    public String userId;
     @Inject
     public SharedPreferences sharedPreferences;
     @Inject
     public Resources resources;
     @Inject
     public Context context;
+    @Inject
+    TaskRepository taskRepository;
     private AppWidgetManager appWidgetManager;
 
     private Map<String, Integer> taskMapping;
     private int[] allWidgetIds;
-    private TransactionListener<Task> userTransactionListener = new TransactionListener<Task>() {
-        @Override
-        public void onResultReceived(Task task) {
-            updateData(task);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<Task> task) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<Task> baseTransaction, Task task) {
-            return true;
-        }
-    };
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-        HabiticaApplication application = (HabiticaApplication) getApplication();
-        application.getComponent().inject(this);
+        HabiticaBaseApplication.getComponent().inject(this);
         this.appWidgetManager = AppWidgetManager.getInstance(this);
         ComponentName thisWidget = new ComponentName(this, HabitButtonWidgetProvider.class);
         allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
         makeTaskMapping();
 
         for (String taskid : this.taskMapping.keySet()) {
-            new Select().from(Task.class).where(Condition.column("id").eq(taskid)).async().querySingle(userTransactionListener);
+            taskRepository.getUnmanagedTask(taskid).first().subscribe(this::updateData, RxErrorHandler.handleEmptyError());
         }
 
         stopSelf();
@@ -77,15 +68,20 @@ public class HabitButtonWidgetService extends Service {
 
     private void updateData(Task task) {
         RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.widget_habit_button);
-        if (task != null) {
-            remoteViews.setTextViewText(R.id.habit_title, task.text);
+        if (task != null && task.isValid()) {
+            CharSequence parsedText = MarkdownParser.parseMarkdown(task.text);
+
+            SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
+            EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false);
+
+            remoteViews.setTextViewText(R.id.habit_title, builder);
 
             if (!task.getUp()) {
                 remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.GONE);
                 remoteViews.setOnClickPendingIntent(R.id.btnPlusWrapper, null);
             } else {
                 remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.VISIBLE);
-                remoteViews.setInt(R.id.btnPlus, "setBackgroundColor", resources.getColor(task.getLightTaskColor()));
+                remoteViews.setInt(R.id.btnPlus, "setBackgroundColor", ContextCompat.getColor(context, task.getLightTaskColor()));
                 remoteViews.setOnClickPendingIntent(R.id.btnPlusWrapper, getPendingIntent(task.getId(), TaskDirection.up.toString(), taskMapping.get(task.getId())));
             }
             if (!task.getDown()) {
@@ -93,10 +89,12 @@ public class HabitButtonWidgetService extends Service {
                 remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, null);
             } else {
                 remoteViews.setViewVisibility(R.id.btnMinusWrapper, View.VISIBLE);
-                remoteViews.setInt(R.id.btnMinus, "setBackgroundColor", resources.getColor(task.getMediumTaskColor()));
+                remoteViews.setInt(R.id.btnMinus, "setBackgroundColor", ContextCompat.getColor(context, task.getMediumTaskColor()));
                 remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, getPendingIntent(task.getId(), TaskDirection.down.toString(), taskMapping.get(task.getId())));
             }
-            appWidgetManager.updateAppWidget(taskMapping.get(task.getId()), remoteViews);
+            if (taskMapping.get(task.getId()) != null && remoteViews != null) {
+                appWidgetManager.updateAppWidget(taskMapping.get(task.getId()), remoteViews);
+            }
         }
     }
 

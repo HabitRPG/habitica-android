@@ -2,93 +2,102 @@ package com.habitrpg.android.habitica.data.implementation;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.amplitude.api.Amplitude;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.ErrorResponse;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
-import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.api.ApiService;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.api.Server;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent;
+import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.models.AchievementResult;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.ContentResult;
-import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.FAQArticle;
-import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
-import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.PurchaseValidationResult;
-import com.habitrpg.android.habitica.models.user.Purchases;
-import com.habitrpg.android.habitica.models.inventory.Quest;
-import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.Skill;
-import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.auth.UserAuth;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial;
 import com.habitrpg.android.habitica.models.auth.UserAuthSocialTokens;
+import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
+import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.responses.HabitResponse;
+import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.responses.Status;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.Purchases;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
-import com.habitrpg.android.habitica.utils.ChallengeSerializer;
+import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
+import com.habitrpg.android.habitica.utils.ChallengeListDeserializer;
 import com.habitrpg.android.habitica.utils.ChatMessageDeserializer;
-import com.habitrpg.android.habitica.utils.ChecklistItemSerializer;
+import com.habitrpg.android.habitica.utils.ChatMessageListDeserializer;
 import com.habitrpg.android.habitica.utils.ContentDeserializer;
 import com.habitrpg.android.habitica.utils.CustomizationDeserializer;
 import com.habitrpg.android.habitica.utils.DateDeserializer;
 import com.habitrpg.android.habitica.utils.EggListDeserializer;
+import com.habitrpg.android.habitica.utils.EquipmentListDeserializer;
 import com.habitrpg.android.habitica.utils.FAQArticleListDeserilializer;
 import com.habitrpg.android.habitica.utils.FeedResponseDeserializer;
 import com.habitrpg.android.habitica.utils.FoodListDeserializer;
 import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.HatchingPotionListDeserializer;
-import com.habitrpg.android.habitica.utils.ItemDataListDeserializer;
+import com.habitrpg.android.habitica.utils.MemberSerialization;
 import com.habitrpg.android.habitica.utils.MountListDeserializer;
+import com.habitrpg.android.habitica.utils.MountMapDeserializer;
 import com.habitrpg.android.habitica.utils.PetListDeserializer;
+import com.habitrpg.android.habitica.utils.PetMapDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
+import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;
+import com.habitrpg.android.habitica.utils.QuestDeserializer;
+import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.QuestListDeserializer;
-import com.habitrpg.android.habitica.utils.RemindersItemSerializer;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskSerializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
-import com.raizlabs.android.dbflow.structure.ModelAdapter;
+import com.habitrpg.android.habitica.utils.UserDeserializer;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -96,20 +105,20 @@ import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.SSLException;
 
+import io.realm.RealmList;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
 import retrofit2.HttpException;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -121,6 +130,7 @@ import rx.schedulers.Schedulers;
 
 
 public class ApiClientImpl implements Action1<Throwable>, ApiClient {
+    private static final String TAG = "ApiClientImpl";
     private final GsonConverterFactory gsonConverter;
     private final HostConfig hostConfig;
     private final Retrofit retrofitAdapter;
@@ -148,6 +158,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     .doOnError(this);
     private AlertDialog displayedAlert;
     private String languageCode;
+    private String lastAPICallURL;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
@@ -159,6 +170,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         this.popupNotificationsManager = popupNotificationsManager;
         this.popupNotificationsManager.setApiClient(this);
 
+        HabiticaBaseApplication.getComponent().inject(this);
         crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
         crashlyticsProxy.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
@@ -184,8 +196,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent);
                     }
+                    builder = builder.addHeader("Authorization", "Basic " + BuildConfig.STAGING_KEY);
                     Request request = builder.method(original.method(), original.body())
                             .build();
+                    lastAPICallURL = original.url().toString();
                     return chain.proceed(request);
                 })
                 .build();
@@ -203,51 +217,31 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     public static GsonConverterFactory createGsonFactory() {
-        Type taskTagClassListType = new TypeToken<List<TaskTag>>() {
-        }.getType();
-        Type skillListType = new TypeToken<List<Skill>>() {
-        }.getType();
-        Type customizationListType = new TypeToken<List<Customization>>() {
-        }.getType();
-        Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {
-        }.getType();
-        Type faqArticleListType = new TypeToken<List<FAQArticle>>() {
-        }.getType();
-        Type itemDataListType = new TypeToken<List<ItemData>>() {
-        }.getType();
-        Type eggListType = new TypeToken<List<Egg>>() {
-        }.getType();
-        Type foodListType = new TypeToken<List<Food>>() {
-        }.getType();
-        Type hatchingPotionListType = new TypeToken<List<HatchingPotion>>() {
-        }.getType();
-        Type questContentListType = new TypeToken<List<QuestContent>>() {
-        }.getType();
-        Type petListType = new TypeToken<Map<String, Pet>>() {
-        }.getType();
-        Type mountListType = new TypeToken<Map<String, Mount>>() {
-        }.getType();
+        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {}.getType();
+        Type skillListType = new TypeToken<List<Skill>>() {}.getType();
+        Type customizationListType = new TypeToken<RealmList<Customization>>() {}.getType();
+        Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {}.getType();
+        Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {}.getType();
+        Type itemDataListType = new TypeToken<RealmList<Equipment>>() {}.getType();
+        Type eggListType = new TypeToken<RealmList<Egg>>() {}.getType();
+        Type foodListType = new TypeToken<RealmList<Food>>() {}.getType();
+        Type hatchingPotionListType = new TypeToken<RealmList<HatchingPotion>>() {}.getType();
+        Type questContentListType = new TypeToken<RealmList<QuestContent>>() {}.getType();
+        Type petMapType = new TypeToken<Map<String, Pet>>() {}.getType();
+        Type mountMapType = new TypeToken<Map<String, Mount>>() {}.getType();
+        Type petListType = new TypeToken<RealmList<Pet>>() {}.getType();
+        Type mountListType = new TypeToken<RealmList<Mount>>() {}.getType();
+        Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {}.getType();
+        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {}.getType();
+        Type challengeListType = new TypeToken<List<Challenge>>() {}.getType();
+        Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {}.getType();
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
-                .setExclusionStrategies(new CheckListItemExcludeStrategy())
-                .setExclusionStrategies(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes field) {
-                        return field.getDeclaredClass().equals(ModelAdapter.class);
-                    }
-
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        return false;
-                    }
-                })
                 .registerTypeAdapter(taskTagClassListType, new TaskTagDeserializer())
                 .registerTypeAdapter(Boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(skillListType, new SkillDeserializer())
-                .registerTypeAdapter(ChecklistItem.class, new ChecklistItemSerializer())
-                .registerTypeAdapter(RemindersItem.class, new RemindersItemSerializer())
                 .registerTypeAdapter(TaskList.class, new TaskListDeserializer())
                 .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
                 .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
@@ -255,18 +249,27 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(faqArticleListType, new FAQArticleListDeserilializer())
                 .registerTypeAdapter(Group.class, new GroupSerialization())
                 .registerTypeAdapter(Date.class, new DateDeserializer())
-                .registerTypeAdapter(itemDataListType, new ItemDataListDeserializer())
+                .registerTypeAdapter(itemDataListType, new EquipmentListDeserializer())
                 .registerTypeAdapter(eggListType, new EggListDeserializer())
                 .registerTypeAdapter(foodListType, new FoodListDeserializer())
                 .registerTypeAdapter(hatchingPotionListType, new HatchingPotionListDeserializer())
                 .registerTypeAdapter(questContentListType, new QuestListDeserializer())
                 .registerTypeAdapter(petListType, new PetListDeserializer())
                 .registerTypeAdapter(mountListType, new MountListDeserializer())
+                .registerTypeAdapter(petMapType, new PetMapDeserializer())
+                .registerTypeAdapter(mountMapType, new MountMapDeserializer())
                 .registerTypeAdapter(ChatMessage.class, new ChatMessageDeserializer())
                 .registerTypeAdapter(Task.class, new TaskSerializer())
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
-                .registerTypeAdapter(Challenge.class, new ChallengeSerializer())
+                .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
+                .registerTypeAdapter(User.class, new UserDeserializer())
+                .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
+                .registerTypeAdapter(chatMessageListType, new ChatMessageListDeserializer())
+                .registerTypeAdapter(challengeListType, new ChallengeListDeserializer())
+                .registerTypeAdapter(questDropItemListType, new QuestDropItemsListSerialization())
+                .registerTypeAdapter(Quest.class, new QuestDeserializer())
+                .registerTypeAdapter(Member.class, new MemberSerialization())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);
@@ -327,75 +330,42 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
             } else {
                 showConnectionProblemDialog(R.string.internal_error_api);
             }
+        } else if (JsonSyntaxException.class.isAssignableFrom(throwableClass)) {
+            crashlyticsProxy.log("Json Error: " + lastAPICallURL + ",  " + throwable.getMessage());
         } else {
             crashlyticsProxy.logException(throwable);
         }
     }
 
     public ErrorResponse getErrorResponse(HttpException error) {
-        Response<?> response = error.response();
+        ResponseBody errorResponse = error.response().errorBody();
+        if (errorResponse == null) {
+            return new ErrorResponse();
+        }
         Converter<ResponseBody, ?> errorConverter =
                 gsonConverter
                         .responseBodyConverter(ErrorResponse.class, new Annotation[0], retrofitAdapter);
         try {
-            return (ErrorResponse) errorConverter.convert(response.errorBody());
+            return (ErrorResponse) errorConverter.convert(errorResponse);
         } catch (IOException e) {
             return new ErrorResponse();
         }
     }
 
-    public Observable<HabitRPGUser> retrieveUser(boolean withTasks) {
+    public Observable<User> retrieveUser(boolean withTasks) {
 
-        Observable<HabitRPGUser> userObservable = this.getUser();
+        Observable<User> userObservable = this.getUser();
 
         if (withTasks) {
             Observable<TaskList> tasksObservable = this.getTasks();
 
             userObservable = Observable.zip(userObservable, tasksObservable,
                     (habitRPGUser, tasks) -> {
-
-                        habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
-                        habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
-                        habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
-                        habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
-                        for (Task task : tasks.tasks.values()) {
-                            switch (task.getType()) {
-                                case Task.TYPE_HABIT:
-                                    habitRPGUser.getHabits().add(task);
-                                    break;
-                                case Task.TYPE_DAILY:
-                                    habitRPGUser.getDailys().add(task);
-                                    break;
-                                case Task.TYPE_TODO:
-                                    habitRPGUser.getTodos().add(task);
-                                    break;
-                                case Task.TYPE_REWARD:
-                                    habitRPGUser.getRewards().add(task);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-
+                        habitRPGUser.tasks = tasks;
                         return habitRPGUser;
                     });
         }
         return userObservable;
-    }
-
-    private List<Task> sortTasks(Map<String, Task> taskMap, List<String> taskOrder) {
-        List<Task> taskList = new ArrayList<>();
-        int position = 0;
-        for (String taskId : taskOrder) {
-            Task task = taskMap.get(taskId);
-            if (task != null) {
-                task.position = position;
-                taskList.add(task);
-                position++;
-                taskMap.remove(taskId);
-            }
-        }
-        return taskList;
     }
 
     public boolean hasAuthenticationKeys() {
@@ -411,20 +381,11 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString) {
-        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-            if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
-                        .setTitle(resourceTitleString)
-                        .setMessage(resourceMessageString)
-                        .setNeutralButton(android.R.string.ok, (dialog, which) -> displayedAlert = null);
-
-                if (!resourceTitleString.isEmpty()) {
-                    builder.setIcon(R.drawable.ic_warning_black);
-                }
-
-                displayedAlert = builder.show();
-            }
-        });
+        ShowConnectionProblemEvent event = new ShowConnectionProblemEvent(resourceTitleString, resourceMessageString);
+        EventBus.getDefault().post(event);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "showConnectionProblemDialog: " + resourceTitleString + " " + resourceMessageString);
+        }
     }
 
     /*
@@ -463,39 +424,51 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> getUser() {
+    public Observable<User> getUser() {
         return apiService.getUser().compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> updateUser(Map<String, Object> updateDictionary) {
+    public Observable<User> updateUser(Map<String, Object> updateDictionary) {
         return apiService.updateUser(updateDictionary).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> registrationLanguage(String registrationLanguage) {
+    public Observable<User> registrationLanguage(String registrationLanguage) {
         return apiService.registrationLanguage(registrationLanguage).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<List<ItemData>> getInventoryBuyableGear() {
-        return apiService.getInventoryBuyableGear().compose(configureApiCallObserver());
+    public Observable<List<ShopItem>> retrieveInAppRewards() {
+        return apiService.retrieveInAppRewards().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<List<ShopItem>> retrieveOldGear() {
+        return apiService.retrieveOldGearRewards().compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Items> equipItem(String type, String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.equipItem(type, itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<BuyResponse> buyItem(String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.buyItem(itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseItem(String type, String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseItem(type, itemKey).compose(configureApiCallObserver());
     }
 
@@ -511,22 +484,33 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Void> purchaseHourglassItem(String type, String itemKey) {
-
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseMysterySet(String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseMysterySet(itemKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> purchaseQuest(String key) {
+        if (key == null) {
+            return Observable.just(null);
+        }
         return apiService.purchaseQuest(key).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> sellItem(String itemType, String itemKey) {
+    public Observable<User> sellItem(String itemType, String itemKey) {
+        if (itemKey == null) {
+            return Observable.just(null);
+        }
         return apiService.sellItem(itemType, itemKey).compose(configureApiCallObserver());
     }
 
@@ -546,6 +530,18 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
+    public Observable<TaskList> getTasks(String type) {
+        return apiService.getTasks(type).compose(configureApiCallObserver());
+    }
+
+
+    @Override
+    public Observable<TaskList> getTasks(String type, String dueDate) {
+        return apiService.getTasks(type, dueDate).compose(configureApiCallObserver());
+    }
+
+
+    @Override
     public Observable<UnlockResponse> unlockPath(String path) {
         return apiService.unlockPath(path).compose(configureApiCallObserver());
     }
@@ -561,7 +557,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<ArrayList<String>> postTaskNewPosition(String id, String position) {
+    public Observable<List<String>> postTaskNewPosition(String id, int position) {
         return apiService.postTaskNewPosition(id, position).compose(configureApiCallObserver());
     }
 
@@ -571,8 +567,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Task> createItem(Task item) {
-        return apiService.createItem(item).compose(configureApiCallObserver());
+    public Observable<Task> createTask(Task item) {
+        return apiService.createTask(item).compose(configureApiCallObserver());
     }
 
     @Override
@@ -611,7 +607,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> revive() {
+    public Observable<User> revive() {
         return apiService.revive().compose(configureApiCallObserver());
     }
 
@@ -626,23 +622,27 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> changeClass() {
+    public Observable<User> changeClass() {
         return apiService.changeClass().compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> changeClass(String className) {
+    public Observable<User> changeClass(String className) {
         return apiService.changeClass(className).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> disableClasses() {
+    public Observable<User> disableClasses() {
         return apiService.disableClasses().compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> markPrivateMessagesRead() {
-        return apiService.markPrivateMessagesRead().compose(configureApiCallObserver());
+        //This is necessary, because the API call returns weird data.
+        return apiService.markPrivateMessagesRead()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(this);
     }
 
     @Override
@@ -652,106 +652,169 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Group> getGroup(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.getGroup(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> updateGroup(String id, Group item) {
+        if (id == null) {
+            return Observable.just(null);
+        }
         return apiService.updateGroup(id, item).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<List<ChatMessage>> listGroupChat(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.listGroupChat(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Group> joinGroup(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.joinGroup(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> leaveGroup(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.leaveGroup(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<PostChatMessageResult> postGroupChat(String groupId, Map<String, String> message) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.postGroupChat(groupId, message).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> deleteMessage(String groupId, String messageId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.deleteMessage(groupId, messageId).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields) {
+    public Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.getGroupMembers(groupId, includeAllPublicFields).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId) {
+    public Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.getGroupMembers(groupId, includeAllPublicFields, lastId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<ChatMessage> likeMessage(String groupId, String mid) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.likeMessage(groupId, mid).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> flagMessage(String groupId, String mid) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.flagMessage(groupId, mid).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> seenMessages(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.seenMessages(groupId).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<Void> inviteToGroup(String groupId, Map<String, Object> inviteData) {
+    public Observable<List<Void>> inviteToGroup(String groupId, Map<String, Object> inviteData) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.inviteToGroup(groupId, inviteData).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> rejectGroupInvite(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.rejectGroupInvite(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> acceptQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.acceptQuest(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> rejectQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.rejectQuest(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> cancelQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.cancelQuest(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Quest> forceStartQuest(String groupId, Group group) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.forceStartQuest(groupId, group).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Quest> inviteToQuest(String groupId, String questKey) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.inviteToQuest(groupId, questKey).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Quest> abortQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.abortQuest(groupId).compose(configureApiCallObserver());
     }
 
     @Override
     public Observable<Void> leaveQuest(String groupId) {
+        if (groupId == null) {
+            return Observable.just(null);
+        }
         return apiService.leaveQuest(groupId).compose(configureApiCallObserver());
     }
 
@@ -766,12 +829,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> changeCustomDayStart(Map<String, Object> updateObject) {
+    public Observable<User> changeCustomDayStart(Map<String, Object> updateObject) {
         return apiService.changeCustomDayStart(updateObject).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> getMember(String memberId) {
+    public Observable<Member> getMember(String memberId) {
         return apiService.getMember(memberId).compose(configureApiCallObserver());
     }
 
@@ -791,17 +854,17 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> addPushDevice(Map<String, String> pushDeviceData) {
+    public Observable<List<Void>> addPushDevice(Map<String, String> pushDeviceData) {
         return apiService.addPushDevice(pushDeviceData).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<Void> deletePushDevice(String regId) {
+    public Observable<List<Void>> deletePushDevice(String regId) {
         return apiService.deletePushDevice(regId).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<ArrayList<Challenge>> getUserChallenges() {
+    public Observable<List<Challenge>> getUserChallenges() {
         return apiService.getUserChallenges().compose(configureApiCallObserver());
     }
 
@@ -825,15 +888,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         return apiService.leaveChallenge(challengeId, body).compose(configureApiCallObserver());
     }
 
+
     @Override
     public Observable<Challenge> createChallenge(Challenge challenge) {
         return apiService.createChallenge(challenge).compose(configureApiCallObserver());
-    }
-
-
-    @Override
-    public Observable<Task> createChallengeTask(String challengeId, Task task) {
-        return apiService.createChallengeTask(challengeId, task).compose(configureApiCallObserver());
     }
 
     @Override
@@ -857,7 +915,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> readNotificaiton(String notificationId) {
+    public Observable<List> readNotification(String notificationId) {
         return apiService.readNotification(notificationId).compose(configureApiCallObserver());
     }
 
@@ -867,8 +925,66 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
 
     @Override
-    public Observable<ItemData> openMysteryItem() {
+    public Observable<Equipment> openMysteryItem() {
         return apiService.openMysteryItem().compose(configureApiCallObserver());
     }
 
+    @Override
+    public Observable<Void> runCron() {
+        return apiService.runCron().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> resetAccount() {
+        return apiService.resetAccount().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> deleteAccount(String password) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("password", password);
+        return apiService.deleteAccount(updateObject).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> togglePinnedItem(String pinType, String path) {
+        return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> sendPasswordResetEmail(String email) {
+        Map<String, String> data = new HashMap<>();
+        data.put("email", email);
+        return apiService.sendPasswordResetEmail(data).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> updateLoginName(String newLoginName, String password) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("username", newLoginName);
+        updateObject.put("password", password);
+        return apiService.updateLoginName(updateObject).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> updateEmail(String newEmail, String password) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("newEmail", newEmail);
+        updateObject.put("password", password);
+        return apiService.updateEmail(updateObject).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> updatePassword(String newPassword, String oldPassword, String oldPasswordConfirmation) {
+        Map<String, String> updateObject = new HashMap<>();
+        updateObject.put("newPassword", newPassword);
+        updateObject.put("password", oldPassword);
+        updateObject.put("confirmPassowrd", oldPasswordConfirmation);
+        return apiService.updatePassword(updateObject).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Stats> allocatePoint(String stat) {
+        return apiService.allocatePoint(stat).compose(configureApiCallObserver());
+    }
 }

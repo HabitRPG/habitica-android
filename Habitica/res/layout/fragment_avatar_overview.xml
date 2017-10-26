@@ -11,18 +11,19 @@
             type="Preferences" />
     </data>
 
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/md_grey_500"
+
         android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="?attr/actionBarSize">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"

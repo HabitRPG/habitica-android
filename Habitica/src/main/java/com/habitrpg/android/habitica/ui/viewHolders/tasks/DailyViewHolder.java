@@ -1,37 +1,36 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.view.View;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import butterknife.BindView;
 
 public class DailyViewHolder extends ChecklistedViewHolder {
 
-    private final int dailyResetOffset;
     @BindView(R.id.streakTextView)
     TextView streakTextView;
 
-    public DailyViewHolder(View itemView, int dailyResetOffset) {
+    public DailyViewHolder(View itemView) {
         super(itemView);
-        this.dailyResetOffset = dailyResetOffset;
     }
 
     @Override
     public void bindHolder(Task newTask, int position) {
-        super.bindHolder(newTask, position);
-        if (this.task.isChecklistDisplayActive(dailyResetOffset)) {
-            this.checklistIndicatorWrapper.setBackgroundResource(this.task.getLightTaskColor());
+        this.task = newTask;
+        if (newTask.isChecklistDisplayActive()) {
+            this.checklistIndicatorWrapper.setBackgroundResource(newTask.getLightTaskColor());
         } else {
             this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray);
         }
+        super.bindHolder(newTask, position);
     }
 
     @Override
-    public Boolean shouldDisplayAsActive() {
-        return this.task.isDisplayedActive(this.dailyResetOffset);
+    public Boolean shouldDisplayAsActive(Task newTask) {
+        return newTask.isDisplayedActive();
     }
 
     @Override

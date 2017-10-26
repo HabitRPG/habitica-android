@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activities.LoginActivity">
 
     <com.habitrpg.android.habitica.ui.views.login.LockableScrollView
         android:layout_width="match_parent"
@@ -215,15 +216,16 @@
                         android:drawableLeft="@drawable/google_icon"
                         style="@style/LoginButton"/>
 
-                    <TextView
-                        android:id="@+id/forgot_pw_tv"
+                    <Button
+                        android:id="@+id/forgot_password"
                         android:layout_width="match_parent"
                         android:layout_marginTop="@dimen/spacing_xlarge"
                         android:gravity="center_horizontal"
                         android:layout_height="wrap_content"
-                        android:text="@string/forgot_pw_tv"
+                        android:text="@string/forgot_pw_btn"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="@color/white_50_alpha"/>
+                        android:textColor="@color/white_75_alpha"
+                        android:background="@color/transparent"/>
 
                 </LinearLayout>
 

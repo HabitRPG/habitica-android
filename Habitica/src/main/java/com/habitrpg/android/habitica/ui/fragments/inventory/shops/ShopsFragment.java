@@ -1,11 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.shops.Shop;
-
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,14 +9,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.views.CurrencyViews;
+
+import javax.inject.Inject;
+
 public class ShopsFragment extends BaseMainFragment {
 
+    @Inject
+    InventoryRepository inventoryRepository;
+
     public ViewPager viewPager;
+    private CurrencyViews currencyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
+        hideToolbar();
+        disableToolbarScrolling();
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
@@ -31,6 +43,27 @@ public class ShopsFragment extends BaseMainFragment {
         setViewPagerAdapter();
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        currencyView = new CurrencyViews(getContext());
+        if (toolbarAccessoryContainer != null) {
+            toolbarAccessoryContainer.addView(currencyView);
+        }
+        updateCurrencyView();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (toolbarAccessoryContainer != null) {
+            toolbarAccessoryContainer.removeView(currencyView);
+        }
+        showToolbar();
+        enableToolbarScrolling();
+        inventoryRepository.close();
+        super.onDestroyView();
     }
 
     @Override
@@ -57,12 +90,12 @@ public class ShopsFragment extends BaseMainFragment {
                         fragment.shopIdentifier = Shop.QUEST_SHOP;
                         break;
                     }
-                    //case 2: {
-                    //    fragment.shopIdentifier = Shop.TIME_TRAVELERS_SHOP;
-                    //    break;
-                    //}
                     case 2: {
                         fragment.shopIdentifier = Shop.SEASONAL_SHOP;
+                        break;
+                    }
+                    case 3: {
+                        fragment.shopIdentifier = Shop.TIME_TRAVELERS_SHOP;
                         break;
                     }
                 }
@@ -73,20 +106,20 @@ public class ShopsFragment extends BaseMainFragment {
 
             @Override
             public int getCount() {
-                return 3;
+                return 4;
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return activity.getString(R.string.market);
+                        return getContext().getString(R.string.market);
                     case 1:
-                        return activity.getString(R.string.quests);
-                    //case 2:
-                    //    return activity.getString(R.string.timeTravelers);
+                        return getContext().getString(R.string.quests);
                     case 2:
-                        return activity.getString(R.string.seasonalShop);
+                        return getContext().getString(R.string.seasonalShop);
+                    case 3:
+                        return getContext().getString(R.string.timeTravelers);
                 }
                 return "";
             }
@@ -100,7 +133,24 @@ public class ShopsFragment extends BaseMainFragment {
 
     @Override
     public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
         return getString(R.string.sidebar_shops);
     }
 
+    @Override
+    public void updateUserData(User user) {
+        super.updateUserData(user);
+        updateCurrencyView();
+    }
+
+    private void updateCurrencyView() {
+        if (user == null || currencyView == null) {
+            return;
+        }
+        currencyView.setGold(user.getStats().getGp());
+        currencyView.setGems(user.getGemCount());
+        currencyView.setHourglasses(user.getHourglassCount());
+    }
 }

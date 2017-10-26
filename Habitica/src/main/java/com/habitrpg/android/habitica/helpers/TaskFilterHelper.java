@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by magicmicky on 02/10/15.
- */
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmQuery;
+
 public class TaskFilterHelper {
     private List<String> tagsId;
     private Map<String, String> activeFilters = new HashMap<>();
@@ -78,12 +78,12 @@ public class TaskFilterHelper {
             switch (activeFilter) {
                 case Task.FILTER_ACTIVE:
                     if (task.type.equals(Task.TYPE_DAILY)) {
-                        return task.isDisplayedActive(0);
+                        return task.isDisplayedActive();
                     } else {
                         return !task.completed;
                     }
                 case Task.FILTER_GRAY:
-                    return task.completed || !task.isDisplayedActive(0);
+                    return task.completed || !task.isDisplayedActive();
                 case Task.FILTER_WEAK:
                     return task.value < 0;
                 case Task.FILTER_STRONG:
@@ -103,5 +103,47 @@ public class TaskFilterHelper {
 
     public String getActiveFilter(String type) {
         return activeFilters.get(type);
+    }
+
+    public RealmQuery<Task> createQuery(OrderedRealmCollection<Task> unfilteredData) {
+        RealmQuery<Task> query = unfilteredData.where();
+
+        if (unfilteredData.size() == 0) {
+            return query;
+        }
+
+        String taskType = unfilteredData.get(0).getType();
+        String activeFilter = getActiveFilter(taskType);
+
+        if (tagsId != null && tagsId.size() > 0) {
+            query = query.in("tags.id", tagsId.toArray(new String[0]));
+        }
+        if (activeFilter != null && !activeFilter.equals(Task.FILTER_ALL)) {
+            switch (activeFilter) {
+                case Task.FILTER_ACTIVE:
+                    if (Task.TYPE_DAILY.equals(taskType)) {
+                        query = query.equalTo("completed", false).equalTo("isDue", true);
+                    } else {
+                        query = query.equalTo("completed", false);
+                    }
+                    break;
+                case Task.FILTER_GRAY:
+                    query = query.equalTo("completed", true).or().equalTo("isDue", false);
+                break;
+                case Task.FILTER_WEAK:
+                    query = query.lessThan("value", 0.0d);
+                    break;
+                case Task.FILTER_STRONG:
+                    query = query.greaterThanOrEqualTo("value", 0.0d);
+                    break;
+                case Task.FILTER_DATED:
+                    query = query.isNotNull("duedate");
+                    break;
+                case Task.FILTER_COMPLETED:
+                    query = query.equalTo("completed", true);
+                    break;
+            }
+        }
+        return query;
     }
 }

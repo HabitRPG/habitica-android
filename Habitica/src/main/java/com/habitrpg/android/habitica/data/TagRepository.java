@@ -5,11 +5,12 @@ import com.habitrpg.android.habitica.models.Tag;
 import java.util.Collection;
 import java.util.List;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 public interface TagRepository extends BaseRepository {
 
-    Observable<List<Tag>> getTags();
+    Observable<RealmResults<Tag>> getTags(String userId);
 
     Observable<Tag> createTag(Tag tag);
     Observable<Tag> updateTag(Tag tag);
@@ -20,5 +21,5 @@ public interface TagRepository extends BaseRepository {
     Observable<Tag> updateTags(Collection<Tag> tags);
     Observable<List<Void>> deleteTags(Collection<String> tagIds);
 
-    void removeOldTags(List<Tag> onlineTags);
+    void removeOldTags(List<Tag> onlineTags, String userID);
 }

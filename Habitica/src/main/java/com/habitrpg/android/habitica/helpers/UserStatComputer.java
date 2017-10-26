@@ -1,8 +1,9 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.Avatar;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.members.Member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class UserStatComputer {
         public String stats;
     }
 
-    public List<StatsRow> computeClassBonus (List<ItemData> itemDataList, HabitRPGUser user) {
+    public List<StatsRow> computeClassBonus (List<Equipment> equipmentList, Avatar user) {
         List<StatsRow> skillRows = new ArrayList<>();
 
         float strAttributes = 0;
@@ -44,11 +45,11 @@ public class UserStatComputer {
         float perClassBonus = 0;
 
         // Summarize stats and fill equipment table
-        for (ItemData i : itemDataList) {
-            int str_ = (int) i.getStr();
-            int int_ = (int) i.get_int();
-            int con_ = (int) i.getCon();
-            int per_ = (int) i.getPer();
+        for (Equipment i : equipmentList) {
+            int str_ = i.getStr();
+            int int_ = i.get_int();
+            int con_ = i.getCon();
+            int per_ = i.getPer();
 
             strAttributes += str_;
             intAttributes += int_;
@@ -93,32 +94,32 @@ public class UserStatComputer {
             }
 
             float classBonus = 0.5f;
-            Boolean userClassMatchesGearClass = !classDoesNotExist && itemClass.equals(user.getStats().get_class().toString());
-            Boolean userClassMatchesGearSpecialClass = !specialClassDoesNotExist && itemSpecialClass.equals(user.getStats().get_class().toString());
+            Boolean userClassMatchesGearClass = !classDoesNotExist && itemClass.equals(user.getStats().getHabitClass());
+            Boolean userClassMatchesGearSpecialClass = !specialClassDoesNotExist && itemSpecialClass.equals(user.getStats().getHabitClass());
 
             if (!userClassMatchesGearClass && !userClassMatchesGearSpecialClass) classBonus = 0;
 
-            if (itemClass == null || itemClass.isEmpty()) {
+            if (itemClass == null || itemClass.isEmpty() || itemClass.equals("special")) {
                 itemClass = itemSpecialClass;
             }
 
             if (itemClass != null) {
                 switch (itemClass) {
                     case "rogue":
-                        strClassBonus = str_ * classBonus;
-                        perClassBonus = per_ * classBonus;
+                        strClassBonus += str_ * classBonus;
+                        perClassBonus += per_ * classBonus;
                         break;
                     case "healer":
-                        conClassBonus = con_ * classBonus;
-                        intClassBonus = int_ * classBonus;
+                        conClassBonus += con_ * classBonus;
+                        intClassBonus += int_ * classBonus;
                         break;
                     case "warrior":
-                        strClassBonus = str_ * classBonus;
-                        conClassBonus = con_ * classBonus;
+                        strClassBonus += str_ * classBonus;
+                        conClassBonus += con_ * classBonus;
                         break;
                     case "wizard":
-                        intClassBonus = int_ * classBonus;
-                        perClassBonus = per_ * classBonus;
+                        intClassBonus += int_ * classBonus;
+                        perClassBonus += per_ * classBonus;
                         break;
                 }
             }

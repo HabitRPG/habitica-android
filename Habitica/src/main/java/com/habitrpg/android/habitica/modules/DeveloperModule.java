@@ -1,8 +1,10 @@
 package com.habitrpg.android.habitica.modules;
 
 
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
+import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
+
+import android.content.Context;
 
 import javax.inject.Singleton;
 
@@ -14,7 +16,7 @@ import dagger.Provides;
 public class DeveloperModule {
     @Provides
     @Singleton
-    protected CrashlyticsProxy provideCrashlyticsProxy() {
+    protected CrashlyticsProxy provideCrashlyticsProxy(Context context) {
         return new EmptyCrashlyticsProxy();
     }
 

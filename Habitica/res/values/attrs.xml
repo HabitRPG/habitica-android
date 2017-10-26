@@ -30,4 +30,27 @@
         <attr name="iconDrawable" format="integer" />
         <attr name="categoryTitle" format="string" />
     </declare-styleable>
+    <declare-styleable name="ValueBar">
+        <attr name="barForegroundColor" format="color" />
+        <attr name="barIconDrawable" format="integer" />
+        <attr name="lightBackground" format="boolean" />
+        <attr name="description" format="string" />
+    </declare-styleable>
+    <declare-styleable name="CurrencyView">
+        <attr name="currency" format="string" />
+    </declare-styleable>
+    <declare-styleable name="CurrencyViews">
+        <attr name="hasLightBackground" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="FixValuesEditText">
+        <attr name="fixIconName" format="string" />
+        <attr name="title" format="string" />
+        <attr name="iconBgColor" format="color" />
+        <attr name="hintStyle" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="StatsView">
+        <attr name="titleBackgroundColor" format="color" />
+        <attr name="statsTitle" format="string" />
+        <attr name="statsColor" format="color" />
+    </declare-styleable>
 </resources>

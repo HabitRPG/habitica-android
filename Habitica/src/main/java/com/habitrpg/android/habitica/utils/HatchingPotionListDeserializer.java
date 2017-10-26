@@ -5,23 +5,25 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import io.realm.Realm;
+import io.realm.RealmList;
 
 public class HatchingPotionListDeserializer implements JsonDeserializer<List<HatchingPotion>> {
     @Override
     public List<HatchingPotion> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<HatchingPotion> vals = new ArrayList<>();
+        RealmList<HatchingPotion> vals = new RealmList<>();
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<HatchingPotion> existingItems = new Select().from(HatchingPotion.class).queryList();
+            Realm realm = Realm.getDefaultInstance();
+            List<HatchingPotion> existingItems = realm.copyFromRealm(realm.where(HatchingPotion.class).findAll());
+            realm.close();
 
             for (HatchingPotion item : existingItems) {
                 if (object.has(item.getKey())) {
@@ -59,7 +61,7 @@ public class HatchingPotionListDeserializer implements JsonDeserializer<List<Hat
             }
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((HatchingPotion) context.deserialize(item.getAsJsonObject(), HatchingPotion.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), HatchingPotion.class));
             }
         }
 

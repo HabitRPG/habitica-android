@@ -1,10 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">完成好習慣能獲得金幣和經驗！壞習慣會使你的角色受到傷害，在現實中戒掉壞習慣吧！</string>
-  <string name="tutorial_dailies">戰勝且規律完成的每日任務可拿到金幣和經驗。危險！如果你沒及時完成每日任務，它們會化為小刀傷害你的角色的。</string>
-  <string name="tutorial_todos">現實完成了待辦事項後，勾選對應項目獲得金幣和經驗，用來購買獎勵和解鎖新的特殊物品。</string>
-  <string name="tutorial_rewards">這些是你的獎勵！通過完成現實的習慣、每日任務和待辦事項獲得金幣，再用它們購買遊戲內獎勵和自己設定的現實獎勵。</string>
-  <string name="tutorial_equipment">在你購買裝備後會在這裡顯示。你的戰鬥裝備會影響你的屬性，你的服裝(如果有裝備的話)會在你的角色上顯示。</string>
   <string name="tutorial_items">通過升級和完成任務獲得物品。點擊一個物品來使用。</string>
   <string name="tutorial_pets">完成現實任務後，隨機掉落寵物蛋和藥水。將藥水灑在寵物蛋上孵化寵物。</string>
   <string name="tutorial_skills">技能是有強大作用的特殊能力！點擊技能使用。使用技能需要消耗魔法值(藍色條)，魔力可由每日打卡和完成現實任務來獲得。更多信息請查詢FAQ。</string>

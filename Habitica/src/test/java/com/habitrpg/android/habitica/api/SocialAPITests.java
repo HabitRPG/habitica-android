@@ -47,7 +47,7 @@ public class SocialAPITests extends BaseAPITests {
         messagesIDs.add(result.message.id);
     }
 
-    @Test
+    /*@Test
     public void shouldLoadTavernWithMessages() {
         groupID = "habitrpg";
         postMessage(groupID, "1");
@@ -87,5 +87,5 @@ public class SocialAPITests extends BaseAPITests {
             testSubscriber.assertCompleted();
         }
         super.tearDown();
-    }
+    }*/
 }

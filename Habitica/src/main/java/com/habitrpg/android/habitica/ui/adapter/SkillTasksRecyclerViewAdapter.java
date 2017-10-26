@@ -1,15 +1,10 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
-import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.OrderBy;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,46 +16,29 @@ import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 
-public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTasksRecyclerViewAdapter.ViewHolder> {
+public class SkillTasksRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.ViewHolder> {
 
+    private PublishSubject<Task> taskSelectionEvents = PublishSubject.create();
 
-    private static final int TYPE_CELL = 1;
-    String taskType;
-    TaskClickActivity activity;
-    private ObservableArrayList<Task> observableContent;
-    private RecyclerView.Adapter<ViewHolder> parentAdapter;
-
-    public SkillTasksRecyclerViewAdapter(String taskType, TaskClickActivity activity) {
-        this.setHasStableIds(true);
-        this.taskType = taskType;
-        this.activity = activity;
-
-        this.loadContent();
-
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        switch (position) {
-            default:
-                return TYPE_CELL;
-        }
+    public SkillTasksRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate) {
+        super(data, autoUpdate);
     }
 
     @Override
     public long getItemId(int position) {
-        Task task = observableContent.get(position);
-        if (task.getId() != null && task.getId().length() == 36) {
-            return UUID.fromString(task.getId()).getMostSignificantBits();
+        if (getData() != null) {
+            Task task = getData().get(position);
+            if (task.getId() != null && task.getId().length() == 36) {
+                return UUID.fromString(task.getId()).getMostSignificantBits();
+            }
         }
         return UUID.randomUUID().getMostSignificantBits();
-    }
-
-    @Override
-    public int getItemCount() {
-        return observableContent.size();
     }
 
     @Override
@@ -72,50 +50,27 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Task item = observableContent.get(position);
-
-        holder.bindHolder(item, position);
-    }
-
-    // region ViewHolders
-
-    public void loadContent() {
-        this.loadContent(false);
-    }
-
-    // endregion
-
-    public void loadContent(boolean forced) {
-
-        if (this.observableContent == null || forced) {
-
-            this.observableContent = new ObservableArrayList<>();
-
-            this.observableContent.addAll(new Select().from(Task.class)
-                    .where(Condition.column("type").eq(this.taskType))
-                    .and(Condition.CombinedCondition
-                            .begin(Condition.column("completed").eq(false))
-                            .or(Condition.column("type").eq("daily"))
-                    )
-                    .orderBy(OrderBy.columns("position", "dateCreated").descending())
-                    .queryList());
-        }
-
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
-        } else {
-            notifyDataSetChanged();
+        if (getData() != null) {
+            holder.bindHolder(getData().get(position));
         }
     }
+
+    public Observable<Task> getTaskSelectionEvents() {
+        return taskSelectionEvents.asObservable();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public Task task;
         protected android.content.res.Resources resources;
-        SkillTaskItemCardBinding binding;
 
+        @BindView(R.id.titleTextView)
+        TextView titleTextView;
         @BindView(R.id.notesTextView)
         TextView notesTextView;
+        @BindView(R.id.rightBorderView)
+        View rightBorderView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -124,27 +79,27 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
             itemView.setClickable(true);
 
             ButterKnife.bind(this, itemView);
-            binding = DataBindingUtil.bind(itemView);
 
             resources = itemView.getResources();
         }
 
-        void bindHolder(Task habitItem, int position) {
-            task = habitItem;
-            if (habitItem.notes == null || habitItem.notes.length() == 0) {
-                notesTextView.setHeight(0);
+        void bindHolder(Task task) {
+            this.task = task;
+            titleTextView.setText(task.text);
+            if (task.notes == null || task.notes.length() == 0) {
+                notesTextView.setVisibility(View.GONE);
             } else {
-                notesTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                notesTextView.setVisibility(View.VISIBLE);
+                notesTextView.setText(task.notes);
             }
-            binding.setTask(task);
+            rightBorderView.setBackgroundResource(task.getLightTaskColor());
         }
 
         @Override
         public void onClick(View v) {
-            if (v != itemView)
-                return;
-            activity.taskSelected(task.getId());
+            if (v.equals(itemView)) {
+                taskSelectionEvents.onNext(task);
+            }
         }
-
     }
 }

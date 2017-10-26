@@ -1,18 +1,20 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.social.Group;
-
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,9 +30,6 @@ class ChallengeFilterDialogHolder {
 
     @BindView(R.id.challenge_filter_recycler_view)
     RecyclerView groupRecyclerView;
-
-    @BindView(R.id.challenge_filter_button_done)
-    Button doneButton;
 
     @BindView(R.id.challenge_filter_button_all)
     Button allButton;
@@ -65,19 +64,21 @@ class ChallengeFilterDialogHolder {
         ChallengeFilterDialogHolder challengeFilterDialogHolder = new ChallengeFilterDialogHolder(dialogLayout, activity);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                .setTitle(R.string.filter)
                 .setView(dialogLayout);
 
-        challengeFilterDialogHolder.bind(builder.show(), challengesViewed, currentFilter, selectedGroupsCallback);
+        challengeFilterDialogHolder.bind(builder, challengesViewed, currentFilter, selectedGroupsCallback);
     }
 
-    public void bind(AlertDialog dialog, List<Challenge> challengesViewed,
+    public void bind(AlertDialog.Builder builder, List<Challenge> challengesViewed,
                      ChallengeFilterOptions currentFilter,
                      Action1<ChallengeFilterOptions> selectedGroupsCallback) {
-        this.dialog = dialog;
+        builder = builder
+                .setPositiveButton(context.getString(R.string.done), (dialog1, which) -> doneClicked());
+        this.dialog = builder.show();
         this.challengesViewed = challengesViewed;
         this.currentFilter = currentFilter;
         this.selectedGroupsCallback = selectedGroupsCallback;
-
         fillChallengeGroups();
 
         if(currentFilter != null ){
@@ -116,8 +117,7 @@ class ChallengeFilterDialogHolder {
         return groupMap.values();
     }
 
-    @OnClick(R.id.challenge_filter_button_done)
-    void doneClicked() {
+    private void doneClicked() {
         ChallengeFilterOptions options = new ChallengeFilterOptions();
         options.showByGroups = this.adapter.getCheckedEntries();
         options.showOwned = checkboxOwned.isChecked();

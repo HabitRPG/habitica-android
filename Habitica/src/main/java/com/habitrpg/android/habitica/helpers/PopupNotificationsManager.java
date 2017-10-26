@@ -1,26 +1,31 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.ShowCheckinDialog;
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent;
 import com.habitrpg.android.habitica.models.Notification;
-import com.habitrpg.android.habitica.models.notifications.Reward;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
-import android.content.Context;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by krh12 on 12/9/2016.
@@ -36,7 +41,7 @@ public class PopupNotificationsManager {
 
     public PopupNotificationsManager(Context context) {
         this.seenNotifications = new HashMap<>();
-        this.context = context.getApplicationContext();
+        this.context = context;
     }
 
     public void setApiClient(@Nullable ApiClient apiClient) {
@@ -44,62 +49,24 @@ public class PopupNotificationsManager {
     }
 
     Boolean displayNotification(Notification notification) {
-        String title = notification.data.message;
-        String youEarnedMessage = "";
-
-        LayoutInflater factory = LayoutInflater.from(context);
-        final View view = factory.inflate(R.layout.dialog_login_incentive, null);
-
-        SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
-        String imageKey = "inventory_present_11";
+        String nextUnlockText = context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt);
         if (notification.data.rewardKey != null) {
-            imageKey = notification.data.rewardKey.get(0);
-
-            if (notification.data.reward != null && notification.data.reward.size() > 0) {
-                String earnedString = "";
-                int count = 0;
-                for (Reward reward : notification.data.reward) {
-                    earnedString += reward.key;
-                    count += 1;
-                    if (notification.data.reward.size() > 1 && count != notification.data.reward.size()) {
-                        earnedString += ", ";
-                    }
-                }
-                youEarnedMessage = context.getString(R.string.checkInRewardEarned, earnedString);
-            }
-        }
-        DataBindingUtils.loadImage(imageView, imageKey);
-
-        TextView youEarnedTexView = (TextView) view.findViewById(R.id.you_earned_message);
-        youEarnedTexView.setTextColor(ContextCompat.getColor(context, R.color.textColorLight));
-        youEarnedTexView.setText(youEarnedMessage);
-
-        String message = context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt);
-        TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
-        nextUnlockTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorLight));
-        nextUnlockTextView.setText(message);
-
-        Button confirmButton = (Button) view.findViewById(R.id.confirm_button);
-        confirmButton.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity, R.style.AlertDialogTheme)
-                .setTitle(title)
-                .setView(view)
-                .setMessage("");
-
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-        confirmButton.setOnClickListener(view1 -> {
+            ShowCheckinDialog event = new ShowCheckinDialog();
+            event.notification = notification;
+            event.nextUnlockText = nextUnlockText;
+            EventBus.getDefault().post(event);
+        } else {
+            ShowSnackbarEvent event = new ShowSnackbarEvent();
+            event.title = notification.data.message;
+            event.text = nextUnlockText;
+            event.type = HabiticaSnackbar.SnackbarDisplayType.BLUE;
+            EventBus.getDefault().post(event);
             if (apiClient != null) {
                 // @TODO: This should be handled somewhere else? MAybe we notifiy via event
-                apiClient.readNotificaiton(notification.getId())
-                        .subscribe(next -> {}, throwable -> {});
+                apiClient.readNotification(notification.getId())
+                        .subscribe(next -> {}, RxErrorHandler.handleEmptyError());
             }
-
-            dialog.hide();
-        });
-
+        }
         return true;
     }
 
@@ -108,31 +75,22 @@ public class PopupNotificationsManager {
             return false;
         }
 
-        if (HabiticaApplication.currentActivity == null || HabiticaApplication.currentActivity.isFinishing()) {
-            return false;
+        if (this.seenNotifications == null) {
+            this.seenNotifications = new HashMap<>();
         }
 
-        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-            if (HabiticaApplication.currentActivity == null) return;
-            if ((HabiticaApplication.currentActivity).isFinishing()) return;
-
-            if (this.seenNotifications == null) {
-                this.seenNotifications = new HashMap<>();
+        for (Notification notification : notifications) {
+            if (this.seenNotifications.get(notification.getId()) != null) {
+                continue;
             }
 
-            for (Notification notification : notifications) {
-                if (this.seenNotifications.get(notification.getId()) != null) {
-                    continue;
-                }
-
-                if (!notification.getType().equals("LOGIN_INCENTIVE")) {
-                    continue;
-                }
-
-                this.displayNotification(notification);
-                this.seenNotifications.put(notification.getId(), true);
+            if (!notification.getType().equals("LOGIN_INCENTIVE")) {
+                continue;
             }
-        });
+
+            this.displayNotification(notification);
+            this.seenNotifications.put(notification.getId(), true);
+        }
 
         return true;
     }

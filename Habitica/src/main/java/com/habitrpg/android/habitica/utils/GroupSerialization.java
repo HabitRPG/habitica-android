@@ -9,14 +9,19 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
-
+import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
+
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 
 public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializer<Group> {
     @Override
@@ -47,15 +52,8 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
             group.type = obj.get("type").getAsString();
         }
         if (obj.has("chat")) {
-            group.chat = context.deserialize(obj.get("chat"), new TypeToken<List<ChatMessage>>() {
+            group.chat = context.deserialize(obj.get("chat"), new TypeToken<RealmList<ChatMessage>>() {
             }.getType());
-        }
-        if (obj.has("members")) {
-            JsonArray memberList = obj.get("members").getAsJsonArray();
-            if (memberList.size() > 0 && memberList.get(0).isJsonObject()) {
-                group.members = context.deserialize(memberList, new TypeToken<List<HabitRPGUser>>() {
-                }.getType());
-            }
         }
         if (obj.has("leader")) {
             if (obj.get("leader").isJsonPrimitive()) {
@@ -70,8 +68,41 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
             }
         }
         if (obj.has("quest")) {
-            group.quest = context.deserialize(obj.get("quest"), new TypeToken<Quest>() {
-            }.getType());
+            group.quest = context.deserialize(obj.get("quest"), new TypeToken<Quest>() {}.getType());
+            if (group.quest != null) {
+                group.quest.id = group.id;
+            }
+
+            if (obj.getAsJsonObject("quest").has("members")) {
+                JsonObject members = obj.getAsJsonObject("quest").getAsJsonObject("members");
+                Realm realm = Realm.getDefaultInstance();
+                List<Member> dbMembers = realm.copyFromRealm(realm.where(Member.class).equalTo("party.id", group.id).findAll());
+                realm.close();
+                for (Member member : dbMembers) {
+                    if (members.has(member.getId())) {
+                        JsonElement value = members.get(member.getId());
+                        if (value.isJsonNull()) {
+                            member.setParticipatesInQuest(null);
+                        } else {
+                            member.setParticipatesInQuest(value.getAsBoolean());
+                        }
+                    } else {
+                        member.setParticipatesInQuest(null);
+                    }
+                    members.remove(member.getId());
+                }
+                for (Map.Entry<String, JsonElement> entry : members.entrySet()) {
+                    Member member = new Member();
+                    member.setId(entry.getKey());
+                    if (!entry.getValue().isJsonNull()) {
+                        member.setParticipatesInQuest(entry.getValue().getAsBoolean());
+                    }
+                    dbMembers.add(member);
+                }
+                RealmList<Member> newMembers = new RealmList<>();
+                newMembers.addAll(dbMembers);
+                group.quest.participants = newMembers;
+            }
         }
 
         return group;

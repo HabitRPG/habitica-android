@@ -62,7 +62,6 @@
 
     <string name="logout">Logout</string>
     <string name="logout_description">Log out of your account</string>
-    <string name="account_details_sum">Check your account details</string>
     <string name="account_details">Account Details</string>
     <string name="LoginActivityName">Welcome</string>
 
@@ -79,6 +78,7 @@
     <string name="about.source_code">Source Code</string>
 
     <string name="repeatEvery">Repeat Every</string>
+
 
     <!-- Network Errors -->
     <string name="network_error_title">Connection Error</string>
@@ -109,10 +109,10 @@
     <string name="actions">Actions</string>
 
     <string name="attributes">Attributes</string>
-    <string name="physical">Physical</string>
-    <string name="mental">Mental</string>
-    <string name="social">Social</string>
-    <string name="other">Other</string>
+    <string name="physical">Strength</string>
+    <string name="mental">Intelligence</string>
+    <string name="social">Constitution</string>
+    <string name="other">Perception</string>
 
     <string name="frequency">Frequency</string>
     <string name="frequency_weekly">On Certain Days of the Week</string>
@@ -127,6 +127,7 @@
     <string name="repeatables_frequency_yearly">Yearly</string>
     <string name="repeatables_frequency_day_of_month">Day of Month</string>
     <string name="repeatables_frequency_day_of_week">Day of Week</string>
+
 
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
@@ -163,7 +164,6 @@
     <string name="unlock_lvl_11">Unlock at lvl 11</string>
     <string name="no_party_message">You are not in a party. To join a party, please visit the website.</string>
     <string name="forgot_pw_btn">Forgot Password</string>
-    <string name="forgot_pw_tv">Forgot Password? Please use the mobile Website.</string>
     <string name="tavern.inn.checkOut">Reactivate your Dailies</string>
     <string name="tavern.inn.rest">Pause your Dailies</string>
     <string name="reward.dialog.buy">Buy</string>
@@ -335,7 +335,8 @@
     <string name="close">Close</string>
     <string name="share">Share</string>
     <string name="notification_pet_fed" >You fed your %1$s %2$s!</string>
-    <string name="notification_purchase" >%s was purchased</string>
+    <string name="notification_purchase" >You purchased %s</string>
+    <string name="notification_purchase_reward" >You purchased a reward</string>
     <string name="sectionpets">Base Pets</string>
     <string name="sectionpremiumPets">Magic Potion Pets</string>
     <string name="sectionquestPets">Quest Pets</string>
@@ -397,7 +398,7 @@
     <string name="party_invite">Unlock by inviting friends</string>
     <string name="no_gold">Not enough Gold</string>
     <string name="no_potion">You don\'t need to buy an health potion</string>
-    <string name="successful_purchase" >%1$s successfully purchased</string>
+    <string name="successful_purchase" >Purchased %1$s</string>
     <string name="purchase_confirmation_title">Confirm purchase</string>
     <string name="confirm_purchase_text" >Purchase %1$s for %2$s %3$s</string>
     <string name="gem">gem</string>
@@ -599,4 +600,113 @@
     <string name="challenge_create_error_title">You need a title to create this Challenge.</string>
     <string name="description_optional">Description (optional)</string>
     <string name="new_challenge_title">New challenge title</string>
+    <string name="ownership">Ownership</string>
+    <string name="inn">Inn</string>
+    <string name="system">System</string>
+    <string name="start_quest">Start a new Quest</string>
+    <string name="leave_party">Leave Party</string>
+    <string name="party_description">Party Description</string>
+    <string name="abort_confirmation">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
+    <string name="leave_quest_confirmation">Are you sure you want to leave the active quest? All your quest progress will be lost.</string>
+    <string name="number_participants">%1$d Participants</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="yesterdaililes_prompt">Did you do any of these Dailies yesterday?</string>
+    <string name="start_day">Start My Day</string>
+    <string name="leave_party_confirmation">Are you sure you want to leave the Party?</string>
+    <string name="nextPrizeUnlocksIn" formatted="false">Next Prize in %d Check-ins</string>
+    <string name="pending">Pending</string>
+    <string name="accepted">Accepted</string>
+    <string name="declined">Declined</string>
+    <string name="participants">Participants</string>
+    <string name="invitations">Invitations</string>
+    <string name="quest_leader_header" formatted="false">Started by %s</string>
+    <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
+    <string name="loading">Loading...</string>
+    <string name="reloading_content">Reloading Content</string>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="your_balance">Your balance:</string>
+    <string name="available_until" formatted="false">Available until %s</string>
+    <string name="gems_left_max" formatted="false">Monthly Gems: %1$d/%2$d Remaining</string>
+    <string name="gems_left_nomax" formatted="false">Monthly Gems: %d Remaining</string>
+    <string name="health">Health</string>
+    <string name="collect">Collect</string>
+    <string name="rage_meter">Rage Meter</string>
+    <string name="boss_quest">Boss Quest</string>
+    <string name="collection_quest">Collection Quest</string>
+    <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+    <string name="experience_reward" formatted="false">%d Experience points</string>
+    <string name="gold_reward" formatted="false">%d Gold</string>
+    <string name="quest_owner_rewards">Quest Owner Rewards</string>
+    <string name="str_abbrv">Str:</string>
+    <string name="per_abbrv">Per:</string>
+    <string name="int_abbrv">Int:</string>
+    <string name="con_abbrv">Con:</string>
+    <string name="reset_account">Reset Account</string>
+    <string name="reset_account_description">WARNING! This resets many parts of your account. This is highly discouraged, but some people find it useful in the beginning after playing with the site for a short time.\n\nYou will lose all your levels, gold, and experience points. All your tasks (except those from challenges) will be deleted permanently and you will lose all of their historical data. You will lose all your equipment but you will be able to buy it all back, including all limited edition equipment or subscriber Mystery items that you already own (you will need to be in the correct class to re-buy class-specific gear). You will keep your current class and your pets and mounts. You might prefer to use an Orb of Rebirth instead, which is a much safer option and which will preserve your tasks and equipment.</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete_account_description">Are you sure? This will delete your account forever, and it can never be restored! You will need to register a new account to use Habitica again. Banked or spent Gems will not be refunded. If you\'re absolutely certain, type your password into the text box below.</string>
+    <string name="reset_account_confirmation">reset my account</string>
+    <string name="delete_account_confirmation">delete my account</string>
+    <string name="danger_zone">Danger Zone</string>
+    <string name="nevermind">Nevermind</string>
+    <string name="resetting_account">Resetting Account</string>
+    <string name="deleting_account">Deleting Account</string>
+    <string name="insufficientGold">You need to complete more tasks before you can afford this item!</string>
+    <string name="insufficientGems">You\'ll need more Gems to buy this item!</string>
+    <string name="purchase_gems">Purchase gems</string>
+    <string name="insufficientHourglasses">You\'ll need more Mystic Hourglasses to buy this item!</string>
+    <string name="get_hourglasses">Get hourglasses</string>
+    <string name="subscribe_for_hourglasses">Subscribe for Hourglasses</string>
+    <string name="timetravelers_closed_description">Earn one Mystic Hourglass for every three months of consecutive subscription, then use them to unlock limited edition items, pets, and mounts from the past… and future!</string>
+    <string name="want_to_subscribe">I want to Subscribe</string>
+    <string name="seasonal_closed_description">The Grand Galas happen close to the solstices and equinoxes, so check back then to find a fun assortment of special seasonal items!</string>
+    <string name="come_back_soon">Come back soon!</string>
+    <string name="level">Level</string>
+    <string name="streak_label">21-Day Streaks</string>
+    <string name="stats">Stats</string>
+    <string name="fix_character_description">If you’ve encountered a bug or made a mistake that unfairly changed your character, you can manually correct those values here.</string>
+    <string name="fix_character_values">Fix Character Values</string>
+    <string name="saving">Saving</string>
+    <string name="forgot_password_title">Email a Password Reset Link</string>
+    <string name="forgot_password_description">Enter the email address you used to register your Habitica account.</string>
+    <string name="forgot_password_confirmation">If we have your email on file, instructions for setting a new password have been sent to your email.</string>
+    <string name="ok">OK</string>
+    <string name="profile">Profile</string>
+    <string name="profile_summary">Edit your public profile.</string>
+    <string name="display_name">Display Name</string>
+    <string name="photo_url">Photo URL</string>
+    <string name="login_name">Login Name</string>
+    <string name="about">About</string>
+    <string name="app_settings">App Settings</string>
+    <string name="authentication">Authentication</string>
+    <string name="authentication_summary">Change your authentication options.</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_email">Change Email Address</string>
+    <string name="change_login_name">Change Login Name</string>
+    <string name="change">Change</string>
+    <string name="character_level">Character Level</string>
+    <string name="auto_allocate_points">Auto Allocate Points</string>
+    <string name="stat_guide">Stat Guide</string>
+    <string name="character_build">Character Build</string>
+    <string name="character_build_description">Each level earns you one point to assign to an attribute of your choice. You can do so manually, or let the game decide for you using one of the Automatic Allocation options.</string>
+    <string name="strength">Strength</string>
+    <string name="strength_description">Increases the bonus of critical hits and makes them more likely when scoring a task. Also increases damage dealt to bosses.</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="intelligence_description">Increases EXP earned from completing tasks. Also increases your mana cap and how fast mana regenerates over time.</string>
+    <string name="constitution">Constitution</string>
+    <string name="constitution_description">Decreases the amount of damage taken from your tasks. Does not decrease the damage received from bosses.</string>
+    <string name="perception">Perception</string>
+    <string name="perception_description">Increases the likelihood of finding drops when completing Tasks, the daily drop-cap, Streak Bonuses, and the amount of gold awarded for Tasks.</string>
+    <string name="buffs">Buffs</string>
+    <string name="allocated">Allocated</string>
+    <string name="distribute_evenly">Distribute Evenly</string>
+    <string name="distribute_class">Distribute based on class</string>
+    <string name="distribute_task">Distribute based on task activity</string>
+    <string name="no_points_to_allocate">No Points to Allocate</string>
+    <string name="points_to_allocate" formatted="false">%d Points to Allocate</string>
+    <string name="distribute_evenly_help">Assigns the same number of points to each attribute.</string>
+    <string name="distribute_class_help">Assigns more points to the attributes important to your Class.</string>
+    <string name="distribute_task_help">Assigns points based on the Strength, Intelligence, Constitution, and Perception categories associated with the tasks you complete.</string>
 </resources>

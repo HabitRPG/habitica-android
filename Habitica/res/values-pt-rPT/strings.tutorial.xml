@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Complete os Hábitos Positivos para ganhar ouro e experiência! Hábitos Negativos irão magoar o seu avatar se tocar neles, por isso evite-os na vida real!</string>
-  <string name="tutorial_dailies">Vença as suas tarefas Diárias repetitivas para ganhar ouro e experiência. Perigo! As Tarefas Diárias irão magoar o seu avatar se não as completar a tempo.</string>
-  <string name="tutorial_todos">Complete os seus Afazeres na vida real, depois verifique-os para o OURO e EXPERIÊNCIA, e assim pode ganhar Recompensas e desbloquear novas funcionalidades!</string>
-  <string name="tutorial_rewards">Estas são as suas Recompensas! Ganhe ouro completando os Hábitos, Tarefas  e Afazeres do mundo real. Depois gaste-os nas Recompensas do jogo ou em Recompensas do mundo real personalizadas!</string>
   <string name="tutorial_equipment">Quando comprar equipamento, este aparece aqui. O seu Equipamento de Batalha afeta as suas estatísticas, e o seu Vestuário (se ativado) afeta o que o seu avatar pode vestir.</string>
   <string name="tutorial_items">Ganhe itens completando as tarefas e subindo de nível. Toque num item para o usar!</string>
   <string name="tutorial_pets">Ao completar as suas tarefas do mundo real, tem agora uma hipótese de aleatória para encontrar ovos e poções. Combina-os para gerar animais</string>

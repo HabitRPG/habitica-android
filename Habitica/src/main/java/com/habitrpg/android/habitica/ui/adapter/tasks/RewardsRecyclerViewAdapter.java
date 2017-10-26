@@ -1,106 +1,124 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.content.Context;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 
-import rx.Observable;
+import io.realm.OrderedRealmCollection;
 
-public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<RewardViewHolder> {
+public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements TaskRecyclerViewAdapter {
+    private static int VIEWTYPE_CUSTOM_REWARD = 0;
+    private static int VIEWTYPE_HEADER = 1;
+    private static int VIEWTYPE_IN_APP_REWARD = 2;
 
-    private final ContentCache contentCache;
-    private final HabitRPGUser user;
-    private ApiClient apiClient;
 
-    public RewardsRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, HabitRPGUser user, ApiClient apiClient) {
-        super(taskType, taskFilterHelper, layoutResource, newContext, user != null ? user.getId() : null);
+    private final Context context;
+    private OrderedRealmCollection<Task> customRewards;
+    private OrderedRealmCollection<ShopItem> inAppRewards;
+    private final int layoutResource;
+    @Nullable
+    private User user;
+
+    public RewardsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, Context context, int layoutResource, @Nullable User user) {
+        this.context = context;
+        this.layoutResource = layoutResource;
+        this.customRewards = data;
         this.user = user;
-        this.apiClient = apiClient;
-        this.contentCache = new ContentCache(apiClient);
+    }
+
+        private View getContentView(ViewGroup parent) {
+        return LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
     }
 
     @Override
-    public RewardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RewardViewHolder(getContentView(parent));
-    }
-
-    private void loadEquipmentRewards() {
-        if (apiClient != null) {
-            apiClient.getInventoryBuyableGear()
-                    .flatMap(items -> {
-                        // get itemdata list
-                        ArrayList<String> itemKeys = new ArrayList<>();
-                        for (ItemData item : items) {
-                            itemKeys.add(item.key);
-                        }
-                        itemKeys.add("potion");
-                        if (user.getFlags().getArmoireEnabled()) {
-                            itemKeys.add("armoire");
-                        }
-                        return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> contentCache.getItemDataList(itemKeys, obj -> {
-                            ArrayList<Task> buyableItems = new ArrayList<>();
-                            if (obj != null) {
-                                for (ItemData item : obj) {
-                                    Task reward = new Task();
-                                    reward.text = item.text;
-                                    reward.notes = item.notes;
-                                    reward.value = item.value;
-                                    reward.setType("reward");
-                                    reward.specialTag = "item";
-                                    reward.setId(item.key);
-
-                                    if ("armoire".equals(item.key)) {
-                                        if (user.getFlags().getArmoireEmpty()) {
-                                            reward.notes = context.getResources().getString(R.string.armoireNotesEmpty);
-                                        } else {
-                                            long gearCount = new Select().count()
-                                                    .from(ItemData.class)
-                                                    .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
-                                                            .and(Condition.column("owned").isNull())
-                                                    ).count();
-                                            reward.notes = context.getResources().getString(R.string.armoireNotesFull, gearCount);
-                                        }
-                                    }
-
-                                    buyableItems.add(reward);
-                                }
-                            }
-                            subscriber.onNext(buyableItems);
-                            subscriber.onCompleted();
-                        }));
-                    })
-                    .subscribe(items -> {
-                        this.filteredContent.addAll(items);
-                        notifyDataSetChanged();
-                    }, throwable -> {
-                    });
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == VIEWTYPE_CUSTOM_REWARD) {
+            return new RewardViewHolder(getContentView(parent));
+        } else {
+            return new ShopItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row_shopitem, parent, false));
         }
     }
 
     @Override
-    protected void injectThis(AppComponent component) {
-        HabiticaBaseApplication.getComponent().inject(this);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (customRewards != null && position < customRewards.size()) {
+            Task reward = customRewards.get(position);
+            Double gold = 0.0;
+            if (user != null && user.getStats() != null) {
+                gold = user.getStats().getGp();
+            }
+            ((RewardViewHolder)holder).bindHolder(reward, position, reward.value < gold);
+        } else if (inAppRewards != null) {
+            ShopItem item = inAppRewards.get(position-getCustomRewardCount());
+            ((ShopItemViewHolder)holder).bind(item, item.canBuy(user));
+            ((ShopItemViewHolder)holder).setIsPinned(true);
+            ((ShopItemViewHolder)holder).pinIndicator.setVisibility(View.GONE);
+        }
     }
 
     @Override
-    public void setTasks(List<Task> tasks) {
-        super.setTasks(tasks);
-        this.loadEquipmentRewards();
+    public int getItemViewType(int position) {
+        if (customRewards != null && position < customRewards.size()) {
+            return VIEWTYPE_CUSTOM_REWARD;
+        } else {
+            return VIEWTYPE_IN_APP_REWARD;
+        }
+    }
+
+    @Override
+    public void setIgnoreUpdates(boolean ignoreUpdates) {
+
+    }
+
+    @Override
+    public boolean getIgnoreUpdates() {
+        return false;
+    }
+
+    @Override
+    public int getItemCount() {
+        int rewardCount = getCustomRewardCount();
+        rewardCount += getInAppRewardCount();
+        return rewardCount;
+    }
+
+    private int getInAppRewardCount() {
+        return inAppRewards != null ? inAppRewards.size() : 0;
+    }
+
+    private int getCustomRewardCount() {
+        return customRewards != null ? customRewards.size() : 0;
+    }
+
+    @Override
+    public void updateData(OrderedRealmCollection<Task> data) {
+        this.customRewards = data;
+        notifyDataSetChanged();
+    }
+
+    public void updateItemRewards(OrderedRealmCollection<ShopItem> items) {
+        if (items.size() > 0) {
+            if (Task.class.isAssignableFrom(items.first().getClass())) {
+                //this catches a weird bug where the observable gets a list of tasks for no apparent reason.
+                return;
+            }
+        }
+        this.inAppRewards = items;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void filter() {
     }
 }

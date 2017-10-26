@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.setup;
 
 
-import com.habitrpg.android.habitica.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
@@ -14,14 +12,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AvatarCategoryView extends LinearLayout {
 
     private final Drawable icon;
-    @BindView(R.id.icon_view)
-    ImageView iconView;
     @BindView(R.id.text_view)
     TextView textView;
 
@@ -40,7 +38,7 @@ public class AvatarCategoryView extends LinearLayout {
 
         icon = a.getDrawable(R.styleable.AvatarCategoryView_iconDrawable);
         if (icon != null) {
-            iconView.setImageDrawable(icon);
+            textView.setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null);
         }
         setActive(false);
     }
@@ -55,7 +53,7 @@ public class AvatarCategoryView extends LinearLayout {
         textView.setTextColor(color);
         if (icon != null) {
             icon.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-            iconView.setImageDrawable(icon);
+            textView.setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null);
         }
     }
 }

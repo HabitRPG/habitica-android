@@ -2,40 +2,43 @@ package com.habitrpg.android.habitica.data;
 
 import android.support.annotation.Nullable;
 
-import com.habitrpg.android.habitica.ErrorResponse;
 import com.habitrpg.android.habitica.models.AchievementResult;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.ContentResult;
-import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
-import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.PurchaseValidationResult;
-import com.habitrpg.android.habitica.models.inventory.Quest;
-import com.habitrpg.android.habitica.models.shops.Shop;
-import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
+import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.responses.HabitResponse;
+import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.responses.Status;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import retrofit2.HttpException;
 import rx.Observable;
+
 
 public interface ApiClient {
     void setLanguageCode(String languageCode);
@@ -47,13 +50,14 @@ public interface ApiClient {
 
     /* user API */
 
-    Observable<HabitRPGUser> getUser();
+    Observable<User> getUser();
 
-    Observable<HabitRPGUser> updateUser(Map<String, Object> updateDictionary);
+    Observable<User> updateUser(Map<String, Object> updateDictionary);
 
-    Observable<HabitRPGUser> registrationLanguage(String registrationLanguage);
+    Observable<User> registrationLanguage(String registrationLanguage);
 
-    Observable<List<ItemData>> getInventoryBuyableGear();
+    Observable<List<ShopItem>> retrieveInAppRewards();
+    Observable<List<ShopItem>> retrieveOldGear();
 
     Observable<Items> equipItem(String type, String itemKey);
 
@@ -68,7 +72,7 @@ public interface ApiClient {
     Observable<Void> purchaseQuest(String key);
     Observable<Void> validateSubscription(SubscriptionValidationRequest request);
 
-    Observable<HabitRPGUser> sellItem(String itemType, String itemKey);
+    Observable<User> sellItem(String itemType, String itemKey);
 
     Observable<FeedResponse> feedPet(String petKey, String foodKey);
 
@@ -76,6 +80,9 @@ public interface ApiClient {
 
 
     Observable<TaskList> getTasks();
+    Observable<TaskList> getTasks(String type);
+    Observable<TaskList> getTasks(String type, String dueDate);
+
 
     Observable<UnlockResponse> unlockPath(String path);
 
@@ -83,11 +90,11 @@ public interface ApiClient {
 
     Observable<TaskDirectionData> postTaskDirection(String id, String direction);
 
-    Observable<ArrayList<String>> postTaskNewPosition(String id, String position);
+    Observable<List<String>> postTaskNewPosition(String id, int position);
 
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
-    Observable<Task> createItem(Task item);
+    Observable<Task> createTask(Task item);
 
     Observable<List<Task>> createTasks(List<Task> tasks);
 
@@ -109,17 +116,17 @@ public interface ApiClient {
     Observable<UserAuthResponse> connectSocial(String network, String userId, String accessToken);
     Observable<Boolean> sleep();
 
-    Observable<HabitRPGUser> revive();
+    Observable<User> revive();
 
     Observable<SkillResponse> useSkill(String skillName, String targetType, String targetId);
 
     Observable<SkillResponse> useSkill(String skillName, String targetType);
 
-    Observable<HabitRPGUser> changeClass();
+    Observable<User> changeClass();
 
-    Observable<HabitRPGUser> changeClass(String className);
+    Observable<User> changeClass(String className);
 
-    Observable<HabitRPGUser> disableClasses();
+    Observable<User> disableClasses();
 
     Observable<Void> markPrivateMessagesRead();
 
@@ -141,9 +148,9 @@ public interface ApiClient {
 
     Observable<Void> deleteMessage(String groupId, String messageId);
 
-    Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields);
+    Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields);
 
-    Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId);
+    Observable<List<Member>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId);
 
     // Like returns the full chat list
     Observable<ChatMessage> likeMessage(String groupId, String mid);
@@ -152,7 +159,7 @@ public interface ApiClient {
 
     Observable<Void> seenMessages(String groupId);
 
-    Observable<Void> inviteToGroup(String groupId, Map<String, Object> inviteData);
+    Observable<List<Void>> inviteToGroup(String groupId, Map<String, Object> inviteData);
 
     Observable<Void> rejectGroupInvite(String groupId);
 
@@ -172,10 +179,10 @@ public interface ApiClient {
 
     Observable<PurchaseValidationResult> validatePurchase(PurchaseValidationRequest request);
 
-    Observable<HabitRPGUser> changeCustomDayStart(Map<String, Object> updateObject);
+    Observable<User> changeCustomDayStart(Map<String, Object> updateObject);
 
     //Members URL
-    Observable<HabitRPGUser> getMember(String memberId);
+    Observable<Member> getMember(String memberId);
 
     Observable<AchievementResult> getMemberAchievements(String memberId);
 
@@ -184,13 +191,13 @@ public interface ApiClient {
     Observable<Shop> fetchShopInventory(String identifier);
 
     //Push notifications
-    Observable<Void> addPushDevice(Map<String, String> pushDeviceData);
+    Observable<List<Void>> addPushDevice(Map<String, String> pushDeviceData);
 
-    Observable<Void> deletePushDevice(String regId);
+    Observable<List<Void>> deletePushDevice(String regId);
 
     /* challenges api */
 
-    Observable<ArrayList<Challenge>> getUserChallenges();
+    Observable<List<Challenge>> getUserChallenges();
 
     Observable<TaskList> getChallengeTasks(String challengeId);
 
@@ -200,9 +207,9 @@ public interface ApiClient {
 
     Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body);
 
+
     Observable<Challenge> createChallenge(Challenge challenge);
 
-    Observable<Task> createChallengeTask(String challengeId, Task task);
     Observable<List<Task>> createChallengeTasks(String challengeId, List<Task> tasks);
     Observable<Challenge> updateChallenge(Challenge challenge);
     Observable<Void> deleteChallenge(String challengeId);
@@ -212,7 +219,7 @@ public interface ApiClient {
     Observable<Void> debugAddTenGems();
 
     // Notifications
-    Observable<Void> readNotificaiton(String notificationId);
+    Observable<List> readNotification(String notificationId);
 
     ErrorResponse getErrorResponse(HttpException throwable);
 
@@ -220,9 +227,26 @@ public interface ApiClient {
 
     boolean hasAuthenticationKeys();
 
-    Observable<HabitRPGUser> retrieveUser(boolean withTasks);
+    Observable<User> retrieveUser(boolean withTasks);
 
     <T> Observable.Transformer<HabitResponse<T>, T> configureApiCallObserver();
 
-    Observable<ItemData> openMysteryItem();
+    Observable<Equipment> openMysteryItem();
+
+    Observable<Void> runCron();
+
+    Observable<Void> resetAccount();
+    Observable<Void> deleteAccount(String password);
+
+    Observable<Void> togglePinnedItem(String pinType, String path);
+
+    Observable<Void> sendPasswordResetEmail(String email);
+
+    Observable<Void> updateLoginName(String newLoginName, String password);
+
+    Observable<Void> updateEmail(String newEmail, String password);
+
+    Observable<Void> updatePassword(String newPassword, String oldPassword, String oldPasswordConfirmation);
+
+    Observable<Stats> allocatePoint(String stat);
 }

@@ -46,7 +46,34 @@
                     android:minHeight="?attr/actionBarSize"
                     android:theme="@style/Toolbar"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/Theme.AppCompat.Light" />
+                    app:popupTheme="@style/Theme.AppCompat.Light">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="16dp">
+
+                        <TextView
+                            android:id="@+id/toolbar_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                            tools:text="Habitica"/>
+
+                        <FrameLayout
+                            android:id="@+id/toolbar_accessory_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:adjustViewBounds="true"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"/>
+
+                    </RelativeLayout>
+                    </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
 
             <android.support.design.widget.TabLayout
@@ -69,6 +96,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/bottom_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

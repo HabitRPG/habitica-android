@@ -17,10 +17,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
@@ -28,12 +26,13 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.views.FadingViewPager;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Task;
 import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;
 
@@ -52,7 +51,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 
-public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
+public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     @Inject
     public ApiClient apiClient;
@@ -73,7 +72,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     AvatarSetupFragment avatarSetupFragment;
     TaskSetupFragment taskSetupFragment;
     @Nullable
-    HabitRPGUser user;
+    User user;
     boolean completedSetup = false;
 
     @Override
@@ -84,7 +83,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userRepository.getUser(hostConfig.getUser())
+        compositeSubscription.add(userRepository.getUser(hostConfig.getUser())
                 .flatMap(user -> {
                     if (user == null) {
                         return userRepository.retrieveUser(true);
@@ -92,9 +91,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
                         return Observable.just(user);
                     }
                 })
-                .subscribe(this::onUserReceived, throwable -> {
-
-        });
+                .subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError()));
 
         Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("status", "displayed");
@@ -104,8 +101,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         for (String language : getResources().getStringArray(R.array.LanguageValues)) {
             if (language.equals(currentDeviceLanguage)) {
                 apiClient.registrationLanguage(currentDeviceLanguage)
-                        .subscribe(habitRPGUser -> {}, throwable -> {
-                        });
+                        .subscribe(habitRPGUser -> {}, RxErrorHandler.handleEmptyError());
             }
         }
 
@@ -129,15 +125,9 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+    protected void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
     }
 
     private void setupViewpager() {
@@ -152,15 +142,13 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
         this.userRepository.updateUser(user, event.updateData)
-                .subscribe(this::onUserReceived, throwable -> {
-                });
+                .subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError());
     }
 
     @Subscribe
     public void onEvent(EquipCommand event) {
         this.apiClient.equipItem(event.type, event.key)
-                .subscribe(new ItemsCallback(this, this.user), throwable -> {
-                });
+                .subscribe(items -> {}, RxErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.nextButton)
@@ -171,12 +159,13 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
                 Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
         editor.apply();
         if (isLastPage()) {
+            if (this.taskSetupFragment == null) {
+                return;
+            }
             List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
             this.completedSetup = true;
             this.taskRepository.createTasks(newTasks)
-                    .subscribe(tasks -> onUserReceived(user), throwable -> {
-                    });
-            //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
+                    .subscribe(tasks -> onUserReceived(user), RxErrorHandler.handleEmptyError());
         }
         this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
     }
@@ -222,9 +211,11 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
     }
 
-    @Override
-    public void onUserReceived(HabitRPGUser user) {
+    public void onUserReceived(User user) {
         if (completedSetup) {
+            if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
+                compositeSubscription.unsubscribe();
+            }
             this.startMainActivity();
             return;
         }
@@ -298,6 +289,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private boolean isLastPage() {
-        return this.pager == null || this.pager.getCurrentItem() == this.pager.getAdapter().getCount() - 1;
+        return this.pager == null || this.pager.getAdapter() == null || this.pager.getCurrentItem() == this.pager.getAdapter().getCount() - 1;
     }
 }

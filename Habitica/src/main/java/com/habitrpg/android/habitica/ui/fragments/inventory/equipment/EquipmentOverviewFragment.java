@@ -1,18 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding;
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,14 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EquipmentOverviewFragment extends BaseMainFragment implements TransactionListener<List<ItemData>> {
+public class EquipmentOverviewFragment extends BaseMainFragment {
+
+    @Inject
+    InventoryRepository inventoryRepository;
 
     FragmentEquipmentOverviewBinding viewBinding;
 
@@ -66,7 +64,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_equipment_overview, container, false);
 
-        if (this.user == null) {
+        if (this.user == null || !this.user.isManaged()) {
             return v;
         }
 
@@ -114,22 +112,29 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         costumeWeaponView.setOnClickListener(v1 -> displayEquipmentDetailList("weapon", user.getItems().getGear().getCostume().getWeapon(), true));
         costumeShieldView.setOnClickListener(v1 -> displayEquipmentDetailList("shield", user.getItems().getGear().getCostume().getShield(), true));
 
-        this.costumeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            UpdateUserCommand command = new UpdateUserCommand();
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.costume", isChecked);
-            command.updateData = updateData;
-
-            EventBus.getDefault().post(command);
-        });
+        this.costumeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(user1 -> {}, RxErrorHandler.handleEmptyError()));
 
         if (this.nameMapping == null) {
-            new Select().from(ItemData.class).where(Condition.column("owned").eq(true)).async().queryList(this);
+            inventoryRepository.getOwnedEquipment().subscribe(items -> {
+                this.nameMapping = new HashMap<>();
+
+                for (Equipment gear : items) {
+                    this.nameMapping.put(gear.key, gear.text);
+                }
+
+                this.viewBinding.setEquipmentNames(this.nameMapping);
+            }, RxErrorHandler.handleEmptyError());
         } else {
             this.viewBinding.setEquipmentNames(this.nameMapping);
         }
 
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        inventoryRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -142,32 +147,16 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         fragment.type = type;
         fragment.isCostume = isCostume;
         fragment.equippedGear = equipped;
-        activity.displayFragment(fragment);
-    }
-
-    @Override
-    public void onResultReceived(List<ItemData> result) {
-        this.nameMapping = new HashMap<>();
-
-        for (ItemData gear : result) {
-            this.nameMapping.put(gear.key, gear.text);
+        if (activity != null) {
+            activity.displayFragment(fragment);
         }
-
-        this.viewBinding.setEquipmentNames(this.nameMapping);
-    }
-
-    @Override
-    public boolean onReady(BaseTransaction<List<ItemData>> transaction) {
-        return true;
-    }
-
-    @Override
-    public boolean hasResult(BaseTransaction<List<ItemData>> transaction, List<ItemData> result) {
-        return true;
     }
 
     @Override
     public String customTitle() {
+        if (!isAdded()) {
+            return "";
+        }
         return getString(R.string.sidebar_equipment);
     }
 

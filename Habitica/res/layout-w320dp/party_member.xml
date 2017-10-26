@@ -72,6 +72,7 @@
                             android:layout_margin="5dp"
                             android:ellipsize="middle"
                             android:lines="1"
+                            android:singleLine="true"
                             android:text="class"
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -79,9 +80,13 @@
             </LinearLayout>
 
 
-            <include
+            <com.habitrpg.android.habitica.ui.views.ValueBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/hpBar"
-                layout="@layout/value_bar" />
+                app:barForegroundColor="@color/hpColor"
+                app:description="@string/HP_default"
+                app:lightBackground="true"/>
         </LinearLayout>
 
     </LinearLayout>

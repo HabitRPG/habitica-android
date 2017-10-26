@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="class_healer">@color/neutral_100</color>
-    <color name="class_warrior">@color/worse_100</color>
-    <color name="class_wizard">@color/best_100</color>
+    <color name="class_healer">@color/yellow_100</color>
+    <color name="class_warrior">@color/red_100</color>
+    <color name="class_wizard">@color/blue_100</color>
     <color name="class_rogue">@color/brand_100</color>
 </resources>

@@ -1,23 +1,13 @@
 package com.habitrpg.android.habitica.models.tasks;
 
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ModelContainer;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-@ModelContainer
-@Table(databaseName = HabitDatabase.NAME)
-public class TaskGroupPlan extends BaseModel {
+public class TaskGroupPlan extends RealmObject {
 
-    @Column
     @PrimaryKey
-    @NotNull
     String task_id;
 
-    @Column
     public boolean approvalRequested, approvalApproved, approvalRequired;
 }

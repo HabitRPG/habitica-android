@@ -2,11 +2,13 @@ package com.habitrpg.android.habitica.ui.fragments.skills;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-
-import org.greenrobot.eventbus.EventBus;
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,31 +18,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SkillTasksRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
-    public RecyclerView mRecyclerView;
-    public RecyclerView.Adapter mAdapter;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import butterknife.BindView;
+import rx.Observable;
+
+public class SkillTasksRecyclerViewFragment extends BaseFragment {
+    @Inject
+    TaskRepository taskRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
+
+    @BindView(R.id.recyclerView)
+    public RecyclerView recyclerView;
+    public SkillTasksRecyclerViewAdapter adapter;
     LinearLayoutManager layoutManager = null;
-    private String classType;
+    public String taskType;
     private View view;
 
-    public static SkillTasksRecyclerViewFragment newInstance(SkillTasksRecyclerViewAdapter adapter, String classType) {
-        SkillTasksRecyclerViewFragment fragment = new SkillTasksRecyclerViewFragment();
-        fragment.setRetainInstance(true);
-
-        fragment.SetInnerAdapter(adapter, classType);
-
-        return fragment;
-    }
-
-    public void SetInnerAdapter(SkillTasksRecyclerViewAdapter adapter, String classType) {
-        this.classType = classType;
-        mAdapter = adapter;
+    public SkillTasksRecyclerViewFragment() {
+        super();
+        adapter = new SkillTasksRecyclerViewAdapter(null, true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        }
 
         return view;
     }
@@ -53,27 +60,21 @@ public class SkillTasksRecyclerViewFragment extends BaseFragment implements View
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-        android.support.v4.app.FragmentActivity context = getActivity();
+        taskRepository.getTasks(taskType, userId).first().subscribe(tasks -> adapter.updateData(tasks), RxErrorHandler.handleEmptyError());
+        recyclerView.setAdapter(adapter);
 
-        layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
         if (layoutManager == null) {
-            layoutManager = new LinearLayoutManager(context);
+            layoutManager = new LinearLayoutManager(getContext());
 
-            mRecyclerView.setLayoutManager(layoutManager);
+            recyclerView.setLayoutManager(layoutManager);
         }
-
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
     }
 
-    @Override
-    public void onClick(View v) {
-        AddNewTaskCommand event = new AddNewTaskCommand();
-        event.ClassType = this.classType;
-
-        EventBus.getDefault().post(event);
+    public Observable<Task> getTaskSelectionEvents() {
+        return adapter.getTaskSelectionEvents();
     }
-
 }

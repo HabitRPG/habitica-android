@@ -1,35 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/PS_contact_title" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:title="@string/PS_contact_title">
 
     <PreferenceCategory
         android:title="@string/pref_account_header"
         android:key="account_prefs">
 
+        <PreferenceScreen android:title="@string/profile"
+            android:summary="@string/profile_summary"
+            android:key="profile">
+                <EditTextPreference android:key="display_name"
+                    android:title="@string/display_name" />
+                <EditTextPreference android:key="photo_url"
+                    android:title="@string/photo_url" />
+                <EditTextPreference android:key="about"
+                    android:title="@string/about" />
+        </PreferenceScreen>
+
         <PreferenceScreen
-            android:key="accountDetails"
-            android:title="@string/account_details"
-            android:summary="@string/account_details_sum"
-            android:order="1">
-
-            <PreferenceCategory android:title="Account Details">
-
+            android:key="authentication"
+            android:title="@string/authentication"
+            android:summary="@string/authentication_summary"
+            app:key="authentication">
                 <Preference
-                    android:key="@string/SP_username"
-                    android:title="Login Name"
+                    android:key="login_name"
+                    android:title="@string/login_name"
                     android:selectable="true"
                     android:persistent="false"
-                    android:shouldDisableView="false"
-                    android:summary="Login Name" />
+                    android:shouldDisableView="false" />
 
                 <Preference
-                    android:key="@string/SP_email"
-                    android:title="E-mail"
+                    android:key="email"
+                    android:title="@string/email"
                     android:selectable="true"
                     android:persistent="false"
-                    android:shouldDisableView="false"
-                    android:summary="E-mail" />
+                    android:shouldDisableView="false"/>
+                <Preference
+                        android:key="subscription_status"
+                        android:title="@string/subscription_status"
+                        android:selectable="true"
+                        android:persistent="false"
+                        android:shouldDisableView="false"/>
+            <PreferenceCategory android:title="@string/danger_zone">
+                <Preference android:title="@string/reset_account"
+                    android:key="reset_account" />
+                <Preference android:title="@string/delete_account"
+                    android:key="delete_account" />
+            </PreferenceCategory>
+        </PreferenceScreen>
 
+        <PreferenceScreen android:title="API"
+            android:key="api">
                 <Preference
                     android:key="@string/SP_userID"
                     android:title="@string/SP_userID_title"
@@ -53,48 +76,40 @@
                     android:persistent="false"
                     android:shouldDisableView="false"
                     android:summary="@string/SP_user_qr_code"/>
-                <Preference
-                        android:key="subscription_status"
-                        android:title="@string/subscription_status"
-                        android:selectable="true"
-                        android:persistent="false"
-                        android:shouldDisableView="false"/>
-            </PreferenceCategory>
-
         </PreferenceScreen>
 
         <Preference
             android:key="choose_class"
-            android:order="2"/>
+            tools:title="Change Class"/>
+        <Preference android:title="@string/fix_character_values"
+            app:key="fixCharacterValues"/>
+        <Preference android:title="@string/logout"
+            android:key="logout"
+            android:summary="@string/logout_description"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/app_settings">
         <ListPreference android:title="@string/pref_first_day_of_the_week_title"
             android:key="@string/pref_first_day_of_the_week_key"
             android:entries="@array/weekdays"
             android:entryValues="@array/weekdayValues"
-            android:summary="@string/pref_first_day_of_the_week_summary"
-            android:order="5"/>
+            android:summary="@string/pref_first_day_of_the_week_summary"/>
         <ListPreference android:title="@string/Language_title"
             android:key="language"
             android:entries="@array/Language"
             android:entryValues="@array/LanguageValues"
-            android:summary="@string/Language_summary"
-            android:order="4"/>
+            android:summary="@string/Language_summary"/>
         <ListPreference android:title="@string/AudioTheme_title"
             android:key="audioTheme"
             android:entries="@array/AudioThemes"
             android:entryValues="@array/AudioValues"
-            android:summary="@string/AudioTheme_summary"
-            android:order="3"/>
+            android:summary="@string/AudioTheme_summary"/>
         <CheckBoxPreference android:title="@string/dailyDueDefaultView"
             android:key="dailyDueDefaultView"
-            android:order="6"
             android:summary="@string/dailyDueDefaultViewDescription"
             />
-        <Preference android:title="@string/logout"
-            android:key="logout"
-            android:summary="@string/logout_description"
-            android:order="99"/>
-
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -133,8 +148,7 @@
         <PreferenceScreen
             android:key="pushNotifications"
             android:title="@string/push_notifications"
-            android:summary="@string/push_notifications_sum"
-            android:order="1">
+            android:summary="@string/push_notifications_sum">
 
             <PreferenceCategory android:title="Push Notifications">
 
@@ -188,8 +202,7 @@
     <PreferenceCategory
         android:title="@string/maintenance">
         <Preference android:title="@string/reload_content"
-            android:key="reload_content"
-            android:order="99"/>
+            android:key="reload_content"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

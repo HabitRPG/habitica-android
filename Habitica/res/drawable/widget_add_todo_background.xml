@@ -5,7 +5,7 @@
 
     <!-- view background color -->
     <solid
-        android:color="@color/worse_10" >
+        android:color="@color/red_10" >
     </solid>
 
 </shape>

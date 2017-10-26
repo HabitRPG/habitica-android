@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,13 +8,32 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import butterknife.BindView;
 
-public class HabitButtonWidgetActivity extends BaseActivity implements TaskClickActivity {
+public class HabitButtonWidgetActivity extends BaseActivity {
+
+    @Inject
+    TaskRepository taskRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private int widgetId;
+    private SkillTasksRecyclerViewAdapter adapter;
 
     @Override
     protected int getLayoutResId() {
@@ -56,10 +69,13 @@ public class HabitButtonWidgetActivity extends BaseActivity implements TaskClick
             recyclerView.setLayoutManager(layoutManager);
         }
 
-        recyclerView.setAdapter(new SkillTasksRecyclerViewAdapter(Task.TYPE_HABIT, this));
+        adapter = new SkillTasksRecyclerViewAdapter(null, true);
+        compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe(task -> taskSelected(task.getId()), RxErrorHandler.handleEmptyError()));
+        recyclerView.setAdapter(adapter);
+
+        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
     }
 
-    @Override
     public void taskSelected(String taskId) {
         finishWithSelection(taskId);
     }
