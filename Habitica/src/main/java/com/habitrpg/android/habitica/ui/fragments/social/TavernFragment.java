@@ -84,12 +84,6 @@ public class TavernFragment extends BaseMainFragment {
                                 TavernFragment.this.tabLayout.setVisibility(View.VISIBLE);
                                 TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
                             }
-
-                            inventoryRepository.getQuestContent(group.quest.key).first().subscribe(content -> {
-                                if (questInfoFragment != null) {
-                                    questInfoFragment.setQuestContent(content);
-                                }
-                            }, RxErrorHandler.handleEmptyError());
                         }
                     }, RxErrorHandler.handleEmptyError()));
         }
@@ -120,7 +114,7 @@ public class TavernFragment extends BaseMainFragment {
                         break;
                     }
                     case 2: {
-                        fragment = questInfoFragment = GroupInformationFragment.newInstance(tavern, user);
+                        fragment = questInfoFragment = GroupInformationFragment.Companion.newInstance(tavern, user);
                         break;
                     }
                     default:

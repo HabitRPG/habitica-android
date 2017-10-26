@@ -1,77 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbarSize="3dp"
+    android:scrollbarThumbVertical="@color/md_grey_500"
+    android:scrollbars="vertical"
+    android:paddingTop="@dimen/row_padding">
 
-    <data>
-        <import type="java.util.Map"/>
-        <import type="com.habitrpg.android.habitica.models.user.Outfit" />
-        <import type="android.view.View" />
-
-        <variable
-            name="currentBattleGear"
-            type="Outfit" />
-        <variable
-            name="currentCostume"
-            type="Outfit" />
-        <variable
-            name="usingCostume"
-            type="Boolean" />
-        <variable
-            name="equipmentNames"
-            type="Map&lt;String, String>" />
-    </data>
-
-
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarSize="3dp"
-        android:scrollbarThumbVertical="@color/md_grey_500"
-        android:scrollbars="vertical"
-        android:paddingTop="@dimen/row_padding">
-
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="?attr/actionBarSize">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SectionTitle"
+            android:text="@string/battle_gear"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="?attr/actionBarSize">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/SectionTitle"
-                android:text="@string/battle_gear"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-            <include layout="@layout/equipment_overview_list"
-                android:id="@+id/battle_gear_group"
-                bind:outfit="@{currentBattleGear}"
-                bind:equipmentNames="@{equipmentNames}" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/SectionTitle"
-                android:text="@string/costume"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+            style="@style/CardView.Default">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/row_padding">
-                <TextView
-                    android:layout_width="0dp"
+                android:orientation="vertical"
+                android:divider="?android:listDivider"
+                android:showDividers="middle">
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/battleGearHeadView"
+                    app:equipmentTitle="@string/outfit_head"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/wear_costume"/>
-
-                <Switch
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                         android:id="@+id/battleGearHeadAccessoryView"
+                         app:equipmentTitle="@string/outfit_headAccessory"
+                         android:layout_height="wrap_content"
+                         android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                         android:id="@+id/battleGearEyewearView"
+                         app:equipmentTitle="@string/outfit_eyewear"
+                         android:layout_height="wrap_content"
+                         android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                         android:id="@+id/battleGearArmorView"
+                         app:equipmentTitle="@string/outfit_armor"
+                         android:layout_height="wrap_content"
+                         android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                         android:id="@+id/battleGearBackView"
+                         app:equipmentTitle="@string/outfit_back"
+                         android:layout_height="wrap_content"
+                         android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                         android:id="@+id/battleGearBodyView"
+                         app:equipmentTitle="@string/outfit_body"
+                         android:layout_height="wrap_content"
+                         android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                         android:id="@+id/battleGearWeaponView"
+                         app:equipmentTitle="@string/outfit_weapon"
+                         android:layout_height="wrap_content"
+                         android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/battleGearShieldView"
+                    app:equipmentTitle="@string/outfit_shield"
                     android:layout_height="wrap_content"
-                    android:id="@+id/costume_switch"
-                    android:checked="@{usingCostume}"/>
-
+                    android:layout_width="match_parent"/>
             </LinearLayout>
-            <include layout="@layout/equipment_overview_list"
-                android:id="@+id/costume_group"
-                bind:outfit="@{currentCostume}"
-                bind:equipmentNames="@{equipmentNames}" />
+        </android.support.v7.widget.CardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SectionTitle"
+            android:text="@string/costume"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/row_padding">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/wear_costume"/>
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/costumeSwitch"/>
+
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</layout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CardView.Default">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:divider="?android:listDivider"
+                android:showDividers="middle">
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/costumeHeadView"
+                    app:equipmentTitle="@string/outfit_head"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/costumeHeadAccessoryView"
+                    app:equipmentTitle="@string/outfit_headAccessory"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/costumeEyewearView"
+                    app:equipmentTitle="@string/outfit_eyewear"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/costumeArmorView"
+                    app:equipmentTitle="@string/outfit_armor"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/costumeBackView"
+                    app:equipmentTitle="@string/outfit_back"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/costumeBodyView"
+                    app:equipmentTitle="@string/outfit_body"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/costumeWeaponView"
+                    app:equipmentTitle="@string/outfit_weapon"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:id="@+id/costumeShieldView"
+                    app:equipmentTitle="@string/outfit_shield"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

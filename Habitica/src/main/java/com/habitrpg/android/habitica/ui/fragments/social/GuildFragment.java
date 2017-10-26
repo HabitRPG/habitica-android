@@ -146,7 +146,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
                 switch (position) {
                     case 0: {
-                        fragment = guildInformationFragment = GroupInformationFragment.newInstance(GuildFragment.this.guild, user);
+                        fragment = guildInformationFragment = GroupInformationFragment.Companion.newInstance(GuildFragment.this.guild, user);
                         break;
                     }
                     case 1: {

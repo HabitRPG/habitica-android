@@ -258,8 +258,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         setupToolbar(toolbar);
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
-        accountHeader = MainDrawerBuilder.INSTANCE.CreateDefaultAccountHeader(this).build();
-        drawer = MainDrawerBuilder.INSTANCE.CreateDefaultBuilderSettings(this, sharedPreferences, toolbar, accountHeader)
+        accountHeader = MainDrawerBuilder.INSTANCE.createDefaultAccountHeader(this).build();
+        drawer = MainDrawerBuilder.INSTANCE.createDefaultBuilderSettings(this, sharedPreferences, toolbar, accountHeader)
                 .build();
         drawer.setSelectionAtPosition(1, false);
         sideAvatarView = new AvatarView(this, true, false, false);

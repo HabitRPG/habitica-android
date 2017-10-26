@@ -59,8 +59,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //Dependency Injection
-    implementation 'com.google.dagger:dagger:2.11'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    implementation 'com.google.dagger:dagger:2.12'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
     //App Compatibility and Material Design
     implementation('com.mikepenz:materialdrawer:5.8.3@aar') {
@@ -235,10 +235,6 @@ android {
             include 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
             universalApk true
         }
-    }
-
-    dataBinding {
-        enabled = true
     }
 }
 

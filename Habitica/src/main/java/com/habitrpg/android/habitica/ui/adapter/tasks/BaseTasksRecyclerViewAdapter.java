@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import android.content.Context;
-import android.databinding.ObservableArrayList;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -109,7 +108,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         if (this.taskFilterHelper == null || this.taskFilterHelper.howMany(taskType) == 0) {
             filteredContent = content;
         } else {
-            filteredContent = new ObservableArrayList<>();
+            filteredContent = new ArrayList<>();
             filteredContent.addAll(this.taskFilterHelper.filter(content));
         }
 
@@ -132,7 +131,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     }
 
     public void setTasks(List<Task> tasks) {
-        this.content = new ObservableArrayList<>();
+        this.content = new ArrayList<>();
         this.content.addAll(tasks);
         filter();
     }

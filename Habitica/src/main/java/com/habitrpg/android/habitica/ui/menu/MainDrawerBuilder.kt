@@ -4,15 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.widget.Toolbar
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.activities.AboutActivity
-import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.MainActivity.GEM_PURCHASE_REQUEST
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment
+import com.habitrpg.android.habitica.ui.fragments.StatsFragment
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment
@@ -31,11 +31,7 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
-
-import java.util.Locale
-
-import com.habitrpg.android.habitica.ui.activities.MainActivity.GEM_PURCHASE_REQUEST
-import com.habitrpg.android.habitica.ui.fragments.StatsFragment
+import java.util.*
 
 object MainDrawerBuilder {
 
@@ -59,19 +55,19 @@ object MainDrawerBuilder {
     val SIDEBAR_HELP = 16
     val SIDEBAR_ABOUT = 17
 
-    fun CreateDefaultAccountHeader(activity: Activity): AccountHeaderBuilder {
+    fun createDefaultAccountHeader(activity: Activity): AccountHeaderBuilder {
         return AccountHeaderBuilder()
                 .withActivity(activity)
                 .withHeaderBackground(R.drawable.sidebar_background)
                 .addProfiles(
                         ProfileDrawerItem()
                 )
-                .withOnAccountHeaderListener { view, profile, currentProfile -> false }
+                .withOnAccountHeaderListener { _, _, _ -> false }
                 .withSelectionListEnabledForSingleProfile(false)
     }
 
 
-    fun CreateDefaultBuilderSettings(activity: MainActivity, sharedPreferences: SharedPreferences, toolbar: Toolbar?, accountHeader: AccountHeader): DrawerBuilder {
+    fun createDefaultBuilderSettings(activity: MainActivity, sharedPreferences: SharedPreferences, toolbar: Toolbar?, accountHeader: AccountHeader): DrawerBuilder {
         val builder = DrawerBuilder()
                 .withActivity(activity)
                 .withFullscreen(true)
@@ -109,7 +105,7 @@ object MainDrawerBuilder {
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_about)).withIdentifier(SIDEBAR_ABOUT.toLong()).withSelectable(false)
                 )
                 .withStickyFooterDivider(false)
-                .withOnDrawerItemClickListener { view, position, drawerItem ->
+                .withOnDrawerItemClickListener { _, position, drawerItem ->
                     var fragment: BaseMainFragment? = null
                     var newActivityClass: Class<*>? = null
 
