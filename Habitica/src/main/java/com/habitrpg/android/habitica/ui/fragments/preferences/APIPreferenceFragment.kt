@@ -33,7 +33,7 @@ class APIPreferenceFragment: BasePreferencesFragment() {
         when (preference.key) {
             "SP_user_qr_code" -> qrCodeManager.showDialogue()
             else -> {
-                val clipMan = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 clipMan.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
                 Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
             }

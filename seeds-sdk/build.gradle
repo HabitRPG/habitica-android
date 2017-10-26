@@ -10,6 +10,21 @@ buildscript {
     }
 }
 
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url 'https://maven.fabric.io/public' }
+
+    // Material View Pager
+    maven { url "http://dl.bintray.com/florent37/maven" }
+
+    // Markdown
+    maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+    maven { url "https://jitpack.io" }
+    maven { url "https://maven.google.com" }
+}
+
 android {
     compileSdkVersion sdk_version
     buildToolsVersion build_tools_version
@@ -46,17 +61,17 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'org.glassfish:javax.json:1.0.4'
-    implementation 'com.google.android.gms:play-services:10.2.6'
+    implementation 'com.google.android.gms:play-services:11.4.2'
     implementation 'com.google.code.gson:gson:2.8.0'
-    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.2'
     implementation 'com.loopj.android:android-async-http:1.4.9'
-    implementation 'org.solovyev.android:checkout:0.9.3@aar'
+    implementation 'org.solovyev.android:checkout:1.0.1@aar'
     androidTestImplementation 'org.mockito:mockito-core:2.8.9'
     androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
     androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:3.2"
-    testImplementation "org.robolectric:shadows-multidex:3.1"
+    testImplementation "org.robolectric:robolectric:3.3.2"
+    testImplementation "org.robolectric:shadows-multidex:3.3.2"
 }
 
 publish {

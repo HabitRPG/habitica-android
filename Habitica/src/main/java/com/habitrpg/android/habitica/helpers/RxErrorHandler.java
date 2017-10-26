@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import java.io.EOFException;
 import java.io.IOException;
 
-import cz.msebera.android.httpclient.HttpException;
+import retrofit2.HttpException;
 import rx.functions.Action1;
 import rx.plugins.RxJavaHooks;
 

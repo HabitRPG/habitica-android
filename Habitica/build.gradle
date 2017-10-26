@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.android.databinding'
 apply plugin: 'io.fabric'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.noveogroup.android.check'
 apply plugin: 'realm-android'
 
@@ -15,8 +13,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.21.6'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'io.fabric.tools:gradle:1.22.1'
         classpath('com.noveogroup.android:check:1.2.3') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
@@ -44,98 +41,99 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //Networking
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     //REST API handling
-    compile('com.squareup.retrofit2:retrofit:2.3.0') {
+    implementation('com.squareup.retrofit2:retrofit:2.3.0') {
         exclude module: 'okhttp'
     }
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
     //Crash Logging
-    releaseCompile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
-        transitive = true;
-    }
-    // View Elements Binding :)
-    compile 'com.jakewharton:butterknife:8.8.1'
-    apt 'com.jakewharton:butterknife-compiler:8.8.1'
-    //Dependency Injection
-    compile 'com.google.dagger:dagger:2.11'
-    apt 'com.google.dagger:dagger-compiler:2.11'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-    //App Compatibility and Material Design
-    compile('com.mikepenz:materialdrawer:5.8.3@aar') {
+    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true
     }
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'com.android.support:preference-v14:26.1.0'
+    // View Elements Binding :)
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //Dependency Injection
+    implementation 'com.google.dagger:dagger:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    //App Compatibility and Material Design
+    implementation('com.mikepenz:materialdrawer:5.8.3@aar') {
+        transitive = true
+    }
+    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation 'com.android.support:design:27.0.0'
+    implementation 'com.android.support:recyclerview-v7:27.0.0'
+    implementation 'com.android.support:preference-v14:27.0.0'
     //QR Code
-    compile 'com.github.kenglxn.QRGen:android:2.2.0'
+    implementation 'com.github.kenglxn.QRGen:android:2.2.0'
     // Emojis
-    compile 'com.github.viirus:emoji-lib:0.0.5'
+    implementation 'com.github.viirus:emoji-lib:0.0.5'
     // Markdown
-    compile 'com.commonsware.cwac:anddown:0.4.0'
+    implementation 'com.commonsware.cwac:anddown:0.4.0'
     // About View for all dependent Libraries, we are using
-    compile('com.mikepenz:aboutlibraries:5.9.4@aar') {
+    implementation('com.mikepenz:aboutlibraries:5.9.4@aar') {
         transitive = true
     }
     // a better fab alternative
-    compile 'com.github.clans:fab:1.6.4'
+    implementation 'com.github.clans:fab:1.6.4'
     //Eventbus
-    compile 'org.greenrobot:eventbus:3.0.0'
+    implementation 'org.greenrobot:eventbus:3.0.0'
     // IAP Handling / Verification
-    compile 'org.solovyev.android:checkout:1.0.1'
+    implementation 'org.solovyev.android:checkout:1.0.1'
     //Facebook
-    compile('com.facebook.android:facebook-android-sdk:4.19.0') {
+    implementation('com.facebook.android:facebook-android-sdk:4.19.0') {
         transitive = true
     }
-    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
+    implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     // lodash/underscore
-    compile 'com.github.javadev:underscore:1.23'
+    implementation 'com.github.javadev:underscore:1.23'
     //RxJava
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.3.2'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'io.reactivex:rxjava:1.3.2'
     //Analytics
-    compile 'com.amplitude:android-sdk:2.14.1'
+    implementation 'com.amplitude:android-sdk:2.14.1'
     // Fresco Image Management Library
-    compile('com.facebook.fresco:fresco:1.5.0') {
+    implementation('com.facebook.fresco:fresco:1.5.0') {
         exclude module: 'bolts-android'
     }
-    compile('com.facebook.fresco:animated-gif:1.5.0') {
+    implementation('com.facebook.fresco:animated-gif:1.5.0') {
         exclude module: 'bolts-android'
     }
     //Tests
-    testCompile 'junit:junit:4.10'
-    testCompile 'org.assertj:assertj-core:1.7.0'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    testCompile 'org.robolectric:robolectric:3.3.2'
-    testCompile 'org.robolectric:shadows-multidex:3.3.2'
-    testCompile 'org.robolectric:shadows-support-v4:3.3.2'
-    testCompile 'org.mockito:mockito-core:2.8.9'
-    testCompile 'org.powermock:powermock-api-mockito2:1.7.0'
-    testCompile 'org.powermock:powermock-module-junit4-rule-agent:1.7.0'
-    testCompile 'org.powermock:powermock-module-junit4-rule:1.7.0'
-    testCompile 'org.powermock:powermock-module-junit4:1.7.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.assertj:assertj-core:2.6.0'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.3'
+    testImplementation 'org.robolectric:robolectric:3.3.2'
+    testImplementation 'org.robolectric:shadows-multidex:3.3.2'
+    testImplementation 'org.robolectric:shadows-support-v4:3.3.2'
+    testImplementation 'org.mockito:mockito-core:2.8.9'
+    testImplementation 'org.powermock:powermock-api-mockito2:1.7.0'
+    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.0'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
+    testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
     //Leak Detection
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.3'
     //Push Notifications
-    compile 'com.google.firebase:firebase-core:11.4.0'
-    compile 'com.google.firebase:firebase-messaging:11.4.0'
-    compile 'com.google.android.gms:play-services-auth:11.4.0'
-    compile 'org.apmem.tools:layouts:1.10@aar'
-    compile 'com.roughike:bottom-bar:2.3.1'
-    compile 'io.realm:android-adapters:2.1.0'
-    compile(project(':seeds-sdk')) {
+    implementation 'com.google.firebase:firebase-core:11.4.2'
+    implementation 'com.google.firebase:firebase-messaging:11.4.2'
+    implementation 'com.google.android.gms:play-services-auth:11.4.2'
+    implementation 'org.apmem.tools:layouts:1.10@aar'
+    implementation 'com.roughike:bottom-bar:2.3.1'
+    implementation 'io.realm:android-adapters:2.1.0'
+    implementation(project(':seeds-sdk')) {
         exclude group: 'com.google.android.gms'
         exclude group: 'com.android.support', module: 'multidex'
     }
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
+
 
 android {
     compileSdkVersion sdk_version
@@ -153,6 +151,7 @@ android {
     signingConfigs {
         release
     }
+    flavorDimensions "buildType"
 
     buildTypes {
         debug {
@@ -182,13 +181,16 @@ android {
         dev {
             minSdkVersion 21
             buildConfigField "String", "STAGING_KEY", "\"1dcf9ed3-3b14-45b3-9e7e-acdfff68a368\""
+            dimension "buildType"
         }
 
         prod {
+            dimension "buildType"
         }
 
         amazon {
             buildConfigField "String", "STORE", "\"amazon\""
+            dimension "buildType"
         }
     }
 
@@ -234,9 +236,13 @@ android {
             universalApk true
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
-def Properties props = new Properties()
+Properties props = new Properties()
 def propFile = new File('signingrelease.properties')
 if (propFile.canRead()) {
     props.load(new FileInputStream(propFile))
@@ -259,7 +265,7 @@ if (propFile.canRead()) {
 // Add Habitica Properties to buildConfigField
 final File HRPG_PROPS_FILE = new File('habitica.properties')
 if (HRPG_PROPS_FILE.canRead()) {
-    def Properties HRPG_PROPS = new Properties()
+    Properties HRPG_PROPS = new Properties()
     HRPG_PROPS.load(new FileInputStream(HRPG_PROPS_FILE))
 
     if (HRPG_PROPS != null) {
@@ -278,7 +284,7 @@ if (HRPG_PROPS_FILE.canRead()) {
 // Add Habitica Resources to resources
 final File HRPG_RES_FILE = new File('habitica.resources')
 if (HRPG_RES_FILE.canRead()) {
-    def Properties HRPG_RES = new Properties()
+    Properties HRPG_RES = new Properties()
     HRPG_RES.load(new FileInputStream(HRPG_RES_FILE))
 
     if (HRPG_RES != null) {
@@ -303,5 +309,4 @@ tasks.whenTaskAdded { task ->
 check { findbugs { skip true } }
 
 apply plugin: 'com.android.application' //or apply plugin: 'java'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.google.gms.google-services'

@@ -51,10 +51,10 @@ class StatsFragment: BaseMainFragment() {
             perceptionStatsView.totalValue = value
         }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         hideToolbar()
-        return inflater?.inflate(R.layout.fragment_stats, container, false)
+        return inflater.inflate(R.layout.fragment_stats, container, false)
     }
 
     override fun onDestroyView() {
@@ -67,7 +67,7 @@ class StatsFragment: BaseMainFragment() {
         super.onDestroy()
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         leftSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
@@ -82,17 +82,17 @@ class StatsFragment: BaseMainFragment() {
             updateAttributePoints()
         }, RxErrorHandler.handleEmptyError()))
 
-        distributeEvenlyButton.setOnCheckedChangeListener { button, isChecked ->
+        distributeEvenlyButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 changeAutoAllocationMode(Stats.AUTO_ALLOCATE_FLAT)
             }
         }
-        distributeClassButton.setOnCheckedChangeListener { button, isChecked ->
+        distributeClassButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 changeAutoAllocationMode(Stats.AUTO_ALLOCATE_CLASSBASED)
             }
         }
-        distributeTaskButton.setOnCheckedChangeListener { button, isChecked ->
+        distributeTaskButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 changeAutoAllocationMode(Stats.AUTO_ALLOCATE_TASKBASED)
             }
@@ -146,19 +146,22 @@ class StatsFragment: BaseMainFragment() {
         intelligenceStatsView.canDistributePoints = canDistributePoints
         constitutionStatsView.canDistributePoints = canDistributePoints
         perceptionStatsView.canDistributePoints = canDistributePoints
-        if (canDistributePoints) {
-            val points = user?.stats?.points ?: 0
-            numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)
-            numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-            numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.pill_bg_gray_100)
-            leftSparklesView.visibility = View.VISIBLE
-            rightSparklesView.visibility = View.VISIBLE
-        } else {
-            numberOfPointsTextView.text = getString(R.string.no_points_to_allocate)
-            numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
-            numberOfPointsTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
-            leftSparklesView.visibility = View.GONE
-            rightSparklesView.visibility = View.GONE
+        val context = context
+        if (context != null) {
+            if (canDistributePoints) {
+                val points = user?.stats?.points ?: 0
+                numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)
+                numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
+                numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.pill_bg_gray_100)
+                leftSparklesView.visibility = View.VISIBLE
+                rightSparklesView.visibility = View.VISIBLE
+            } else {
+                numberOfPointsTextView.text = getString(R.string.no_points_to_allocate)
+                numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
+                numberOfPointsTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
+                leftSparklesView.visibility = View.GONE
+                rightSparklesView.visibility = View.GONE
+            }
         }
         numberOfPointsTextView.setScaledPadding(context, 18, 4, 18, 4)
     }

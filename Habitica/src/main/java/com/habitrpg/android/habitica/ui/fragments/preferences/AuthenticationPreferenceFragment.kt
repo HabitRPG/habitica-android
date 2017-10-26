@@ -75,7 +75,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             "reset_account" -> showAccountResetConfirmation()
             "delete_account" -> showAccountDeleteConfirmation()
             else -> {
-                val clipMan = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 clipMan.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
                 Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
             }
@@ -88,45 +88,52 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showEmailDialog() {
-        val inflater = context.layoutInflater
-        val view = inflater.inflate(R.layout.dialog_edittext_confirm_pw, null)
-        val emailEditText = view.findViewById<EditText>(R.id.editText)
-        emailEditText.setText(user?.authentication?.localAuthentication?.email)
-        val passwordEditText = view.findViewById<EditText>(R.id.passwordEditText)
-        val dialog = AlertDialog.Builder(context)
-                .setTitle(R.string.change_email)
-                .setPositiveButton(R.string.change) { thisDialog, _ ->
-                    thisDialog.dismiss()
-                    userRepository.updateEmail(emailEditText.text.toString(), passwordEditText.text.toString())
-                            .subscribe(Action1 {
-                                configurePreference(findPreference("email"), emailEditText.text.toString())
-                            }, RxErrorHandler.handleEmptyError())
-                }
-                .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
-                .create()
-        dialog.setView(view)
-        dialog.show()
+        val inflater = context?.layoutInflater
+        val view = inflater?.inflate(R.layout.dialog_edittext_confirm_pw, null)
+        val emailEditText = view?.findViewById<EditText>(R.id.editText)
+        emailEditText?.setText(user?.authentication?.localAuthentication?.email)
+        val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
+        val context = context
+        if (context != null) {
+            val dialog = AlertDialog.Builder(context)
+                    .setTitle(R.string.change_email)
+                    .setPositiveButton(R.string.change) { thisDialog, _ ->
+                        thisDialog.dismiss()
+                        userRepository.updateEmail(emailEditText?.text.toString(), passwordEditText?.text.toString())
+                                .subscribe(Action1 {
+                                    configurePreference(findPreference("email"), emailEditText?.text.toString())
+                                }, RxErrorHandler.handleEmptyError())
+                    }
+                    .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
+                    .create()
+            dialog.setView(view)
+            dialog.show()
+        }
     }
 
     private fun showLoginNameDialog() {
-        val inflater = context.layoutInflater
-        val view = inflater.inflate(R.layout.dialog_edittext_confirm_pw, null)
-        val loginNameEditText = view.findViewById<EditText>(R.id.editText)
-        loginNameEditText.setText(user?.authentication?.localAuthentication?.username)
-        val passwordEditText = view.findViewById<EditText>(R.id.passwordEditText)
-        val dialog = AlertDialog.Builder(context)
-                .setTitle(R.string.change_login_name)
-                .setPositiveButton(R.string.change) { thisDialog, _ ->
-                    thisDialog.dismiss()
-                    userRepository.updateLoginName(loginNameEditText.text.toString(), passwordEditText.text.toString())
-                            .subscribe(Action1 {
-                                configurePreference(findPreference("login_name"), loginNameEditText.text.toString())
-                            }, RxErrorHandler.handleEmptyError())
-                }
-                .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
-                .create()
-        dialog.setView(view)
-        dialog.show()
+        val inflater = context?.layoutInflater
+        val view = inflater?.inflate(R.layout.dialog_edittext_confirm_pw, null)
+        val loginNameEditText = view?.findViewById<EditText>(R.id.editText)
+        loginNameEditText?.setText(user?.authentication?.localAuthentication?.username)
+        val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
+        val context = context
+        if (context != null) {
+            val dialog = AlertDialog.Builder(context)
+
+                    .setTitle(R.string.change_login_name)
+                    .setPositiveButton(R.string.change) { thisDialog, _ ->
+                        thisDialog.dismiss()
+                        userRepository.updateLoginName(loginNameEditText?.text.toString(), passwordEditText?.text.toString())
+                                .subscribe(Action1 {
+                                    configurePreference(findPreference("login_name"), loginNameEditText?.text.toString())
+                                }, RxErrorHandler.handleEmptyError())
+                    }
+                    .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
+                    .create()
+            dialog.setView(view)
+            dialog.show()
+        }
     }
 
     private fun showAccountDeleteConfirmation() {
@@ -135,25 +142,28 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT)
         input.layoutParams = lp
-        val dialog = AlertDialog.Builder(context)
-                .setTitle(R.string.delete_account)
-                .setMessage(R.string.delete_account_description)
-                .setPositiveButton(R.string.delete_account_confirmation) { thisDialog, _ ->
-                    thisDialog.dismiss()
-                    deleteAccount(input.text.toString())
-                }
-                .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
-                .create()
-        dialog.setOnShowListener { _ -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
-        dialog.setView(input)
-        dialog.show()
+        val context = context
+        if (context != null) {
+            val dialog = AlertDialog.Builder(context)
+                    .setTitle(R.string.delete_account)
+                    .setMessage(R.string.delete_account_description)
+                    .setPositiveButton(R.string.delete_account_confirmation) { thisDialog, _ ->
+                        thisDialog.dismiss()
+                        deleteAccount(input.text.toString())
+                    }
+                    .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
+                    .create()
+            dialog.setOnShowListener { _ -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
+            dialog.setView(input)
+            dialog.show()
+        }
     }
 
     private fun deleteAccount(password: String) {
-        val dialog = ProgressDialog.show(context, context.getString(R.string.deleting_account), null, true)
+        val dialog = ProgressDialog.show(context, context?.getString(R.string.deleting_account), null, true)
         userRepository.deleteAccount(password).subscribe({ _ ->
             HabiticaApplication.logout(context)
-            activity.finish()
+            activity?.finish()
         }) { throwable ->
             dialog.dismiss()
             RxErrorHandler.reportError(throwable)
@@ -161,21 +171,24 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showAccountResetConfirmation() {
-        val dialog = AlertDialog.Builder(context)
-                .setTitle(R.string.reset_account)
-                .setMessage(R.string.reset_account_description)
-                .setPositiveButton(R.string.reset_account_confirmation) { thisDialog, _ ->
-                    thisDialog.dismiss()
-                    resetAccount()
-                }
-                .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
-                .create()
-        dialog.setOnShowListener { _ -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
-        dialog.show()
+        val context = context
+        if (context != null) {
+            val dialog = AlertDialog.Builder(context)
+                    .setTitle(R.string.reset_account)
+                    .setMessage(R.string.reset_account_description)
+                    .setPositiveButton(R.string.reset_account_confirmation) { thisDialog, _ ->
+                        thisDialog.dismiss()
+                        resetAccount()
+                    }
+                    .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
+                    .create()
+            dialog.setOnShowListener { _ -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
+            dialog.show()
+        }
     }
 
     private fun resetAccount() {
-        val dialog = ProgressDialog.show(context, context.getString(R.string.resetting_account), null, true)
+        val dialog = ProgressDialog.show(context, context?.getString(R.string.resetting_account), null, true)
         userRepository.resetAccount().subscribe({ _ -> dialog.dismiss() }) { throwable ->
             dialog.dismiss()
             RxErrorHandler.reportError(throwable)
@@ -185,10 +198,13 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     private fun showSubscriptionStatusDialog() {
         val view = SubscriptionDetailsView(context)
         view.setPlan(user?.purchased?.plan)
-        val dialog = AlertDialog.Builder(context)
-                .setView(view)
-                .setTitle(R.string.subscription_status)
-                .setPositiveButton(R.string.close) { dialogInterface, _ -> dialogInterface.dismiss() }.create()
-        dialog.show()
+        val context = context
+        if (context != null) {
+            val dialog = AlertDialog.Builder(context)
+                    .setView(view)
+                    .setTitle(R.string.subscription_status)
+                    .setPositiveButton(R.string.close) { dialogInterface, _ -> dialogInterface.dismiss() }.create()
+            dialog.show()
+        }
     }
 }
