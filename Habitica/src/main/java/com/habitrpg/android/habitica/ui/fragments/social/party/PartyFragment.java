@@ -266,7 +266,7 @@ public class PartyFragment extends BaseMainFragment {
                             detailFragment.partyId = user.getParty().id;
                             fragment = detailFragment;
                         } else {
-                            fragment = GroupInformationFragment.newInstance(null, user);
+                            fragment = GroupInformationFragment.Companion.newInstance(null, user);
                         }
                         break;
                     }

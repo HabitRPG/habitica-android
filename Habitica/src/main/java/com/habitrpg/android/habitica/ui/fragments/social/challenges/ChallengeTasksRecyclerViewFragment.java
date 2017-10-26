@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 
-import android.databinding.ObservableList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +19,8 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapt
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,13 +31,13 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     @Named(AppModule.NAMED_USER_ID)
     String userID;
 
-    ObservableList<Task> tasksOnInitialize;
+    List<Task> tasksOnInitialize;
 
     LinearLayoutManager layoutManager = null;
     private User user;
     private View view;
 
-    public static ChallengeTasksRecyclerViewFragment newInstance(User user, ObservableList<Task> tasks) {
+    public static ChallengeTasksRecyclerViewFragment newInstance(User user, List<Task> tasks) {
         ChallengeTasksRecyclerViewFragment fragment = new ChallengeTasksRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
@@ -45,33 +46,6 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
         if (tasks.size() != 0 && fragment.recyclerAdapter != null) {
             fragment.recyclerAdapter.setTasks(tasks);
         }
-
-        tasks.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Task>>() {
-            @Override
-            public void onChanged(ObservableList<Task> tasks) {
-            }
-
-            @Override
-            public void onItemRangeChanged(ObservableList<Task> tasks, int i, int i1) {
-
-            }
-
-            @Override
-            public void onItemRangeInserted(ObservableList<Task> tasks, int i, int i1) {
-                fragment.recyclerAdapter.setTasks(tasks);
-            }
-
-            @Override
-            public void onItemRangeMoved(ObservableList<Task> tasks, int i, int i1, int i2) {
-
-            }
-
-
-            @Override
-            public void onItemRangeRemoved(ObservableList<Task> tasks, int i, int i1) {
-
-            }
-        });
 
         return fragment;
     }

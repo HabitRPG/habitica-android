@@ -53,4 +53,7 @@
         <attr name="statsTitle" format="string" />
         <attr name="statsColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="EquipmentItemRow">
+        <attr name="equipmentTitle" format="string" />
+    </declare-styleable>
 </resources>

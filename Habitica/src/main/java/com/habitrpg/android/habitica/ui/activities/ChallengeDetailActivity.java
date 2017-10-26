@@ -2,8 +2,6 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -55,6 +53,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -147,7 +146,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         String challengeId = extras.getString(CHALLENGE_ID);
 
-        ObservableList<Task> fullList = new ObservableArrayList<>();
+        List<Task> fullList = new ArrayList<>();
 
         userRepository.getUser(userId).first().subscribe(user -> {
             ChallengeDetailActivity.this.user = user;
@@ -242,7 +241,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         }
     }
 
-    private void createTaskRecyclerFragment(ObservableList<Task> fullList) {
+    private void createTaskRecyclerFragment(List<Task> fullList) {
         ChallengeTasksRecyclerViewFragment fragment = ChallengeTasksRecyclerViewFragment.newInstance(user, fullList);
 
         if (getSupportFragmentManager().getFragments() == null) {

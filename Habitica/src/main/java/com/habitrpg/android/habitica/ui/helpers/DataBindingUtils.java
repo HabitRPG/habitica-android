@@ -1,20 +1,14 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
-import android.databinding.BindingAdapter;
-import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,46 +19,12 @@ import net.pherth.android.emoji_library.EmojiTextView;
 
 public class DataBindingUtils {
 
-    @BindingAdapter("bind:imageName")
     public static void loadImage(SimpleDraweeView view, String imageName) {
         if (view != null && view.getVisibility() == View.VISIBLE) {
             view.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png"));
         }
     }
 
-    @BindingAdapter("bind:cardColor")
-    public static void setCardColor(CardView cardView, int color) {
-        if (color > 0) {
-            color = ContextCompat.getColor(cardView.getContext(), color);
-        }
-        cardView.setCardBackgroundColor(color);
-    }
-
-    @BindingAdapter("app:backgroundColor")
-    public static void setBackgroundTintColor(CheckBox view, int color) {
-        if (color > 0) {
-            color = ContextCompat.getColor(view.getContext(), color);
-        }
-        ViewHelper.SetBackgroundTint(view, color);
-    }
-
-    @BindingAdapter("app:backgroundColor")
-    public static void setBackgroundTintColor(Button view, int color) {
-        if (color > 0) {
-            color = ContextCompat.getColor(view.getContext(), color);
-        }
-        ViewHelper.SetBackgroundTint(view, color);
-    }
-
-    @BindingAdapter("app:backgroundColor")
-    public static void setBackgroundTintColor(View view, int color) {
-        if (color > 0) {
-            color = ContextCompat.getColor(view.getContext(), color);
-        }
-        view.setBackgroundColor(color);
-    }
-
-    @BindingAdapter("app:foregroundColor")
     public static void setForegroundTintColor(TextView view, int color) {
         if (color > 0) {
             color = ContextCompat.getColor(view.getContext(), color);
@@ -72,7 +32,6 @@ public class DataBindingUtils {
         view.setTextColor(color);
     }
 
-    @BindingAdapter("app:rounded_background")
     public static void setRoundedBackground(View view, int color) {
         Drawable drawable = ResourcesCompat.getDrawable(view.getResources(), R.drawable.layout_rounded_bg, null);
         if (drawable != null) {
@@ -85,14 +44,12 @@ public class DataBindingUtils {
         }
     }
 
-    @BindingAdapter("app:rounded_background_int")
     public static void setRoundedBackgroundInt(View view, int color) {
         if (color != 0) {
             setRoundedBackground(view, ContextCompat.getColor(view.getContext(), color));
         }
     }
 
-    @BindingAdapter("parsemarkdown")
     public static void bindEmojiconTextView(EmojiTextView textView, CharSequence value) {
         if (value != null) {
             textView.setText(MarkdownParser.parseMarkdown(value.toString()));
