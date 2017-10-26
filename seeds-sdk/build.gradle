@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.novoda:bintray-release:0.3.4'
+        classpath 'com.novoda:bintray-release:0.5.0'
     }
 }
 
@@ -21,9 +21,7 @@ repositories {
 
     // Markdown
     maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
-
     maven { url "https://jitpack.io" }
-
     maven { url "https://maven.google.com" }
 }
 
@@ -61,18 +59,19 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'org.glassfish:javax.json:1.0.4'
-    compile 'com.google.android.gms:play-services:11.4.0'
-    compile 'com.google.code.gson:gson:2.7'
-    compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'org.solovyev.android:checkout:0.9.1@aar'
-    androidTestCompile 'org.mockito:mockito-core:1.9.5'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0'
-    testCompile 'junit:junit:4.12'
-    testCompile "org.robolectric:robolectric:3.0"
-    testCompile "org.robolectric:shadows-multidex:3.0"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'org.glassfish:javax.json:1.0.4'
+    implementation 'com.google.android.gms:play-services:11.4.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'org.solovyev.android:checkout:0.9.3@aar'
+    androidTestImplementation 'org.mockito:mockito-core:2.8.9'
+    androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
+    androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.robolectric:robolectric:3.2"
+    testImplementation "org.robolectric:shadows-multidex:3.1"
 }
 
 publish {
