@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.setOkButton
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
@@ -54,7 +55,7 @@ class StatsFragment: BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         hideToolbar()
-        return inflater.inflate(R.layout.fragment_stats, container, false)
+        return container?.inflate(R.layout.fragment_stats)
     }
 
     override fun onDestroyView() {

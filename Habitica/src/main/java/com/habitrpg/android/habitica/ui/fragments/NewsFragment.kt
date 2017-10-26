@@ -9,6 +9,7 @@ import android.webkit.WebChromeClient
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.extensions.inflate
 
 import kotlinx.android.synthetic.main.fragment_news.*
 
@@ -16,7 +17,7 @@ class NewsFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_news, container, false)
+        return container?.inflate(R.layout.fragment_news)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

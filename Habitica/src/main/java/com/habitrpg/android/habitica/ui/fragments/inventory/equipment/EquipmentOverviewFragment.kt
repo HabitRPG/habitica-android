@@ -18,7 +18,7 @@ import kotlin.collections.HashMap
 class EquipmentOverviewFragment : BaseMainFragment() {
 
     @Inject
-    internal var inventoryRepository: InventoryRepository? = null
+    lateinit var inventoryRepository: InventoryRepository
 
     private var nameMapping: MutableMap<String, String> = HashMap()
 
@@ -54,7 +54,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         setImageNames()
 
         if (this.nameMapping.isEmpty()) {
-            inventoryRepository!!.ownedEquipment.subscribe(Action1 {
+            inventoryRepository.ownedEquipment.subscribe(Action1 {
                 for (gear in it) {
                     this.nameMapping.put(gear.key, gear.text)
                 }
@@ -89,7 +89,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
     }
 
     override fun onDestroy() {
-        inventoryRepository!!.close()
+        inventoryRepository.close()
         super.onDestroy()
     }
 
