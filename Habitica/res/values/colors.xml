@@ -158,4 +158,5 @@
     <color name="hair_black">#313131</color>
     <color name="gold">#ee9109</color>
     <color name="reward_buy_button_bg">#4cfedead</color>
+    <color name="ic_launcher_background">#331960</color>
 </resources>
