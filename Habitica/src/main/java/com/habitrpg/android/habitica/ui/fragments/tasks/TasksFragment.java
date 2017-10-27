@@ -77,21 +77,21 @@ public class TasksFragment extends BaseMainFragment {
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
 
-        viewPager = (ViewPager) v.findViewById(R.id.view_pager);
+        viewPager = v.findViewById(R.id.view_pager);
         View view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
         if (FloatingActionMenu.class.equals(view.getClass())) {
             floatingMenu = (FloatingActionMenu) view;
         } else {
             ViewGroup frame = (ViewGroup) view;
-            floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
+            floatingMenu = frame.findViewById(R.id.fab_menu);
         }
-        FloatingActionButton habit_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_habit);
+        FloatingActionButton habit_fab = floatingMenu.findViewById(R.id.fab_new_habit);
         habit_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_HABIT));
-        FloatingActionButton daily_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_daily);
+        FloatingActionButton daily_fab = floatingMenu.findViewById(R.id.fab_new_daily);
         daily_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_DAILY));
-        FloatingActionButton todo_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_todo);
+        FloatingActionButton todo_fab = floatingMenu.findViewById(R.id.fab_new_todo);
         todo_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_TODO));
-        FloatingActionButton reward_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_reward);
+        FloatingActionButton reward_fab = floatingMenu.findViewById(R.id.fab_new_reward);
         reward_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_REWARD));
         floatingMenu.setOnMenuButtonLongClickListener(this::onFloatingMenuLongClicked);
 

@@ -69,7 +69,7 @@ public class HabitButtonWidgetService extends Service {
     private void updateData(Task task) {
         RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.widget_habit_button);
         if (task != null && task.isValid()) {
-            CharSequence parsedText = MarkdownParser.parseMarkdown(task.text);
+            CharSequence parsedText = MarkdownParser.parseMarkdown(task.getText());
 
             SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
             EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false);

@@ -165,7 +165,7 @@ public class ChallengeDetailActivity extends BaseActivity {
                         ArrayList<Task> rewards = new ArrayList<>();
 
                         for (Map.Entry<String, Task> entry : taskList.tasks.entrySet()) {
-                            switch (entry.getValue().type) {
+                            switch (entry.getValue().getType()) {
                                 case Task.TYPE_TODO:
                                     todos.add(entry.getValue());
                                     break;
@@ -188,8 +188,8 @@ public class ChallengeDetailActivity extends BaseActivity {
                         if (!habits.isEmpty()) {
                             Task dividerTask = new Task();
                             dividerTask.setId("divhabits");
-                            dividerTask.type = "divider";
-                            dividerTask.text = "Challenge Habits";
+                            dividerTask.setType("divider");
+                            dividerTask.setText("Challenge Habits");
 
                             resultList.add(dividerTask);
                             resultList.addAll(habits);
@@ -199,8 +199,8 @@ public class ChallengeDetailActivity extends BaseActivity {
                         if (!dailies.isEmpty()) {
                             Task dividerTask = new Task();
                             dividerTask.setId("divdailies");
-                            dividerTask.type = "divider";
-                            dividerTask.text = "Challenge Dailies";
+                            dividerTask.setType("divider");
+                            dividerTask.setText("Challenge Dailies");
 
                             resultList.add(dividerTask);
                             resultList.addAll(dailies);
@@ -210,8 +210,8 @@ public class ChallengeDetailActivity extends BaseActivity {
                         if (!todos.isEmpty()) {
                             Task dividerTask = new Task();
                             dividerTask.setId("divtodos");
-                            dividerTask.type = "divider";
-                            dividerTask.text = "Challenge To-Dos";
+                            dividerTask.setType("divider");
+                            dividerTask.setText("Challenge To-Dos");
 
                             resultList.add(dividerTask);
                             resultList.addAll(todos);
@@ -220,8 +220,8 @@ public class ChallengeDetailActivity extends BaseActivity {
                         if (!rewards.isEmpty()) {
                             Task dividerTask = new Task();
                             dividerTask.setId("divrewards");
-                            dividerTask.type = "divider";
-                            dividerTask.text = "Challenge Rewards";
+                            dividerTask.setType("divider");
+                            dividerTask.setText("Challenge Rewards");
 
                             resultList.add(dividerTask);
                             resultList.addAll(rewards);
@@ -379,7 +379,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     @Subscribe
     public void onEvent(TaskCheckedCommand event) {
-        switch (event.Task.type) {
+        switch (event.Task.getType()) {
             case Task.TYPE_DAILY: {
                 dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
                         .subscribe(this::onTaskDataReceived, RxErrorHandler.handleEmptyError());
@@ -413,7 +413,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         }
 
 
-        if (event.Reward.specialTag == null || !event.Reward.specialTag.equals("item")) {
+        if (event.Reward.getSpecialTag() == null || !event.Reward.getSpecialTag().equals("item")) {
 
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
                     .subscribe(res -> HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_purchase_reward), HabiticaSnackbar.SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());

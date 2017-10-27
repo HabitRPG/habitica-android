@@ -283,7 +283,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if(bundle.containsKey(PARCELABLE_TASK)){
             task = bundle.getParcelable(PARCELABLE_TASK);
             if (task != null) {
-                taskType = task.type;
+                taskType = task.getType();
             }
         }
 
@@ -982,9 +982,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (!task.isValid()) {
             return;
         }
-        taskText.setText(task.text);
-        taskNotes.setText(task.notes);
-        taskValue.setText(String.format(Locale.getDefault(), "%.2f", task.value));
+        taskText.setText(task.getText());
+        taskNotes.setText(task.getNotes());
+        taskValue.setText(String.format(Locale.getDefault(), "%.2f", task.getValue()));
 
         for (Tag tag : task.getTags()) {
             selectedTags.add(tag);
@@ -1024,12 +1024,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         }
 
-        if (task.type.equals("habit")) {
+        if (task.getType().equals("habit")) {
             positiveCheckBox.setChecked(task.getUp());
             negativeCheckBox.setChecked(task.getDown());
         }
 
-        if (task.type.equals("daily")) {
+        if (task.getType().equals("daily")) {
 
             if (task.getStartDate() != null) {
                 startDateListener.setCalendar(task.getStartDate());
@@ -1057,7 +1057,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             populateRepeatables(task);
         }
 
-        if (task.type.equals("todo")) {
+        if (task.getType().equals("todo")) {
             if (task.getDueDate() != null) {
                 dueDateCheckBox.setChecked(true);
                 dueDateListener.setCalendar(task.getDueDate());
@@ -1095,8 +1095,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         taskRepository.executeTransaction(realm -> {
             try {
-                task.text = text;
-                task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
+                task.setText(text);
+                task.setNotes(MarkdownParser.parseCompiled(taskNotes.getText()));
             } catch (IllegalArgumentException ignored) {
 
             }
@@ -1151,7 +1151,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 }
             }
 
-            switch (task.type != null ? task.type : "") {
+            switch (task.getType() != null ? task.getType() : "") {
                 case "habit": {
                     task.setUp(positiveCheckBox.isChecked());
                     task.setDown(negativeCheckBox.isChecked());

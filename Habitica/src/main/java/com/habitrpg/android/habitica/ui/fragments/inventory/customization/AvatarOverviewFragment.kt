@@ -29,8 +29,13 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_avatar_overview, container, false)
 
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (this.user == null) {
-            return view
+            return
         }
 
         this.setSize(this.user?.preferences?.size)
@@ -47,8 +52,6 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         avatarHairBeardView.setOnClickListener { displayCustomizationFragment("hair", "beard") }
         avatarHairMustacheView.setOnClickListener { displayCustomizationFragment("hair", "mustache") }
         avatarBackgroundView.setOnClickListener { displayCustomizationFragment("background", null) }
-
-        return view
     }
 
     override fun injectFragment(component: AppComponent) {

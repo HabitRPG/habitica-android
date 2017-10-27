@@ -58,7 +58,7 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             if (user != null && user.getStats() != null) {
                 gold = user.getStats().getGp();
             }
-            ((RewardViewHolder)holder).bindHolder(reward, position, reward.value < gold);
+            ((RewardViewHolder)holder).bindHolder(reward, position, reward.getValue() < gold);
         } else if (inAppRewards != null) {
             ShopItem item = inAppRewards.get(position-getCustomRewardCount());
             ((ShopItemViewHolder)holder).bind(item, item.canBuy(user));

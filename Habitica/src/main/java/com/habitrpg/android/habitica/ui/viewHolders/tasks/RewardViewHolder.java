@@ -40,7 +40,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
 
 
     private boolean isItem() {
-        return this.task.specialTag != null && this.task.specialTag.equals("item");
+        return this.task.getSpecialTag() != null && this.task.getSpecialTag().equals("item");
     }
 
     @Override
@@ -60,7 +60,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
         if (!task.isValid()) {
             return;
         }
-        if (task.specialTag != null && task.specialTag.equals("item")) {
+        if (task.getSpecialTag() != null && task.getSpecialTag().equals("item")) {
             ItemDetailDialog dialog = new ItemDetailDialog(context);
             dialog.setTitle(task.getText());
             dialog.setDescription(task.getNotes());
@@ -87,7 +87,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
     public void bindHolder(Task reward, int position, boolean canBuy) {
         this.task = reward;
         super.bindHolder(reward, position);
-        this.priceLabel.setText(NumberAbbreviator.INSTANCE.abbreviate(itemView.getContext(), this.task.value));
+        this.priceLabel.setText(NumberAbbreviator.INSTANCE.abbreviate(itemView.getContext(), this.task.getValue()));
 
         if (canBuy) {
             goldIconView.setAlpha(1.0f);

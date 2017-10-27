@@ -29,8 +29,8 @@ public class TodoViewHolder extends ChecklistedViewHolder {
     @Override
     protected void configureSpecialTaskTextView(Task task) {
         if (this.specialTaskTextView != null) {
-            if (task.duedate != null) {
-                this.specialTaskTextView.setText(dateFormatter.format(task.duedate));
+            if (task.getDueDate() != null) {
+                this.specialTaskTextView.setText(dateFormatter.format(task.getDueDate()));
                 this.specialTaskTextView.setVisibility(View.VISIBLE);
             } else {
                 this.specialTaskTextView.setVisibility(View.INVISIBLE);
