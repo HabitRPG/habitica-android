@@ -61,8 +61,8 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
 
             List<ChecklistItem> allChecklistItems = new ArrayList<>();
             for (Task t : sortedTasks) {
-                if (t.checklist != null) {
-                    allChecklistItems.addAll(t.checklist);
+                if (t.getChecklist() != null) {
+                    allChecklistItems.addAll(t.getChecklist());
                 }
             }
             removeOldChecklists(allChecklistItems);
@@ -84,7 +84,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         for (String taskId : taskOrder) {
             Task task = taskMap.get(taskId);
             if (task != null) {
-                task.position = position;
+                task.setPosition(position);
                 taskList.add(task);
                 position++;
                 taskMap.remove(taskId);
@@ -108,11 +108,11 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         }
         realm.executeTransaction(realm1 -> {
             for (Task localTask : tasksToDelete) {
-                if (localTask.checklist != null) {
-                    localTask.checklist.deleteAllFromRealm();
+                if (localTask.getChecklist() != null) {
+                    localTask.getChecklist().deleteAllFromRealm();
                 }
-                if (localTask.reminders != null) {
-                    localTask.reminders.deleteAllFromRealm();
+                if (localTask.getReminders() != null) {
+                    localTask.getReminders().deleteAllFromRealm();
                 }
                 localTask.deleteFromRealm();
             }
@@ -176,7 +176,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     @Override
     public void markTaskCompleted(String taskId, boolean isCompleted) {
         Task task = realm.where(Task.class).equalTo("id", taskId).findFirstAsync();
-        realm.executeTransaction(realm1 -> task.completed = true);
+        realm.executeTransaction(realm1 -> task.setCompleted(true));
     }
 
     @Override
@@ -190,8 +190,8 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         Task secondTask = realm.where(Task.class).equalTo("position", secondPosition).findFirst();
         if (firstTask != null && secondTask != null && firstTask.isValid() && secondTask.isValid()) {
             realm.executeTransaction(realm1 -> {
-                firstTask.position = secondPosition;
-                secondTask.position = firstPosition;
+                firstTask.setPosition(secondPosition);
+                secondTask.setPosition(firstPosition);
             });
         }
     }
@@ -211,7 +211,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
                     realm.beginTransaction();
                     for (Task task : tasks) {
                         if (dailies.tasks.containsKey(task.getId())) {
-                            task.isDue = dailies.tasks.get(task.getId()).isDue;
+                            task.setDue(dailies.tasks.get(task.getId()).isDue());
                         }
                     }
                     realm.commitTransaction();
@@ -226,7 +226,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
             realm.executeTransaction(realm1 -> {
                 for (Task task : tasks) {
                     if (taskOrder.contains(task.getId())) {
-                        task.position = taskOrder.indexOf(task.getId());
+                        task.setPosition(taskOrder.indexOf(task.getId()));
                     }
                 }
             });

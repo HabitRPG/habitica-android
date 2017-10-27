@@ -93,9 +93,9 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
     public void bindHolder(Task newTask, int position) {
         this.task = newTask;
         if (this.canContainMarkdown()) {
-            if (this.task.parsedText != null) {
-                this.titleTextView.setText(this.task.parsedText);
-                this.notesTextView.setText(this.task.parsedNotes);
+            if (this.task.getParsedText() != null) {
+                this.titleTextView.setText(this.task.getParsedText());
+                this.notesTextView.setText(this.task.getParsedNotes());
             } else {
                 this.titleTextView.setText(this.task.getText());
                 this.notesTextView.setText(this.task.getNotes());
@@ -104,16 +104,16 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(parsedText -> {
-                            this.task.parsedText = parsedText;
-                            this.titleTextView.setText(this.task.parsedText);
+                            this.task.setParsedText(parsedText);
+                            this.titleTextView.setText(this.task.getParsedText());
                         }, RxErrorHandler.handleEmptyError());
                 Observable.just(this.task.getNotes())
                         .map(MarkdownParser::parseMarkdown)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(parsedNotes -> {
-                            this.task.parsedNotes = parsedNotes;
-                            this.notesTextView.setText(this.task.parsedNotes);
+                            this.task.setParsedNotes(parsedNotes);
+                            this.notesTextView.setText(this.task.getParsedNotes());
                         }, RxErrorHandler.handleEmptyError());
             }
         } else {

@@ -83,12 +83,12 @@ public class SkillTasksRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task
 
         void bindHolder(Task task) {
             this.task = task;
-            titleTextView.setText(task.text);
-            if (task.notes == null || task.notes.length() == 0) {
+            titleTextView.setText(task.getText());
+            if (task.getNotes() == null || task.getNotes().length() == 0) {
                 notesTextView.setVisibility(View.GONE);
             } else {
                 notesTextView.setVisibility(View.VISIBLE);
-                notesTextView.setText(task.notes);
+                notesTextView.setText(task.getNotes());
             }
             rightBorderView.setBackgroundResource(task.getLightTaskColor());
         }

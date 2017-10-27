@@ -287,7 +287,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                         this.emptyViewDescription.setText(R.string.empty_description_habits);
                         break;
                     }
-                    case Task.FREQUENCY_DAILY: {
+                    case Task.TYPE_DAILY: {
                         this.emptyViewTitle.setText(R.string.empty_title_dailies);
                         this.emptyViewDescription.setText(R.string.empty_description_dailies);
                         break;

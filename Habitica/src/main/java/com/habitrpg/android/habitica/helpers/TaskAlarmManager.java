@@ -141,7 +141,7 @@ public class TaskAlarmManager {
     //We may be able to use repeating alarms instead of this in the future
     public void addAlarmForTaskId(String taskId) {
         taskRepository.getTaskCopy(taskId)
-                .filter(task -> task.isValid() && task.isManaged() && Task.TYPE_DAILY.equals(task.type))
+                .filter(task -> task.isValid() && task.isManaged() && Task.TYPE_DAILY.equals(task.getType()))
                 .first()
                 .subscribe(this::setAlarmsForTask, RxErrorHandler.handleEmptyError());
     }

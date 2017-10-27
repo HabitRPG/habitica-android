@@ -41,7 +41,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
     @Override
     public void bindHolder(Task newTask, int position) {
         this.task = newTask;
-        if (newTask.up) {
+        if (newTask.getUp()) {
             this.btnPlusWrapper.setBackgroundResource(newTask.getLightTaskColor());
             if (newTask.getLightTaskColor() == R.color.yellow_100) {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus_yellow);
@@ -57,7 +57,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
             this.btnPlus.setClickable(false);
         }
 
-        if (newTask.down) {
+        if (newTask.getDown()) {
             this.btnMinusWrapper.setBackgroundResource(newTask.getLightTaskColor());
             if (newTask.getLightTaskColor() == R.color.yellow_100) {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus_yellow);
@@ -74,12 +74,12 @@ public class HabitViewHolder extends BaseTaskViewHolder {
         }
 
         String streakString = "";
-        if (newTask.counterUp > 0 && newTask.counterDown > 0) {
-            streakString = streakString + "+" + String.valueOf(task.counterUp) + " | -" + String.valueOf(task.counterDown);
-        } else if (newTask.counterUp > 0) {
-            streakString = streakString + "+" + String.valueOf(task.counterUp);
-        } else if (newTask.counterUp > 0) {
-            streakString = streakString + "-" + String.valueOf(task.counterDown);
+        if (newTask.getCounterUp() > 0 && newTask.getCounterDown() > 0) {
+            streakString = streakString + "+" + String.valueOf(task.getCounterUp()) + " | -" + String.valueOf(task.getCounterDown());
+        } else if (newTask.getCounterUp() > 0) {
+            streakString = streakString + "+" + String.valueOf(task.getCounterUp());
+        } else if (newTask.getCounterUp() > 0) {
+            streakString = streakString + "-" + String.valueOf(task.getCounterDown());
         }
         if (streakString.length() > 0) {
             streakTextView.setText(streakString);

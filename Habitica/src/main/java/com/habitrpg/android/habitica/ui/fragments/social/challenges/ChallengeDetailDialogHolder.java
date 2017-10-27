@@ -121,7 +121,7 @@ public class ChallengeDetailDialogHolder {
                             ArrayList<Task> rewards = new ArrayList<>();
 
                             for (Map.Entry<String, Task> entry : taskList.tasks.entrySet()) {
-                                switch (entry.getValue().type) {
+                                switch (entry.getValue().getType()) {
                                     case Task.TYPE_TODO:
                                         todos.add(entry.getValue());
                                         break;
@@ -172,13 +172,13 @@ public class ChallengeDetailDialogHolder {
 
             View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_habit, tasks_layout, false);
             TextView habitTitle = (TextView) entry.findViewById(R.id.habit_title);
-            ImageView plusImg = (ImageView) entry.findViewById(task.up ? R.id.plus_img_tinted : R.id.plus_img);
-            ImageView minusImg = (ImageView) entry.findViewById(task.down ? R.id.minus_img_tinted : R.id.minus_img);
+            ImageView plusImg = (ImageView) entry.findViewById(task.getUp() ? R.id.plus_img_tinted : R.id.plus_img);
+            ImageView minusImg = (ImageView) entry.findViewById(task.getDown() ? R.id.minus_img_tinted : R.id.minus_img);
 
             plusImg.setVisibility(View.VISIBLE);
             minusImg.setVisibility(View.VISIBLE);
 
-            habitTitle.setText(EmojiParser.parseEmojis(task.text));
+            habitTitle.setText(EmojiParser.parseEmojis(task.getText()));
             tasks_layout.addView(entry);
         }
         task_group_layout.addView(taskGroup);
@@ -198,15 +198,15 @@ public class ChallengeDetailDialogHolder {
 
             View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_daily, tasks_layout, false);
             TextView title = (TextView) entry.findViewById(R.id.daily_title);
-            title.setText(EmojiParser.parseEmojis(task.text));
+            title.setText(EmojiParser.parseEmojis(task.getText()));
 
-            if (task.checklist != null && !task.checklist.isEmpty()) {
+            if (task.getChecklist() != null && !task.getChecklist().isEmpty()) {
                 View checklistIndicatorWrapper = entry.findViewById(R.id.checklistIndicatorWrapper);
 
                 checklistIndicatorWrapper.setVisibility(View.VISIBLE);
 
                 TextView checkListAllTextView = (TextView) entry.findViewById(R.id.checkListAllTextView);
-                checkListAllTextView.setText(String.valueOf(task.checklist.size()));
+                checkListAllTextView.setText(String.valueOf(task.getChecklist().size()));
             }
             tasks_layout.addView(entry);
         }
@@ -227,15 +227,15 @@ public class ChallengeDetailDialogHolder {
 
             View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_todo, tasks_layout, false);
             TextView title = (TextView) entry.findViewById(R.id.todo_title);
-            title.setText(EmojiParser.parseEmojis(task.text));
+            title.setText(EmojiParser.parseEmojis(task.getText()));
 
-            if (task.checklist != null && !task.checklist.isEmpty()) {
+            if (task.getChecklist() != null && !task.getChecklist().isEmpty()) {
                 View checklistIndicatorWrapper = entry.findViewById(R.id.checklistIndicatorWrapper);
 
                 checklistIndicatorWrapper.setVisibility(View.VISIBLE);
 
                 TextView checkListAllTextView = (TextView) entry.findViewById(R.id.checkListAllTextView);
-                checkListAllTextView.setText(String.valueOf(task.checklist.size()));
+                checkListAllTextView.setText(String.valueOf(task.getChecklist().size()));
             }
             tasks_layout.addView(entry);
         }
@@ -257,7 +257,7 @@ public class ChallengeDetailDialogHolder {
             View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_reward, tasks_layout, false);
             ((ImageView)entry.findViewById(R.id.gold_icon)).setImageBitmap(HabiticaIconsHelper.imageOfGold());
             TextView title = (TextView) entry.findViewById(R.id.reward_title);
-            title.setText(EmojiParser.parseEmojis(task.text));
+            title.setText(EmojiParser.parseEmojis(task.getText()));
             tasks_layout.addView(entry);
         }
         task_group_layout.addView(taskGroup);

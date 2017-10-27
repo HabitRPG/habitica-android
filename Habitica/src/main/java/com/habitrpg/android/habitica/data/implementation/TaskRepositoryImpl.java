@@ -89,10 +89,10 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
                             result.drop = res.get_tmp().getDrop();
                         }
                         this.localRepository.executeTransaction(realm -> {
-                            if (task.type != null && !task.type.equals("reward")) {
-                                task.value = task.value + res.getDelta();
-                                if (Task.TYPE_DAILY.equals(task.type) || Task.TYPE_TODO.equals(task.type)) {
-                                    task.completed = up;
+                            if (task.getType() != null && !task.getType().equals("reward")) {
+                                task.setValue(task.getValue() + res.getDelta());
+                                if (Task.TYPE_DAILY.equals(task.getType()) || Task.TYPE_TODO.equals(task.getType())) {
+                                    task.setCompleted(up);
                                 }
                             }
                             stats.setHp(res.hp);
@@ -161,7 +161,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         }
         return apiClient.createTask(task)
                 .map(task1 -> {
-                    task1.dateCreated = new Date();
+                    task1.setDateCreated(new Date());
                     return task1;
                 })
                 .doOnNext(localRepository::saveTask);
@@ -177,7 +177,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         return localRepository.getTaskCopy(task.getId()).first()
                 .flatMap(task1 -> apiClient.updateTask(task1.getId(), task1))
                 .map(task1 -> {
-                    task1.position = task.position;
+                    task1.setPosition(task.getPosition());
                     return task1;
                 })
                 .doOnNext(localRepository::saveTask);

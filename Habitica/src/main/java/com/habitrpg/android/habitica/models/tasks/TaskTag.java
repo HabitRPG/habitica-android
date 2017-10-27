@@ -44,7 +44,7 @@ public class TaskTag extends RealmObject {
     public void setTask(Task task) {
         this.task = task;
 
-        taskId = task.id;
+        taskId = task.getId();
         updatePrimaryKey();
     }
 

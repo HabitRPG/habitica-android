@@ -65,7 +65,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         mainHandler.post(() -> taskRepository.getTasks(taskType, userID)
                 .first()
                 .flatMap(Observable::from)
-                .filter(task -> (task.type.equals(Task.TYPE_TODO) && !task.completed) || task.isDisplayedActive())
+                .filter(task -> (task.getType().equals(Task.TYPE_TODO) && !task.getCompleted()) || task.isDisplayedActive())
                 .toList()
                 .flatMap(tasks -> taskRepository.getTaskCopies(tasks))
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -107,7 +107,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         if (taskList.size() > position) {
             Task task = taskList.get(position);
 
-            CharSequence parsedText = MarkdownParser.parseMarkdown(task.text);
+            CharSequence parsedText = MarkdownParser.parseMarkdown(task.getText());
 
             SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
             EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false);

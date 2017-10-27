@@ -59,7 +59,7 @@ public class TaskFilterHelper {
         List<Task> filtered = new ArrayList<>();
         String activeFilter = null;
         if (activeFilters != null && activeFilters.size() > 0) {
-            activeFilter = activeFilters.get(tasks.get(0).type);
+            activeFilter = activeFilters.get(tasks.get(0).getType());
         }
         for (Task task : tasks) {
             if (isFiltered(task, activeFilter)) {
@@ -77,21 +77,21 @@ public class TaskFilterHelper {
         if (activeFilter != null && !activeFilter.equals(Task.FILTER_ALL)) {
             switch (activeFilter) {
                 case Task.FILTER_ACTIVE:
-                    if (task.type.equals(Task.TYPE_DAILY)) {
+                    if (task.getType().equals(Task.TYPE_DAILY)) {
                         return task.isDisplayedActive();
                     } else {
-                        return !task.completed;
+                        return !task.getCompleted();
                     }
                 case Task.FILTER_GRAY:
-                    return task.completed || !task.isDisplayedActive();
+                    return task.getCompleted() || !task.isDisplayedActive();
                 case Task.FILTER_WEAK:
-                    return task.value < 0;
+                    return task.getValue() < 0;
                 case Task.FILTER_STRONG:
-                    return task.value >= 0;
+                    return task.getValue() >= 0;
                 case Task.FILTER_DATED:
-                    return task.duedate != null;
+                    return task.getDueDate() != null;
                 case Task.FILTER_COMPLETED:
-                    return task.completed;
+                    return task.getCompleted();
             }
         }
         return true;

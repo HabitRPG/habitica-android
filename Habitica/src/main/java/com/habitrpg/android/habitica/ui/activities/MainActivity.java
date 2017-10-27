@@ -574,8 +574,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             }
         }
 
-        if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
-            inventoryRepository.buyItem(user, event.Reward.getId(), event.Reward.value)
+        if (event.Reward.getSpecialTag() != null && event.Reward.getSpecialTag().equals("item")) {
+            inventoryRepository.buyItem(user, event.Reward.getId(), event.Reward.getValue())
                     .subscribe(buyResponse -> {
                                 String snackbarMessage = getString(R.string.successful_purchase, event.Reward.getText());
                                 if (event.Reward.getId().equals("armoire")) {
@@ -588,14 +588,14 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                                     }
                                     soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                                 }
-                                showSnackbar(floatingMenuWrapper, null, snackbarMessage, new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()), ContextCompat.getColor(this, R.color.yellow_10), "-"+event.Reward.value, SnackbarDisplayType.NORMAL);
+                                showSnackbar(floatingMenuWrapper, null, snackbarMessage, new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()), ContextCompat.getColor(this, R.color.yellow_10), "-"+ event.Reward.getValue(), SnackbarDisplayType.NORMAL);
                             }, RxErrorHandler.handleEmptyError());
         } else {
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
                     .subscribe(res -> showSnackbar(floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
                             new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()),
                             ContextCompat.getColor(this, R.color.yellow_10),
-                            "-"+ ((int) event.Reward.value),
+                            "-"+ ((int) event.Reward.getValue()),
                             SnackbarDisplayType.DROP), RxErrorHandler.handleEmptyError());
         }
     }
@@ -865,7 +865,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void onEvent(TaskCheckedCommand event) {
-        switch (event.Task.type) {
+        switch (event.Task.getType()) {
             case Task.TYPE_DAILY: {
                 dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
                         .subscribe(this::displayTaskScoringResponse, RxErrorHandler.handleEmptyError());

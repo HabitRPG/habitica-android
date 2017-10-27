@@ -66,7 +66,7 @@ public class YesterdailyDialog extends AlertDialog {
     private void runCron() {
         List<Task> completedTasks = new ArrayList<>();
         for (Task task : tasks) {
-            if (task.completed) {
+            if (task.getCompleted()) {
                 completedTasks.add(task);
             }
         }
@@ -83,15 +83,15 @@ public class YesterdailyDialog extends AlertDialog {
             configureTaskView(taskView, task);
             View taskContainer = taskView.findViewById(R.id.taskHolder);
             taskContainer.setOnClickListener(v -> {
-                task.completed = !task.completed;
+                task.setCompleted(!task.getCompleted());
                 configureTaskView(taskView, task);
             });
 
-            if (task.checklist.size() > 0) {
+            if (task.getChecklist().size() > 0) {
                 View checklistDivider = taskView.findViewById(R.id.checklistDivider);
                 checklistDivider.setVisibility(View.VISIBLE);
                 ViewGroup checklistContainer = taskView.findViewById(R.id.checklistView);
-                for (ChecklistItem item : task.checklist) {
+                for (ChecklistItem item : task.getChecklist()) {
                     View checklistView = inflater.inflate(R.layout.checklist_item_row, yesterdailiesList, false);
                     configureChecklistView(checklistView, item);
                     checklistView.setOnClickListener(v -> {
