@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.members.Member;
+import com.habitrpg.android.habitica.models.user.Stats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,19 +106,19 @@ public class UserStatComputer {
 
             if (itemClass != null) {
                 switch (itemClass) {
-                    case "rogue":
+                    case Stats.ROGUE:
                         strClassBonus += str_ * classBonus;
                         perClassBonus += per_ * classBonus;
                         break;
-                    case "healer":
+                    case Stats.HEALER:
                         conClassBonus += con_ * classBonus;
                         intClassBonus += int_ * classBonus;
                         break;
-                    case "warrior":
+                    case Stats.WARRIOR:
                         strClassBonus += str_ * classBonus;
                         conClassBonus += con_ * classBonus;
                         break;
-                    case "wizard":
+                    case Stats.MAGE:
                         intClassBonus += int_ * classBonus;
                         perClassBonus += per_ * classBonus;
                         break;

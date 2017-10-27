@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.members.Member;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -102,19 +103,19 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Mem
 
             int colorResourceID;
             switch (user.getStats().habitClass) {
-                case "healer": {
+                case Stats.HEALER: {
                     colorResourceID = R.color.class_healer;
                     break;
                 }
-                case "warrior": {
+                case Stats.WARRIOR: {
                     colorResourceID = R.color.class_warrior;
                     break;
                 }
-                case "rogue": {
+                case Stats.ROGUE: {
                     colorResourceID = R.color.class_rogue;
                     break;
                 }
-                case "wizard": {
+                case Stats.MAGE: {
                     colorResourceID = R.color.class_wizard;
                     break;
                 }
