@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import rx.functions.Action1
+import rx.subscriptions.CompositeSubscription
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -25,6 +26,8 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     internal open var user: User? = null
 
+    internal val compositeSubscription = CompositeSubscription()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,6 +38,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onDestroy() {
         userRepository.close()
+        compositeSubscription.unsubscribe()
         super.onDestroy()
     }
 
