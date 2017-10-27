@@ -272,8 +272,7 @@
   <string name="equipped">In gebruik</string>
   <string name="quest_cancel_message">Ben je zeker dat je deze queeste wilt beëindigen? Alle aangenomen uitnodigingen zullen verloren gaan. De eigenaar van de queeste zal de queesterol terug krijgen.</string>
   <string name="quest.invitation">Queeste uitnodiging</string>
-  <string name="quest_begin_message">Ben je zeker dat je de queeste wilt beginnen? Zodra het actief is, kunnen er geen andere spelers zich bij de queeste aansluiten.</string>
-  <string name="quest.invitation.text">Je bent uitgenodigd om deel te nemen aan een queeste!</string>
+    <string name="quest.invitation.text">Je bent uitgenodigd om deel te nemen aan een queeste!</string>
   <string name="ago_1day">1 dag geleden</string>
   <string name="ago_days">%d dagen geleden</string>
   <string name="ago_1Minute">1 minuut geleden</string>

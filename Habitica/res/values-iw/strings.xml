@@ -235,8 +235,7 @@
   <string name="equipped">מצוייד</string>
   <string name="quest_cancel_message">האם אתם בטוחים שאתם מעוניינים להפסיק את ההרפתקאה הזו? כל אישורי ההזמנות יאבדו. הבעלים של ההרפתקאה ימשיכו להחזיק במגילת ההרפתקאה.</string>
   <string name="quest.invitation">הזמנה להרפתקאה</string>
-  <string name="quest_begin_message">האם אתם בטוחים שאתם מעוניינים להתחיל בהרפתקאה? ברגע שהיא מתחילה, חברי חבורה נוספים לא יכולים להצטרף אליה.</string>
-  <string name="quest.invitation.text">הוזמנתם להשתתף בהרפתקאה!</string>
+    <string name="quest.invitation.text">הוזמנתם להשתתף בהרפתקאה!</string>
   <string name="ago_1day">לפני יום</string>
   <string name="ago_days">לפני %d ימים</string>
   <string name="ago_1Minute">לפני דקה</string>

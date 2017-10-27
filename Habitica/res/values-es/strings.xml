@@ -243,7 +243,7 @@
   <string name="equipped">Equipado</string>
   <string name="quest_cancel_message">¿Seguro que quieres cancelar esta misión? Se perderán todas las invitaciones que se hayan aceptado y el propietario de la misión recuperará el pergamino.</string>
   <string name="quest.invitation">Invitación a misión</string>
-  <string name="quest_begin_message">¿Seguro que quieres comenzar la misión? Una vez comenzada, no podrán unirse a esta misión más miembros del grupo.</string>
+  <string name="quest_begin_message">¿Estás seguro? Solamente %1$d de %2$d miembros de tu grupo se han unido a la misión! Las misiones comienzan automaticamente cuando todos los jugadores se han unido o han rechazado la invitación.</string>
   <string name="quest.invitation.text">Te han invitado a participar en una misión.</string>
   <string name="ago_1day">Hace 1 día</string>
   <string name="ago_days">Hace %d días</string>

@@ -242,8 +242,7 @@
   <string name="equipped">Užsidėta</string>
   <string name="quest_cancel_message">Ar tikrai nori atšaukti misiją? Visi pakvietimai bus nutraukti. Misijos savininkas atgaus misijos rankraštį.</string>
   <string name="quest.invitation">Misijos Pakvietimas</string>
-  <string name="quest_begin_message">Ar tikrai nori pradėti misiją? Kai ji prasidės, kiti grupės nariai nebegalės prisijungti.</string>
-  <string name="quest.invitation.text">Tave pakvietė dalyvauti misijoje!</string>
+    <string name="quest.invitation.text">Tave pakvietė dalyvauti misijoje!</string>
   <string name="ago_1day">Liko 1 diena</string>
   <string name="ago_days">prieš %d dieną(as)</string>
   <string name="ago_1Minute">prieš 1 minutę</string>

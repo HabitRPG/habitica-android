@@ -206,7 +206,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         } else {
             participantHeader.setText(R.string.invitations);
             participantHeaderCount.setText(participantCount + "/" + quest.participants.size());
-            begin_quest_message = getString(R.string.quest_begin_message_2, participantCount, quest.participants.size());
+            begin_quest_message = getString(R.string.quest_begin_message, participantCount, quest.participants.size());
         }
     }
 
