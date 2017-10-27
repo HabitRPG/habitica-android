@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.ui.views.settings
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Bitmap
 import android.graphics.PorterDuff
+import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
@@ -26,6 +28,16 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
         editText?.setText(value)
     }
 
+    @ColorRes
+    var iconBackgroundColor: Int = 0
+    set(value) {
+        field = value
+        val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
+        backgroundDrawable?.setColorFilter(field, PorterDuff.Mode.MULTIPLY)
+        backgroundDrawable?.alpha = 50
+        iconBackgroundView.background = backgroundDrawable
+    }
+
     init {
         View.inflate(context, R.layout.fixvalues_edittext, this)
         ButterKnife.bind(this)
@@ -38,11 +50,7 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
         editText.hint = attributes.getString(R.styleable.FixValuesEditText_title)
         editTextWrapper.hint = editText.hint
         editTextWrapper.setHintTextAppearance(attributes.getResourceId(R.styleable.FixValuesEditText_hintStyle, R.style.PurpleTextLabel))
-        val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
-        backgroundDrawable?.setColorFilter(attributes.getColor(R.styleable.FixValuesEditText_iconBgColor, 0), PorterDuff.Mode.MULTIPLY)
-        backgroundDrawable?.alpha = 50
-
-        iconBackgroundView.background = backgroundDrawable
+        iconBackgroundColor = attributes.getColor(R.styleable.FixValuesEditText_iconBgColor, 0)
 
         val iconName = attributes.getString(R.styleable.FixValuesEditText_fixIconName)
         when (iconName) {
@@ -53,5 +61,9 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
             "level" -> iconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             "streak" -> iconView.setImageResource(R.drawable.achievement_thermometer)
         }
+    }
+
+    fun setIconBitmap(icon: Bitmap) {
+        iconView.setImageBitmap(icon)
     }
 }

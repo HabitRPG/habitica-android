@@ -23,6 +23,15 @@ public class Stats extends RealmObject {
     @Retention(RetentionPolicy.SOURCE)
     public @interface StatsTypes {}
 
+
+    public static final String WARRIOR = "warrior";
+    public static final String MAGE = "wizard";
+    public static final String HEALER = "healer";
+    public static final String ROGUE = "rogue";
+    @StringDef({Stats.WARRIOR, Stats.MAGE, Stats.HEALER, Stats.ROGUE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface HabiticaClassTypes {}
+
     public static final String AUTO_ALLOCATE_FLAT = "flat";
     public static final String AUTO_ALLOCATE_CLASSBASED = "classbased";
     public static final String AUTO_ALLOCATE_TASKBASED = "taskbased";
@@ -41,6 +50,7 @@ public class Stats extends RealmObject {
     public Buffs buffs;
     public Integer points, lvl;
     @SerializedName("class")
+    @HabiticaClassTypes
     public String habitClass;
     public Double gp, exp, mp, hp;
     private Integer toNextLevel, maxHealth, maxMP;
@@ -78,13 +88,13 @@ public class Stats extends RealmObject {
 
     public String getTranslatedClassName(Context context) {
         switch (habitClass) {
-            case "healer":
+            case HEALER:
                 return context.getString(R.string.healer);
-            case "rogue":
+            case ROGUE:
                 return context.getString(R.string.rogue);
-            case "warrior":
+            case WARRIOR:
                 return context.getString(R.string.warrior);
-            case "wizard":
+            case MAGE:
                 return context.getString(R.string.mage);
             default:
                 return context.getString(R.string.warrior);

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -10,8 +11,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.settings.FixValuesEditText
 import kotlinx.android.synthetic.main.activity_fixcharacter.*
 import rx.functions.Action0
@@ -86,6 +89,25 @@ class FixCharacterValuesActivity: BaseActivity() {
         manaEditText.text = user.stats?.mp.toString()
         levelEditText.text = user.stats?.lvl.toString()
         streakEditText.text = user.streakCount.toString()
+
+        when (user.stats.habitClass) {
+            Stats.WARRIOR -> {
+                levelEditText.iconBackgroundColor = ContextCompat.getColor(this, R.color.red_500)
+                levelEditText.setIconBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
+            }
+            Stats.MAGE -> {
+                levelEditText.iconBackgroundColor = ContextCompat.getColor(this, R.color.blue_500)
+                levelEditText.setIconBitmap(HabiticaIconsHelper.imageOfMageLightBg())
+            }
+            Stats.HEALER -> {
+                levelEditText.iconBackgroundColor = ContextCompat.getColor(this, R.color.yellow_500)
+                levelEditText.setIconBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
+            }
+            Stats.ROGUE -> {
+                levelEditText.iconBackgroundColor = ContextCompat.getColor(this, R.color.red_500)
+                levelEditText.setIconBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
+            }
+        }
     }
 
     fun FixValuesEditText.getDoubleValue(): Double {
