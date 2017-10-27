@@ -299,9 +299,7 @@
     <string name="equipped">Equipped</string>
     <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
     <string name="quest.invitation">Quest Invitation</string>
-    <string name="quest_begin_message">Are you sure you want to begin the quest? Once it is active, no additional party members can join the quest.</string>
-    <!--TODO quest_begin_message_2 for every translation-->
-    <string name="quest_begin_message_2">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
+    <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="quest.invitation.text">You have been invited to participate in a quest!</string>
     <string name="ago_1day">1 day ago</string>
     <string name="ago_days" >%d days ago</string>

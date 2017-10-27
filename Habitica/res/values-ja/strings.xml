@@ -272,8 +272,7 @@
   <string name="equipped">装備済み</string>
   <string name="quest_cancel_message">このクエストを中止します。よろしいですか?　招待を受けたすべての参加者を失うことになります。クエストの所有者の元にクエストの巻物が戻ってきます。</string>
   <string name="quest.invitation">クエストへの招待</string>
-  <string name="quest_begin_message">クエストをはじめます。よろしいですか?　クエストを開始すると、新たにメンバーがクエストに参加することはできません。</string>
-  <string name="quest.invitation.text">クエストへの招待状が届いた!</string>
+    <string name="quest.invitation.text">クエストへの招待状が届いた!</string>
   <string name="ago_1day">1日前</string>
   <string name="ago_days">%d日前</string>
   <string name="ago_1Minute">1分前</string>

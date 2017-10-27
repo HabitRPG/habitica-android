@@ -272,8 +272,7 @@
   <string name="equipped">Ausgerüstet</string>
   <string name="quest_cancel_message">Bist Du sicher, dass Du diese Quest abbrechen willst? Alle angenommenen Einladungen gehen verloren. Der Questbesitzer erhält die Questschriftrolle zurück.</string>
   <string name="quest.invitation">Questeinladung</string>
-  <string name="quest_begin_message">Bist Du sicher, dass Du die Quest beginnen willst? Sobald sie aktiv ist, können keine zusätzlichen Gruppenmitglieder beitreten.</string>
-  <string name="quest.invitation.text">Du wurdest eingeladen, an einer Quest teilzunehmen!</string>
+    <string name="quest.invitation.text">Du wurdest eingeladen, an einer Quest teilzunehmen!</string>
   <string name="ago_1day">Vor einem Tag</string>
   <string name="ago_days">Vor %d Tagen</string>
   <string name="ago_1Minute">Vor einer Minute</string>

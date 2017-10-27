@@ -218,8 +218,7 @@
   <string name="equipped">Opremljeno</string>
   <string name="quest_cancel_message">Jesi li siguran da želiš otkazati ovaj pothvat? Svi prihvati pozivnica će biti izgubljeni. Vlasnik pothvata će dobiti natrag svitak Pothvata</string>
   <string name="quest.invitation">Pozivnica za Pothvat</string>
-  <string name="quest_begin_message">Jesi li siguran da želiš započeti pothvat? Jednom kad je aktivan, članovi grupe se ne mogu pridružiti.</string>
-  <string name="quest.invitation.text">Pozvani ste na sudjelovanje u pothvatu!</string>
+    <string name="quest.invitation.text">Pozvani ste na sudjelovanje u pothvatu!</string>
   <string name="ago_1day">Prije 1 dan</string>
   <string name="ago_days">Prije %d dana </string>
   <string name="ago_1Minute">Prije 1 minute </string>

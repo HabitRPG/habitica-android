@@ -254,8 +254,7 @@
   <string name="equipped">装备</string>
   <string name="quest_cancel_message">你是否确定要放弃这个探索任务？这将会失去所有已接受的邀请。探索任务拥有者将拿回探索任务卷轴。</string>
   <string name="quest.invitation">任务邀请</string>
-  <string name="quest_begin_message">你是否确定要直接开始这个探索任务？一旦开始，其他队伍成员就不能加入这个探索任务。</string>
-  <string name="quest.invitation.text">你被邀请参加一个探索任务！</string>
+    <string name="quest.invitation.text">你被邀请参加一个探索任务！</string>
   <string name="ago_1day">1天前</string>
   <string name="ago_days">%d天前</string>
   <string name="ago_1Minute">1分钟前</string>

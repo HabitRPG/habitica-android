@@ -272,8 +272,7 @@
   <string name="equipped">Giyilmiş</string>
   <string name="quest_cancel_message">Bu görevi iptal etmek istediğinize emin misiniz?  Tüm davet kabulleri kaybolacak. Görev sahibi görev parşömeni sahipliğini sürdürecektir.</string>
   <string name="quest.invitation">Görev Daveti</string>
-  <string name="quest_begin_message">Göreve başlamak istediğinize emin misiniz? Bir görev aktif ederseniz, ilave takım üyesi göreve katılamayacaktır.</string>
-  <string name="quest.invitation.text">Göreve katılmak için davet edildin!</string>
+    <string name="quest.invitation.text">Göreve katılmak için davet edildin!</string>
   <string name="ago_1day">1 gün önce</string>
   <string name="ago_days">%d gün önce</string>
   <string name="ago_1Minute">1 dakika önce</string>

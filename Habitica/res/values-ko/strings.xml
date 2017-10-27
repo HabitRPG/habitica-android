@@ -275,8 +275,7 @@
   <string name="equipped">착용됨</string>
   <string name="quest_cancel_message">정말 이 퀘스트를 취소하시겠습니까? 모든 초대장과 승인들을 잃을 것입니다. 퀘스트 스크롤은 주인에게 돌아갑니다.</string>
   <string name="quest.invitation">퀘스트 초대장</string>
-  <string name="quest_begin_message">정말 이 퀘스트를 시작하시겠습니까? 시작 후 더이상 새로운 파티 멤버가 참여할 수 없습니다.</string>
-  <string name="quest.invitation.text">퀘스트에 초대받았습니다!</string>
+    <string name="quest.invitation.text">퀘스트에 초대받았습니다!</string>
   <string name="ago_1day">하루 전</string>
   <string name="ago_days">%d 일 전</string>
   <string name="ago_1Minute">1분 전</string>
