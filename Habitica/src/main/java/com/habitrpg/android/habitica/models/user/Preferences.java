@@ -11,7 +11,7 @@ public class Preferences extends RealmObject implements AvatarPreferences {
     @PrimaryKey
     private String userId;
 
-    public Hair hair;
+    private Hair hair;
     SuppressedModals suppressModals;
     User user;
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader, dailyDueDefaultView, automaticAllocation;
