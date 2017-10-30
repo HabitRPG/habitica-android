@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.helpers
 
-import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -14,7 +13,7 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
     private var isPlaying: Boolean = false
 
     val webUrl: String
-        get() = "https://habitica.com/static/audio/$theme/$fileName.mp3"
+        get() = "https://habitica.com/assets/audio/$theme/$fileName.mp3"
 
     val filePath: String
         get() = theme + "_" + fileName + ".mp3"
@@ -22,7 +21,7 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
     init {
     }
 
-    fun play(context: Context) {
+    fun play() {
         if (isPlaying) {
             return
         }
@@ -36,6 +35,15 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
 
         try {
             m.setDataSource(file?.path)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val attributes = AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                        .build()
+                m.setAudioAttributes(attributes)
+            } else {
+                m.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
+            }
             m.prepare()
 
             playerPrepared = true
