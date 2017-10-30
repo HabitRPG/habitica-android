@@ -196,7 +196,6 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent);
                     }
-                    builder = builder.addHeader("Authorization", "Basic " + BuildConfig.STAGING_KEY);
                     Request request = builder.method(original.method(), original.body())
                             .build();
                     lastAPICallURL = original.url().toString();

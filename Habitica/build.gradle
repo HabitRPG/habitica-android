@@ -180,7 +180,6 @@ android {
     productFlavors {
         dev {
             minSdkVersion 21
-            buildConfigField "String", "STAGING_KEY", "\"1dcf9ed3-3b14-45b3-9e7e-acdfff68a368\""
             dimension "buildType"
         }
 
