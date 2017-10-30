@@ -1,23 +1,16 @@
 package com.habitrpg.android.habitica.helpers
 
-import android.content.Context
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-
-import java.util.ArrayList
-import java.util.HashMap
-
-import javax.inject.Inject
-
 import rx.Observable
 import rx.functions.Action1
 import rx.schedulers.Schedulers
+import java.util.*
+import javax.inject.Inject
 
 class SoundManager {
 
     @Inject
     lateinit var soundFileLoader: SoundFileLoader
-    @Inject
-    lateinit var context: Context
     var soundTheme: String = SoundThemeOff
 
     private val loadedSoundFiles: MutableMap<String, SoundFile> = HashMap()
@@ -51,7 +44,7 @@ class SoundManager {
         }
 
         if (loadedSoundFiles.containsKey(type)) {
-            loadedSoundFiles[type]?.play(context)
+            loadedSoundFiles[type]?.play()
         } else {
             val soundFiles = ArrayList<SoundFile>()
 
@@ -59,7 +52,7 @@ class SoundManager {
             soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe(Action1 {
                 val file = soundFiles[0]
                 loadedSoundFiles.put(type, file)
-                file.play(context)
+                file.play()
             }, RxErrorHandler.handleEmptyError())
         }
     }
