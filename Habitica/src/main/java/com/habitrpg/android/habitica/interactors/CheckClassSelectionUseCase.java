@@ -31,7 +31,7 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
             User user = requestValues.user;
 
             if(requestValues.selectClassEvent == null) {
-                if (user.getStats().getLvl() > 10 &&
+                if (user.getStats().getLvl() >= 10 &&
                         !user.getPreferences().getDisableClasses() &&
                         !user.getFlags().getClassSelected()) {
                     SelectClassEvent event = new SelectClassEvent();
