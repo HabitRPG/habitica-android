@@ -43,9 +43,9 @@ public class Stats extends RealmObject {
     private String userId;
 
     User user;
-    public Float con, str, per;
+    public Integer con, str, per;
     @SerializedName("int")
-    public Float _int;
+    public Integer _int;
     public Training training;
     public Buffs buffs;
     public Integer points, lvl;
@@ -179,19 +179,19 @@ public class Stats extends RealmObject {
         return buffs;
     }
 
-    public Float getStr() {
+    public Integer getStr() {
         return str;
     }
 
-    public Float get_int() {
+    public Integer get_int() {
         return _int;
     }
 
-    public Float getCon() {
+    public Integer getCon() {
         return con;
     }
 
-    public Float getPer() {
+    public Integer getPer() {
         return per;
     }
 

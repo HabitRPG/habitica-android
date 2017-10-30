@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -16,6 +17,7 @@ import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.android.habitica.ui.views.BulkAllocateStatsDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import kotlinx.android.synthetic.main.fragment_stats.*
 import rx.functions.Action1
@@ -111,6 +113,17 @@ class StatsFragment: BaseMainFragment() {
         distributeEvenlyHelpButton.setOnClickListener { showHelpAlert(R.string.distribute_evenly_help) }
         distributeClassHelpButton.setOnClickListener { showHelpAlert(R.string.distribute_class_help) }
         distributeTaskHelpButton.setOnClickListener { showHelpAlert(R.string.distribute_task_help) }
+
+        statsAllocationButton.setOnClickListener {
+            if (user?.stats?.points ?: 0 > 0) {
+                showBulkAllocateDialog()
+            }
+        }
+    }
+
+    private fun showBulkAllocateDialog() {
+        val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.getComponent())
+        dialog.show()
     }
 
     private fun changeAutoAllocationMode(@Stats.AutoAllocationTypes allocationMode: String) {

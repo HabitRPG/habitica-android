@@ -55,9 +55,9 @@ open class Task : RealmObject, Parcelable {
     // used for buyable items
     var specialTag: String = ""
     @Ignore
-    var parsedText: CharSequence = ""
+    var parsedText: CharSequence? = null
     @Ignore
-    var parsedNotes: CharSequence = ""
+    var parsedNotes: CharSequence? = null
     @PrimaryKey
     @SerializedName("_id")
     var id: String = ""
