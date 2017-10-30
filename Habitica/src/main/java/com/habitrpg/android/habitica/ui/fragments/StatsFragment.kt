@@ -122,8 +122,11 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun showBulkAllocateDialog() {
-        val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.getComponent())
-        dialog.show()
+        val context = context
+        if (context != null) {
+            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.getComponent())
+            dialog.show()
+        }
     }
 
     private fun changeAutoAllocationMode(@Stats.AutoAllocationTypes allocationMode: String) {

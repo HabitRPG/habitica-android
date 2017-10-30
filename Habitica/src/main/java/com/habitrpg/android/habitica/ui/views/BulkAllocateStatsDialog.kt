@@ -1,9 +1,10 @@
 package com.habitrpg.android.habitica.ui.views
 
-import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -12,10 +13,11 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import kotlinx.android.synthetic.main.dialog_bulk_allocate.*
 import rx.Subscription
+import rx.functions.Action0
 import rx.functions.Action1
 import javax.inject.Inject
 
-class BulkAllocateStatsDialog(context: Context?, component: AppComponent) : AlertDialog(context) {
+class BulkAllocateStatsDialog(context: Context, component: AppComponent) : AlertDialog(context) {
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -62,9 +64,25 @@ class BulkAllocateStatsDialog(context: Context?, component: AppComponent) : Aler
         val view = inflater.inflate(R.layout.dialog_bulk_allocate, null)
 
         setView(view)
-        this.setButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE, context?.getString(R.string.done)) { _, _ ->
+        this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.save)) { _, _ ->
+            saveChanges()
+        }
+        this.setButton(AlertDialog.BUTTON_NEUTRAL, context.getString(R.string.action_cancel)) { _, _ ->
             this.dismiss()
         }
+    }
+
+    private fun saveChanges() {
+        val progressDialog = ProgressDialog.show(context, context.getString(R.string.allocating_points), null, true)
+        userRepository.bulkAllocatePoints(strengthSliderView.currentValue, intelligenceSliderView.currentValue, constitutionSliderView.currentValue, perceptionSliderView.currentValue)
+                .subscribe({
+                    progressDialog.dismiss()
+                    this.dismiss()
+                }, {
+                    RxErrorHandler.reportError(it)
+                    progressDialog.dismiss()
+                    this.dismiss()
+                })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,16 +92,56 @@ class BulkAllocateStatsDialog(context: Context?, component: AppComponent) : Aler
         }, RxErrorHandler.handleEmptyError())
 
         strengthSliderView.allocateAction = {
+            checkRedistribution(strengthSliderView)
             updateTitle()
         }
         intelligenceSliderView.allocateAction = {
+            checkRedistribution(intelligenceSliderView)
             updateTitle()
         }
         constitutionSliderView.allocateAction = {
+            checkRedistribution(constitutionSliderView)
             updateTitle()
         }
         perceptionSliderView.allocateAction = {
+            checkRedistribution(perceptionSliderView)
             updateTitle()
+        }
+    }
+
+    private fun checkRedistribution(excludedSlider: StatsSliderView) {
+        val diff = allocatedPoints - pointsToAllocate
+        if (diff > 0) {
+            var highestSlider: StatsSliderView? = null
+            if (excludedSlider != strengthSliderView) {
+                highestSlider = getSliderWithHigherValue(highestSlider, strengthSliderView)
+            }
+            if (excludedSlider != intelligenceSliderView) {
+                highestSlider = getSliderWithHigherValue(highestSlider, intelligenceSliderView)
+            }
+            if (excludedSlider != constitutionSliderView) {
+                highestSlider = getSliderWithHigherValue(highestSlider, constitutionSliderView)
+            }
+            if (excludedSlider != perceptionSliderView) {
+                highestSlider = getSliderWithHigherValue(highestSlider, perceptionSliderView)
+            }
+            if (highestSlider != null) {
+                highestSlider.currentValue -= diff
+            }
+        }
+    }
+
+    private fun getSliderWithHigherValue(firstSlider: StatsSliderView?, secondSlider: StatsSliderView?): StatsSliderView? {
+        if (firstSlider == null) {
+            return secondSlider
+        }
+        if (secondSlider == null) {
+            return firstSlider
+        }
+        if (firstSlider.currentValue > secondSlider.currentValue) {
+            return firstSlider
+        } else {
+            return secondSlider
         }
     }
 
@@ -99,5 +157,7 @@ class BulkAllocateStatsDialog(context: Context?, component: AppComponent) : Aler
         } else {
             titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_400))
         }
+
+        getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = allocatedPoints > 0
     }
 }

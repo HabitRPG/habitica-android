@@ -986,4 +986,14 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     public Observable<Stats> allocatePoint(String stat) {
         return apiService.allocatePoint(stat).compose(configureApiCallObserver());
     }
+
+    @Override
+    public Observable<Stats> bulkAllocatePoints(int strength, int intelligence, int constitution, int perception) {
+        Map<String, Integer> stats = new HashMap<>();
+        stats.put("str", strength);
+        stats.put("int", intelligence);
+        stats.put("con", constitution);
+        stats.put("per", perception);
+        return apiService.bulkAllocatePoints(stats).compose(configureApiCallObserver());
+    }
 }

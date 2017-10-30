@@ -77,4 +77,7 @@ public interface UserRepository extends BaseRepository {
 
     @NotNull
     Observable<Stats> allocatePoint(@Nullable User user, @Stats.StatsTypes String s);
+
+    @NotNull
+    Observable<Stats> bulkAllocatePoints(int strength, int intelligence, int constitution, int perception);
 }

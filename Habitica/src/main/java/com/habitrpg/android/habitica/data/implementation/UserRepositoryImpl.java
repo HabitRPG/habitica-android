@@ -311,6 +311,12 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                 });
     }
 
+    @NotNull
+    @Override
+    public Observable<Stats> bulkAllocatePoints(int strength, int intelligence, int constitution, int perception) {
+        return apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception);
+    }
+
     @Override
     public void runCron(List<Task> tasks) {
         Observable<List<TaskScoringResult>> observable;
