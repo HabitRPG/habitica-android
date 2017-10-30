@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
@@ -135,6 +136,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     }
 
 
+    @SuppressLint("ObsoleteSdkInt")
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
             "use_reminder" -> {
@@ -196,7 +198,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 userRepository.updateUser(user, "preferences.sound", newAudioTheme)
                         .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
-                soundManager.setSoundTheme(newAudioTheme)
+                soundManager.soundTheme = newAudioTheme
                 soundManager.preloadAllFiles()
             }
             "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
