@@ -62,6 +62,7 @@ import com.habitrpg.android.habitica.ui.fragments.preferences.APIPreferenceFragm
 import com.habitrpg.android.habitica.ui.fragments.preferences.AuthenticationPreferenceFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.ProfilePreferencesFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsPreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
@@ -293,4 +294,6 @@ public interface AppComponent {
     void inject(@NotNull StatsFragment statsFragment);
 
     void inject(@NotNull BulkAllocateStatsDialog bulkAllocateStatsDialog);
+
+    void inject(@NotNull PushNotificationsPreferencesFragment pushNotificationsPreferencesFragment);
 }
