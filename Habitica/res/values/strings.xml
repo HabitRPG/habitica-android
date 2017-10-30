@@ -711,4 +711,5 @@
     <string name="distribute_evenly_help">Assigns the same number of points to each attribute.</string>
     <string name="distribute_class_help">Assigns more points to the attributes important to your Class.</string>
     <string name="distribute_task_help">Assigns points based on the Strength, Intelligence, Constitution, and Perception categories associated with the tasks you complete.</string>
+    <string name="allocating_points">Allocating Points</string>
 </resources>

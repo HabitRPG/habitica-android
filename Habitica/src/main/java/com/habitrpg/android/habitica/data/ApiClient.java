@@ -249,4 +249,6 @@ public interface ApiClient {
     Observable<Void> updatePassword(String newPassword, String oldPassword, String oldPasswordConfirmation);
 
     Observable<Stats> allocatePoint(String stat);
+
+    Observable<Stats> bulkAllocatePoints(int strength, int intelligence, int constitution, int perception);
 }
