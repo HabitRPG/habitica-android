@@ -60,7 +60,7 @@ open class Task : RealmObject, Parcelable {
     var parsedNotes: CharSequence? = null
     @PrimaryKey
     @SerializedName("_id")
-    var id: String = ""
+    var id: String? = null
 
     var isDue: Boolean? = null
 
