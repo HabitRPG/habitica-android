@@ -1,4 +1,6 @@
 <resources>
+    <attr name="statsColor" format="color" />
+    <attr name="statsTitle" format="string" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
         <attr name="showMount" format="boolean" />
@@ -50,10 +52,15 @@
     </declare-styleable>
     <declare-styleable name="StatsView">
         <attr name="titleBackgroundColor" format="color" />
-        <attr name="statsTitle" format="string" />
-        <attr name="statsColor" format="color" />
+        <attr name="statsColor" />
+        <attr name="statsTitle" />
     </declare-styleable>
     <declare-styleable name="EquipmentItemRow">
         <attr name="equipmentTitle" format="string" />
+    </declare-styleable>
+    <declare-styleable name="StatsSliderView">
+        <attr name="statsColor" />
+        <attr name="statsTextColor" format="color" />
+        <attr name="statsTitle" />
     </declare-styleable>
 </resources>

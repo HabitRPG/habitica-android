@@ -87,6 +87,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
+import com.habitrpg.android.habitica.ui.views.BulkAllocateStatsDialog;
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
@@ -290,4 +291,6 @@ public interface AppComponent {
     void inject(@NotNull APIPreferenceFragment apiPreferenceFragment);
 
     void inject(@NotNull StatsFragment statsFragment);
+
+    void inject(@NotNull BulkAllocateStatsDialog bulkAllocateStatsDialog);
 }

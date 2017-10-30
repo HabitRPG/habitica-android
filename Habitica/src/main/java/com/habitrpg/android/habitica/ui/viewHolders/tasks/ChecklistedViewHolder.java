@@ -34,7 +34,7 @@ import rx.schedulers.Schedulers;
 
 public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implements CompoundButton.OnCheckedChangeListener {
 
-    static Integer expandedChecklistRow = null;
+    private static Integer expandedChecklistRow = null;
 
     @BindView(R.id.checkBoxHolder)
     ViewGroup checkboxHolder;
@@ -93,13 +93,13 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
     public void updateChecklistDisplay() {
         //This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
         if (this.checklistView != null) {
-            if (this.shouldDisplayExpandedChecklist() && this.task.getChecklist() != null) {
+            if (this.shouldDisplayExpandedChecklist()) {
                 LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 if (this.task.getChecklist().isValid()) {
                     for (ChecklistItem item : this.task.getChecklist()) {
                         LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView, false);
-                        CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
-                        EmojiTextView textView = (EmojiTextView) itemView.findViewById(R.id.checkedTextView);
+                        CheckBox checkbox = itemView.findViewById(R.id.checkBox);
+                        EmojiTextView textView = itemView.findViewById(R.id.checkedTextView);
                         // Populate the data into the template view using the data object
                         textView.setText(item.getText());
 
