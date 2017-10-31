@@ -80,7 +80,7 @@ public class InboxMessageListFragment extends BaseMainFragment
         //layoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(layoutManager);
 
-        chatAdapter = new ChatRecyclerViewAdapter(null, true, user);
+        chatAdapter = new ChatRecyclerViewAdapter(null, true, user, false);
         chatAdapter.setSendingUser(this.user);
         recyclerView.setAdapter(chatAdapter);
         recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
