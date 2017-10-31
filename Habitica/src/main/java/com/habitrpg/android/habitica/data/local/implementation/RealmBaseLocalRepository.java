@@ -8,7 +8,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmObject;
 
-abstract class RealmBaseLocalRepository implements BaseLocalRepository {
+public abstract class RealmBaseLocalRepository implements BaseLocalRepository {
 
     Realm realm;
 
