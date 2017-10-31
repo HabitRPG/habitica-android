@@ -120,7 +120,7 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
     @Override
     public Observable<List<Challenge>> retrieveChallenges(User user) {
         return apiClient.getUserChallenges()
-                .doOnNext(localRepository::save);
+                .doOnNext(localRepository::saveChallenges);
     }
 
     @Override

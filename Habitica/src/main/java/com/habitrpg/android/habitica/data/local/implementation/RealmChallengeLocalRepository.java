@@ -2,12 +2,12 @@ package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
 import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.OrderedRealmCollectionSnapshot;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -56,5 +56,22 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
     @Override
     public void setParticipating(Challenge challenge, boolean isParticipating) {
         realm.executeTransaction(realm1 -> challenge.isParticipating = isParticipating);
+    }
+
+    @Override
+    public void saveChallenges(List<Challenge> onlineChallenges) {
+        OrderedRealmCollectionSnapshot<Challenge> localChallenges = realm.where(Challenge.class).findAll().createSnapshot();
+        List<Challenge> challengesToDelete = new ArrayList<>();
+        for (Challenge localTask : localChallenges) {
+            if (!onlineChallenges.contains(localTask)) {
+                challengesToDelete.add(localTask);
+            }
+        }
+        realm.executeTransaction(realm1 -> {
+            for (Challenge localTask : challengesToDelete) {
+                localTask.deleteFromRealm();
+            }
+        });
+        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(onlineChallenges));
     }
 }
