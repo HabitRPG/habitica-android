@@ -365,7 +365,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         } else {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
-            transaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+            transaction.replace(R.id.fragment_container, fragment);
+            if (fragment.addToBackStack()) {
+                transaction.addToBackStack(null);
+            }
+            transaction.commitAllowingStateLoss();
         }
     }
 
