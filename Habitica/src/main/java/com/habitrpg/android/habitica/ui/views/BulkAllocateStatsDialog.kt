@@ -74,7 +74,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent) : Alert
 
     private fun saveChanges() {
         val progressDialog = ProgressDialog.show(context, context.getString(R.string.allocating_points), null, true)
-        userRepository.bulkAllocatePoints(strengthSliderView.currentValue, intelligenceSliderView.currentValue, constitutionSliderView.currentValue, perceptionSliderView.currentValue)
+        userRepository.bulkAllocatePoints(user, strengthSliderView.currentValue, intelligenceSliderView.currentValue, constitutionSliderView.currentValue, perceptionSliderView.currentValue)
                 .subscribe({
                     progressDialog.dismiss()
                     this.dismiss()

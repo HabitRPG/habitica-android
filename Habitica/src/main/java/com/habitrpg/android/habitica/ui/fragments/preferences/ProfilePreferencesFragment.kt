@@ -54,13 +54,15 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         val profileCategory = findPreference("profile") as? PreferenceCategory
         configurePreference(profileCategory?.findPreference(key), sharedPreferences?.getString(key, ""))
-        val observable: Observable<User>? = when (key) {
-            "display_name" -> userRepository.updateUser(user, "profile.name", sharedPreferences?.getString(key, ""))
-            "photo_url" -> userRepository.updateUser(user, "profile.photo", sharedPreferences?.getString(key, ""))
-            "about" -> userRepository.updateUser(user, "profile.blurb", sharedPreferences?.getString(key, ""))
-            else -> null
+        if (sharedPreferences != null) {
+            val observable: Observable<User>? = when (key) {
+                "display_name" -> userRepository.updateUser(user, "profile.name", sharedPreferences.getString(key, ""))
+                "photo_url" -> userRepository.updateUser(user, "profile.photo", sharedPreferences.getString(key, ""))
+                "about" -> userRepository.updateUser(user, "profile.blurb", sharedPreferences.getString(key, ""))
+                else -> null
+            }
+            observable?.subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
         }
-        observable?.subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
     }
 
 }
