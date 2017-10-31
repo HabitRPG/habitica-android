@@ -48,7 +48,7 @@ public class PartyInviteActivity extends BaseActivity {
     UserRepository userRepository;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @BindView(R.id.view_pager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
     List<PartyInviteFragment> fragments = new ArrayList<>();
     private String userIdToInvite;

@@ -23,7 +23,7 @@ public class StableFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
-        viewPager = (ViewPager) v.findViewById(R.id.view_pager);
+        viewPager = (ViewPager) v.findViewById(R.id.viewPager);
 
         viewPager.setCurrentItem(0);
 

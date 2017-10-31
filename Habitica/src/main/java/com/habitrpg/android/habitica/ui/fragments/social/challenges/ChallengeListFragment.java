@@ -46,7 +46,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerViewEmptySupport recyclerView;
-    @BindView(R.id.empty_view)
+    @BindView(R.id.emptyView)
     public View emptyView;
 
     private ChallengesListViewAdapter challengeAdapter;

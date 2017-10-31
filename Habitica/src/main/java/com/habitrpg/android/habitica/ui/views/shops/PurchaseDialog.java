@@ -101,8 +101,8 @@ public class PurchaseDialog extends AlertDialog {
         currencyView.setGems(user.getGemCount());
         currencyView.setHourglasses(user.getHourglassCount());
 
-        if ("gems".equals(shopItem.purchaseType)) {
-            int gemsLeft = shopItem.limitedNumberLeft != null ? shopItem.limitedNumberLeft : 0;
+        if ("gems".equals(shopItem.getPurchaseType())) {
+            int gemsLeft = shopItem.getLimitedNumberLeft() != null ? shopItem.getLimitedNumberLeft() : 0;
             int maxGems = user.getPurchased().getPlan().totalNumberOfGems();
             if (maxGems > 0) {
                 limitedTextView.setText(getContext().getString(R.string.gems_left_max, gemsLeft, maxGems));
@@ -134,7 +134,7 @@ public class PurchaseDialog extends AlertDialog {
         buyButton.setVisibility(View.VISIBLE);
 
         if (item.getUnlockCondition() == null) {
-            priceLabel.setValue(Double.valueOf(item.getValue()));
+            priceLabel.setValue((double) item.getValue());
             priceLabel.setCurrency(item.getCurrency());
         } else {
             setBuyButtonEnabled(false);
@@ -158,7 +158,7 @@ public class PurchaseDialog extends AlertDialog {
         } else if (shopItem.isTypeGear()) {
             contentView = new PurchaseDialogGearContent(getContext());
             inventoryRepository.getEquipment(item.getKey()).first().subscribe(((PurchaseDialogGearContent) contentView)::setEquipment, RxErrorHandler.handleEmptyError());
-        } else if ("gems".equals(shopItem.purchaseType)) {
+        } else if ("gems".equals(shopItem.getPurchaseType())) {
             contentView = new PurchaseDialogGemsContent(getContext());
         } else {
             contentView = new PurchaseDialogBaseContent(getContext());
@@ -209,17 +209,17 @@ public class PurchaseDialog extends AlertDialog {
         if (shopItem.isValid()) {
             if (shopItem.canBuy(user)) {
                 Observable<Void> observable;
-                if ((shopIdentifier != null && shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(shopItem.purchaseType)) {
-                    if (shopItem.purchaseType.equals("gear")) {
-                        observable = inventoryRepository.purchaseMysterySet(shopItem.categoryIdentifier);
+                if ((shopIdentifier != null && shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(shopItem.getPurchaseType())) {
+                    if (shopItem.getPurchaseType().equals("gear")) {
+                        observable = inventoryRepository.purchaseMysterySet(shopItem.getCategoryIdentifier());
                     } else {
-                        observable = inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key);
+                        observable = inventoryRepository.purchaseHourglassItem(shopItem.getPurchaseType(), shopItem.getKey());
                     }
-                } else if (shopItem.purchaseType.equals("quests") && shopItem.getCurrency().equals("gold")) {
-                    observable = inventoryRepository.purchaseQuest(shopItem.key);
-                } else if ("gold".equals(shopItem.currency) && !"gem".equals(shopItem.key)) {
-                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value).flatMap(buyResponse -> {
-                        if (shopItem.key.equals("armoire")) {
+                } else if (shopItem.getPurchaseType().equals("quests") && shopItem.getCurrency().equals("gold")) {
+                    observable = inventoryRepository.purchaseQuest(shopItem.getKey());
+                } else if ("gold".equals(shopItem.getCurrency()) && !"gem".equals(shopItem.getKey())) {
+                    observable = inventoryRepository.buyItem(user, shopItem.getKey(), shopItem.getValue()).flatMap(buyResponse -> {
+                        if (shopItem.getKey().equals("armoire")) {
                             if (buyResponse.armoire.get("type").equals("gear")) {
                                 snackbarText[0] = getContext().getString(R.string.armoireEquipment, buyResponse.armoire.get("dropText"));
                             } else if (buyResponse.armoire.get("type").equals("food")) {
@@ -231,12 +231,12 @@ public class PurchaseDialog extends AlertDialog {
                         return Observable.just(null);
                     });
                 } else {
-                    observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key);
+                    observable = inventoryRepository.purchaseItem(shopItem.getPurchaseType(), shopItem.getKey());
                 }
                 observable
                         .doOnNext(aVoid -> {
                             ShowSnackbarEvent event = new ShowSnackbarEvent();
-                            event.title = getContext().getString(R.string.successful_purchase, shopItem.text);
+                            event.title = getContext().getString(R.string.successful_purchase, shopItem.getText());
                             if (snackbarText[0].length() > 0) {
                                 event.text = snackbarText[0];
                             }
@@ -259,11 +259,11 @@ public class PurchaseDialog extends AlertDialog {
                         });
             } else {
                 InsufficientCurrencyDialog dialog = null;
-                if ("gold".equals(shopItem.currency)) {
+                if ("gold".equals(shopItem.getCurrency())) {
                     dialog = new InsufficientGoldDialog(getContext());
-                } else if ("gems".equals(shopItem.currency)) {
+                } else if ("gems".equals(shopItem.getCurrency())) {
                     dialog = new InsufficientGemsDialog(getContext());
-                } else if ("hourglasses".equals(shopItem.currency)) {
+                } else if ("hourglasses".equals(shopItem.getCurrency())) {
                     dialog = new InsufficientHourglassesDialog(getContext());
                 }
                 if (dialog != null) {

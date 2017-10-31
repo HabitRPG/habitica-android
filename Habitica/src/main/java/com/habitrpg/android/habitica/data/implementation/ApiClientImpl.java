@@ -850,8 +850,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Shop> fetchShopInventory(String identifier) {
-        return apiService.fetchShopInventory(identifier).compose(configureApiCallObserver());
+    public Observable<Shop> retrieveShopIventory(String identifier) {
+        return apiService.retrieveShopInventory(identifier).compose(configureApiCallObserver());
     }
 
     @Override
@@ -997,5 +997,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         stats.put("con", constitution);
         stats.put("per", perception);
         return apiService.bulkAllocatePoints(stats).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Shop> retrieveMarketGear() {
+        return apiService.retrieveMarketGear().compose(configureApiCallObserver());
     }
 }

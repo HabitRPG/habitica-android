@@ -47,7 +47,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
-    @BindView(R.id.empty_view)
+    @BindView(R.id.emptyView)
     public View emptyView;
     @BindView(R.id.empty_text_view)
     public TextView emptyTextView;

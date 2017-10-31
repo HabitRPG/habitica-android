@@ -188,7 +188,7 @@ public interface ApiClient {
 
     Observable<PostChatMessageResult> postPrivateMessage(Map<String, String> messageDetails);
 
-    Observable<Shop> fetchShopInventory(String identifier);
+    Observable<Shop> retrieveShopIventory(String identifier);
 
     //Push notifications
     Observable<List<Void>> addPushDevice(Map<String, String> pushDeviceData);
@@ -251,4 +251,6 @@ public interface ApiClient {
     Observable<Stats> allocatePoint(String stat);
 
     Observable<Stats> bulkAllocatePoints(int strength, int intelligence, int constitution, int perception);
+
+    Observable<Shop> retrieveMarketGear();
 }
