@@ -77,7 +77,7 @@ public class TasksFragment extends BaseMainFragment {
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
 
-        viewPager = v.findViewById(R.id.view_pager);
+        viewPager = v.findViewById(R.id.viewPager);
         View view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
         if (FloatingActionMenu.class.equals(view.getClass())) {
             floatingMenu = (FloatingActionMenu) view;

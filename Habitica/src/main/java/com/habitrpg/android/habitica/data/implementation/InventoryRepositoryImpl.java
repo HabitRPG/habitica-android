@@ -68,7 +68,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                     .map(items -> {
                         List<String> itemKeys = new ArrayList<>();
                         for (ShopItem item : items) {
-                            itemKeys.add(item.key);
+                            itemKeys.add(item.getKey());
                         }
                         itemKeys.add("potion");
                         itemKeys.add("armoire");
@@ -80,17 +80,17 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                         if (items != null) {
                             for (Equipment item : items) {
                                 ShopItem shopItem = new ShopItem();
-                                shopItem.key = item.key;
-                                shopItem.text = item.text;
-                                shopItem.notes = item.notes;
-                                shopItem.value = (int)item.value;
-                                shopItem.currency = "gold";
+                                shopItem.setKey(item.key);
+                                shopItem.setText(item.text);
+                                shopItem.setNotes(item.notes);
+                                shopItem.setValue((int) item.value);
+                                shopItem.setCurrency("gold");
                                 if ("potion".equals(item.key)) {
-                                    shopItem.purchaseType = "potion";
+                                    shopItem.setPurchaseType("potion");
                                 } else if ("armoire".equals(item.key)) {
-                                    shopItem.purchaseType = "armoire";
+                                    shopItem.setPurchaseType("armoire");
                                 } else {
-                                    shopItem.purchaseType = "gear";
+                                    shopItem.setPurchaseType("gear");
                                 }
 
                                 buyableItems.add(shopItem);
@@ -303,8 +303,13 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<Shop> fetchShopInventory(String identifier) {
-        return apiClient.fetchShopInventory(identifier);
+    public Observable<Shop> retrieveShopInventory(String identifier) {
+        return apiClient.retrieveShopIventory(identifier);
+    }
+
+    @Override
+    public Observable<Shop> retrieveMarketGear() {
+        return apiClient.retrieveMarketGear();
     }
 
     @Override
@@ -332,7 +337,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
         if (!item.isValid()) {
             return Observable.just(null);
         }
-        return apiClient.togglePinnedItem(item.pinType, item.path)
+        return apiClient.togglePinnedItem(item.getPinType(), item.getPath())
                 .flatMap(aVoid -> retrieveInAppRewards());
     }
 }

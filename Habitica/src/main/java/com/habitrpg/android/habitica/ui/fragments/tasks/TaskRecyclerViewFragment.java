@@ -7,10 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -83,7 +81,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
 
-    @BindView(R.id.empty_view)
+    @BindView(R.id.emptyView)
     ViewGroup emptyView;
     @BindView(R.id.empty_view_title)
     TextView emptyViewTitle;

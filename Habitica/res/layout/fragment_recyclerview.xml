@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/empty_view"
+        android:id="@+id/emptyView"
         style="@style/EmptyView"
         android:visibility="gone"/>
 

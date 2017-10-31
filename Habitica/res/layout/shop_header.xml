@@ -21,7 +21,7 @@
         android:background="@drawable/gradient_white"/>
 
     <TextView
-        android:id="@+id/name_plate"
+        android:id="@+id/namePlate"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
         tools:text="Justin"

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,7 +50,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
-        viewPager = (ViewPager) v.findViewById(R.id.view_pager);
+        viewPager = (ViewPager) v.findViewById(R.id.viewPager);
 
         viewPager.setCurrentItem(0);
 

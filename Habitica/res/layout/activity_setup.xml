@@ -3,7 +3,7 @@
                 android:layout_width="match_parent" android:layout_height="match_parent">
 
     <com.habitrpg.android.habitica.ui.views.FadingViewPager
-            android:id="@+id/view_pager"
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottomBar" />

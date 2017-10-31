@@ -273,7 +273,9 @@ public interface ApiService {
     Observable<HabitResponse<PostChatMessageResult>> postPrivateMessage(@Body Map<String, String> messageDetails);
 
     @GET("shops/{identifier}")
-    Observable<HabitResponse<Shop>> fetchShopInventory(@Path("identifier") String identifier);
+    Observable<HabitResponse<Shop>> retrieveShopInventory(@Path("identifier") String identifier);
+    @GET("shops/market-gear")
+    Observable<HabitResponse<Shop>> retrieveMarketGear();
 
     //Push notifications
     @POST("user/push-devices")

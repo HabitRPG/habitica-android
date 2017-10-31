@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
-import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 
@@ -86,7 +85,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_task_list);
             rv.setRemoteAdapter(appWidgetId, R.id.list_view, intent);
-            rv.setEmptyView(R.id.list, R.id.empty_view);
+            rv.setEmptyView(R.id.list, R.id.emptyView);
             rv.setTextViewText(R.id.widget_title, context.getString(getTitleResId()));
 
             // if the user click on the title: open App

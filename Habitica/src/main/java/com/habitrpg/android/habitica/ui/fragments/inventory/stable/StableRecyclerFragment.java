@@ -40,7 +40,7 @@ public class StableRecyclerFragment extends BaseFragment {
 
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
-    @BindView(R.id.empty_view)
+    @BindView(R.id.emptyView)
     public TextView emptyView;
     public StableRecyclerAdapter adapter;
     public String itemType;

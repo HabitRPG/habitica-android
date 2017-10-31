@@ -31,7 +31,7 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
 
     @Inject
     public ApiClient apiClient;
-    @BindView(R.id.view_pager)
+    @BindView(R.id.viewPager)
     ViewPager pager;
     @BindView(R.id.view_pager_indicator)
     IconPageIndicator indicator;

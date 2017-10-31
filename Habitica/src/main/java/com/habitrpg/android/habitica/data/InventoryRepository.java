@@ -75,7 +75,8 @@ public interface InventoryRepository extends ContentRepository {
 
     Observable<BuyResponse> buyItem(User user, String id, double value);
 
-    Observable<Shop> fetchShopInventory(String identifier);
+    Observable<Shop> retrieveShopInventory(String identifier);
+    Observable<Shop> retrieveMarketGear();
 
     Observable<Void> purchaseMysterySet(String categoryIdentifier);
 

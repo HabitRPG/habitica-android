@@ -22,7 +22,7 @@
             android:paddingBottom="?attr/actionBarSize" />
 
         <LinearLayout
-            android:id="@+id/empty_view"
+            android:id="@+id/emptyView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

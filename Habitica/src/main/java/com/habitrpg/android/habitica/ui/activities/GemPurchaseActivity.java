@@ -42,7 +42,7 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
     CrashlyticsProxy crashlyticsProxy;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @BindView(R.id.view_pager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
     List<CheckoutFragment> fragments = new ArrayList<>();
     private ActivityCheckout checkout;
