@@ -137,4 +137,8 @@ public abstract class BaseFragment extends DialogFragment {
     public String getDisplayedClassName() {
         return this.getClass().getSimpleName();
     }
+
+    public boolean addToBackStack() {
+        return true;
+    }
 }

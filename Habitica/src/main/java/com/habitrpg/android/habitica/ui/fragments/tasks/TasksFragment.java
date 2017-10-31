@@ -467,4 +467,9 @@ public class TasksFragment extends BaseMainFragment {
     public String customTitle() {
         return null;
     }
+
+    @Override
+    public boolean addToBackStack() {
+        return false;
+    }
 }
