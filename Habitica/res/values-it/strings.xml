@@ -272,8 +272,7 @@
   <string name="equipped">Equipaggiato</string>
   <string name="quest_cancel_message">Vuoi davvero annullare questa missione? Tutti gli inviti accettati andranno persi. Il proprietario della missione tornerà in possesso della Pergamena.</string>
   <string name="quest.invitation">Invito Missione</string>
-  <string name="quest_begin_message">Vuoi davvero iniziare la missione? Una volta attiva, nessun altro membro della squadra potrà unirsi alla missione.</string>
-  <string name="quest.invitation.text">Sei stato invitato a partecipare ad una missione!</string>
+    <string name="quest.invitation.text">Sei stato invitato a partecipare ad una missione!</string>
   <string name="ago_1day">1 giorno fa</string>
   <string name="ago_days">%d giorni fa</string>
   <string name="ago_1Minute">1 minuto fa</string>

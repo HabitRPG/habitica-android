@@ -272,8 +272,7 @@
   <string name="equipped">Надето</string>
   <string name="quest_cancel_message">Вы уверены, что хотите отменить квест? Все принятые приглашения будут отменены. Квестовый свиток останется у владельца.</string>
   <string name="quest.invitation">Приглашение в квест</string>
-  <string name="quest_begin_message">Вы уверены, что хотите начать квест? Никто больше не сможет присоединиться к нему.</string>
-  <string name="quest.invitation.text">Вас пригласили в квест!</string>
+    <string name="quest.invitation.text">Вас пригласили в квест!</string>
   <string name="ago_1day">1 день назад</string>
   <string name="ago_days">%d дней назад</string>
   <string name="ago_1Minute">1 минуту назад</string>

@@ -255,8 +255,7 @@
   <string name="equipped">Equipado</string>
   <string name="quest_cancel_message">Tem a certeza que deseja cancelar esta missão? Todos os convites aceites serão perdidos. O dono da missão manterá a posse do pergaminho da missão.</string>
   <string name="quest.invitation">Convite de Missão</string>
-  <string name="quest_begin_message">Tem a certeza que pretende iniciar a missão? Assim que esta seja iniciada, nenhum membro da equipa adicional pode juntar-se à missão.</string>
-  <string name="quest.invitation.text">Foi convidado para participar numa missão!</string>
+    <string name="quest.invitation.text">Foi convidado para participar numa missão!</string>
   <string name="ago_1day">Há 1 dia</string>
   <string name="ago_days">Há %d dias</string>
   <string name="ago_1Minute">Há 1 minuto</string>

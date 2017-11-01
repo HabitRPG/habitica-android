@@ -81,6 +81,7 @@ public class QuestDetailFragment extends BaseMainFragment {
     public String questKey;
     private Group party;
     private Quest quest;
+    private String begin_quest_message;
 
 
     @Nullable
@@ -205,6 +206,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         } else {
             participantHeader.setText(R.string.invitations);
             participantHeaderCount.setText(participantCount + "/" + quest.participants.size());
+            begin_quest_message = getString(R.string.quest_begin_message, participantCount, quest.participants.size());
         }
     }
 
@@ -230,7 +232,7 @@ public class QuestDetailFragment extends BaseMainFragment {
     @OnClick(R.id.quest_begin_button)
     public void onQuestBegin() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.quest_begin_message)
+                .setMessage(begin_quest_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> socialRepository.forceStartQuest(party)
                         .subscribe(quest -> {}, RxErrorHandler.handleEmptyError()))
                 .setNegativeButton(R.string.no, (dialog, which) -> {});

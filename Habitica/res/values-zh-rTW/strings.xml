@@ -246,8 +246,7 @@
   <string name="equipped">裝備</string>
   <string name="quest_cancel_message">你確定要取消任務? 所有邀請將會消失，任務擁有者會收到退還的任務卷軸</string>
   <string name="quest.invitation">任務邀請</string>
-  <string name="quest_begin_message">準備好開始任務了嗎?開始後就無法加入新成員了</string>
-  <string name="quest.invitation.text">你已經被邀請加入任務!</string>
+    <string name="quest.invitation.text">你已經被邀請加入任務!</string>
   <string name="ago_1day">1 天前</string>
   <string name="ago_days">%d 天前</string>
   <string name="ago_1Minute">1 分鐘之前</string>

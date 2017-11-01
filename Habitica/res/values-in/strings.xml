@@ -243,8 +243,7 @@
   <string name="equipped">Digunakan</string>
   <string name="quest_cancel_message">Apakah kamu yakin kamu ingin membatalkan misi ini? Semua undangan yang disetujui akan hilang. Pemilik misi akan mendapatkan gulungan misi kembali.</string>
   <string name="quest.invitation">Undangan Misi</string>
-  <string name="quest_begin_message">Apakah kamu yakin kamu ingin memulai misi? Setelah aktif, tidak ada anggota kelompok lain yang dapat bergabung.</string>
-  <string name="quest.invitation.text">Kamu telah diundang untuk berpartisipasi dalam misi!</string>
+    <string name="quest.invitation.text">Kamu telah diundang untuk berpartisipasi dalam misi!</string>
   <string name="ago_1day">1 hari yang lalu</string>
   <string name="ago_days">%d hari yang lalu</string>
   <string name="ago_1Minute">1 menit yang lalu</string>

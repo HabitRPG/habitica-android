@@ -272,7 +272,6 @@
   <string name="equipped">Екипирано</string>
   <string name="quest_cancel_message">Наистина ли искате да прекратите мисията? Всички приети покани ще бъдат загубени. Притежателят на мисията ще си запази свитъка ѝ.</string>
   <string name="quest.invitation">Покана за мисия</string>
-  <string name="quest_begin_message">Наистина ли искате да започнете мисията? След като мисията започне, никой повече няма да може да се присъедини към нея.</string>
   <string name="quest.invitation.text">Получихте покана за участие в мисия!</string>
   <string name="ago_1day">Преди 1 ден</string>
   <string name="ago_days">Преди %d дни</string>

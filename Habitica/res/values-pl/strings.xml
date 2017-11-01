@@ -269,8 +269,7 @@
   <string name="equipped">W użyciu</string>
   <string name="quest_cancel_message">Jesteś pewien że chcesz przerwać quest? Quest zostanie przerwany dla wszystkich uczestników. Zwołujący quest odzyska skrypt (quest scroll).</string>
   <string name="quest.invitation">Zaproszenie do questa.</string>
-  <string name="quest_begin_message">Czy jesteś pewien, ze chcesz zacząć misję? Gdy zostanie aktywowana, żaden dodatkowy członek drużyny nie będzie mógł do niej dołączyc.</string>
-  <string name="quest.invitation.text">Zostałeś zaproszony do udziału w misji!</string>
+    <string name="quest.invitation.text">Zostałeś zaproszony do udziału w misji!</string>
   <string name="ago_1day">1 dzień temu</string>
   <string name="ago_days">%d dni temu</string>
   <string name="ago_1Minute">1 minutę temu</string>

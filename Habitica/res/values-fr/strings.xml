@@ -272,7 +272,6 @@
   <string name="equipped">Équipé</string>
   <string name="quest_cancel_message">Êtes-vous sûr·e de vouloir annuler cette quête ? Toutes les invitations ayant été acceptées seront perdues. Le lanceur de la quête gardera le parchemin de la quête en sa possession.</string>
   <string name="quest.invitation">Invitation à une quête</string>
-  <string name="quest_begin_message">Êtes-vous sûr·e de vouloir commencer la quête ? Une fois lancée, aucun autre membre de l\'équipe ne peut rejoindre la quête.</string>
   <string name="quest.invitation.text">Vous avez été invité·e à participer à une quête !</string>
   <string name="ago_1day">il y a 1 jour</string>
   <string name="ago_days">il y a %d jours</string>
