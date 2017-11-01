@@ -139,7 +139,7 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
                     disabled = this.isPetOwned();
                 }
             }
-            DataBindingUtils.loadImage(imageView, imageName != null ? imageName : "head_0");
+            DataBindingUtils.INSTANCE.loadImage(imageView, imageName != null ? imageName : "head_0");
 
             float alpha = 1.0f;
             if (disabled) {

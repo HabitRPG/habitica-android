@@ -31,7 +31,7 @@ open class ShopItem : RealmObject() {
     var value: Int = 0
     var locked: Boolean = false
     var isLimited: Boolean = false
-    var currency: String = ""
+    var currency: String? = null
     var purchaseType: String = ""
     var categoryIdentifier: String = ""
     var limitedNumberLeft: Int? = null

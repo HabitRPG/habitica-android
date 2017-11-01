@@ -105,7 +105,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
 
                 priceButton.setCompoundDrawablesWithIntrinsicBounds(magicDrawable, null, null, null);
             }
-            DataBindingUtils.loadImage(skillImageView, "shop_" + skill.key);
+            DataBindingUtils.INSTANCE.loadImage(skillImageView, "shop_" + skill.key);
 
             if (skill.mana > mana) {
                 priceButton.setEnabled(false);

@@ -163,7 +163,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         }
         questTitleView.setText(questContent.getText());
         questDescriptionView.setText(MarkdownParser.parseMarkdown(questContent.getNotes()));
-        DataBindingUtils.loadImage(questScrollImageView, "inventory_quest_scroll_"+questContent.getKey());
+        DataBindingUtils.INSTANCE.loadImage(questScrollImageView, "inventory_quest_scroll_"+questContent.getKey());
     }
 
     private void setQuestParticipants(List<Member> participants) {

@@ -107,13 +107,13 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if (animal.getNumberOwned() > 0) {
                 this.ownedTextView.setText(String.valueOf(animal.getNumberOwned()));
                 if (itemType.equals("pets")) {
-                    DataBindingUtils.loadImage(this.imageView, "Pet-" + item.getKey());
+                    DataBindingUtils.INSTANCE.loadImage(this.imageView, "Pet-" + item.getKey());
                 } else {
-                    DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + item.getKey());
+                    DataBindingUtils.INSTANCE.loadImage(this.imageView, "Mount_Icon_" + item.getKey());
                 }
             } else {
                 ownedTextView.setVisibility(View.GONE);
-                DataBindingUtils.loadImage(this.imageView, "PixelPaw");
+                DataBindingUtils.INSTANCE.loadImage(this.imageView, "PixelPaw");
                 this.imageView.setAlpha(0.4f);
             }
         }

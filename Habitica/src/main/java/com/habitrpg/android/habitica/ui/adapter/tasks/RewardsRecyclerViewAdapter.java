@@ -62,8 +62,8 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         } else if (inAppRewards != null) {
             ShopItem item = inAppRewards.get(position-getCustomRewardCount());
             ((ShopItemViewHolder)holder).bind(item, item.canBuy(user));
-            ((ShopItemViewHolder)holder).setIsPinned(true);
-            ((ShopItemViewHolder)holder).pinIndicator.setVisibility(View.GONE);
+            ((ShopItemViewHolder)holder).setPinned(true);
+            ((ShopItemViewHolder) holder).hidePinIndicator();
         }
     }
 
