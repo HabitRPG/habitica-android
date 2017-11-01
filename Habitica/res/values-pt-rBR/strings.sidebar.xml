@@ -4,7 +4,7 @@
   <string name="sidebar.skills">Habilidades</string>
   <string name="sidebar.section.social">Social</string>
   <string name="sidebar.inbox">Caixa de Entrada</string>
-  <string name="sidebar.tavern">Taberna</string>
+  <string name="sidebar.tavern">Taverna</string>
   <string name="sidebar.party">Grupo</string>
   <string name="sidebar.purchaseGems">Comprar Gemas</string>
   <string name="sidebar.guilds">Guilda</string>
@@ -17,4 +17,5 @@
   <string name="sidebar.settings">Configurações</string>
   <string name="sidebar.about">Sobre</string>
   <string name="sidebar_shops">Compras</string>
+  <string name="sidebar_stats">Atributos</string>
 </resources>

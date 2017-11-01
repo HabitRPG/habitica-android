@@ -54,7 +54,6 @@
   <string name="confirmpassword">Potwierdź hasło</string>
   <string name="logout">Wyloguj</string>
   <string name="logout_description">Wyloguj się</string>
-  <string name="account_details_sum">Sprawdź szczegóły swojego konta</string>
   <string name="account_details">Szczegóły konta</string>
   <string name="LoginActivityName">Witaj</string>
   <string name="string_revive">Odrodzenie</string>
@@ -93,10 +92,10 @@
   <string name="reminders">Przypomnienia</string>
   <string name="actions">Akcje</string>
   <string name="attributes">Atrybuty</string>
-  <string name="physical">Fizyczne</string>
-  <string name="mental">Umysłowe</string>
-  <string name="social">Społeczne</string>
-  <string name="other">Pozostałe</string>
+  <string name="physical">Siła</string>
+  <string name="mental">Inteligencja</string>
+  <string name="social">Kondycja</string>
+  <string name="other">Percepcja</string>
   <string name="frequency">Częstotliwość</string>
   <string name="frequency_weekly">W konkretne dni tygodnia</string>
   <string name="frequency_daily">Co X dni</string>
@@ -139,7 +138,6 @@
   <string name="unlock_lvl_11">Odblokuj na poziomie 11</string>
   <string name="no_party_message">Nie jesteś w drużynie. Żeby dołączyć do drużyny odwiedź stronę internetową.</string>
   <string name="forgot_pw_btn">Zapomniane hasło</string>
-  <string name="forgot_pw_tv">Zapomniane hasło? Użyj mobilnej strony internetowej.</string>
   <string name="tavern.inn.checkOut">Reaktywuj swoje codzienne</string>
   <string name="tavern.inn.rest">Zapauzuj swoje codzienne</string>
   <string name="reward.dialog.buy">Kup</string>
@@ -303,7 +301,6 @@
   <string name="close">Zamknij</string>
   <string name="share">Podziel się</string>
   <string name="notification_pet_fed">Nakarmiłeś/aś %1$s %2$s!</string>
-  <string name="notification_purchase">%s zakupiony</string>
   <string name="sectionpets">Podstawowe chowańce</string>
   <string name="sectionpremiumPets">Magiczne chowańce</string>
   <string name="sectionquestPets">Chowańce z misji</string>
@@ -365,7 +362,6 @@
   <string name="party_invite">Odblokuj poprzez zapraszanie przyjaciół</string>
   <string name="no_gold">Niewystarczająca ilość złota</string>
   <string name="no_potion">Nie potrzebujesz kupować eliksiru uzdrawiającego</string>
-  <string name="successful_purchase">%1$s jest w Twoim posiadaniu</string>
   <string name="purchase_confirmation_title">Potwierdź zakup</string>
   <string name="confirm_purchase_text">Zakup %1$s za %2$s %3$s</string>
   <string name="gem">diament</string>
@@ -430,9 +426,12 @@
   <string name="subscribe_prompt">Zostań abonentem i uzyskuj te użyteczne korzyści:</string>
   <string name="subscribe.listitem1">Kup klejnoty za złoto</string>
   <string name="subscribe.listitem2">Ekskluzywne przedmioty miesiąca </string>
+  <string name="subscribe.listitem3">Zachowuj dodatkowe wpisy w historii konta</string>
+  <string name="subscribe.listitem4">Dzienny limit łupów podwojony</string>
   <string name="subscriptions">Subskrypcje</string>
   <string name="subscription_duration">Powtarzaj co %s</string>
   <string name="subscribe">Subskrybuj</string>
+  <string name="subscribe.listitem3.description">Historia ukończonych Do-Zrobienia i zadań jest dostępna dłużej.</string>
   <string name="subscription_hourglasses">+%d Mistycznej Klepsydry</string>
   <string name="payment_method">Metoda płatności</string>
   <string name="subscription">Subskrypcja</string>
@@ -442,6 +441,8 @@
   <string name="visit_habitica_website">Odwiedź Stronę Habitiki</string>
   <string name="current_bonuses">Obecne Dodatki</string>
   <string name="months_subscribed">Miesięcy subskrypcji</string>
+  <string name="current_hourclasses">Mistyczne Klepsydry</string>
+  <string name="monthly_gem_cap">Miesięczny limit Klejnotów</string>
   <string name="inactive">Nieaktywne</string>
   <string name="one_month">1 Miesiąc</string>
   <string name="months">%d Miesięcy</string>
@@ -485,6 +486,7 @@
   <string name="open">Otwórz</string>
   <string name="notification_mystery_item">Otwórz pudełko i znajdź %s!</string>
   <string name="checkInRewardEarned">Zdobyłeś %1$s jako nagrodę za poświęcenie w poprawie swojego życia.</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Twoja następna nagroda zostanie odblokowana za %1$d wizyt</string>
   <string name="pending_approval">oczekująca aprobata</string>
   <string name="filters">Filtry</string>
   <string name="done">Zrobione</string>
@@ -542,4 +544,32 @@
   <string name="challenge_create_error_title">Potrzebujesz tytułu, aby stworzyć to wyzwanie.</string>
   <string name="description_optional">Opis (opcjonalne)</string>
   <string name="new_challenge_title">Tytuł nowego wyzwania</string>
+  <string name="ownership">Własność</string>
+  <string name="inn">Karczma</string>
+  <string name="start_quest">Rozpocznij nową misję</string>
+  <string name="leave_party">Opuść drużynę</string>
+  <string name="party_description">Opis drużyny</string>
+  <string name="welcome_back">Witaj ponownie</string>
+  <string name="start_day">Rozpocznij nowy dzień!</string>
+  <string name="leave_party_confirmation">Jesteś pewien, że chcesz opuścić drużynę ?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Następna nagroda za %d wizyt</string>
+  <string name="pending">Oczekujące</string>
+  <string name="accepted">Zaakceptowane</string>
+  <string name="declined">Odrzucone</string>
+  <string name="participants">Uczestnicy</string>
+  <string name="invitations">Zaproszenia</string>
+  <string name="quest_leader_header" formatted="false">Rozpoczęta przez %s</string>
+  <string name="loading">Ładowanie...</string>
+  <string name="reloading_content">Przeładowuję...</string>
+  <string name="available_until" formatted="false">Dostępne do %s</string>
+  <string name="health">Zdrowie</string>
+  <string name="experience_reward" formatted="false">%d punktów doświadczenia</string>
+  <string name="gold_reward" formatted="false">%d Złoto</string>
+  <string name="reset_account">Zresetuj konto</string>
+  <string name="delete_account">Usuń konto</string>
+  <string name="delete_account_confirmation">Usuń moje konto</string>
+  <string name="danger_zone">Strefa zagrożenia</string>
+  <string name="nevermind">Nieważne</string>
+  <string name="resetting_account">Resetowanie konta</string>
+  <string name="deleting_account">Usuwanie konta</string>
 </resources>

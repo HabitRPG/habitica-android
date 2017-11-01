@@ -49,7 +49,6 @@
   <string name="confirmpassword">Patvirtinti slaptažodį</string>
   <string name="logout">Atsijungti</string>
   <string name="logout_description">Atsijungti nuo paskyros</string>
-  <string name="account_details_sum">Patikrinkite Jūsų paskyros detales</string>
   <string name="account_details">Paskyros Duomenys</string>
   <string name="LoginActivityName">Sveiki</string>
   <string name="string_revive">Prisikelti</string>
@@ -87,10 +86,6 @@
   <string name="reminders">Priminimai</string>
   <string name="actions">Veiksmai</string>
   <string name="attributes">Savybės</string>
-  <string name="physical">Fizinė</string>
-  <string name="mental">Protinė</string>
-  <string name="social">Socialinė</string>
-  <string name="other">Kita</string>
   <string name="frequency">Dažnumas</string>
   <string name="frequency_weekly">Specifinėmis Savaitės Dienomis</string>
   <string name="frequency_daily">Kas X Dienų</string>
@@ -124,7 +119,6 @@
   <string name="unlock_lvl_11">Atsidengia pasiekus 11 lygį</string>
   <string name="no_party_message">Tu nesi grupėje. Norėdama(s) prisidėti prie grupės, apsilankyk svetainėje.</string>
   <string name="forgot_pw_btn">Pamiršau Slaptažodį</string>
-  <string name="forgot_pw_tv">Pamiršote Slaptažodį? Naudokite mobilią Svetainę.</string>
   <string name="tavern.inn.checkOut">Atnaujinti Kasdienes Užduotis</string>
   <string name="tavern.inn.rest">Sustabdyti Kasdienes Užduotis</string>
   <string name="reward.dialog.buy">Pirkti</string>
@@ -276,7 +270,6 @@
   <string name="close">Uždaryti</string>
   <string name="share">Dalintis</string>
   <string name="notification_pet_fed">Pašėrei savo %1$s %2$s!</string>
-  <string name="notification_purchase">%s nupirkta</string>
   <string name="sectionpets">Paprasti Augintiniai</string>
   <string name="sectionpremiumPets">Stebuklingų Eliksyrų Augintiniai</string>
   <string name="sectionquestPets">Misijų Augintiniai</string>
@@ -331,7 +324,6 @@
   <string name="party_invite">Atidenk pakviečiant draugus</string>
   <string name="no_gold">Nepakanka Aukso</string>
   <string name="no_potion">Tau nereikia gyvybių eliksyro</string>
-  <string name="successful_purchase">%1$s nupirktas</string>
   <string name="purchase_confirmation_title">Patvirtinti pirkinį</string>
   <string name="confirm_purchase_text">Pirkti %1$s už %2$s %3$s</string>
   <string name="gem">brangakmenis</string>

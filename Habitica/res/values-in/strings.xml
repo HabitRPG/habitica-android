@@ -49,7 +49,6 @@
   <string name="confirmpassword">Konfirmasi kata sandi</string>
   <string name="logout">Keluar</string>
   <string name="logout_description">Keluar dari akun anda</string>
-  <string name="account_details_sum">Cek detail akun anda</string>
   <string name="account_details">Detail Akun</string>
   <string name="LoginActivityName">Selamat Datang</string>
   <string name="string_revive">Pulihkan</string>
@@ -87,10 +86,6 @@
   <string name="reminders">Pengingat</string>
   <string name="actions">Aksi</string>
   <string name="attributes">Atribut</string>
-  <string name="physical">Fisik</string>
-  <string name="mental">Mental</string>
-  <string name="social">Sosial</string>
-  <string name="other">Lain-lain</string>
   <string name="frequency">Frekuensi</string>
   <string name="frequency_weekly">Pada Hari Tertentu dalam Seminggu</string>
   <string name="frequency_daily">Setiap X Hari</string>
@@ -124,7 +119,6 @@
   <string name="unlock_lvl_11">Buka pada lvl 11</string>
   <string name="no_party_message">Kamu tidak memiliki teman. Untuk mencari teman, tolong kunjungi situs.</string>
   <string name="forgot_pw_btn">Lupa Kata Sandi</string>
-  <string name="forgot_pw_tv">Lupa Kata Sandi? Tolong gunakan Situs mobile</string>
   <string name="tavern.inn.checkOut">Aktifkan kembali Keseharianmu</string>
   <string name="tavern.inn.rest">Nonaktifkan Keseharianmu</string>
   <string name="reward.dialog.buy">Beli</string>
@@ -277,7 +271,6 @@
   <string name="close">Tutup</string>
   <string name="share">Bagikan</string>
   <string name="notification_pet_fed">Kamu memberi makan %2$s %1$s !</string>
-  <string name="notification_purchase">%s telah dibeli</string>
   <string name="sectionpets">Peliharaan Dasar</string>
   <string name="sectionpremiumPets">Peliharaan Ramuan Ajaib</string>
   <string name="sectionquestPets">Peliharaan Misi</string>
@@ -338,7 +331,6 @@
   <string name="party_invite">Buka dengan mengundang teman</string>
   <string name="no_gold">Koin Emas tidak cukup</string>
   <string name="no_potion">Kamu tidak perlu membeli ramuan kesehatan</string>
-  <string name="successful_purchase">%1$s telah sukses terbeli</string>
   <string name="purchase_confirmation_title">Pastikan belian</string>
   <string name="confirm_purchase_text">Membeli %1$s untuk %2$s %3$s</string>
   <string name="gem">Permata</string>

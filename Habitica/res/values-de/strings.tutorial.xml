@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_overview">Da sind wir! Ich habe bereits einige Aufgaben basierend auf Deinen Interessen erstellt. Füge ein paar eigene hinzu. Du kannst jede Aufgabe durch das Antippen des Titels bearbeiten.</string>
-  <string name="tutorial_habits_1">Zuerst ein Blick auf die Gewohnheiten. Es kann gute Gewohnheiten geben, wenn Du eine Gewohnheit verbessern möchtest, oder auch schlechte Gewohnheiten, die Du aufgeben möchtest.</string>
-  <string name="tutorial_habits_2">Jedes Mal, wenn Du eine gute Gewohnheit umsetzt, klicke auf das +, um Erfahrung und Gold zu erhalten!</string>
-  <string name="tutorial_habits_3">Falls Dir doch einen Ausrutscher passiert und Du eine schlechte Gewohnheit umsetzt, wird ein Klick auf das - die Lebenspunkte Deines Avatars verringern, um Dir dabei zu helfen, für Deine Taten Verantwortung zu übernehmen.</string>
-  <string name="tutorial_habits_4">Probier es aus! Du kannst die anderen Aufgaben-Typen kennenernen, indem Du die untere Navigation benutzt.</string>
-  <string name="tutorial_dailies_1">Erstelle tägliche Aufgaben für sich wiederholende Aufgaben, die regelmäßig erledigt werden müssen. </string>
-  <string name="tutorial_dailies_2">Pass auf - wenn Du eine dieser Aufgaben nicht erledigst, dann wird Deinem Avatar über Nacht Schaden zugefügt. Erledige Deine Aufgaben täglich und Du wirst tolle Belohnungen erhalten.</string>
-  <string name="tutorial_todos_1">Nutze die To-Dos, um Aufgaben zu organisieren, die Du nur einmalig erledigen musst.</string>
-  <string name="tutorial_todos_2">Falls Dein To-Do an einem bestimmten Tag erledigt sein muss, kannst Du dafür ein Fälligkeitsdatum erstellen. Es sieht so aus, als ob Du jetzt auch eine Aufgabe abhaken kannst - probier es aus!</string>
-  <string name="tutorial_rewards_1">Kaufe Dir Ausrüstung für Deinen Avatar mit dem Gold, dass Du Dir verdienst!</string>
-  <string name="tutorial_rewards_2">Du kannst auch benutzerdefinierte Belohnungen erstellen, die sich auf etwas in Deinem wiklichen Leben beziehen, je nachdem was Dich motiviert.</string>
-  <string name="tutorial_tasks_complete">Das war\'s für das Erste. Falls Du eine Erinnerungshilfe brauchst, dann schau in die FAQs.</string>
-  <string name="tutorial_equipment">Wenn Du Ausrüstung kaufst, taucht diese hier auf. Deine Kampfausrüstung beeinflusst Deine Spielerstatistiken und Dein Kostüm (falls aktiviert) beeinflusst Dein Aussehen.</string>
-  <string name="tutorial_items">Verdiene Gegenstände, indem Du Aufgaben erledigst und Stufen aufsteigst. Tippe auf einen Gegenstand, um ihn zu benutzen!</string>
-  <string name="tutorial_pets">Wenn du Aufgaben abschließt, hast Du eine Chance, Eier und Tränke zu finden. Kombiniere sie, um Haustiere auszubrüten.</string>
-  <string name="tutorial_skills">Fähigkeiten erlauben es Dir, mächtige Effekte auszulösen. Tippe auf eine Fähigkeit, um sie zu benutzen. Das kostet Mana (der blaue Balken), das Du verdienst, indem Du Dich jeden Tag einloggst und reale Aufgaben abschließt. Für mehr Infos schaue im Menü in die FAQ!</string>
-  <string name="tutorial_party">Hier können Du und Deine Freunde Euch gegenseitig motivieren und mit Euren Aufgaben Monster bekämpfen!</string>
-  <string name="tutorial_tavern">Willkommen im Gasthaus, einem öffentlichen und für alle Altersklassen geeigneten Chat! Hier kannst Du über Produktivität diskutieren und Fragen stellen. Viel Spaß!</string>
-  <string name="tutorial_classes">Wähle aus, ob Du ein Krieger, Magier, Heiler oder Schurke werden möchtest. Jede Klasse hat einzigartige Ausrüstungsgegenstände und Fähigkeiten. Tippe auf (?), um mehr zu erfahren!</string>
+  <string name="tutorial_overview">Da sind wir! Ich habe bereits einige Aufgaben basierend auf deinen Interessen erstellt. Füge ein paar eigene hinzu. du kannst jede Aufgabe durch das Antippen des Titels bearbeiten.</string>
+  <string name="tutorial_habits_1">Zuerst die Gewohnheiten. Sie können gute Gewohnheiten sein, die du verbessern möchtest, oder schlechte Gewohnheiten, die du aufgeben möchtest.</string>
+  <string name="tutorial_habits_2">Jedes Mal, wenn du eine gute Gewohnheit umsetzt, klicke auf das +, um Erfahrung und Gold zu erhalten!</string>
+  <string name="tutorial_habits_3">Falls dir doch einen Ausrutscher passiert und du eine schlechte Gewohnheit umsetzt, wird ein Klick auf das - die Lebenspunkte deines Avatars verringern, um dir dabei zu helfen, für deine Taten Verantwortung zu übernehmen.</string>
+  <string name="tutorial_habits_4">Probier es aus! Du kannst die anderen Aufgaben-Typen kennenernen, indem du die untere Navigation benutzt.</string>
+  <string name="tutorial_dailies_1">Erstelle tägliche Aufgaben für zeitkritische Aufgaben, die regelmäßig erledigt werden müssen. </string>
+  <string name="tutorial_dailies_2">Pass auf - wenn du eine dieser Aufgaben nicht erledigst, wird deinem Avatar über Nacht Schaden zugefügt. Erledige deine Aufgaben täglich und du wirst tolle Belohnungen erhalten.</string>
+  <string name="tutorial_todos_1">Nutze die To-Dos, um Aufgaben zu organisieren, die du nur einmalig erledigen musst.</string>
+  <string name="tutorial_todos_2">Falls Dein To-Do an einem bestimmten Tag erledigt sein muss, kannst du dafür ein Fälligkeitsdatum erstellen. Es sieht so aus, als ob du jetzt auch eine Aufgabe abhaken kannst - probier es aus!</string>
+  <string name="tutorial_rewards_1">Kaufe dir mit dem verdienten Gold Ausrüstung für deinen Avatar!</string>
+  <string name="tutorial_rewards_2">Du kannst auch benutzerdefinierte Belohnungen erstellen, die sich auf etwas in deinem wiklichen Leben beziehen, je nachdem was dich motiviert.</string>
+  <string name="tutorial_tasks_complete">Das war\'s für das Erste. Falls du eine Erinnerungshilfe brauchst, dann schau in die FAQs.</string>
+  <string name="tutorial_equipment">Wenn du Ausrüstung kaufst, taucht diese hier auf. Deine Kampfausrüstung beeinflusst deine Statuswerte und dein Kostüm (falls aktiviert) beeinflusst was dein Avatar trägt.</string>
+  <string name="tutorial_items">Verdiene Gegenstände, indem du Aufgaben erledigst und Stufen aufsteigst. Tippe auf einen Gegenstand, um ihn zu benutzen!</string>
+  <string name="tutorial_pets">Während du Aufgaben abschließt, kannst du nun durch Zufall, Eier und Elixiere zu finden. Kombiniere sie, um Haustiere auszubrüten.</string>
+  <string name="tutorial_skills">Fähigkeiten erlauben es dir, mächtige Effekte auszulösen! Tippe auf eine Fähigkeit, um sie zu benutzen. Das kostet Mana (der blaue Balken), das du verdienst, indem du dich jeden Tag einloggst und reale Aufgaben abschließt. Für mehr Infos schaue im Menü in die FAQ!</string>
+  <string name="tutorial_party">Hier können du und deine Freunde einander motivieren und mit euren Aufgaben Monster bekämpfen!</string>
+  <string name="tutorial_tavern">Willkommen im Gasthaus, einem öffentlichen Chat für alle Altersklassen! Hier kannst du dich über Produktivität unterhalten und Fragen stellen. Viel Spaß!</string>
+  <string name="tutorial_classes">Wähle aus, ob du Krieger, Magier, Heiler oder Schurke werden möchtest. Jede Klasse hat einzigartige Ausrüstungsgegenstände und Fähigkeiten. Tippe auf (?), um mehr zu erfahren!</string>
 </resources>

@@ -4,7 +4,7 @@
   <string name="XP_default">Esperienza</string>
   <string name="HP_default">Salute</string>
   <string name="MP_default">Mana</string>
-  <string name="ERR_pb_barcode">Le preferenze non possono essere importate dal codice a barre</string>
+  <string name="ERR_pb_barcode">Non è stato possibile importare le preferenze dal codice a barre</string>
   <!--Prefs-->
   <string name="PS_settings_title">Impostazioni</string>
   <string name="SP_address_hint">Il tuo server personalizzato</string>
@@ -31,10 +31,10 @@
   <string name="preference_push_you_won_challenge">Hai vinto una Sfida!</string>
   <string name="preference_push_received_a_private_message">Nuovo messaggio privato ricevuto</string>
   <string name="preference_push_gifted_gems">Gemme regalate</string>
-  <string name="preference_push_gifted_subscription">Abbonamento Regalato</string>
+  <string name="preference_push_gifted_subscription">Abbonamento regalato</string>
   <string name="preference_push_invited_to_party">Invito in una Squadra</string>
   <string name="preference_push_invited_to_guild">Invito Gilda</string>
-  <string name="preference_push_your_quest_has_begun">La tua Missione è cominciata</string>
+  <string name="preference_push_your_quest_has_begun">La tua missione è cominciata</string>
   <string name="preference_push_invited_to_quest">Invito ad una Missione</string>
   <!--Adding tasks-->
   <string name="task_value">Valore</string>
@@ -54,7 +54,6 @@
   <string name="confirmpassword">Conferma password</string>
   <string name="logout">Esci</string>
   <string name="logout_description">Esci dal tuo account</string>
-  <string name="account_details_sum">Controlla i dettagli del tuo account</string>
   <string name="account_details">Dettagli account</string>
   <string name="LoginActivityName">Benvenuto</string>
   <string name="string_revive">Rianima</string>
@@ -93,15 +92,15 @@
   <string name="reminders">Promemoria</string>
   <string name="actions">Azioni</string>
   <string name="attributes">Attributi</string>
-  <string name="physical">Fisica</string>
-  <string name="mental">Mentale</string>
-  <string name="social">Sociale</string>
-  <string name="other">Altro</string>
+  <string name="physical">Forza</string>
+  <string name="mental">Intelligenza</string>
+  <string name="social">Costituzione</string>
+  <string name="other">Percezione</string>
   <string name="frequency">Frequenza</string>
   <string name="frequency_weekly">Certi giorni della settimana</string>
   <string name="frequency_daily">Ogni X giorni</string>
   <string name="repeatables_summary_title">Riepilogo</string>
-  <string name="repeatables_title">Frequenza</string>
+  <string name="repeatables_title">Si ripete</string>
   <string name="repeatables_on_title">Ripeti di</string>
   <string name="repeatables_frequency_daily">Quotidianamente</string>
   <string name="repeatables_frequency_weekly">Settimanalmente</string>
@@ -132,14 +131,13 @@
   <string name="new_checklist_item">Nuovo elemento checklist</string>
   <string name="add_checklist_item">Aggiungi</string>
   <string name="reminder_title">Ricorda di completare le tue Daily!</string>
-  <string name="skill_progress_title">Usando abilità</string>
+  <string name="skill_progress_title">Usando abilità...</string>
   <string name="coming_soon">Presto disponibile</string>
   <string name="chat_flag_confirmation">Vuoi davvero segnalare questo messaggio per violazione?</string>
   <string name="flag_confirm">Segnala messaggio</string>
   <string name="unlock_lvl_11">Sblocca al liv. 11</string>
   <string name="no_party_message">Non sei in una squadra. Per unirti ad una squadra, per favore visita il sito web di Habitica.</string>
   <string name="forgot_pw_btn">Password dimenticata</string>
-  <string name="forgot_pw_tv">Hai dimenticato la password? Per favore usa il sito web di Habitica.</string>
   <string name="tavern.inn.checkOut">Riattiva le tue Daily</string>
   <string name="tavern.inn.rest">Sospendi le tue Daily</string>
   <string name="reward.dialog.buy">Compra</string>
@@ -151,7 +149,7 @@
   <string name="dailies">Daily</string>
   <string name="todos">To-do</string>
   <string name="rewards">Ricompense</string>
-  <string name="taskform.delete.title">Sei sicuro?</string>
+  <string name="taskform.delete.title">Sei sicuro/a?</string>
   <string name="taskform.delete.message">Vuoi davvero eliminare?</string>
   <string name="yes">Sì</string>
   <string name="no">No</string>
@@ -306,7 +304,8 @@
   <string name="close">Chiudi</string>
   <string name="share">Condividi</string>
   <string name="notification_pet_fed">Hai dato da mangiare al tuo %1$s %2$s!</string>
-  <string name="notification_purchase">Hai acquistato %s</string>
+  <string name="notification_purchase">Hai comprato %s</string>
+  <string name="notification_purchase_reward">Hai comprato una ricompensa</string>
   <string name="sectionpets">Animali base</string>
   <string name="sectionpremiumPets">Animali Pozione Magica</string>
   <string name="sectionquestPets">Animali Missione</string>
@@ -369,7 +368,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
   <string name="party_invite">Sblocca invitando amici</string>
   <string name="no_gold">Non hai abbastanza Oro</string>
   <string name="no_potion">Non hai bisogno di comprare una pozione di salute</string>
-  <string name="successful_purchase">%1$s comprato con successo</string>
+  <string name="successful_purchase">Acquistato %1$s</string>
   <string name="purchase_confirmation_title">Conferma acquisto</string>
   <string name="confirm_purchase_text">Compra %1$s per %2$s %3$s</string>
   <string name="gem">gemma</string>
@@ -589,4 +588,89 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
   <string name="quest_abort_message">Vuoi davvero annullare questa missione? Verrà annullata per tutti i membri della tua squadra e tutti i progressi nella missione saranno persi. La Pergamena tornerà al proprietario della missione.</string>
   <string name="loading">Caricamento...</string>
   <string name="reloading_content">Ricaricamento contenuti</string>
+  <string name="thousand_abbrev">k</string>
+  <string name="million_abbrev">mln</string>
+  <string name="billion_abbrev">mld</string>
+  <string name="your_balance">Il tuo bilancio:</string>
+  <string name="available_until" formatted="false">Disponibile fino al %s</string>
+  <string name="gems_left_max" formatted="false">Gemme mensili: %1$d/%2$d rimanenti</string>
+  <string name="gems_left_nomax" formatted="false">Gemme mensili: %d rimanenti</string>
+  <string name="health">Salute</string>
+  <string name="collect">Raccogli</string>
+  <string name="rage_meter">Indicatore Furia</string>
+  <string name="boss_quest">Missione Boss</string>
+  <string name="collection_quest">Missione Raccolta</string>
+  <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+  <string name="experience_reward" formatted="false">%d Punti esperienza</string>
+  <string name="gold_reward" formatted="false">%d Oro</string>
+  <string name="quest_owner_rewards">Premi proprietario missione</string>
+  <string name="str_abbrv">FOR</string>
+  <string name="per_abbrv">PER</string>
+  <string name="int_abbrv">INT</string>
+  <string name="con_abbrv">COS</string>
+  <string name="reset_account">Resetta account</string>
+  <string name="reset_account_description">ATTENZIONE! Questo resetterà diversi aspetti del tuo account. È altamente sconsigliato, ma qualcuno trova questa opzione utile all\'inizio, dopo aver provato il sito per un po\' di tempo.\n\nPerderai tutti i tuoi livelli, l\'oro e i punti esperienza. Tutte le tue attività (eccetto quelle delle sfide) verranno cancellate in modo permanente, insieme alla loro cronologia dei progressi. Perderai inoltre tutto il tuo equipaggiamento, ma potrai recuperare ogni cosa, compresi gli oggetti in edizione limitata e gli Oggetti Misteriosi che già possiedi (alcuni oggetti potrebbero richiedere l\'appartenenza ad una determinata classe per essere acquistati). Manterrai la tua classe, i tuoi animali e le cavalcature. Potresti forse preferire la Sfera della Rinascita, un\'alternativa molto più sicura che ti permette di tenere le tue attività e il tuo equipaggiamento.</string>
+  <string name="delete_account">Elimina account</string>
+  <string name="delete_account_description">Sei sicuro/a? Questo cancellerà per sempre il tuo account, e non potrà mai essere ripristinato! Dovrai registrarti con un nuovo account per usare ancora Habitica. Le Gemme che possiedi e quelle spese non verranno rimborsate. Se sei assolutamente certo/a, digita la tua password nella casella di testo qui sotto.</string>
+  <string name="reset_account_confirmation">resetta il mio account</string>
+  <string name="delete_account_confirmation">elimina il mio account</string>
+  <string name="danger_zone">Zona pericolosa</string>
+  <string name="nevermind">Ho cambiato idea</string>
+  <string name="resetting_account">Resettando l\'account</string>
+  <string name="deleting_account">Cancellazione account</string>
+  <string name="insufficientGold">Hai bisogno di completare più attività per comprare questo oggetto!</string>
+  <string name="insufficientGems">Ti servono più Gemme per comprare questo oggetto!</string>
+  <string name="purchase_gems">Compra gemme</string>
+  <string name="insufficientHourglasses">Ti servono più Clessidre Mistiche per comprare questo oggetto!</string>
+  <string name="get_hourglasses">Ottieni clessidre</string>
+  <string name="subscribe_for_hourglasses">Abbonati per le Clessidre</string>
+  <string name="timetravelers_closed_description">Ottieni una Clessidra Mistica per ogni tre mesi di abbonamento consecutivi, che puoi usare per sbloccare elementi in edizione limitata come oggetti, animali e cavalcature del passato... o del futuro!</string>
+  <string name="want_to_subscribe">Voglio abbonarmi</string>
+  <string name="seasonal_closed_description">I Gran Galà stagionali hanno luogo nei pressi dei solstizi e degli equinozi, quindi torna più avanti per trovare un vivace assortimento di oggetti stagionali!</string>
+  <string name="come_back_soon">Torna presto!</string>
+  <string name="level">Livello</string>
+  <string name="streak_label">Serie di 21 giorni</string>
+  <string name="stats">Statistiche</string>
+  <string name="fix_character_description">Se hai avuto a che fare con un bug o commesso un errore che ha ingiustamente modificato il tuo personaggio (danni che non avresti dovuto ricevere, Oro che non hai guadagnato, ecc.), qui puoi sistemare manualmente quei valori.</string>
+  <string name="fix_character_values">Sistema valori personaggio</string>
+  <string name="saving">Salvataggio</string>
+  <string name="forgot_password_title">Invia un link di reimpostazione password</string>
+  <string name="forgot_password_description">Inserisci l\'indirizzo e-mail che hai usato per creare il tuo account su Habitica.</string>
+  <string name="forgot_password_confirmation">Se abbiamo il tuo indirizzo e-mail in archivio, ti abbiamo inviato a quell\'indirizzo le istruzioni per creare una nuova password.</string>
+  <string name="ok">OK</string>
+  <string name="profile">Profilo</string>
+  <string name="profile_summary">Modifica il tuo profilo pubblico.</string>
+  <string name="display_name">Nome pubblico</string>
+  <string name="photo_url">URL foto</string>
+  <string name="login_name">Nome di login</string>
+  <string name="app_settings">Impostazioni app</string>
+  <string name="authentication">Autenticazione</string>
+  <string name="authentication_summary">Cambia le tue opzioni di autenticazione.</string>
+  <string name="change_password">Cambia password</string>
+  <string name="change_email">Cambia indirizzo e-mail</string>
+  <string name="change_login_name">Cambia nome di login</string>
+  <string name="change">Cambia</string>
+  <string name="character_level">Livello personaggio</string>
+  <string name="auto_allocate_points">Alloca punti automaticamente</string>
+  <string name="stat_guide">Guida statistiche</string>
+  <string name="character_build">Costruzione personaggio</string>
+  <string name="character_build_description">Ogni volta che sali di livello ottieni un punto da assegnare ad un attributo a tua scelta. Puoi farlo manualmente, o lasciare che se ne occupi il gioco selezionando una delle opzioni di allocazione automatica.</string>
+  <string name="strength">Forza</string>
+  <string name="strength_description">Aumenta il bonus dei colpi critici e li rende più probabili al completamento di un\'attività. Aumenta inoltre il danno inflitto ai Boss.</string>
+  <string name="intelligence">Intelligenza</string>
+  <string name="intelligence_description">Aumenta l\'esperienza ottenuta dal completamento delle attività. Aumenta inoltre il tuo mana massimo e la sua velocità di rigenerazione.</string>
+  <string name="constitution">Costituzione</string>
+  <string name="constitution_description">Diminuisce i danni ricevuti dalle tue attività. Non riduce i danni ricevuti dai Boss.</string>
+  <string name="perception">Percezione</string>
+  <string name="perception_description">Aumenta la probabilità di trovare drop (oggetti casuali) al completamento delle attività. Aumenta inoltre il limite di drop giornaliero, i bonus Serie e la quantità di Oro ottenuta dalle attività.</string>
+  <string name="buffs">Bonus</string>
+  <string name="allocated">Allocati</string>
+  <string name="distribute_evenly">Distribuzione uniforme</string>
+  <string name="distribute_class">Distribuzione basata sulla Classe</string>
+  <string name="distribute_task">Distribuzione basata sulle attività</string>
+  <string name="no_points_to_allocate">Nessun punto da allocare</string>
+  <string name="points_to_allocate" formatted="false">%d punti da allocare</string>
+  <string name="distribute_evenly_help">Assegna lo stesso numero di punti ad ogni attributo.</string>
+  <string name="distribute_class_help">Assegna più punti agli attributi importanti per la tua Classe.</string>
+  <string name="distribute_task_help">Assegna punti in base alle categorie Forza, Intelligenza, Costituzione e Percezione associati alle attività che completi.</string>
 </resources>

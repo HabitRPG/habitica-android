@@ -54,7 +54,6 @@
   <string name="confirmpassword">Bevestig wachtwoord</string>
   <string name="logout">Uitloggen</string>
   <string name="logout_description">Uitloggen</string>
-  <string name="account_details_sum">Kijk je accountgegevens na</string>
   <string name="account_details">Accountgegevens</string>
   <string name="LoginActivityName">Welkom</string>
   <string name="string_revive">Herleven</string>
@@ -93,10 +92,10 @@
   <string name="reminders">Herinneringen</string>
   <string name="actions">Acties</string>
   <string name="attributes">Eigenschappen</string>
-  <string name="physical">Fysiek</string>
-  <string name="mental">Mentaal</string>
-  <string name="social">Sociaal</string>
-  <string name="other">Overige</string>
+  <string name="physical">Kracht</string>
+  <string name="mental">Intelligentie</string>
+  <string name="social">Lichaam</string>
+  <string name="other">Perceptie</string>
   <string name="frequency">Frequentie</string>
   <string name="frequency_weekly">Op Bepaalde Dagen van de Week</string>
   <string name="frequency_daily">Iedere X Dagen</string>
@@ -139,7 +138,6 @@
   <string name="unlock_lvl_11">Beschikbaar vanaf niveau 11</string>
   <string name="no_party_message">Je zit niet in een groep. Bezoek de website als je je bij een groep wilt aansluiten.</string>
   <string name="forgot_pw_btn">Wachtwoord vergeten</string>
-  <string name="forgot_pw_tv">Wachtwoord vergeten? Gebruik dan de mobiele website.</string>
   <string name="tavern.inn.checkOut">Heractiveer je Dagelijkse taken</string>
   <string name="tavern.inn.rest">Pauzeer je Dagelijkse Taken</string>
   <string name="reward.dialog.buy">Kopen</string>
@@ -306,7 +304,6 @@
   <string name="close">Sluiten</string>
   <string name="share">Delen</string>
   <string name="notification_pet_fed">Je hebt je %1$s %2$s gevoederd!</string>
-  <string name="notification_purchase">%s werd gekocht</string>
   <string name="sectionpets">Normale huisdieren</string>
   <string name="sectionpremiumPets">Huisdieren uit magische drankjes</string>
   <string name="sectionquestPets">Queeste Huisdieren</string>
@@ -368,7 +365,7 @@
   <string name="party_invite">Ontgrendel door vrienden uit te nodigen</string>
   <string name="no_gold">Niet genoeg goud</string>
   <string name="no_potion">Je hoeft geen gezondheidsdrankje te kopen</string>
-  <string name="successful_purchase">%1$s succesvol gekocht</string>
+  <string name="successful_purchase">%1$s gekocht</string>
   <string name="purchase_confirmation_title">Bevestig aankoop</string>
   <string name="confirm_purchase_text">Koop %1$s voor %2$s %3$s</string>
   <string name="gem">edelsteen</string>
@@ -588,4 +585,23 @@
   <string name="quest_abort_message">Weet je zeker dat je deze missie wilt stoppen? Hij zal worden gestopt voor iedereen in je groep en alle vooruitgang raakt verloren. De queesterol wordt terug gegeven aan de eigenaar van de queeste.</string>
   <string name="loading">Aan het laden...</string>
   <string name="reloading_content">Inhoud opnieuw aan het laden</string>
+  <string name="your_balance">Jouw balans:</string>
+  <string name="available_until" formatted="false">Verkrijgbaar tot %s</string>
+  <string name="gems_left_max" formatted="false">Maandelijkse edelstenen: %1$d/%2$d Resterend</string>
+  <string name="gems_left_nomax" formatted="false">Maandelijkse edelstenen: %d Resterend</string>
+  <string name="health">Gezondheid</string>
+  <string name="collect">Verzamel</string>
+  <string name="rage_meter">Furie meter</string>
+  <string name="boss_quest">Baas Queeste</string>
+  <string name="collection_quest">Verzamel Queeste</string>
+  <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+  <string name="experience_reward" formatted="false">%dErvaringspunten</string>
+  <string name="gold_reward" formatted="false">%d Goud</string>
+  <string name="quest_owner_rewards">Queeste Eigenaar Beloningen</string>
+  <string name="delete_account">Verwijder Account</string>
+  <string name="delete_account_description">Weet je het zeker? Dit zal je account voor altijd wissen en het kan nooit meer hersteld worden! Je zult een nieuw account moeten aanmaken om Habitica opnieuw te gebruiken. Resterende of uitgegeven Edelstenen zullen niet terugbetaald worden. Als je het echt zeker weet, typ je wachtwoord dan in het onderstaande tekstveld.</string>
+  <string name="delete_account_confirmation">verwijder mijn account</string>
+  <string name="danger_zone">Gevarenzone</string>
+  <string name="nevermind">Laat maar</string>
+  <string name="deleting_account">Account Verwijderen</string>
 </resources>

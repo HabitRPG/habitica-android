@@ -1,4 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="store_title">Gamifique suas tarefas</string>
   <string name="store_short_description">Trate sua vida como um jogo para se manter motivado e organizado!</string>
+  <string name="store_description">Trate sua vida como um jogo para se manter motivado e organizado! Habitica facilita a diversão ao cumprir suas metas.
+Insira seus Hábitos, seus objetivos Diárias e sua lista de Afazeres e então crie um personagem personalizado. Marque como feitas suas tarefas para subir de nível e desbloqueie recursos como armaduras, mascotes, habilidades e até mesmo missões! Combata monstros com amigos para manter todos na linha enquanto usa seu ouro em recompensas dentro do jogo, como equipamento, ou prêmios personalizados como assistir a um episódio de da sua série preferida. Flexível, social, e divertido, Habitica é a maneira perfeita de se motivar para cumprir qualquer coisa.
+Se você tem qualquer pergunta, sinta-se à vontade para enviar seus comentários para mobile@habitica.com! E se você gostou de nosso aplicativo, nós iríamos gostar muito se você deixasse sua opinião.
+</string>
 </resources>

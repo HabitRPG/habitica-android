@@ -47,7 +47,6 @@
   <string name="confirmpassword">確認密碼</string>
   <string name="logout">登出</string>
   <string name="logout_description">從你的帳號登出</string>
-  <string name="account_details_sum">檢查你的帳號信息</string>
   <string name="account_details">帳號信息</string>
   <string name="LoginActivityName">歡迎</string>
   <string name="string_revive">重生</string>
@@ -85,10 +84,6 @@
   <string name="reminders">提醒</string>
   <string name="actions">動作</string>
   <string name="attributes">屬性</string>
-  <string name="physical">物理的</string>
-  <string name="mental">心理的</string>
-  <string name="social">社會的</string>
-  <string name="other">其他</string>
   <string name="frequency">頻率</string>
   <string name="frequency_weekly">每周中的特定日期</string>
   <string name="frequency_daily">每x日</string>
@@ -122,7 +117,6 @@
   <string name="unlock_lvl_11">11級時解鎖</string>
   <string name="no_party_message">你沒有加入任何隊伍。如想加入隊伍，請訪問網頁版。</string>
   <string name="forgot_pw_btn">忘記密碼</string>
-  <string name="forgot_pw_tv">忘記了您的密碼？請訪問網頁版。</string>
   <string name="tavern.inn.checkOut">重啟每日任務</string>
   <string name="tavern.inn.rest">暫停每日任務</string>
   <string name="reward.dialog.buy">購買</string>
@@ -280,7 +274,6 @@
   <string name="close">關閉</string>
   <string name="share">分享</string>
   <string name="notification_pet_fed">你餵食了你的%1$s %2$s！</string>
-  <string name="notification_purchase">%s 被買下來了</string>
   <string name="sectionpets">基本寵物</string>
   <string name="sectionpremiumPets">神奇藥水寵物</string>
   <string name="sectionquestPets">劇情任務寵物</string>
@@ -339,7 +332,6 @@
   <string name="party_invite">解鎖 邀請朋友</string>
   <string name="no_gold">金幣不足</string>
   <string name="no_potion">你不需要購買治療藥水</string>
-  <string name="successful_purchase">成功購入 %1$s</string>
   <string name="purchase_confirmation_title">確認購買</string>
   <string name="confirm_purchase_text">購買 %1$s 用了 %2$s %3$s</string>
   <string name="gem">寶石</string>

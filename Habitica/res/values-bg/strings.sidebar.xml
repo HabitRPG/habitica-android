@@ -17,4 +17,5 @@
   <string name="sidebar.settings">Настройки</string>
   <string name="sidebar.about">Относно</string>
   <string name="sidebar_shops">Магазини</string>
+  <string name="sidebar_stats">Показатели</string>
 </resources>

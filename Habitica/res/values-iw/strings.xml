@@ -43,7 +43,6 @@
   <string name="confirmpassword">אמתו סיסמה</string>
   <string name="logout">התנתקות</string>
   <string name="logout_description">התנתקו מהחשבון שלכם</string>
-  <string name="account_details_sum">בדוק את פרטי החשבון שלך</string>
   <string name="account_details">פרטי חשבון</string>
   <string name="LoginActivityName">ברוכים הבאים</string>
   <string name="string_revive">קומו לתחייה</string>
@@ -81,10 +80,6 @@
   <string name="reminders">תזכורות</string>
   <string name="actions">פעולות</string>
   <string name="attributes">תכונות</string>
-  <string name="physical">פיזי</string>
-  <string name="mental">שכלי</string>
-  <string name="social">חברתי</string>
-  <string name="other">אחר</string>
   <string name="frequency">תדירות</string>
   <string name="frequency_weekly">בימים מסויימים בשבוע</string>
   <string name="frequency_daily">כל X ימים</string>
@@ -117,7 +112,6 @@
   <string name="unlock_lvl_11">משתחרר בדרגה 11</string>
   <string name="no_party_message">אתם לא בחבורה. כדי להצטרף לחבורה, בקרו באתר.</string>
   <string name="forgot_pw_btn">שכחתי סיסמה</string>
-  <string name="forgot_pw_tv">שחכתם סיסמה? אנא השתמשו בגרסת האתר לניידים.</string>
   <string name="tavern.inn.checkOut">הפעילו מחדש את המטלות היומיות שלכם</string>
   <string name="tavern.inn.rest">עצרו את המטלות היומיות שלכם</string>
   <string name="reward.dialog.buy">קנייה</string>
@@ -269,7 +263,6 @@
   <string name="close">סיגרו</string>
   <string name="share">שתפו</string>
   <string name="notification_pet_fed">האכלתם את ה %1$s %2$s שלכם!</string>
-  <string name="notification_purchase">%s נקנה</string>
   <string name="sectionpets">חיות מחמד רגילות</string>
   <string name="sectionpremiumPets">חיות מחמד משיקויים קסומים</string>
   <string name="sectionquestPets">חיות מחמד מהרפתקאות</string>
@@ -326,7 +319,6 @@
   <string name="party_invite">שחררו על-ידי הזמנת חברים</string>
   <string name="no_gold">אין די זהב</string>
   <string name="no_potion">אינכם צריכים לקנות שיקוי בריאות</string>
-  <string name="successful_purchase">%1$s נרכש בהצלחה</string>
   <string name="purchase_confirmation_title">אשרו רכישה</string>
   <string name="confirm_purchase_text">קנו %1$s בעבור %2$s %3$s</string>
   <string name="gem">אבן חן</string>

@@ -54,7 +54,6 @@
   <string name="confirmpassword">Confirmar palavra-passe</string>
   <string name="logout">Terminar Sessão</string>
   <string name="logout_description">Termine a sessão da sua conta</string>
-  <string name="account_details_sum">Verifique os detalhes da sua conta</string>
   <string name="account_details">Detalhes da Conta</string>
   <string name="LoginActivityName">Bem-vindo</string>
   <string name="string_revive">Reanimar</string>
@@ -92,10 +91,6 @@
   <string name="reminders">Lembretes</string>
   <string name="actions">Ações</string>
   <string name="attributes">Atributos</string>
-  <string name="physical">Físico</string>
-  <string name="mental">Mental</string>
-  <string name="social">Social</string>
-  <string name="other">Outro</string>
   <string name="frequency">Frequência</string>
   <string name="frequency_weekly">Em certos dias da semana</string>
   <string name="frequency_daily">A cada X dias</string>
@@ -129,7 +124,6 @@
   <string name="unlock_lvl_11">Desbloquear no nível 11</string>
   <string name="no_party_message">Não faz parte de nenhuma equipa. Para se juntar a uma equipa, por favor, visite o site da Web.</string>
   <string name="forgot_pw_btn">Esqueci-me da Palavra-passe</string>
-  <string name="forgot_pw_tv">Esqueceu-se da sua palavra-passe? Por favor, use a versão móvel do site da Web.</string>
   <string name="tavern.inn.checkOut">Reativar as suas Tarefas Diárias</string>
   <string name="tavern.inn.rest">Pausar as suas Tarefes Diárias</string>
   <string name="reward.dialog.buy">Comprar</string>
@@ -289,7 +283,6 @@
   <string name="close">Fechar</string>
   <string name="share">Partilhar</string>
   <string name="notification_pet_fed">Alimentou o seu %1$s %2$s!</string>
-  <string name="notification_purchase">Comprou %s</string>
   <string name="sectionpets">Animais de Estimação Base</string>
   <string name="sectionpremiumPets">Animais de Estimação de Poção Mágica</string>
   <string name="sectionquestPets">Animais de Estimação de Missão</string>
@@ -347,7 +340,6 @@
   <string name="party_invite">Desbloqueie ao Convidar amigos</string>
   <string name="no_gold">Ouro insuficiente</string>
   <string name="no_potion">Precisa de comprar uma poção de vida</string>
-  <string name="successful_purchase">Comprou %1$s com sucesso</string>
   <string name="purchase_confirmation_title">Confirmar compra</string>
   <string name="confirm_purchase_text">Comprar %1$s por %2$s %3$s</string>
   <string name="gem">gema</string>
