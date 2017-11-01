@@ -66,10 +66,6 @@
   <string name="checklist">Spisak</string>
   <string name="actions">Akcije</string>
   <string name="attributes">Atributi</string>
-  <string name="physical">Fizičke</string>
-  <string name="mental">Mentalne</string>
-  <string name="social">Socijalno</string>
-  <string name="other">Drugo</string>
   <string name="frequency">Učestalost</string>
   <string name="frequency_weekly">Na Određene dane u tjednu</string>
   <string name="frequency_daily">Svakih X dana</string>
@@ -101,7 +97,6 @@
   <string name="unlock_lvl_11">Otključano na razini 11</string>
   <string name="no_party_message">Nisi u grupi. Za pridruživanje grupi, posjetite stranicu.</string>
   <string name="forgot_pw_btn">Zaboravili Lozinku</string>
-  <string name="forgot_pw_tv">Zaboravili Lozinku? Molimo koristite mobilnu Stranicu.</string>
   <string name="tavern.inn.checkOut">Reaktiviraj svoje Dailies-e</string>
   <string name="tavern.inn.rest">Pauziraj svoje Dailies-e</string>
   <string name="reward.dialog.buy">Kupi</string>
@@ -252,7 +247,6 @@
   <string name="close">Zatvori</string>
   <string name="share">Podijeli</string>
   <string name="notification_pet_fed">Nahranio/la si svoju/ga %1$s %2$s!</string>
-  <string name="notification_purchase">%s je kupljen/a</string>
   <string name="sectionpets">Bazni Ljubimci</string>
   <string name="sectionpremiumPets">Ljubimci Čarobnog Napitka</string>
   <string name="sectionquestPets">Ljubimci s Pothvata</string>

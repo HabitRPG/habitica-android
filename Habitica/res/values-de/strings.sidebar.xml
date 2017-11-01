@@ -17,4 +17,5 @@
   <string name="sidebar.settings">Einstellungen</string>
   <string name="sidebar.about">Über</string>
   <string name="sidebar_shops">Märkte</string>
+  <string name="sidebar_stats">Statuswerte</string>
 </resources>

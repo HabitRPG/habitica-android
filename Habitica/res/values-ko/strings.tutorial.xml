@@ -1,5 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="tutorial_overview">짜잔! 당신의 관심도에 따라 몇가지 과제들을 작성했습니다. 본인이 직접 새로운 과제들을 더해보세요. 제목을 탭하시면 과제를 수정할 수 있습니다.</string>
+  <string name="tutorial_habits_1">첫째는 습관입니다. 개선해야 할 긍정적인 습관이나 금지해야 할 부정적인 습관일 수 있습니다.</string>
+  <string name="tutorial_habits_2">긍정적인 습관을 실행할 때마다 + 를 눌러서 경험치와 골드를 받으세요!</string>
+  <string name="tutorial_habits_3">실수로 부정적인 습관을 실행해서 - 를 누르면 책임을 느끼도록 아바타의 체력이 내려갑니다.</string>
+  <string name="tutorial_habits_4">한 번 해보세요! 아래의 메뉴를 통해 다른 과제 유형들도 살펴보세요.</string>
+  <string name="tutorial_dailies_1">시간별로 규칙적으로 실행해야 할 일은 일일 과제로 설정하세요.</string>
+  <string name="tutorial_dailies_2">조심하세요! 시간을 놓치면 밤새 아바타가 데미지를 입습니다. 꾸준히 체크하셔서 많은 보상을 받으세요!</string>
+  <string name="tutorial_todos_1">한 번만 하면 끝나는 과제들은 해야 할 일 목록을 사용하세요.</string>
+  <string name="tutorial_todos_2">할 일을 일정한 시간까지 완료해야 한다면, 기한을 정하세요. </string>
+  <string name="tutorial_rewards_1">벌어들인 골드로 자신의 아바타 착용품을 구입하세요.</string>
+  <string name="tutorial_rewards_2">동기부여를 도와주는 자신만의 현실세상의 보상을 정할 수도 있습니다.</string>
+  <string name="tutorial_tasks_complete">이제 다 되었네요. 다시 보고 싶으시면 FAQ를 확인하세요.</string>
   <string name="tutorial_equipment">장비를 구입하면 여기에 보입니다. 전투장비는 당신의 스탯에 영향을 주고, 당신의 의상은 (활성화 했다면) 아바타의 모습을 바꿔줍니다.</string>
   <string name="tutorial_items">과제와 레벨업을 달성하면 아이템을 받을 수 있습니다. 아이템을 터치해서 사용하세요!</string>
   <string name="tutorial_pets">일상생활의 과제들을 해결해 나아가면, 랜덤으로 알이나 포션을 발견할 수 있습니다. 둘을 섞어서 알을 부화시키면 펫을 얻을 수 있어요.</string>

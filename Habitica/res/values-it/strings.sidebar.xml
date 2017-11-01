@@ -6,7 +6,7 @@
   <string name="sidebar.inbox">Messaggi</string>
   <string name="sidebar.tavern">Taverna</string>
   <string name="sidebar.party">Squadra</string>
-  <string name="sidebar.purchaseGems">Compra gemme</string>
+  <string name="sidebar.purchaseGems">Gemme e abbonamento</string>
   <string name="sidebar.guilds">Gilde</string>
   <string name="sidebar.challenges">Sfide</string>
   <string name="sidebar.section.inventory">Inventario</string>
@@ -17,4 +17,5 @@
   <string name="sidebar.settings">Impostazioni</string>
   <string name="sidebar.about">Su Habitica</string>
   <string name="sidebar_shops">Negozi</string>
+  <string name="sidebar_stats">Statistiche</string>
 </resources>

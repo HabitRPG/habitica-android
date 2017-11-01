@@ -54,7 +54,6 @@
   <string name="confirmpassword">Подтвердите пароль</string>
   <string name="logout">Выйти</string>
   <string name="logout_description">Выйти из вашего аккаунта</string>
-  <string name="account_details_sum">Проверьте детали вашего аккаунта</string>
   <string name="account_details">Детали аккаунта</string>
   <string name="LoginActivityName">Добро пожаловать</string>
   <string name="string_revive">Воскресить</string>
@@ -93,10 +92,10 @@
   <string name="reminders">Напоминания</string>
   <string name="actions">Действия</string>
   <string name="attributes">Характеристики</string>
-  <string name="physical">Физическое</string>
-  <string name="mental">Умственное</string>
-  <string name="social">Общение</string>
-  <string name="other">Другое</string>
+  <string name="physical">Сила</string>
+  <string name="mental">Интеллект</string>
+  <string name="social">Телосложение</string>
+  <string name="other">Восприятие</string>
   <string name="frequency">Периодичность</string>
   <string name="frequency_weekly">В определенные дни недели</string>
   <string name="frequency_daily">Каждые X дня/дней</string>
@@ -139,7 +138,6 @@
   <string name="unlock_lvl_11">Открывается на 11 уровне</string>
   <string name="no_party_message">Вы не состоите в команде. Для того, чтобы присоединиться к команде, пожалуйста, перейдите на сайт.</string>
   <string name="forgot_pw_btn">Забыли пароль</string>
-  <string name="forgot_pw_tv">Забыли пароль? Пожалуйста, перейдите на сайт.</string>
   <string name="tavern.inn.checkOut">Cнова активировать ваши ежедневные задания</string>
   <string name="tavern.inn.rest">Временно приостановить ваши ежедневные задания</string>
   <string name="reward.dialog.buy">Купить</string>
@@ -306,7 +304,8 @@
   <string name="close">Закрыть</string>
   <string name="share">Поделиться</string>
   <string name="notification_pet_fed">Вы покормили вашего %1$s %2$s!</string>
-  <string name="notification_purchase">%s приобретен</string>
+  <string name="notification_purchase">Вы купили %s</string>
+  <string name="notification_purchase_reward">Вы купили награду</string>
   <string name="sectionpets">Основные питомцы</string>
   <string name="sectionpremiumPets">Питомцы из волшебного эликсира</string>
   <string name="sectionquestPets">Квестовые питомцы</string>
@@ -368,7 +367,7 @@
   <string name="party_invite">Разблокировать, пригласив друзей</string>
   <string name="no_gold">Недостаточно золота</string>
   <string name="no_potion">Вам не нужно покупать зелье здоровья</string>
-  <string name="successful_purchase">%1$s успешно куплен</string>
+  <string name="successful_purchase">Купленный %1$s</string>
   <string name="purchase_confirmation_title">Подтвердите покупку</string>
   <string name="confirm_purchase_text">Купить %1$s для %2$s %3$s</string>
   <string name="gem">самоцвет</string>
@@ -542,6 +541,7 @@
   <string name="empty_title_todos">У вас нет задач</string>
   <string name="empty_description_todos">Задачи - это дела, которые нужно выполнить только один раз. Добавьте контрольный списки в свои задачи, чтобы повысить их ценность.</string>
   <string name="empty_title_rewards">У вас нет вознаграждений</string>
+  <string name="reset_walkthrough">Сбросить задачу Джастина</string>
   <string name="read_community_guidelines">Перед публикацией ознакомьтесь с нашими Правилами сообщества</string>
   <string name="maintenance">Cодержание</string>
   <string name="reload_content">Обновить содержимое</string>
@@ -587,4 +587,84 @@
   <string name="quest_abort_message">Вы уверены, что хотите отменить эту миссию? Это прервет её прохождение для каждого в вашей команде и весь прогресс будет потерян. Квестовый свиток останется у владельца.</string>
   <string name="loading">Подключение...</string>
   <string name="reloading_content">Обновление содержимого</string>
+  <string name="thousand_abbrev">тыс</string>
+  <string name="million_abbrev">млн</string>
+  <string name="billion_abbrev">млрд</string>
+  <string name="your_balance">Ваш баланс:</string>
+  <string name="available_until" formatted="false">Доступно до %s</string>
+  <string name="gems_left_max" formatted="false">Ежемесячные самоцветы: осталось %1$d/%2$d</string>
+  <string name="gems_left_nomax" formatted="false">Ежемесячные самоцветы: осталось %d</string>
+  <string name="health">Здоровье</string>
+  <string name="collect">Собирать</string>
+  <string name="rage_meter">Шкала ярости</string>
+  <string name="boss_quest">Квест с боссом</string>
+  <string name="collection_quest">Квест со сбором предметов</string>
+  <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+  <string name="experience_reward" formatted="false">%d опыта</string>
+  <string name="gold_reward" formatted="false">%d золота</string>
+  <string name="quest_owner_rewards">Награды для владельца квеста</string>
+  <string name="reset_account">Сбросить аккаунт</string>
+  <string name="reset_account_description">ВНИМАНИЕ! Это сбросит много разных деталей вашего аккаунта. Это очень не рекомендуется делать, но некоторые люди находя полезным сделать это в начале после кратковременных экспериментов с сайтом.\n\nВы потеряете все свои уровни, золото и очки опыта. Все ваши задачи (кроме полученных из испытаний) будут удалены навсегда, и вы потеряете всю историю задач. Вы потеряете всё своё снаряжение, но у вас будет возможность купить его обратно, включая всё снаряжение из ограниченных выпусков, а также таинственные предметы для подписчиков, которые у вас уже есть (вам понадобится персонаж соответствующего класса, чтобы купить обратно снаряжение, предназначенное для этого класса). У вас сохранится текущий класс, а также все питомцы и скакуны. Возможно, вы предпочтёте вместо этого использовать Шар возрождения, что является значительно более безопасным вариантом, и что сохранит ваши задачи и снаряжение.</string>
+  <string name="delete_account">Удалить аккаунт</string>
+  <string name="delete_account_description">Вы уверены? Это удалит ваш аккаунт навсегда, и вы никогда не сможете его восстановить! Вам нужно будет зарегистрировать новый аккаунт, чтобы снова пользоваться Habitica. За имеющиеся или потраченные самоцветы не будет компенсации. Если вы абсолютно уверены, введите свой пароль в текстовое поле снизу.</string>
+  <string name="reset_account_confirmation">сбросить мой аккаунт</string>
+  <string name="delete_account_confirmation">удалить мой аккаунт</string>
+  <string name="danger_zone">Опасная зона</string>
+  <string name="nevermind">Неважно</string>
+  <string name="resetting_account">Сброс аккаунта</string>
+  <string name="deleting_account">Удаление аккаунта</string>
+  <string name="insufficientGold">Вам нужно выполнить больше задач, прежде чем вы сможете позволить себе этот предмет!</string>
+  <string name="insufficientGems">Для покупки этого предмета вам нужно больше самоцветов!</string>
+  <string name="purchase_gems">Приобрести самоцветы</string>
+  <string name="insufficientHourglasses">Вам нужно больше мистических песочных очков чтобы купить этот предмет!</string>
+  <string name="get_hourglasses">Получить песочные часы</string>
+  <string name="timetravelers_closed_description">Зарабатывайте одни мистические песочные часы за каждые три последующие месяца подписки, чтобы потом использовать их для открытия труднодоступного снаряжения, питомцев и скакунов из прошлого... и даже будущего!</string>
+  <string name="want_to_subscribe">Я хочу подписаться</string>
+  <string name="seasonal_closed_description">Великие праздники случаются ближе к солнцестоянию и равноденствия, поэтому в это время возможно найти забавный ассортимент специальных сезонных предметов!</string>
+  <string name="come_back_soon">Возвращайся скорее!</string>
+  <string name="level">Уровень</string>
+  <string name="streak_label">21-дневная серия подряд</string>
+  <string name="stats">Статистика</string>
+  <string name="fix_character_description">Если вы столкнулись с багом или допустили ошибку, которая несправедливо изменила характеристики вашего персонажа, вы можете вручную исправить эти значения здесь.</string>
+  <string name="fix_character_values">Исправить параметры персонажа</string>
+  <string name="saving">Сохранение</string>
+  <string name="forgot_password_title">Ссылка сброса почты и пароля</string>
+  <string name="forgot_password_description">Введите электронную почту, которую вы использовали для регистрации вашего аккаунта Habitica.</string>
+  <string name="forgot_password_confirmation">Если у вас указана ваша электронная почта в профиле, то инструкции по настройке нового пароля отправлены на ваш адрес электронной почты.</string>
+  <string name="ok">OK</string>
+  <string name="profile">Профиль</string>
+  <string name="profile_summary">Редактировать ваш профиль.</string>
+  <string name="display_name">Отображаемое имя</string>
+  <string name="photo_url">Адрес фотографии</string>
+  <string name="login_name">Логин</string>
+  <string name="about">О приложении</string>
+  <string name="app_settings">Настройки приложения</string>
+  <string name="authentication">Проверка подлинности</string>
+  <string name="authentication_summary">Измените ваши параметры аутентификации.</string>
+  <string name="change_password">Сменить пароль</string>
+  <string name="change_email">Изменить электронную почту</string>
+  <string name="change_login_name">Изменить логин</string>
+  <string name="change">Изменить</string>
+  <string name="character_level">Уровень персонажа</string>
+  <string name="auto_allocate_points">Автоматически распределять очки</string>
+  <string name="character_build">Развитие персонажа</string>
+  <string name="character_build_description">За каждый уровень вы получаете одно очко, которое можете распределить на характеристику по вашему выбору. Вы можете сделать это вручную или позволить игре решить за вас, используя опцию автоматическое распределение.</string>
+  <string name="strength">Сила</string>
+  <string name="strength_description">Увеличивает бонус критических ударов и делает их более вероятными при подсчете заданий. Также увеличивает урон, нанесенный боссам.</string>
+  <string name="intelligence">Интеллект</string>
+  <string name="intelligence_description">Увеличивает опыт получаемый за выполнение заданий. Также увеличивает предел маны и скорость её восстановления.</string>
+  <string name="constitution">Телосложение</string>
+  <string name="constitution_description">Уменьшает количество урона получаемое от ваших заданий. Не уменьшает урон получаемый от боссов.</string>
+  <string name="perception">Восприятие</string>
+  <string name="perception_description">Увеличивает вероятность нахождения трофеев при выполнении заданий, ежедневный предел выпадения трофеев, бонус за серию, а также количество золота получаемое за задания.</string>
+  <string name="buffs">Баффы</string>
+  <string name="allocated">Распределено</string>
+  <string name="distribute_evenly">Распределять равномерно</string>
+  <string name="distribute_class">Распределять на основе класса</string>
+  <string name="distribute_task">Распределять на основе типов задач</string>
+  <string name="no_points_to_allocate">Нет очков для распределения</string>
+  <string name="points_to_allocate" formatted="false">%dочк. для распределения</string>
+  <string name="distribute_evenly_help">Назначает одинаковое количество очков для каждой характеристики.</string>
+  <string name="distribute_class_help">Назначает больше очков на важные вашему классу характеристики.</string>
+  <string name="distribute_task_help">Назначаемые очки основываются на параметрах силы, интеллекта, телосложения и восприятии, связанных с выполняемыми вами задачами.</string>
 </resources>

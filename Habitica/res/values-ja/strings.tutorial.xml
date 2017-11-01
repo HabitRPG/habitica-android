@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_equipment">装備を買ったら、ここに表示されるよ。武装はアバターのステータに影響し、(有効にすれば)衣装としてアバターの見た目を変えるよ。</string>
+  <string name="tutorial_overview">興味がありそうなタスクをいくつか入れてみたよ！自分でもタスクを追加してみよう。編集するときはタスクのタイトルをタップ！</string>
+  <string name="tutorial_habits_1">まずは習慣。身につけたい良い習慣もあれば、やめられない悪い習慣もあるよね。</string>
+  <string name="tutorial_habits_2">良い習慣をこなした時は、＋をタップして経験値とゴールドをゲット！</string>
+  <string name="tutorial_habits_3">うっかり悪い習慣を行ってしまった時は、－をタップ。アバターの体力が減ってしまうので、責任を持って悪い習慣を断ち切ろう。</string>
+  <string name="tutorial_tasks_complete">これで説明は終わり。もし忘れちゃったときは，FAQをチェックしてみてね。</string>
+  <string name="tutorial_equipment">装備を買ったら、ここに表示されるよ。武装はアバターのステータスに影響し、(有効にすれば)衣装としてアバターの見た目を変えるよ。</string>
   <string name="tutorial_items">タスクを達成したりレベルを上げることで、アイテムを入手できるぞ。アイテムを使うにはタップしよう。</string>
   <string name="tutorial_pets">現実世界のタスクを達成すると、「たまご」や「たまごがえしの薬」を見つけるチャンスが。組み合わせるとペットが生まれるよ。</string>
   <string name="tutorial_skills">スキルは、特別な属性で強力な効果だ!　スキルを使うにはタップしよう。魔法を使うとマナ (青いバー) が減る。マナは、毎日アプリを使ったり、実生活のタスクを達成することで増える。詳しくは、メニューのFAQをチェック!</string>

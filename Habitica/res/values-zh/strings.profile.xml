@@ -3,7 +3,6 @@
     <string name="profile_pets_and_mounts">宠物 &amp; 坐骑</string>
     <string name="profile_pets_found">发现的宠物</string>
     <string name="profile_mounts_tamed">驯养的坐骑</string>
-    <string name="profile_loading_data">读取成员数据</string>
     <string name="profile_send_message_to">给%s发送信息</string>
     <string name="profile_message_sent_to">发送给%s的信息</string>
     <string name="profile_level">级别：</string>
@@ -12,7 +11,7 @@
     <string name="profile_boosts">增益：</string>
     <string name="profile_private_message">私信</string>
     <string name="profile_achievements">成就</string>
-    <string name="profile_achievement_ok">OK</string>
+    <string name="profile_achievement_ok">了解了</string>
     <string name="profile_qrcode_close">关闭</string>
 
 </resources>

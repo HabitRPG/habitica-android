@@ -54,7 +54,6 @@
   <string name="confirmpassword">确认密码</string>
   <string name="logout">注销</string>
   <string name="logout_description">从你的账号登出</string>
-  <string name="account_details_sum">账号信息</string>
   <string name="account_details">账号信息</string>
   <string name="LoginActivityName">欢迎</string>
   <string name="string_revive">重生</string>
@@ -92,10 +91,10 @@
   <string name="reminders">提醒</string>
   <string name="actions">动作</string>
   <string name="attributes">属性</string>
-  <string name="physical">身体上的</string>
-  <string name="mental">精神上的</string>
-  <string name="social">社交</string>
-  <string name="other">其他</string>
+  <string name="physical">力量</string>
+  <string name="mental">智力</string>
+  <string name="social">体质</string>
+  <string name="other">感知</string>
   <string name="frequency">频率</string>
   <string name="frequency_weekly">每周中的特定日期</string>
   <string name="frequency_daily">每x日</string>
@@ -129,7 +128,6 @@
   <string name="unlock_lvl_11">11级时解锁</string>
   <string name="no_party_message">你没有加入任何队伍。如想加入队伍，请访问网页版。</string>
   <string name="forgot_pw_btn">忘记密码</string>
-  <string name="forgot_pw_tv">忘记了您的密码？请访问网页版。</string>
   <string name="tavern.inn.checkOut">重启每日任务</string>
   <string name="tavern.inn.rest">暂停每日任务</string>
   <string name="reward.dialog.buy">购买</string>
@@ -288,7 +286,6 @@
   <string name="close">关闭</string>
   <string name="share">分享</string>
   <string name="notification_pet_fed">你喂食了你的%1$s %2$s！</string>
-  <string name="notification_purchase">已购买 %s</string>
   <string name="sectionpets">基本宠物</string>
   <string name="sectionpremiumPets">神奇药水宠物</string>
   <string name="sectionquestPets">剧情任务宠物</string>
@@ -350,7 +347,6 @@
   <string name="party_invite">通过邀请朋友来解锁</string>
   <string name="no_gold">没有足够的金币</string>
   <string name="no_potion">你不需要购买生命药水</string>
-  <string name="successful_purchase">已购买 %1$s</string>
   <string name="purchase_confirmation_title">确认购买</string>
   <string name="confirm_purchase_text">为 %2$s %3$s 购买 %1$s</string>
   <string name="gem">宝石</string>

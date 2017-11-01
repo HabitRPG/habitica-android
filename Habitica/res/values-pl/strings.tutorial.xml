@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="tutorial_habits_2">Za każdym razem, kiedy zrobisz pozytywny nawyk, naciśnij +, aby otrzymać doświadczenie i złoto!</string>
+  <string name="tutorial_dailies_1">Twórz Codzienne dla zadań, które wymagają regularnego działania.</string>
+  <string name="tutorial_dailies_2">Bądź ostrożny - jeśli pominiesz jedno z nich, twój awatar następnego dnia otrzyma obrażenia. Systematyczne odznaczanie ich przynosi wspaniałe nagrody!</string>
+  <string name="tutorial_todos_1">Użyj Do-Zrobienia dla zadań, które musisz zrobić tylko raz.</string>
+  <string name="tutorial_rewards_1">Kup wyposażenie dla swojego awatara za złoto, które zarobiłeś!</string>
+  <string name="tutorial_rewards_2">Możesz również robić realne nagrody, na podstawie tego, co Cię motywuje.</string>
   <string name="tutorial_tasks_complete">To wszystko na razie. Jeżeli potrzebujesz przypomnienia, sprawdź sekcję FAQ.</string>
   <string name="tutorial_equipment">Tu pojawia się zakupiony ekwipunek. Wyposażenie Bojowe wpływa na Twoje statystyki, a Kostium (o ile włączony) na wygląd Twojego awatara.</string>
   <string name="tutorial_items">Zbieraj przedmioty kończąc zadania i zdobywając poziomy. Stuknij przedmiot, żeby go użyć!</string>

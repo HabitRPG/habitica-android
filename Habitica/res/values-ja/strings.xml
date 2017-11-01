@@ -54,7 +54,6 @@
   <string name="confirmpassword">パスワード ( 確認 )</string>
   <string name="logout">ログアウト</string>
   <string name="logout_description">ログアウトする</string>
-  <string name="account_details_sum">アカウントの詳細を確認</string>
   <string name="account_details">アカウントの詳細</string>
   <string name="LoginActivityName">ようこそ</string>
   <string name="string_revive">復活</string>
@@ -93,10 +92,6 @@
   <string name="reminders">通知</string>
   <string name="actions">行動</string>
   <string name="attributes">属性</string>
-  <string name="physical">肉体</string>
-  <string name="mental">精神</string>
-  <string name="social">社会性</string>
-  <string name="other">ほか</string>
   <string name="frequency">頻度</string>
   <string name="frequency_weekly">決まった曜日</string>
   <string name="frequency_daily">何日かごと</string>
@@ -139,7 +134,6 @@
   <string name="unlock_lvl_11">レベル11 でアンロック</string>
   <string name="no_party_message">パーティーに参加してないよ。パーティーに参加する方法を website で確認して。</string>
   <string name="forgot_pw_btn">パスワードがわからない</string>
-  <string name="forgot_pw_tv">パスワードを忘れた? 携帯電話用のWebsiteへアクセスしてください。</string>
   <string name="tavern.inn.checkOut">日課を再開する</string>
   <string name="tavern.inn.rest">日課を中断する</string>
   <string name="reward.dialog.buy">買う</string>
@@ -306,7 +300,6 @@
   <string name="close">閉じる</string>
   <string name="share">共有する</string>
   <string name="notification_pet_fed">%1$s%2$sにえさをやった!</string>
-  <string name="notification_purchase">%s は購入済み</string>
   <string name="sectionpets">基本のペット</string>
   <string name="sectionpremiumPets">魔法の薬のペット</string>
   <string name="sectionquestPets">クエスト ペット</string>
@@ -368,7 +361,6 @@
   <string name="party_invite">友達を招待するとアンロック</string>
   <string name="no_gold">ゴールドが足りません</string>
   <string name="no_potion">体力回復の薬を買う必要がありません</string>
-  <string name="successful_purchase">%1$s を買いました</string>
   <string name="purchase_confirmation_title">購入の確認</string>
   <string name="confirm_purchase_text">%2$s %3$s で %1$s  を買う</string>
   <string name="gem">ジェム</string>
@@ -449,6 +441,7 @@
   <string name="subscription_hourglasses">+%d個の神秘の砂時計</string>
   <string name="payment_method">支払方法</string>
   <string name="subscription">寄付</string>
+  <string name="active">有効</string>
   <string name="cancel_subscription">寄付のキャンセル</string>
   <string name="cancel_subscription_google.description">寄付をやめたいですか? Googleプレイストアのマイアプリの項目から寄付をやめることができます。</string>
   <string name="cancel_subscription_notgoogle.description">寄付をやめたいですか?あなたの支払い方法では,ウェブサイトからのみ寄付をやめることができます。下のボタンをクリックしてあなたのブラウザでウェブサイトを開きます!</string>
@@ -457,6 +450,7 @@
   <string name="months_subscribed">購読した月数</string>
   <string name="current_hourclasses">現在の神秘の砂時計</string>
   <string name="monthly_gem_cap">毎月のジェムの購入上限</string>
+  <string name="inactive">無効</string>
   <string name="one_month">1ヶ月</string>
   <string name="months">%dヶ月</string>
   <string name="month">月</string>
@@ -513,9 +507,13 @@
   <string name="none">なし</string>
   <string name="owned">所持</string>
   <string name="not_owned">非所持</string>
+  <string name="new_game">ニュー・ゲーム</string>
   <string name="login_btn_fb">Facebookでログイン</string>
   <string name="login_btn_google">Googleでログイン</string>
   <string name="action_back">戻る</string>
+  <string name="welcome_text">やあ、新人さんだね。僕はジャスティン。Habiticaの案内役だよ。
+始める前に、まずは自分のアバターを作ろう。</string>
+  <string name="randomize">ランダムにする</string>
   <string name="avatar_skin_color">肌の色</string>
   <string name="avatar_hair_color">髪色</string>
   <string name="avatar_hair_bangs">前髪</string>
@@ -528,15 +526,21 @@
   <string name="dated">古い</string>
   <string name="completed">完了</string>
   <string name="setuP_group_other">ほか</string>
+  <string name="clear">クリア</string>
   <string name="empty_title_habits">習慣を持っていません</string>
+  <string name="empty_description_habits">習慣は、タスクの中でもこなすスケジュールがきっちりと決まっていないもの。１日に何回チェックしてもいいし、チェックしない日があっても大丈夫。</string>
   <string name="empty_title_dailies">日課を持っていません</string>
+  <string name="empty_description_dailies">日課は一定のペースでこなすタスクだよ。自分に合ったスケジュールを組もう！</string>
   <string name="empty_title_todos">To-Doがありません</string>
+  <string name="empty_description_todos">To-Doは一度だけ実行すればいいタスク。チェックリストを加えて忘れないようにしよう。</string>
   <string name="empty_title_rewards">ごほうびがありません</string>
   <string name="reset_walkthrough">ジャスティンのチュートリアルをリセット</string>
   <string name="read_community_guidelines">投稿する前に、私たちのコミュニティガイドラインを読んでください</string>
   <string name="maintenance">修理</string>
+  <string name="reload_content">再度読み込み</string>
   <string name="dailyDueDefaultView">日課を標準で「期限」タブに入れる</string>
   <string name="dailyDueDefaultViewDescription">この設定にチェックを入れると、日課は標準で「すべて」タブではなく「期限」タブに入ります。</string>
+  <string name="repeat_summary">%1$sを%2$s%3$s%4$sごとに繰り返し行おう。</string>
   <string name="no_billing_gems">あなたのデバイスは、サポートされている支払方法に対応していません。ジェムを購入したい場合は、Habiticaのウェブサイトをご利用ください。</string>
   <string name="no_billing_subscriptions">あなたのデバイスは、サポートされている支払方法に対応していません。寄付を購入したい場合は、Habiticaのウェブサイトをご利用ください。</string>
   <string name="save">保存</string>
@@ -547,6 +551,7 @@
   <string name="edit_challenge">チャレンジを編集する</string>
   <string name="challenge_create_error_tavern_one_gem">キャンプ場でチャレンジを作成するには、ジェムが1つ以上必要です。</string>
   <string name="challenge_create_error_enough_gems">チャレンジを作成するのに十分なジェムを持っていません。</string>
+  <string name="identify_your_challenge_with_a_tag">チャレンジをタグから探しています……</string>
   <string name="challenge_create_error_tag">このチャレンジを作成するには、タグが必要です。</string>
   <string name="challenge_create_error_no_tasks">このチャレンジを作成するには、タスクを1つ以上追加する必要があります。</string>
   <string name="challenge_create_error_title">このチャレンジを作成するには、タイトルが必要です。</string>
@@ -571,5 +576,8 @@
   <string name="declined">辞退済</string>
   <string name="participants">参加者</string>
   <string name="invitations">招待</string>
+  <string name="quest_leader_header" formatted="false">%sが始めたタスク</string>
   <string name="quest_abort_message">このミッションを中断します。よろしいですか?　パーティの全員が中断になり、すべての進行状況は失われます。クエストの巻物はクエスト所有者の手に戻ります。</string>
+  <string name="loading">Loading...</string>
+  <string name="reloading_content">再度読み込みます</string>
 </resources>

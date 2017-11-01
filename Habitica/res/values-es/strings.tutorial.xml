@@ -1,5 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="tutorial_overview">¡Vamos allá! He añadido varias tareas por ti basándome en tus intereses. Intenta añadir algunas por ti mismo. Puedes editar cualquier tarea pulsando en su título.</string>
+  <string name="tutorial_habits_1">Lo primero de todo son Hábitos. Pueden ser hábitos positivos que quieras mejorar, o hábitos negativos que quieras dejar.</string>
+  <string name="tutorial_habits_2">¡Cada vez que realizas un Hábito positivo, presiona el + para obtener oro y experiencia!</string>
+  <string name="tutorial_habits_3">Si pecas y caes en un Hábito negativo, presionando el - reducirás la salud de tu personaje para impulsarte a tomártelo más en serio.</string>
+  <string name="tutorial_habits_4">¡Inténtalo! Puedes explorar otros tipos de tarea mediante el botón de navegación.</string>
+  <string name="tutorial_dailies_1">Utiliza Tareas Diarias para aquellas tareas que debes realizar ciñéndote a un programa regular.</string>
+  <string name="tutorial_dailies_2">Ten cuidado — si fallas una, tu personaje recibirá daño durante la noche. ¡Tacharlas sistemáticamente trae consigo estupendos premios!</string>
+  <string name="tutorial_todos_1">Usa las Tareas Pendientes para gestionar las tareas que solo tienes que realizar una vez.</string>
+  <string name="tutorial_todos_2">Si tu Tarea Pendiente debe estar completada para un momento concreto, añádele una fecha límite. Parece ser que puedes tachar una — ¡Adelante!</string>
+  <string name="tutorial_rewards_1">¡Compra equipamiento para tu personaje con el oro que ganas!</string>
+  <string name="tutorial_rewards_2">También puedes hacer Recompensas Personalizadas del mundo real basándote en lo que te motiva.</string>
+  <string name="tutorial_tasks_complete">Eso es todo por ahora. Si necesitas un recordatorio, consulta la sección de Preguntas Frecuentes.</string>
   <string name="tutorial_equipment">Cuando compres artículos de equipamiento, aparecerán aquí. El equipo de batalla que elijas afectará a tus estadísticas, y el disfraz (si lo habilitas) será lo que lleve tu personaje.</string>
   <string name="tutorial_items">Consigue artículos completando tareas y subiendo de nivel. Pulsa en un artículo para usarlo.</string>
   <string name="tutorial_pets">A medida que completes tareas del mundo real, a partir de ahora, podrás encontrar huevos y pociones al azar. Combínalos para que nazca una mascota.</string>

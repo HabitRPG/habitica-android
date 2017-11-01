@@ -54,7 +54,6 @@
   <string name="confirmpassword">Passwort bestätigen</string>
   <string name="logout">Ausloggen</string>
   <string name="logout_description">Logge Dich aus</string>
-  <string name="account_details_sum">Prüfe deine Kontodetails</string>
   <string name="account_details">Kontodetails</string>
   <string name="LoginActivityName">Willkommen</string>
   <string name="string_revive">Wiederbeleben</string>
@@ -64,7 +63,7 @@
   <string name="about.versionhistory">Versionsverlauf</string>
   <string name="about.habitica_open_source">Habitica ist als Open-Source-Software auf GitHub verfügbar</string>
   <string name="about.rate_our_app">Bewerte unsere App</string>
-  <string name="about.give_us_feedback">Feedback senden!</string>
+  <string name="about.give_us_feedback">Sende uns Feedback!</string>
   <string name="about.bugreport">Melde einen Fehler</string>
   <string name="about.source_code">Quellcode</string>
   <string name="repeatEvery">Es wiederholt sich jeden</string>
@@ -93,10 +92,10 @@
   <string name="reminders">Erinnerungen</string>
   <string name="actions">Aktionen</string>
   <string name="attributes">Attribute</string>
-  <string name="physical">Körperlich</string>
-  <string name="mental">Mental</string>
-  <string name="social">Sozial</string>
-  <string name="other">Anderes</string>
+  <string name="physical">Stärke</string>
+  <string name="mental">Intelligenz</string>
+  <string name="social">Ausdauer</string>
+  <string name="other">Wahrnehmung</string>
   <string name="frequency">Häufigkeit</string>
   <string name="frequency_weekly">An bestimmten Tagen der Woche</string>
   <string name="frequency_daily">Alle X Tage</string>
@@ -139,7 +138,6 @@
   <string name="unlock_lvl_11">Freigeschaltet ab Lvl 11</string>
   <string name="no_party_message">Du bist nicht in einer Gruppe. Besuche die Website, um einer Gruppe beizutreten.</string>
   <string name="forgot_pw_btn">Passwort vergessen</string>
-  <string name="forgot_pw_tv">Passwort vergessen? Bitte die mobile Website benutzen.</string>
   <string name="tavern.inn.checkOut">Reaktiviere Deine täglichen Aufgaben</string>
   <string name="tavern.inn.rest">Pausiere Deine täglichen Aufgaben</string>
   <string name="reward.dialog.buy">Kaufen</string>
@@ -282,7 +280,7 @@
   <string name="today">Heute</string>
   <string name="sidebar_items">Gegenstände</string>
   <string name="eggs">Eier</string>
-  <string name="hatching_potions">Schlüpftränke</string>
+  <string name="hatching_potions">Schlüpfelixiere</string>
   <string name="food">Futter</string>
   <string name="quests">Quests</string>
   <string name="pets">Haustiere</string>
@@ -294,7 +292,7 @@
   <string name="armoireLastItem">Du hast das letzte Stück der seltenen Ausrüstung im verzauberten Schrank gefunden.</string>
   <string name="armoireNotesEmpty">Der Schrank wird jeden Monat neue Ausrüstung beinhalten. Bis dahin kannst Du weiterklicken um Erfahrung und Nahrung zu erhalten.</string>
   <string name="sell">Verkaufen (%d Gold)</string>
-  <string name="hatch_with_potion">Mit Trank ausbrüten</string>
+  <string name="hatch_with_potion">Mit Elixier ausbrüten</string>
   <string name="feed_to_pet">An Haustier verfüttern</string>
   <string name="hatch_egg">Mit Ei ausbrüten</string>
   <string name="invite_party">Gruppe einladen</string>
@@ -306,7 +304,8 @@
   <string name="close">Schließen</string>
   <string name="share">Teilen</string>
   <string name="notification_pet_fed">Du hast Dein/e/n %1$s %2$s gefüttert!</string>
-  <string name="notification_purchase">%s gekauft</string>
+  <string name="notification_purchase">Du hast %s gekauft</string>
+  <string name="notification_purchase_reward">Du hast eine Belohnung gekauft</string>
   <string name="sectionpets">Normale Haustiere</string>
   <string name="sectionpremiumPets">Magische Haustiere</string>
   <string name="sectionquestPets">Quest-Haustiere</string>
@@ -590,4 +589,76 @@ Sie wird für alle Mitglieder Deiner Gruppe abgebrochen und Euer gesamter Fortsc
 Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
   <string name="loading">Inhalt wird geladen....</string>
   <string name="reloading_content">Inhalt wird erneut geladen</string>
+  <string name="thousand_abbrev">k</string>
+  <string name="million_abbrev">m</string>
+  <string name="billion_abbrev">b</string>
+  <string name="your_balance">Dein Kontostand:</string>
+  <string name="available_until" formatted="false">Verfügbar bis  zum %s</string>
+  <string name="gems_left_max" formatted="false">Monatliche Edelsteine: %1$d/%2$d verbleibend</string>
+  <string name="gems_left_nomax" formatted="false">Monatliche Edelsteine: %d verbleibend</string>
+  <string name="health">Gesundheit</string>
+  <string name="collect">Sammel</string>
+  <string name="rage_meter">Wut-Meter</string>
+  <string name="boss_quest">Boss Aufgabe</string>
+  <string name="collection_quest">Sammel Aufgabe</string>
+  <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+  <string name="experience_reward" formatted="false">%d Erfahrungspunkte</string>
+  <string name="gold_reward" formatted="false">%d Gold</string>
+  <string name="quest_owner_rewards">Quest-Besitzer Belohnungen</string>
+  <string name="reset_account">Konto zurücksetzen</string>
+  <string name="delete_account">Konto löschen</string>
+  <string name="reset_account_confirmation">Konto zurücksetzen</string>
+  <string name="delete_account_confirmation">Mein Konto löschen</string>
+  <string name="danger_zone">Gefahrenzone</string>
+  <string name="nevermind">Egal</string>
+  <string name="resetting_account">Konto zurücksetzen</string>
+  <string name="deleting_account">Konto löschen</string>
+  <string name="insufficientGold">Du musst mehr Aufgaben erledigen bevor du Dir dieses Item leisten kannst!</string>
+  <string name="insufficientGems">Du wirst mehr Edelsteine benötigen um dieses Item zu kaufen!</string>
+  <string name="purchase_gems">Kaufe Edelsteine</string>
+  <string name="insufficientHourglasses">Du wirst mehr mystische Sanduhren benötigen um dieses Item zu kaufen!</string>
+  <string name="get_hourglasses">Kaufe Sanduhren</string>
+  <string name="subscribe_for_hourglasses">Abonniere für Sanduhren</string>
+  <string name="want_to_subscribe">I möchte ein Abo abschließen</string>
+  <string name="come_back_soon">Komm bald zurück!</string>
+  <string name="level">Level</string>
+  <string name="streak_label">21-Tage-Strähnen</string>
+  <string name="stats">Statuswerte</string>
+  <string name="fix_character_values">Charakterwerte reparieren</string>
+  <string name="saving">Speichert</string>
+  <string name="forgot_password_title">Einen Passwort-Rücksetz-Link per E-Mail senden</string>
+  <string name="forgot_password_description">Gib die E-Mail-Adresse an, mit der Du Dich bei Habitica registriert hast.</string>
+  <string name="forgot_password_confirmation">Wenn Deine E-Mail-Adresse bei uns gespeichert ist, sind Informationen, wie Du ein neues Passwort setzt, an Deine Adresse unterwegs.</string>
+  <string name="ok">OK</string>
+  <string name="profile">Profil</string>
+  <string name="profile_summary">Bearbeite Dein öffentliches Profil.</string>
+  <string name="display_name">Anzeigename</string>
+  <string name="photo_url">Foto URL</string>
+  <string name="login_name">Login-Name</string>
+  <string name="about">Über</string>
+  <string name="app_settings">App Einstellungen</string>
+  <string name="authentication">Authentifizierung</string>
+  <string name="authentication_summary">Ändere Deine Authentifizierungsoptionen.</string>
+  <string name="change_password">Passwort ändern</string>
+  <string name="change_email">E-Mail-Adresse ändern</string>
+  <string name="change_login_name">Login-Name ändern</string>
+  <string name="change">Ändern</string>
+  <string name="character_level">Charakterlevel</string>
+  <string name="auto_allocate_points">Punkte automatisch verteilen</string>
+  <string name="character_build">Charaktererstellung</string>
+  <string name="character_build_description">Jedes Level bringt Dir einen Punkt, den Du einem Attribut Deiner Wahl zuschreiben kannst. Du kannst es selbst machen oder Du lässt das Spiel für dich entscheiden, indem du eine der Optionen der automatischen Zuweisung wählst.</string>
+  <string name="strength">Stärke</string>
+  <string name="intelligence">Intelligenz</string>
+  <string name="constitution">Ausdauer</string>
+  <string name="perception">Wahrnehmung</string>
+  <string name="buffs">Verstärkt</string>
+  <string name="allocated">Verteilt</string>
+  <string name="distribute_evenly">Gleichmäßig verteilen</string>
+  <string name="distribute_class">Auf Basis der eigenen Klasse verteilen</string>
+  <string name="distribute_task">Nach Aufgabenaktivität verteilen</string>
+  <string name="no_points_to_allocate">Keine Punkte zum Verteilen</string>
+  <string name="points_to_allocate" formatted="false">%d Punkte zum Verteilen</string>
+  <string name="distribute_evenly_help">Weist jedem Attribut die gleiche Anzahl an Punkten zu</string>
+  <string name="distribute_class_help">Weist den Attributen, die wichtig für Deine Klasse sind, mehr Punkte zu</string>
+  <string name="distribute_task_help">Weist Punkte nach den Eigenschaftskategorien zu, die mit den abgeschlossenen Aufgaben zusammenhängen.</string>
 </resources>

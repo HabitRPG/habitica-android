@@ -54,15 +54,14 @@
   <string name="confirmpassword">Şifreni onayla</string>
   <string name="logout">Çıkış yap</string>
   <string name="logout_description">Hesabından çıkış yap</string>
-  <string name="account_details_sum">Hesap detaylarını kontrol et</string>
   <string name="account_details">Hesap Detayları</string>
   <string name="LoginActivityName">Hoş Geldin</string>
   <string name="string_revive">Dirilt</string>
-  <string name="please_connect">Lütfen uygulamaya bir ekran aracı kullanmadan önce bağlanın</string>
+  <string name="please_connect">Lütfen uygulamaya bir ekran aracı kullanmadan önce bağlan</string>
   <string name="about.title">Hakkında</string>
   <string name="about.libraries">Kütüphaneler</string>
   <string name="about.versionhistory">Sürüm geçmişi</string>
-  <string name="about.habitica_open_source">Habitica yazılımı Github üzerinde açık kaynak olarak mevcuttur.</string>
+  <string name="about.habitica_open_source">Habitica yazılımı Github üzerinde açık kaynak olarak mevcuttur</string>
   <string name="about.rate_our_app">Uygulamamızı Değerlendir</string>
   <string name="about.give_us_feedback">Bize Geribildirim gönder!</string>
   <string name="about.bugreport">Hata Bildir</string>
@@ -93,10 +92,10 @@
   <string name="reminders">Hatırlatıcılar</string>
   <string name="actions">Hareketler</string>
   <string name="attributes">Özellikler</string>
-  <string name="physical">Fiziksel</string>
-  <string name="mental">Zihinsel</string>
-  <string name="social">Sosyal</string>
-  <string name="other">Diğer</string>
+  <string name="physical">Güç</string>
+  <string name="mental">Zeka</string>
+  <string name="social">Bünye</string>
+  <string name="other">Sezgi</string>
   <string name="frequency">Sıklık</string>
   <string name="frequency_weekly">Haftanın Belirli Günlerinde</string>
   <string name="frequency_daily">X günde bir</string>
@@ -129,17 +128,16 @@
   <string name="mana_price_button">%d MP</string>
   <string name="used_skill">%2$d mana karşılığında %1$s kullandın.</string>
   <string name="used_skill_without_mana">%1$s kullandın.</string>
-  <string name="new_checklist_item">yeni yapılacak iş</string>
+  <string name="new_checklist_item">yeni yapılacak iş maddesi</string>
   <string name="add_checklist_item">Ekle</string>
   <string name="reminder_title">Günlük İşlerini kontrol etmeyi unutma!</string>
   <string name="skill_progress_title">Yetenek Kullanma</string>
   <string name="coming_soon">Yakında</string>
   <string name="chat_flag_confirmation">Bu mesajı kural ihlali olarak bildirmek istediğine emin misin?</string>
   <string name="flag_confirm">Mesajı İşaretle</string>
-  <string name="unlock_lvl_11">Seviye 11\'de aç</string>
+  <string name="unlock_lvl_11">Seviye 11\'de açılır</string>
   <string name="no_party_message">Bir takıma üye değilsin. Bir takıma katılmak için lütfen internet sitesini ziyaret et. </string>
   <string name="forgot_pw_btn">Şifremi Unuttum</string>
-  <string name="forgot_pw_tv">Şifreni mi unuttun? Lütfen mobil internet sitemizi kullan.</string>
   <string name="tavern.inn.checkOut">Günlük İşlerini tekrar aktive et</string>
   <string name="tavern.inn.rest">Günlük İşleri durdur</string>
   <string name="reward.dialog.buy">Satın al</string>
@@ -161,7 +159,7 @@
   <string name="avatar_shirt">Gömlek</string>
   <string name="avatar_skin">Ten</string>
   <string name="avatar_ears">Hayvan Kulakları</string>
-  <string name="avatar_base">Üs</string>
+  <string name="avatar_base">Temel</string>
   <string name="avatar_color">Renk</string>
   <string name="avatar_beard">Sakal</string>
   <string name="avatar_mustache">Bıyık</string>
@@ -306,7 +304,8 @@
   <string name="close">Kapat</string>
   <string name="share">Paylaş</string>
   <string name="notification_pet_fed">%1$s %2$s besledin!</string>
-  <string name="notification_purchase">%s satın alındı</string>
+  <string name="notification_purchase">%s satın aldın</string>
+  <string name="notification_purchase_reward">Bir ödül satın aldın</string>
   <string name="sectionpets">Temel Evcil Hayvanlar</string>
   <string name="sectionpremiumPets">Büyü İksiri Evcil Hayvanları</string>
   <string name="sectionquestPets">Görev Evcil Hayvanları</string>
@@ -335,7 +334,7 @@
   <string name="class_changed">Yeni sınıfın: %s!</string>
   <string name="class_changed_description">Ekipmanlar menüsü altında değiştirebileceğin yeni varsayılan Savaş Ekipmanın var!</string>
   <string name="choose_class">Sınıf Seç</string>
-  <string name="dialog_go_back">Geri dön</string>
+  <string name="dialog_go_back">Geri Dön</string>
   <string name="opt_out_confirmation">Çekilmek istediğinden emin misin?</string>
   <string name="change_class">Sınıfını değiştir</string>
   <string name="change_class_description">3 elmas karşılığında sınıfını değiştir ve özellik puanlarını geri al. Özellik puanlarını websitesi üzerinden atayabilirsin</string>
@@ -348,14 +347,14 @@
   <string name="invite_id_description">Habitica kullanan arkadaşların var ise, Kullanıcı ID\'leri ile davet edebilirsin.</string>
   <string name="invite_email_description">Epostan ile bir arkadaşın Habitica\'ya katılırsa, otomatik olarak takımına davet edilecektir.</string>
   <string name="add_invites">Davetleri Ekle</string>
-  <string name="user_id">Kullanıcı ID</string>
+  <string name="user_id">Kullanıcı ID\'si</string>
   <string name="email">Eposta</string>
   <string name="invite_users">Takıma davet et</string>
   <string name="share_using">Kullanımı paylaş</string>
   <string name="share_levelup">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %d seviye elde ettim!</string>
   <string name="share_hatched">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %1$s %2$s evcil hayvan ürettim.</string>
   <string name="share_raised">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %1$s %2$s binek kazandım.</string>
-  <string name="open_in_store">Play Store\'da Aç</string>
+  <string name="open_in_store">Play Store\'da aç</string>
   <string name="change_class_confirmation">Sınıfınızı değiştirmek istediğinize emin misiniz? Bu işlem 3 elmasa mal olacaktır.</string>
   <string name="change_class_equipment_warning">Uyarı: %s sınıfından ekipman alamayacaksınız.</string>
   <string name="leaderMessage">%1$s tarafından mesaj</string>
@@ -368,7 +367,7 @@
   <string name="party_invite">Arkadaşlarını davet ederek kilidi aç</string>
   <string name="no_gold">Yeterli Altın yok</string>
   <string name="no_potion">Sağlık iksiri satın almanıza gerek yoktur</string>
-  <string name="successful_purchase">%1$s başarıyla satın alındı</string>
+  <string name="successful_purchase">%1$s satın alındı</string>
   <string name="purchase_confirmation_title">Satın almayı onayla</string>
   <string name="confirm_purchase_text">%2$s %3$s karşılığında %1$s satın al</string>
   <string name="gem">elmas</string>
@@ -509,7 +508,7 @@
   <string name="filters">Filtreler</string>
   <string name="done">Tamam</string>
   <string name="group_tasks_edit_description">Grup işleri düzenlenemez.</string>
-  <string name="group_tasks_edit_title">Bu işi düzenleyemezsin</string>
+  <string name="group_tasks_edit_title">Bu iş düzenleyemez</string>
   <string name="groups">Gruplar</string>
   <string name="all">Hepsi</string>
   <string name="none">Hiçbiri</string>
@@ -525,7 +524,7 @@
   <string name="avatar_skin_color">Ten Rengi</string>
   <string name="avatar_hair_color">Saç Rengi</string>
   <string name="avatar_hair_bangs">Kahkül</string>
-  <string name="avatar_hair_ponytail">Atkuyruğu</string>
+  <string name="avatar_hair_ponytail">At Kuyruğu</string>
   <string name="avatar_glasses">Gözlükler</string>
   <string name="avatar_wheelchair">Tekerlekli Sandalye</string>
   <string name="weak">Zayıf</string>
@@ -543,10 +542,8 @@
   <string name="empty_description_todos">Yapılacak İşler yalnızca bir kez tamamlanması gereken işlerdir. Değerlerini artırmak için Yapılacak İşlerine kontrol listeleri ekle.</string>
   <string name="empty_title_rewards">Hiç Ödül sahibi değilsin</string>
   <string name="reset_walkthrough">Junstin\'in Rehberliğini Sıfırla</string>
-  <string name="read_community_guidelines">undefined</string>
   <string name="maintenance">Bakım</string>
   <string name="reload_content">İçeriği Yenile</string>
-  <string name="dailyDueDefaultView">Günlükleri varsayılan \'due\' sekmesine ayarla</string>
   <string name="dailyDueDefaultViewDescription">Bu seçenek seçili ise, Günlük İşler işleri varsayılan olarak \'tümü\' yerine \'bitirme\' olacaktır</string>
   <string name="repeat_summary">%1$sher %2$s%3$s%4$s tekrarlanır</string>
   <string name="no_billing_gems">Cihazında desteklenen ödeme yöntemleri yok. Elmas satın almak istersen lütfen habitica web sitesini kullan.</string>
@@ -588,4 +585,43 @@
   <string name="quest_abort_message">Bu görevi iptal etmek istediğine emin misin?  Tüm davet kabulleri ve ilerleme kaybolacak. Görev parşömenini görev sahibine geri verilecektir.</string>
   <string name="loading">Yükleniyor...</string>
   <string name="reloading_content">İçerik Yeniden Yükleniyor</string>
+  <string name="thousand_abbrev">bin</string>
+  <string name="million_abbrev">milyon</string>
+  <string name="billion_abbrev">milyar</string>
+  <string name="your_balance">Bakiye:</string>
+  <string name="available_until" formatted="false">%s tarihine kadar mevcut</string>
+  <string name="gems_left_max" formatted="false">Aylık Elmaslar: %1$d/%2$d Kalmış</string>
+  <string name="gems_left_nomax" formatted="false">Aylık Elmaslar: %d Kalmış</string>
+  <string name="health">Sağlık</string>
+  <string name="collect">Topla</string>
+  <string name="rage_meter">Öfke Sayacı</string>
+  <string name="boss_quest">Canavar Görevi</string>
+  <string name="collection_quest">Toplama Görevi</string>
+  <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+  <string name="experience_reward" formatted="false">%dTecrübe Puanı</string>
+  <string name="gold_reward" formatted="false">%dAltın</string>
+  <string name="quest_owner_rewards">Görev Sahibinin Ödülleri</string>
+  <string name="reset_account">Hesabı Sıfırla</string>
+  <string name="delete_account">Hesabı Sil</string>
+  <string name="reset_account_confirmation">hesabımı sıfırla</string>
+  <string name="delete_account_confirmation">hesabımı sil</string>
+  <string name="danger_zone">Tehlike Bölgesi</string>
+  <string name="nevermind">Boşver</string>
+  <string name="resetting_account">Hesap Sıfırlanıyor</string>
+  <string name="deleting_account">Hesap Siliniyor</string>
+  <string name="insufficientGold">Bu eşyanın fiyatını karşılamak için daha çok çalışmalısın!</string>
+  <string name="insufficientGems">Bu eşyayı almak için daha çok elmasa ihtiyacın var.</string>
+  <string name="purchase_gems">Elmas satın al</string>
+  <string name="insufficientHourglasses">Bu eşyayı almak için daha çok mistik kum saatine ihtiyacın var.</string>
+  <string name="get_hourglasses">Mistik Kum Saatleri al</string>
+  <string name="subscribe_for_hourglasses">Kum saatleri için abone ol.</string>
+  <string name="want_to_subscribe">Abone olmak istiyorum</string>
+  <string name="level">Seviye</string>
+  <string name="fix_character_description">Eğer bir programlama hatası veya bir hata yanlışlıkla karakterini adaletsizce etkilemiş ise buradan düzeltebilirsin.</string>
+  <string name="fix_character_values">Karakter değerlerini düzelt</string>
+  <string name="saving">Kaydediliyor</string>
+  <string name="ok">TAMAM</string>
+  <string name="profile">Profil</string>
+  <string name="display_name">Görünen isim</string>
+  <string name="login_name">Kullanıcı Adı</string>
 </resources>

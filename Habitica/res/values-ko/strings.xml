@@ -16,7 +16,7 @@
   <string name="Language_summary">Habitica의 언어 바꾸기</string>
   <string name="SP_user_qr_code">당신의 QR코드</string>
   <string name="PS_contact_title">연락처</string>
-  <string name="unknown_error">에러가 생겼어요...</string>
+  <string name="unknown_error">오류가 발생했습니다...</string>
   <string name="pref_account_header">계정</string>
   <string name="pref_first_day_of_the_week_title">일주일의 첫날</string>
   <string name="pref_first_day_of_the_week_summary">모든 달력에서 일주일의 첫날</string>
@@ -38,7 +38,7 @@
   <string name="preference_push_invited_to_quest">퀘스트에 초대를 받았음</string>
   <!--Adding tasks-->
   <string name="task_value">값</string>
-  <string name="new_todo">새로운 할일</string>
+  <string name="new_todo">새로운 할 일</string>
   <string name="new_reward">새로운 보상</string>
   <string name="new_daily">새로운 일일과제</string>
   <string name="new_habit">새로운 습관</string>
@@ -54,7 +54,6 @@
   <string name="confirmpassword">암호 확인</string>
   <string name="logout">로그아웃</string>
   <string name="logout_description">계정 로그아웃</string>
-  <string name="account_details_sum">계정 정보를 확인하세요</string>
   <string name="account_details">계정 정보</string>
   <string name="LoginActivityName">환영합니다</string>
   <string name="string_revive">되살리기</string>
@@ -67,7 +66,7 @@
   <string name="about.give_us_feedback">피드백을 보내주세요!</string>
   <string name="about.bugreport">버그 신고</string>
   <string name="about.source_code">소스코드</string>
-  <string name="repeatEvery">매일 반복하기</string>
+  <string name="repeatEvery">반복주기</string>
   <!--Network Errors-->
   <string name="network_error_title">연결 오류</string>
   <string name="network_error_no_network_body">인터넷에 연결되어 있지 않습니다.</string>
@@ -93,16 +92,16 @@
   <string name="reminders">알림</string>
   <string name="actions">행동</string>
   <string name="attributes">속성</string>
-  <string name="physical">신체</string>
-  <string name="mental">정신</string>
-  <string name="social">사회성</string>
-  <string name="other">기타</string>
+  <string name="physical">근력</string>
+  <string name="mental">지력</string>
+  <string name="social">생명력</string>
+  <string name="other">인지력</string>
   <string name="frequency">빈도</string>
   <string name="frequency_weekly">특정 요일에만</string>
   <string name="frequency_daily">X일 마다</string>
   <string name="repeatables_summary_title">요약</string>
   <string name="repeatables_title">반복</string>
-  <string name="repeatables_on_title">반복</string>
+  <string name="repeatables_on_title">반복일</string>
   <string name="repeatables_frequency_daily">매일</string>
   <string name="repeatables_frequency_weekly">매주</string>
   <string name="repeatables_frequency_monthly">매달</string>
@@ -139,7 +138,6 @@
   <string name="unlock_lvl_11">레벨 11에 열림</string>
   <string name="no_party_message">파티에 소속되어 있지 않습니다. 파티에 가입하려면 저희 홈페이지를 방문해주세요.</string>
   <string name="forgot_pw_btn">암호 찾기</string>
-  <string name="forgot_pw_tv">암호를 잊어버리셨나요? 모바일 홈페이지를 이용해주세요.</string>
   <string name="tavern.inn.checkOut">일일과제 활성화</string>
   <string name="tavern.inn.rest">일일과제 일시중지</string>
   <string name="reward.dialog.buy">구매</string>
@@ -191,7 +189,7 @@
   <string name="sidebar_help">도움말 &amp; FAQ</string>
   <string name="complete_tutorial">네, 알겠어요!</string>
   <string name="dismiss_tutorial">나중에 알려주세요</string>
-  <string name="intro_1_subtitle">오신 것을 환영합니다</string>
+  <string name="intro_1_subtitle">환영합니다</string>
   <string name="intro_1_title">Habitica</string>
   <string name="intro_2_subtitle">게임의 진전</string>
   <string name="intro_2_title">삶의 진전</string>
@@ -309,7 +307,6 @@
   <string name="close">닫기</string>
   <string name="share">나누기</string>
   <string name="notification_pet_fed">%1$s %2$s 에게 먹이를 줬습니다!</string>
-  <string name="notification_purchase">%s 를 구매했습니다</string>
   <string name="sectionpets">기본 펫</string>
   <string name="sectionpremiumPets">마법 물약의 펫</string>
   <string name="sectionquestPets">퀘스트 펫</string>
@@ -371,7 +368,6 @@
   <string name="party_invite">친구를 초대하여 잠금 해제하기</string>
   <string name="no_gold">골드가 충분하지 않음</string>
   <string name="no_potion">체력 물약을 살 필요가 없음</string>
-  <string name="successful_purchase">%1$s을(를) 성공적으로 구매했음</string>
   <string name="purchase_confirmation_title">구매 확인</string>
   <string name="confirm_purchase_text">%1$s을(를) %2$s %3$s(으)로 구매함</string>
   <string name="gem">보석</string>
