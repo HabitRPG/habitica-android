@@ -72,7 +72,7 @@ public class QuestProgressView extends LinearLayout {
                     SimpleDraweeView iconView = (SimpleDraweeView) view.findViewById(R.id.icon_view);
                     TextView nameView = (TextView) view.findViewById(R.id.name_view);
                     ValueBar valueView = (ValueBar) view.findViewById(R.id.value_view);
-                    DataBindingUtils.loadImage(iconView, "quest_" + quest.getKey() + "_" + collect.key);
+                    DataBindingUtils.INSTANCE.loadImage(iconView, "quest_" + quest.getKey() + "_" + collect.key);
                     nameView.setText(contentCollect.text);
                     valueView.set(collect.count, contentCollect.count);
 

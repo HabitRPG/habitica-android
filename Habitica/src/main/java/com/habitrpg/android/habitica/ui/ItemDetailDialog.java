@@ -115,7 +115,7 @@ public class ItemDetailDialog extends AlertDialog {
 
     public void setImage(String imageName) {
         itemImageView.setVisibility(View.VISIBLE);
-        DataBindingUtils.loadImage(itemImageView, imageName);
+        DataBindingUtils.INSTANCE.loadImage(itemImageView, imageName);
     }
 
     public void setBuyListener(OnClickListener listener) {

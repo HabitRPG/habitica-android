@@ -150,9 +150,9 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
 
             if (userBackground != null) {
                 if (msg.sent != null && msg.sent.equals("true") && sendingUser != null) {
-                    DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributorColor());
+                    DataBindingUtils.INSTANCE.setRoundedBackgroundInt(userBackground, sendingUser.getContributorColor());
                 } else {
-                    DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+                    DataBindingUtils.INSTANCE.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
                 }
             }
 
@@ -171,7 +171,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 userLabel.setOnClickListener(view -> userLabelClickEvents.onNext(msg.uuid));
             }
 
-            DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
+            DataBindingUtils.INSTANCE.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
             if (messageText != null) {
                 messageText.setText(chatMessage.parsedText);
@@ -214,7 +214,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 foregroundColorRes = R.color.tavern_nolikes_foreground;
             }
 
-            DataBindingUtils.setRoundedBackground(likeBackground, ContextCompat.getColor(context, backgroundColorRes));
+            DataBindingUtils.INSTANCE.setRoundedBackground(likeBackground, ContextCompat.getColor(context, backgroundColorRes));
             tvLikes.setTextColor(ContextCompat.getColor(context, foregroundColorRes));
         }
 

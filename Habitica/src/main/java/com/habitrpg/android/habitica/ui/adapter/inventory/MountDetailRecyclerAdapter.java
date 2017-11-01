@@ -88,9 +88,9 @@ public class MountDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Mount, 
             ownedTextView.setVisibility(View.GONE);
             this.imageView.setAlpha(1.0f);
             if (this.animal.getOwned()) {
-                DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + itemType + "-" + item.getColor());
+                DataBindingUtils.INSTANCE.loadImage(this.imageView, "Mount_Icon_" + itemType + "-" + item.getColor());
             } else {
-                DataBindingUtils.loadImage(this.imageView, "PixelPaw");
+                DataBindingUtils.INSTANCE.loadImage(this.imageView, "PixelPaw");
                 this.imageView.setAlpha(0.3f);
             }
         }

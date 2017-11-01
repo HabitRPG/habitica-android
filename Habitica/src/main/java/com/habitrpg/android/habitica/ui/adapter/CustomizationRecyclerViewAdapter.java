@@ -185,7 +185,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             this.customization = customization;
 
 
-            DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor));
+            DataBindingUtils.INSTANCE.loadImage(this.imageView, customization.getImageName(userSize, hairColor));
             cardView.setCardBackgroundColor(context.getResources().getColor(android.R.color.white));
             if (customization.isUsable()) {
                 imageView.setAlpha(1.0f);
@@ -206,7 +206,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 LinearLayout dialogContent = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_purchase_customization, null);
 
                 SimpleDraweeView imageView = (SimpleDraweeView) dialogContent.findViewById(R.id.imageView);
-                DataBindingUtils.loadImage(imageView, customization.getImageName(userSize, hairColor));
+                DataBindingUtils.INSTANCE.loadImage(imageView, customization.getImageName(userSize, hairColor));
 
                 TextView priceLabel = (TextView) dialogContent.findViewById(R.id.priceLabel);
                 priceLabel.setText(String.valueOf(customization.getPrice()));

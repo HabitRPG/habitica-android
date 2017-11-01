@@ -146,7 +146,7 @@ public class PurchaseDialogQuestContent extends PurchaseDialogContent {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.row_quest_reward, containerView, false);
         SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
         TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
-        DataBindingUtils.loadImage(imageView, item.getImageName());
+        DataBindingUtils.INSTANCE.loadImage(imageView, item.getImageName());
         if (item.getCount() > 1) {
             titleTextView.setText(getContext().getString(R.string.quest_reward_count, item.getText(), item.getCount()));
         } else {

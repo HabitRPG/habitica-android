@@ -46,7 +46,7 @@ public abstract class PurchaseDialogContent extends LinearLayout {
 
 
     public void setItem(ShopItem item) {
-        DataBindingUtils.loadImage(imageView, item.getImageName());
+        DataBindingUtils.INSTANCE.loadImage(imageView, item.getImageName());
         titleTextView.setText(item.getText());
     }
 }

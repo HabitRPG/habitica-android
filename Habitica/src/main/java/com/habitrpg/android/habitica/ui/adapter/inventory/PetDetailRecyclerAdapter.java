@@ -104,13 +104,13 @@ public class PetDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Pet, PetD
                 } else {
                     this.trainedProgressbar.setProgress(this.animal.getTrained());
                 }
-                DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
+                DataBindingUtils.INSTANCE.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
             } else {
                 this.trainedProgressbar.setVisibility(View.GONE);
                 if (this.animal.getTrained() == 0) {
-                    DataBindingUtils.loadImage(this.imageView, "PixelPaw");
+                    DataBindingUtils.INSTANCE.loadImage(this.imageView, "PixelPaw");
                 } else {
-                    DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
+                    DataBindingUtils.INSTANCE.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
                 }
                 this.imageView.setAlpha(0.3f);
             }

@@ -195,8 +195,8 @@ public class PartyDetailFragment extends BaseFragment {
             return;
         }
         questTitleView.setText(questContent.getText());
-        DataBindingUtils.loadImage(questScrollImageView, "inventory_quest_scroll_"+questContent.getKey());
-        DataBindingUtils.loadImage(questImageView, "quest_"+questContent.getKey());
+        DataBindingUtils.INSTANCE.loadImage(questScrollImageView, "inventory_quest_scroll_"+questContent.getKey());
+        DataBindingUtils.INSTANCE.loadImage(questImageView, "quest_"+questContent.getKey());
         if (isQuestActive()) {
             questProgressView.setVisibility(View.VISIBLE);
             questProgressView.setData(questContent, quest.getProgress());

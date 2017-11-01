@@ -50,7 +50,7 @@ public class ValueBar extends FrameLayout {
         setLightBackground(attributes.getBoolean(R.styleable.ValueBar_lightBackground, false));
 
         int color = attributes.getColor(R.styleable.ValueBar_barForegroundColor, 0);
-        DataBindingUtils.setRoundedBackground(barView, color);
+        DataBindingUtils.INSTANCE.setRoundedBackground(barView, color);
 
         Drawable iconRes = attributes.getDrawable(R.styleable.ValueBar_barIconDrawable);
         if (iconRes != null) {

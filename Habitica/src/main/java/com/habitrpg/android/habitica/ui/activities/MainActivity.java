@@ -642,7 +642,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     FrameLayout petWrapper = (FrameLayout) View.inflate(this, R.layout.pet_imageview, null);
                     SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
 
-                    DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
+                    DataBindingUtils.INSTANCE.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
                     String potionName = event.usingHatchingPotion.getText();
                     String eggName = event.usingEgg.getText();
                     AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
@@ -678,7 +678,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                         FrameLayout mountWrapper = (FrameLayout) View.inflate(this, R.layout.pet_imageview, null);
                         SimpleDraweeView mountImageView = (SimpleDraweeView) mountWrapper.findViewById(R.id.pet_imageview);
 
-                        DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.getKey());
+                        DataBindingUtils.INSTANCE.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.getKey());
                         String colorName = event.usingPet.getColorText();
                         String animalName = event.usingPet.getAnimalText();
                         AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
@@ -950,7 +950,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
         SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
         String imageKey = event.notification.data.rewardKey.get(0);
-        DataBindingUtils.loadImage(imageView, imageKey);
+        DataBindingUtils.INSTANCE.loadImage(imageView, imageKey);
 
         String youEarnedMessage = this.getString(R.string.checkInRewardEarned, event.notification.data.rewardText);
 
