@@ -20,4 +20,5 @@
     <string name="tutorial_party">This is where you and your friends can hold each other accountable to your goals and fight monsters with your tasks!</string>
     <string name="tutorial_tavern">Welcome to the Tavern, a public, all-ages chatroom! Here you can chat about productivity and ask questions. Have fun!</string>
     <string name="tutorial_classes">Choose to become a Warrior, Mage, Healer, or Rogue! Each class has unique equipment and skills. Tap the (?) to learn more!</string>
+    <string name="tutorial_stats">Tap the gray button to allocate lots of your stats at once, or tap the arrows to add them one point at a time.</string>
 </resources>
