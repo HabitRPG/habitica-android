@@ -5,6 +5,8 @@ import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Build
 import android.support.v4.content.ContextCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -57,6 +59,27 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             statsSeekBar.thumb = thumbDrawable
         }
 
+        valueEditText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val newValue = try {
+                    s.toString().toInt()
+                } catch (e: NumberFormatException) {
+                    0
+                }
+                if (newValue != currentValue && newValue < maxValue) {
+                    currentValue = newValue
+                    allocateAction?.invoke(currentValue)
+                } else if (newValue > maxValue) {
+                    valueEditText.setText(currentValue.toString())
+                }
+            }
+
+        })
+
         statsSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 currentValue = progress
@@ -65,11 +88,9 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                 }
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
         currentValue = 0

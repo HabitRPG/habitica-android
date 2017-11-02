@@ -422,5 +422,4 @@
     <style name="PurpleTextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brand_300</item>
     </style>
-
 </resources>
