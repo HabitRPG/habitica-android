@@ -24,7 +24,13 @@ class CurrencyView : android.support.v7.widget.AppCompatTextView {
             updateVisibility()
         }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        val attributes = context.theme?.obtainStyledAttributes(
+                attrs,
+                R.styleable.CurrencyViews,
+                0, 0)
+        lightBackground = attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, true) ?: true
+    }
 
     constructor(context: Context, currency: String, lightbackground: Boolean) : super(context) {
         this.lightBackground = lightbackground

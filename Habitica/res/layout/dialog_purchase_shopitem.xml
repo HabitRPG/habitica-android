@@ -90,6 +90,7 @@
                 tools:text="10"
                 tools:textColor="@color/green_10"
                 style="@style/Body1"
+                app:hasLightBackground="true"
                 android:layout_marginLeft="12dp"/>
         </LinearLayout>
         <Button

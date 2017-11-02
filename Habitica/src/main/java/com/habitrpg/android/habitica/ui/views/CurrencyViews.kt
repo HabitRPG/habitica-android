@@ -30,7 +30,6 @@ class CurrencyViews : LinearLayout {
 
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-
         val attributes = context?.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.CurrencyViews,
