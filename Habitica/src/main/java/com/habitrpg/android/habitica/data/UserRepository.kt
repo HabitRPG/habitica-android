@@ -23,7 +23,7 @@ interface UserRepository : BaseRepository {
     fun retrieveUser(withTasks: Boolean): Observable<User>
     fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false): Observable<User>
 
-    fun getInboxMessages(replyToUserID: String): Observable<RealmResults<ChatMessage>>
+    fun getInboxMessages(replyToUserID: String?): Observable<RealmResults<ChatMessage>>
 
     fun revive(user: User): Observable<User>
 

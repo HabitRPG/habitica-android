@@ -30,8 +30,11 @@ class GroupInformationFragment : BaseFragment() {
     private var group: Group? = null
     private var user: User? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_group_info, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_group_info, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         if (user != null) {
             setUser(user)
@@ -69,7 +72,6 @@ class GroupInformationFragment : BaseFragment() {
             }
         })
 
-        return view
     }
 
     private fun setUser(user: User?) {

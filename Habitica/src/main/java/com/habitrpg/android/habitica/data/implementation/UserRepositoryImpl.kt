@@ -73,7 +73,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun getInboxMessages(replyToUserID: String): Observable<RealmResults<ChatMessage>> =
+    override fun getInboxMessages(replyToUserID: String?): Observable<RealmResults<ChatMessage>> =
             localRepository.getInboxMessages(userId, replyToUserID)
 
     override fun revive(user: User): Observable<User> =

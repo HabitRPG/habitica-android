@@ -77,7 +77,6 @@ public abstract class BaseFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         injectFragment(HabiticaBaseApplication.getComponent());
-        compositeSubscription = new CompositeSubscription();
         this.setShowsDialog(false);
         super.onCreate(savedInstanceState);
     }
@@ -85,6 +84,7 @@ public abstract class BaseFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        compositeSubscription = new CompositeSubscription();
 
         // Receive Events
         try {
@@ -117,6 +117,9 @@ public abstract class BaseFragment extends DialogFragment {
             unbinder.unbind();
             unbinder = null;
         }
+        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
+            compositeSubscription.unsubscribe();
+        }
 
         super.onDestroyView();
         RefWatcher refWatcher = HabiticaApplication.getInstance(getContext()).refWatcher;
@@ -127,9 +130,6 @@ public abstract class BaseFragment extends DialogFragment {
     public void onDestroy() {
         if (tutorialRepository != null) {
             tutorialRepository.close();
-        }
-        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
-            compositeSubscription.unsubscribe();
         }
         super.onDestroy();
     }
