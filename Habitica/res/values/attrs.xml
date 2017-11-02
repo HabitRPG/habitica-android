@@ -1,6 +1,7 @@
 <resources>
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />
+    <attr name="hasLightBackground" format="boolean" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
         <attr name="showMount" format="boolean" />
@@ -40,9 +41,10 @@
     </declare-styleable>
     <declare-styleable name="CurrencyView">
         <attr name="currency" format="string" />
+        <attr name="hasLightBackground" />
     </declare-styleable>
     <declare-styleable name="CurrencyViews">
-        <attr name="hasLightBackground" format="boolean" />
+        <attr name="hasLightBackground" />
     </declare-styleable>
     <declare-styleable name="FixValuesEditText">
         <attr name="fixIconName" format="string" />
