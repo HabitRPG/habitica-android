@@ -30,9 +30,10 @@
             <TextView
                 android:id="@+id/numberOfPointsTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"/>
+                android:layout_marginRight="12dp"
+                android:gravity="center"/>
             <ImageView
                 android:id="@+id/rightSparklesView"
                 android:layout_width="77dp"
