@@ -237,8 +237,6 @@ public interface AppComponent {
 
     void inject(RemindersManager remindersManager);
 
-    void inject(TaskAlarmManager taskAlarmManager);
-
     void inject(DailiesRecyclerViewHolder dailiesRecyclerViewHolder);
 
     void inject(HabitsRecyclerViewAdapter habitsRecyclerViewAdapter);

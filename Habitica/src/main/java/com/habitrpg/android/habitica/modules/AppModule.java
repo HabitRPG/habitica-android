@@ -8,6 +8,7 @@ import android.support.v7.preference.PreferenceManager;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.executors.JobExecutor;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
@@ -92,8 +93,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    TaskAlarmManager providesTaskAlarmManager(Context context) {
-        return new TaskAlarmManager(context);
+    TaskAlarmManager providesTaskAlarmManager(Context context, TaskRepository taskRepository, @Named(NAMED_USER_ID) String userId) {
+        return new TaskAlarmManager(context, taskRepository, userId);
     }
 
     @Provides
