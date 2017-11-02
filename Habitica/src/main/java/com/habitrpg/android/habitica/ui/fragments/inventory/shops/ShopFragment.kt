@@ -35,19 +35,7 @@ class ShopFragment : BaseFragment() {
     @Inject
     lateinit var configManager: RemoteConfigManager
 
-    private val layoutManager: GridLayoutManager by lazy {
-        val layoutManager = GridLayoutManager(context, 2)
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (adapter?.getItemViewType(position) ?: 0 < 3) {
-                    layoutManager.spanCount
-                } else {
-                    1
-                }
-            }
-        }
-        return@lazy layoutManager
-    }
+    private var layoutManager: GridLayoutManager? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -73,6 +61,16 @@ class ShopFragment : BaseFragment() {
         }
 
         if (recyclerView.layoutManager == null) {
+            layoutManager = GridLayoutManager(context, 2)
+            layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (adapter?.getItemViewType(position) ?: 0 < 3) {
+                        layoutManager?.spanCount ?: 1
+                    } else {
+                        1
+                    }
+                }
+            }
             recyclerView.layoutManager = layoutManager
         }
 
@@ -168,8 +166,8 @@ class ShopFragment : BaseFragment() {
         if (spanCount == 0) {
             spanCount = 1
         }
-        layoutManager.spanCount = spanCount
-        layoutManager.requestLayout()
+        layoutManager?.spanCount = spanCount
+        layoutManager?.requestLayout()
     }
 
     companion object {
