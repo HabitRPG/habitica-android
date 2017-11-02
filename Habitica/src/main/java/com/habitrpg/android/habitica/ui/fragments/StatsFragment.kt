@@ -138,9 +138,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun showHelpAlert(resourceId: Int) {
-        val builder = AlertDialog.Builder(context)
-                .setMessage(resourceId)
-                .setOkButton()
+        val builder = AlertDialog.Builder(context).setMessage(resourceId).setOkButton()
         builder.show()
     }
 
@@ -230,7 +228,7 @@ class StatsFragment: BaseMainFragment() {
         outfitList.add(outfit.shield)
         outfitList.add(outfit.weapon)
 
-        inventoryRepository.getItems(outfitList).subscribe(Action1 {
+        inventoryRepository.getItems(outfitList).first().subscribe(Action1 {
             val userStatComputer = UserStatComputer()
             val statsRows = userStatComputer.computeClassBonus(it, user)
 
