@@ -12,17 +12,27 @@ class EquipmentItemRow(context: Context?, attrs: AttributeSet?) : LinearLayout(c
 
     var equipmentIdentifier: String? = null
     set(value) {
-        val imageName = if (equipmentIdentifier != null) "shop_"+equipmentIdentifier else "head_0"
+        field = value
+        val imageName = if (equipmentIdentifier != null && equipmentIdentifier != "") "shop_"+equipmentIdentifier else "head_0"
+        DataBindingUtils.loadImage(imageView, imageName)
+    }
+
+    var customizationIdentifier: String? = null
+    set(value) {
+        field = value
+        val imageName = if (customizationIdentifier != null && customizationIdentifier != "") customizationIdentifier else "head_0"
         DataBindingUtils.loadImage(imageView, imageName)
     }
 
     var equipmentName: String? = ""
     set(value) {
+        field = value
         valueTextView.text = equipmentName
     }
 
     init {
         View.inflate(context, R.layout.item_image_row, this)
+        isClickable = true
 
         val attributes = context?.theme?.obtainStyledAttributes(
                 attrs,
