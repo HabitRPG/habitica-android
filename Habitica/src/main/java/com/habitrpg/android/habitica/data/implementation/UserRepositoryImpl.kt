@@ -230,6 +230,18 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Observable<Stats> =
             apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception)
+                    .doOnNext { stats ->
+                        if (user != null && user.isManaged) {
+                            localRepository.executeTransaction {
+                                user.stats.str = stats.str
+                                user.stats.con = stats.con
+                                user.stats.per = stats.per
+                                user.stats._int = stats._int
+                                user.stats.points = stats.points
+                                user.stats.mp = stats.mp
+                            }
+                        }
+                    }
 
     override fun runCron(tasks: List<Task>) {
         val observable: Observable<List<TaskScoringResult>> = if (tasks.isNotEmpty()) {
