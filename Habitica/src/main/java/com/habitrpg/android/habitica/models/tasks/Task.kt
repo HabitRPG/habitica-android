@@ -117,11 +117,11 @@ open class Task : RealmObject, Parcelable {
             }
         }
 
-    val isDisplayedActive: Boolean?
+    val isDisplayedActive: Boolean
         get() = isDue == true && !completed
 
-    val isChecklistDisplayActive: Boolean?
-        get() = this.isDisplayedActive!! && this.checklist.size != this.completedChecklistCount
+    val isChecklistDisplayActive: Boolean
+        get() = this.isDisplayedActive && this.checklist.size != this.completedChecklistCount
 
     val isGroupTask: Boolean
         get() = group?.approvalApproved == true
@@ -147,44 +147,11 @@ open class Task : RealmObject, Parcelable {
             today.add(Calendar.DAY_OF_MONTH, -1)
         }
 
-        if (nextDue != null) {
+        if (nextDue != null && !isDisplayedActive) {
             val nextDueCalendar = GregorianCalendar()
             nextDueCalendar.time = nextDue
             newTime.set(nextDueCalendar.get(Calendar.YEAR), nextDueCalendar.get(Calendar.MONTH), nextDueCalendar.get(Calendar.DAY_OF_MONTH))
             return newTime.time
-        }
-
-        if (FREQUENCY_DAILY == this.frequency) {
-            if (this.everyX == 0) {
-                return null
-            }
-            val startDate = GregorianCalendar()
-            startDate.time = this.startDate
-
-            val timeUnit = TimeUnit.DAYS
-            val diffInMillies = today.timeInMillis - startDate.timeInMillis
-            val daySinceStart = timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS)
-            val daysUntilNextReminder = this.everyX - daySinceStart % this.everyX
-
-            today.add(Calendar.DATE, daysUntilNextReminder.toInt())
-            newTime.time = today.time
-        } else if (FREQUENCY_WEEKLY == this.frequency) {
-            var nextActiveDayOfTheWeek = newTime.get(Calendar.DAY_OF_WEEK)
-            var daysChecked = 0
-            while ((this.repeat?.getForDay(nextActiveDayOfTheWeek) == false || newTime.before(today) || newTime == today) && daysChecked <= 7) {
-                if (nextActiveDayOfTheWeek == 6) {
-                    nextActiveDayOfTheWeek = 0
-                } else {
-                    nextActiveDayOfTheWeek += 1
-                }
-                daysChecked += 1
-                newTime.add(Calendar.DATE, 1)
-            }
-            if (daysChecked > 7) {
-                return null
-            }
-        } else {
-            return null
         }
 
         return newTime.time

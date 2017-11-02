@@ -47,6 +47,7 @@ import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
@@ -232,7 +233,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Inject
     TaskFilterHelper taskFilterHelper;
     @Inject
-
     TaskRepository taskRepository;
     @Inject
     TagRepository tagRepository;
@@ -241,6 +241,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     String userId;
     @Inject
     RemoteConfigManager remoteConfigManager;
+    @Inject
+    TaskAlarmManager taskAlarmManager;
 
     private Task task;
     private boolean taskBasedAllocation;
@@ -1293,7 +1295,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             } else {
                 taskRepository.updateTaskInBackground(task);
             }
-
+            Task unmanagedTask = taskRepository.getUnmanagedCopy(task);
+            taskAlarmManager.scheduleAlarmsForTask(unmanagedTask);
         }
     }
 

@@ -54,7 +54,7 @@ public class NotificationPublisher extends WakefulBroadcastReceiver {
                         break;
                     }
                 }
-                TaskAlarmManager.scheduleDailyReminder(context);
+                TaskAlarmManager.Companion.scheduleDailyReminder(context);
                 if (showNotifications) {
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
