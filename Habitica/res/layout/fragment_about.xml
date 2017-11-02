@@ -1,122 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarSize="3dp"
-        android:scrollbarThumbVertical="@color/md_grey_500"
-        android:scrollbars="vertical">
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarSize="3dp"
+    android:scrollbarThumbVertical="@color/md_grey_500"
+    android:scrollbars="vertical">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10sp"
+            android:autoLink="web"
+            android:text="\@habitica"
+            android:textSize="@dimen/abc_text_size_title_material" />
+
+        <TextView
+            android:id="@+id/webSite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10sp"
+            android:autoLink="web"
+            android:text="www.habitica.com"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+
+        <TextView
+            android:id="@+id/wiki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10sp"
+            android:autoLink="web"
+            android:text="http://habitica.wikia.com/"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+
+        <Button
+            android:id="@+id/googlePlayStoreButton"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_marginTop="35sp"
+            android:background="@drawable/rounded_purple_square"
+            android:text="@string/about.rate_our_app"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+
+        <Button
+            android:id="@+id/reportBug"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20sp"
+
+            android:background="@drawable/rounded_purple_square"
+            android:text="@string/about.bugreport"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+
+        <Button
+            android:id="@+id/sendFeedback"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/rounded_purple_square"
+            android:text="@string/about.give_us_feedback"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+
+        <TextView
+            android:id="@+id/sourceCodeLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:layout_marginTop="20sp"
+            android:text="@string/about.habitica_open_source"
+            android:textSize="@dimen/abc_text_size_small_material" />
 
-            <ImageView
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_launcher" />
+        <Button
+            android:id="@+id/sourceCodeButton"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10sp"
+            android:background="@drawable/rounded_purple_square"
 
-            <TextView
-                android:id="@+id/twitter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10sp"
-                android:autoLink="web"
-                android:text="\@habitica"
-                android:textSize="@dimen/abc_text_size_title_material" />
+            android:text="@string/about.source_code"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/abc_text_size_medium_material" />
 
-            <TextView
-                android:id="@+id/webSite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10sp"
-                android:autoLink="web"
-                android:text="www.habitica.com"
-                android:textSize="@dimen/abc_text_size_medium_material" />
+        <TextView
+            android:id="@+id/versionInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30sp"
+            android:textSize="@dimen/abc_text_size_small_material" />
 
-            <TextView
-                android:id="@+id/wiki"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10sp"
-                android:autoLink="web"
-                android:text="http://habitica.wikia.com/"
-                android:textSize="@dimen/abc_text_size_medium_material" />
-
-            <Button
-                android:id="@+id/googlePlayStoreButton"
-                android:layout_width="250dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-
-                android:layout_marginTop="35sp"
-                android:background="@drawable/rounded_purple_square"
-                android:text="@string/about.rate_our_app"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/abc_text_size_medium_material" />
-
-            <Button
-                android:id="@+id/reportBug"
-                android:layout_width="250dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20sp"
-
-                android:background="@drawable/rounded_purple_square"
-                android:text="@string/about.bugreport"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/abc_text_size_medium_material" />
-
-            <Button
-                android:id="@+id/sendFeedback"
-                android:layout_width="250dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20sp"
-                android:background="@drawable/rounded_purple_square"
-                android:text="@string/about.give_us_feedback"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/abc_text_size_medium_material" />
-
-            <TextView
-                android:id="@+id/sourceCodeLink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="20sp"
-                android:text="@string/about.habitica_open_source"
-                android:textSize="@dimen/abc_text_size_small_material" />
-
-            <Button
-                android:id="@+id/sourceCodeButton"
-                android:layout_width="250dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10sp"
-                android:background="@drawable/rounded_purple_square"
-
-                android:text="@string/about.source_code"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/abc_text_size_medium_material" />
-
-            <TextView
-                android:id="@+id/versionInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="30sp"
-                android:textSize="@dimen/abc_text_size_small_material" />
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</layout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
