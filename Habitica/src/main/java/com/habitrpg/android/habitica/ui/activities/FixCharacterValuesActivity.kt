@@ -104,7 +104,7 @@ class FixCharacterValuesActivity: BaseActivity() {
                 levelEditText.setIconBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
             }
             Stats.ROGUE -> {
-                levelEditText.iconBackgroundColor = ContextCompat.getColor(this, R.color.red_500)
+                levelEditText.iconBackgroundColor = ContextCompat.getColor(this, R.color.brand_500)
                 levelEditText.setIconBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             }
         }
