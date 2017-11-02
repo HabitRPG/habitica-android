@@ -169,7 +169,7 @@ class StatsFragment: BaseMainFragment() {
                 val points = user?.stats?.points ?: 0
                 numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)
                 numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-                numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.pill_bg_gray_100)
+                numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.button_gray_100)
                 leftSparklesView.visibility = View.VISIBLE
                 rightSparklesView.visibility = View.VISIBLE
             } else {
