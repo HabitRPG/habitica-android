@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        xmlns:tools="http://schemas.android.com/tools"
@@ -32,21 +33,24 @@
         android:id="@+id/statsSeekBar"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:maxHeight="4dp"
+        android:minHeight="4dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
         android:textColor="@color/gray_100"
         android:textSize="16sp"/>
-    <EditText
+    <android.support.v7.widget.AppCompatEditText
         android:id="@+id/valueEditText"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         tools:text="0"
         android:gravity="center_horizontal"
         android:textColor="@color/gray_100"
-        style="@style/Body3"
+        style="@style/Body1"
+        app:backgroundTint="@color/gray_500"
         android:textSize="16sp"
         android:inputType="number"/>
 </merge>
