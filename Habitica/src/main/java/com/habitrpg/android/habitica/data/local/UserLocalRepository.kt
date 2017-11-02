@@ -20,7 +20,7 @@ interface UserLocalRepository : BaseLocalRepository {
 
     fun getSpecialItems(user: User): Observable<RealmResults<Skill>>
 
-    fun getInboxMessages(userId: String, replyToUserID: String): Observable<RealmResults<ChatMessage>>
+    fun getInboxMessages(userId: String, replyToUserID: String?): Observable<RealmResults<ChatMessage>>
 
     fun getInboxOverviewList(userId: String): Observable<RealmResults<ChatMessage>>
 }

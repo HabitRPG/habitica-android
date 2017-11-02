@@ -56,8 +56,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
         }
 
         // Build the intent to call the service
-        Intent intent = new Intent(context.getApplicationContext(),
-                HabitButtonWidgetService.class);
+        Intent intent = new Intent(context.getApplicationContext(), HabitButtonWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
 
         context.startService(intent);

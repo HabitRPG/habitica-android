@@ -79,7 +79,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter({ it.isLoaded })
     }
 
-    override fun getInboxMessages(userId: String, replyToUserID: String): Observable<RealmResults<ChatMessage>> {
+    override fun getInboxMessages(userId: String, replyToUserID: String?): Observable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
                 .equalTo("uuid", replyToUserID)
