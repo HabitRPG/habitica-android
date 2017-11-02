@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import kotlinx.android.synthetic.main.fragment_equipment_overview.*
 import rx.functions.Action1
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.HashMap
 
@@ -25,11 +24,11 @@ class EquipmentOverviewFragment : BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val v = inflater.inflate(R.layout.fragment_equipment_overview, container, false)
+        return inflater.inflate(R.layout.fragment_equipment_overview, container, false)
+    }
 
-        if (this.user == null || !this.user!!.isManaged) {
-            return v
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         battleGearHeadView.setOnClickListener { displayEquipmentDetailList("head", user?.items?.gear?.equipped?.head, false) }
         battleGearHeadAccessoryView.setOnClickListener { displayEquipmentDetailList("headAccessory", user?.items?.gear?.equipped?.headAccessory, false) }
@@ -49,6 +48,8 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         costumeWeaponView.setOnClickListener { displayEquipmentDetailList("weapon", user?.items?.gear?.costume?.weapon, true) }
         costumeShieldView.setOnClickListener { displayEquipmentDetailList("shield", user?.items?.gear?.costume?.shield, true) }
 
+        costumeSwitch.isSelected = user?.preferences?.costume ?: false
+
         costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
 
         setImageNames()
@@ -64,8 +65,6 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         } else {
             setEquipmentNames()
         }
-
-        return v
     }
 
     private fun setEquipmentNames() {
