@@ -27,9 +27,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.fragment_avatar_overview, container, false)
-
-        return view
+        return inflater.inflate(R.layout.fragment_avatar_overview, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,9 +40,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         avatarSizeSpinner.onItemSelectedListener = this
 
         avatarShirtView.setOnClickListener { displayCustomizationFragment("shirt", null) }
-
         avatarSkinView.setOnClickListener { displayCustomizationFragment("skin", null) }
-
         avatarHairColorView.setOnClickListener { displayCustomizationFragment("hair", "color") }
         avatarHairBangsView.setOnClickListener { displayCustomizationFragment("hair", "bangs") }
         avatarHairBaseView.setOnClickListener { displayCustomizationFragment("hair", "base") }
@@ -52,6 +48,29 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         avatarHairBeardView.setOnClickListener { displayCustomizationFragment("hair", "beard") }
         avatarHairMustacheView.setOnClickListener { displayCustomizationFragment("hair", "mustache") }
         avatarBackgroundView.setOnClickListener { displayCustomizationFragment("background", null) }
+
+        setCustomizations()
+    }
+
+    private fun setCustomizations() {
+        avatarShirtView.customizationIdentifier = user?.preferences?.size + "_shirt_" + user?.preferences?.shirt
+        avatarShirtView.equipmentName = user?.preferences?.shirt
+        avatarSkinView.customizationIdentifier = "skin_" + user?.preferences?.skin
+        avatarSkinView.equipmentName = user?.preferences?.skin
+        avatarHairColorView.customizationIdentifier = if (user?.preferences?.hair?.color != null && user?.preferences?.hair?.color != "") "hair_bangs_1_" + user?.preferences?.hair?.color else ""
+        avatarHairColorView.equipmentName = user?.preferences?.hair?.color
+        avatarHairBangsView.customizationIdentifier = if (user?.preferences?.hair?.bangs != null && user?.preferences?.hair?.bangs != 0) "hair_bangs_" + user?.preferences?.hair?.bangs + "_" + user?.preferences?.hair?.color else ""
+        avatarHairBangsView.equipmentName = user?.preferences?.hair?.bangs.toString()
+        avatarHairBaseView.customizationIdentifier = if (user?.preferences?.hair?.base != null && user?.preferences?.hair?.base != 0) "hair_base_" + user?.preferences?.hair?.base + "_" + user?.preferences?.hair?.color else ""
+        avatarHairBaseView.equipmentName = user?.preferences?.hair?.base.toString()
+        avatarHairFlowerView.customizationIdentifier = if (user?.preferences?.hair?.flower != null && user?.preferences?.hair?.flower != 0) "hair_flower_" + user?.preferences?.hair?.flower else ""
+        avatarHairFlowerView.equipmentName = user?.preferences?.hair?.bangs.toString()
+        avatarHairBeardView.customizationIdentifier = if (user?.preferences?.hair?.beard != null && user?.preferences?.hair?.beard != 0) "hair_beard_" + user?.preferences?.hair?.beard + "_" + user?.preferences?.hair?.color else ""
+        avatarHairBeardView.equipmentName = user?.preferences?.hair?.beard.toString()
+        avatarHairMustacheView.customizationIdentifier = if (user?.preferences?.hair?.mustache != null && user?.preferences?.hair?.mustache != 0) "hair_mustache_" + user?.preferences?.hair?.mustache + "_" + user?.preferences?.hair?.color else ""
+        avatarHairMustacheView.equipmentName = user?.preferences?.hair?.mustache.toString()
+        avatarBackgroundView.customizationIdentifier = "background_" + user?.preferences?.background
+        avatarBackgroundView.equipmentName = user?.preferences?.background
     }
 
     override fun injectFragment(component: AppComponent) {
