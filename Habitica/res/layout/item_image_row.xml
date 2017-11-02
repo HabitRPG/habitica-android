@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<merge
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/RowWrapper"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    tools:parentTag="android.widget.LinearLayout">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView"
         android:layout_width="@dimen/gear_image_size"
@@ -31,4 +32,4 @@
             tools:text="Value"
             style="@style/RowText"/>
     </LinearLayout>
-</LinearLayout>
+</merge>
