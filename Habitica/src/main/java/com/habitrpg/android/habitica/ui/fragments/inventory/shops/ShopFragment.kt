@@ -161,7 +161,7 @@ class ShopFragment : BaseFragment() {
         var spanCount = 0
         val context = context
         if (context != null && context.resources != null) {
-            val itemWidth: Float = context.resources.getDimension(R.dimen.pet_width)
+            val itemWidth: Float = context.resources.getDimension(R.dimen.reward_width)
 
             spanCount = (width / itemWidth).toInt()
         }
