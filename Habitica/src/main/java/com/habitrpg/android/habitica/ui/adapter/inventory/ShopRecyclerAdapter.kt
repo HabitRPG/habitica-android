@@ -10,7 +10,6 @@ import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -128,7 +127,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     val category = obj as ShopCategory
                     (holder as SectionViewHolder).bind((category).text)
                     if (gearCategories.contains(category)) {
-                        val adapter = ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_dropdown_item, gearCategories.map { it.identifier })
+                        val adapter = HabiticaClassArrayAdapter(context, R.layout.class_spinner_dropdown_item, gearCategories.map { it.identifier })
                         holder.spinnerAdapter = adapter
                         holder.selectedItem = gearCategories.indexOf(category)
                         holder.spinnerSelectionChanged = {
@@ -140,7 +139,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
                 ShopItem::class.java -> {
                     val item = obj as ShopItem
-                    (holder as ShopItemViewHolder).bind(item, item.canBuy(user))
+                    (holder as ShopItemViewHolder).bind(item, item.canAfford(user))
                     if (ownedItems.containsKey(item.key)) {
                         holder.itemCount = ownedItems[item.key]?.owned ?: 0
                     }
@@ -160,7 +159,11 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
         if (position <= getGearItemCount()) {
             return when {
-                position == 1 -> getSelectedShopCategory()
+                position == 1 -> {
+                    val category = getSelectedShopCategory()
+                    category?.text = context?.getString(R.string.class_equipment) ?: ""
+                    category
+                }
                 getSelectedShopCategory()?.items?.size ?: 0 <= position-2 -> return context?.getString(R.string.equipment_empty)
                 else -> getSelectedShopCategory()?.items?.get(position-2)
             }

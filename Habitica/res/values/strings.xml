@@ -714,4 +714,5 @@
     <string name="allocating_points">Allocating Points</string>
     <string name="class_equipment">Class Equipment</string>
     <string name="equipment_empty">You already have all equipment! More will be released during the Grand Galas, near the solstices and equinoxes.</string>
+    <string name="classless">Classless</string>
 </resources>

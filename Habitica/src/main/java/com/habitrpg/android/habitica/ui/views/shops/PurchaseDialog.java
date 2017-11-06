@@ -113,7 +113,7 @@ public class PurchaseDialog extends AlertDialog {
             limitedTextView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green_10));
         }
 
-        if (shopItem != null && !shopItem.canBuy(user)) {
+        if (shopItem != null && !shopItem.canAfford(user)) {
             priceLabel.setCantAfford(true);
         }
     }
@@ -207,7 +207,10 @@ public class PurchaseDialog extends AlertDialog {
     void onBuyButtonClicked() {
         final String[] snackbarText = {""};
         if (shopItem.isValid()) {
-            if (shopItem.canBuy(user)) {
+            if (shopItem.getLocked()) {
+                return;
+            }
+            if (shopItem.canAfford(user)) {
                 Observable<Void> observable;
                 if ((shopIdentifier != null && shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) || "mystery_set".equals(shopItem.getPurchaseType())) {
                     if (shopItem.getPurchaseType().equals("gear")) {
