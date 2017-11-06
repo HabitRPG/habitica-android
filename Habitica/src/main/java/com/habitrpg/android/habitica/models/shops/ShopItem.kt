@@ -53,12 +53,12 @@ open class ShopItem : RealmObject() {
         get() = "pets" == purchaseType || "mounts" == purchaseType
 
     fun canBuy(user: User?): Boolean {
-        if (user == null || user.stats == null) {
+        if (locked) {
             return false
         }
         return when(currency) {
-            "gold" -> value <= user.stats.getGp()
-            "gems" -> value <= user.balance * 4
+            "gold" -> value <= user?.stats?.getGp() ?: 0.0
+            "gems" -> value <= user?.balance ?: 0.0 * 4
             else -> false
         }
     }
