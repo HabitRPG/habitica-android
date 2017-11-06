@@ -11,24 +11,26 @@
         android:layout_marginTop="12dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp">
         <TextView
             android:id="@+id/label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
             tools:text="Section Header"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp" />
         <Spinner
             android:id="@+id/classSelectionSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_gravity="bottom"
+            tools:visibility="visible"
             />
     </LinearLayout>
 </LinearLayout>

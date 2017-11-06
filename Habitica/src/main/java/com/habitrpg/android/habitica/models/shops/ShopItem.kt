@@ -52,10 +52,7 @@ open class ShopItem : RealmObject() {
     val isTypeAnimal: Boolean
         get() = "pets" == purchaseType || "mounts" == purchaseType
 
-    fun canBuy(user: User?): Boolean {
-        if (locked) {
-            return false
-        }
+    fun canAfford(user: User?): Boolean {
         return when(currency) {
             "gold" -> value <= user?.stats?.getGp() ?: 0.0
             "gems" -> value <= user?.balance ?: 0.0 * 4
