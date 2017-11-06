@@ -52,12 +52,11 @@ open class ShopItem : RealmObject() {
     val isTypeAnimal: Boolean
         get() = "pets" == purchaseType || "mounts" == purchaseType
 
-    fun canAfford(user: User?): Boolean {
-        return when(currency) {
-            "gold" -> value <= user?.stats?.getGp() ?: 0.0
-            "gems" -> value <= user?.balance ?: 0.0 * 4
-            else -> false
-        }
+    fun canAfford(user: User?): Boolean = when(currency) {
+        "gold" -> value <= user?.stats?.getGp() ?: 0.0
+        "gems" -> value <= user?.balance ?: 0.0 * 4
+        "hourglasses" -> value <= user?.purchased?.plan?.consecutive?.trinkets ?: 0
+        else -> false
     }
 
     override fun equals(other: Any?): Boolean {
