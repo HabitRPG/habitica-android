@@ -134,7 +134,7 @@ class ShopFragment : BaseFragment() {
                     for (category in shop.categories) {
                         val items = category.items.filter({
                             !equipment.contains(it.key)
-                        })
+                        }).sortedBy { it.locked }
                         category.items.clear()
                         category.items.addAll(items)
                     }
