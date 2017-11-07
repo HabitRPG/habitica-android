@@ -715,4 +715,6 @@
     <string name="class_equipment">Class Equipment</string>
     <string name="equipment_empty">You already have all equipment! More will be released during the Grand Galas, near the solstices and equinoxes.</string>
     <string name="classless">Classless</string>
+    <string name="class_equipment_shop_dialog">This item is only available to a specific class.\nYou can change your class from Settings.</string>
+    <string name="class_gear_disclaimer">You can only purchase gear for your current class</string>
 </resources>

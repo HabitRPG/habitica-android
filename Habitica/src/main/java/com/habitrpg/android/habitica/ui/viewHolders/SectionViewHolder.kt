@@ -16,7 +16,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val label: TextView by bindView(itemView, R.id.label)
     private val purchaseSetButton: Button? by bindView(itemView, R.id.purchaseSetButton)
     private val selectionSpinner: Spinner? by bindView(itemView, R.id.classSelectionSpinner)
-
+    internal val notesView: TextView? by bindView(itemView, R.id.headerNotesView)
     var context: Context = itemView.context
 
     var spinnerSelectionChanged: (() -> Unit)? = null
@@ -31,7 +31,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 spinnerSelectionChanged?.invoke()
             }
-        };
+        }
 
     }
 

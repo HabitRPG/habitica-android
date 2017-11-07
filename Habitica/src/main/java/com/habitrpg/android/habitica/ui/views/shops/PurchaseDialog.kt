@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
@@ -96,6 +97,7 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
                 shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
                     inventoryRepository.getEquipment(shopItem.key).first().subscribe(Action1<Equipment> { contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
+                    checkGearClass()
                 }
                 "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
                 else -> contentView = PurchaseDialogBaseContent(context)
@@ -105,6 +107,18 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
 
             setScrollviewSize()
         }
+
+    private fun checkGearClass() {
+        val user = user ?: return
+
+        if (user.stats.habitClass != shopItem.habitClass) {
+            limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
+            limitedTextView.visibility = View.VISIBLE
+            limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_100))
+        } else {
+            limitedTextView.visibility = View.GONE
+        }
+    }
 
     private val compositeSubscription: CompositeSubscription = CompositeSubscription()
     var shopIdentifier: String? = null
@@ -157,6 +171,8 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
         if (!shopItem.canAfford(user)) {
             priceLabel.cantAfford = true
         }
+
+        checkGearClass()
     }
 
     override fun dismiss() {
@@ -238,6 +254,10 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
                                 if (error.code() == 401 && shopItem.currency == "gems") {
                                     EventBus.getDefault().post(OpenGemPurchaseFragmentCommand())
                                 }
+                            }
+
+                            if (item.isTypeGear) {
+                                EventBus.getDefault().post(GearPurchasedEvent(item))
                             }
                         }
             } else {

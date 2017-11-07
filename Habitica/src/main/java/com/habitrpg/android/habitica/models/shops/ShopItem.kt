@@ -39,6 +39,8 @@ open class ShopItem : RealmObject() {
     var path: String? = null
     var isSuggested: String? = null
     var pinType: String? = null
+    @SerializedName("klass")
+    var habitClass: String? = null
 
     val isTypeItem: Boolean
         get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType

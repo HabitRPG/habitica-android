@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.events.ShopItemPurchasedEvent
+import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -38,6 +38,8 @@ class ShopFragment : BaseFragment() {
     lateinit var configManager: RemoteConfigManager
 
     private var layoutManager: GridLayoutManager? = null
+
+    private var gearCategories: MutableList<ShopCategory>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -80,11 +82,22 @@ class ShopFragment : BaseFragment() {
             this.shopIdentifier = savedInstanceState.getString(SHOP_IDENTIFIER_KEY, "")
         }
 
+        adapter?.selectedGearCategory = user?.stats?.habitClass ?: ""
+
         if (shop == null) {
             loadShopInventory()
         } else {
             adapter?.setShop(shop, configManager.shopSpriteSuffix())
         }
+        val categories = gearCategories
+        if (categories != null) {
+            adapter?.gearCategories = categories
+        } else {
+            if (Shop.MARKET == shopIdentifier) {
+                loadMarketGear()
+            }
+        }
+
         adapter?.user = user
 
         view.post { setGridSpanCount(view.width) }
@@ -115,9 +128,6 @@ class ShopFragment : BaseFragment() {
                 }
                 .subscribe(Action1 {
                     this.shop = it
-                    if (Shop.MARKET == shopIdentifier) {
-                        loadMarketGear()
-                    }
                     this.adapter?.setShop(it, configManager.shopSpriteSuffix())
                 }, RxErrorHandler.handleEmptyError())
 
@@ -143,7 +153,7 @@ class ShopFragment : BaseFragment() {
                     shop
                 })
                 .subscribe(Action1 {
-                    adapter?.selectedGearCategory = user?.stats?.habitClass ?: ""
+                    this.gearCategories = it.categories
                     adapter?.gearCategories = it.categories
                 }, RxErrorHandler.handleEmptyError())
     }
@@ -177,7 +187,7 @@ class ShopFragment : BaseFragment() {
     }
 
     @Subscribe
-    fun onItemPurchased(event: ShopItemPurchasedEvent) {
+    fun onItemPurchased(event: GearPurchasedEvent) {
         loadShopInventory()
     }
 
