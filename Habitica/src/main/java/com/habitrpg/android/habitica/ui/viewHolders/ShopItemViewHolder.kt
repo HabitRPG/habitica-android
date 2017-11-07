@@ -86,10 +86,13 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     }
 
     override fun onClick(view: View) {
-        val dialog = PurchaseDialog(context, HabiticaBaseApplication.getComponent(), item)
-        dialog.shopIdentifier = shopIdentifier
-        dialog.setIsPinned(isPinned)
-        dialog.show()
+        val item = item
+        if (item != null) {
+            val dialog = PurchaseDialog(context, HabiticaBaseApplication.getComponent(), item)
+            dialog.shopIdentifier = shopIdentifier
+            dialog.isPinned = isPinned
+            dialog.show()
+        }
     }
 
     fun hidePinIndicator() {

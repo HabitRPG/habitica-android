@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.events.ShopItemPurchasedEvent
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -19,6 +20,7 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import org.greenrobot.eventbus.Subscribe
 import rx.functions.Action1
 import javax.inject.Inject
 
@@ -172,6 +174,11 @@ class ShopFragment : BaseFragment() {
 
     companion object {
         private const val SHOP_IDENTIFIER_KEY = "SHOP_IDENTIFIER_KEY"
+    }
+
+    @Subscribe
+    fun onItemPurchased(event: ShopItemPurchasedEvent) {
+        loadShopInventory()
     }
 
 }
