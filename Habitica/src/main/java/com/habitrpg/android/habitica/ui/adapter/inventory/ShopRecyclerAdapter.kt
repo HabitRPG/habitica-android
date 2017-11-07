@@ -135,6 +135,12 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                                 selectedGearCategory = gearCategories[holder.selectedItem].identifier
                             }
                         }
+                        if (user?.stats?.habitClass != category.identifier) {
+                            holder.notesView?.text = context?.getString(R.string.class_gear_disclaimer)
+                            holder.notesView?.visibility = View.VISIBLE
+                        } else {
+                            holder.notesView?.visibility = View.GONE
+                        }
                     }
                 }
                 ShopItem::class.java -> {
