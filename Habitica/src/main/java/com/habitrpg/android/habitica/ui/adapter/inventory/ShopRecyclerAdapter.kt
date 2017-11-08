@@ -141,6 +141,8 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         } else {
                             holder.notesView?.visibility = View.GONE
                         }
+                    } else {
+                        holder.spinnerAdapter = null
                     }
                 }
                 ShopItem::class.java -> {
