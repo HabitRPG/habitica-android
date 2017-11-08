@@ -148,8 +148,8 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 ShopItem::class.java -> {
                     val item = obj as ShopItem
                     (holder as ShopItemViewHolder).bind(item, item.canAfford(user))
-                    if (ownedItems.containsKey(item.key)) {
-                        holder.itemCount = ownedItems[item.key]?.owned ?: 0
+                    if (ownedItems.containsKey(item.key+"-"+item.pinType)) {
+                        holder.itemCount = ownedItems[item.key+"-"+item.pinType]?.owned ?: 0
                     }
                     holder.isPinned = pinnedItemKeys.contains(item.key)
                 }
