@@ -477,24 +477,29 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     drawer.removeItem(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
                 }
             } else {
-                IDrawerItem newItem;
+                PrimaryDrawerItem newItem = new PrimaryDrawerItem()
+                        .withName(this.getString(R.string.sidebar_skills))
+                        .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
                 if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
-                    newItem = new PrimaryDrawerItem()
-                            .withName(this.getString(R.string.sidebar_skills))
-                            .withEnabled(false)
-                            .withBadge(this.getString(R.string.unlock_lvl_11))
-                            .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
-                } else {
-                    newItem = new PrimaryDrawerItem()
-                            .withName(this.getString(R.string.sidebar_skills))
-                            .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
+                    newItem = newItem.withEnabled(false).withBadge(this.getString(R.string.unlock_lvl_11));
                 }
                 if (item == null) {
                     drawer.addItemAtPosition(newItem, 1);
                 } else {
                     drawer.updateItem(newItem);
-
                 }
+            }
+            IDrawerItem statsItem = drawer.getDrawerItem(MainDrawerBuilder.INSTANCE.getSIDEBAR_STATS());
+            PrimaryDrawerItem newStatsItem = new PrimaryDrawerItem()
+                    .withName(this.getString(R.string.sidebar_skills))
+                    .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
+            if (user.getStats() != null && user.getStats().lvl >= 0 && user.getStats().points > 0) {
+                newStatsItem = newStatsItem.withBadge(this.getString(R.string.available_stats, user.getStats().points));
+            }
+            if (statsItem == null) {
+                drawer.addItemAtPosition(newStatsItem, 2);
+            } else {
+                drawer.updateItem(newStatsItem);
             }
         }
     }
