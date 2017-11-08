@@ -160,7 +160,14 @@ class StatsFragment: BaseMainFragment() {
         distributeClassButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         distributeTaskButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
 
-        val canDistributePoints =0 < (user?.stats?.points ?: 0)
+        val canDistributePoints = 0 < (user?.stats?.points ?: 0) && 10 <= (user?.stats?.lvl ?: 0)
+        if (10 <= (user?.stats?.lvl ?: 0)) {
+            automaticAllocationSwitch.visibility = View.VISIBLE
+            automaticAllocationSwitch.visibility = View.VISIBLE
+        } else {
+            automaticAllocationSwitch.visibility = View.GONE
+            automaticAllocationSwitch.visibility = View.GONE
+        }
         strengthStatsView.canDistributePoints = canDistributePoints
         intelligenceStatsView.canDistributePoints = canDistributePoints
         constitutionStatsView.canDistributePoints = canDistributePoints
