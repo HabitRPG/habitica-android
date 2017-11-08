@@ -120,16 +120,16 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
                 (Func4<RealmResults<? extends Item>, RealmResults<? extends Item>, RealmResults<? extends Item>, RealmResults<? extends Item>, Map<String, Item>>) (eggs, hatchingPotions, food, quests) -> {
                     Map<String, Item> items = new HashMap<>();
                     for (Item item : eggs) {
-                        items.put(item.getKey(), item);
+                        items.put(item.getKey()+"-"+item.getType(), item);
                     }
                     for (Item item : hatchingPotions) {
-                        items.put(item.getKey(), item);
+                        items.put(item.getKey()+"-"+item.getType(), item);
                     }
                     for (Item item : food) {
-                        items.put(item.getKey(), item);
+                        items.put(item.getKey()+"-"+item.getType(), item);
                     }
                     for (Item item : quests) {
-                        items.put(item.getKey(), item);
+                        items.put(item.getKey()+"-"+item.getType(), item);
                     }
                     return items;
                 }
