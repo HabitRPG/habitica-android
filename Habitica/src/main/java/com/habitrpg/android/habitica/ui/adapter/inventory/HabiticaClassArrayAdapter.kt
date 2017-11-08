@@ -16,11 +16,12 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 class HabiticaClassArrayAdapter(context: Context?, resource: Int, objects: List<CharSequence>?) : ArrayAdapter<CharSequence>(context, resource, R.id.textView, objects) {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View =
-            getView(position, convertView, parent)
+            createView(position, convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item, false))
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val row = convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item, false)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View =
+            createView(position, convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item_selected, false))
 
+    private fun createView(position: Int, row: View?): View {
         val textView: TextView? = row?.findViewById(R.id.textView)
         val imageView: ImageView? = row?.findViewById(R.id.classIconView)
 
@@ -51,8 +52,6 @@ class HabiticaClassArrayAdapter(context: Context?, resource: Int, objects: List<
                 imageView?.setImageBitmap(null)
             }
         }
-
-
         return row ?: View(context)
     }
 
