@@ -21,6 +21,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)
     private val buyButton: View by bindView(itemView, R.id.buyButton)
     private val priceLabel: CurrencyView by bindView(itemView, R.id.priceLabel)
+    private val unlockLabel: TextView by bindView(itemView, R.id.unlockLabel)
     private val itemDetailIndicator: TextView by bindView(itemView, R.id.item_detail_indicator)
     private val pinIndicator: ImageView by bindView(itemView, R.id.pin_indicator)
 
@@ -67,8 +68,12 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             if (item.currency == null) {
                 buyButton.visibility = View.GONE
             }
+            priceLabel.visibility = View.VISIBLE
+            unlockLabel.visibility = View.GONE
         } else {
-            priceLabel.setText(item.unlockCondition!!.readableUnlockConditionId())
+            unlockLabel.setText(item.unlockCondition!!.readableUnlockConditionId())
+            priceLabel.visibility = View.GONE
+            unlockLabel.visibility = View.VISIBLE
         }
 
         itemDetailIndicator.text = null
