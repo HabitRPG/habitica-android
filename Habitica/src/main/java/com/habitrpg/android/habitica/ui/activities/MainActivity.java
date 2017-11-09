@@ -24,6 +24,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
@@ -91,6 +92,7 @@ import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
@@ -131,7 +133,7 @@ import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LE
 import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
-public class MainActivity extends BaseActivity implements TutorialView.OnTutorialReaction {
+public class MainActivity extends BaseActivity implements TutorialView.OnTutorialReaction, NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public static final int SELECT_CLASS_RESULT = 11;
     public static final int GEM_PURCHASE_REQUEST = 111;
@@ -259,9 +261,10 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
         accountHeader = MainDrawerBuilder.INSTANCE.createDefaultAccountHeader(this).build();
-        drawer = MainDrawerBuilder.INSTANCE.createDefaultBuilderSettings(this, sharedPreferences, toolbar, accountHeader)
-                .build();
-        drawer.setSelectionAtPosition(1, false);
+        //drawer = MainDrawerBuilder.INSTANCE.createDefaultBuilderSettings(this, sharedPreferences, toolbar, accountHeader)
+        //        .build();
+        //drawer.setSelectionAtPosition(1, false);
+
         sideAvatarView = new AvatarView(this, true, false, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -281,6 +284,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     MainActivity.this.setUserData();
                 }, RxErrorHandler.handleEmptyError());
 
+        NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     public int getStatusBarHeight() {
@@ -993,5 +998,10 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     final AlertDialog dialog = builder.create();
                     dialog.show();
                 }, RxErrorHandler.handleEmptyError());
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white"
+          android:choiceMode="singleChoice"
+          android:dividerHeight="0dp"
+          android:fitsSystemWindows="true"
+          tools:context="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment"/>
