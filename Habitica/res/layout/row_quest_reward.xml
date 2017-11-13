@@ -12,7 +12,8 @@
         android:layout_width="@dimen/shopitem_image_size"
         android:layout_height="@dimen/shopitem_image_size"
         android:layout_marginRight="8dp"
-        app:actualImageScaleType="center"/>
+        android:scaleType="center"
+        app:actualImageScaleType="fitCenter"/>
 
     <TextView
         android:id="@+id/titleTextView"
