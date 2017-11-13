@@ -368,7 +368,7 @@
     <string name="dialog_go_back">Go Back</string>
     <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
     <string name="change_class">Change your class</string>
-    <string name="change_class_description">Change your class and refund your attribute points for 3 gems.</string>
+    <string name="change_class_description">Change your class and refund your stat points for 3 gems.</string>
     <string name="enable_class">Enable Class System</string>
     <string name="changing_class_progress">Changing Class</string>
     <string name="by_email">By Email</string>
