@@ -1,19 +1,14 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.app.ProgressDialog
-import android.app.Service
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
-import android.support.v7.preference.EditTextPreference
 import android.support.v7.preference.Preference
-import android.support.v7.preference.PreferenceCategory
-import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -22,12 +17,10 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.helpers.QrCodeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import org.greenrobot.eventbus.EventBus
-import rx.Observable
 import rx.functions.Action1
 
 class AuthenticationPreferenceFragment: BasePreferencesFragment() {

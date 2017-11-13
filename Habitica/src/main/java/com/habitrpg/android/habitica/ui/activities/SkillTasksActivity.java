@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
-import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 
 import javax.inject.Inject;

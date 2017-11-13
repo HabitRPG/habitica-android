@@ -15,8 +15,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.models.SetupCustomization;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Preferences;
+import com.habitrpg.android.habitica.models.user.User;
 
 import org.greenrobot.eventbus.EventBus;
 

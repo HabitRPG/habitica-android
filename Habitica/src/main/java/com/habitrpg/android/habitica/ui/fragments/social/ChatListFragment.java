@@ -41,8 +41,8 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.realm.RealmResults;
 
-import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
 public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 

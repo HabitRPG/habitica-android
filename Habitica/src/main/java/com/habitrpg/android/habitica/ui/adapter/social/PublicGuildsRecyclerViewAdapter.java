@@ -19,16 +19,13 @@ import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Case;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
-import io.realm.RealmResults;
 
 public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Group, PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable {
 

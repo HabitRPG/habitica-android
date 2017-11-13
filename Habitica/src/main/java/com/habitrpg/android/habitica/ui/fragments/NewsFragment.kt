@@ -5,18 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
-
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.inflate
-
 import kotlinx.android.synthetic.main.fragment_news.*
-import android.webkit.ConsoleMessage
-import android.webkit.WebSettings
-
-
 
 
 class NewsFragment : BaseMainFragment() {

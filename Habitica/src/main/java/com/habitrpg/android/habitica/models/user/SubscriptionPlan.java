@@ -3,10 +3,8 @@ package com.habitrpg.android.habitica.models.user;
 import android.support.annotation.Nullable;
 
 import java.util.Date;
-import java.util.List;
 
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class SubscriptionPlan extends RealmObject {

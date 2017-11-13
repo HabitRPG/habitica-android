@@ -3,22 +3,17 @@ package com.habitrpg.android.habitica.helpers
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
-
 import com.habitrpg.android.habitica.HabiticaApplication
-
-import java.io.File
-import java.io.IOException
-import java.util.ArrayList
-
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import okio.BufferedSink
 import okio.Okio
 import rx.Observable
 import rx.exceptions.OnErrorThrowable
-import rx.functions.Func1
 import rx.schedulers.Schedulers
+import java.io.File
+import java.io.IOException
+import java.util.*
 
 // based on http://stackoverflow.com/questions/29838565/downloading-files-using-okhttp-okio-and-rxjava
 class SoundFileLoader(private val context: Context) {

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
-import com.habitrpg.android.habitica.models.user.Flags;
 import com.habitrpg.android.habitica.models.user.Inbox;
 import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Profile;

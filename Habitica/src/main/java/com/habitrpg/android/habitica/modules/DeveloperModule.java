@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.modules;
 
 
+import android.content.Context;
+
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
-
-import android.content.Context;
 
 import javax.inject.Singleton;
 

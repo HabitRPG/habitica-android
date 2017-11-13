@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.tasks.Task;
@@ -17,9 +15,7 @@ import io.realm.OrderedCollectionChangeSet;
 import io.realm.OrderedRealmCollection;
 import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.RealmList;
-import io.realm.RealmModel;
 import io.realm.RealmQuery;
-import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 
 public abstract class RealmBaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder> extends RecyclerView.Adapter<VH> implements TaskRecyclerViewAdapter {

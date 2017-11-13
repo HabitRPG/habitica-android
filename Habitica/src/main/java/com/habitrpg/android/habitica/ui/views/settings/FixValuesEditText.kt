@@ -1,22 +1,15 @@
 package com.habitrpg.android.habitica.ui.views.settings
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
-import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-
-import com.habitrpg.android.habitica.R
-
-import butterknife.BindView
 import butterknife.ButterKnife
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import kotlinx.android.synthetic.main.fixvalues_edittext.view.*
 

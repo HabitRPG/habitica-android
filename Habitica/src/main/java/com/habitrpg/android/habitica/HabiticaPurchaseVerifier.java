@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.common.api.Response;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;

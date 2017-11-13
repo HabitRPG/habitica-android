@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 

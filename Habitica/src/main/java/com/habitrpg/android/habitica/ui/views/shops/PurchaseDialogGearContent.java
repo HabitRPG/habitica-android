@@ -4,13 +4,11 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
-import com.habitrpg.android.habitica.models.user.Gear;
 
 import butterknife.BindView;
 

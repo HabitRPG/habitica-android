@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.events;
 
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 

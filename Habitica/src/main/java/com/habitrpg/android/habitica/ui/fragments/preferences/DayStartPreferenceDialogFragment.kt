@@ -10,13 +10,10 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TimePicker
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.prefs.TimePreference
-
 import java.text.DateFormat
-import java.util.Calendar
-import java.util.GregorianCalendar
+import java.util.*
 
 class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 

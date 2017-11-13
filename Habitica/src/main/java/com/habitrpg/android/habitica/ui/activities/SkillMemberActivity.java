@@ -13,8 +13,6 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 
-import org.greenrobot.eventbus.EventBus;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;

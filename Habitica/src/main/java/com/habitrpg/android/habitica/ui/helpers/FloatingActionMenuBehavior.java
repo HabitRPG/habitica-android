@@ -2,9 +2,6 @@ package com.habitrpg.android.habitica.ui.helpers;
 
 // https://gist.github.com/lodlock/e3cd12130bad70a098db
 
-import com.github.clans.fab.FloatingActionMenu;
-import com.habitrpg.android.habitica.R;
-
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,8 +10,9 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+
+import com.github.clans.fab.FloatingActionMenu;
+import com.habitrpg.android.habitica.R;
 
 import java.util.List;
 

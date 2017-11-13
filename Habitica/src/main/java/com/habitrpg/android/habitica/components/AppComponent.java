@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.components;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseInstanceIDService;
 import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseMessagingService;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
@@ -14,6 +12,7 @@ import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.modules.DeveloperModule;
 import com.habitrpg.android.habitica.modules.RepositoryModule;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
+import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;

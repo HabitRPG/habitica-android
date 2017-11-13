@@ -2,11 +2,9 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository

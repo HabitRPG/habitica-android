@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import kotlinx.android.synthetic.main.fragment_equipment_overview.*
 import rx.functions.Action1
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 class EquipmentOverviewFragment : BaseMainFragment() {
 

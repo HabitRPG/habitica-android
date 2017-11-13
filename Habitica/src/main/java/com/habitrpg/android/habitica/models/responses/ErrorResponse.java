@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models.responses;
 
-import com.habitrpg.android.habitica.models.responses.HabiticaError;
-
 import java.util.List;
 
 public class ErrorResponse {

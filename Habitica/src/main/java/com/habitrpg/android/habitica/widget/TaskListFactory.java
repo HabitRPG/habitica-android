@@ -1,5 +1,14 @@
 package com.habitrpg.android.habitica.widget;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
+import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
+
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.TaskRepository;
@@ -11,15 +20,6 @@ import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import net.pherth.android.emoji_library.EmojiHandler;
 
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Handler;
-import android.text.SpannableStringBuilder;
-import android.text.style.DynamicDrawableSpan;
-import android.widget.RemoteViews;
-import android.widget.RemoteViewsService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,6 @@ import javax.inject.Named;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsFactory {
     private final int widgetId;

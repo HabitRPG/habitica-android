@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 
 public class MaxHeightLinearLayout extends LinearLayout {
