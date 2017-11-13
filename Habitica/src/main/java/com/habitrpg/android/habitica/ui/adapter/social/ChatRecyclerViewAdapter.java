@@ -91,7 +91,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
         return deleteMessageEvents.asObservable();
     }
 
-    public Observable<ChatMessage> getFlatMessageEvents() {
+    public Observable<ChatMessage> getFlagMessageEvents() {
         return flatMessageEvents.asObservable();
     }
 

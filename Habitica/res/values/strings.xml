@@ -394,7 +394,7 @@
     <string name="market">Market</string>
     <string name="timeTravelers">Time Travelers</string>
     <string name="seasonalShop">Seasonal Shop</string>
-    <string name="empty_inbox">You don\'t have any Inbox messages. You can send a user a new message from their public chat messages!</string>
+    <string name="empty_inbox">You don\'t have any messages. You can send a user a new message from their public chat messages!</string>
     <string name="party_invite">Unlock by inviting friends</string>
     <string name="login_incentive">Unlock by logging into Habitica regularly</string>
     <string name="create_account">Unlock by creating an account</string>
@@ -529,7 +529,7 @@
     <string name="warning">Warning</string>
     <string name="open_settings">Open Settings</string>
     <string name="dont_keep_activities_warning">It seems like you have the Developer option \“Don\'t keep Activities\” active. Currently this option causes issues with the habitica app, so we suggest disabling it.</string>
-    <string name="inbox">Inbox</string>
+    <string name="inbox">Messages</string>
     <string name="FAQ">Frequently Asked Questions</string>
     <string name="special">Special</string>
     <string name="gem_for_gold_description">Because you subscribe to Habitica, you can purchase a number of Gems each month using Gold.</string>

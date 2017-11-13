@@ -56,13 +56,13 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     RecyclerView recyclerView;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.emoji_button)
+    @BindView(R.id.emojiButton)
     ImageButton emojiButton;
-    @BindView(R.id.chat_edit_text)
+    @BindView(R.id.chatEditText)
     EditText chatEditText;
-    @BindView(R.id.send_button)
+    @BindView(R.id.sendButton)
     ImageButton sendButton;
-    @BindView(R.id.community_guidelines_view)
+    @BindView(R.id.communityGuidelinesView)
     TextView communityGuidelinesView;
     LinearLayoutManager layoutManager;
     private String groupId;
@@ -144,7 +144,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         chatAdapter = new ChatRecyclerViewAdapter(null, true, user, true);
         compositeSubscription.add(chatAdapter.getUserLabelClickEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
         compositeSubscription.add(chatAdapter.getDeleteMessageEvents().subscribe(this::showDeleteConfirmationDialog, RxErrorHandler.handleEmptyError()));
-        compositeSubscription.add(chatAdapter.getFlatMessageEvents().subscribe(this::showFlagConfirmationDialog, RxErrorHandler.handleEmptyError()));
+        compositeSubscription.add(chatAdapter.getFlagMessageEvents().subscribe(this::showFlagConfirmationDialog, RxErrorHandler.handleEmptyError()));
         compositeSubscription.add(chatAdapter.getCopyMessageAsTodoEvents().subscribe(this::copyMessageAsTodo, RxErrorHandler.handleEmptyError()));
         compositeSubscription.add(chatAdapter.getCopyMessageEvents().subscribe(this::copyMessageToClipboard, RxErrorHandler.handleEmptyError()));
         compositeSubscription.add(chatAdapter.getLikeMessageEvents().flatMap(socialRepository::likeMessage).subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError()));
@@ -253,7 +253,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         markMessagesAsSeen();
     }
 
-    @OnTextChanged(R.id.chat_edit_text)
+    @OnTextChanged(R.id.chatEditText)
     public void onChatMessageTextChanged() {
         Editable chatText = chatEditText.getText();
         setSendButtonEnabled(chatText.length() > 0);
@@ -270,7 +270,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         sendButton.setColorFilter(tintColor);
     }
 
-    @OnClick(R.id.send_button)
+    @OnClick(R.id.sendButton)
     public void sendChatMessage() {
         String chatText = chatEditText.getText().toString();
         if (chatText.length() > 0) {
@@ -283,7 +283,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
     }
 
-    @OnClick(R.id.emoji_button)
+    @OnClick(R.id.emojiButton)
     public void openEmojiView() {
 
     }
