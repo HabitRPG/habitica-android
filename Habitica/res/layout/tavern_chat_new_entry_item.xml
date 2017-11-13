@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:id="@+id/chat_bar_container"
+        android:id="@+id/chatBarContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -14,7 +14,7 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/emoji_button"
+                android:id="@+id/emojiButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_emoticon_grey600_24dp"
@@ -25,7 +25,7 @@
                 android:layout_gravity="center"/>
 
                 <net.pherth.android.emoji_library.EmojiEditText
-                    android:id="@+id/chat_edit_text"
+                    android:id="@+id/chatEditText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -33,10 +33,8 @@
                     android:hint="@string/write_message"
                     android:textColor="@android:color/black"
                     android:inputType="textCapSentences|textMultiLine" />
-
-
             <ImageButton
-                android:id="@+id/send_button"
+                android:id="@+id/sendButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
@@ -45,7 +43,7 @@
                 android:src="@drawable/ic_send_grey_600_24dp"/>
         </LinearLayout>
         <TextView
-            android:id="@+id/community_guidelines_view"
+            android:id="@+id/communityGuidelinesView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/read_community_guidelines"

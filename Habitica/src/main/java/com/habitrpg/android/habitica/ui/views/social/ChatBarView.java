@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 
 public class ChatBarView extends FrameLayout {
 
-    @BindView(R.id.chat_bar_container)
+    @BindView(R.id.chatBarContainer)
     LinearLayout chatBarContainer;
 
     private boolean navBarAccountedHeightCalculated = false;
