@@ -712,7 +712,7 @@
     <string name="distribute_class_help">Assigns more points to the attributes important to your Class.</string>
     <string name="distribute_task_help">Assigns points based on the Strength, Intelligence, Constitution, and Perception categories associated with the tasks you complete.</string>
     <string name="allocating_points">Allocating Points</string>
-    <string name="class_equipment">Class Equipment</string>
+    <string name="class_equipment">Equipment</string>
     <string name="equipment_empty">You already have all equipment! More will be released during the Grand Galas, near the solstices and equinoxes.</string>
     <string name="classless">Classless</string>
     <string name="class_equipment_shop_dialog">This item is only available to a specific class.\nYou can change your class from Settings.</string>
