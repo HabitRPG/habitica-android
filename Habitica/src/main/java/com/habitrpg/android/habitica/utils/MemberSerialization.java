@@ -10,10 +10,8 @@ import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.members.MemberPreferences;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
-import com.habitrpg.android.habitica.models.user.Flags;
 import com.habitrpg.android.habitica.models.user.Inbox;
 import com.habitrpg.android.habitica.models.user.Outfit;
-import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.Profile;
 import com.habitrpg.android.habitica.models.user.Stats;
 

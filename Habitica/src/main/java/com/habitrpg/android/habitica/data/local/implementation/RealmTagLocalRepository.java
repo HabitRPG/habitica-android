@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.List;
 

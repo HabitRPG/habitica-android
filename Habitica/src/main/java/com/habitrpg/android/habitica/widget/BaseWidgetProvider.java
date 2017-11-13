@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.text.SpannableStringBuilder;
-import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -16,7 +15,6 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import javax.inject.Inject;

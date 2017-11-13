@@ -26,7 +26,6 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
@@ -61,8 +60,8 @@ import butterknife.BindView;
 import io.realm.RealmResults;
 import rx.Observable;
 
-import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
+import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
 public class FullProfileActivity extends BaseActivity {
     @Inject

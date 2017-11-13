@@ -3,15 +3,12 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.preference.Preference
 import android.widget.Toast
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.helpers.QrCodeManager
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class APIPreferenceFragment: BasePreferencesFragment() {

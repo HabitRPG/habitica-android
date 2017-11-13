@@ -1,21 +1,15 @@
 package com.habitrpg.android.habitica.data
 
-import com.google.android.gms.tasks.Tasks
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TaskTag
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.User
-
-import java.util.Date
-
 import io.realm.Realm
 import io.realm.RealmResults
 import rx.Observable
+import java.util.*
 
 interface TaskRepository : BaseRepository {
     fun getTasks(taskType: String, userID: String): Observable<RealmResults<Task>>

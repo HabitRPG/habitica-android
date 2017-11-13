@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.utils;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -13,7 +12,6 @@ import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.User;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -21,7 +19,6 @@ import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmResults;
 
 public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializer<Group> {
     @Override

@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.login;
 
 
-import com.habitrpg.android.habitica.R;
-
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -11,11 +9,11 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.habitrpg.android.habitica.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

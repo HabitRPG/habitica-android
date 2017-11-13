@@ -36,7 +36,6 @@ import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Sort;
 
 public class InboxFragment extends BaseMainFragment
         implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {

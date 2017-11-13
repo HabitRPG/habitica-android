@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
@@ -11,7 +9,6 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.LinearLayout
 import android.widget.TextView
-
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 

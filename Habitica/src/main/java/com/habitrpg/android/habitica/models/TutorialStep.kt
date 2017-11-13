@@ -1,11 +1,8 @@
 package com.habitrpg.android.habitica.models
 
-import com.habitrpg.android.habitica.models.user.Flags
-
-import java.util.Date
-
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 open class TutorialStep : RealmObject() {
 

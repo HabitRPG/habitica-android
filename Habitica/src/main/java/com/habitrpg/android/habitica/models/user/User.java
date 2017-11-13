@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models.user;
 
-import android.text.TextUtils;
-
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.PushDevice;
@@ -11,11 +9,8 @@ import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
-import com.habitrpg.android.habitica.ui.AvatarView;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.EnumMap;
 import java.util.List;
 
 import io.realm.RealmList;

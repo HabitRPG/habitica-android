@@ -17,8 +17,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;

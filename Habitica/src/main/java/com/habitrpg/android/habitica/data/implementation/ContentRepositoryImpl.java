@@ -2,15 +2,10 @@ package com.habitrpg.android.habitica.data.implementation;
 
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.ContentRepository;
-import com.habitrpg.android.habitica.data.local.BaseLocalRepository;
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository;
 import com.habitrpg.android.habitica.models.ContentResult;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 

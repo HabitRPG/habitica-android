@@ -7,10 +7,8 @@ import android.support.v7.preference.PreferenceDialogFragmentCompat
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.View
 import android.widget.TimePicker
-
 import com.habitrpg.android.habitica.prefs.TimePreference
-
-import java.util.Locale
+import java.util.*
 
 class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 

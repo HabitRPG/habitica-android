@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.helpers;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;

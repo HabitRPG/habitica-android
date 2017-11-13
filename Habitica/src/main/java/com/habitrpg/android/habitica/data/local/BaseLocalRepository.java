@@ -1,13 +1,7 @@
 package com.habitrpg.android.habitica.data.local;
 
-import com.habitrpg.android.habitica.models.ContentResult;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.User;
-
 import java.util.List;
 
-import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmObject;
 

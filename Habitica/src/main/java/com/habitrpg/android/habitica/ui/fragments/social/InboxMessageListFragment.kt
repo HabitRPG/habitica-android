@@ -11,7 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import butterknife.ButterKnife
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -26,18 +26,13 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.UiUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-
-import org.greenrobot.eventbus.Subscribe
-
-import javax.inject.Inject
-
-import butterknife.ButterKnife
-
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar
 import kotlinx.android.synthetic.main.fragment_inbox_message_list.*
 import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
+import org.greenrobot.eventbus.Subscribe
 import rx.functions.Action0
 import rx.functions.Action1
+import javax.inject.Inject
 
 class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener {
 
