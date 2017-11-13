@@ -15,9 +15,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * Created by viirus on 21/01/16.
- */
 public class DateDeserializer implements JsonDeserializer<Date>, JsonSerializer<Date> {
 
     private final DateFormat dateFormat;

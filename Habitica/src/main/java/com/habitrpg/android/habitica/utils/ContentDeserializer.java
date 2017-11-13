@@ -48,31 +48,19 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         //result.armoire.currency = "gold";
         result.gear = context.deserialize(object.get("gear"), ContentGear.class);
 
-        result.quests = context.deserialize(object.get("quests"), new TypeToken<RealmList<QuestContent>>() {
-        }.getType());
-        result.eggs = context.deserialize(object.get("eggs"), new TypeToken<RealmList<Egg>>() {
-        }.getType());
-        result.food = context.deserialize(object.get("food"), new TypeToken<RealmList<Food>>() {
-        }.getType());
-        result.hatchingPotions = context.deserialize(object.get("hatchingPotions"), new TypeToken<RealmList<HatchingPotion>>() {
-        }.getType());
+        result.quests = context.deserialize(object.get("quests"), new TypeToken<RealmList<QuestContent>>() {}.getType());
+        result.eggs = context.deserialize(object.get("eggs"), new TypeToken<RealmList<Egg>>() {}.getType());
+        result.food = context.deserialize(object.get("food"), new TypeToken<RealmList<Food>>() {}.getType());
+        result.hatchingPotions = context.deserialize(object.get("hatchingPotions"), new TypeToken<RealmList<HatchingPotion>>() {}.getType());
 
-        Map<String, Pet> pets = context.deserialize(object.get("pets"), new TypeToken<Map<String, Pet>>() {
-        }.getType());
-        Map<String, Pet> specialPets = context.deserialize(object.get("specialPets"), new TypeToken<Map<String, Pet>>() {
-        }.getType());
-        Map<String, Pet> premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<Map<String, Pet>>() {
-        }.getType());
-        Map<String, Pet> questPets = context.deserialize(object.get("questPets"), new TypeToken<Map<String, Pet>>() {
-        }.getType());
-        Map<String, Mount> mounts = context.deserialize(object.get("mounts"), new TypeToken<Map<String, Mount>>() {
-        }.getType());
-        Map<String, Mount> specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<Map<String, Mount>>() {
-        }.getType());
-        Map<String, Mount> premiumMounts = context.deserialize(object.get("premiumMounts"), new TypeToken<Map<String, Mount>>() {
-        }.getType());
-        Map<String, Mount> questMounts = context.deserialize(object.get("questMounts"), new TypeToken<Map<String, Mount>>() {
-        }.getType());
+        Map<String, Pet> pets = context.deserialize(object.get("pets"), new TypeToken<Map<String, Pet>>() {}.getType());
+        Map<String, Pet> specialPets = context.deserialize(object.get("specialPets"), new TypeToken<Map<String, Pet>>() {}.getType());
+        Map<String, Pet> premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<Map<String, Pet>>() {}.getType());
+        Map<String, Pet> questPets = context.deserialize(object.get("questPets"), new TypeToken<Map<String, Pet>>() {}.getType());
+        Map<String, Mount> mounts = context.deserialize(object.get("mounts"), new TypeToken<Map<String, Mount>>() {}.getType());
+        Map<String, Mount> specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
+        Map<String, Mount> premiumMounts = context.deserialize(object.get("premiumMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
+        Map<String, Mount> questMounts = context.deserialize(object.get("questMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
 
         for (Egg egg : result.eggs) {
             for (HatchingPotion potion : result.hatchingPotions) {
@@ -104,7 +92,7 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
             }
         }
         for (Pet pet : specialPets.values()) {
-            pet.setAnimalGroup("specialMounts");
+            pet.setAnimalGroup("specialPets");
         }
         for (Mount mount : specialMounts.values()) {
             mount.setAnimalGroup("specialMounts");
@@ -122,16 +110,12 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         result.mounts.addAll(premiumMounts.values());
         result.mounts.addAll(questMounts.values());
 
-        result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {
-        }.getType());
+        result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {}.getType());
 
-        result.appearances = context.deserialize(object.get("appearances"), new TypeToken<RealmList<Customization>>() {
-        }.getType());
-        result.backgrounds = context.deserialize(object.get("backgrounds"), new TypeToken<RealmList<Customization>>() {
-        }.getType());
+        result.appearances = context.deserialize(object.get("appearances"), new TypeToken<RealmList<Customization>>() {}.getType());
+        result.backgrounds = context.deserialize(object.get("backgrounds"), new TypeToken<RealmList<Customization>>() {}.getType());
 
-        result.faq = context.deserialize(object.get("faq"), new TypeToken<RealmList<FAQArticle>>() {
-        }.getType());
+        result.faq = context.deserialize(object.get("faq"), new TypeToken<RealmList<FAQArticle>>() {}.getType());
 
         return result;
     }
