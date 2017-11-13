@@ -84,8 +84,8 @@ public class StableRecyclerFragment extends BaseFragment {
         adapter = (StableRecyclerAdapter) recyclerView.getAdapter();
         if (adapter == null) {
             adapter = new StableRecyclerAdapter();
-            adapter.activity = (MainActivity) this.getActivity();
-            adapter.itemType = this.itemType;
+            adapter.setActivity((MainActivity) this.getActivity());
+            adapter.setItemType(this.itemType);
             recyclerView.setAdapter(adapter);
             recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
         }
