@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ScrollView
 import android.widget.TextView
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -18,8 +17,11 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
+import com.habitrpg.android.habitica.extensions.bindView
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
@@ -30,19 +32,12 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
-
 import org.greenrobot.eventbus.EventBus
-
-import java.util.Date
-
-import javax.inject.Inject
-
-import com.habitrpg.android.habitica.extensions.bindView
-import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.inventory.QuestContent
 import rx.Observable
 import rx.functions.Action1
 import rx.subscriptions.CompositeSubscription
+import java.util.*
+import javax.inject.Inject
 
 class PurchaseDialog(context: Context, component: AppComponent, val item: ShopItem) : AlertDialog(context) {
 
@@ -248,16 +243,16 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
                         }
                         .flatMap { userRepository.retrieveUser(false, true) }
                         .flatMap { inventoryRepository.retrieveInAppRewards() }
-                        .subscribe({ }) { throwable ->
+                        .subscribe({
+                            if (item.isTypeGear) {
+                                EventBus.getDefault().post(GearPurchasedEvent(item))
+                            }
+                        }) { throwable ->
                             if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {
                                 val error = throwable as retrofit2.HttpException
                                 if (error.code() == 401 && shopItem.currency == "gems") {
                                     EventBus.getDefault().post(OpenGemPurchaseFragmentCommand())
                                 }
-                            }
-
-                            if (item.isTypeGear) {
-                                EventBus.getDefault().post(GearPurchasedEvent(item))
                             }
                         }
             } else {
