@@ -188,7 +188,9 @@ class ShopFragment : BaseFragment() {
 
     @Subscribe
     fun onItemPurchased(event: GearPurchasedEvent) {
-        loadShopInventory()
+        if (Shop.MARKET == shopIdentifier) {
+            loadMarketGear()
+        }
     }
 
 }
