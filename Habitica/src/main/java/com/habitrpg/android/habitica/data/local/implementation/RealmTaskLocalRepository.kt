@@ -20,14 +20,15 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .equalTo("type", taskType)
                 .equalTo("userId", userID)
                 .findAllSorted("position")
-                .sort("dateCreated", Sort.DESCENDING)
                 .asObservable()
                 .filter({ it.isLoaded })
                 .retry(1)
     }
 
     override fun getTasks(userId: String): Observable<RealmResults<Task>> {
-        return realm.where(Task::class.java).equalTo("userId", userId).findAll().asObservable()
+        return realm.where(Task::class.java).equalTo("userId", userId)
+                .findAllSorted("position")
+                .asObservable()
                 .filter({ it.isLoaded })
     }
 
@@ -146,8 +147,8 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getTaskAtPosition(currentPosition: Int): Observable<Task> {
-        return realm.where(Task::class.java).equalTo("position", currentPosition).findFirstAsync().asObservable<RealmObject>()
+    override fun getTaskAtPosition(taskType: String, position: Int): Observable<Task> {
+        return realm.where(Task::class.java).equalTo("type", taskType).equalTo("position", position).findFirstAsync().asObservable<RealmObject>()
                 .filter { realmObject -> realmObject.isLoaded }
                 .cast(Task::class.java)
     }

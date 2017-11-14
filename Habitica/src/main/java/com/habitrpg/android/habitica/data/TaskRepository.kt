@@ -40,7 +40,7 @@ interface TaskRepository : BaseRepository {
 
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)
 
-    fun updateTaskPosition(oldPosition: Int, newPosition: Int): Observable<List<String>>
+    fun updateTaskPosition(taskType: String, oldPosition: Int, newPosition: Int): Observable<List<String>>
 
     fun getUnmanagedTask(taskid: String): Observable<Task>
 

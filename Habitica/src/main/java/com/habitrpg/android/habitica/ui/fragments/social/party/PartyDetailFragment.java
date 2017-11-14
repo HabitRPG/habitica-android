@@ -51,7 +51,7 @@ public class PartyDetailFragment extends BaseFragment {
     @Named(AppModule.NAMED_USER_ID)
     String userId;
 
-    @BindView(R.id.refresh_layout)
+    @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
 
     @BindView(R.id.party_invitation_wrapper)

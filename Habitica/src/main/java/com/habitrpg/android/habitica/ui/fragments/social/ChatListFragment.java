@@ -54,7 +54,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public boolean isTavern;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.refresh_layout)
+    @BindView(R.id.refreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.emojiButton)
     ImageButton emojiButton;
