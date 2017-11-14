@@ -491,8 +491,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             }
             IDrawerItem statsItem = drawer.getDrawerItem(MainDrawerBuilder.INSTANCE.getSIDEBAR_STATS());
             PrimaryDrawerItem newStatsItem = new PrimaryDrawerItem()
-                    .withName(this.getString(R.string.sidebar_skills))
-                    .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
+                    .withName(this.getString(R.string.sidebar_stats))
+                    .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_STATS());
             if (user.getStats() != null && user.getStats().lvl >= 0 && user.getStats().points > 0) {
                 newStatsItem = newStatsItem.withBadge(this.getString(R.string.available_stats, user.getStats().points));
             }
