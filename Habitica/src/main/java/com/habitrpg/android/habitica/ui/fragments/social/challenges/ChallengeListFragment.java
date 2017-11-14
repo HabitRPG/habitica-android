@@ -42,7 +42,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     @Named(AppModule.NAMED_USER_ID)
     String userId;
 
-    @BindView(R.id.refresh_layout)
+    @BindView(R.id.refreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerViewEmptySupport recyclerView;

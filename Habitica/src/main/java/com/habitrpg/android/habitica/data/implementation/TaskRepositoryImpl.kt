@@ -175,8 +175,8 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.swapTaskPosition(firstPosition, secondPosition)
     }
 
-    override fun updateTaskPosition(oldPosition: Int, newPosition: Int): Observable<List<String>> {
-        return localRepository.getTaskAtPosition(oldPosition)
+    override fun updateTaskPosition(taskType: String, oldPosition: Int, newPosition: Int): Observable<List<String>> {
+        return localRepository.getTaskAtPosition(taskType, oldPosition)
                 .first()
                 .flatMap { task ->
                     if (task.isValid) {

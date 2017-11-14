@@ -27,7 +27,7 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)
 
-    fun getTaskAtPosition(currentPosition: Int): Observable<Task>
+    fun getTaskAtPosition(taskType: String, position: Int): Observable<Task>
 
     fun updateIsdue(daily: TaskList): Observable<TaskList>
 

@@ -56,7 +56,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         if (this.nameMapping.isEmpty()) {
             compositeSubscription.add(inventoryRepository.ownedEquipment.subscribe(Action1 {
                 for (gear in it) {
-                    this.nameMapping.put(gear.key, gear.text)
+                    this.nameMapping.put(gear.key ?: "", gear.text)
                 }
 
                 setEquipmentNames()

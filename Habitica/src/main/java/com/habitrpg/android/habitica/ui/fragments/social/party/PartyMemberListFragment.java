@@ -32,7 +32,7 @@ public class PartyMemberListFragment extends BaseFragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.refresh_layout)
+    @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
     private PartyMemberRecyclerViewAdapter adapter;
     private View view;
