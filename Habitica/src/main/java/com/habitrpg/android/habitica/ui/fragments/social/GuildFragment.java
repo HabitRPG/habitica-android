@@ -25,7 +25,7 @@ import javax.inject.Inject;
 
 import rx.functions.Action1;
 
-public class GuildFragment extends BaseMainFragment implements Action1<Group> {
+public class GuildFragment extends BaseMainFragment {
 
     @Inject
     SocialRepository socialRepository;
@@ -57,7 +57,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         setViewPagerAdapter();
 
         if (guildId != null && this.socialRepository != null) {
-            compositeSubscription.add(socialRepository.getGroup(this.guildId).subscribe(this, RxErrorHandler.handleEmptyError()));
+            compositeSubscription.add(socialRepository.getGroup(this.guildId).subscribe(this::setGroup, RxErrorHandler.handleEmptyError()));
             socialRepository.retrieveGroup(this.guildId).subscribe(group -> {}, RxErrorHandler.handleEmptyError());
         }
 
@@ -86,8 +86,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (this.socialRepository != null && this.guild != null) {
-            socialRepository.retrieveGroup(this.guild.id)
-                    .subscribe(this, RxErrorHandler.handleEmptyError());
+            socialRepository.retrieveGroup(this.guild.id).subscribe(this::setGroup, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -113,8 +112,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
         switch (id) {
             case R.id.menu_guild_join:
-                this.socialRepository.joinGroup(this.guild.id)
-                        .subscribe(this, RxErrorHandler.handleEmptyError());
+                this.socialRepository.joinGroup(this.guild.id).subscribe(this::setGroup, RxErrorHandler.handleEmptyError());
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
@@ -237,8 +235,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         }
     }
 
-    @Override
-    public void call(Group group) {
+    public void setGroup(Group group) {
         if (group != null) {
             if (this.guildInformationFragment != null) {
                 this.guildInformationFragment.setGroup(group);

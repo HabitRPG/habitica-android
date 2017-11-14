@@ -99,6 +99,10 @@ class GroupInformationFragment : BaseFragment() {
     fun setGroup(group: Group?) {
         this.group = group
 
+        if (qrWrapper == null) {
+            return
+        }
+
         val hasGroup = group != null
         val groupItemVisibility = if (hasGroup) View.VISIBLE else View.GONE
         qrWrapper.visibility = if (hasGroup) View.GONE else View.VISIBLE

@@ -12,8 +12,8 @@ import io.realm.annotations.PrimaryKey
 open class ShopItem : RealmObject() {
     @PrimaryKey
     var key: String = ""
-    var text: String = ""
-    var notes: String = ""
+    var text: String? = ""
+    var notes: String? = ""
     @SerializedName("class")
     var imageName: String? = null
     get() {

@@ -504,7 +504,7 @@ public class AvatarView extends View {
         initAvatarRectMatrix();
 
         // draw only when user is set
-        if (avatar == null) return;
+        if (avatar == null || !avatar.isValid()) return;
 
         // request image layers if not yet processed
         if (multiDraweeHolder.size() == 0) {
