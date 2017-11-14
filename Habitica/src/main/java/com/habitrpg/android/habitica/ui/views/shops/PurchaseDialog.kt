@@ -60,7 +60,7 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
     private val contentContainer: ViewGroup by bindView(customView, R.id.content_container)
     private val scrollView: ScrollView by bindView(customView, R.id.scrollView)
 
-    var shopItem: ShopItem = item
+    private var shopItem: ShopItem = item
         set(value) {
             field = value
 
@@ -106,7 +106,11 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
     private fun checkGearClass() {
         val user = user ?: return
 
-        if (shopItem.habitClass != null && user.stats.habitClass != shopItem.habitClass) {
+        if (shopItem.purchaseType == "gems") {
+            return
+        }
+
+        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user.stats.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_100))
