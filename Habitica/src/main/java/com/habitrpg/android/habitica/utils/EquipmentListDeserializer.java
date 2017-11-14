@@ -26,27 +26,27 @@ public class EquipmentListDeserializer implements JsonDeserializer<List<Equipmen
             realm.close();
 
             for (Equipment item : existingItems) {
-                if (object.has(item.key)) {
-                    JsonElement itemObject = object.get(item.key);
+                if (object.has(item.getKey())) {
+                    JsonElement itemObject = object.get(item.getKey());
 
                     if (itemObject.isJsonObject()) {
                         Equipment parsedItem = context.deserialize(itemObject.getAsJsonObject(), Equipment.class);
-                        item.text = parsedItem.text;
-                        item.value = parsedItem.value;
-                        item.type = parsedItem.type;
-                        item.klass = parsedItem.klass;
-                        item.specialClass = parsedItem.specialClass;
-                        item.index = parsedItem.index;
-                        item.notes = parsedItem.notes;
-                        item.con = parsedItem.con;
-                        item.str = parsedItem.str;
-                        item.per = parsedItem.per;
-                        item._int = parsedItem._int;
+                        item.setText(parsedItem.getText());
+                        item.setValue(parsedItem.getValue());
+                        item.setType(parsedItem.getType());
+                        item.setKlass(parsedItem.getKlass());
+                        item.setSpecialClass(parsedItem.getSpecialClass());
+                        item.setIndex(parsedItem.getIndex());
+                        item.setNotes(parsedItem.getNotes());
+                        item.setCon(parsedItem.getCon());
+                        item.setStr(parsedItem.getStr());
+                        item.setPer(parsedItem.getPer());
+                        item.set_int(parsedItem.get_int());
                     } else {
                         item.setOwned(itemObject.getAsBoolean());
                     }
                     vals.add(item);
-                    object.remove(item.key);
+                    object.remove(item.getKey());
                 }
             }
 
@@ -56,7 +56,7 @@ public class EquipmentListDeserializer implements JsonDeserializer<List<Equipmen
                     item = context.deserialize(entry.getValue(), Equipment.class);
                 } else {
                     item = new Equipment();
-                    item.key = entry.getKey();
+                    item.setKey(entry.getKey());
                     if (entry.getValue().isJsonNull()) {
                         item.setOwned(false);
                     } else {

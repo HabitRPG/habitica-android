@@ -80,14 +80,14 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                         if (items != null) {
                             for (Equipment item : items) {
                                 ShopItem shopItem = new ShopItem();
-                                shopItem.setKey(item.key);
-                                shopItem.setText(item.text);
-                                shopItem.setNotes(item.notes);
-                                shopItem.setValue((int) item.value);
+                                shopItem.setKey(item.getKey());
+                                shopItem.setText(item.getText());
+                                shopItem.setNotes(item.getNotes());
+                                shopItem.setValue((int) item.getValue());
                                 shopItem.setCurrency("gold");
-                                if ("potion".equals(item.key)) {
+                                if ("potion".equals(item.getKey())) {
                                     shopItem.setPurchaseType("potion");
-                                } else if ("armoire".equals(item.key)) {
+                                } else if ("armoire".equals(item.getKey())) {
                                     shopItem.setPurchaseType("armoire");
                                 } else {
                                     shopItem.setPurchaseType("gear");

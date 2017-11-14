@@ -131,7 +131,9 @@ public class UserDeserializer implements JsonDeserializer<User> {
 
         if (obj.has("achievements")) {
             if (obj.getAsJsonObject("achievements").has("streak")) {
-                user.setStreakCount(obj.getAsJsonObject("achievements").get("streak").getAsInt());
+                try {
+                    user.setStreakCount(obj.getAsJsonObject("achievements").get("streak").getAsInt());
+                } catch (UnsupportedOperationException ignored) {}
             }
         }
 

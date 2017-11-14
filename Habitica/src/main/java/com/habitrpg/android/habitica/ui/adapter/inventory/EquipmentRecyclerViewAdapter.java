@@ -85,10 +85,10 @@ public class EquipmentRecyclerViewAdapter extends RealmRecyclerViewAdapter<Equip
 
         public void bind(Equipment gear) {
             this.gear = gear;
-            this.gearNameTextView.setText(this.gear.text);
-            this.gearNotesTextView.setText(this.gear.notes);
+            this.gearNameTextView.setText(this.gear.getText());
+            this.gearNotesTextView.setText(this.gear.getNotes());
 
-            if (gear.key.equals(equippedGear)) {
+            if (gear.getKey().equals(equippedGear)) {
                 this.equippedIndicator.setVisibility(View.VISIBLE);
                 this.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_700));
             } else {
@@ -96,17 +96,17 @@ public class EquipmentRecyclerViewAdapter extends RealmRecyclerViewAdapter<Equip
                 this.gearContainer.setBackgroundResource(R.drawable.selection_highlight);
             }
 
-            String imageUrl = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_" + gear.key + ".png";
+            String imageUrl = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_" + gear.getKey() + ".png";
             imageView.setImageURI(Uri.parse(imageUrl));
         }
 
         @Override
         public void onClick(View v) {
-            equipEvents.onNext(this.gear.key);
-            if (this.gear.key.equals(equippedGear)) {
+            equipEvents.onNext(this.gear.getKey());
+            if (this.gear.getKey().equals(equippedGear)) {
                 equippedGear = type + "_base_0";
             } else {
-                equippedGear = this.gear.key;
+                equippedGear = this.gear.getKey();
             }
             notifyDataSetChanged();
         }

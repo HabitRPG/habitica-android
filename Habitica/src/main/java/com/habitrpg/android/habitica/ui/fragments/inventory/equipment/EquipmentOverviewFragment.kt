@@ -54,13 +54,13 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         setImageNames()
 
         if (this.nameMapping.isEmpty()) {
-            inventoryRepository.ownedEquipment.subscribe(Action1 {
+            compositeSubscription.add(inventoryRepository.ownedEquipment.subscribe(Action1 {
                 for (gear in it) {
                     this.nameMapping.put(gear.key, gear.text)
                 }
 
                 setEquipmentNames()
-            }, RxErrorHandler.handleEmptyError())
+            }, RxErrorHandler.handleEmptyError()))
         } else {
             setEquipmentNames()
         }

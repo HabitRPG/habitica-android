@@ -187,7 +187,7 @@ public class PartyDetailFragment extends BaseFragment {
     }
 
     private void updateQuestContent(QuestContent questContent) {
-        if (questTitleView == null || !questContent.isManaged()) {
+        if (questTitleView == null || !questContent.isValid()) {
             return;
         }
         questTitleView.setText(questContent.getText());

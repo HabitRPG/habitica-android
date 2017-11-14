@@ -949,6 +949,9 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Void> togglePinnedItem(String pinType, String path) {
+        if (pinType == null) {
+            return Observable.just(null);
+        }
         return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver());
     }
 
