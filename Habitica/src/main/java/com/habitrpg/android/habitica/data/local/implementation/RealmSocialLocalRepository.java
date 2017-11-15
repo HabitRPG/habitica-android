@@ -161,7 +161,7 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
     public void saveChatMessages(String groupId, List<ChatMessage> chatMessages) {
         realm.executeTransaction(realm1 -> realm.insertOrUpdate(chatMessages));
         if (groupId != null) {
-            List<ChatMessage> existingMessages = realm.where(ChatMessage.class).equalTo("GroupId", groupId).findAll();
+            List<ChatMessage> existingMessages = realm.where(ChatMessage.class).equalTo("groupId", groupId).findAll();
             List<ChatMessage> messagesToRemove = new ArrayList<>();
             for (ChatMessage existingMember : existingMessages) {
                 boolean isStillMember = false;
