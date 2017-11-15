@@ -427,6 +427,6 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
     public interface OnFilterCompletedListener {
 
-        void onFilterCompleted(String activeTaskFilter, List<String> activeTags);
+        void onFilterCompleted(@Nullable String activeTaskFilter, List<String> activeTags);
     }
 }

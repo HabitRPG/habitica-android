@@ -69,6 +69,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                             result.drop = res._tmp.drop
                         }
                         this.localRepository.executeTransaction {
+                            if (!task.isValid) {
+                                return@executeTransaction
+                            }
                             if (task.type != "reward") {
                                 task.value = task.value + res.delta
                                 if (Task.TYPE_DAILY == task.type || Task.TYPE_TODO == task.type) {

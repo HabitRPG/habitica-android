@@ -254,7 +254,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
         refreshLayout.isRefreshing = true
         userRepository.retrieveUser(true, true)
                 .doOnTerminate {
-                    refreshLayout.isRefreshing = false
+                    refreshLayout?.isRefreshing = false
                 }.subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
     }
 

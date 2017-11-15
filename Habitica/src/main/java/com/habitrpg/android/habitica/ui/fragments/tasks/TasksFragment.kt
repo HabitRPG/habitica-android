@@ -160,7 +160,9 @@ class TasksFragment : BaseMainFragment() {
             if (activePos < viewPager?.adapter?.count ?: 0 - 1 && viewFragmentsDictionary?.get(activePos + 1) != null && viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter != null) {
                 viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter?.filter()
             }
-            activeFragment?.setActiveFilter(activeTaskFilter)
+            if (activeTaskFilter != null) {
+                activeFragment?.setActiveFilter(activeTaskFilter)
+            }
             taskFilterHelper.tags = activeTags
             updateFilterIcon()
 
