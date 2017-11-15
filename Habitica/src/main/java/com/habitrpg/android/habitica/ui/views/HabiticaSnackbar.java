@@ -127,24 +127,24 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
     }
 
 
-    public static void showSnackbar(ViewGroup container, CharSequence content, SnackbarDisplayType displayType) {
+    public static void showSnackbar(@NonNull ViewGroup container, CharSequence content, SnackbarDisplayType displayType) {
         showSnackbar(container, null, null, content, null, null, 0, null, displayType);
     }
 
-    public static void showSnackbar(ViewGroup container, Drawable leftImage, CharSequence title, CharSequence content, SnackbarDisplayType displayType) {
+    public static void showSnackbar(@NonNull ViewGroup container, Drawable leftImage, CharSequence title, CharSequence content, SnackbarDisplayType displayType) {
         showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType);
     }
 
 
-    public static void showSnackbar(ViewGroup container, CharSequence title, CharSequence content, Drawable rightIcon, int rightTextColor, String rightText, SnackbarDisplayType displayType) {
+    public static void showSnackbar(@NonNull ViewGroup container, CharSequence title, CharSequence content, Drawable rightIcon, int rightTextColor, String rightText, SnackbarDisplayType displayType) {
         showSnackbar(container, null, title, content, null, rightIcon, rightTextColor, rightText, displayType);
     }
 
-    public static void showSnackbar(ViewGroup container, CharSequence title, CharSequence content, View specialView, SnackbarDisplayType displayType) {
+    public static void showSnackbar(@NonNull ViewGroup container, CharSequence title, CharSequence content, View specialView, SnackbarDisplayType displayType) {
         showSnackbar(container, null, title, content, specialView, null, 0, null, displayType);
     }
 
-    public static void showSnackbar(ViewGroup container, Drawable leftImage, CharSequence title, CharSequence content, View specialView, Drawable rightIcon, int rightTextColor, String rightText, SnackbarDisplayType displayType) {
+    public static void showSnackbar(@NonNull ViewGroup container, Drawable leftImage, CharSequence title, CharSequence content, View specialView, Drawable rightIcon, int rightTextColor, String rightText, SnackbarDisplayType displayType) {
         HabiticaSnackbar snackbar = HabiticaSnackbar.make(container, Snackbar.LENGTH_LONG)
                 .setTitle(title)
                 .setText(content)

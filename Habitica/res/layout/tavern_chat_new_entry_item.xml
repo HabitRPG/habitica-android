@@ -20,11 +20,11 @@
                 android:src="@drawable/ic_emoticon_grey600_24dp"
                 android:scaleType="center"
                 android:backgroundTint="@color/transparent"
-                android:contentDescription="Toogle Emojis"
+                android:contentDescription="@string/toogle_emojis"
                 android:tint="@color/brand_400"
                 android:layout_gravity="center"/>
 
-                <net.pherth.android.emoji_library.EmojiEditText
+                <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/chatEditText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                     android:layout_margin="5dp"
                     android:hint="@string/write_message"
                     android:textColor="@android:color/black"
-                    android:inputType="textCapSentences|textMultiLine" />
+                    android:inputType="textCapSentences|textMultiLine"/>
             <ImageButton
                 android:id="@+id/sendButton"
                 android:layout_width="30dp"
@@ -40,7 +40,8 @@
                 android:layout_gravity="center"
                 android:background="@color/transparent"
                 android:tint="@color/md_grey_400"
-                android:src="@drawable/ic_send_grey_600_24dp"/>
+                android:src="@drawable/ic_send_grey_600_24dp"
+                android:contentDescription="@string/send"/>
         </LinearLayout>
         <TextView
             android:id="@+id/communityGuidelinesView"

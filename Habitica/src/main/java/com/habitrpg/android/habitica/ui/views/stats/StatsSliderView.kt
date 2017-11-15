@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.android.habitica.ui.views.stats
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -35,6 +35,9 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
         field = value
         statsSeekBar.progress = value
         valueEditText.setText(value.toString())
+        if (valueEditText.isFocused) {
+            valueEditText.setSelection(valueEditText.length())
+        }
     }
 
     var allocateAction: ((Int) -> Unit)? = null
@@ -70,11 +73,12 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                 } catch (e: NumberFormatException) {
                     0
                 }
-                if (newValue != currentValue && newValue < maxValue) {
+                if (newValue != currentValue && newValue <= maxValue && newValue > 0) {
                     currentValue = newValue
                     allocateAction?.invoke(currentValue)
-                } else if (newValue > maxValue) {
+                } else if (newValue > maxValue || newValue < 0) {
                     valueEditText.setText(currentValue.toString())
+                    valueEditText.setSelection(valueEditText.length())
                 }
             }
 

@@ -40,7 +40,7 @@
                 android:layout_height="24dp"
                 android:scaleType="fitCenter"/>
         </LinearLayout>
-        <com.habitrpg.android.habitica.ui.views.StatsView
+        <com.habitrpg.android.habitica.ui.views.stats.StatsView
             android:id="@+id/strengthStatsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             app:titleBackgroundColor="@color/red_50"
             app:statsColor="@color/red_10"
             android:layout_marginBottom="12dp"/>
-        <com.habitrpg.android.habitica.ui.views.StatsView
+        <com.habitrpg.android.habitica.ui.views.stats.StatsView
             android:id="@+id/intelligenceStatsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             app:titleBackgroundColor="@color/blue_50"
             app:statsColor="@color/blue_10"
             android:layout_marginBottom="12dp"/>
-        <com.habitrpg.android.habitica.ui.views.StatsView
+        <com.habitrpg.android.habitica.ui.views.stats.StatsView
             android:id="@+id/constitutionStatsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             app:titleBackgroundColor="@color/yellow_10"
             app:statsColor="@color/yellow_5"
             android:layout_marginBottom="12dp"/>
-        <com.habitrpg.android.habitica.ui.views.StatsView
+        <com.habitrpg.android.habitica.ui.views.stats.StatsView
             android:id="@+id/perceptionStatsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

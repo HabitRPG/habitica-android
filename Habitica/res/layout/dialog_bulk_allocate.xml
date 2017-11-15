@@ -37,28 +37,28 @@
         android:layout_height="wrap_content"
         android:padding="18dp"
         android:orientation="vertical">
-    <com.habitrpg.android.habitica.ui.views.StatsSliderView
+    <com.habitrpg.android.habitica.ui.views.stats.StatsSliderView
         android:id="@+id/strengthSliderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:statsTitle="@string/str_abbrv"
         app:statsColor="@color/red_100"
         app:statsTextColor="@color/red_10"/>
-    <com.habitrpg.android.habitica.ui.views.StatsSliderView
+    <com.habitrpg.android.habitica.ui.views.stats.StatsSliderView
         android:id="@+id/intelligenceSliderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:statsTitle="@string/int_abbrv"
         app:statsColor="@color/blue_100"
         app:statsTextColor="@color/blue_10"/>
-    <com.habitrpg.android.habitica.ui.views.StatsSliderView
+    <com.habitrpg.android.habitica.ui.views.stats.StatsSliderView
         android:id="@+id/constitutionSliderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:statsTitle="@string/con_abbrv"
         app:statsColor="@color/yellow_100"
         app:statsTextColor="@color/yellow_10"/>
-    <com.habitrpg.android.habitica.ui.views.StatsSliderView
+    <com.habitrpg.android.habitica.ui.views.stats.StatsSliderView
         android:id="@+id/perceptionSliderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
