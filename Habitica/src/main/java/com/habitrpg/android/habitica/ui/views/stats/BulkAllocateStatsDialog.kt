@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.android.habitica.ui.views.stats
 
 import android.app.ProgressDialog
 import android.content.Context
@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.views.stats.StatsSliderView
 import kotlinx.android.synthetic.main.dialog_bulk_allocate.*
 import rx.Subscription
 import rx.functions.Action1

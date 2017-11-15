@@ -17,13 +17,14 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.views.BulkAllocateStatsDialog
+import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import kotlinx.android.synthetic.main.fragment_stats.*
 import rx.functions.Action1
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
+
 
 class StatsFragment: BaseMainFragment() {
 
@@ -55,11 +56,11 @@ class StatsFragment: BaseMainFragment() {
         }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        hideToolbar()
-
         tutorialStepIdentifier = "stats"
         tutorialText = getString(R.string.tutorial_stats)
+
+        super.onCreateView(inflater, container, savedInstanceState)
+        hideToolbar()
 
         return container?.inflate(R.layout.fragment_stats)
     }
@@ -198,7 +199,7 @@ class StatsFragment: BaseMainFragment() {
 
     private fun updateStats() {
         val currentUser = user ?: return
-        val levelStat = Math.min(currentUser.stats.getLvl()!! / 2.0f, 50f).toInt()
+        val levelStat = Math.min(currentUser.stats.getLvl() / 2.0f, 50f).toInt()
 
         totalStrength = levelStat
         totalIntelligence = levelStat

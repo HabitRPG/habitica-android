@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.android.habitica.ui.views.stats
 
 import android.content.Context
 import android.graphics.PorterDuff
@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import kotlinx.android.synthetic.main.stats_view.view.*
 
 class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {

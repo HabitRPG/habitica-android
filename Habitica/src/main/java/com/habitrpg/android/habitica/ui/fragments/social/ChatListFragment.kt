@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -41,7 +40,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
-    var isTavern: Boolean = false
+    private var isTavern: Boolean = false
     internal var layoutManager: LinearLayoutManager? = null
     private var groupId: String? = null
     private var user: User? = null
@@ -73,7 +72,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             if (savedInstanceState.containsKey("userId")) {
                 this.userId = savedInstanceState.getString("userId")
                 if (this.userId != null) {
-                    userRepository!!.getUser(userId!!).subscribe(Action1 { habitRPGUser -> this.user = habitRPGUser }, RxErrorHandler.handleEmptyError())
+                    userRepository.getUser(userId!!).subscribe(Action1 { habitRPGUser -> this.user = habitRPGUser }, RxErrorHandler.handleEmptyError())
                 }
             }
 
@@ -99,7 +98,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
         refreshLayout.setOnRefreshListener(this)
 
-        layoutManager = recyclerView.layoutManager as LinearLayoutManager
+        layoutManager = recyclerView.layoutManager as LinearLayoutManager?
 
         if (layoutManager == null) {
             layoutManager = LinearLayoutManager(context)
@@ -162,30 +161,38 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
         clipMan.primaryClip = messageText
         val activity = activity as MainActivity?
-        showSnackbar(activity!!.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL)
+        if (activity != null) {
+            showSnackbar(activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL)
+        }
     }
 
     private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-        val builder = AlertDialog.Builder(activity!!)
-        builder.setMessage(R.string.chat_flag_confirmation)
-                .setPositiveButton(R.string.flag_confirm) { dialog, id ->
-                    socialRepository.flagMessage(chatMessage)
-                            .subscribe(Action1 { aVoid ->
-                                val activity = activity as MainActivity?
-                                showSnackbar(activity!!.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL)
-                            }, RxErrorHandler.handleEmptyError())
-                }
-                .setNegativeButton(R.string.action_cancel) { dialog, id -> }
-        builder.show()
+        val context = context
+        if (context != null) {
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage(R.string.chat_flag_confirmation)
+                    .setPositiveButton(R.string.flag_confirm) { _, _ ->
+                        socialRepository.flagMessage(chatMessage)
+                                .subscribe(Action1 {
+                                    val activity = activity as MainActivity?
+                                    showSnackbar(activity!!.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL)
+                                }, RxErrorHandler.handleEmptyError())
+                    }
+                    .setNegativeButton(R.string.action_cancel) { _, _ -> }
+            builder.show()
+        }
     }
 
     private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {
-        AlertDialog.Builder(context!!)
-                .setTitle(R.string.confirm_delete_tag_title)
-                .setMessage(R.string.confirm_delete_tag_message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
-                .setNegativeButton(android.R.string.no, null).show()
+        val context = context
+        if (context != null) {
+            AlertDialog.Builder(context)
+                    .setTitle(R.string.confirm_delete_tag_title)
+                    .setMessage(R.string.confirm_delete_tag_message)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
+                    .setNegativeButton(android.R.string.no, null).show()
+        }
     }
 
     private fun copyMessageAsTodo(chatMessage: ChatMessage) {
@@ -208,7 +215,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         markMessagesAsSeen()
     }
 
-    fun sendChatMessage(chatText: String) {
+    private fun sendChatMessage(chatText: String) {
         socialRepository.postGroupChat(groupId, chatText).subscribe(Action1 {
             recyclerView?.scrollToPosition(0)
         }, RxErrorHandler.handleEmptyError())
