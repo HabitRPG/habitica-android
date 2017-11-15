@@ -27,10 +27,10 @@ public abstract class SortableTasksRecyclerViewAdapter<VH extends BaseTaskViewHo
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        if (filteredContent.size() <= fromPosition || filteredContent.size() <= toPosition) {
+        if (getFilteredContent().size() <= fromPosition || getFilteredContent().size() <= toPosition) {
             return;
         }
-        Collections.swap(filteredContent, fromPosition, toPosition);
+        Collections.swap(getFilteredContent(), fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -42,7 +42,7 @@ public abstract class SortableTasksRecyclerViewAdapter<VH extends BaseTaskViewHo
     @Override
     public void onDrop(int from, int to) {
         if (this.sortCallback != null && from != to) {
-            this.sortCallback.onMove(filteredContent.get(to), from, to);
+            this.sortCallback.onMove(getFilteredContent().get(to), from, to);
         }
     }
 

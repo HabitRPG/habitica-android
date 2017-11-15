@@ -242,7 +242,7 @@ public class GuildFragment extends BaseMainFragment {
             }
 
             if (this.chatListFragment != null) {
-                this.chatListFragment.seenGroupId = group.id;
+                this.chatListFragment.setSeenGroupId(group.id);
             }
 
             this.guild = group;

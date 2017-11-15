@@ -174,7 +174,7 @@ public class PartyDetailFragment extends BaseFragment {
         }
 
         if (questParticipantResponseWrapper != null) {
-            if (showParticipatantButtons()) {
+            if (showParticipantButtons()) {
                 questParticipantResponseWrapper.setVisibility(View.VISIBLE);
             } else {
                 questParticipantResponseWrapper.setVisibility(View.GONE);
@@ -182,7 +182,7 @@ public class PartyDetailFragment extends BaseFragment {
         }
     }
 
-    private boolean showParticipatantButtons() {
+    private boolean showParticipantButtons() {
         return !(user == null || user.getParty() == null || user.getParty().getQuest() == null) && !isQuestActive() && user.getParty().getQuest().RSVPNeeded;
     }
 

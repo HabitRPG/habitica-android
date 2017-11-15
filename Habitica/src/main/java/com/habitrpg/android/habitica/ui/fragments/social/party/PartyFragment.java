@@ -133,7 +133,7 @@ public class PartyFragment extends BaseMainFragment {
         }
 
         if (chatListFragment != null && group != null) {
-            chatListFragment.seenGroupId = group.id;
+            chatListFragment.setSeenGroupId(group.id);
         }
 
         if (this.activity != null) {

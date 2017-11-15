@@ -14,6 +14,7 @@
         android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
     <com.habitrpg.android.habitica.ui.views.social.ChatBarView
+        android:id="@+id/chatBarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
