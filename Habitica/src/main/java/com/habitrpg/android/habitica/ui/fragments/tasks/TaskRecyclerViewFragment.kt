@@ -94,7 +94,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
         recyclerView.adapter = adapter
 
         if (this.classType != null) {
-            taskRepository.getTasks(this.classType ?: "", userID).first().subscribe(Action1 { this.recyclerAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError())
+            taskRepository.getTasks(this.classType ?: "", userID).first().subscribe(Action1 { this.recyclerAdapter?.updateUnfilteredData(it) }, RxErrorHandler.handleEmptyError())
         }
     }
 
