@@ -87,6 +87,11 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
+    public void updateUnfilteredData(@org.jetbrains.annotations.Nullable OrderedRealmCollection<Task> data) {
+        updateData(data);
+    }
+
+    @Override
     public int getItemCount() {
         int rewardCount = getCustomRewardCount();
         rewardCount += getInAppRewardCount();

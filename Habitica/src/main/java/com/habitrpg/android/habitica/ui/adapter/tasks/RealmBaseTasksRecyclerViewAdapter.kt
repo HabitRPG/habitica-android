@@ -12,7 +12,7 @@ import io.realm.OrderedRealmCollectionChangeListener
 import io.realm.RealmList
 import io.realm.RealmResults
 
-abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private val unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : RecyclerView.Adapter<VH>(), TaskRecyclerViewAdapter {
+abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : RecyclerView.Adapter<VH>(), TaskRecyclerViewAdapter {
     private var updateOnModification: Boolean = false
     private var ignoreUpdates: Boolean = false
     private val listener: OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> by lazy {
@@ -49,8 +49,9 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         get() = data?.isValid ?: false
 
     init {
-        if (unfilteredData != null && !unfilteredData.isManaged)
+        if (unfilteredData != null && unfilteredData?.isManaged == false) {
             throw IllegalStateException("Only use this adapter with managed RealmCollection, " + "for un-managed lists you can just use the BaseRecyclerViewAdapter")
+        }
         this.data = unfilteredData
         this.updateOnModification = true
     }
@@ -76,6 +77,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
 
     fun getItem(index: Int): Task? = if (isDataValid) data!![index] else null
 
+
+
     override fun updateData(data: OrderedRealmCollection<Task>?) {
         if (hasAutoUpdates) {
             if (isDataValid) {
@@ -89,6 +92,11 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
 
         this.data = data
         notifyDataSetChanged()
+    }
+
+    override fun updateUnfilteredData(data: OrderedRealmCollection<Task>?) {
+        unfilteredData = data
+        updateData(data)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -125,7 +133,6 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
             holder.bindHolder(item, position)
         }
     }
-
 
     internal fun getContentView(parent: ViewGroup): View = getContentView(parent, layoutResource)
 
