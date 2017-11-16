@@ -77,11 +77,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             }
 
         }
-
-        if (view == null) {
-            return inflater.inflate(R.layout.fragment_chat, container, false)
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_chat, container, false)
     }
 
     override fun onDestroy() {

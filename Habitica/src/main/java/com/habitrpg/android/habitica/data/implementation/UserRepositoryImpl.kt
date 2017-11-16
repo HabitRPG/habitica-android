@@ -35,7 +35,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun updateUser(user: User?, updateData: Map<String, Any>): Observable<User> {
         return if (user == null) {
-            Observable.just(null)
+            Observable.just(User())
         } else apiClient.updateUser(updateData).map { newUser -> mergeUser(user, newUser) }
     }
 
