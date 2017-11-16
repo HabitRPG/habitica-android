@@ -248,7 +248,8 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
         EventBus.getDefault().post(event)
     }
 
-    override fun getDisplayedClassName(): String = this.classType + super.getDisplayedClassName()
+    override val displayedClassName: String?
+        get() = this.classType + super.displayedClassName
 
     override fun onRefresh() {
         refreshLayout.isRefreshing = true

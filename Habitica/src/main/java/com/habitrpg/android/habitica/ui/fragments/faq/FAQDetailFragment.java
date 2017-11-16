@@ -31,7 +31,7 @@ public class FAQDetailFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_faq_detail, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
+        setUnbinder(ButterKnife.bind(this, view));
 
         if (this.article != null) {
             this.questionTextView.setText(this.article.getQuestion());

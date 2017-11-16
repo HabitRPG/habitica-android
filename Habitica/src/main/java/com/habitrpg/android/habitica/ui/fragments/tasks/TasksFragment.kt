@@ -273,7 +273,7 @@ class TasksFragment : BaseMainFragment() {
                 val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
                 if (fragment?.tutorialTexts != null && context != null) {
                     val finalText = context?.getString(R.string.tutorial_tasks_complete)
-                    if (!fragment.tutorialTexts.contains(finalText)) {
+                    if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
                         fragment.tutorialTexts.add(finalText)
                     }
                 }
@@ -378,7 +378,8 @@ class TasksFragment : BaseMainFragment() {
         return -1
     }
 
-    override fun getDisplayedClassName(): String? = null
+    override val displayedClassName: String?
+        get() = null
 
     override fun customTitle(): String? = null
 

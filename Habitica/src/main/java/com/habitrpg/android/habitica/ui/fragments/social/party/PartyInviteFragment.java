@@ -37,7 +37,7 @@ public class PartyInviteFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_party_invite, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        setUnbinder(ButterKnife.bind(this, v));
 
         if (isEmailInvite) {
             inviteDescription.setText(getString(R.string.invite_email_description));

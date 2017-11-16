@@ -36,7 +36,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
+        setUnbinder(ButterKnife.bind(this, view));
         adapter = new FAQOverviewRecyclerAdapter();
         adapter.getResetWalkthroughEvents().subscribe(aVoid -> this.userRepository.resetTutorial(user), RxErrorHandler.handleEmptyError());
         adapter.activity = activity;

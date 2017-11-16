@@ -60,7 +60,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
                 recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
                 this.loadItems();
 
-                compositeSubscription.add(adapter.getEquipEvents()
+                getCompositeSubscription().add(adapter.getEquipEvents()
                         .flatMap(key -> inventoryRepository.equip(user, "pet", key))
                         .subscribe(items -> {}, RxErrorHandler.handleEmptyError()));
             }

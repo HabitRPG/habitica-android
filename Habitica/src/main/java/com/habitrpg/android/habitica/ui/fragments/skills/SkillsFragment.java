@@ -68,8 +68,8 @@ public class SkillsFragment extends BaseMainFragment {
         adapter = new SkillsRecyclerViewAdapter();
         checkUserLoadSkills();
 
-        this.tutorialStepIdentifier = "skills";
-        this.tutorialText = getString(R.string.tutorial_skills);
+        this.setTutorialStepIdentifier("skills");
+        this.setTutorialText(getString(R.string.tutorial_skills));
 
         return view;
     }

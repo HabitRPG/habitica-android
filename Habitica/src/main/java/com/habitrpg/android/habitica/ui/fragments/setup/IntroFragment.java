@@ -49,7 +49,7 @@ public class IntroFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_intro, container, false);
 
-        unbinder = ButterKnife.bind(this, v);
+        setUnbinder(ButterKnife.bind(this, v));
 
         if (this.image != null) {
             this.imageView.setImageDrawable(this.image);

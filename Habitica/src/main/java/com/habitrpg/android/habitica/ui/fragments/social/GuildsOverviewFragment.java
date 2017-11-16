@@ -55,10 +55,10 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_guilds_overview, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        setUnbinder(ButterKnife.bind(this, v));
         swipeRefreshLayout.setOnRefreshListener(this);
         this.publicGuildsButton.setOnClickListener(this);
-        compositeSubscription.add(socialRepository.getUserGroups().subscribe(this::setGuilds, RxErrorHandler.handleEmptyError()));
+        getCompositeSubscription().add(socialRepository.getUserGroups().subscribe(this::setGuilds, RxErrorHandler.handleEmptyError()));
         return v;
     }
 

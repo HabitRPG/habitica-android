@@ -57,7 +57,7 @@ public class GuildFragment extends BaseMainFragment {
         setViewPagerAdapter();
 
         if (guildId != null && this.socialRepository != null) {
-            compositeSubscription.add(socialRepository.getGroup(this.guildId).subscribe(this::setGroup, RxErrorHandler.handleEmptyError()));
+            getCompositeSubscription().add(socialRepository.getGroup(this.guildId).subscribe(this::setGroup, RxErrorHandler.handleEmptyError()));
             socialRepository.retrieveGroup(this.guildId).subscribe(group -> {}, RxErrorHandler.handleEmptyError());
         }
 
