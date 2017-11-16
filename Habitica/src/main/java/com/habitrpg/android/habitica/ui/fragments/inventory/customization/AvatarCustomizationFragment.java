@@ -48,10 +48,10 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-        unbinder = ButterKnife.bind(this, view);
+        setUnbinder(ButterKnife.bind(this, view));
         adapter = new CustomizationRecyclerViewAdapter();
 
-        compositeSubscription.add(adapter.getSelectCustomizationEvents()
+        getCompositeSubscription().add(adapter.getSelectCustomizationEvents()
                 .flatMap(customization -> {
                     String updatePath = "preferences." + customization.getType();
                     if (customization.getCategory() != null) {
@@ -60,10 +60,10 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
                     return userRepository.updateUser(user, updatePath, customization.getIdentifier());
                 })
                 .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError()));
-        compositeSubscription.add(adapter.getUnlockCustomizationEvents()
+        getCompositeSubscription().add(adapter.getUnlockCustomizationEvents()
                 .flatMap(customization -> userRepository.unlockPath(user, customization))
                 .subscribe(unlockResponse -> {}, RxErrorHandler.handleEmptyError()));
-        compositeSubscription.add(adapter.getUnlockSetEvents()
+        getCompositeSubscription().add(adapter.getUnlockSetEvents()
                 .flatMap(set -> userRepository.unlockPath(user, set))
                 .subscribe(unlockResponse -> {}, RxErrorHandler.handleEmptyError()));
 

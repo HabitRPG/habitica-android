@@ -62,7 +62,7 @@ public class TutorialView extends FrameLayout {
 
     private void displayNextTutorialText() {
         currentTextIndex++;
-        if (currentTextIndex < tutorialTexts.size()) {
+        if (tutorialTexts != null && currentTextIndex < tutorialTexts.size()) {
             speechBubbleView.animateText(tutorialTexts.get(currentTextIndex));
             if (isDisplayingLastStep()) {
                 speechBubbleView.setConfirmationButtonVisibility(View.VISIBLE);

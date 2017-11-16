@@ -59,7 +59,7 @@ public class PartyMemberListFragment extends BaseFragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new PartyMemberRecyclerViewAdapter(null, true, getContext());
-        compositeSubscription.add(adapter.getUserClickedEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
+        getCompositeSubscription().add(adapter.getUserClickedEvents().subscribe(userId -> FullProfileActivity.open(getContext(), userId), RxErrorHandler.handleEmptyError()));
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
 

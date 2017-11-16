@@ -59,7 +59,7 @@ public class StableRecyclerFragment extends BaseFragment {
             setupViews = true;
         }
 
-        unbinder = ButterKnife.bind(this, view);
+        setUnbinder(ButterKnife.bind(this, view));
 
         if (setupViews) {
             recyclerView.setEmptyView(emptyView);

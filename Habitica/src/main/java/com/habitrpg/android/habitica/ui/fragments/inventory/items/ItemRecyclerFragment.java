@@ -76,7 +76,7 @@ public class ItemRecyclerFragment extends BaseFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_items, container, false);
         }
-        unbinder = ButterKnife.bind(this, view);
+        setUnbinder(ButterKnife.bind(this, view));
 
         recyclerView.setEmptyView(emptyView);
         emptyTextView.setText(getString(R.string.empty_items, itemTypeText));
@@ -106,11 +106,11 @@ public class ItemRecyclerFragment extends BaseFragment {
             }
             recyclerView.setAdapter(adapter);
 
-            compositeSubscription.add(adapter.getSellItemEvents()
+            getCompositeSubscription().add(adapter.getSellItemEvents()
                     .flatMap(item -> inventoryRepository.sellItem(user, item))
                     .subscribe(item -> {}, RxErrorHandler.handleEmptyError()));
 
-            compositeSubscription.add(adapter.getQuestInvitationEvents()
+            getCompositeSubscription().add(adapter.getQuestInvitationEvents()
                     .flatMap(quest -> inventoryRepository.inviteToQuest(quest))
                             .subscribe(group -> {
                                 OpenMenuItemCommand event1 = new OpenMenuItemCommand();
@@ -208,7 +208,7 @@ public class ItemRecyclerFragment extends BaseFragment {
             }
         }, RxErrorHandler.handleEmptyError());
 
-        compositeSubscription.add(inventoryRepository.getOwnedPets().subscribe(adapter::setOwnedPets, RxErrorHandler.handleEmptyError()));
+        getCompositeSubscription().add(inventoryRepository.getOwnedPets().subscribe(adapter::setOwnedPets, RxErrorHandler.handleEmptyError()));
     }
 
     @OnClick(R.id.openMarketButton)

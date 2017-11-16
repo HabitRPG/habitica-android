@@ -38,7 +38,7 @@ public class WelcomeFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_welcome, container, false);
 
-        unbinder = ButterKnife.bind(this, v);
+        setUnbinder(ButterKnife.bind(this, v));
 
         speechBubbleView.animateText(getContext().getString(R.string.welcome_text));
 

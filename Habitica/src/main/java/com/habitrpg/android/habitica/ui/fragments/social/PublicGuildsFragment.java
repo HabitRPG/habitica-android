@@ -50,7 +50,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            unbinder = ButterKnife.bind(this, view);
+            setUnbinder(ButterKnife.bind(this, view));
             recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
             viewAdapter = new PublicGuildsRecyclerViewAdapter(null, true);

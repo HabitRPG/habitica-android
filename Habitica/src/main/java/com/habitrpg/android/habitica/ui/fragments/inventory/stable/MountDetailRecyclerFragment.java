@@ -55,7 +55,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
                 recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
                 this.loadItems();
 
-                compositeSubscription.add(adapter.getEquipEvents()
+                getCompositeSubscription().add(adapter.getEquipEvents()
                         .flatMap(key -> inventoryRepository.equip(user, "mount", key))
                         .subscribe(items -> {}, RxErrorHandler.handleEmptyError()));
             }

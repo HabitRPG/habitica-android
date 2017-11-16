@@ -47,8 +47,8 @@ public class TavernFragment extends BaseMainFragment {
 
         setViewPagerAdapter();
 
-        this.tutorialStepIdentifier = "tavern";
-        this.tutorialText = getString(R.string.tutorial_tavern);
+        this.setTutorialStepIdentifier("tavern");
+        this.setTutorialText(getString(R.string.tutorial_tavern));
 
         return v;
     }
@@ -75,7 +75,7 @@ public class TavernFragment extends BaseMainFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (this.socialRepository != null) {
-            compositeSubscription.add(socialRepository.getGroup("habitrpg")
+            getCompositeSubscription().add(socialRepository.getGroup("habitrpg")
                     .subscribe(group -> {
                         TavernFragment.this.tavern = group;
                         if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {

@@ -44,7 +44,7 @@ public class TavernDetailFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(user -> {
+        getCompositeSubscription().add(userRepository.getUser(userId).subscribe(user -> {
             this.user = user;
             this.updatePausedState();
         }, RxErrorHandler.handleEmptyError()));

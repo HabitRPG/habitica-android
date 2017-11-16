@@ -119,8 +119,8 @@ public class PartyDetailFragment extends BaseFragment {
 
         refreshLayout.setOnRefreshListener(this::refreshParty);
 
-        compositeSubscription.add(socialRepository.getGroup(partyId).subscribe(this::updateParty, RxErrorHandler.handleEmptyError()));
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(this::updateUser, RxErrorHandler.handleEmptyError()));
+        getCompositeSubscription().add(socialRepository.getGroup(partyId).subscribe(this::updateParty, RxErrorHandler.handleEmptyError()));
+        getCompositeSubscription().add(userRepository.getUser(userId).subscribe(this::updateUser, RxErrorHandler.handleEmptyError()));
     }
 
     private void refreshParty() {
