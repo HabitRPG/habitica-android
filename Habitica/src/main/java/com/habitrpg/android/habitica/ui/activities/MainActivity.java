@@ -789,11 +789,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     private void displayTutorialStep(TutorialStep step, String text, boolean canBeDeferred) {
         TutorialView view = new TutorialView(this, step, this);
+        this.activeTutorialView = view;
         view.setTutorialText(text);
         view.onReaction = this;
         view.setCanBeDeferred(canBeDeferred);
         this.overlayLayout.addView(view);
-        this.activeTutorialView = view;
 
         Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("eventLabel", step.getIdentifier() + "-android");
@@ -804,11 +804,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     private void displayTutorialStep(TutorialStep step, List<String> texts, boolean canBeDeferred) {
         TutorialView view = new TutorialView(this, step, this);
+        this.activeTutorialView = view;
         view.setTutorialTexts(texts);
         view.onReaction = this;
         view.setCanBeDeferred(canBeDeferred);
         this.overlayLayout.addView(view);
-        this.activeTutorialView = view;
 
         Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("eventLabel", step.getIdentifier() + "-android");

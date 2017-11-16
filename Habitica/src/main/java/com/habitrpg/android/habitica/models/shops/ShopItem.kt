@@ -56,7 +56,7 @@ open class ShopItem : RealmObject() {
 
     fun canAfford(user: User?): Boolean = when(currency) {
         "gold" -> value <= user?.stats?.getGp() ?: 0.0
-        "gems" -> value <= user?.balance ?: 0.0 * 4
+        "gems" -> value <= user?.gemCount ?: 0
         "hourglasses" -> value <= user?.purchased?.plan?.consecutive?.trinkets ?: 0
         else -> false
     }
