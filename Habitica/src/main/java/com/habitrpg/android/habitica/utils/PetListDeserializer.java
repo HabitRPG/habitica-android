@@ -29,7 +29,10 @@ public class PetListDeserializer implements JsonDeserializer<RealmList<Pet>> {
             for (Pet item : existingItems) {
                 if (object.has(item.getKey())) {
                     JsonElement itemObject = object.get(item.getKey());
-                    item.setTrained(itemObject.getAsInt());
+                    try {
+                        item.setTrained(itemObject.getAsInt());
+                    } catch (UnsupportedOperationException ignored) {
+                    }
                     vals.add(item);
                     object.remove(item.getKey());
                 }
@@ -43,7 +46,10 @@ public class PetListDeserializer implements JsonDeserializer<RealmList<Pet>> {
                 if (entry.getValue().isJsonNull()) {
                     pet.setTrained(0);
                 } else {
-                    pet.setTrained(entry.getValue().getAsInt());
+                    try {
+                        pet.setTrained(entry.getValue().getAsInt());
+                    } catch (UnsupportedOperationException ignored) {
+                    }
                 }
                 vals.add(pet);
             }

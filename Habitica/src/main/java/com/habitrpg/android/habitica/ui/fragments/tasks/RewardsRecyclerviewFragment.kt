@@ -21,10 +21,8 @@ import java.util.*
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-
         inventoryRepository.retrieveInAppRewards().subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
-        return view
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,7 +58,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         userRepository.retrieveUser(true, true)
                 .flatMap<List<ShopItem>> { inventoryRepository.retrieveInAppRewards() }
                 .doOnTerminate {
-                    refreshLayout.isRefreshing = false
+                    refreshLayout?.isRefreshing = false
                 }.subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
     }
 

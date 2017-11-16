@@ -144,10 +144,12 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
 
         RelativeLayout badgeLayout = (RelativeLayout) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        TextView filterCountTextView = (TextView) badgeLayout.findViewById(R.id.badge_textview);
-        filterCountTextView.setText(null);
-        filterCountTextView.setVisibility(View.GONE);
-        badgeLayout.setOnClickListener(view -> showFilterDialog());
+        if (badgeLayout != null) {
+            TextView filterCountTextView = badgeLayout.findViewById(R.id.badge_textview);
+            filterCountTextView.setText(null);
+            filterCountTextView.setVisibility(View.GONE);
+            badgeLayout.setOnClickListener(view -> showFilterDialog());
+        }
     }
 
     private void showFilterDialog() {
