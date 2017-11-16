@@ -346,7 +346,11 @@
     <string name="sectionquestMounts">Quest</string>
     <string name="sectionspecialMounts">Rare</string>
     <string name="world_quest">World Quest</string>
-    <string name="inn_description">Rest in the Inn to prevent your undone Dailies from hurting you overnight! (Note: does not prevent you from receiving Boss damage.)</string>
+    <string name="inn_description">Need a break? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:\n\n
+&#8226; Missed Dailies won’t damage you\n
+&#8226; Tasks won’t lose streaks or decay in color\n
+&#8226; Bosses won’t do damage for your missed Dailies\n
+&#8226; Your boss damage or collection quest items will stay pending until check-out</string>
     <string name="empty_items" >You don\'t have any %s</string>
     <string name="user_level" >Lvl %d</string>
     <string name="user_level_with_class" >Lvl %1$d %2$s</string>
@@ -719,4 +723,5 @@
     <string name="class_gear_disclaimer">You can only purchase gear for your current class</string>
     <string name="available_stats" formatted="false">%d points</string>
     <string name="toogle_emojis">Toogle Emojis</string>
+    <string name="tavern_description">Welcome to the Inn! Pull up a chair to chat, or take a break from your tasks.</string>
 </resources>
