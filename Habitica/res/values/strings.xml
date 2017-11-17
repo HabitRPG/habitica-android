@@ -571,7 +571,7 @@
     <string name="weak">Weak</string>
     <string name="strong">Strong</string>
     <string name="gray">Grey</string>
-    <string name="dated">Dated</string>
+    <string name="dated">Scheduled</string>
     <string name="completed">Completed</string>
     <string name="setuP_group_other">Other</string>
     <string name="clear">Clear</string>

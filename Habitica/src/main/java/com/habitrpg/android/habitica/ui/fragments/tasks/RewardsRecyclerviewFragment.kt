@@ -31,7 +31,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         (layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (recyclerAdapter?.getItemViewType(position) ?: 0 < 2) {
-                    (getLayoutManager(context) as GridLayoutManager).spanCount
+                    (layoutManager as GridLayoutManager).spanCount
                 } else {
                     1
                 }
