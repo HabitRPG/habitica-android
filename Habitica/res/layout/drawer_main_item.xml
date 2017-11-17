@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="48dp"
-    android:paddingLeft="@dimen/drawer_padding"
-    android:paddingRight="@dimen/drawer_padding"
-    android:gravity="center_vertical">
+              android:paddingLeft="@dimen/drawer_padding"
+              android:paddingRight="@dimen/drawer_padding"
+              android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        style="@style/Body1"/>
+        style="@style/Body1"
+        android:textColor="@color/gray_50"
+        tools:text="Tasks"/>
 
     <TextView
         android:id="@+id/additionalInfoView"

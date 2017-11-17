@@ -78,8 +78,10 @@ class NavigationDrawerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             if (isSelected) {
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.gray_600))
+                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.brand_300))
             } else {
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
+                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_50))
             }
 
             if (drawerItem.additionalInfo != null) {
