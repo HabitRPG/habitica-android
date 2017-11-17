@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:background="@color/brand_100"
+          tools:text="Social"
+    android:textColor="@color/white"
+    android:paddingLeft="@dimen/drawer_padding"
+    android:paddingRight="@dimen/drawer_padding"
+    android:textAllCaps="true"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"/>

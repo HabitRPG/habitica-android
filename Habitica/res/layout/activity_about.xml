@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/tab_layout"
-        android:background="@color/material_drawer_background"
+        android:background="@color/white"
         />
 
 </RelativeLayout>

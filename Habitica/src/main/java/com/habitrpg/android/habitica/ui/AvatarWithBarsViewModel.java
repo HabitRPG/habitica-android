@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentComm
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.user.Stats;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.views.CurrencyViews;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
@@ -163,7 +163,7 @@ public class AvatarWithBarsViewModel {
     @OnClick(R.id.avatarView)
     public void avatarViewClicked() {
         OpenMenuItemCommand event = new OpenMenuItemCommand();
-        event.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_AVATAR();
+        event.identifier = NavigationDrawerFragment.SIDEBAR_AVATAR;
         EventBus.getDefault().post(event);
     }
 

@@ -26,9 +26,9 @@ import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -114,7 +114,7 @@ public class ItemRecyclerFragment extends BaseFragment {
                     .flatMap(quest -> inventoryRepository.inviteToQuest(quest))
                             .subscribe(group -> {
                                 OpenMenuItemCommand event1 = new OpenMenuItemCommand();
-                                event1.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_PARTY();
+                                event1.identifier = NavigationDrawerFragment.SIDEBAR_PARTY;
                                 EventBus.getDefault().post(event1);
                             }, RxErrorHandler.handleEmptyError()));
         }
@@ -224,7 +224,7 @@ public class ItemRecyclerFragment extends BaseFragment {
 
     private void openMarket() {
         OpenMenuItemCommand command = new OpenMenuItemCommand();
-        command.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_SHOPS();
+        command.identifier = NavigationDrawerFragment.SIDEBAR_SHOPS;
         EventBus.getDefault().post(command);
     }
 }
