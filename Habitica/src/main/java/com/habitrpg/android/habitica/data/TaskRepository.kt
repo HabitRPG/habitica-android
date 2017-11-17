@@ -19,8 +19,8 @@ interface TaskRepository : BaseRepository {
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Observable<TaskList>
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Observable<TaskList>
 
-    fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Observable<TaskScoringResult>
-    fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean): Observable<TaskScoringResult>
+    fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Observable<TaskScoringResult?>
+    fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean): Observable<TaskScoringResult?>
     fun scoreChecklistItem(taskId: String, itemId: String): Observable<Task>
 
     fun getTask(taskId: String): Observable<Task>

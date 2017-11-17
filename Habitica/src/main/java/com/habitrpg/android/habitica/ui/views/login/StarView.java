@@ -67,6 +67,9 @@ public class StarView extends AppCompatImageView {
                 runBlink();
             }
         });
-        animator.start();
+        try {
+            animator.start();
+        } catch (NullPointerException ignored) {
+        }
     }
 }

@@ -46,10 +46,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
-    override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Observable<TaskScoringResult> {
+    override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Observable<TaskScoringResult?> {
         val now = Date().time
         if (lastTaskAction > now - 500 && !force) {
-            return Observable.just(TaskScoringResult())
+            return Observable.just(null)
         }
         lastTaskAction = now
         return this.apiClient.postTaskDirection(task.id, (if (up) TaskDirection.up else TaskDirection.down).toString())
@@ -90,7 +90,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean): Observable<TaskScoringResult> {
+    override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean): Observable<TaskScoringResult?> {
         return localRepository.getTask(taskId).first()
                 .flatMap { task -> taskChecked(user, task, up, force) }
     }

@@ -836,7 +836,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Override
     public void onTutorialDeferred(TutorialStep step) {
-        step.setDisplayedOn(new Date());
+        taskRepository.executeTransaction(realm -> step.setDisplayedOn(new Date()));
 
         this.removeActiveTutorialView();
     }
