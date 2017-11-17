@@ -52,5 +52,7 @@ public class WelcomeFragment extends BaseFragment {
     }
 
     @Override
-    public void injectFragment(AppComponent component) {}
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
+    }
 }

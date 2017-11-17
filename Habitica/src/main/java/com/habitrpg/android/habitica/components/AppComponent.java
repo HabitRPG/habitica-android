@@ -65,6 +65,7 @@ import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsP
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
+import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
@@ -293,4 +294,6 @@ public interface AppComponent {
     void inject(@NotNull BulkAllocateStatsDialog bulkAllocateStatsDialog);
 
     void inject(@NotNull PushNotificationsPreferencesFragment pushNotificationsPreferencesFragment);
+
+    void inject(WelcomeFragment welcomeFragment);
 }

@@ -244,7 +244,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     }
 
     override fun runCron(tasks: List<Task>) {
-        val observable: Observable<List<TaskScoringResult>> = if (tasks.isNotEmpty()) {
+        val observable: Observable<List<TaskScoringResult?>> = if (tasks.isNotEmpty()) {
             Observable.from(tasks)
                     .flatMap { task -> taskRepository.taskChecked(null, task, true, true) }
                     .toList()

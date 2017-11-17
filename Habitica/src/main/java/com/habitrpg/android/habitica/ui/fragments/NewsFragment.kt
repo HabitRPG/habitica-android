@@ -18,14 +18,16 @@ class NewsFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        hideToolbar()
         return container?.inflate(R.layout.fragment_news)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val address = if (BuildConfig.DEBUG) BuildConfig.BASE_URL else context?.getString(R.string.base_url)
-        val webSettings = newsWebview.getSettings()
-        webSettings.setJavaScriptEnabled(true)
+        val webSettings = newsWebview.settings
+        webSettings.javaScriptEnabled = true
+        webSettings.domStorageEnabled = true
         newsWebview.webChromeClient = object : WebChromeClient() {
             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
                 Log.d("Habitica", consoleMessage.message() + " -- From line "
@@ -35,6 +37,11 @@ class NewsFragment : BaseMainFragment() {
             }
         }
         newsWebview.loadUrl(address + "/static/new-stuff")
+    }
+
+    override fun onDestroyView() {
+        showToolbar()
+        super.onDestroyView()
     }
 
     override fun injectFragment(component: AppComponent) {
