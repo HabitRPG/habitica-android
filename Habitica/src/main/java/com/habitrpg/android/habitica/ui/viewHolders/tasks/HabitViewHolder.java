@@ -41,7 +41,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
     @Override
     public void bindHolder(Task newTask, int position) {
         this.task = newTask;
-        if (newTask.getUp()) {
+        if (newTask.getUp() != null && newTask.getUp()) {
             this.btnPlusWrapper.setBackgroundResource(newTask.getLightTaskColor());
             if (newTask.getLightTaskColor() == R.color.yellow_100) {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus_yellow);
@@ -57,7 +57,7 @@ public class HabitViewHolder extends BaseTaskViewHolder {
             this.btnPlus.setClickable(false);
         }
 
-        if (newTask.getDown()) {
+        if (newTask.getDown() != null && newTask.getDown()) {
             this.btnMinusWrapper.setBackgroundResource(newTask.getLightTaskColor());
             if (newTask.getLightTaskColor() == R.color.yellow_100) {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus_yellow);
@@ -74,11 +74,11 @@ public class HabitViewHolder extends BaseTaskViewHolder {
         }
 
         String streakString = "";
-        if (newTask.getCounterUp() > 0 && newTask.getCounterDown() > 0) {
+        if (newTask.getCounterUp() != null && newTask.getCounterUp() > 0 && newTask.getCounterDown() != null && newTask.getCounterDown() > 0) {
             streakString = streakString + "+" + String.valueOf(task.getCounterUp()) + " | -" + String.valueOf(task.getCounterDown());
-        } else if (newTask.getCounterUp() > 0) {
+        } else if (newTask.getCounterUp() != null && newTask.getCounterUp() > 0) {
             streakString = streakString + "+" + String.valueOf(task.getCounterUp());
-        } else if (newTask.getCounterUp() > 0) {
+        } else if (newTask.getCounterDown() != null && newTask.getCounterDown() > 0) {
             streakString = streakString + "-" + String.valueOf(task.getCounterDown());
         }
         if (streakString.length() > 0) {

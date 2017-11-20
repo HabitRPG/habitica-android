@@ -99,7 +99,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
     }
 
     private fun refreshUserInbox() {
-        this.swipeRefreshLayout!!.isRefreshing = true
+        this.swipeRefreshLayout?.isRefreshing = true
         this.userRepository.retrieveUser(true)
                 .subscribe(Action1<User> {
                     user = it
@@ -124,11 +124,13 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
     }
 
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {
-        val clipMan = getActivity()!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipMan = getActivity()?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
         clipMan.primaryClip = messageText
         val activity = getActivity() as MainActivity?
-        showSnackbar(activity!!.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+        if (activity != null) {
+            showSnackbar(activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+        }
     }
 
     private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {

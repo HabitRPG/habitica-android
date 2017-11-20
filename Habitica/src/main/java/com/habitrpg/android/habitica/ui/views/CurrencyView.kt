@@ -29,7 +29,11 @@ class CurrencyView : android.support.v7.widget.AppCompatTextView {
                 attrs,
                 R.styleable.CurrencyViews,
                 0, 0)
-        lightBackground = attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, true) ?: true
+        lightBackground = try {
+            attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, true) ?: true
+        } catch (_: ArrayIndexOutOfBoundsException) {
+            true
+        }
     }
 
     constructor(context: Context, currency: String, lightbackground: Boolean) : super(context) {

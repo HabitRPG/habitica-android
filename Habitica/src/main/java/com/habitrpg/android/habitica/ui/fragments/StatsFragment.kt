@@ -240,7 +240,9 @@ class StatsFragment: BaseMainFragment() {
         outfitList.add(outfit.shield)
         outfitList.add(outfit.weapon)
 
-        inventoryRepository.getItems(outfitList).first().subscribe(Action1 {
+        inventoryRepository.getItems(outfitList).first()
+                .retry(1)
+                .subscribe(Action1 {
             val userStatComputer = UserStatComputer()
             val statsRows = userStatComputer.computeClassBonus(it, user)
 

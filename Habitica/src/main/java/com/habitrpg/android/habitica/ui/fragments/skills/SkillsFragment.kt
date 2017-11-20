@@ -59,7 +59,7 @@ class SkillsFragment : BaseMainFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView.invalidateItemDecorations()
-        recyclerView.addItemDecoration(DividerItemDecoration(getActivity()!!, DividerItemDecoration.VERTICAL))
+        recyclerView.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
@@ -70,11 +70,13 @@ class SkillsFragment : BaseMainFragment() {
             return
         }
 
-        adapter?.mana = this.user!!.stats.getMp()
+        adapter?.mana = this.user?.stats?.getMp()
 
-        Observable.concat<Skill>(userRepository.getSkills(user!!).first().flatMap( { Observable.from(it) }), userRepository.getSpecialItems(user!!).first().flatMap( { Observable.from(it) }))
-                .toList()
-                .subscribe(Action1 { skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
+        user?.let {
+            Observable.concat<Skill>(userRepository.getSkills(it).first().flatMap( { Observable.from(it) }), userRepository.getSpecialItems(it).first().flatMap( { Observable.from(it) }))
+                    .toList()
+                    .subscribe(Action1 { skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
+        }
     }
 
     override fun setUser(user: User?) {
@@ -104,15 +106,15 @@ class SkillsFragment : BaseMainFragment() {
 
     private fun displaySkillResult(usedSkill: Skill?, response: SkillResponse) {
         removeProgressDialog()
-        adapter!!.setMana(response.user.stats.mp)
+        adapter?.setMana(response.user.stats.mp)
         val activity = activity ?: return
-        if ("special" == usedSkill!!.habitClass) {
+        if ("special" == usedSkill?.habitClass) {
             showSnackbar(activity.getFloatingMenuWrapper(), context!!.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
         } else {
             showSnackbar(activity.getFloatingMenuWrapper(), null,
-                    context!!.getString(R.string.used_skill_without_mana, usedSkill.text),
+                    context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
-                    ContextCompat.getColor(context!!, R.color.blue_10), "-" + usedSkill.mana,
+                    ContextCompat.getColor(context!!, R.color.blue_10), "-" + usedSkill?.mana,
                     HabiticaSnackbar.SnackbarDisplayType.BLUE)
         }
         userRepository.retrieveUser(false).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
@@ -149,7 +151,7 @@ class SkillsFragment : BaseMainFragment() {
 
     private fun displayProgressDialog() {
         progressDialog?.dismiss()
-        progressDialog = ProgressDialog.show(activity, context!!.getString(R.string.skill_progress_title), null, true)
+        progressDialog = ProgressDialog.show(activity, context?.getString(R.string.skill_progress_title), null, true)
     }
 
     private fun removeProgressDialog() {

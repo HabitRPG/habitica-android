@@ -35,6 +35,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
+import kotlinx.android.synthetic.main.shop_header.*
 import org.greenrobot.eventbus.EventBus
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -269,7 +270,12 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         drawable.tileModeX = Shader.TileMode.REPEAT
                         Observable.just(drawable)
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(Action1 { backgroundView.background = it }, RxErrorHandler.handleEmptyError())
+                                .subscribe(Action1 {
+                                    if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                                        backgroundView.setBackgroundDrawable(it)
+                                    } else {
+                                        backgroundView.background = it
+                                    } }, RxErrorHandler.handleEmptyError())
                         dataSource.close()
                     }
                 }

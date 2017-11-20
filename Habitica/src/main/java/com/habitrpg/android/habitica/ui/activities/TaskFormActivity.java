@@ -798,7 +798,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     private void populateChecklistRecyclerView() {
         List<ChecklistItem> checklistItems = new ArrayList<>();
-        if (task != null && task.getChecklist() != null) {
+        if (task != null && task.isManaged()) {
             checklistItems = taskRepository.getUnmanagedCopy(task.getChecklist());
         }
         checklistAdapter.setItems(checklistItems);

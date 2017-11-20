@@ -75,7 +75,11 @@ class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context,
                 backgroundDrawable?.setColorFilter(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
                 titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
             }
-            titleWrapper.background = backgroundDrawable
+            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                titleWrapper.setBackgroundDrawable(backgroundDrawable)
+            } else {
+                titleWrapper.background = backgroundDrawable
+            }
         }
 
         allocateButton.setOnClickListener {

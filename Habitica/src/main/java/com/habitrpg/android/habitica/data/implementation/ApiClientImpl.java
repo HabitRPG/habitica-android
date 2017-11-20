@@ -544,6 +544,9 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<UnlockResponse> unlockPath(String path) {
+        if (path == null) {
+            return Observable.just(null);
+        }
         return apiService.unlockPath(path).compose(configureApiCallObserver());
     }
 
@@ -949,7 +952,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Void> togglePinnedItem(String pinType, String path) {
-        if (pinType == null) {
+        if (pinType == null || path == null) {
             return Observable.just(null);
         }
         return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver());

@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import kotlinx.android.synthetic.main.shop_header.*
 import kotlinx.android.synthetic.main.fragment_tavern_detail.*
+import kotlinx.android.synthetic.main.stats_view.view.*
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
@@ -91,7 +92,12 @@ class TavernDetailFragment : BaseFragment() {
                     drawable.tileModeX = Shader.TileMode.REPEAT
                     Observable.just(drawable)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Action1 { backgroundView.background = it }, RxErrorHandler.handleEmptyError())
+                            .subscribe(Action1 {
+                                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                                    backgroundView?.setBackgroundDrawable(it)
+                                } else {
+                                    backgroundView?.background = it
+                                }}, RxErrorHandler.handleEmptyError())
                     dataSource.close()
                 }
             }
