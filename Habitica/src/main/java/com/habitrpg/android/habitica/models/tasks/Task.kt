@@ -47,6 +47,10 @@ open class Task : RealmObject, Parcelable {
     var streak: Int = 0
     var startDate: Date? = null
     var repeat: Days? = null
+    set(value) {
+        field = value
+        field?.taskId = id
+    }
     //todos
     @SerializedName("date")
     var dueDate: Date? = null
@@ -60,6 +64,10 @@ open class Task : RealmObject, Parcelable {
     @PrimaryKey
     @SerializedName("_id")
     var id: String? = null
+    set(value) {
+        field = value
+        repeat?.taskId = id
+    }
 
     var isDue: Boolean? = null
 
