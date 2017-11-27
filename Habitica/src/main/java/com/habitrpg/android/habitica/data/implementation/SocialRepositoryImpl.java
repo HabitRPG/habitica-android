@@ -200,7 +200,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<List<Void>> inviteToGroup(String id, Map<String, Object> inviteData) {
+    public Observable<List<String>> inviteToGroup(String id, Map<String, Object> inviteData) {
         return apiClient.inviteToGroup(id, inviteData);
     }
 

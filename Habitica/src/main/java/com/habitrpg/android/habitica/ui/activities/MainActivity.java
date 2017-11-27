@@ -530,6 +530,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         if (drawer != null && drawer.isDrawerOpen()) {
             drawer.closeDrawer();
         } else {
+            try {
+                crashlyticsProxy.setString("nextOnBackStack", getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName());
+            } catch (ArrayIndexOutOfBoundsException ignored) {}
             super.onBackPressed();
             if (this.activeFragment != null && activeFragment.get() != null) {
                 this.activeFragment.get().updateUserData(user);

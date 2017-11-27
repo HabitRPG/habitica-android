@@ -120,17 +120,21 @@ class SkillsFragment : BaseMainFragment() {
         userRepository.retrieveUser(false).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            TASK_SELECTION_ACTIVITY -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    useSkill(selectedSkill, data.getStringExtra("task_id"))
+        if (data != null) {
+            when (requestCode) {
+                TASK_SELECTION_ACTIVITY -> {
+                    if (resultCode == Activity.RESULT_OK) {
+                        useSkill(selectedSkill, data.getStringExtra("task_id"))
+                    }
                 }
-            }
-            MEMBER_SELECTION_ACTIVITY -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    useSkill(selectedSkill, data.getStringExtra("member_id"))
+                MEMBER_SELECTION_ACTIVITY -> {
+                    if (resultCode == Activity.RESULT_OK) {
+                        useSkill(selectedSkill, data.getStringExtra("member_id"))
+                    }
                 }
             }
         }

@@ -51,7 +51,7 @@ public interface SocialRepository extends BaseRepository {
     Observable<RealmResults<Member>> getGroupMembers(String id);
     Observable<List<Member>> retrieveGroupMembers(String id, boolean includeAllPublicFields);
 
-    Observable<List<Void>> inviteToGroup(String id, Map<String, Object> inviteData);
+    Observable<List<String>> inviteToGroup(String id, Map<String, Object> inviteData);
 
     Observable<List<Challenge>> getUserChallenges();
 

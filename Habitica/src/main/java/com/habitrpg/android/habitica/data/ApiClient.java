@@ -159,7 +159,7 @@ public interface ApiClient {
 
     Observable<Void> seenMessages(String groupId);
 
-    Observable<List<Void>> inviteToGroup(String groupId, Map<String, Object> inviteData);
+    Observable<List<String>> inviteToGroup(String groupId, Map<String, Object> inviteData);
 
     Observable<Void> rejectGroupInvite(String groupId);
 

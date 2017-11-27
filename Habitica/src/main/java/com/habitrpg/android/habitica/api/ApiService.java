@@ -227,7 +227,7 @@ public interface ApiService {
     Observable<HabitResponse<Void>> seenMessages(@Path("gid") String groupId);
 
     @POST("groups/{gid}/invite")
-    Observable<HabitResponse<List<Void>>> inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData);
+    Observable<HabitResponse<List<String>>> inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData);
 
     @POST("groups/{gid}/reject-invite")
     Observable<HabitResponse<Void>> rejectGroupInvite(@Path("gid") String groupId);
