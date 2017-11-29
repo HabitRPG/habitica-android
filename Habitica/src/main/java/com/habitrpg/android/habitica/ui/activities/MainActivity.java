@@ -532,8 +532,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         } else {
             try {
                 crashlyticsProxy.setString("nextOnBackStack", getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName());
-            } catch (ArrayIndexOutOfBoundsException ignored) {}
-            super.onBackPressed();
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            } catch (NullPointerException ignored) {}
+            try {
+                super.onBackPressed();
+            } catch (IllegalStateException ignored) {}
             if (this.activeFragment != null && activeFragment.get() != null) {
                 this.activeFragment.get().updateUserData(user);
             }
