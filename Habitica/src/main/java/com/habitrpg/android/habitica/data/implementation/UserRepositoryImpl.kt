@@ -182,8 +182,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun resetAccount(): Observable<User> {
-        return apiClient.resetAccount()
-                .flatMap { retrieveUser(true, true) }
+        return apiClient.resetAccount().flatMap { retrieveUser(true, true) }
     }
 
     override fun deleteAccount(password: String): Observable<Void> =
@@ -243,15 +242,21 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                         }
                     }
 
-    override fun runCron(tasks: List<Task>) {
-        val observable: Observable<List<TaskScoringResult?>> = if (tasks.isNotEmpty()) {
-            Observable.from(tasks)
-                    .flatMap { task -> taskRepository.taskChecked(null, task, true, true) }
-                    .toList()
-        } else {
-            Observable.just(null)
+    override fun runCron(tasks: MutableList<Task>) {
+        var observable: Observable<Any> = localRepository.getUser(userId).first()
+                .filter { it.needsCron }
+                .map {  user -> localRepository.executeTransaction {
+                    user.needsCron = false
+                    user.lastCron = Date()
+                }
+                    user
+                }
+        if (tasks.isNotEmpty()) {
+            for (task in tasks) {
+                observable = observable.flatMap { taskRepository.taskChecked(null, task, true, true) }
+            }
+            observable.toList()
         }
-        localRepository.getUser(userId).first().subscribe(Action1 { user -> localRepository.executeTransaction { user.needsCron = false } }, RxErrorHandler.handleEmptyError())
         observable.flatMap { apiClient.runCron() }
                 .flatMap { this.retrieveUser(true, true) }
                 .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())

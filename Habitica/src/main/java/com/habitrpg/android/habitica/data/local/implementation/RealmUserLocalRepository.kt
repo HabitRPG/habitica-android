@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.TutorialStep
@@ -10,6 +11,8 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import rx.Observable
+import rx.functions.Action0
+import rx.functions.Action1
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
 
@@ -27,6 +30,16 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun saveUser(user: User) {
+        val oldUser = realm.where(User::class.java)
+                .equalTo("id", user.id)
+                .findFirst()
+        if (oldUser != null && oldUser.isValid) {
+            if (user.needsCron && !oldUser.needsCron) {
+                if (user.lastCron.before(oldUser.lastCron)) {
+                    user.needsCron = false
+                }
+            }
+        }
         realm.executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
         if (user.tags != null) {
             removeOldTags(user.id, user.tags)
