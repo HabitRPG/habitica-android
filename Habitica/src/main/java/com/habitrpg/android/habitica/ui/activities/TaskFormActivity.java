@@ -616,7 +616,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         });
 
         // Every X
-        setEveryXSpinner(repeatablesEveryXSpinner);
+        setupEveryXSpinner(repeatablesEveryXSpinner);
         repeatablesEveryXSpinner.setOnValueChangedListener((picker, oldVal, newVal) -> generateSummary());
 
         // WeekDays
@@ -754,11 +754,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     }
 
-    private void setEveryXSpinner(NumberPicker frequencyPicker) {
+    private void setupEveryXSpinner(NumberPicker frequencyPicker) {
 //        View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, this.frequencyContainer, false);
 //        frequencyPicker = (NumberPicker) dayRow.findViewById(R.id.numberPicker);
-        frequencyPicker.setMinValue(1);
+        frequencyPicker.setMinValue(0);
         frequencyPicker.setMaxValue(366);
+        frequencyPicker.setValue(1);
 //        TextView tv = (TextView) dayRow.findViewById(R.id.label);
 //        tv.setText(getResources().getString(R.string.frequency_daily));
 //        this.frequencyContainer.addView(dayRow);
