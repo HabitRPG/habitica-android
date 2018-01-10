@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentComm
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.views.CurrencyViews;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
@@ -116,9 +117,11 @@ public class AvatarWithBarsViewModel {
         setXpBarData(stats.getExp().floatValue(), stats.getToNextLevel());
         setMpBarData(stats.getMp().floatValue(), stats.getMaxMP());
 
-        currencyView.setHourglasses(user.getHourglassCount());
         currencyView.setGold(stats.getGp());
-        currencyView.setGems(user.getGemCount());
+        if (user instanceof User) {
+            currencyView.setHourglasses(user.getHourglassCount());
+            currencyView.setGems(user.getGemCount());
+        }
     }
 
     private void setHpBarData(float value, int valueMax) {
