@@ -34,11 +34,13 @@ class CurrencyView : android.support.v7.widget.AppCompatTextView {
         } catch (_: ArrayIndexOutOfBoundsException) {
             true
         }
+        visibility = GONE;
     }
 
     constructor(context: Context, currency: String, lightbackground: Boolean) : super(context) {
         this.lightBackground = lightbackground
         this.currency = currency
+        visibility = GONE;
     }
 
     private fun configureCurrency() {
@@ -73,8 +75,10 @@ class CurrencyView : android.support.v7.widget.AppCompatTextView {
         field = value
         if (value != null) {
             drawable = BitmapDrawable(resources, value)
-            this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-            val padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6f, context.resources.displayMetrics).toInt()
+            this.setCompoundDrawablesWithIntrinsicBounds(drawable,
+                    null, null, null)
+            val padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    6f, context.resources.displayMetrics).toInt()
             compoundDrawablePadding = padding
             this.gravity = Gravity.CENTER_VERTICAL
         }
@@ -113,6 +117,8 @@ class CurrencyView : android.support.v7.widget.AppCompatTextView {
     private fun updateVisibility() {
         if ("hourglasses" == this.currency) {
             visibility = if ("0" == text) View.GONE else View.VISIBLE
+        } else {
+            visibility = View.VISIBLE;
         }
     }
 }
