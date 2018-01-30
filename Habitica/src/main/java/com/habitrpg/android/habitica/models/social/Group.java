@@ -4,11 +4,15 @@ import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.user.User;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Group extends RealmObject {
+
+    public static final String TAVERN_ID = "00000000-0000-4000-A000-000000000000";
 
     @SerializedName("_id")
     @PrimaryKey

@@ -43,14 +43,6 @@ class TavernFragment : BaseMainFragment() {
         super.onViewCreated(view, savedInstanceState)
         setViewPagerAdapter()
         viewPager.currentItem = 0
-        compositeSubscription.add(socialRepository.getGroup("habitrpg")?.subscribe(Action1 { group ->
-            this@TavernFragment.tavern = group
-            if (group.quest != null && group.quest.key != null && this@TavernFragment.isAdded) {
-                this@TavernFragment.viewPager.adapter?.notifyDataSetChanged()
-                this@TavernFragment.tabLayout?.visibility = View.VISIBLE
-                this@TavernFragment.tabLayout?.setupWithViewPager(this@TavernFragment.viewPager)
-            }
-        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroyView() {
@@ -81,7 +73,7 @@ class TavernFragment : BaseMainFragment() {
                         tavernDetailFragment
                     }
                     1 -> {
-                        chatListFragment.configure("habitrpg", user, true)
+                        chatListFragment.configure(Group.TAVERN_ID, user, true)
                         chatListFragment
                     }
                     else -> Fragment()

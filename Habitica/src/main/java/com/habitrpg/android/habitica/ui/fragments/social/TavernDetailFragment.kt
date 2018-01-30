@@ -5,8 +5,10 @@ import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -32,9 +34,12 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
 import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.request.ImageRequestBuilder
+import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.members.PlayerTier
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
@@ -49,6 +54,10 @@ class TavernDetailFragment : BaseFragment() {
 
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
     @Inject
@@ -99,7 +108,13 @@ class TavernDetailFragment : BaseFragment() {
                     drawable.tileModeX = Shader.TileMode.REPEAT
                     Observable.just(drawable)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Action1 { backgroundView.background = it }, RxErrorHandler.handleEmptyError())
+                            .subscribe(Action1 {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                    backgroundView.background = it
+                                } else {
+                                    backgroundView.setBackgroundDrawable(it)
+                                }
+                            }, RxErrorHandler.handleEmptyError())
                     dataSource.close()
                 }
             }
@@ -107,6 +122,23 @@ class TavernDetailFragment : BaseFragment() {
 
         addPlayerTiers()
         bindButtons()
+
+        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
+                .doOnNext({ worldBossSection.visibility = if (it.quest.active) View.VISIBLE else View.GONE })
+                .filter { it.quest.active }
+                .doOnNext({ questProgressView.progress = it.quest.progress})
+                .flatMap { inventoryRepository.getQuestContent(it.quest.key) }
+                .subscribe(Action1 {
+                    questProgressView.quest = it
+                }, RxErrorHandler.handleEmptyError()))
+        socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+    }
+
+    override fun onDestroy() {
+        userRepository.close()
+        socialRepository.close()
+        inventoryRepository.close()
+        super.onDestroy()
     }
 
     private fun bindButtons() {

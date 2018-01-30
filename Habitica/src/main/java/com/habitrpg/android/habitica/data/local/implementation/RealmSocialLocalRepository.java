@@ -191,4 +191,10 @@ public class RealmSocialLocalRepository extends RealmBaseLocalRepository impleme
                 .filter(messages -> messages.isLoaded() && messages.isValid() && !messages.isEmpty())
                 .map(messages -> messages.first());
     }
+
+    @Override
+    public boolean doesGroupExist(String id) {
+        Group party = realm.where(Group.class).equalTo("id", id).findFirst();
+        return party != null && party.isValid();
+    }
 }

@@ -736,4 +736,8 @@
     <string name="tiers_descriptions">The colored usernames you see in chat represent a person’s contributor tier. The higher the tier, the more the person has contributed to habitica through art, code, the community, or more!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="world_boss">World  Boss</string>
+    <string name="world_boss_art">Boss Art</string>
+    <string name="boss_art">Boss Art</string>
+    <string name="world_boss_description">World Boss Description</string>
 </resources>

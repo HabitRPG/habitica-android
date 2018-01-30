@@ -19,6 +19,7 @@ import java.util.Map;
 
 import io.realm.RealmResults;
 import rx.Observable;
+import rx.functions.Func1;
 
 
 public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalRepository> implements SocialRepository {
@@ -103,7 +104,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     @Override
     public Observable<Group> retrieveGroup(String id) {
         Observable<Group> observable = apiClient.getGroup(id);
-        if (!"party".equals(id)) {
+        if (!"party".equals(id) && localRepository.doesGroupExist(id)) {
             observable = observable.withLatestFrom(localRepository.getGroup(id)
                     .first(), (newGroup, oldGroup) -> {
                 newGroup.isMember = oldGroup.isMember;

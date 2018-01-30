@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
@@ -10,18 +11,12 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.bindView
 
-
-/**
- * Created by phillip on 29.01.18.
- */
-
-
 class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     private val titleView: LinearLayout by bindView(R.id.title_view)
     private val titleLabel: TextView by bindView(R.id.titleTextView)
     private val caretView: ImageView by bindView(R.id.caretView)
-
+    private var preferences: SharedPreferences? = null
     private val padding = context?.resources?.getDimension(R.dimen.spacing_large)?.toInt() ?: 0
 
     var title: CharSequence
@@ -44,7 +39,10 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
 
     var caretColor: Int = 0
 
+    var identifier: String? = null
+
     private fun showViews() {
+        updatePreferences()
         setCaretImage()
         setPadding(0, 0, 0, padding)
         (2 until childCount)
@@ -53,6 +51,7 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     }
 
     private fun hideViews() {
+        updatePreferences()
         setCaretImage()
         setPadding(0, 0, 0, 0)
         (2 until childCount)
@@ -60,6 +59,15 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
                 .forEach {
                     it.visibility = View.GONE
                 }
+    }
+
+    private fun updatePreferences() {
+        if (identifier == null) {
+            return
+        }
+        val editPreferences = preferences?.edit()
+        editPreferences?.putBoolean(identifier, isCollapsed)
+        editPreferences?.apply()
     }
 
     private fun setCaretImage() {
@@ -77,8 +85,8 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        super.onLayout(changed, l, t, r, b)
         setChildMargins()
+        super.onLayout(changed, l, t, r, b)
     }
 
     init {
@@ -96,7 +104,16 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
                 R.styleable.CollapsibleSectionView,
                 0, 0)
         title = attributes?.getString(R.styleable.CollapsibleSectionView_title) ?: ""
+        identifier = attributes?.getString(R.styleable.CollapsibleSectionView_identifier)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         setCaretImage()
         setChildMargins()
+        preferences = context.getSharedPreferences("collapsible_sections", 0)
+        if (identifier != null && preferences?.getBoolean(identifier, false) == true) {
+            isCollapsed = true
+        }
     }
 }

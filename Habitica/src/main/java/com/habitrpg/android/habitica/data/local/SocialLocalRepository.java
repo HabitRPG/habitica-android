@@ -35,4 +35,6 @@ public interface SocialLocalRepository extends BaseLocalRepository {
     void setQuestActivity(Group party, boolean active);
 
     void saveChatMessages(String groupId, List<ChatMessage> chatMessages);
+
+    boolean doesGroupExist(String id);
 }

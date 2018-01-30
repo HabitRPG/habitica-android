@@ -2,6 +2,7 @@
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />
     <attr name="title" format="string" />
+    <attr name="identifier" format="string" />
     <attr name="hasLightBackground" format="boolean" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
@@ -68,5 +69,6 @@
     </declare-styleable>
     <declare-styleable name="CollapsibleSectionView">
         <attr name="title" />
+        <attr name="identifier" />
     </declare-styleable>
 </resources>

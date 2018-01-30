@@ -16,7 +16,9 @@ public class QuestContent extends RealmObject implements Item {
     private int lvl;
     private boolean canBuy;
     private String category;
+    @Nullable
     private QuestBoss boss;
+    @Nullable
     private QuestDrops drop;
 
     RealmList<QuestCollect> collect;
