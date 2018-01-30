@@ -23,12 +23,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -217,6 +220,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     private AvatarView sideAvatarView;
     private TutorialView activeTutorialView;
     private NavigationDrawerFragment drawerFragment;
+    private ActionBarDrawerToggle drawerToggle;
 
 
     @Override
@@ -268,9 +272,58 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     MainActivity.this.setUserData();
                 }, RxErrorHandler.handleEmptyError());
 
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+
         drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        drawerFragment.setUp(R.id.navigation_drawer, findViewById(R.id.drawer_layout));
+        drawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
         drawerFragment.setSelection(NavigationDrawerFragment.SIDEBAR_TASKS, true);
+
+        drawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                findViewById(R.id.drawer_layout),         /* DrawerLayout object */
+                R.string.navigation_drawer_open,  /* "open drawer" description */
+                R.string.navigation_drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        drawerLayout.addDrawerListener(drawerToggle);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public int getStatusBarHeight() {
@@ -475,7 +528,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     }
 
     private void setTranslatedFragmentTitle(@Nullable BaseMainFragment fragment) {
-        if (getSupportActionBar() == null) {
+            if (getSupportActionBar() == null) {
             return;
         }
         if (fragment != null && fragment.customTitle() != null) {
