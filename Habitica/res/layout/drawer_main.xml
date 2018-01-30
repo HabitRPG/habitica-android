@@ -38,14 +38,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:src="@drawable/ic_message_white_24dp"
+                android:src="@drawable/menu_messages"
                 android:layout_marginLeft="16dp"/>
             <ImageButton
                 android:id="@+id/settingsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:src="@drawable/ic_settings_white_24dp"
+                android:src="@drawable/menu_settings"
                 android:layout_marginLeft="20dp"/>
 
         </LinearLayout>

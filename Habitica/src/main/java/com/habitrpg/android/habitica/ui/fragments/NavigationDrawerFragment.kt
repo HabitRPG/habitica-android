@@ -5,10 +5,10 @@ import android.app.ActionBar
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.v4.app.ActionBarDrawerToggle
 import android.support.v4.app.DialogFragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment
+import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import kotlinx.android.synthetic.main.drawer_main.*
 import rx.Subscription
@@ -44,11 +45,6 @@ import rx.functions.Action1
  * design guidelines](https://developer.android.com/design/patterns/navigation-drawer.html#Interaction) for a complete explanation of the behaviors implemented here.
  */
 class NavigationDrawerFragment : DialogFragment() {
-
-    /**
-     * Helper component that ties the action bar to the navigation drawer.
-     */
-    private var drawerToggle: ActionBarDrawerToggle? = null
 
     private var drawerLayout: DrawerLayout? = null
     private var fragmentContainerView: View? = null
@@ -77,6 +73,8 @@ class NavigationDrawerFragment : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true)
+
+        context?.let {recyclerView.setPadding(0, 0, 0,  NavbarUtils.getNavbarHeight(it)) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -222,41 +220,6 @@ class NavigationDrawerFragment : DialogFragment() {
         // set a custom shadow that overlays the main content when the drawer opens
         this.drawerLayout?.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // set up the drawer's list view with items and click listener
-
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the navigation drawer and the action bar app icon.
-        drawerToggle = object : ActionBarDrawerToggle(
-                activity, /* host Activity */
-                this.drawerLayout, /* DrawerLayout object */
-                R.drawable.ic_menu_white_24dp, /* nav drawer image to replace 'Up' caret */
-                R.string.navigation_drawer_open, /* "open drawer" description for accessibility */
-                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
-        ) {
-            override fun onDrawerClosed(drawerView: View) {
-                super.onDrawerClosed(drawerView)
-                if (!isAdded) {
-                    return
-                }
-
-                activity?.invalidateOptionsMenu() // calls onPrepareOptionsMenu()
-            }
-
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-                if (!isAdded) {
-                    return
-                }
-
-                activity?.invalidateOptionsMenu() // calls onPrepareOptionsMenu()
-            }
-        }
-
-        drawerToggle?.isDrawerIndicatorEnabled = true
-
-        // Defer code dependent on restoration of previous instance state.
-        this.drawerLayout?.post { drawerToggle?.syncState() }
-
-        //this.drawerLayout?.setDrawerListener(drawerToggle)
     }
 
     fun openDrawer() {
@@ -287,12 +250,6 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        // Forward the new configuration the drawer toggle component.
-        drawerToggle?.onConfigurationChanged(newConfig)
     }
 
     companion object {
