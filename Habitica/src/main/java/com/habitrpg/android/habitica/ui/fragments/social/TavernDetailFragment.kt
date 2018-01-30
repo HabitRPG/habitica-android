@@ -25,7 +25,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import javax.inject.Inject
 import javax.inject.Named
 
-import butterknife.OnClick
 import com.facebook.common.executors.CallerThreadExecutor
 import com.facebook.common.references.CloseableReference
 import com.facebook.datasource.DataSource
@@ -36,12 +35,11 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.members.PlayerTier
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import kotlinx.android.synthetic.main.shop_header.*
 import kotlinx.android.synthetic.main.fragment_tavern_detail.*
-import kotlinx.android.synthetic.main.stats_view.view.*
 import org.greenrobot.eventbus.EventBus
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -121,11 +119,11 @@ class TavernDetailFragment : BaseFragment() {
             context?.startActivity(i)
         }
         faqButton.setOnClickListener {
-            EventBus.getDefault().post(OpenMenuItemCommand(MainDrawerBuilder.SIDEBAR_HELP))
+            EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_HELP))
 
         }
         reportButton.setOnClickListener {
-            EventBus.getDefault().post(OpenMenuItemCommand(MainDrawerBuilder.SIDEBAR_ABOUT))
+            EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_ABOUT))
         }
     }
 

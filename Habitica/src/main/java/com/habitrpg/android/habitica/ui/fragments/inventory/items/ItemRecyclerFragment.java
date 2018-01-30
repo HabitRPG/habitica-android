@@ -26,9 +26,9 @@ import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -113,9 +113,7 @@ public class ItemRecyclerFragment extends BaseFragment {
             getCompositeSubscription().add(adapter.getQuestInvitationEvents()
                     .flatMap(quest -> inventoryRepository.inviteToQuest(quest))
                             .subscribe(group -> {
-                                OpenMenuItemCommand event1 = new OpenMenuItemCommand();
-                                event1.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_PARTY();
-                                EventBus.getDefault().post(event1);
+                                EventBus.getDefault().post(new OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_PARTY));
                             }, RxErrorHandler.handleEmptyError()));
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -223,8 +221,6 @@ public class ItemRecyclerFragment extends BaseFragment {
     }
 
     private void openMarket() {
-        OpenMenuItemCommand command = new OpenMenuItemCommand();
-        command.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_SHOPS();
-        EventBus.getDefault().post(command);
+        EventBus.getDefault().post(new OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_SHOPS));
     }
 }

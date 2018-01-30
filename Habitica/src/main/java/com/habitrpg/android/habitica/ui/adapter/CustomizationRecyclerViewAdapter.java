@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -217,7 +217,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                         .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {
                             if (customization.getPrice() > gemBalance) {
                                 OpenMenuItemCommand event = new OpenMenuItemCommand();
-                                event.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_PURCHASE();
+                                event.identifier = NavigationDrawerFragment.SIDEBAR_PURCHASE;
                                 EventBus.getDefault().post(event);
                                 return;
                             }
@@ -276,7 +276,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                     .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {
                         if (set.price > gemBalance) {
                             OpenMenuItemCommand event = new OpenMenuItemCommand();
-                            event.identifier = MainDrawerBuilder.INSTANCE.getSIDEBAR_PURCHASE();
+                            event.identifier = NavigationDrawerFragment.SIDEBAR_PURCHASE;
                             EventBus.getDefault().post(event);
                             return;
                         }

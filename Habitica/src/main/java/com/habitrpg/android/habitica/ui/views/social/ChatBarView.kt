@@ -79,7 +79,7 @@ class ChatBarView : FrameLayout {
         val tintColor: Int = if (enabled) {
             ContextCompat.getColor(context, R.color.brand_400)
         } else {
-            ContextCompat.getColor(context, R.color.md_grey_400)
+            ContextCompat.getColor(context, R.color.gray_400)
         }
         sendButton.setColorFilter(tintColor)
         sendButton.isEnabled = enabled

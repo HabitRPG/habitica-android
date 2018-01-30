@@ -23,7 +23,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:scrollbarSize="3dp"
-            android:scrollbarThumbVertical="@color/md_grey_500"
+            android:scrollbarThumbVertical="@color/scrollbarThumb"
             android:scrollbars="vertical"
             android:paddingBottom="?attr/actionBarSize" />
 

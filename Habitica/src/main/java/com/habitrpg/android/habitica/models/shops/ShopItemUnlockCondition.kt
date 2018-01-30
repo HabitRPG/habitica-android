@@ -12,6 +12,8 @@ open class ShopItemUnlockCondition : RealmObject() {
 
     fun readableUnlockConditionId(): Int = when (this.condition) {
         "party invite" -> R.string.party_invite
+        "login incentive" -> R.string.login_incentive
+        "create account" -> R.string.create_account
         else -> R.string.empty
     }
 }
