@@ -1,6 +1,7 @@
 <resources>
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />
+    <attr name="title" format="string" />
     <attr name="hasLightBackground" format="boolean" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
@@ -48,7 +49,7 @@
     </declare-styleable>
     <declare-styleable name="FixValuesEditText">
         <attr name="fixIconName" format="string" />
-        <attr name="title" format="string" />
+        <attr name="title" />
         <attr name="iconBgColor" format="color" />
         <attr name="hintStyle" format="reference" />
     </declare-styleable>
@@ -64,5 +65,8 @@
         <attr name="statsColor" />
         <attr name="statsTextColor" format="color" />
         <attr name="statsTitle" />
+    </declare-styleable>
+    <declare-styleable name="CollapsibleSectionView">
+        <attr name="title" />
     </declare-styleable>
 </resources>

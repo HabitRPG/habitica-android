@@ -59,7 +59,11 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
         Intent intent = new Intent(context.getApplicationContext(), HabitButtonWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
 
-        context.startService(intent);
+        try {
+            context.startService(intent);
+        } catch (IllegalStateException ignore) {
+            //TODO: Make this play more nicely with Android 8
+        }
     }
 
     @Override
@@ -76,9 +80,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
             if (taskId != null) {
                 userRepository.getUser(userId).first().flatMap(user -> taskRepository.taskChecked(user, taskId, TaskDirection.up.toString().equals(direction), false))
-                        .subscribe(taskDirectionData -> {
-                            showToastForTaskDirection(context, taskDirectionData, userId);
-                        }, RxErrorHandler.handleEmptyError(), () -> this.onUpdate(context, mgr, ids));
+                        .subscribe(taskDirectionData -> showToastForTaskDirection(context, taskDirectionData, userId), RxErrorHandler.handleEmptyError(), () -> this.onUpdate(context, mgr, ids));
             }
         }
         super.onReceive(context, intent);

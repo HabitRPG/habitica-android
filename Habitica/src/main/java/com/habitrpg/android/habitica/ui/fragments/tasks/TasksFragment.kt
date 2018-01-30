@@ -154,12 +154,8 @@ class TasksFragment : BaseMainFragment() {
                 return@setListener
             }
             val activePos = viewPager?.currentItem ?: 0
-            if (activePos >= 1 && viewFragmentsDictionary?.get(activePos - 1) != null && activePos >= 1 && viewFragmentsDictionary?.get(activePos - 1)?.recyclerAdapter != null) {
-                viewFragmentsDictionary?.get(activePos - 1)?.recyclerAdapter?.filter()
-            }
-            if (activePos < viewPager?.adapter?.count ?: 0 - 1 && viewFragmentsDictionary?.get(activePos + 1) != null && viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter != null) {
-                viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter?.filter()
-            }
+            viewFragmentsDictionary?.get(activePos - 1)?.recyclerAdapter?.filter()
+            viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter?.filter()
             if (activeTaskFilter != null) {
                 activeFragment?.setActiveFilter(activeTaskFilter)
             }

@@ -9,7 +9,6 @@ import okhttp3.Request
 import okhttp3.Response
 import okio.Okio
 import rx.Observable
-import rx.exceptions.OnErrorThrowable
 import rx.schedulers.Schedulers
 import java.io.File
 import java.io.IOException
@@ -47,7 +46,8 @@ class SoundFileLoader(private val context: Context) {
                                 throw IOException()
                             }
                         } catch (io: IOException) {
-                            throw OnErrorThrowable.from(OnErrorThrowable.addValueAsLastCause(io, audioFile))
+                            sub.onCompleted()
+                            return@create
                         }
 
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -57,7 +57,8 @@ class SoundFileLoader(private val context: Context) {
                                 sink.flush()
                                 sink.close()
                             } catch (io: IOException) {
-                                throw OnErrorThrowable.from(OnErrorThrowable.addValueAsLastCause(io, audioFile))
+                                sub.onCompleted()
+                                return@create
                             }
 
                             file.setReadable(true, false)

@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
+import kotlinx.android.synthetic.main.shop_header.*
 
 class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
@@ -79,13 +80,21 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         itemDetailIndicator.text = null
         itemDetailIndicator.visibility = View.GONE
         if (item.isLimited) {
-            itemDetailIndicator.background = limitedDrawable
+            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                itemDetailIndicator.setBackgroundDrawable(limitedDrawable)
+            } else {
+                itemDetailIndicator.background = limitedDrawable
+            }
             itemDetailIndicator.visibility = View.VISIBLE
         }
 
         priceLabel.isLocked = item.locked || !canBuy
         if (item.locked) {
-            itemDetailIndicator.background = lockedDrawable
+            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                itemDetailIndicator.setBackgroundDrawable(lockedDrawable)
+            } else {
+                itemDetailIndicator.background = lockedDrawable
+            }
             itemDetailIndicator.visibility = View.VISIBLE
         }
     }

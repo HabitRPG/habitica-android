@@ -486,4 +486,59 @@ public class HabiticaIconsHelper {
 
         return imageOfInfoIcon;
     }
+
+    public static Bitmap imageOfContributorBadge(float contributorTier, boolean isNPC) {
+        int size = scaleSize(16);
+        Bitmap imageOfContributorBadge = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfContributorBadge);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawContributorBadge(canvas, contributorTier, isNPC);
+
+        return imageOfContributorBadge;
+    }
+
+    public static Bitmap imageOfChatLikeIcon(boolean wasLiked) {
+        int size = scaleSize(12);
+        Bitmap imageOfChatLikeIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfChatLikeIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawChatLikeIcon(canvas, wasLiked);
+
+        return imageOfChatLikeIcon;
+    }
+
+    public static Bitmap imageOfQuestBackground(int bossColorDark, int bossColorMedium, int bossColorLight) {
+        int size = scaleSize(21);
+        Bitmap imageOfQuestBackground = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfQuestBackground);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawQuestBackground(canvas, bossColorDark, bossColorMedium, bossColorLight);
+
+        return imageOfQuestBackground;
+    }
+
+    private static Bitmap imageOfDamage = null;
+    public static Bitmap imageOfDamage() {
+        if (imageOfDamage != null)
+            return imageOfDamage;
+
+        int size = scaleSize(18);
+        imageOfDamage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfDamage);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawDamage(canvas);
+
+        return imageOfDamage;
+    }
+
+    public static Bitmap imageOfCaret(int caretColor, boolean pointsUp) {
+        int size = scaleSize(16);
+        Bitmap imageOfCaret = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfCaret);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawCaret(canvas, caretColor, pointsUp);
+
+        return imageOfCaret;
+    }
+
 }

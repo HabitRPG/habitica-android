@@ -110,7 +110,11 @@ class FixCharacterValuesActivity: BaseActivity() {
 
     fun FixValuesEditText.getDoubleValue(): Double {
         val stringValue = this.text
-        return stringValue.toDouble()
+        return try {
+            stringValue.toDouble()
+        } catch (_: NumberFormatException) {
+            0.0
+        }
     }
 
 }

@@ -1,34 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/shop_header" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/days_gray"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginBottom="@dimen/spacing_large"/>
-
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingBottom="?attr/actionBarSize">
+    <include layout="@layout/shop_header"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
+    <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/check_into_inn">
         <Button
-            android:id="@+id/dailiesButton"
+            android:id="@+id/innButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/tavern.inn.rest"
-            android:layout_marginLeft="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_large"
-            style="@style/Button.Purple.Small"/>
-
+            style="@style/Button.Yellow.Small"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/inn_description"
-            android:layout_margin="@dimen/spacing_large"/>
-        <View
+            android:layout_marginTop="@dimen/spacing_large"/>
+    </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
+    <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/community_guidelines">
+        <Button
+            android:id="@+id/guidelinesButton"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/days_gray" />
-
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/view_community_guidelines"
+            style="@style/HabiticaButton.Gray"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/guidelines_description"
+            android:layout_marginTop="@dimen/spacing_large"/>
+    </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
+    <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/helpful_links">
+        <Button
+            android:id="@+id/faqButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/view_faq"
+            style="@style/HabiticaButton.Gray"/>
+        <Button
+            android:id="@+id/reportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/report_bug"
+            style="@style/HabiticaButton.Gray"
+            android:layout_marginTop="@dimen/spacing_large"/>
+    </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
+    <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
+        android:id="@+id/moderatorsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/staff_moderators">
+    </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
+    <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
+        android:id="@+id/playerTiersView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/player_tiers">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tiers_descriptions"/>
+    </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
 </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -32,15 +32,19 @@ public class TaskTagDeserializer implements JsonDeserializer<List<Tag>> {
                 if (tagElement.isJsonObject()) {
                     tags.add(context.deserialize(tagElement, Tag.class));
                 } else {
-                    String tagId = tagElement.getAsString();
-                    for (Tag tag : databaseTags) {
-                        if (tag.getId().equals(tagId)) {
-                            if (!alreadyContainsTag(tags, tagId)) {
-                                tags.add(tag);
-                            }
+                    try {
+                        String tagId = tagElement.getAsString();
+                        for (Tag tag : databaseTags) {
+                            if (tag.getId().equals(tagId)) {
+                                if (!alreadyContainsTag(tags, tagId)) {
+                                    tags.add(tag);
+                                }
 
-                            break;
+                                break;
+                            }
                         }
+                    } catch (UnsupportedOperationException ignored) {
+
                     }
                 }
 

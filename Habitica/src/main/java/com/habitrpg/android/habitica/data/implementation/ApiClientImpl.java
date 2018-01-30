@@ -202,7 +202,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     lastAPICallURL = original.url().toString();
                     return chain.proceed(request);
                 })
-                .readTimeout(45, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
                 .build();
 
         Server server = new Server(this.hostConfig.getAddress());
@@ -544,6 +544,9 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<UnlockResponse> unlockPath(String path) {
+        if (path == null) {
+            return Observable.just(null);
+        }
         return apiService.unlockPath(path).compose(configureApiCallObserver());
     }
 
@@ -748,7 +751,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<List<Void>> inviteToGroup(String groupId, Map<String, Object> inviteData) {
+    public Observable<List<String>> inviteToGroup(String groupId, Map<String, Object> inviteData) {
         if (groupId == null) {
             return Observable.just(null);
         }
@@ -949,7 +952,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Void> togglePinnedItem(String pinType, String path) {
-        if (pinType == null) {
+        if (pinType == null || path == null) {
             return Observable.just(null);
         }
         return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver());

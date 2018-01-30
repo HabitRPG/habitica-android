@@ -15,14 +15,10 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.text.DecimalFormat;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class RewardViewHolder extends BaseTaskViewHolder {
-
-    private final DecimalFormat priceFormat;
 
     @BindView(R.id.buyButton)
     View buyButton;
@@ -33,8 +29,6 @@ public class RewardViewHolder extends BaseTaskViewHolder {
 
     public RewardViewHolder(View itemView) {
         super(itemView);
-        priceFormat = new DecimalFormat("0.##");
-
         goldIconView.setImageBitmap(HabiticaIconsHelper.imageOfGold());
     }
 

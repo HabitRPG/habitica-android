@@ -11,7 +11,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -91,8 +90,9 @@ import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog;
@@ -101,12 +101,6 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider;
-import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.holder.BadgeStyle;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.roughike.bottombar.BottomBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -217,15 +211,12 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     // endregion
 
     @Nullable
-    private Drawer drawer;
-    @Nullable
-    private AccountHeader accountHeader;
-    @Nullable
     private WeakReference<BaseMainFragment> activeFragment;
     private AvatarWithBarsViewModel avatarInHeader;
     private AlertDialog faintDialog;
     private AvatarView sideAvatarView;
     private TutorialView activeTutorialView;
+    private NavigationDrawerFragment drawerFragment;
 
 
     @Override
@@ -258,10 +249,6 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         setupToolbar(toolbar);
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
-        accountHeader = MainDrawerBuilder.INSTANCE.createDefaultAccountHeader(this).build();
-        drawer = MainDrawerBuilder.INSTANCE.createDefaultBuilderSettings(this, sharedPreferences, toolbar, accountHeader)
-                .build();
-        drawer.setSelectionAtPosition(1, false);
         sideAvatarView = new AvatarView(this, true, false, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -281,6 +268,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     MainActivity.this.setUserData();
                 }, RxErrorHandler.handleEmptyError());
 
+        drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        drawerFragment.setUp(R.id.navigation_drawer, findViewById(R.id.drawer_layout));
+        drawerFragment.setSelection(NavigationDrawerFragment.SIDEBAR_TASKS, true);
     }
 
     public int getStatusBarHeight() {
@@ -318,8 +308,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         //Recreate the fragment as a result.
         if (activeFragment != null && activeFragment.get() != null && activeFragment.get().tabLayout == null) {
             activeFragment = null;
-            if (drawer != null) {
-                drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
+            if (drawerFragment != null) {
+                drawerFragment.setSelection(this.sharedPreferences.getString("lastActivePosition", NavigationDrawerFragment.SIDEBAR_TASKS), true);
             }
         }
     }
@@ -388,8 +378,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 if (activeFragment != null && activeFragment.get() != null) {
                     activeFragment.get().updateUserData(user);
                 } else {
-                    if (drawer != null) {
-                        drawer.setSelectionAtPosition(1);
+                    if (drawerFragment != null) {
+                        drawerFragment.setSelection(NavigationDrawerFragment.SIDEBAR_TASKS, true);
                     }
                 }
             });
@@ -402,7 +392,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     }
 
     private void displayNewInboxMessagesBadge() {
-        int numberOfUnreadPms = this.user.getInbox().getNewMessages();
+        /*int numberOfUnreadPms = this.user.getInbox().getNewMessages();
         IDrawerItem newInboxItem;
 
         if (numberOfUnreadPms <= 0) {
@@ -421,10 +411,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                     .withBadge(numberOfUnreadPmsLabel)
                     .withBadgeStyle(badgeStyle);
         }
-
-        if (this.drawer != null) {
+        if (this.drawerFragment != null) {
             this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.INSTANCE.getSIDEBAR_INBOX()));
-        }
+        }*/
     }
 
     private void updateHeader() {
@@ -434,30 +423,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         if (activeFragment != null) {
             setTranslatedFragmentTitle(activeFragment.get());
         }
-
-        if (drawer != null) {
-            android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
-            if (actionBarDrawerToggle != null) {
-                actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-            }
-        }
     }
 
     public void updateSidebar() {
-        if (accountHeader != null) {
-            final IProfile profile = accountHeader.getProfiles().get(0);
-            if (user.getAuthentication() != null) {
-                if (user.getAuthentication().getLocalAuthentication() != null) {
-                    profile.withEmail(user.getAuthentication().getLocalAuthentication().getEmail());
-                }
-            }
-            profile.withName(user.getProfile().getName());
-            sideAvatarView.setAvatar(user);
-            sideAvatarView.onAvatarImageReady(avatarImage -> {
-                profile.withIcon(avatarImage);
-                accountHeader.updateProfile(profile);
-            });
-            accountHeader.updateProfile(profile);
+        if (drawerFragment != null) {
+            drawerFragment.setUsername(user.getProfile().getName());
         }
 
         if (user.getPreferences() == null || user.getFlags() == null) {
@@ -469,46 +439,38 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         if (specialItems != null) {
             hasSpecialItems = specialItems.hasSpecialItems();
         }
-
-        if (drawer != null) {
-            IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
-            if (!user.hasClass() && !hasSpecialItems) {
-                if (item != null) {
-                    drawer.removeItem(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
-                }
-            } else {
-                PrimaryDrawerItem newItem = new PrimaryDrawerItem()
-                        .withName(this.getString(R.string.sidebar_skills))
-                        .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_SKILLS());
-                if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
-                    newItem = newItem.withEnabled(false).withBadge(this.getString(R.string.unlock_lvl_11));
-                }
-                if (item == null) {
-                    drawer.addItemAtPosition(newItem, 1);
+        if (drawerFragment != null) {
+            HabiticaDrawerItem item = drawerFragment.getItemWithIdentifier(NavigationDrawerFragment.SIDEBAR_SKILLS);
+            if (item != null) {
+                if (!user.hasClass() && !hasSpecialItems) {
+                    item.setVisible(false);
                 } else {
-                    drawer.updateItem(newItem);
+                    if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
+                        item.setAdditionalInfo(getString(R.string.unlock_lvl_11));
+                    } else {
+                        item.setAdditionalInfo(null);
+                    }
+                    item.setVisible(true);
                 }
+                drawerFragment.updateItem(item);
             }
-            IDrawerItem statsItem = drawer.getDrawerItem(MainDrawerBuilder.INSTANCE.getSIDEBAR_STATS());
-            PrimaryDrawerItem newStatsItem = new PrimaryDrawerItem()
-                    .withName(this.getString(R.string.sidebar_stats))
-                    .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_STATS());
-            if (user.getStats() != null && user.getStats().lvl >= 0 && user.getStats().points > 0) {
-                newStatsItem = newStatsItem.withBadge(this.getString(R.string.available_stats, user.getStats().points));
-            }
-            if (statsItem == null) {
-                drawer.addItemAtPosition(newStatsItem, 2);
-            } else {
-                drawer.updateItem(newStatsItem);
+            HabiticaDrawerItem statsItem = drawerFragment.getItemWithIdentifier(NavigationDrawerFragment.SIDEBAR_STATS);
+            if (statsItem != null) {
+                if (user.getStats() != null && user.getStats().lvl >= 0 && user.getStats().points > 0) {
+                    statsItem.setAdditionalInfo(user.getStats().points.toString());
+                } else {
+                    statsItem.setAdditionalInfo(null);
+                }
+                drawerFragment.updateItem(statsItem);
             }
         }
     }
 
     public void setActiveFragment(@Nullable BaseMainFragment fragment) {
-        this.activeFragment = new WeakReference<BaseMainFragment>(fragment);
+        this.activeFragment = new WeakReference<>(fragment);
         setTranslatedFragmentTitle(fragment);
-        if (this.drawer != null && this.activeFragment != null && activeFragment.get() != null) {
-            this.drawer.setSelectionAtPosition(this.activeFragment.get().fragmentSidebarPosition, false);
+        if (this.drawerFragment != null && this.activeFragment != null && activeFragment.get() != null) {
+            this.drawerFragment.setSelection(this.activeFragment.get().fragmentSidebarIdentifier, false);
         }
     }
 
@@ -527,10 +489,12 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         if (this.activeTutorialView != null) {
             this.removeActiveTutorialView();
         }
-        if (drawer != null && drawer.isDrawerOpen()) {
-            drawer.closeDrawer();
+        if (drawerFragment != null && drawerFragment.isDrawerOpen()) {
+            drawerFragment.closeDrawer();
         } else {
-            super.onBackPressed();
+            try {
+                super.onBackPressed();
+            } catch (IllegalStateException ignored) {}
             if (this.activeFragment != null && activeFragment.get() != null) {
                 this.activeFragment.get().updateUserData(user);
             }
@@ -559,8 +523,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void onEvent(OpenMenuItemCommand event) {
-        if (drawer != null) {
-            drawer.setSelection(event.identifier);
+        if (drawerFragment != null) {
+            drawerFragment.setSelection(event.identifier, true);
         }
     }
 
@@ -618,8 +582,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void openGemPurchaseFragment(@Nullable OpenGemPurchaseFragmentCommand cmd) {
-        if (drawer != null) {
-            drawer.setSelection(MainDrawerBuilder.INSTANCE.getSIDEBAR_PURCHASE());
+        if (drawerFragment != null) {
+            drawerFragment.setSelection(NavigationDrawerFragment.SIDEBAR_PURCHASE, true);
         }
     }
 
@@ -757,8 +721,8 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU && drawer != null) {
-            drawer.openDrawer();
+        if (keyCode == KeyEvent.KEYCODE_MENU && drawerFragment != null) {
+            drawerFragment.openDrawer();
             return true;
         }
 

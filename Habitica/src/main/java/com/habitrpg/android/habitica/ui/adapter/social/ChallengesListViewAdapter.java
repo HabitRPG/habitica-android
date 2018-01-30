@@ -170,7 +170,7 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
 
         @Override
         public void onClick(View view) {
-            if (challenge != null) {
+            if (challenge != null && challenge.isManaged()) {
                 if (viewUserChallengesOnly) {
                     EventBus.getDefault().post(new ShowChallengeDetailActivityCommand(challenge.id));
                 } else {

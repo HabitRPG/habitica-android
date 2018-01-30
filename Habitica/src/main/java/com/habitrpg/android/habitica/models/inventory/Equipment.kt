@@ -8,7 +8,7 @@ import io.realm.annotations.PrimaryKey
 open class Equipment : RealmObject() {
 
     var value: Double = 0.toDouble()
-    var type: String = ""
+    var type: String? = ""
     @PrimaryKey
     var key: String? = ""
     var klass: String = ""

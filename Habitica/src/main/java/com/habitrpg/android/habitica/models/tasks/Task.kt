@@ -22,37 +22,41 @@ open class Task : RealmObject, Parcelable {
     var userId: String = ""
     var priority: Float = 0.0f
     var text: String = ""
-    var notes: String = ""
+    var notes: String? = null
     @TaskTypes
     var type: String = ""
     @Stats.StatsTypes
-    var attribute: String = Stats.STRENGTH
+    var attribute: String? = Stats.STRENGTH
     var value: Double = 0.0
     var tags: RealmList<Tag> = RealmList()
     var dateCreated: Date? = null
-    var position: Int = 0
+    var position: Int? = 0
     var group: TaskGroupPlan? = null
     //Habits
-    var up: Boolean = false
-    var down: Boolean = false
-    var counterUp: Int = 0
-    var counterDown: Int = 0
+    var up: Boolean? = false
+    var down: Boolean? = false
+    var counterUp: Int? = 0
+    var counterDown: Int? = 0
     //todos/dailies
     var completed: Boolean = false
     var checklist: RealmList<ChecklistItem> = RealmList()
     var reminders: RealmList<RemindersItem> = RealmList()
     //dailies
     var frequency: String? = null
-    var everyX: Int = 0
-    var streak: Int = 0
+    var everyX: Int? = 0
+    var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
+    set(value) {
+        field = value
+        field?.taskId = id
+    }
     //todos
     @SerializedName("date")
     var dueDate: Date? = null
     //TODO: private String lastCompleted;
     // used for buyable items
-    var specialTag: String = ""
+    var specialTag: String? = ""
     @Ignore
     var parsedText: CharSequence? = null
     @Ignore
@@ -60,6 +64,10 @@ open class Task : RealmObject, Parcelable {
     @PrimaryKey
     @SerializedName("_id")
     var id: String? = null
+    set(value) {
+        field = value
+        repeat?.taskId = id
+    }
 
     var isDue: Boolean? = null
 
@@ -193,8 +201,8 @@ open class Task : RealmObject, Parcelable {
         dest.writeString(this.type)
         dest.writeDouble(this.value)
         dest.writeList(this.tags)
-        dest.writeLong(if (this.dateCreated != null) this.dateCreated!!.time else -1)
-        dest.writeInt(this.position)
+        dest.writeLong(this.dateCreated?.time ?: -1)
+        dest.writeInt(this.position ?: 0)
         dest.writeValue(this.up)
         dest.writeValue(this.down)
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())
@@ -203,9 +211,9 @@ open class Task : RealmObject, Parcelable {
         dest.writeString(this.frequency)
         dest.writeValue(this.everyX)
         dest.writeValue(this.streak)
-        dest.writeLong(if (this.startDate != null) this.startDate!!.time else -1)
+        dest.writeLong(this.startDate?.time ?: -1)
         dest.writeParcelable(this.repeat, flags)
-        dest.writeLong(if (this.dueDate != null) this.dueDate!!.time else -1)
+        dest.writeLong(this.dueDate?.time ?: -1)
         dest.writeString(this.specialTag)
         dest.writeString(this.id)
     }

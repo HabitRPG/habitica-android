@@ -137,7 +137,7 @@ public class TaskFilterHelper {
                     query = query.greaterThanOrEqualTo("value", 0.0d);
                     break;
                 case Task.FILTER_DATED:
-                    query = query.isNotNull("duedate");
+                    query = query.isNotNull("dueDate");
                     break;
                 case Task.FILTER_COMPLETED:
                     query = query.equalTo("completed", true);

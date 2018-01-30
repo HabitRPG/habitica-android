@@ -48,7 +48,7 @@ interface UserRepository : BaseRepository {
     fun unlockPath(user: User, customization: Customization): Observable<UnlockResponse>
     fun unlockPath(user: User, set: CustomizationSet): Observable<UnlockResponse>
 
-    fun runCron(tasks: List<Task>)
+    fun runCron(tasks: MutableList<Task>)
     fun runCron()
 
     fun readNotification(id: String): Observable<List<*>>

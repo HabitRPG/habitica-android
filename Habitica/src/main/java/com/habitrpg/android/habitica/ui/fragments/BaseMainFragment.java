@@ -40,7 +40,7 @@ public abstract class BaseMainFragment extends BaseFragment {
     public ViewGroup floatingMenuWrapper;
     public boolean usesTabLayout;
     public boolean usesBottomNavigation = false;
-    public int fragmentSidebarPosition;
+    public String fragmentSidebarIdentifier;
     @Inject
     protected SoundManager soundManager;
     @Nullable

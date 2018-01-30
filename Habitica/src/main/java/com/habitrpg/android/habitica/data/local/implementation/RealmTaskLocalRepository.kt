@@ -107,7 +107,11 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun deleteTask(taskID: String) {
         val task = realm.where(Task::class.java).equalTo("id", taskID).findFirstAsync()
-        realm.executeTransaction { task.deleteFromRealm() }
+        realm.executeTransaction {
+            if (task.isManaged) {
+                task.deleteFromRealm()
+            }
+        }
     }
 
     override fun getTask(taskId: String): Observable<Task> {

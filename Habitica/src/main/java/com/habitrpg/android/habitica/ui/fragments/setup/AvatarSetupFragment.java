@@ -243,10 +243,10 @@ public class AvatarSetupFragment extends BaseFragment {
         }
         if (weighFirstOption) {
             if (random.nextInt(10) > 3) {
-                return customizations.get(0).key;
+                return customizations.get(0).getKey();
             }
         }
-        return customizations.get(random.nextInt(customizations.size())).key;
+        return customizations.get(random.nextInt(customizations.size())).getKey();
     }
 
     private void activateButton(AvatarCategoryView button) {
