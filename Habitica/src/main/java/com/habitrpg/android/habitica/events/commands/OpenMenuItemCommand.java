@@ -5,4 +5,11 @@ package com.habitrpg.android.habitica.events.commands;
  */
 public class OpenMenuItemCommand {
     public int identifier;
+
+    public OpenMenuItemCommand(int identifier) {
+        this.identifier = identifier;
+    }
+
+    public OpenMenuItemCommand() {
+    }
 }

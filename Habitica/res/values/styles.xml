@@ -304,6 +304,18 @@
         <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
     </style>
 
+    <style name="Button.Yellow">
+        <item name="android:background">@drawable/rounded_yellow_10_square</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Button.Yellow.Small">
+        <item name="android:paddingLeft">@dimen/button_padding_small</item>
+        <item name="android:paddingRight">@dimen/button_padding_small</item>
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
+    </style>
+
     <style name="LoginEditTextTheme">
         <item name="colorAccent">@color/white_50_alpha</item>
         <item name="colorControlNormal">@color/white_15_alpha</item>

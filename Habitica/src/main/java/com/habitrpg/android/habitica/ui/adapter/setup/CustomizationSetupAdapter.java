@@ -63,42 +63,42 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
             return false;
         }
         Preferences prefs = this.user.getPreferences();
-        switch (customization.category) {
+        switch (customization.getCategory()) {
             case "body": {
-                switch (customization.subcategory) {
+                switch (customization.getSubcategory()) {
                     case "size":
-                        return customization.key.equals(prefs.getSize());
+                        return customization.getKey().equals(prefs.getSize());
                     case "shirt":
-                        return customization.key.equals(prefs.getShirt());
+                        return customization.getKey().equals(prefs.getShirt());
                 }
             }
             case "skin":
-                return customization.key.equals(prefs.getSkin());
+                return customization.getKey().equals(prefs.getSkin());
             case "background":
-                return customization.key.equals(prefs.getBackground());
+                return customization.getKey().equals(prefs.getBackground());
             case "hair":
-                switch (customization.subcategory) {
+                switch (customization.getSubcategory()) {
                     case "bangs":
-                        return Integer.parseInt(customization.key) == prefs.getHair().getBangs();
+                        return Integer.parseInt(customization.getKey()) == prefs.getHair().getBangs();
                     case "base":
-                        return Integer.parseInt(customization.key) == prefs.getHair().getBase();
+                        return Integer.parseInt(customization.getKey()) == prefs.getHair().getBase();
                     case "color":
-                        return customization.key.equals(prefs.getHair().getColor());
+                        return customization.getKey().equals(prefs.getHair().getColor());
                     case "flower":
-                        return Integer.parseInt(customization.key) == prefs.getHair().getFlower();
+                        return Integer.parseInt(customization.getKey()) == prefs.getHair().getFlower();
                     case "beard":
-                        return Integer.parseInt(customization.key) == prefs.getHair().getBeard();
+                        return Integer.parseInt(customization.getKey()) == prefs.getHair().getBeard();
                     case "mustache":
-                        return Integer.parseInt(customization.key) == prefs.getHair().getMustache();
+                        return Integer.parseInt(customization.getKey()) == prefs.getHair().getMustache();
                 }
             case "extras": {
-                switch (customization.subcategory) {
+                switch (customization.getSubcategory()) {
                     case "glasses":
-                        return customization.key.equals(this.user.getItems().getGear().getEquipped().getEyeWear()) || ("eyewear_base_0".equals(this.user.getItems().getGear().getEquipped().getEyeWear()) && customization.key.length() == 0);
+                        return customization.getKey().equals(this.user.getItems().getGear().getEquipped().getEyeWear()) || ("eyewear_base_0".equals(this.user.getItems().getGear().getEquipped().getEyeWear()) && customization.getKey().length() == 0);
                     case "flower":
-                        return Integer.parseInt(customization.key) == prefs.getHair().getFlower();
+                        return Integer.parseInt(customization.getKey()) == prefs.getHair().getFlower();
                     case "wheelchair":
-                        return ("chair_"+customization.key).equals(prefs.getChair()) || customization.key.equals(prefs.getChair()) || (customization.key.equals("none") && prefs.getChair() == null);
+                        return ("chair_"+ customization.getKey()).equals(prefs.getChair()) || customization.getKey().equals(prefs.getChair()) || (customization.getKey().equals("none") && prefs.getChair() == null);
                 }
             }
         }
@@ -129,19 +129,19 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
         public void bind(SetupCustomization customization) {
             this.customization = customization;
 
-            if (customization.drawableId != null) {
-                imageView.setImageResource(customization.drawableId);
-            } else if (customization.colorId != null) {
+            if (customization.getDrawableId() != null) {
+                imageView.setImageResource(customization.getDrawableId());
+            } else if (customization.getColorId() != null) {
                 Drawable drawable = ContextCompat.getDrawable(context, R.drawable.setup_customization_circle);
                 if (drawable != null) {
-                    drawable.setColorFilter(ContextCompat.getColor(context, customization.colorId), PorterDuff.Mode.MULTIPLY);
+                    drawable.setColorFilter(ContextCompat.getColor(context, customization.getColorId()), PorterDuff.Mode.MULTIPLY);
                 }
                 imageView.setImageDrawable(drawable);
             } else {
                 imageView.setImageDrawable(null);
             }
-            textView.setText(customization.text);
-            if (!"0".equals(customization.key) && "flower".equals(customization.subcategory)) {
+            textView.setText(customization.getText());
+            if (!"0".equals(customization.getKey()) && "flower".equals(customization.getSubcategory())) {
                 if (isCustomizationActive(customization)) {
                     imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg_selected);
                 } else {
@@ -160,12 +160,12 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View v) {
-            if (customization.path.equals("glasses")) {
+            if (customization.getPath().equals("glasses")) {
                 EquipCommand command = new EquipCommand();
-                if (customization.key.length() == 0) {
+                if (customization.getKey().length() == 0) {
                     command.key = user.getItems().getGear().getEquipped().getEyeWear();
                 } else {
-                    command.key = customization.key;
+                    command.key = customization.getKey();
                 }
                 command.type = "equipped";
                 EventBus.getDefault().post(command);
@@ -173,7 +173,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
                 UpdateUserCommand command = new UpdateUserCommand();
                 Map<String, Object> updateData = new HashMap<>();
                 String updatePath = "preferences." + customization.getPath();
-                updateData.put(updatePath, customization.key);
+                updateData.put(updatePath, customization.getKey());
 
                 command.updateData = updateData;
 

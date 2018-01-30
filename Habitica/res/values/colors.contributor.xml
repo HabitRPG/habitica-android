@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="contributor.0">#aaa</color>
-    <color name="contributor.1">#f57a9d</color>
-    <color name="contributor.2">#b93030</color>
-    <color name="contributor.3">#ff3300</color>
-    <color name="contributor.4">#ff9500</color>
-    <color name="contributor.5">#fff700</color>
-    <color name="contributor.6">#5eff00</color>
-    <color name="contributor.7">#00aaff</color>
-    <color name="contributor.mod">#130ead</color>
-    <color name="contributor.staff">#88108f</color>
+    <color name="contributor.1">#c42871</color>
+    <color name="contributor.2">#b01515</color>
+    <color name="contributor.3">#d70e14</color>
+    <color name="contributor.4">#c24d00</color>
+    <color name="contributor.5">#9e650f</color>
+    <color name="contributor.6">#2b8363</color>
+    <color name="contributor.7">#167e87</color>
+    <color name="contributor.mod">#277eab</color>
+    <color name="contributor.staff">#6133b4</color>
     <color name="contributor.npc">#000</color>
     <color name="contributor.npc.font">#00FF00</color>
 </resources>

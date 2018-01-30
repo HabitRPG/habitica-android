@@ -724,4 +724,14 @@
     <string name="available_stats" formatted="false">%d points</string>
     <string name="toogle_emojis">Toogle Emojis</string>
     <string name="tavern_description">Welcome to the Inn! Pull up a chair to chat, or take a break from your tasks.</string>
+    <string name="check_into_inn">Check into Inn</string>
+    <string name="community_guidelines">Community Guidelines</string>
+    <string name="view_community_guidelines">View Community Guidelines</string>
+    <string name="guidelines_description">Habitica tries to create a welcoming environment for users of all ages and backgrounds, especially in public spaces like the Tavern. If you have any questions, please consult our guidelines.</string>
+    <string name="helpful_links">Helpful Links</string>
+    <string name="view_faq">View FAQ</string>
+    <string name="report_bug">Report a Bug</string>
+    <string name="player_tiers">Player Tiers</string>
+    <string name="staff_moderators">Staff and Moderators</string>
+    <string name="tiers_descriptions">The colored usernames you see in chat represent a person’s contributor tier. The higher the tier, the more the person has contributed to habitica through art, code, the community, or more!</string>
 </resources>

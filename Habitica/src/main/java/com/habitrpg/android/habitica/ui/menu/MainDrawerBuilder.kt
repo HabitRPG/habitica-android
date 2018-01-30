@@ -83,14 +83,14 @@ object MainDrawerBuilder {
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_skills)).withIdentifier(SIDEBAR_SKILLS.toLong()),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stats)).withIdentifier(SIDEBAR_STATS.toLong()),
 
-                        SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_social).toUpperCase(Locale.getDefault())),
+                        //SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_social).toUpperCase(Locale.getDefault())),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_inbox)).withIdentifier(SIDEBAR_INBOX.toLong()),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN.toLong()),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY.toLong()),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)).withIdentifier(SIDEBAR_GUILDS.toLong()),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)).withIdentifier(SIDEBAR_CHALLENGES.toLong()),
 
-                        SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory).toUpperCase(Locale.getDefault())),
+                        //SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory).toUpperCase(Locale.getDefault())),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_shops)).withIdentifier(SIDEBAR_SHOPS.toLong()),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)).withIdentifier(SIDEBAR_AVATAR.toLong()),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)).withIdentifier(SIDEBAR_EQUIPMENT.toLong()),
@@ -98,7 +98,7 @@ object MainDrawerBuilder {
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withIdentifier(SIDEBAR_STABLE.toLong()),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE.toLong()),
 
-                        SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_about).toUpperCase(Locale.getDefault())),
+                        //SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_about).toUpperCase(Locale.getDefault())),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_news)).withIdentifier(SIDEBAR_NEWS.toLong()).withSelectable(false),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS.toLong()).withSelectable(false),
                         PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_help)).withIdentifier(SIDEBAR_HELP.toLong()),
