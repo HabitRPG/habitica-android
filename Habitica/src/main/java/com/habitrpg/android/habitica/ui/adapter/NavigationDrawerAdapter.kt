@@ -35,7 +35,7 @@ class NavigationDrawerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun updateItem(item: HabiticaDrawerItem) {
         val position = getItemPosition(item.identifier)
         items[position] = item
-        notifyItemChanged(position)
+        notifyDataSetChanged()
     }
 
     fun updateItems(newItems: List<HabiticaDrawerItem>) {
