@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.drawable.ColorDrawable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
@@ -13,6 +14,7 @@ import com.habitrpg.android.habitica.extensions.bindView
 
 class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
+    private val separatorView: View by bindView(R.id.separator)
     private val titleView: LinearLayout by bindView(R.id.title_view)
     private val titleLabel: TextView by bindView(R.id.titleTextView)
     private val caretView: ImageView by bindView(R.id.caretView)
@@ -40,6 +42,16 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     var caretColor: Int = 0
 
     var identifier: String? = null
+
+    var separatorColor: Int
+    get() {
+        return (separatorView.background as? ColorDrawable)?.color ?: 0
+    }
+    set(value) {
+        if (value != null) {
+            separatorView.setBackgroundColor(value)
+        }
+    }
 
     private fun showViews() {
         updatePreferences()
@@ -105,6 +117,12 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
                 0, 0)
         title = attributes?.getString(R.styleable.CollapsibleSectionView_title) ?: ""
         identifier = attributes?.getString(R.styleable.CollapsibleSectionView_identifier)
+
+        val color = attributes?.getColor(R.styleable.CollapsibleSectionView_color, 0)
+        if (color != null && color != 0) {
+            caretColor = color
+            titleLabel.setTextColor(color)
+        }
     }
 
     override fun onAttachedToWindow() {

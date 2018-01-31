@@ -20,6 +20,8 @@ public class QuestContent extends RealmObject implements Item {
     private QuestBoss boss;
     @Nullable
     private QuestDrops drop;
+    @Nullable
+    private QuestColors colors;
 
     RealmList<QuestCollect> collect;
 
@@ -63,6 +65,18 @@ public class QuestContent extends RealmObject implements Item {
         this.boss = boss;
         if (boss != null) {
             boss.setKey(key);
+        }
+    }
+
+    @Nullable
+    public QuestColors getColors() {
+        return colors;
+    }
+
+    public void setColors(QuestColors colors) {
+        this.colors = colors;
+        if (colors != null) {
+            colors.setKey(key);
         }
     }
 

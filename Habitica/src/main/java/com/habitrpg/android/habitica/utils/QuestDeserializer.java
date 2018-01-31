@@ -37,27 +37,27 @@ public class QuestDeserializer implements JsonDeserializer<Quest> {
         }
         if (obj.has("progress")) {
             QuestProgress progress = new QuestProgress();
-            progress.key = quest.getKey();
+            progress.setKey(quest.getKey());
             JsonObject progressObj = obj.get("progress").getAsJsonObject();
             if (progressObj.has("hp")) {
-                progress.hp = progressObj.get("hp").getAsInt();
+                progress.setHp(progressObj.get("hp").getAsInt());
             }
             if (progressObj.has("rage")) {
-                progress.rage = progressObj.get("rage").getAsInt();
+                progress.setRage(progressObj.get("rage").getAsInt());
             }
             if (progressObj.has("up")) {
-                progress.up = progressObj.get("up").getAsInt();
+                progress.setUp(progressObj.get("up").getAsInt());
             }
             if (progressObj.has("down")) {
-                progress.down = progressObj.get("down").getAsInt();
+                progress.setDown(progressObj.get("down").getAsInt());
             }
             if (progressObj.has("collect")) {
-                progress.collect = new RealmList<>();
+                progress.setCollect(new RealmList<>());
                 for (Map.Entry<String, JsonElement> entry : progressObj.get("collect").getAsJsonObject().entrySet()) {
                     QuestProgressCollect collect = new QuestProgressCollect();
                     collect.key = entry.getKey();
                     collect.count = entry.getValue().getAsInt();
-                    progress.collect.add(collect);
+                    progress.getCollect().add(collect);
                 }
             }
             quest.setProgress(progress);

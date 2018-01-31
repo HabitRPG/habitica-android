@@ -4,8 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="8dp">
     <LinearLayout
+        android:id="@+id/questImageTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/spacing_large"
@@ -16,16 +21,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/boss_art"/>
+            android:text="@string/boss_art"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
         <ImageView
             android:id="@+id/caretView"
             android:layout_width="18dp"
             android:layout_height="18dp" />
     </LinearLayout>
-    <ImageView
+    <View
+        android:id="@+id/questImageSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <com.habitrpg.android.habitica.ui.views.WrapContentDraweeView
         android:id="@+id/questImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:paddingLeft="@dimen/spacing_large"
+        android:paddingRight="@dimen/spacing_large"/>
     <TextView
         android:id="@+id/bossNameView"
         android:layout_width="match_parent"
@@ -34,13 +49,15 @@
         android:textStyle="bold"
         android:layout_marginBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"/>
+        android:paddingRight="@dimen/spacing_large"
+        android:textColor="@color/white"/>
     <com.habitrpg.android.habitica.ui.views.ValueBar
         android:id="@+id/bossHealthView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:barForegroundColor="@color/red_100"
-        app:lightBackground="true"
+        app:textColor="@color/white"
+        app:barBackgroundColor="@color/white_15_alpha"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large" />
     <TextView
@@ -52,15 +69,18 @@
         android:layout_marginBottom="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_large"
         android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"/>
+        android:paddingRight="@dimen/spacing_large"
+        android:textColor="@color/white"/>
     <com.habitrpg.android.habitica.ui.views.ValueBar
         android:id="@+id/bossRageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:barForegroundColor="@color/orange_100"
-        app:lightBackground="true"
+        app:textColor="@color/white"
+        app:barBackgroundColor="@color/white_15_alpha"
         android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large" />
+        android:paddingRight="@dimen/spacing_large"
+        android:layout_marginBottom="@dimen/spacing_large"/>
     <LinearLayout
         android:id="@+id/collectionContainer"
         android:layout_width="match_parent"
@@ -78,18 +98,20 @@
         android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
         android:textColor="@color/orange_500"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"/>
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginRight="@dimen/spacing_large" />
     <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
+        android:id="@+id/questDescriptionSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/world_boss_description"
         app:identifier="questDescription"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large">
+        app:color="@color/white">
     <TextView
         android:id="@+id/questDescription"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="14sp"/>
     </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
 </LinearLayout>

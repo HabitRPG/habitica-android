@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.views;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.PointF;
+import android.graphics.RectF;
 
 /**
  * Created by phillip on 05.09.17.
@@ -507,16 +509,6 @@ public class HabiticaIconsHelper {
         return imageOfChatLikeIcon;
     }
 
-    public static Bitmap imageOfQuestBackground(int bossColorDark, int bossColorMedium, int bossColorLight) {
-        int size = scaleSize(21);
-        Bitmap imageOfQuestBackground = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfQuestBackground);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawQuestBackground(canvas, bossColorDark, bossColorMedium, bossColorLight);
-
-        return imageOfQuestBackground;
-    }
-
     private static Bitmap imageOfDamage = null;
     public static Bitmap imageOfDamage() {
         if (imageOfDamage != null)
@@ -539,6 +531,16 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawCaret(canvas, caretColor, pointsUp);
 
         return imageOfCaret;
+    }
+
+    public static Bitmap imageOfQuestBackground(int bossColorDark, int bossColorMedium, int bossColorLight) {
+        int size = scaleSize(21);
+        Bitmap imageOfQuestBackground = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfQuestBackground);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawQuestBackground(canvas, new RectF(0f, 0f, size, size), bossColorDark, bossColorMedium, bossColorLight);
+
+        return imageOfQuestBackground;
     }
 
 }

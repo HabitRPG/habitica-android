@@ -37,6 +37,8 @@
     </declare-styleable>
     <declare-styleable name="ValueBar">
         <attr name="barForegroundColor" format="color" />
+        <attr name="barBackgroundColor" format="color" />
+        <attr name="textColor" format="color" />
         <attr name="barIconDrawable" format="integer" />
         <attr name="lightBackground" format="boolean" />
         <attr name="description" format="string" />
@@ -69,6 +71,7 @@
     </declare-styleable>
     <declare-styleable name="CollapsibleSectionView">
         <attr name="title" />
+        <attr name="color" format="color" />
         <attr name="identifier" />
     </declare-styleable>
 </resources>
