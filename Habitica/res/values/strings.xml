@@ -741,4 +741,10 @@
     <string name="boss_art">Boss Art</string>
     <string name="world_boss_description">World Boss Description</string>
     <string name="rage_strike_count" formatted="false">Rage Strikes: %d/%d</string>
+    <string name="pending_strike_description">This Strike hasn’t happened yet!\nThe World Boss will lash out and attack one of our friendly shopkeepers once its rage bar fills. Keep up with your Dailies to try and prevent it from happening!</string>
+    <string name="pending_strike_title">Pending Strike</string>
+    <string name="strike_description_title">What’s a Rage Strike?</string>
+    <string name="strike_description_subtitle">There are 3 potential Rage Strikes</string>
+    <string name="strike_description_description">This gauge fills when Habiticans miss their Dailies. If it fills up, the DysHeartener will unleash its Shattering Heartbreak attack on one of Habitica\'s shopkeepers, so be sure to do your tasks!</string>
+    <string name="pending_strike_subtitle">This Strike hasn’t happened yet!</string>
 </resources>

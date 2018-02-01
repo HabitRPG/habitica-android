@@ -1,11 +1,13 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.app.AlertDialog
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -17,16 +19,16 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
-import com.habitrpg.android.habitica.ui.views.HabiticaIcons
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.ValueBar
+import com.habitrpg.android.habitica.ui.views.*
 import io.realm.RealmList
+import org.greenrobot.eventbus.EventBus
 
 class QuestProgressView : LinearLayout {
 
@@ -79,6 +81,8 @@ class QuestProgressView : LinearLayout {
                 showQuestImage()
             }
         }
+
+        rageStrikeDescriptionView.setOnClickListener { showStrikeDescriptionAlert() }
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -164,15 +168,45 @@ class QuestProgressView : LinearLayout {
                     val height = it.height * displayDensity
                     val scaledImage = Bitmap.createScaledBitmap(it, width.toInt(), height.toInt(), false)
                     iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
+                    iconView.setOnClickListener { showActiveStrikeAlert(strike.key) }
                 })
             } else {
                 iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeInactive())
+                iconView.setOnClickListener { showPendingStrikeAlert() }
             }
             val params = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             val spacing = context.resources.getDimension(R.dimen.spacing_medium).toInt()
             params.setMargins(spacing, 0, spacing, 0)
             rageStrikeContainer.addView(iconView, params)
         }
+    }
+
+    private fun showActiveStrikeAlert(key: String) {
+
+    }
+
+    private fun showPendingStrikeAlert() {
+        val alert = HabiticaAlertDialog(context)
+        alert.setTitle(R.string.pending_strike_title)
+        alert.setTitleBackground(R.color.orange_10)
+        alert.setSubtitle(R.string.pending_strike_subtitle)
+        alert.setMessage(R.string.pending_strike_description)
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+            dialog.dismiss()
+        })
+        alert.show()
+    }
+
+    private fun showStrikeDescriptionAlert() {
+        val alert = HabiticaAlertDialog(context)
+        alert.setTitle(R.string.strike_description_title)
+        alert.setTitleBackground(R.color.orange_10)
+        alert.setSubtitle(R.string.strike_description_subtitle)
+        alert.setMessage(R.string.strike_description_description)
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+            dialog.dismiss()
+        })
+        alert.show()
     }
 
     private fun setCollectionViews(collection: RealmList<QuestProgressCollect>, quest: QuestContent) {
