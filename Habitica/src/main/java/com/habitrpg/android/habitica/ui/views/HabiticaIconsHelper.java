@@ -543,4 +543,25 @@ public class HabiticaIconsHelper {
         return imageOfQuestBackground;
     }
 
+    private static Bitmap imageOfRageStrikeInactive = null;
+    public static Bitmap imageOfRageStrikeInactive() {
+        if (imageOfRageStrikeInactive != null)
+            return imageOfRageStrikeInactive;
+
+        imageOfRageStrikeInactive = Bitmap.createBitmap(scaleSize(63), scaleSize(82), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfRageStrikeInactive);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawRageStrikeInactive(canvas);
+
+        return imageOfRageStrikeInactive;
+    }
+
+    public static Bitmap imageOfRageStrikeActive(Context context, Bitmap rageStrikeNPC) {
+        Bitmap imageOfRageStrikeActive = Bitmap.createBitmap(scaleSize(63), scaleSize(82), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfRageStrikeActive);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawRageStrikeActive(canvas, context, rageStrikeNPC);
+
+        return imageOfRageStrikeActive;
+    }
 }

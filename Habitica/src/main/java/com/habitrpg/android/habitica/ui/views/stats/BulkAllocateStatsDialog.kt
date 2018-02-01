@@ -87,7 +87,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent) : Alert
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        subscription = userRepository.user.subscribe(Action1 {
+        subscription = userRepository.getUser().subscribe(Action1 {
             user = it
         }, RxErrorHandler.handleEmptyError())
 

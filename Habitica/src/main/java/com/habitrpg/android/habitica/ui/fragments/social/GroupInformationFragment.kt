@@ -39,7 +39,7 @@ class GroupInformationFragment : BaseFragment() {
         if (user != null) {
             setUser(user)
         } else {
-            compositeSubscription.add(userRepository.user.subscribe(Action1 {
+            compositeSubscription.add(userRepository.getUser().subscribe(Action1 {
                 user = it
                 setUser(user)
             }, RxErrorHandler.handleEmptyError()))
@@ -55,8 +55,9 @@ class GroupInformationFragment : BaseFragment() {
         }
 
         buttonPartyInviteAccept.setOnClickListener({
-            if (user != null) {
-                socialRepository.joinGroup(user?.invitations?.party?.id)
+            val userId = user?.invitations?.party?.id
+            if (userId != null) {
+                socialRepository.joinGroup(userId)
                         .doOnNext { setInvitation(null) }
                         .flatMap { userRepository.retrieveUser(false) }
                         .flatMap { socialRepository.retrieveGroup("party") }
@@ -66,8 +67,9 @@ class GroupInformationFragment : BaseFragment() {
         })
 
         buttonPartyInviteReject.setOnClickListener({
-            if (user != null) {
-                socialRepository.rejectGroupInvite(user?.invitations?.party?.id)
+            val userId = user?.invitations?.party?.id
+            if (userId != null) {
+                socialRepository.rejectGroupInvite(userId)
                         .subscribe(Action1 { setInvitation(null) }, RxErrorHandler.handleEmptyError())
             }
         })

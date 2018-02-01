@@ -73,7 +73,7 @@ public class ChallengesListViewAdapter extends RealmRecyclerViewAdapter<Challeng
             String[] groupIds = new String[filterOptions.showByGroups.size()];
             int index = 0;
             for (Group group : filterOptions.showByGroups) {
-                groupIds[index] = group.id;
+                groupIds[index] = group.getId();
                 index += 1;
             }
             query = query.in("groupId", groupIds);

@@ -10,7 +10,7 @@ import rx.Observable
 
 interface UserLocalRepository : BaseLocalRepository {
 
-    val tutorialSteps: Observable<RealmResults<TutorialStep>>
+    fun getTutorialSteps(): Observable<RealmResults<TutorialStep>>
 
     fun getUser(userID: String): Observable<User>
 

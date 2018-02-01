@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -100,8 +101,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 intent.putExtras(bundle)
 
                 if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
-                    val context = context
-                    if (context != null) {
+                    context.notNull { context ->
                         val builder = AlertDialog.Builder(context)
                                 .setMessage(getString(R.string.change_class_confirmation))
                                 .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }

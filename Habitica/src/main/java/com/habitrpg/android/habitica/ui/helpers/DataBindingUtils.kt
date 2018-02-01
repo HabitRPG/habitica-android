@@ -1,6 +1,9 @@
 package com.habitrpg.android.habitica.ui.helpers
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
@@ -9,7 +12,14 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.facebook.common.executors.CallerThreadExecutor
+import com.facebook.common.references.CloseableReference
+import com.facebook.datasource.DataSource
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
+import com.facebook.imagepipeline.image.CloseableImage
+import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
 
 object DataBindingUtils {
@@ -18,6 +28,28 @@ object DataBindingUtils {
         if (view != null && imageName != null && view.visibility == View.VISIBLE) {
             view.setImageURI("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.png")
         }
+    }
+
+    fun loadImage(imageName: String, imageResult: (Bitmap) -> Unit) {
+        val imageRequest = ImageRequestBuilder
+                .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.png"))
+                .build()
+
+        val imagePipeline = Fresco.getImagePipeline()
+        val dataSource = imagePipeline.fetchDecodedImage(imageRequest, this)
+
+        dataSource.subscribe(object : BaseBitmapDataSubscriber() {
+            override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+                dataSource?.close()
+            }
+
+            public override fun onNewResultImpl(bitmap: Bitmap?) {
+                if (dataSource.isFinished && bitmap != null) {
+                    imageResult(bitmap)
+                    dataSource.close()
+                }
+            }
+        }, CallerThreadExecutor.getInstance())
     }
 
     fun setForegroundTintColor(view: TextView, color: Int) {

@@ -49,11 +49,11 @@ public class MemberSerialization implements JsonDeserializer<Member> {
         if (obj.has("party")) {
             member.setParty(context.deserialize(obj.get("party"), UserParty.class));
             if (member.getParty() != null && member.getParty().getQuest() != null) {
-                member.getParty().getQuest().id = member.getId();
+                member.getParty().getQuest().setId(member.getId());
                 if (!obj.get("party").getAsJsonObject().get("quest").getAsJsonObject().has("RSVPNeeded")) {
                     Quest quest = realm.where(Quest.class).equalTo("id", member.getId()).findFirst();
                     if (quest != null && quest.isValid()) {
-                        member.getParty().getQuest().RSVPNeeded = quest.RSVPNeeded;
+                        member.getParty().getQuest().setRSVPNeeded(quest.getRSVPNeeded());
                     }
                 }
             }

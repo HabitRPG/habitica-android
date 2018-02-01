@@ -103,10 +103,10 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (Group guild : this.guilds) {
             TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.guildsListView, false);
-            entry.setText(guild.name);
+            entry.setText(guild.getName());
             entry.setOnClickListener(this);
             this.guildsListView.addView(entry);
-            this.guildIDs.add(guild.id);
+            this.guildIDs.add(guild.getId());
         }
     }
 
@@ -120,7 +120,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
         } else {
             Integer guildIndex = ((ViewGroup) v.getParent()).indexOfChild(v);
             GuildFragment guildFragment = new GuildFragment();
-            guildFragment.setGuildId(this.guilds.get(guildIndex).id);
+            guildFragment.setGuildId(this.guilds.get(guildIndex).getId());
             guildFragment.isMember = true;
             fragment = guildFragment;
         }

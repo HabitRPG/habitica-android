@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.extensions
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.support.annotation.IdRes
 import android.view.View
 
@@ -12,4 +14,19 @@ fun View.setScaledPadding(context: Context?, left: Int, top: Int, right: Int, bo
 fun <T : View> View.bindView(@IdRes res: Int) : Lazy<T> {
     @Suppress("UNCHECKED_CAST")
     return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
+}
+
+var <T : View> T.backgroundCompat: Drawable?
+get() {
+    return background
+}
+set(value) {
+    if (value == null) {
+        return
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        background = value
+    } else {
+        setBackgroundDrawable(value)
+    }
 }

@@ -22,18 +22,18 @@ public class QuestDeserializer implements JsonDeserializer<Quest> {
         Quest quest = new Quest();
 
         if (obj.has("key") && !obj.get("key").isJsonNull()) {
-            quest.key = obj.get("key").getAsString();
+            quest.setKey(obj.get("key").getAsString());
         } else {
             return quest;
         }
         if (obj.has("active")) {
-            quest.active = obj.get("active").getAsBoolean();
+            quest.setActive(obj.get("active").getAsBoolean());
         }
         if (obj.has("leader")) {
-            quest.leader = obj.get("leader").getAsString();
+            quest.setLeader(obj.get("leader").getAsString());
         }
         if (obj.has("RSVPNeeded")) {
-            quest.RSVPNeeded = obj.get("RSVPNeeded").getAsBoolean();
+            quest.setRSVPNeeded(obj.get("RSVPNeeded").getAsBoolean());
         }
         if (obj.has("progress")) {
             QuestProgress progress = new QuestProgress();
@@ -75,7 +75,7 @@ public class QuestDeserializer implements JsonDeserializer<Quest> {
                 }
                 members.add(member);
             }
-            quest.members = members;
+            quest.setMembers(members);
         }
         return quest;
     }

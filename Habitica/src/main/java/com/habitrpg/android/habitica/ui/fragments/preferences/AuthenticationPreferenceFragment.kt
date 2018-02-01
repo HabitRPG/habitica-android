@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
@@ -86,8 +87,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val emailEditText = view?.findViewById<EditText>(R.id.editText)
         emailEditText?.setText(user?.authentication?.localAuthentication?.email)
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
-        val context = context
-        if (context != null) {
+        context.notNull { context ->
             val dialog = AlertDialog.Builder(context)
                     .setTitle(R.string.change_email)
                     .setPositiveButton(R.string.change) { thisDialog, _ ->
@@ -110,8 +110,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val loginNameEditText = view?.findViewById<EditText>(R.id.editText)
         loginNameEditText?.setText(user?.authentication?.localAuthentication?.username)
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
-        val context = context
-        if (context != null) {
+        context.notNull { context ->
             val dialog = AlertDialog.Builder(context)
 
                     .setTitle(R.string.change_login_name)
@@ -135,8 +134,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT)
         input.layoutParams = lp
-        val context = context
-        if (context != null) {
+        context.notNull { context ->
             val dialog = AlertDialog.Builder(context)
                     .setTitle(R.string.delete_account)
                     .setMessage(R.string.delete_account_description)
@@ -164,8 +162,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showAccountResetConfirmation() {
-        val context = context
-        if (context != null) {
+        context.notNull { context ->
             val dialog = AlertDialog.Builder(context)
                     .setTitle(R.string.reset_account)
                     .setMessage(R.string.reset_account_description)
@@ -191,8 +188,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     private fun showSubscriptionStatusDialog() {
         val view = SubscriptionDetailsView(context)
         view.setPlan(user?.purchased?.plan)
-        val context = context
-        if (context != null) {
+        context.notNull { context ->
             val dialog = AlertDialog.Builder(context)
                     .setView(view)
                     .setTitle(R.string.subscription_status)

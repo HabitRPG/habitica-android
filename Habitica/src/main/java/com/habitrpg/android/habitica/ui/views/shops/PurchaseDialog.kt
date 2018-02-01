@@ -138,7 +138,7 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
 
         shopItem = item
 
-        compositeSubscription.add(userRepository.user.subscribe(Action1<User> { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUser().subscribe(Action1<User> { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
 
         if (!this.configManager.newShopsEnabled()) {
             pinButton.visibility = View.GONE

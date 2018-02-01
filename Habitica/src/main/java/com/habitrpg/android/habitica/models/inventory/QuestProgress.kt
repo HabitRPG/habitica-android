@@ -13,8 +13,4 @@ open class QuestProgress : RealmObject() {
     var collect: RealmList<QuestProgressCollect>? = null
     var down: Float = 0.0f
     var up: Float = 0.0f
-
-    fun hasRageStrikes(): Boolean {
-        return false
-    }
 }

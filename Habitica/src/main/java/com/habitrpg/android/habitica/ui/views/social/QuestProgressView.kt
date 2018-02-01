@@ -1,19 +1,23 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
@@ -35,6 +39,7 @@ class QuestProgressView : LinearLayout {
     private val rageMeterView: TextView by bindView(R.id.rageMeterView)
     private val bossRageView: ValueBar by bindView(R.id.bossRageView)
     private val rageStrikeDescriptionView: TextView by bindView(R.id.rageStrikeDescriptionView)
+    private val rageStrikeContainer: LinearLayout by bindView(R.id.rageStrikeContainer)
     private val collectionContainer: ViewGroup by bindView(R.id.collectionContainer)
     private val questDescriptionSection: CollapsibleSectionView by bindView(R.id.questDescriptionSection)
     private val questDescriptionView: TextView by bindView(R.id.questDescription)
@@ -47,7 +52,7 @@ class QuestProgressView : LinearLayout {
         field = value
         configure()
     }
-    var progress: QuestProgress? = null
+    var progress: Quest? = null
     set(value) {
         field = value
         configure()
@@ -77,24 +82,29 @@ class QuestProgressView : LinearLayout {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        val colors = quest?.colors
-        if (colors != null) {
-            rect.set(0.0f, 0.0f, (canvas?.width?.toFloat()
-                    ?: 1.0f) / displayDensity, (canvas?.height?.toFloat() ?: 1.0f) / displayDensity)
-            canvas?.scale(displayDensity, displayDensity)
-            HabiticaIcons.drawQuestBackground(canvas, rect, colors.darkColor, colors.mediumColor, colors.extraLightColor)
-            canvas?.scale(1.0f / displayDensity, 1.0f / displayDensity)
+        if (quest?.isValid == true) {
+            val colors = quest?.colors
+            if (colors != null) {
+                rect.set(0.0f, 0.0f, (canvas?.width?.toFloat()
+                        ?: 1.0f) / displayDensity, (canvas?.height?.toFloat()
+                        ?: 1.0f) / displayDensity)
+                canvas?.scale(displayDensity, displayDensity)
+                HabiticaIcons.drawQuestBackground(canvas, rect, colors.darkColor, colors.mediumColor, colors.extraLightColor)
+                canvas?.scale(1.0f / displayDensity, 1.0f / displayDensity)
+            }
         }
         super.onDraw(canvas)
     }
 
-    fun setData(quest: QuestContent, progress: QuestProgress?) {
+    fun setData(quest: QuestContent, progress: Quest?) {
+        this.quest = quest
+        this.progress = progress
     }
 
     private fun configure() {
         val quest = this.quest
         val progress = this.progress
-        if (quest == null || progress == null) {
+        if (quest == null || progress == null || !quest.isValid || !progress.isValid) {
             return
         }
         collectionContainer.removeAllViews()
@@ -102,15 +112,15 @@ class QuestProgressView : LinearLayout {
             bossNameView.text = quest.boss.name
             bossNameView.visibility = View.VISIBLE
             bossHealthView.visibility = View.VISIBLE
-            bossHealthView.set(progress.hp, quest.boss?.hp?.toDouble() ?: 0.0)
+            bossHealthView.set(progress.progress?.hp ?: 0.0, quest.boss?.hp?.toDouble() ?: 0.0)
 
             if (quest.boss.hasRage()) {
                 rageMeterView.visibility = View.VISIBLE
                 bossRageView.visibility = View.VISIBLE
                 rageMeterView.text = quest.boss.rage?.title
-                bossRageView.set(progress.rage, quest.boss?.rage?.value ?: 0.0)
+                bossRageView.set(progress.progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
                 if (progress.hasRageStrikes()) {
-                    rageStrikeDescriptionView.visibility = View.VISIBLE
+                    setupRageStrikeViews()
                 } else {
                     rageStrikeDescriptionView.visibility = View.GONE
                 }
@@ -126,7 +136,7 @@ class QuestProgressView : LinearLayout {
             bossRageView.visibility = View.GONE
             rageStrikeDescriptionView.visibility = View.GONE
 
-            val collection = progress.collect
+            val collection = progress.progress?.collect
             if (collection != null) {
                 setCollectionViews(collection, quest)
             }
@@ -137,6 +147,31 @@ class QuestProgressView : LinearLayout {
         if (lightColor != null) {
             questDescriptionSection.separatorColor = lightColor
             questImageSeparator.setBackgroundColor(lightColor)
+        }
+    }
+
+    private fun setupRageStrikeViews() {
+        rageStrikeDescriptionView.visibility = View.VISIBLE
+        rageStrikeDescriptionView.text = context.getString(R.string.rage_strike_count, progress?.activeRageStrikeNumber, progress?.rageStrikes?.size ?: 0)
+
+        rageStrikeContainer.removeAllViews()
+        progress?.rageStrikes?.forEach { strike ->
+            val iconView = ImageView(context)
+            if (strike.wasHit) {
+                DataBindingUtils.loadImage("rage_strike_${strike.key}", {
+                    val displayDensity = resources.displayMetrics.density
+                    val width = it.width * displayDensity
+                    val height = it.height * displayDensity
+                    val scaledImage = Bitmap.createScaledBitmap(it, width.toInt(), height.toInt(), false)
+                    iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
+                })
+            } else {
+                iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeInactive())
+            }
+            val params = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            val spacing = context.resources.getDimension(R.dimen.spacing_medium).toInt()
+            params.setMargins(spacing, 0, spacing, 0)
+            rageStrikeContainer.addView(iconView, params)
         }
     }
 

@@ -105,8 +105,8 @@ class ChallengeFilterDialogHolder {
                     continue;
                 }
                 Group group = new Group();
-                group.id = challenge.groupId;
-                group.name = challenge.groupName;
+                group.setId(challenge.groupId);
+                group.setName(challenge.groupName);
 
                 groupMap.put(challenge.groupName, group);
             }

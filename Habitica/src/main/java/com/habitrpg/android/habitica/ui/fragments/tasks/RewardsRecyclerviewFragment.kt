@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
@@ -39,9 +40,8 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
 
         view.post { setGridSpanCount(view.width) }
-        val context = context
-        if (context != null) {
-            recyclerView.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+        context.notNull {
+            recyclerView.setBackgroundColor(ContextCompat.getColor(it, R.color.white))
         }
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 

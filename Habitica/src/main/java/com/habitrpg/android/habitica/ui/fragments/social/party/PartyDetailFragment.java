@@ -125,7 +125,7 @@ public class PartyDetailFragment extends BaseFragment {
 
     private void refreshParty() {
         socialRepository.retrieveGroup("party")
-                .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.id, true))
+                .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.getId(), true))
                 .subscribe(members -> {}, RxErrorHandler.handleEmptyError(), () -> {
                     if (refreshLayout != null) {
                         refreshLayout.setRefreshing(false);
@@ -135,14 +135,14 @@ public class PartyDetailFragment extends BaseFragment {
 
     private void updateParty(Group party) {
         this.party = party;
-        this.quest = party.quest;
+        this.quest = party.getQuest();
         if (titleView == null) {
             return;
         }
-        titleView.setText(party.name);
-        descriptionView.setText(MarkdownParser.parseMarkdown(party.description));
+        titleView.setText(party.getName());
+        descriptionView.setText(MarkdownParser.parseMarkdown(party.getDescription()));
 
-        if (quest != null && quest.key != null) {
+        if (quest != null) {
             newQuestButton.setVisibility(View.GONE);
             questDetailButton.setVisibility(View.VISIBLE);
             questImageWrapper.setVisibility(View.VISIBLE);
@@ -183,7 +183,7 @@ public class PartyDetailFragment extends BaseFragment {
     }
 
     private boolean showParticipantButtons() {
-        return !(user == null || user.getParty() == null || user.getParty().getQuest() == null) && !isQuestActive() && user.getParty().getQuest().RSVPNeeded;
+        return !(user == null || user.getParty() == null || user.getParty().getQuest() == null) && !isQuestActive() && user.getParty().getQuest().getRSVPNeeded();
     }
 
     private void updateQuestContent(QuestContent questContent) {
@@ -195,16 +195,16 @@ public class PartyDetailFragment extends BaseFragment {
         DataBindingUtils.INSTANCE.loadImage(questImageView, "quest_"+questContent.getKey());
         if (isQuestActive()) {
             questProgressView.setVisibility(View.VISIBLE);
-            questProgressView.setData(questContent, quest.getProgress());
+            questProgressView.setData(questContent, quest);
 
-            questParticipationView.setText(getString(R.string.number_participants, quest.members.size()));
+            questParticipationView.setText(getString(R.string.number_participants, quest.getMembers().size()));
         } else {
             questProgressView.setVisibility(View.GONE);
         }
     }
 
     private boolean isQuestActive() {
-        return quest != null && quest.active;
+        return quest != null && quest.getActive();
     }
 
     @OnClick(R.id.new_quest_button)
@@ -254,8 +254,8 @@ public class PartyDetailFragment extends BaseFragment {
     public void questDetailButtonClicked() {
         QuestDetailFragment fragment = new QuestDetailFragment();
         fragment.partyId = partyId;
-        if (party != null && party.quest != null) {
-            fragment.questKey = party.quest.key;
+        if (party != null && party.getQuest() != null) {
+            fragment.questKey = party.getQuest().getKey();
         }
         if (getActivity() != null) {
             MainActivity activity = (MainActivity) getActivity();

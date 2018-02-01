@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.AboutActivity
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
@@ -99,8 +100,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun initializeMenuItems() {
         val items = ArrayList<HabiticaDrawerItem>()
-        val context = context
-        if (context != null) {
+        context.notNull {context ->
             items.add(HabiticaDrawerItem(SIDEBAR_TASKS, context.getString(R.string.sidebar_tasks)))
             items.add(HabiticaDrawerItem(SIDEBAR_SKILLS, context.getString(R.string.sidebar_skills)))
             items.add(HabiticaDrawerItem(SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))

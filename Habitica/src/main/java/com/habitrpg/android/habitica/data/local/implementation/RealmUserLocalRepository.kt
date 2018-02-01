@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.TutorialStep
@@ -11,13 +10,10 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import rx.Observable
-import rx.functions.Action0
-import rx.functions.Action1
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
 
-    override val tutorialSteps: Observable<RealmResults<TutorialStep>>
-        get() = realm.where(TutorialStep::class.java).findAll().asObservable()
+    override fun getTutorialSteps(): Observable<RealmResults<TutorialStep>> = realm.where(TutorialStep::class.java).findAll().asObservable()
                 .filter({ it.isLoaded })
 
     override fun getUser(userID: String): Observable<User> {

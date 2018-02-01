@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -113,9 +114,11 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
     }
 
     private fun sendMessage(chatText: String) {
-        socialRepository.postPrivateMessage(replyToUserUUID, chatText)
-                .subscribe(Action1 { this.refreshUserInbox() }, RxErrorHandler.handleEmptyError())
-        UiUtils.dismissKeyboard(getActivity())
+        replyToUserUUID?.notNull {
+            socialRepository.postPrivateMessage(it, chatText)
+                    .subscribe(Action1 { this.refreshUserInbox() }, RxErrorHandler.handleEmptyError())
+            UiUtils.dismissKeyboard(getActivity())
+        }
     }
 
     fun setReceivingUser(chatRoomUser: String, replyToUserUUID: String) {

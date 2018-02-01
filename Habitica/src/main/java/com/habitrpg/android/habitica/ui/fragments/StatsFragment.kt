@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.setOkButton
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -127,8 +128,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun showBulkAllocateDialog() {
-        val context = context
-        if (context != null) {
+        context.notNull { context ->
             val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.getComponent())
             dialog.show()
         }
@@ -173,8 +173,7 @@ class StatsFragment: BaseMainFragment() {
         intelligenceStatsView.canDistributePoints = canDistributePoints
         constitutionStatsView.canDistributePoints = canDistributePoints
         perceptionStatsView.canDistributePoints = canDistributePoints
-        val context = context
-        if (context != null) {
+        context.notNull { context ->
             if (canDistributePoints) {
                 val points = user?.stats?.points ?: 0
                 numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)

@@ -48,7 +48,7 @@ public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Gr
         guildViewHolder.itemView.setOnClickListener(v -> {
             Group guild = (Group) v.getTag();
             GuildFragment guildFragment = new GuildFragment();
-            guildFragment.setGuildId(guild.id);
+            guildFragment.setGuildId(guild.getId());
             guildFragment.isMember = isInGroup(guild);
             DisplayFragmentEvent event = new DisplayFragmentEvent();
             event.fragment = guildFragment;
@@ -56,20 +56,20 @@ public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Gr
         });
         guildViewHolder.joinLeaveButton.setOnClickListener(v -> {
             Group guild = (Group) v.getTag();
-            boolean isMember = this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
+            boolean isMember = this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.getId());
             if (isMember) {
-                PublicGuildsRecyclerViewAdapter.this.apiClient.leaveGroup(guild.id)
+                PublicGuildsRecyclerViewAdapter.this.apiClient.leaveGroup(guild.getId())
                         .subscribe(aVoid -> {
-                            memberGuildIDs.remove(guild.id);
+                            memberGuildIDs.remove(guild.getId());
                             if (getData() != null) {
                                 int indexOfGroup = getData().indexOf(guild);
                                 notifyItemChanged(indexOfGroup);
                             }
                         }, RxErrorHandler.handleEmptyError());
             } else {
-                PublicGuildsRecyclerViewAdapter.this.apiClient.joinGroup(guild.id)
+                PublicGuildsRecyclerViewAdapter.this.apiClient.joinGroup(guild.getId())
                         .subscribe(group -> {
-                            memberGuildIDs.add(group.id);
+                            memberGuildIDs.add(group.getId());
                             if (getData() != null) {
                                 int indexOfGroup = getData().indexOf(group);
                                 notifyItemChanged(indexOfGroup);
@@ -93,7 +93,7 @@ public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Gr
     }
 
     private boolean isInGroup(Group guild) {
-        return this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
+        return this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.getId());
     }
 
     @Override
@@ -138,9 +138,9 @@ public class PublicGuildsRecyclerViewAdapter extends RealmRecyclerViewAdapter<Gr
         }
 
         public void bind(Group guild, boolean isInGroup) {
-            this.nameTextView.setText(guild.name);
-            this.memberCountTextView.setText(String.valueOf(guild.memberCount));
-            this.descriptionTextView.setText(guild.description);
+            this.nameTextView.setText(guild.getName());
+            this.memberCountTextView.setText(String.valueOf(guild.getMemberCount()));
+            this.descriptionTextView.setText(guild.getDescription());
             if (isInGroup) {
                 this.joinLeaveButton.setText(R.string.leave);
             } else {

@@ -64,12 +64,12 @@ public class UserDeserializer implements JsonDeserializer<User> {
         if (obj.has("party")) {
             user.setParty(context.deserialize(obj.get("party"), UserParty.class));
             if (user.getParty() != null && user.getParty().getQuest() != null) {
-                user.getParty().getQuest().id = user.getId();
+                user.getParty().getQuest().setId(user.getId());
                 if (!obj.get("party").getAsJsonObject().get("quest").getAsJsonObject().has("RSVPNeeded")) {
                     Realm realm = Realm.getDefaultInstance();
                     Quest quest = realm.where(Quest.class).equalTo("id", user.getId()).findFirst();
                     if (quest != null && quest.isValid()) {
-                        user.getParty().getQuest().RSVPNeeded = quest.RSVPNeeded;
+                        user.getParty().getQuest().setRSVPNeeded(quest.getRSVPNeeded());
                     }
                 }
             }

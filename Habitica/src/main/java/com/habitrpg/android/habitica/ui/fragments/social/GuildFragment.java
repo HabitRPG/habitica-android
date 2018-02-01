@@ -86,7 +86,7 @@ public class GuildFragment extends BaseMainFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (this.socialRepository != null && this.guild != null) {
-            socialRepository.retrieveGroup(this.guild.id).subscribe(this::setGroup, RxErrorHandler.handleEmptyError());
+            socialRepository.retrieveGroup(this.guild.getId()).subscribe(this::setGroup, RxErrorHandler.handleEmptyError());
         }
     }
 
@@ -94,7 +94,7 @@ public class GuildFragment extends BaseMainFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         if (this.activity != null && this.guild != null) {
             if (this.isMember) {
-                if (this.user != null && this.user.getId().equals(this.guild.leaderID)) {
+                if (this.user != null && this.user.getId().equals(this.guild.getLeaderID())) {
                     this.activity.getMenuInflater().inflate(R.menu.guild_admin, menu);
                 } else {
                     this.activity.getMenuInflater().inflate(R.menu.guild_member, menu);
@@ -112,11 +112,11 @@ public class GuildFragment extends BaseMainFragment {
 
         switch (id) {
             case R.id.menu_guild_join:
-                this.socialRepository.joinGroup(this.guild.id).subscribe(this::setGroup, RxErrorHandler.handleEmptyError());
+                this.socialRepository.joinGroup(this.guild.getId()).subscribe(this::setGroup, RxErrorHandler.handleEmptyError());
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
-                this.socialRepository.leaveGroup(this.guild.id)
+                this.socialRepository.leaveGroup(this.guild.getId())
                         .subscribe(aVoid -> {
                             if (this.activity != null) {
                                 this.activity.supportInvalidateOptionsMenu();
@@ -180,14 +180,14 @@ public class GuildFragment extends BaseMainFragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == 1 && GuildFragment.this.guild != null) {
-                    chatListFragment.setNavigatedToFragment(GuildFragment.this.guild.id);
+                    chatListFragment.setNavigatedToFragment(GuildFragment.this.guild.getId());
                 }
             }
 
             @Override
             public void onPageSelected(int position) {
                 if (position == 1 && GuildFragment.this.guild != null && chatListFragment != null) {
-                    chatListFragment.setNavigatedToFragment(GuildFragment.this.guild.id);
+                    chatListFragment.setNavigatedToFragment(GuildFragment.this.guild.getId());
                 }
             }
 
@@ -204,11 +204,11 @@ public class GuildFragment extends BaseMainFragment {
 
     private void displayEditForm() {
         Bundle bundle = new Bundle();
-        bundle.putString("groupID", this.guild.id);
-        bundle.putString("name", this.guild.name);
-        bundle.putString("description", this.guild.description);
-        bundle.putString("privacy", this.guild.privacy);
-        bundle.putString("leader", this.guild.leaderID);
+        bundle.putString("groupID", this.guild.getId());
+        bundle.putString("name", this.guild.getName());
+        bundle.putString("description", this.guild.getDescription());
+        bundle.putString("privacy", this.guild.getPrivacy());
+        bundle.putString("leader", this.guild.getLeaderID());
 
         Intent intent = new Intent(activity, GroupFormActivity.class);
         intent.putExtras(bundle);
@@ -242,7 +242,7 @@ public class GuildFragment extends BaseMainFragment {
             }
 
             if (this.chatListFragment != null) {
-                this.chatListFragment.setSeenGroupId(group.id);
+                this.chatListFragment.setSeenGroupId(group.getId());
             }
 
             this.guild = group;

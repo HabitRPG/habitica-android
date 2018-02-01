@@ -37,6 +37,8 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
+import com.habitrpg.android.habitica.extensions.backgroundCompat
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.members.PlayerTier
 import com.habitrpg.android.habitica.models.social.Group
@@ -87,49 +89,30 @@ class TavernDetailFragment : BaseFragment() {
 
         backgroundView.scaleType = ImageView.ScaleType.FIT_START
 
-        val imageRequest = ImageRequestBuilder
-                .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/tavern_background" + configManager.shopSpriteSuffix() + ".png"))
-                .build()
-
-        val imagePipeline = Fresco.getImagePipeline()
-        val dataSource = imagePipeline.fetchDecodedImage(imageRequest, this)
-
-        dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-            override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
-                dataSource?.close()
-            }
-
-            public override fun onNewResultImpl(bitmap: Bitmap?) {
-                if (dataSource.isFinished && bitmap != null) {
-                    val aspectRatio = bitmap.width / bitmap.height.toFloat()
-                    val height = context?.resources?.getDimension(R.dimen.shop_height)?.toInt() ?: 0
-                    val width = Math.round(height * aspectRatio)
-                    val drawable = BitmapDrawable(context?.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
-                    drawable.tileModeX = Shader.TileMode.REPEAT
-                    Observable.just(drawable)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Action1 {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    backgroundView.background = it
-                                } else {
-                                    backgroundView.setBackgroundDrawable(it)
-                                }
-                            }, RxErrorHandler.handleEmptyError())
-                    dataSource.close()
-                }
-            }
-        }, CallerThreadExecutor.getInstance())
+        DataBindingUtils.loadImage("tavern_background" + configManager.shopSpriteSuffix(), {bitmap ->
+            val aspectRatio = bitmap.width / bitmap.height.toFloat()
+            val height = context?.resources?.getDimension(R.dimen.shop_height)?.toInt() ?: 0
+            val width = Math.round(height * aspectRatio)
+            val drawable = BitmapDrawable(context?.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
+            drawable.tileModeX = Shader.TileMode.REPEAT
+            Observable.just(drawable)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(Action1 {
+                        backgroundView.backgroundCompat = it
+                    }, RxErrorHandler.handleEmptyError())
+        })
 
         addPlayerTiers()
         bindButtons()
 
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
-                .doOnNext({ worldBossSection.visibility = if (it.quest.active) View.VISIBLE else View.GONE })
-                .filter { it.quest.active }
-                .doOnNext({ questProgressView.progress = it.quest.progress})
-                .flatMap { inventoryRepository.getQuestContent(it.quest.key) }
+                .doOnNext({  if (!it.hasActiveQuest) worldBossSection.visibility = View.GONE })
+                .filter { it.hasActiveQuest }
+                .doOnNext({ questProgressView.progress = it.quest})
+                .flatMap { inventoryRepository.getQuestContent(it.quest?.key) }
                 .subscribe(Action1 {
                     questProgressView.quest = it
+                    worldBossSection.visibility = View.VISIBLE
                 }, RxErrorHandler.handleEmptyError()))
         socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
     }
@@ -143,7 +126,7 @@ class TavernDetailFragment : BaseFragment() {
 
     private fun bindButtons() {
         innButton.setOnClickListener {
-            user?.let { userRepository.sleep(it).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
+            user?.notNull { userRepository.sleep(it).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
         }
         guidelinesButton.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
@@ -173,9 +156,8 @@ class TavernDetailFragment : BaseFragment() {
     private fun addPlayerTiers() {
         for (tier in PlayerTier.getTiers()) {
             val container = FrameLayout(context)
-            val context = this.context
-            if (context != null) {
-                container.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_700))
+            context.notNull {
+                container.backgroundCompat = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_gray_700)
             }
             val label = UsernameLabel(context, null)
             label.tier = tier.id

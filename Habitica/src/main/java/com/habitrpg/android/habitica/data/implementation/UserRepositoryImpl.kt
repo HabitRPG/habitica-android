@@ -25,10 +25,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     private var lastSync: Date? = null
 
-    override val user: Observable<User>
-        get() = getUser(userId) //To change initializer of created properties use File | Settings | File Templates.
-    override val inboxOverviewList: Observable<RealmResults<ChatMessage>>
-        get() = localRepository.getInboxOverviewList(userId) //To change initializer of created properties use File | Settings | File Templates.
+    override fun getUser(): Observable<User> = getUser(userId)
+    override fun getInboxOverviewList(): Observable<RealmResults<ChatMessage>> = localRepository.getInboxOverviewList(userId)
 
 
     override fun getUser(userID: String): Observable<User> = localRepository.getUser(userID)
@@ -41,7 +39,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun updateUser(user: User?, key: String, value: Any): Observable<User> {
         val updateData = HashMap<String, Any>()
-        updateData.put(key, value)
+        updateData[key] = value
         return updateUser(user, updateData)
     }
 
@@ -69,7 +67,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                         }
                     }
         } else {
-            return user
+            return getUser()
         }
     }
 
@@ -80,11 +78,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             apiClient.revive().map { newUser -> mergeUser(user, newUser) }
 
     override fun resetTutorial(user: User?) {
-        localRepository.tutorialSteps
+        localRepository.getTutorialSteps()
                 .map<Map<String, Any>> { tutorialSteps ->
                     val updateData = HashMap<String, Any>()
                     for (step in tutorialSteps) {
-                        updateData.put("flags.tutorial." + step.tutorialGroup + "." + step.identifier, false)
+                        updateData["flags.tutorial." + step.tutorialGroup + "." + step.identifier] = false
                     }
                     updateData
                 }
@@ -172,7 +170,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun changeCustomDayStart(dayStartTime: Int): Observable<User> {
         val updateObject = HashMap<String, Any>()
-        updateObject.put("dayStart", dayStartTime)
+        updateObject["dayStart"] = dayStartTime
         return apiClient.changeCustomDayStart(updateObject)
     }
 

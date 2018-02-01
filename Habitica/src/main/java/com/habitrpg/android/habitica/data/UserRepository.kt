@@ -13,8 +13,8 @@ import io.realm.RealmResults
 import rx.Observable
 
 interface UserRepository : BaseRepository {
-    val user: Observable<User>
-    val inboxOverviewList: Observable<RealmResults<ChatMessage>>
+    fun getUser(): Observable<User>
+    fun getInboxOverviewList(): Observable<RealmResults<ChatMessage>>
 
     fun getUser(userID: String): Observable<User>
     fun updateUser(user: User?, updateData: Map<String, Any>): Observable<User>

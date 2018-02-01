@@ -35,14 +35,14 @@ import javax.inject.Inject
 
 class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    var seenGroupId: String? = null
+    var seenGroupId: String = ""
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
     private var isTavern: Boolean = false
     internal var layoutManager: LinearLayoutManager? = null
-    private var groupId: String? = null
+    private var groupId: String = ""
     private var user: User? = null
     private var userId: String? = null
     private var chatAdapter: ChatRecyclerViewAdapter? = null
@@ -143,11 +143,8 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun markMessagesAsSeen() {
-        if (!isTavern && seenGroupId != null && !seenGroupId!!.isEmpty()
-                && gotNewMessages && navigatedOnceToFragment) {
-
+        if (!isTavern && seenGroupId.isNotEmpty() && gotNewMessages && navigatedOnceToFragment) {
             gotNewMessages = false
-
             socialRepository.markMessagesSeen(seenGroupId)
         }
     }

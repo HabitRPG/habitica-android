@@ -345,8 +345,8 @@ public class CreateChallengeActivity extends BaseActivity {
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         socialRepository.getGroups("guild").subscribe(groups -> {
             Group tavern = new Group();
-            tavern.id = "00000000-0000-4000-A000-000000000000";
-            tavern.name = getString(R.string.sidebar_tavern);
+            tavern.setId("00000000-0000-4000-A000-000000000000");
+            tavern.setName(getString(R.string.sidebar_tavern));
 
             locationAdapter.add(tavern);
 
@@ -436,7 +436,7 @@ public class CreateChallengeActivity extends BaseActivity {
             for (int i = 0; i < locationAdapter.getCount(); i++) {
                 Group group = locationAdapter.getItem(i);
 
-                if (group != null && challenge.groupId.equals(group.id)) {
+                if (group != null && challenge.groupId.equals(group.getId())) {
                     challengeLocationSpinner.setSelection(i);
                     break;
                 }
@@ -493,7 +493,7 @@ public class CreateChallengeActivity extends BaseActivity {
         }
 
         if (locationGroup != null) {
-            c.groupId = locationGroup.id;
+            c.groupId = locationGroup.getId();
         }
         c.name = createChallengeTitle.getText().toString();
         c.description = createChallengeDescription.getText().toString();
@@ -575,14 +575,14 @@ public class CreateChallengeActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             AppCompatTextView checkedTextView = (AppCompatTextView) super.getView(position, convertView, parent);
-            checkedTextView.setText(getItem(position).name);
+            checkedTextView.setText(getItem(position).getName());
             return checkedTextView;
         }
 
         @Override
         public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             AppCompatCheckedTextView checkedTextView = (AppCompatCheckedTextView) super.getDropDownView(position, convertView, parent);
-            checkedTextView.setText(getItem(position).name);
+            checkedTextView.setText(getItem(position).getName());
             return checkedTextView;
         }
     }

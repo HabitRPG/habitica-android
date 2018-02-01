@@ -64,7 +64,7 @@ public class ChallengesFilterRecyclerViewAdapter extends RecyclerView.Adapter<Ch
 
     public void selectAll(List<Group> groupsToCheck){
         for (ChallengeViewHolder h : holderList) {
-            h.checkbox.setChecked($.find(groupsToCheck, g -> h.group.id.equals(g.id)).isPresent());
+            h.checkbox.setChecked($.find(groupsToCheck, g -> h.group.getId().equals(g.getId())).isPresent());
         }
     }
     public List<Group> getCheckedEntries(){
@@ -94,7 +94,7 @@ public class ChallengesFilterRecyclerViewAdapter extends RecyclerView.Adapter<Ch
         public void bind(Group group) {
             this.group = group;
 
-            checkbox.setText(group.name);
+            checkbox.setText(group.getName());
         }
     }
 }

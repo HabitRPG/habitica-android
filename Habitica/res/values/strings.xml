@@ -740,4 +740,5 @@
     <string name="world_boss_art">Boss Art</string>
     <string name="boss_art">Boss Art</string>
     <string name="world_boss_description">World Boss Description</string>
+    <string name="rage_strike_count" formatted="false">Rage Strikes: %d/%d</string>
 </resources>

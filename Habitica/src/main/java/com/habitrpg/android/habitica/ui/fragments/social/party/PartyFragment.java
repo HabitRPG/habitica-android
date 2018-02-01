@@ -81,7 +81,7 @@ public class PartyFragment extends BaseMainFragment {
                         }, RxErrorHandler.handleEmptyError()));
             }
             socialRepository.retrieveGroup("party")
-                    .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.id, true))
+                    .flatMap(group1 -> socialRepository.retrieveGroupMembers(group1.getId(), true))
                     .subscribe(members -> {}, RxErrorHandler.handleEmptyError());
         }
 
@@ -129,11 +129,11 @@ public class PartyFragment extends BaseMainFragment {
         }
 
         if (partyMemberListFragment != null && group != null) {
-            partyMemberListFragment.setPartyId(group.id);
+            partyMemberListFragment.setPartyId(group.getId());
         }
 
         if (chatListFragment != null && group != null) {
-            chatListFragment.setSeenGroupId(group.id);
+            chatListFragment.setSeenGroupId(group.getId());
         }
 
         if (this.activity != null) {
@@ -144,7 +144,7 @@ public class PartyFragment extends BaseMainFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         if (this.group != null && this.user != null) {
-            if (this.group.leaderID.equals(this.user.getId())) {
+            if (this.group.getLeaderID().equals(this.user.getId())) {
                 inflater.inflate(R.menu.menu_party_admin, menu);
             } else {
                 inflater.inflate(R.menu.menu_party, menu);
@@ -170,7 +170,7 @@ public class PartyFragment extends BaseMainFragment {
                         .setMessage(viewPager.getContext().getString(R.string.leave_party_confirmation))
                         .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  {
                             if (this.group != null){
-                                this.socialRepository.leaveGroup(this.group.id)
+                                this.socialRepository.leaveGroup(this.group.getId())
                                         .subscribe(group -> getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit(), RxErrorHandler.handleEmptyError());
                             }
                         })
@@ -184,10 +184,10 @@ public class PartyFragment extends BaseMainFragment {
 
     private void displayEditForm() {
         Bundle bundle = new Bundle();
-        bundle.putString("groupID", this.group != null ? this.group.id : null);
-        bundle.putString("name", this.group.name);
-        bundle.putString("description", this.group.description);
-        bundle.putString("leader", this.group.leaderID);
+        bundle.putString("groupID", this.group != null ? this.group.getId() : null);
+        bundle.putString("name", this.group.getName());
+        bundle.putString("description", this.group.getDescription());
+        bundle.putString("leader", this.group.getLeaderID());
 
         Intent intent = new Intent(activity, GroupFormActivity.class);
         intent.putExtras(bundle);
@@ -232,7 +232,7 @@ public class PartyFragment extends BaseMainFragment {
                         inviteData.put("uuids", invites);
                     }
                     if (this.group != null) {
-                        this.socialRepository.inviteToGroup(this.group.id, inviteData)
+                        this.socialRepository.inviteToGroup(this.group.getId(), inviteData)
                                 .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
                     }
                 }
@@ -326,7 +326,7 @@ public class PartyFragment extends BaseMainFragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == 1 && group != null) {
                     if (chatListFragment != null) {
-                        chatListFragment.setNavigatedToFragment(group.id);
+                        chatListFragment.setNavigatedToFragment(group.getId());
 
                     }
                 }
@@ -336,7 +336,7 @@ public class PartyFragment extends BaseMainFragment {
             public void onPageSelected(int position) {
                 if (position == 1 && group != null) {
                     if (chatListFragment != null) {
-                        chatListFragment.setNavigatedToFragment(group.id);
+                        chatListFragment.setNavigatedToFragment(group.getId());
                     }
                 }
             }

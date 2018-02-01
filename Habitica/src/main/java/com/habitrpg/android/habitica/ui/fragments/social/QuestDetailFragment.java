@@ -106,13 +106,13 @@ public class QuestDetailFragment extends BaseMainFragment {
 
 
     private void updateParty(Group group) {
-        if (questTitleView == null || group.quest == null) {
+        if (questTitleView == null || group.getQuest() == null) {
             return;
         }
         party = group;
-        quest = group.quest;
-        setQuestParticipants(group.quest.participants);
-        socialRepository.getMember(quest.leader).first().subscribe(member -> {
+        quest = group.getQuest();
+        setQuestParticipants(group.getQuest().getParticipants());
+        socialRepository.getMember(quest.getLeader()).first().subscribe(member -> {
             if (getContext() != null && questLeaderView != null && member != null) {
                 questLeaderView.setText(getContext().getString(R.string.quest_leader_header, member.getDisplayName()));
             }
@@ -142,18 +142,18 @@ public class QuestDetailFragment extends BaseMainFragment {
     }
 
     private boolean showLeaderButtons() {
-        return party != null && party.quest != null && userId != null && userId.equals(party.quest.leader);
+        return party != null && party.getQuest() != null && userId != null && userId.equals(party.getQuest().getLeader());
     }
 
     private boolean showParticipatantButtons() {
         if (user == null || user.getParty() == null || user.getParty().getQuest() == null) {
             return false;
         }
-        return !isQuestActive() && user.getParty().getQuest().RSVPNeeded;
+        return !isQuestActive() && user.getParty().getQuest().getRSVPNeeded();
     }
 
     private boolean isQuestActive() {
-        return quest != null && quest.active;
+        return quest != null && quest.getActive();
     }
 
 
@@ -174,14 +174,14 @@ public class QuestDetailFragment extends BaseMainFragment {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         int participantCount = 0;
         for (Member participant : participants) {
-            if (quest.active && (participant.getParticipatesInQuest() == null || !participant.getParticipatesInQuest())) {
+            if (quest.getActive() && (participant.getParticipatesInQuest() == null || !participant.getParticipatesInQuest())) {
                 continue;
             }
             View participantView = inflater.inflate(R.layout.quest_participant, questParticipantList, false);
             TextView textView = (TextView) participantView.findViewById(R.id.participant_name);
             textView.setText(participant.getDisplayName());
             TextView statusTextView = (TextView) participantView.findViewById(R.id.status_view);
-            if (!quest.active) {
+            if (!quest.getActive()) {
                 if (participant.getParticipatesInQuest() == null) {
                     statusTextView.setText(R.string.pending);
                     statusTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.gray_200));
@@ -196,17 +196,17 @@ public class QuestDetailFragment extends BaseMainFragment {
                 statusTextView.setVisibility(View.GONE);
             }
             questParticipantList.addView(participantView);
-            if (quest.active || (participant.getParticipatesInQuest() != null && participant.getParticipatesInQuest())) {
+            if (quest.getActive() || (participant.getParticipatesInQuest() != null && participant.getParticipatesInQuest())) {
                 participantCount += 1;
             }
         }
-        if (quest.active) {
+        if (quest.getActive()) {
             participantHeader.setText(R.string.participants);
             participantHeaderCount.setText(String.valueOf(participantCount));
         } else {
             participantHeader.setText(R.string.invitations);
-            participantHeaderCount.setText(participantCount + "/" + quest.participants.size());
-            begin_quest_message = getString(R.string.quest_begin_message, participantCount, quest.participants.size());
+            participantHeaderCount.setText(participantCount + "/" + quest.getParticipants().size());
+            begin_quest_message = getString(R.string.quest_begin_message, participantCount, quest.getParticipants().size());
         }
     }
 
