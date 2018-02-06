@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginBottom="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_large"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large"/>
     <TextView
@@ -50,6 +50,7 @@
         android:layout_marginBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_large"
         android:textColor="@color/white"/>
     <com.habitrpg.android.habitica.ui.views.ValueBar
         android:id="@+id/bossHealthView"

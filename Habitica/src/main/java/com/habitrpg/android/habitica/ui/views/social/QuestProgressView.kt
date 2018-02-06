@@ -1,34 +1,32 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
-import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.bindView
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.*
 import io.realm.RealmList
-import org.greenrobot.eventbus.EventBus
+import android.graphics.drawable.GradientDrawable
+import com.habitrpg.android.habitica.extensions.backgroundCompat
+
 
 class QuestProgressView : LinearLayout {
 
@@ -68,6 +66,8 @@ class QuestProgressView : LinearLayout {
         setupView(context)
     }
 
+    private var preferences: SharedPreferences? = null
+
     private fun setupView(context: Context) {
         setWillNotDraw(false)
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -83,6 +83,11 @@ class QuestProgressView : LinearLayout {
         }
 
         rageStrikeDescriptionView.setOnClickListener { showStrikeDescriptionAlert() }
+
+        preferences = context.getSharedPreferences("collapsible_sections", 0)
+        if (preferences?.getBoolean("boss_art_collapsed", false) == true) {
+            hideQuestImage()
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -145,12 +150,18 @@ class QuestProgressView : LinearLayout {
                 setCollectionViews(collection, quest)
             }
         }
-        questDescriptionView.text = quest.notes
+        questDescriptionView.text = MarkdownParser.parseMarkdown(quest.notes)
         DataBindingUtils.loadImage(questImageView, "quest_"+quest.key)
         val lightColor =  quest.colors?.lightColor
         if (lightColor != null) {
             questDescriptionSection.separatorColor = lightColor
             questImageSeparator.setBackgroundColor(lightColor)
+
+            val gradientDrawable = GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    intArrayOf(ContextCompat.getColor(context, R.color.transparent), lightColor))
+            gradientDrawable.cornerRadius = 0f
+            questImageView.backgroundCompat = gradientDrawable
         }
     }
 
@@ -182,7 +193,15 @@ class QuestProgressView : LinearLayout {
     }
 
     private fun showActiveStrikeAlert(key: String) {
-
+        val alert = HabiticaAlertDialog(context)
+        alert.setTitle(context.getString(R.string.strike_active_title, getLocationName(key)))
+        alert.setTitleBackground(R.color.orange_10)
+        alert.setSubtitle(context.getString(R.string.strike_active_subtitle, getNpcName(key)))
+        alert.setMessage(context.getString(R.string.strike_active_description, getLongNPCName(key), quest?.boss?.name ?: "", getLocationName(key)))
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+            dialog.dismiss()
+        })
+        alert.show()
     }
 
     private fun showPendingStrikeAlert() {
@@ -225,13 +244,53 @@ class QuestProgressView : LinearLayout {
         }
     }
 
+    private fun getNpcName(key: String): String {
+        return when (key) {
+            "market" -> context.getString(R.string.market_owner)
+            "tavern" -> context.getString(R.string.tavern_owner)
+            "questShop" -> context.getString(R.string.questShop_owner)
+            "seasonalShop" -> context.getString(R.string.seasonalShop_owner)
+            "stable" -> context.getString(R.string.stable_owner)
+            else -> ""
+        }
+    }
+
+    private fun getLocationName(key: String): String {
+        return when (key) {
+            "market" -> context.getString(R.string.market)
+            "tavern" -> context.getString(R.string.sidebar_tavern)
+            "questShop" -> context.getString(R.string.questShop)
+            "seasonalShop" -> context.getString(R.string.seasonalShop)
+            "stable" -> context.getString(R.string.sidebar_stable)
+            else -> ""
+        }
+    }
+
+    private fun getLongNPCName(key: String): String {
+        return when (key) {
+            "market" -> context.getString(R.string.market_owner_long)
+            "tavern" -> context.getString(R.string.tavern_owner_long)
+            "questShop" -> context.getString(R.string.questShop_owner)
+            "seasonalShop" -> context.getString(R.string.seasonalShop_owner)
+            "stable" -> context.getString(R.string.stable_owner_long)
+            else -> ""
+        }
+    }
+
+
     private fun showQuestImage() {
         questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), true))
         questImageView.visibility = View.VISIBLE
+        val editPreferences = preferences?.edit()
+        editPreferences?.putBoolean("boss_art_collapsed", true)
+        editPreferences?.apply()
     }
 
     private fun hideQuestImage() {
         questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), false))
         questImageView.visibility = View.GONE
+        val editPreferences = preferences?.edit()
+        editPreferences?.putBoolean("boss_art_collapsed", true)
+        editPreferences?.apply()
     }
 }

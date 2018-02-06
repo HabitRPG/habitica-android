@@ -98,8 +98,8 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
                 group.quest?.participants = newMembers
             }
 
-            if (questObject.has("extra") && questObject.getAsJsonObject("extra").has("worldDmg")) {
-                val worldDamageObject = questObject.getAsJsonObject("extra").getAsJsonObject("worldDmg")
+            if (questObject.has("extra")) {
+                val worldDamageObject = questObject.getAsJsonObject("extra")
                 worldDamageObject.entrySet().forEach { (key, value) ->
                     val rageStrike = QuestRageStrike(key, value.asBoolean)
                     group.quest?.addRageStrike(rageStrike)

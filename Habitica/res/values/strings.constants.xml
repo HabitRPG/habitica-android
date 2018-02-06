@@ -26,5 +26,6 @@
     <string name="seasonalShop_owner" translatable="false">Leslie</string>
     <string name="timetravelers_owner" translatable="false">Time Travelers</string>
     <string name="tavern_owner" translatable="false">Daniel</string>
+    <string name="stable_owner" translatable="false">Matt</string>
     <string name="empty" translatable="false"> </string>
 </resources>
