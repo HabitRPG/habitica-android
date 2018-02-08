@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.PurchaseValidationResult;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.android.habitica.models.WorldState;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Quest;
@@ -253,4 +254,6 @@ public interface ApiClient {
     Observable<Stats> bulkAllocatePoints(int strength, int intelligence, int constitution, int perception);
 
     Observable<Shop> retrieveMarketGear();
+
+    Observable<WorldState> getWorldState();
 }

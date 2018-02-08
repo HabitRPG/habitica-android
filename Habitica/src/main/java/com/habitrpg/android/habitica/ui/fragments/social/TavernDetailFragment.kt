@@ -109,7 +109,7 @@ class TavernDetailFragment : BaseFragment() {
                 .doOnNext({  if (!it.hasActiveQuest) worldBossSection.visibility = View.GONE })
                 .filter { it.hasActiveQuest }
                 .doOnNext({ questProgressView.progress = it.quest})
-                .flatMap { inventoryRepository.getQuestContent(it.quest?.key) }
+                .flatMap { inventoryRepository.getQuestContent(it.quest?.key).first() }
                 .subscribe(Action1 {
                     questProgressView.quest = it
                     worldBossSection.visibility = View.VISIBLE

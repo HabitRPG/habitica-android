@@ -24,6 +24,24 @@ class ValueBar(context: Context, attrs: AttributeSet) : FrameLayout(context, att
     private val barView: View by bindView(R.id.bar)
     private val barEmptySpace: View by bindView(R.id.empty_bar_space)
 
+    var currentValue: Double = 0.0
+    set(value) {
+        field = value
+        updateBar()
+    }
+
+    var maxValue: Double = 0.0
+        set(value) {
+            field = value
+            updateBar()
+        }
+
+    private fun updateBar() {
+        val percent = Math.min(1.0, currentValue / maxValue)
+
+        this.setBarWeight(percent)
+        this.setValueText(currentValue.toInt().toString() + "/" + maxValue.toInt())
+    }
 
     init {
         View.inflate(context, R.layout.value_bar, this)
@@ -88,10 +106,8 @@ class ValueBar(context: Context, attrs: AttributeSet) : FrameLayout(context, att
     }
 
     fun set(value: Double, valueMax: Double) {
-        val percent = Math.min(1.0, value / valueMax)
-
-        this.setBarWeight(percent)
-        this.setValueText(value.toInt().toString() + "/" + valueMax.toInt())
+        currentValue = value
+        maxValue = valueMax
     }
 
     companion object {
@@ -108,5 +124,10 @@ class ValueBar(context: Context, attrs: AttributeSet) : FrameLayout(context, att
                 view.startAnimation(anim)
             }
         }
+    }
+
+    fun setLabelVisibility(visibility: Int) {
+        valueTextView.visibility = visibility
+        descriptionTextView.visibility = visibility
     }
 }

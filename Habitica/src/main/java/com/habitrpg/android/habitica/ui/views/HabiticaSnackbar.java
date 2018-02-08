@@ -33,11 +33,11 @@ public class HabiticaSnackbar extends BaseTransientBottomBar<HabiticaSnackbar> {
     private static HabiticaSnackbar make(@NonNull ViewGroup parent, int duration) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View content = inflater.inflate(R.layout.snackbar_view, parent, false);
-        if (NavbarUtils.hasSoftKeys(parent.getContext())) {
+        if (NavbarUtils.INSTANCE.hasSoftKeys(parent.getContext())) {
             int[] parentLocation = new int[2];
             parent.getLocationInWindow(parentLocation);
-            if (NavbarUtils.isBehindNavbar(parentLocation, parent.getContext())) {
-                content.setPadding(0, 0, 0, NavbarUtils.getNavbarHeight(parent.getContext()));
+            if (NavbarUtils.INSTANCE.isBehindNavbar(parentLocation, parent.getContext())) {
+                content.setPadding(0, 0, 0, NavbarUtils.INSTANCE.getNavbarHeight(parent.getContext()));
             }
         }
         final ContentViewCallback viewCallback = new ContentViewCallback(content);

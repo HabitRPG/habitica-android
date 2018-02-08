@@ -309,13 +309,17 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState();
+        if (drawerToggle != null) {
+            drawerToggle.syncState();
+        }
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
+        if (drawerToggle != null) {
+            drawerToggle.onConfigurationChanged(newConfig);
+        }
     }
 
     @Override
@@ -794,6 +798,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                         pushNotificationManager.addPushDeviceUsingStoredToken();
                     })
                     .flatMap(user1 -> inventoryRepository.retrieveContent(false))
+                    .flatMap(contentResult -> inventoryRepository.retrieveWorldState())
                     .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());
         }
     }

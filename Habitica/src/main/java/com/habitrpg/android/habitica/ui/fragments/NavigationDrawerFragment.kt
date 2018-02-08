@@ -3,19 +3,25 @@ package com.habitrpg.android.habitica.ui.fragments
 
 import android.app.ActionBar
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.AboutActivity
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -37,8 +43,9 @@ import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import kotlinx.android.synthetic.main.drawer_main.*
-import rx.Subscription
 import rx.functions.Action1
+import rx.subscriptions.CompositeSubscription
+import javax.inject.Inject
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -47,13 +54,22 @@ import rx.functions.Action1
  */
 class NavigationDrawerFragment : DialogFragment() {
 
+    @Inject
+    lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var userRepository: UserRepository
+
     private var drawerLayout: DrawerLayout? = null
     private var fragmentContainerView: View? = null
 
     private var mCurrentSelectedPosition = 0
     private var mFromSavedInstanceState: Boolean = false
 
-    private var adapter: NavigationDrawerAdapter = NavigationDrawerAdapter()
+    private lateinit var adapter: NavigationDrawerAdapter
+
+    private var subscriptions: CompositeSubscription? = null
 
     val isDrawerOpen: Boolean
         get() = drawerLayout?.isDrawerOpen(fragmentContainerView!!) ?: false
@@ -61,7 +77,48 @@ class NavigationDrawerFragment : DialogFragment() {
     private val actionBar: ActionBar?
         get() = activity?.actionBar
 
+    private var questContent: QuestContent? = null
+    set(value) {
+        field = value
+        updateQuestDisplay()
+    }
+    private var quest: Quest? = null
+    set(value) {
+        field = value
+        updateQuestDisplay()
+    }
+
+    private fun updateQuestDisplay() {
+        val quest = this.quest
+        val questContent = this.questContent
+        if (quest == null || questContent == null || !quest.active) {
+            questMenuView.visibility = View.GONE
+            context.notNull {
+                adapter.tintColor = ContextCompat.getColor(it, R.color.brand_300)
+                adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.brand_200)
+            }
+            return
+        }
+        questMenuView.visibility = View.VISIBLE
+
+        menuHeaderView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
+        questMenuView.configure(quest)
+        questMenuView.configure(questContent)
+        adapter.tintColor = questContent.colors?.lightColor ?: 0
+        adapter.backgroundTintColor = questContent.colors?.darkColor ?: 0
+
+        questMenuView.hideBossArt()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val context = context
+        adapter = if (context != null) {
+            NavigationDrawerAdapter(ContextCompat.getColor(context, R.color.brand_300), ContextCompat.getColor(context, R.color.brand_200))
+        } else {
+            NavigationDrawerAdapter(0, 0)
+        }
+        subscriptions = CompositeSubscription()
+        HabiticaBaseApplication.getComponent().inject(this)
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {
@@ -75,14 +132,11 @@ class NavigationDrawerFragment : DialogFragment() {
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true)
 
-        context?.let {recyclerView.setPadding(0, 0, 0,  NavbarUtils.getNavbarHeight(it)) }
+        context?.notNull {recyclerView.setPadding(0, 0, 0,  NavbarUtils.getNavbarHeight(it)) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.drawer_main, container, false) as ViewGroup
-
-    private var selectionSubscription: Subscription? = null
+                              savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.drawer_main, container, false) as ViewGroup
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,12 +144,33 @@ class NavigationDrawerFragment : DialogFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         initializeMenuItems()
 
-        selectionSubscription = adapter.getItemSelectionEvents().subscribe(Action1 {
+        subscriptions?.add(adapter.getItemSelectionEvents().subscribe(Action1 {
             setSelection(it, true)
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
+
+        subscriptions?.add(socialRepository.getGroup(Group.TAVERN_ID)
+                .doOnNext({  quest = it.quest })
+                .filter { it.hasActiveQuest }
+                .flatMap { inventoryRepository.getQuestContent(it.quest?.key).first() }
+                .subscribe(Action1 {
+                   questContent = it
+                }, RxErrorHandler.handleEmptyError()))
+
+        subscriptions?.add(userRepository.getUser().subscribe(Action1 {
+            setUsername(it.profile.name)
+            avatarView.setAvatar(it)
+        }, RxErrorHandler.handleEmptyError()))
 
         messagesButton.setOnClickListener { setSelection(SIDEBAR_INBOX) }
         settingsButton.setOnClickListener { setSelection(SIDEBAR_SETTINGS) }
+    }
+
+    override fun onDestroy() {
+        subscriptions?.clear()
+        socialRepository.close()
+        inventoryRepository.close()
+        userRepository.close()
+        super.onDestroy()
     }
 
     private fun initializeMenuItems() {

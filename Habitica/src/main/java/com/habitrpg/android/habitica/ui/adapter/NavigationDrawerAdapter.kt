@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter
 
+import android.graphics.PorterDuff
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -11,8 +12,26 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import rx.Observable
 import rx.subjects.PublishSubject
+import android.support.v4.graphics.drawable.DrawableCompat.setTint
+import android.graphics.drawable.Drawable
+import android.support.v4.graphics.drawable.DrawableCompat
+import com.habitrpg.android.habitica.extensions.backgroundCompat
 
-class NavigationDrawerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var tintColor: Int = tintColor
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var backgroundTintColor: Int = backgroundTintColor
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
 
     internal val items: MutableList<HabiticaDrawerItem> = ArrayList()
     var selectedItem: String? = null
@@ -48,9 +67,12 @@ class NavigationDrawerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val drawerItem = getItem(position)
         if (getItemViewType(position) == 0) {
             (holder as DrawerItemViewHolder?)?.bind(drawerItem, drawerItem.identifier == selectedItem)
+            holder?.tintColor = tintColor
+            holder?.backgroundTintColor = backgroundTintColor
             holder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem.identifier) }
         } else {
             (holder as SectionHeaderViewHolder?)?.bind(drawerItem)
+            holder?.backgroundTintColor = backgroundTintColor
         }
     }
 
@@ -70,6 +92,9 @@ class NavigationDrawerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class DrawerItemViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
+        var tintColor: Int = 0
+        var backgroundTintColor: Int = 0
+
         private val titleTextView: TextView? by bindOptionalView(itemView, R.id.titleTextView)
         private val additionalInfoView: TextView? by bindOptionalView(itemView, R.id.additionalInfoView)
 
@@ -78,25 +103,43 @@ class NavigationDrawerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             if (isSelected) {
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.gray_600))
-                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.brand_300))
+                titleTextView?.setTextColor(tintColor)
             } else {
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
                 titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_50))
             }
 
-            if (drawerItem.additionalInfo != null) {
-                additionalInfoView?.visibility = View.VISIBLE
-                additionalInfoView?.text = drawerItem.additionalInfo
-            } else {
-                additionalInfoView?.visibility = View.GONE
+            val additionalInfoView = this.additionalInfoView
+            if (additionalInfoView != null) {
+                if (drawerItem.additionalInfo != null) {
+                    additionalInfoView.visibility = View.VISIBLE
+                    additionalInfoView.text = drawerItem.additionalInfo
+                    val drawable = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg)
+                    if (drawable != null) {
+                        DrawableCompat.setTint(drawable, backgroundTintColor)
+
+                        val pL = additionalInfoView.paddingLeft
+                        val pT = additionalInfoView.paddingTop
+                        val pR = additionalInfoView.paddingRight
+                        val pB = additionalInfoView.paddingBottom
+
+                        additionalInfoView.backgroundCompat = drawable
+                        additionalInfoView.setPadding(pL, pT, pR, pB)
+                    }
+                } else {
+                    additionalInfoView.visibility = View.GONE
+                }
             }
         }
     }
 
     class SectionHeaderViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
+        var backgroundTintColor: Int = 0
+
         fun bind(drawerItem: HabiticaDrawerItem) {
             (itemView as TextView).text = drawerItem.text
+            itemView.setBackgroundColor(backgroundTintColor)
         }
     }
 }

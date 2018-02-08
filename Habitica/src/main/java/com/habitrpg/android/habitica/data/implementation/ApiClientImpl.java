@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
+import com.habitrpg.android.habitica.models.WorldState;
 import com.habitrpg.android.habitica.models.auth.UserAuth;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial;
@@ -196,6 +197,9 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                     builder = builder.header("x-client", "habitica-android");
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent);
+                    }
+                    if (!BuildConfig.STAGING_KEY.isEmpty()) {
+                        builder = builder.header("Authorization", "Basic " + BuildConfig.STAGING_KEY);
                     }
                     Request request = builder.method(original.method(), original.body())
                             .build();
@@ -1010,5 +1014,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     @Override
     public Observable<Shop> retrieveMarketGear() {
         return apiService.retrieveMarketGear().compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<WorldState> getWorldState() {
+        return apiService.getWorldState().compose(configureApiCallObserver());
     }
 }

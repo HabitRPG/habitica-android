@@ -44,26 +44,26 @@ open class Group : RealmObject() {
 
     var leaderMessage: String? = null
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
             return true
         }
-        if (o == null || javaClass != o.javaClass) {
+        if (other == null || javaClass != other.javaClass) {
             return false
         }
 
-        val group = o as Group?
+        val group = other as Group
 
-        return if (id != null) id == group!!.id else group!!.id == null
+        return id == group.id
 
     }
 
     override fun hashCode(): Int {
-        return if (id != null) id!!.hashCode() else 0
+        return id.hashCode()
     }
 
     companion object {
-        val TAVERN_ID = "00000000-0000-4000-A000-000000000000"
+        const val TAVERN_ID = "00000000-0000-4000-A000-000000000000"
     }
 
     val hasActiveQuest: Boolean
