@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
@@ -72,6 +73,7 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
                 .count();
     }
 
+    @NonNull
     @Override
     public Observable<RealmResults<Equipment>> getOwnedEquipment(String type) {
         return getRealm().where(Equipment.class)
@@ -82,6 +84,7 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
                 .filter(RealmResults::isLoaded);
     }
 
+    @NonNull
     @Override
     public Observable<RealmResults<Equipment>> getOwnedEquipment() {
         return getRealm().where(Equipment.class)
@@ -91,8 +94,9 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
                 .filter(RealmResults::isLoaded);
     }
 
+    @NotNull
     @Override
-    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(Class<? extends Item> itemClass, User user) {
+    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(@NotNull Class<? extends Item> itemClass, @Nullable User user) {
         if (itemClass == null) {
             return Observable.empty();
         }

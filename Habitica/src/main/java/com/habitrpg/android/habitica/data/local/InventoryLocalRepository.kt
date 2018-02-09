@@ -31,7 +31,7 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getOwnedEquipment(type: String): Observable<RealmResults<Equipment>>
 
-    fun getOwnedItems(itemClass: Class<out Item>, user: User): Observable<out RealmResults<out Item>>
+    fun getOwnedItems(itemClass: Class<out Item>, user: User?): Observable<out RealmResults<out Item>>
     fun getOwnedItems(user: User): Observable<out Map<String, Item>>
 
     fun getEquipment(key: String): Observable<Equipment>

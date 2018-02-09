@@ -85,7 +85,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getOwnedEquipment()
     }
 
-    override fun getOwnedItems(itemClass: Class<out Item>, user: User): Observable<out RealmResults<out Item>> {
+    override fun getOwnedItems(itemClass: Class<out Item>, user: User?): Observable<out RealmResults<out Item>> {
         return localRepository.getOwnedItems(itemClass, user)
     }
 
@@ -214,13 +214,13 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 .doOnNext {
                     localRepository.changeOwnedCount(egg, -1)
                     localRepository.changeOwnedCount(hatchingPotion, -1)
-                    localRepository.changePetFeedStatus(egg.key+hatchingPotion.key, 5)
+                    localRepository.changePetFeedStatus(egg.key+"-"+hatchingPotion.key, 5)
                 }
     }
 
     override fun inviteToQuest(quest: QuestContent): Observable<Quest> {
         return apiClient.inviteToQuest("party", quest.key)
-                .doOnNext { quest1 -> localRepository.changeOwnedCount(quest, -1) }
+                .doOnNext { localRepository.changeOwnedCount(quest, -1) }
     }
 
     override fun buyItem(user: User, key: String, value: Double): Observable<BuyResponse> {
@@ -280,6 +280,6 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return if (!item.isValid) {
             Observable.just(null)
         } else apiClient.togglePinnedItem(item.pinType, item.path)
-                .flatMap { aVoid -> retrieveInAppRewards() }
+                .flatMap { retrieveInAppRewards() }
     }
 }
