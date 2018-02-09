@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFr
 import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView;
 import com.habitrpg.android.habitica.ui.views.social.QuestProgressView;
 
 import javax.inject.Inject;
@@ -83,7 +84,7 @@ public class PartyDetailFragment extends BaseFragment {
     @BindView(R.id.quest_reject_button)
     Button questRejectButton;
     @BindView(R.id.quest_progress_view)
-    QuestProgressView questProgressView;
+    OldQuestProgressView questProgressView;
     @BindView(R.id.quest_participant_list)
     LinearLayout questParticipantList;
 

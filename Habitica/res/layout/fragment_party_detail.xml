@@ -132,7 +132,7 @@
                             android:layout_height="@dimen/quest_image_height"
                             android:scaleType="fitCenter"/>
                     </LinearLayout>
-                    <com.habitrpg.android.habitica.ui.views.social.QuestProgressView
+                    <com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
                         android:id="@+id/quest_progress_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
