@@ -52,20 +52,118 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
+            android:id="@+id/noPartyWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CardView.Default"
-            android:id="@+id/qrWrapper">
+            android:orientation="vertical">
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="@style/CardContent">
-
-                <include layout="@layout/qr_code" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/spacing_large">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Title1"
+                    android:text="@string/no_party_title"
+                    android:gravity="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Body1"
+                    android:text="@string/no_party_description"
+                    android:textColor="@color/gray_300"
+                    android:gravity="center"/>
+                <Button
+                    android:id="@+id/craetePartyButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/HabiticaButton.Gray.600"
+                    android:text="@string/create_party_website"
+                    android:layout_marginTop="@dimen/spacing_large"/>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_500"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/spacing_large">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Title2"
+                    android:text="@string/join_party_title"
+                    android:gravity="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Body1"
+                    android:text="@string/join_party_description"
+                    android:textColor="@color/gray_300"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/userIdView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/brand_400"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_large"/>
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical"
+                    android:id="@+id/qrLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <FrameLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="300dp"
+                        android:id="@+id/qrCodeWrapper">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/QRImageView"
+                            android:layout_gravity="center" />
+
+                        <RelativeLayout
+                            android:orientation="vertical"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:background="@color/white"
+                            android:clipChildren="true"
+                            android:padding="1dp"
+                            android:visibility="gone"
+                            >
+                            <com.habitrpg.android.habitica.ui.AvatarView
+                                android:id="@+id/avatarView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                />
+                        </RelativeLayout>
+                    </FrameLayout>
+
+                    <Button
+                        android:id="@+id/QRDownloadButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/download"
+                        style="@style/HabiticaButton.Gray.600"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/groupNameView"

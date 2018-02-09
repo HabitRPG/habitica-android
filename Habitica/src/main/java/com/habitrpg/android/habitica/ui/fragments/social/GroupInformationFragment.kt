@@ -16,9 +16,16 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import kotlinx.android.synthetic.main.fragment_group_info.*
-import kotlinx.android.synthetic.main.qr_code.*
 import rx.functions.Action1
 import javax.inject.Inject
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import android.content.Intent
+import android.net.Uri
+
 
 class GroupInformationFragment : BaseFragment() {
 
@@ -74,6 +81,20 @@ class GroupInformationFragment : BaseFragment() {
             }
         })
 
+        userIdView.setOnClickListener {
+            val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText(context?.getString(R.string.user_id), user?.id)
+            clipboard.primaryClip = clip
+            val activity = activity as MainActivity?
+            if (activity != null) {
+                HabiticaSnackbar.showSnackbar(activity.getFloatingMenuWrapper(), getString(R.string.id_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+            }
+        }
+
+        craetePartyButton.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://habitica.com/party"))
+            startActivity(browserIntent)
+        }
     }
 
     private fun setUser(user: User?) {
@@ -82,6 +103,7 @@ class GroupInformationFragment : BaseFragment() {
         } else {
             setInvitation(null)
         }
+        userIdView.text = user?.id
     }
 
     private fun setInvitation(invitation: PartyInvite?) {
@@ -101,15 +123,16 @@ class GroupInformationFragment : BaseFragment() {
     fun setGroup(group: Group?) {
         this.group = group
 
-        if (qrWrapper == null) {
+        if (noPartyWrapper == null) {
             return
         }
 
         val hasGroup = group != null
         val groupItemVisibility = if (hasGroup) View.VISIBLE else View.GONE
-        qrWrapper.visibility = if (hasGroup) View.GONE else View.VISIBLE
+        noPartyWrapper.visibility = if (hasGroup) View.GONE else View.VISIBLE
         groupNameView.visibility = groupItemVisibility
         groupDescriptionView.visibility = groupItemVisibility
+        groupDescriptionWrapper.visibility = groupItemVisibility
 
         groupDescriptionView.text = group?.description
         leadernameWrapper.visibility = if (group?.leaderName != null) View.VISIBLE else View.GONE

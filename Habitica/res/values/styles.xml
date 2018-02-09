@@ -376,6 +376,11 @@
         <item name="android:textColor">@color/brand_400</item>
     </style>
 
+    <style name="HabiticaButton.Gray.600" parent="HabiticaButton">
+        <item name="android:background">@drawable/layout_rounded_bg_gray_600</item>
+        <item name="android:textColor">@color/brand_400</item>
+    </style>
+
     <style name="HabiticaButton.Red" parent="HabiticaButton">
         <item name="android:background">@drawable/layout_rounded_bg_red</item>
     </style>

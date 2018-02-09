@@ -31,7 +31,6 @@ import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView;
-import com.habitrpg.android.habitica.ui.views.social.QuestProgressView;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -196,7 +195,7 @@ public class PartyDetailFragment extends BaseFragment {
         DataBindingUtils.INSTANCE.loadImage(questImageView, "quest_"+questContent.getKey());
         if (isQuestActive()) {
             questProgressView.setVisibility(View.VISIBLE);
-            questProgressView.setData(questContent, quest);
+            questProgressView.setData(questContent, quest.getProgress());
 
             questParticipationView.setText(getString(R.string.number_participants, quest.getMembers().size()));
         } else {

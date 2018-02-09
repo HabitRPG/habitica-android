@@ -756,4 +756,10 @@
     <string name="stable_owner_long">Matt the beast master</string>
     <string name="hide_boss_art">Hide Boss Art</string>
     <string name="active_world_boss">Active World Boss</string>
+    <string name="no_party_description">Take on quests with friends or on your own. Battle monsters, create Challenges, and help yourself stay accountable through Parties.</string>
+    <string name="no_party_title">Play Habitica in a Party</string>
+    <string name="join_party_description">Give them your User ID or have them scan your QR code while inviting</string>
+    <string name="join_party_title">Want to join a party?</string>
+    <string name="create_party_website">Open website to create party</string>
+    <string name="id_copied">ID copied to clipboard</string>
 </resources>
