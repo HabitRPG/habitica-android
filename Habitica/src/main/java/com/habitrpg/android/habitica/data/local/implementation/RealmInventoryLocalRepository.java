@@ -16,6 +16,9 @@ import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.user.User;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,8 @@ import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import rx.Observable;
 import rx.functions.Func4;
 
@@ -284,7 +289,7 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     }
 
     @Override
-    public void saveInAppRewards(List<ShopItem> onlineItems) {
+    public void saveInAppRewards(@NotNull List<? extends ShopItem> onlineItems) {
         OrderedRealmCollectionSnapshot<ShopItem> localItems = getRealm().where(ShopItem.class).findAll().createSnapshot();
         getRealm().executeTransaction(realm1 -> {
             for (ShopItem localItem : localItems) {
@@ -296,5 +301,11 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
         });
     }
 
-
+    @Override
+    public void changePetFeedStatus(@Nullable String key, int feedStatus) {
+        Pet pet = getRealm().where(Pet.class).equalTo("key", key).findFirst();
+        if (pet != null) {
+            executeTransaction(realm -> { pet.setTrained(feedStatus); });
+        }
+    }
 }

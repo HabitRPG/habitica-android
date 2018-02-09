@@ -9,7 +9,7 @@ interface BaseLocalRepository {
 
     fun close()
 
-    fun executeTransaction(transaction: () -> Unit)
+    fun executeTransaction(transaction: (Realm) -> Unit)
     fun executeTransaction(transaction: Realm.Transaction)
 
     fun <T : RealmObject> getUnmanagedCopy(managedObject: T): T

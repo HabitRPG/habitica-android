@@ -11,7 +11,7 @@ import java.util.Date
 import rx.Observable
 import rx.functions.Action1
 
-internal abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
+abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
 
     private var lastContentSync = 0L
     private var lastWorldStateSync = 0L

@@ -14,9 +14,9 @@ abstract class RealmBaseLocalRepository internal constructor(protected var realm
         realm.close()
     }
 
-    override fun executeTransaction(transaction: () -> Unit) {
+    override fun executeTransaction(transaction: (Realm) -> Unit) {
         realm.executeTransaction {
-            transaction()
+            transaction(it)
         }
     }
 
