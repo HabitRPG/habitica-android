@@ -15,15 +15,9 @@ open class Preferences : RealmObject(), AvatarPreferences {
     private var hair: Hair? = null
     var suppressModals: SuppressedModals? = null
     private var costume: Boolean = false
-    var toolbarCollapsed: Boolean = false
-    var advancedCollapsed: Boolean = false
-    var tagsCollapsed: Boolean = false
-    var newTaskEdit: Boolean = false
     var isDisableClasses: Boolean = false
-    var stickyHeader: Boolean = false
     @SerializedName("sleep")
     var isSleep: Boolean = false
-    var hideHeader: Boolean = false
     var dailyDueDefaultView: Boolean = false
     var automaticAllocation: Boolean = false
     var allocationMode: String? = null
@@ -113,11 +107,11 @@ open class Preferences : RealmObject(), AvatarPreferences {
 
     fun setUserId(userId: String) {
         this.userId = userId
-        if (hair != null && !hair!!.isManaged) {
-            hair!!.userId = userId
+        if (hair?.isManaged == false) {
+            hair?.userId = userId
         }
-        if (suppressModals != null && !suppressModals!!.isManaged) {
-            suppressModals!!.userId = userId
+        if (suppressModals?.isManaged == false) {
+            suppressModals?.userId = userId
         }
     }
 
