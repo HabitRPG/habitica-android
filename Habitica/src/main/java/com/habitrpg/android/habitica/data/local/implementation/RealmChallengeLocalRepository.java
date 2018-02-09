@@ -21,7 +21,7 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
 
     @Override
     public Observable<Challenge> getChallenge(String id) {
-        return realm.where(Challenge.class)
+        return getRealm().where(Challenge.class)
                 .equalTo("id", id)
                 .findFirstAsync()
                 .asObservable()
@@ -36,7 +36,7 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
 
     @Override
     public Observable<RealmResults<Challenge>> getChallenges() {
-        return realm.where(Challenge.class)
+        return getRealm().where(Challenge.class)
                 .isNotNull("name")
                 .findAllSortedAsync("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
                 .asObservable()
@@ -45,7 +45,7 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
 
     @Override
     public Observable<RealmResults<Challenge>> getUserChallenges(String userId) {
-        return realm.where(Challenge.class)
+        return getRealm().where(Challenge.class)
                 .isNotNull("name")
                 .equalTo("isParticipating", true)
                 .findAllSortedAsync("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
@@ -55,23 +55,23 @@ public class RealmChallengeLocalRepository extends RealmBaseLocalRepository impl
 
     @Override
     public void setParticipating(Challenge challenge, boolean isParticipating) {
-        realm.executeTransaction(realm1 -> challenge.isParticipating = isParticipating);
+        getRealm().executeTransaction(realm1 -> challenge.isParticipating = isParticipating);
     }
 
     @Override
     public void saveChallenges(List<Challenge> onlineChallenges) {
-        OrderedRealmCollectionSnapshot<Challenge> localChallenges = realm.where(Challenge.class).findAll().createSnapshot();
+        OrderedRealmCollectionSnapshot<Challenge> localChallenges = getRealm().where(Challenge.class).findAll().createSnapshot();
         List<Challenge> challengesToDelete = new ArrayList<>();
         for (Challenge localTask : localChallenges) {
             if (!onlineChallenges.contains(localTask)) {
                 challengesToDelete.add(localTask);
             }
         }
-        realm.executeTransaction(realm1 -> {
+        getRealm().executeTransaction(realm1 -> {
             for (Challenge localTask : challengesToDelete) {
                 localTask.deleteFromRealm();
             }
         });
-        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(onlineChallenges));
+        getRealm().executeTransaction(realm1 -> realm1.insertOrUpdate(onlineChallenges));
     }
 }

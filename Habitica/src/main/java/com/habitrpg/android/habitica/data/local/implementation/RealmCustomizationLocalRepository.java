@@ -19,7 +19,7 @@ public class RealmCustomizationLocalRepository extends RealmContentLocalReposito
 
     @Override
     public Observable<RealmResults<Customization>> getCustomizations(String type, String category, boolean onlyAvailable) {
-        RealmQuery<Customization> query = realm.where(Customization.class)
+        RealmQuery<Customization> query = getRealm().where(Customization.class)
                 .equalTo("type", type)
                 .equalTo("category", category);
         if (onlyAvailable) {

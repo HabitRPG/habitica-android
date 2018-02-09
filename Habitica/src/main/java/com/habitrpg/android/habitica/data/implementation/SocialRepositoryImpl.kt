@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
+import io.realm.Realm
 import io.realm.RealmResults
 import rx.Observable
 import rx.functions.Action1

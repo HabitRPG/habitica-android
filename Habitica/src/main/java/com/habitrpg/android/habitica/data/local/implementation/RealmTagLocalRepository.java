@@ -18,12 +18,12 @@ public class RealmTagLocalRepository extends RealmBaseLocalRepository implements
 
     @Override
     public Observable<RealmResults<Tag>> getTags(String userId) {
-        return realm.where(Tag.class).equalTo("userId", userId).findAll().asObservable();
+        return getRealm().where(Tag.class).equalTo("userId", userId).findAll().asObservable();
     }
 
     @Override
     public void removeOldTags(List<Tag> onlineTags, String userID) {
-        OrderedRealmCollectionSnapshot<Tag> localTags = realm.where(Tag.class).equalTo("userId", userID).findAll().createSnapshot();
+        OrderedRealmCollectionSnapshot<Tag> localTags = getRealm().where(Tag.class).equalTo("userId", userID).findAll().createSnapshot();
         for (Tag localTag : localTags) {
             if (!onlineTags.contains(localTag)) {
                 localTag.deleteFromRealm();

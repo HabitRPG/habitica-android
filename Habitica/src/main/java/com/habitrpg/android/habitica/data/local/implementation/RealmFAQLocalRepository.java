@@ -15,7 +15,7 @@ public class RealmFAQLocalRepository extends RealmContentLocalRepository impleme
 
     @Override
     public Observable<RealmResults<FAQArticle>> getArticles() {
-        return realm.where(FAQArticle.class)
+        return getRealm().where(FAQArticle.class)
                 .findAll()
                 .asObservable()
                 .filter(RealmResults::isLoaded);

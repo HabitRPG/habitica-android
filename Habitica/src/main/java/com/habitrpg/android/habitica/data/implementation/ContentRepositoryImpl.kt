@@ -13,16 +13,17 @@ import rx.functions.Action1
 
 internal abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
 
-    private var lastContentSync = Date()
-    private var lastWorldStateSync = Date()
+    private var lastContentSync = 0L
+    private var lastWorldStateSync = 0L
 
     override fun retrieveContent(): Observable<ContentResult> {
         return retrieveContent(false)
     }
 
     override fun retrieveContent(forced: Boolean): Observable<ContentResult> {
-        return if (forced || Date().time - this.lastContentSync.time > 3600000) {
-            lastContentSync = Date()
+        val now = Date().time
+        return if (forced || now - this.lastContentSync > 3600000) {
+            lastContentSync = now
             apiClient.content.doOnNext({ localRepository.saveContent(it) })
         } else {
             Observable.just(null)
@@ -30,8 +31,9 @@ internal abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localR
     }
 
     override fun retrieveWorldState(): Observable<WorldState> {
-        return if (Date().time - this.lastWorldStateSync.time > 3600000) {
-            lastWorldStateSync = Date()
+        val now = Date().time
+        return if (now - this.lastWorldStateSync > 3600000) {
+            lastWorldStateSync = now
             apiClient.worldState.doOnNext({ localRepository.saveWorldState(it) })
         } else {
             Observable.just(null)

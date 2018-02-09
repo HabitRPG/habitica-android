@@ -18,7 +18,16 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
         }
         state.worldBossActive = worldBossObject["active"].asBoolean
         state.worldBossKey = worldBossObject["key"].asString
-        state.progress = context?.deserialize(worldBossObject["progress"], QuestProgress::class.java)
+        if (worldBossObject.has("progress")) {
+            val progress = QuestProgress()
+            val progressObj = worldBossObject.getAsJsonObject("progress")
+            if (progressObj.has("hp")) {
+                progress.hp = progressObj["hp"].asDouble
+            }
+            if (progressObj.has("rage")) {
+                progress.rage = progressObj["rage"].asDouble
+            }
+        }
         if (worldBossObject.has("extra")) {
             val extra = worldBossObject["extra"].asJsonObject
             if (extra.has("worldDmg")) {

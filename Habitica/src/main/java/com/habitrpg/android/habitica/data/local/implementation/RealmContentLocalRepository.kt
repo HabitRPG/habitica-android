@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.local.implementation
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
+import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.social.Group
 
 import io.realm.Realm
@@ -32,10 +33,15 @@ internal open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRe
     }
 
     override fun saveWorldState(worldState: WorldState) {
-        val tavern = realm.where(Group::class.java)
+        val tavern = getUnmanagedCopy(realm.where(Group::class.java)
                 .equalTo("id", Group.TAVERN_ID)
-                .findFirst() ?: Group()
-        tavern.id = Group.TAVERN_ID
+                .findFirst() ?: Group())
+        if (!tavern.isManaged) {
+            tavern.id = Group.TAVERN_ID
+        }
+        if (tavern.quest == null) {
+            tavern.quest = Quest()
+        }
         tavern.quest?.active = worldState.worldBossActive
         tavern.quest?.key = worldState.worldBossKey
         tavern.quest?.progress = worldState.progress

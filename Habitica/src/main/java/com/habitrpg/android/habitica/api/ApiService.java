@@ -357,6 +357,6 @@ public interface ApiService {
     @POST("user/allocate-bulk")
     Observable<HabitResponse<Stats>> bulkAllocatePoints(@Body Map<String, Map<String, Integer>> stats);
 
-    @POST("world-state")
+    @GET("world-state")
     Observable<HabitResponse<WorldState>> getWorldState();
 }
