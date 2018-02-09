@@ -47,7 +47,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         costumeWeaponView.setOnClickListener { displayEquipmentDetailList("weapon", user?.items?.gear?.costume?.weapon, true) }
         costumeShieldView.setOnClickListener { displayEquipmentDetailList("shield", user?.items?.gear?.costume?.shield, true) }
 
-        costumeSwitch.isSelected = user?.preferences?.costume ?: false
+        costumeSwitch.isChecked = user?.preferences?.costume ?: false
 
         costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
 
