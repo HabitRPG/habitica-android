@@ -90,7 +90,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun sleep(user: User): Observable<User> {
-        localRepository.executeTransaction { user.preferences.sleep = !user.preferences.sleep }
+        localRepository.executeTransaction { user.preferences.isSleep = !user.preferences.sleep }
         return apiClient.sleep().map { user }
     }
 
