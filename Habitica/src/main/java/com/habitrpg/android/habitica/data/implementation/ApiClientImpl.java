@@ -97,6 +97,7 @@ import com.habitrpg.android.habitica.utils.TaskSerializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
 import com.habitrpg.android.habitica.utils.UserDeserializer;
+import com.habitrpg.android.habitica.utils.WorldStateSerialization;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -275,6 +276,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(questDropItemListType, new QuestDropItemsListSerialization())
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
+                .registerTypeAdapter(WorldState.class, new WorldStateSerialization())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

@@ -107,6 +107,15 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.tintColor = questContent.colors?.lightColor ?: 0
         adapter.backgroundTintColor = questContent.colors?.darkColor ?: 0
 
+
+        /* Reenable this once the boss art can be displayed correctly.
+
+        val preferences = context?.getSharedPreferences("collapsible_sections", 0)
+        if (preferences?.getBoolean("boss_art_collapsed", false) == true) {
+            questMenuView.hideBossArt()
+        } else {
+            questMenuView.showBossArt()
+        }*/
         questMenuView.hideBossArt()
     }
 

@@ -26,6 +26,10 @@ import com.habitrpg.android.habitica.ui.views.*
 import io.realm.RealmList
 import android.graphics.drawable.GradientDrawable
 import com.habitrpg.android.habitica.extensions.backgroundCompat
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
+import rx.functions.Action1
 
 
 class QuestProgressView : LinearLayout {
@@ -87,6 +91,8 @@ class QuestProgressView : LinearLayout {
         preferences = context.getSharedPreferences("collapsible_sections", 0)
         if (preferences?.getBoolean("boss_art_collapsed", false) == true) {
             hideQuestImage()
+        } else {
+            showQuestImage()
         }
     }
 
@@ -174,12 +180,18 @@ class QuestProgressView : LinearLayout {
             val iconView = ImageView(context)
             if (strike.wasHit) {
                 DataBindingUtils.loadImage("rage_strike_${strike.key}", {
-                    val displayDensity = resources.displayMetrics.density
-                    val width = it.width * displayDensity
-                    val height = it.height * displayDensity
-                    val scaledImage = Bitmap.createScaledBitmap(it, width.toInt(), height.toInt(), false)
-                    iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
-                    iconView.setOnClickListener { showActiveStrikeAlert(strike.key) }
+                    Observable.just(it)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(Action1 {
+                                val displayDensity = resources.displayMetrics.density
+                                val width = it.width * displayDensity
+                                val height = it.height * displayDensity
+                                val scaledImage = Bitmap.createScaledBitmap(it, width.toInt(), height.toInt(), false)
+                                iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
+                                iconView.setOnClickListener {
+                                    showActiveStrikeAlert(strike.key)
+                                }
+                            }, RxErrorHandler.handleEmptyError())
                 })
             } else {
                 iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeInactive())
@@ -281,8 +293,9 @@ class QuestProgressView : LinearLayout {
     private fun showQuestImage() {
         questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), true))
         questImageView.visibility = View.VISIBLE
+        DataBindingUtils.loadImage(questImageView, "quest_"+quest?.key)
         val editPreferences = preferences?.edit()
-        editPreferences?.putBoolean("boss_art_collapsed", true)
+        editPreferences?.putBoolean("boss_art_collapsed", false)
         editPreferences?.apply()
     }
 
