@@ -11,5 +11,6 @@ public class InsufficientGoldDialog extends InsufficientCurrencyDialog {
 
         imageView.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward());
         textView.setText(context.getString(R.string.insufficientGold));
+        setTitle(R.string.insufficientSubscriberGemsTitle);
     }
 }

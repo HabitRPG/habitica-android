@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import org.greenrobot.eventbus.EventBus
 import rx.Observable
 import rx.functions.Action1
@@ -164,7 +165,11 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
                 limitedTextView.text = context.getString(R.string.gems_left_nomax, gemsLeft)
             }
             limitedTextView.visibility = View.VISIBLE
-            limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.green_10))
+            if (gemsLeft == 0) {
+                limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.orange_10))
+            } else {
+                limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.green_10))
+            }
         }
 
         if (!shopItem.canAfford(user)) {
@@ -208,7 +213,8 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
             if (shopItem.locked) {
                 return
             }
-            if (shopItem.canAfford(user)) {
+            val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
+            if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user)) {
                 val observable: Observable<Void>
                 if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType) {
                     observable = if (shopItem.purchaseType == "gear") {
@@ -261,6 +267,7 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
                         }
             } else {
                 when {
+                    "gems" == shopItem.purchaseType -> InsufficientSubscriberGemsDialog(context)
                     "gold" == shopItem.currency -> InsufficientGoldDialog(context)
                     "gems" == shopItem.currency -> InsufficientGemsDialog(context)
                     "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context)

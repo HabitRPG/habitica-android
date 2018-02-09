@@ -762,4 +762,6 @@
     <string name="join_party_title">Want to join a party?</string>
     <string name="create_party_website">Open website to create party</string>
     <string name="id_copied">ID copied to clipboard</string>
+    <string name="insufficientSubscriberGems">You have bought all the Gems you can this month. More become available within the first three days of each month. Thanks for subscribing!</string>
+    <string name="insufficientSubscriberGemsTitle">Monthly Gem Cap Reached</string>
 </resources>
