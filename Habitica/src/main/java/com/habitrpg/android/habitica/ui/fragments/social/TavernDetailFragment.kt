@@ -65,6 +65,7 @@ class TavernDetailFragment : BaseFragment() {
     @Inject
     lateinit var configManager: RemoteConfigManager
 
+    private var shopSpriteSuffix = ""
 
     private var user: User? = null
 
@@ -76,6 +77,8 @@ class TavernDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        shopSpriteSuffix = configManager.shopSpriteSuffix()
 
         compositeSubscription.add(userRepository.getUser(userId).subscribe(Action1 {
             this.user = it
@@ -114,6 +117,18 @@ class TavernDetailFragment : BaseFragment() {
                     questProgressView.quest = it
                     worldBossSection.visibility = View.VISIBLE
                 }, RxErrorHandler.handleEmptyError()))
+
+        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
+                .filter { it.hasActiveQuest }
+                .filter { it.quest?.rageStrikes?.any { it.key == "tavern" } }
+                .filter { it.quest?.rageStrikes?.filter { it.key == "tavern" }?.get(0)?.wasHit == true }
+                .subscribe(Action1 {
+                    val key = it.quest?.key
+                    if (key != null) {
+                        shopSpriteSuffix = key
+                    }
+                }, RxErrorHandler.handleEmptyError()))
+
         socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
     }
 

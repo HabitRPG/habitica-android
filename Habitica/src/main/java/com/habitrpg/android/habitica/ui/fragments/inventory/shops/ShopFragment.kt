@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.extensions.notNull
@@ -16,6 +17,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -33,6 +35,8 @@ class ShopFragment : BaseFragment() {
     var shop: Shop? = null
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
@@ -88,8 +92,10 @@ class ShopFragment : BaseFragment() {
         if (shop == null) {
             loadShopInventory()
         } else {
-            adapter?.setShop(shop, configManager.shopSpriteSuffix())
+            adapter?.setShop(shop)
         }
+        adapter?.shopSpriteSuffix = configManager.shopSpriteSuffix()
+
         val categories = gearCategories
         if (categories != null) {
             adapter?.gearCategories = categories
@@ -100,6 +106,14 @@ class ShopFragment : BaseFragment() {
         }
 
         adapter?.user = user
+
+        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
+                .filter { it.hasActiveQuest }
+                .filter { it.quest?.rageStrikes?.any { it.key == shopIdentifier } }
+                .filter { it.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
+                .subscribe(Action1 {
+                    adapter?.shopSpriteSuffix = "_"+it.quest?.key
+                }, RxErrorHandler.handleEmptyError()))
 
         view.post { setGridSpanCount(view.width) }
     }
@@ -129,7 +143,7 @@ class ShopFragment : BaseFragment() {
                 }
                 .subscribe(Action1 {
                     this.shop = it
-                    this.adapter?.setShop(it, configManager.shopSpriteSuffix())
+                    this.adapter?.setShop(it)
                 }, RxErrorHandler.handleEmptyError())
 
 

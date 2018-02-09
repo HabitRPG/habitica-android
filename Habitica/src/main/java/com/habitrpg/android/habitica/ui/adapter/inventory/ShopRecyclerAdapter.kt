@@ -24,6 +24,7 @@ import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
+import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.bindView
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -47,7 +48,13 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
     private var ownedItems: Map<String, Item> = HashMap()
-    private var shopSpriteSuffix: String? = null
+
+
+    var shopSpriteSuffix: String? = null
+    set(value) {
+        field = value
+        notifyItemChanged(0)
+    }
     var context: Context? = null
     var user: User? = null
     set(value) {
@@ -77,11 +84,10 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             else -> R.layout.simple_textview
         }
 
-    fun setShop(shop: Shop?, shopSpriteSuffix: String) {
+    fun setShop(shop: Shop?) {
         if (shop == null) {
             return
         }
-        this.shopSpriteSuffix = shopSpriteSuffix
         shopIdentifier = shop.identifier
         items.clear()
         items.add(shop)
@@ -249,37 +255,18 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             backgroundView.scaleType = ImageView.ScaleType.FIT_START
 
-            val imageRequest = ImageRequestBuilder
-                    .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + shop.identifier + "_background" + shopSpriteSuffix + ".png"))
-                    .build()
-
-            val imagePipeline = Fresco.getImagePipeline()
-            val dataSource = imagePipeline.fetchDecodedImage(imageRequest, this)
-
-            dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-                override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
-                    dataSource?.close()
-                }
-
-                public override fun onNewResultImpl(bitmap: Bitmap?) {
-                    if (dataSource.isFinished && bitmap != null) {
-                        val aspectRatio = bitmap.width / bitmap.height.toFloat()
-                        val height = context.resources.getDimension(R.dimen.shop_height).toInt()
-                        val width = Math.round(height * aspectRatio)
-                        val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
-                        drawable.tileModeX = Shader.TileMode.REPEAT
-                        Observable.just(drawable)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(Action1 {
-                                    if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                                        backgroundView.setBackgroundDrawable(it)
-                                    } else {
-                                        backgroundView.background = it
-                                    } }, RxErrorHandler.handleEmptyError())
-                        dataSource.close()
-                    }
-                }
-            }, CallerThreadExecutor.getInstance())
+            DataBindingUtils.loadImage(shop.identifier + "_background" + shopSpriteSuffix, {
+                val aspectRatio = it.width / it.height.toFloat()
+                val height = context.resources.getDimension(R.dimen.shop_height).toInt()
+                val width = Math.round(height * aspectRatio)
+                val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it, width, height, false))
+                drawable.tileModeX = Shader.TileMode.REPEAT
+                Observable.just(drawable)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Action1 {
+                            backgroundView.backgroundCompat = it
+                        }, RxErrorHandler.handleEmptyError())
+            })
 
             descriptionView.text = Html.fromHtml(shop.notes)
             namePlate.setText(shop.npcNameResource)
