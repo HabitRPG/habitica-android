@@ -123,9 +123,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun changeClass(): Observable<User> = apiClient.changeClass()
+    override fun changeClass(): Observable<User> = apiClient.changeClass().flatMap { retrieveUser(false, true) }
 
-    override fun disableClasses(): Observable<User> = apiClient.disableClasses()
+    override fun disableClasses(): Observable<User> = apiClient.disableClasses().flatMap { retrieveUser(false, true) }
 
     override fun changeClass(selectedClass: String): Observable<User> = apiClient.changeClass(selectedClass)
 
