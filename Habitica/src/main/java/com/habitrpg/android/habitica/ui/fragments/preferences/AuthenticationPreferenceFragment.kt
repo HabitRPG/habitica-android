@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.preference.Preference
+import android.text.InputType
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -130,6 +131,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
     private fun showAccountDeleteConfirmation() {
         val input = EditText(context)
+        input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT)
