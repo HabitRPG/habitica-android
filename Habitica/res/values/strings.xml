@@ -755,4 +755,5 @@
     <string name="tavern_owner_long">Daniel the inn keeper</string>
     <string name="stable_owner_long">Matt the beast master</string>
     <string name="hide_boss_art">Hide Boss Art</string>
+    <string name="active_world_boss">Active World Boss</string>
 </resources>

@@ -97,6 +97,9 @@ class NavigationDrawerFragment : DialogFragment() {
                 adapter.tintColor = ContextCompat.getColor(it, R.color.brand_300)
                 adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.brand_200)
             }
+            adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
+                it.additionalInfo = null
+            }
             return
         }
         questMenuView.visibility = View.VISIBLE
@@ -117,6 +120,12 @@ class NavigationDrawerFragment : DialogFragment() {
             questMenuView.showBossArt()
         }*/
         questMenuView.hideBossArt()
+
+        adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
+            it.additionalInfo = context?.getString(R.string.active_world_boss)
+            it.additionalInfoAsPill = false
+        }
+        adapter.notifyDataSetChanged()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

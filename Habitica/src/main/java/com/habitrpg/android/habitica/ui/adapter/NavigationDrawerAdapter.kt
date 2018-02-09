@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter
 
+import android.content.Context
 import android.graphics.PorterDuff
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -114,17 +115,24 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                 if (drawerItem.additionalInfo != null) {
                     additionalInfoView.visibility = View.VISIBLE
                     additionalInfoView.text = drawerItem.additionalInfo
-                    val drawable = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg)
-                    if (drawable != null) {
-                        DrawableCompat.setTint(drawable, backgroundTintColor)
+                    if (drawerItem.additionalInfoAsPill) {
+                        val drawable = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg)
+                        if (drawable != null) {
+                            DrawableCompat.setTint(drawable, backgroundTintColor)
 
-                        val pL = additionalInfoView.paddingLeft
-                        val pT = additionalInfoView.paddingTop
-                        val pR = additionalInfoView.paddingRight
-                        val pB = additionalInfoView.paddingBottom
+                            val pL = additionalInfoView.paddingLeft
+                            val pT = additionalInfoView.paddingTop
+                            val pR = additionalInfoView.paddingRight
+                            val pB = additionalInfoView.paddingBottom
 
-                        additionalInfoView.backgroundCompat = drawable
-                        additionalInfoView.setPadding(pL, pT, pR, pB)
+                            additionalInfoView.backgroundCompat = drawable
+                            additionalInfoView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
+                            additionalInfoView.setPadding(pL, pT, pR, pB)
+                        }
+                    } else {
+                        additionalInfoView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.transparent))
+                        additionalInfoView.setTextColor(tintColor)
+                        additionalInfoView.setPadding(0, 0, 0,0)
                     }
                 } else {
                     additionalInfoView.visibility = View.GONE
