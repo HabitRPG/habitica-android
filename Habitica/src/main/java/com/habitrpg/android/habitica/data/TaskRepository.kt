@@ -53,4 +53,5 @@ interface TaskRepository : BaseRepository {
     fun getTaskCopies(tasks: List<Task>): Observable<List<Task>>
 
     fun updateDailiesIsDue(date: Date): Observable<TaskList>
+    fun retrieveCompletedTodos(userId: String): Observable<TaskList>
 }

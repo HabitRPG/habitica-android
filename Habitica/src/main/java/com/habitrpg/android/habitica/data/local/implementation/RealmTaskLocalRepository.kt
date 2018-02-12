@@ -9,9 +9,8 @@ import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
-import io.realm.Sort
 import rx.Observable
-import java.util.*
+import kotlin.collections.ArrayList
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
@@ -54,6 +53,11 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(sortedTasks) }
     }
 
+    override fun saveCompletedTodos(userId: String, tasks: MutableCollection<Task>) {
+        removeCompletedTodos(userId, tasks)
+        realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(tasks) }
+    }
+
     private fun sortTasks(taskMap: MutableMap<String, Task>, taskOrder: List<String>): List<Task> {
         val taskList = ArrayList<Task>()
         var position = 0
@@ -74,7 +78,35 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     private fun removeOldTasks(userID: String, onlineTaskList: List<Task>) {
-        val localTasks = realm.where(Task::class.java).equalTo("userId", userID).findAll().createSnapshot()
+        val localTasks = realm.where(Task::class.java)
+                .equalTo("userId", userID)
+                .beginGroup()
+                .beginGroup()
+                .equalTo("type", Task.TYPE_TODO)
+                .equalTo("completed", false)
+                .endGroup()
+                .or()
+                .notEqualTo("type", Task.TYPE_TODO)
+                .endGroup()
+                .findAll()
+                .createSnapshot()
+        val tasksToDelete = localTasks.filterNot { onlineTaskList.contains(it) }
+        realm.executeTransaction {
+            for (localTask in tasksToDelete) {
+                localTask.checklist.deleteAllFromRealm()
+                localTask.reminders.deleteAllFromRealm()
+                localTask.deleteFromRealm()
+            }
+        }
+    }
+
+    private fun removeCompletedTodos(userID: String, onlineTaskList: MutableCollection<Task>) {
+        val localTasks = realm.where(Task::class.java)
+                .equalTo("userId", userID)
+                .equalTo("type", Task.TYPE_TODO)
+                .equalTo("completed", true)
+                .findAll()
+                .createSnapshot()
         val tasksToDelete = localTasks.filterNot { onlineTaskList.contains(it) }
         realm.executeTransaction {
             for (localTask in tasksToDelete) {

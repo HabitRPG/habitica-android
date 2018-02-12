@@ -40,6 +40,16 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
+    override fun retrieveCompletedTodos(userId: String): Observable<TaskList> {
+        return this.apiClient.getTasks("completedTodos")
+                .doOnNext { taskList ->
+                    val tasks = taskList.tasks
+                    if (tasks != null) {
+                        this.localRepository.saveCompletedTodos(userId, tasks.values)
+                    }
+                }
+    }
+
     override fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Observable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return this.apiClient.getTasks("dailys", formatter.format(dueDate))

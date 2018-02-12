@@ -32,4 +32,5 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun updateIsdue(daily: TaskList): Observable<TaskList>
 
     fun updateTaskPositions(taskOrder: List<String>)
+    fun saveCompletedTodos(userId: String, tasks: MutableCollection<Task>)
 }

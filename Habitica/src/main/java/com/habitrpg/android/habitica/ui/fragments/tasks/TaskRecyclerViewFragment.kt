@@ -266,6 +266,10 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
             taskFilterHelper.setActiveFilter(classType, activeFilter)
         }
         recyclerAdapter?.filter()
+
+        if (activeFilter == Task.FILTER_COMPLETED) {
+            compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe(Action1 {}, RxErrorHandler.handleEmptyError()))
+        }
     }
 
     companion object {
