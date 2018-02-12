@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.text.method.LinkMovementMethod
@@ -13,15 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.ButterKnife
-import com.facebook.common.executors.CallerThreadExecutor
-import com.facebook.common.references.CloseableReference
-import com.facebook.datasource.DataSource
-import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
-import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
-import com.facebook.imagepipeline.image.CloseableImage
-import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.extensions.backgroundCompat
@@ -36,7 +27,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
-import kotlinx.android.synthetic.main.shop_header.*
 import org.greenrobot.eventbus.EventBus
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -238,14 +228,12 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal class ShopHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val context: Context
         private val descriptionView: TextView by bindView(itemView, R.id.descriptionView)
         private val sceneView: SimpleDraweeView by bindView(itemView, R.id.sceneView)
         private val backgroundView: ImageView by bindView(itemView, R.id.backgroundView)
         private val namePlate: TextView by bindView(itemView, R.id.namePlate)
 
         init {
-            context = itemView.context
             descriptionView.movementMethod = LinkMovementMethod.getInstance()
         }
 
@@ -256,9 +244,9 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             DataBindingUtils.loadImage(shop.identifier + "_background" + shopSpriteSuffix, {
                 val aspectRatio = it.width / it.height.toFloat()
-                val height = context.resources.getDimension(R.dimen.shop_height).toInt()
+                val height = itemView.context.resources.getDimension(R.dimen.shop_height).toInt()
                 val width = Math.round(height * aspectRatio)
-                val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it, width, height, false))
+                val drawable = BitmapDrawable(itemView.context.resources, Bitmap.createScaledBitmap(it, width, height, false))
                 drawable.tileModeX = Shader.TileMode.REPEAT
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())

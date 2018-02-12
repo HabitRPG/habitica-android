@@ -100,8 +100,7 @@ public class HabiticaIconsHelper {
         int size = scaleSize(40);
         imageOfExperienceReward = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfExperienceReward);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawExperience(canvas);
+        HabiticaIcons.drawExperience(canvas, new RectF(0f, 0f, size, size), HabiticaIcons.ResizingBehavior.AspectFit);
 
         return imageOfExperienceReward;
     }
@@ -114,8 +113,7 @@ public class HabiticaIconsHelper {
         int size = scaleSize(40);
         imageOfGoldReward = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfGoldReward);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawGold(canvas);
+        HabiticaIcons.drawGold(canvas, new RectF(0f, 0f, size, size), HabiticaIcons.ResizingBehavior.AspectFit);
 
         return imageOfGoldReward;
     }

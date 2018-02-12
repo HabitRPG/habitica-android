@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
@@ -61,11 +62,9 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         if (questContent.drop != null && questContent.drop.items != null) {
-            for (item in questContent.drop.items) {
-                if (!item.isOnlyOwner) {
-                    addRewardsRow(inflater, item, rewardsList)
-                }
-            }
+            questContent.drop.items
+                    .filterNot { it.isOnlyOwner }
+                    .forEach { addRewardsRow(inflater, it, rewardsList) }
 
             var hasOwnerRewards = false
             for (item in questContent.drop.items) {
@@ -80,8 +79,9 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
             }
 
             if (questContent.drop.exp > 0) {
-                val view = inflater.inflate(R.layout.row_quest_reward, rewardsList, false) as ViewGroup
-                val imageView = view.findViewById<SimpleDraweeView>(R.id.imageView)
+                val view = inflater.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as ViewGroup
+                val imageView = view.findViewById<ImageView>(R.id.imageView)
+                imageView.scaleType = ImageView.ScaleType.CENTER
                 imageView.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
                 val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
                 titleTextView.text = context.getString(R.string.experience_reward, questContent.drop.exp)
@@ -89,8 +89,9 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
             }
 
             if (questContent.drop.gp > 0) {
-                val view = inflater.inflate(R.layout.row_quest_reward, rewardsList, false) as ViewGroup
-                val imageView = view.findViewById<SimpleDraweeView>(R.id.imageView)
+                val view = inflater.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as ViewGroup
+                val imageView = view.findViewById<ImageView>(R.id.imageView)
+                imageView.scaleType = ImageView.ScaleType.CENTER
                 imageView.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
                 val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
                 titleTextView.text = context.getString(R.string.gold_reward, questContent.drop.gp)
