@@ -156,10 +156,11 @@ class TasksFragment : BaseMainFragment() {
             val activePos = viewPager?.currentItem ?: 0
             viewFragmentsDictionary?.get(activePos - 1)?.recyclerAdapter?.filter()
             viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter?.filter()
+            taskFilterHelper.tags = activeTags
             if (activeTaskFilter != null) {
                 activeFragment?.setActiveFilter(activeTaskFilter)
             }
-            taskFilterHelper.tags = activeTags
+            viewFragmentsDictionary?.values?.forEach { it.recyclerAdapter?.filter() }
             updateFilterIcon()
 
         }
