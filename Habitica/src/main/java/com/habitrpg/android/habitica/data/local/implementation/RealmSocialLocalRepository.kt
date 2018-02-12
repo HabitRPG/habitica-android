@@ -87,7 +87,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun saveGroupMembers(groupId: String?, members: List<Member>) {
-        realm.executeTransaction { realm1 -> realm.insertOrUpdate(members) }
+        realm.executeTransaction { realm.insertOrUpdate(members) }
         if (groupId != null) {
             val existingMembers = realm.where(Member::class.java).equalTo("party.id", groupId).findAll()
             val membersToRemove = ArrayList<Member>()
