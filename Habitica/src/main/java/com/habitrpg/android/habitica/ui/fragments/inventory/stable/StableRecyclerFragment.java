@@ -155,7 +155,7 @@ public class StableRecyclerFragment extends BaseFragment {
 
             Animal lastAnimal = unsortedAnimals.get(0);
             for (Animal animal : unsortedAnimals) {
-                if (!animal.getAnimal().equals(lastAnimal.getAnimal())) {
+                if (!animal.getAnimal().equals(lastAnimal.getAnimal()) || animal == unsortedAnimals.get(unsortedAnimals.size()-1)) {
                     if (!((lastAnimal.getAnimalGroup().equals("premiumPets") || lastAnimal.getAnimalGroup().equals("specialPets")
                             || lastAnimal.getAnimalGroup().equals("specialMounts") || lastAnimal.getAnimalGroup().equals("premiumMounts"))
                             && lastAnimal.getNumberOwned() == 0)) {
