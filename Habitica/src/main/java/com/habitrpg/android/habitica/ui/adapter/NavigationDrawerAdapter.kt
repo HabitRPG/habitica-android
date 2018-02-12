@@ -67,13 +67,13 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val drawerItem = getItem(position)
         if (getItemViewType(position) == 0) {
-            (holder as DrawerItemViewHolder?)?.bind(drawerItem, drawerItem.identifier == selectedItem)
-            holder?.tintColor = tintColor
+            (holder as DrawerItemViewHolder?)?.tintColor = tintColor
             holder?.backgroundTintColor = backgroundTintColor
+            holder?.bind(drawerItem, drawerItem.identifier == selectedItem)
             holder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem.identifier) }
         } else {
-            (holder as SectionHeaderViewHolder?)?.bind(drawerItem)
-            holder?.backgroundTintColor = backgroundTintColor
+            (holder as SectionHeaderViewHolder?)?.backgroundTintColor = backgroundTintColor
+            holder?.bind(drawerItem)
         }
     }
 
