@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar
 import io.realm.RealmResults
@@ -189,7 +190,13 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun copyMessageAsTodo(chatMessage: ChatMessage) {
-
+        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText(context?.getString(R.string.chat_message), chatMessage.text)
+        clipboard.primaryClip = clip
+        val activity = activity as MainActivity?
+        if (activity != null) {
+            HabiticaSnackbar.showSnackbar(activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

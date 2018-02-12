@@ -41,13 +41,13 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun flagMessage(chatMessage: ChatMessage): Observable<Void> {
-        return if (chatMessage.id == null) {
+        return if (chatMessage.id == "") {
             Observable.just(null)
         } else apiClient.flagMessage(chatMessage.groupId, chatMessage.id)
     }
 
     override fun likeMessage(chatMessage: ChatMessage): Observable<ChatMessage> {
-        if (chatMessage.id == null) {
+        if (chatMessage.id == "") {
             return Observable.just(null)
         }
         val liked = chatMessage.userLikesMessage(userId)
