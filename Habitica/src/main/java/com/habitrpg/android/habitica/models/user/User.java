@@ -10,6 +10,8 @@ import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Date;
 import java.util.List;
 
@@ -183,6 +185,7 @@ public class User extends RealmObject implements Avatar {
         return this.balance;
     }
 
+    @NotNull
     public Integer getGemCount(){
         return (int)(this.balance * 4);
     }
