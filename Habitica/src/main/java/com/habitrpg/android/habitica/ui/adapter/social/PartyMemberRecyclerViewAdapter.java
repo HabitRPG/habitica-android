@@ -95,7 +95,7 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Mem
         public void bind(Member user) {
             avatarView.setAvatar(user);
 
-            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats());
+            AvatarWithBarsViewModel.Companion.setHpBarData(hpBar, user.getStats());
 
             lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 
