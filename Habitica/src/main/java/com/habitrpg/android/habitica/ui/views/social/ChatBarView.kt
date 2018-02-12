@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.social
 import android.content.Context
 import android.os.Build
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.AppCompatEditText
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -20,7 +21,7 @@ class ChatBarView : FrameLayout {
 
     private val chatBarContainer: LinearLayout by bindView(R.id.chatBarContainer)
     private val sendButton: ImageButton by bindView(R.id.sendButton)
-    private val chatEditText: EditText by bindView(R.id.chatEditText)
+    private val chatEditText: AppCompatEditText by bindView(R.id.chatEditText)
 
     private var navBarAccountedHeightCalculated = false
 
@@ -50,13 +51,15 @@ class ChatBarView : FrameLayout {
         })
 
         sendButton.setOnClickListener { sendButtonPressed() }
+
+        resizeForDrawingUnderNavbar()
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
         if (changed) {
             resizeForDrawingUnderNavbar()
         }
-        super.onLayout(changed, left, top, right, bottom)
     }
 
     //https://github.com/roughike/BottomBar/blob/master/bottom-bar/src/main/java/com/roughike/bottombar/BottomBar.java#L834
@@ -64,13 +67,13 @@ class ChatBarView : FrameLayout {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             val currentHeight = height
 
-            if (!navBarAccountedHeightCalculated) {
+            if (currentHeight != 0 && !navBarAccountedHeightCalculated) {
                 navBarAccountedHeightCalculated = true
 
                 val navbarHeight = NavbarUtils.getNavbarHeight(context)
-                val params = layoutParams
-                params.height = currentHeight + navbarHeight
-                layoutParams = params
+                val finalHeight = currentHeight + navbarHeight
+                chatBarContainer.layoutParams.height = finalHeight
+                invalidate()
             }
         }
     }

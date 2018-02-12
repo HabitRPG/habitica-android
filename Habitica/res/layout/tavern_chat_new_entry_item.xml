@@ -11,7 +11,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageButton
                 android:id="@+id/emojiButton"
@@ -24,15 +24,21 @@
                 android:tint="@color/brand_400"
                 android:layout_gravity="center"/>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat"
+                app:hintEnabled="false">
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/chatEditText"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_margin="5dp"
                     android:hint="@string/write_message"
                     android:textColor="@android:color/black"
                     android:inputType="textCapSentences|textMultiLine"/>
+            </android.support.design.widget.TextInputLayout>
             <ImageButton
                 android:id="@+id/sendButton"
                 android:layout_width="30dp"
