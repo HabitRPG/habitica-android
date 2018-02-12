@@ -245,7 +245,6 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val namePlate: TextView by bindView(itemView, R.id.namePlate)
 
         init {
-            ButterKnife.bind(this, itemView)
             context = itemView.context
             descriptionView.movementMethod = LinkMovementMethod.getInstance()
         }
@@ -278,7 +277,6 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val subscribeButton: Button? by bindView(itemView, R.id.subscribeButton)
         private val textView: TextView? by bindView(itemView, R.id.textView)
         init {
-            ButterKnife.bind(this, view)
             subscribeButton?.setOnClickListener { EventBus.getDefault().post(OpenGemPurchaseFragmentCommand()) }
         }
 

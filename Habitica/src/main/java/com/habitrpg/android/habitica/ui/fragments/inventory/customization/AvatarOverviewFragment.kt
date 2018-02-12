@@ -19,7 +19,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         super.onCreate(savedInstanceState)
 
         if (apiClient != null) {
-            apiClient.content
+            apiClient.getContent()
                     .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
         }
     }

@@ -24,15 +24,23 @@ import com.habitrpg.android.habitica.R
 
 object DataBindingUtils {
 
-    fun loadImage(view: SimpleDraweeView?, imageName: String?) {
+    fun loadImage(view: SimpleDraweeView?, imageName: String) {
+        loadImage(view, imageName, "png")
+    }
+
+    fun loadImage(view: SimpleDraweeView?, imageName: String?, imageFormat: String = "png") {
         if (view != null && imageName != null && view.visibility == View.VISIBLE) {
-            view.setImageURI("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.png")
+            view.setImageURI("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.$imageFormat")
         }
     }
 
     fun loadImage(imageName: String, imageResult: (Bitmap) -> Unit) {
+        loadImage(imageName, "png", imageResult)
+    }
+
+    fun loadImage(imageName: String, imageFormat: String = "png", imageResult: (Bitmap) -> Unit) {
         val imageRequest = ImageRequestBuilder
-                .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.png"))
+                .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.$imageFormat"))
                 .build()
 
         val imagePipeline = Fresco.getImagePipeline()

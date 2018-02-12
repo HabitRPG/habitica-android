@@ -279,7 +279,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     override fun togglePinnedItem(item: ShopItem): Observable<List<ShopItem>> {
         return if (!item.isValid) {
             Observable.just(null)
-        } else apiClient.togglePinnedItem(item.pinType, item.path)
+        } else apiClient.togglePinnedItem(item.pinType ?: "", item.path ?: "")
                 .flatMap { retrieveInAppRewards() }
     }
 }

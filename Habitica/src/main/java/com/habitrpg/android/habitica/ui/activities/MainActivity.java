@@ -116,6 +116,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -426,8 +427,12 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             Preferences preferences = user.getPreferences();
 
             if (preferences != null) {
-                apiClient.setLanguageCode(preferences.getLanguage());
-                soundManager.setSoundTheme(preferences.getSound());
+                if (preferences.getLanguage() != null) {
+                    apiClient.setLanguageCode(preferences.getLanguage());
+                }
+                if (preferences.getSound() != null) {
+                    soundManager.setSoundTheme(preferences.getSound());
+                }
             }
             runOnUiThread(() -> {
                 updateHeader();
@@ -594,7 +599,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             return;
         }
 
-        if (rewardKey.equals("potion")) {
+        if (Objects.equals(rewardKey, "potion")) {
             int currentHp = user.getStats().getHp().intValue();
             int maxHp = user.getStats().getMaxHealth();
 

@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import kotlinx.android.synthetic.main.fragment_equipment_overview.*
 import rx.functions.Action1
@@ -56,7 +57,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         if (this.nameMapping.isEmpty()) {
             compositeSubscription.add(inventoryRepository.ownedEquipment.subscribe(Action1 {
                 for (gear in it) {
-                    this.nameMapping.put(gear.key ?: "", gear.text)
+                    this.nameMapping[gear.key ?: ""] = gear.text
                 }
 
                 setEquipmentNames()
@@ -120,9 +121,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         fragment.type = type
         fragment.isCostume = isCostume
         fragment.equippedGear = equipped
-        if (activity != null) {
-            activity!!.displayFragment(fragment)
-        }
+        activity?.displayFragment(fragment)
     }
 
     override fun customTitle(): String {

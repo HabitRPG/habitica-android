@@ -36,7 +36,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Observable<TaskList> {
-        return this.apiClient.tasks
+        return this.apiClient.getTasks()
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
@@ -58,11 +58,15 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Observable<TaskScoringResult?> {
         val now = Date().time
+        val id = task.id
         if (lastTaskAction > now - 500 && !force) {
             return Observable.just(null)
         }
+        if (id == null) {
+            return Observable.just(null)
+        }
         lastTaskAction = now
-        return this.apiClient.postTaskDirection(task.id, (if (up) TaskDirection.up else TaskDirection.down).toString())
+        return this.apiClient.postTaskDirection(id, (if (up) TaskDirection.up else TaskDirection.down).toString())
                 .map { res ->
                     // save local task changes
                     val result = TaskScoringResult()
@@ -152,8 +156,12 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             return Observable.just(task)
         }
         lastTaskAction = now
-        return localRepository.getTaskCopy(task.id ?: "").first()
-                .flatMap { task1 -> apiClient.updateTask(task1.id, task1) }
+        val id = task.id
+        if (id == null) {
+            return Observable.just(task)
+        }
+        return localRepository.getTaskCopy(id).first()
+                .flatMap { task1 -> apiClient.updateTask(id, task1) }
                 .map { task1 ->
                     task1.position = task.position
                     task1
@@ -193,7 +201,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .first()
                 .flatMap { task ->
                     if (task.isValid) {
-                        return@flatMap apiClient.postTaskNewPosition(task.id, newPosition)
+                        return@flatMap apiClient.postTaskNewPosition(task.id ?: "", newPosition)
                     }
                     return@flatMap Observable.just<List<String>>(ArrayList())
                 }

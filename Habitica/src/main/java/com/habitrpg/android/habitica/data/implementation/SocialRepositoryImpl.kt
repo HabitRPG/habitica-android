@@ -43,7 +43,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun flagMessage(chatMessage: ChatMessage): Observable<Void> {
         return if (chatMessage.id == "") {
             Observable.just(null)
-        } else apiClient.flagMessage(chatMessage.groupId, chatMessage.id)
+        } else apiClient.flagMessage(chatMessage.groupId ?: "", chatMessage.id)
     }
 
     override fun likeMessage(chatMessage: ChatMessage): Observable<ChatMessage> {
@@ -52,12 +52,12 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         }
         val liked = chatMessage.userLikesMessage(userId)
         localRepository.likeMessage(chatMessage, userId, !liked)
-        return apiClient.likeMessage(chatMessage.groupId, chatMessage.id)
+        return apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
                 .doOnError { localRepository.likeMessage(chatMessage, userId, liked) }
     }
 
     override fun deleteMessage(chatMessage: ChatMessage): Observable<Void> {
-        return apiClient.deleteMessage(chatMessage.groupId, chatMessage.id)
+        return apiClient.deleteMessage(chatMessage.groupId ?: "", chatMessage.id)
                 .doOnNext { localRepository.deleteMessage(chatMessage.id) }
     }
 
@@ -159,7 +159,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun inviteToGroup(id: String, inviteData: Map<String, Any>): Observable<List<String>> = apiClient.inviteToGroup(id, inviteData)
 
-    override fun getUserChallenges(): Observable<List<Challenge>> = apiClient.userChallenges
+    override fun getUserChallenges(): Observable<List<Challenge>> = apiClient.getUserChallenges()
 
     override fun getMember(userId: String?): Observable<Member> {
         return if (userId == null) {
