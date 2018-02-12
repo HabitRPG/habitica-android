@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.models.user;
 
+import android.util.SparseArray;
+import android.util.SparseIntArray;
+
 import com.habitrpg.android.habitica.R;
 
 import java.util.HashMap;
@@ -9,10 +12,10 @@ import io.realm.annotations.PrimaryKey;
 
 public class ContributorInfo extends RealmObject {
 
-    public static final HashMap<Integer, Integer> CONTRIBUTOR_COLOR_DICT;
+    public static final SparseIntArray CONTRIBUTOR_COLOR_DICT;
 
     static {
-        CONTRIBUTOR_COLOR_DICT = new HashMap<>();
+        CONTRIBUTOR_COLOR_DICT = new SparseIntArray();
         CONTRIBUTOR_COLOR_DICT.put(0, R.color.contributor_0);
         CONTRIBUTOR_COLOR_DICT.put(1, R.color.contributor_1);
         CONTRIBUTOR_COLOR_DICT.put(2, R.color.contributor_2);
@@ -70,7 +73,7 @@ public class ContributorInfo extends RealmObject {
         int rColor = android.R.color.black;
 
 
-        if (CONTRIBUTOR_COLOR_DICT.containsKey(this.level)) {
+        if (CONTRIBUTOR_COLOR_DICT.get(this.level, -1) > 0) {
             rColor = CONTRIBUTOR_COLOR_DICT.get(this.level);
         }
 

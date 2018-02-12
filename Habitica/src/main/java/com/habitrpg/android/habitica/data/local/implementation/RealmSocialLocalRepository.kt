@@ -79,10 +79,9 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             return
         }
         if (liked) {
-            realm.executeTransaction { chatMessage.likes.add(ChatMessageLike(userId)) }
+            realm.executeTransaction { chatMessage.likes?.add(ChatMessageLike(userId, chatMessage.id)) }
         } else {
-            chatMessage.likes.filter { userId == it.id }
-                    .forEach { like -> realm.executeTransaction { like.deleteFromRealm() } }
+            chatMessage.likes?.filter { userId == it.id }?.forEach { like -> realm.executeTransaction { like.deleteFromRealm() } }
         }
     }
 
@@ -122,10 +121,10 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         if (groupId != null) {
             val existingMessages = realm.where(ChatMessage::class.java).equalTo("groupId", groupId).findAll()
             val messagesToRemove = ArrayList<ChatMessage>()
-            for (existingMember in existingMessages) {
-                val isStillMember = chatMessages.any { existingMember.id != null && existingMember.id == it.id }
+            for (existingMessage in existingMessages) {
+                val isStillMember = chatMessages.any { existingMessage.id == it.id }
                 if (!isStillMember) {
-                    messagesToRemove.add(existingMember)
+                    messagesToRemove.add(existingMessage)
                 }
             }
             realm.executeTransaction {

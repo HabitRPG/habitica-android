@@ -149,7 +149,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
             setLikeProperties();
 
             if (userBackground != null) {
-                if (msg.sent != null && msg.sent.equals("true") && sendingUser != null) {
+                if (msg.getSent() != null && msg.getSent().equals("true") && sendingUser != null) {
                     DataBindingUtils.INSTANCE.setRoundedBackgroundInt(userBackground, sendingUser.getContributorColor());
                 } else {
                     DataBindingUtils.INSTANCE.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
@@ -157,33 +157,33 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
             }
 
             if (userLabel != null) {
-                if (msg.sent != null && msg.sent.equals("true")) {
+                if (msg.getSent() != null && msg.getSent().equals("true")) {
                     userLabel.setText(sendingUser.getProfile().getName());
                 } else {
-                    if (msg.user != null && msg.user.length() > 0) {
-                        userLabel.setText(msg.user);
+                    if (msg.getUser() != null && msg.getUser().length() > 0) {
+                        userLabel.setText(msg.getUser());
                     } else {
                         userLabel.setText(R.string.system);
                     }
                 }
 
                 userLabel.setClickable(true);
-                userLabel.setOnClickListener(view -> userLabelClickEvents.onNext(msg.uuid));
+                userLabel.setOnClickListener(view -> userLabelClickEvents.onNext(msg.getUuid()));
             }
 
             DataBindingUtils.INSTANCE.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
             if (messageText != null) {
-                messageText.setText(chatMessage.parsedText);
-                if (msg.parsedText == null) {
-                    messageText.setText(chatMessage.text);
-                    Observable.just(chatMessage.text)
+                messageText.setText(chatMessage.getParsedText());
+                if (msg.getParsedText() == null) {
+                    messageText.setText(chatMessage.getText());
+                    Observable.just(chatMessage.getText())
                             .map(MarkdownParser::parseMarkdown)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(parsedText -> {
-                                chatMessage.parsedText = parsedText;
-                                messageText.setText(chatMessage.parsedText);
+                                chatMessage.setParsedText(parsedText);
+                                messageText.setText(chatMessage.getParsedText());
                             }, Throwable::printStackTrace);
                 }
                 this.messageText.setMovementMethod(LinkMovementMethod.getInstance());
@@ -243,7 +243,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
 
 
                     popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(shouldShowDelete(chatMessage));
-                    popupMenu.getMenu().findItem(R.id.menu_chat_flag).setVisible(!chatMessage.uuid.equals("system"));
+                    popupMenu.getMenu().findItem(R.id.menu_chat_flag).setVisible(!chatMessage.getUuid().equals("system"));
                     popupMenu.getMenu().findItem(R.id.menu_chat_copy_as_todo).setVisible(false);
                     popupMenu.getMenu().findItem(R.id.menu_chat_send_pm).setVisible(false);
 
@@ -273,7 +273,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
         }
 
         private boolean shouldShowDelete(ChatMessage chatMsg) {
-            return !chatMsg.isSystemMessage() && (chatMsg.uuid.equals(userId) || user.getContributor() != null && user.getContributor().getAdmin());
+            return !chatMsg.isSystemMessage() && (chatMsg.getUuid().equals(userId) || user.getContributor() != null && user.getContributor().getAdmin());
         }
 
         @OnClick(R.id.tvLikes)
@@ -298,7 +298,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 }
 
                 case R.id.menu_chat_send_pm: {
-                    privateMessageClickEvents.onNext(chatMessage.uuid);
+                    privateMessageClickEvents.onNext(chatMessage.getUuid());
                     break;
                 }
 

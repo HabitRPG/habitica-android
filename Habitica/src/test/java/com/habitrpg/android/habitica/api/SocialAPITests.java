@@ -44,7 +44,7 @@ public class SocialAPITests extends BaseAPITests {
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         PostChatMessageResult result = testSubscriber.getOnNextEvents().get(0);
-        messagesIDs.add(result.message.id);
+        messagesIDs.add(result.message.getId());
     }
 
     /*@Test

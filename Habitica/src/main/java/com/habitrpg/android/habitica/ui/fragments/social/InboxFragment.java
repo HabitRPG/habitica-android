@@ -152,8 +152,8 @@ public class InboxFragment extends BaseMainFragment
         if (messages.size() > 0) {
             for (ChatMessage message : messages) {
                 TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.inboxMessagesListView, false);
-                entry.setText(message.user);
-                entry.setTag(message.uuid);
+                entry.setText(message.getUser());
+                entry.setTag(message.getUuid());
                 entry.setOnClickListener(this);
                 this.inboxMessagesListView.addView(entry);
             }
