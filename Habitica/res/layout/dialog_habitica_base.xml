@@ -13,13 +13,13 @@
         android:paddingTop="@dimen/spacing_large"
         android:paddingBottom="@dimen/spacing_large"
         android:textSize="18sp"
-        android:layout_marginBottom="@dimen/spacing_large"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large"
         tools:text="This is the title!"
         tools:background="@color/brand_300"
         />
     <TextView
+        android:layout_marginTop="@dimen/spacing_large"
         android:id="@+id/subtitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,10 +44,4 @@
         android:paddingRight="@dimen/spacing_large"
         tools:text="This is an example message"
         tools:visibility="visible"/>
-    <FrameLayout
-        android:id="@+id/contentViewContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large" />
 </LinearLayout>

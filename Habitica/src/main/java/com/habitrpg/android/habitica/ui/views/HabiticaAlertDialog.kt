@@ -5,7 +5,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
@@ -18,7 +17,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
     private val titleTextView: TextView by bindView(view, R.id.titleTextView)
     private val subtitleTextView: TextView by bindView(view, R.id.subtitleTextView)
     private val messageTextView: TextView by bindView(view, R.id.messageTextView)
-    private val contentViewContainer: ViewGroup by bindView(view, R.id.contentViewContainer)
+
+    private var additionalContentView: View? = null
 
     init {
         setView(view)
@@ -66,26 +66,20 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
         setMessage(context.getString(messageId))
     }
 
-    fun setAdditionalContentView(layoutResID: Int) {
+    fun setAdditionalContentView(layoutResID: Int, index: Int = -1) {
         val inflater = context.layoutInflater
-        setAdditionalContentView(inflater.inflate(layoutResID, contentViewContainer, false))
+        setAdditionalContentView(inflater.inflate(layoutResID, view, false))
     }
 
-    fun setAdditionalContentView(view: View?) {
-        contentViewContainer.removeAllViewsInLayout()
-        if (view != null) {
-            contentViewContainer.visibility = View.VISIBLE
+    fun setAdditionalContentView(view: View?, index: Int = -1) {
+        this.view.removeView(additionalContentView)
+        additionalContentView = view
+        if (index >= 0) {
+            this.view.addView(view, index)
         } else {
-            contentViewContainer.visibility = View.GONE
+            this.view.addView(view)
         }
-        contentViewContainer.addView(view)
     }
 
-    fun getContentView(): View? {
-        return if (contentViewContainer.childCount > 0) {
-            contentViewContainer.getChildAt(0)
-        } else {
-            null
-        }
-    }
+    fun getContentView(): View? = additionalContentView
 }

@@ -95,22 +95,8 @@ class TavernDetailFragment : BaseFragment() {
         descriptionView.setText(R.string.tavern_description)
         namePlate.setText(R.string.tavern_owner)
 
-        DataBindingUtils.loadImage(sceneView, "tavern_scene" + configManager.shopSpriteSuffix())
-
-        backgroundView.scaleType = ImageView.ScaleType.FIT_START
-
-        DataBindingUtils.loadImage("tavern_background" + configManager.shopSpriteSuffix(), {bitmap ->
-            val aspectRatio = bitmap.width / bitmap.height.toFloat()
-            val height = context?.resources?.getDimension(R.dimen.shop_height)?.toInt() ?: 0
-            val width = Math.round(height * aspectRatio)
-            val drawable = BitmapDrawable(context?.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
-            drawable.tileModeX = Shader.TileMode.REPEAT
-            Observable.just(drawable)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Action1 {
-                        backgroundView.backgroundCompat = it
-                    }, RxErrorHandler.handleEmptyError())
-        })
+        npcBannerView.shopSpriteSuffix = configManager.shopSpriteSuffix()
+        npcBannerView.identifier = "tavern"
 
         addPlayerTiers()
         bindButtons()

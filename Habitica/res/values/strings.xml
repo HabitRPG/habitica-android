@@ -765,7 +765,7 @@
     <string name="insufficientSubscriberGems">You have bought all the Gems you can this month. More become available within the first three days of each month. Thanks for subscribing!</string>
     <string name="insufficientSubscriberGemsTitle">Monthly Gem Cap Reached</string>
     <string name="chat_message">Chat Message</string>
-    <string name="world_boss_description_title">The DysHeartener attacks!</string>
+    <string name="world_boss_description_title">What’s a World Boss?</string>
     <string name="world_boss_description_description">A World Boss is a special event where the whole community works together to take down a powerful monster with their tasks!\nComplete tasks to damage the Boss\nThe Boss won’t damage you for missed tasks, but its Rage meter will go up. If the bar fills up, the Boss will attack one of the shopkeepers!\nYou can continue with normal Quest Bosses, damage will apply to both\nCheck the Tavern to see Boss progress and Rage attacks</string>
     <string name="world_boss_description_intro">A World Boss is a special event where the whole community works together to take down a powerful monster with their tasks!</string>
     <string name="world_boss_description_1">Complete tasks to damage the Boss</string>

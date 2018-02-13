@@ -6,14 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/backgroundView"
+    <com.habitrpg.android.habitica.ui.views.NPCBannerView
+        android:id="@+id/npcBannerView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/shop_height"/>
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sceneView"
-        android:layout_width="375dp"
-        android:layout_height="@dimen/shop_scene_height" />
+        android:layout_height="@dimen/shop_scene_height"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="28dp"

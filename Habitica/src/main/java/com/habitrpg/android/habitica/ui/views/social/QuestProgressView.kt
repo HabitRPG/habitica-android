@@ -210,6 +210,12 @@ class QuestProgressView : LinearLayout {
         alert.setTitleBackground(R.color.orange_10)
         alert.setSubtitle(context.getString(R.string.strike_active_subtitle, getNpcName(key)))
         alert.setMessage(context.getString(R.string.strike_active_description, getLongNPCName(key), quest?.boss?.name ?: "", getLocationName(key)))
+
+        val npcBannerView = NPCBannerView(context, null)
+        npcBannerView.shopSpriteSuffix = quest?.key ?: ""
+        npcBannerView.identifier = key
+        alert.setAdditionalContentView(npcBannerView, 1)
+
         alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
             dialog.dismiss()
         })

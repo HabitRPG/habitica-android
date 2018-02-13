@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
+import com.habitrpg.android.habitica.ui.views.NPCBannerView
 import org.greenrobot.eventbus.EventBus
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -40,7 +41,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var ownedItems: Map<String, Item> = HashMap()
 
 
-    var shopSpriteSuffix: String? = null
+    var shopSpriteSuffix: String = ""
     set(value) {
         field = value
         notifyItemChanged(0)
@@ -229,31 +230,16 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     internal class ShopHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val descriptionView: TextView by bindView(itemView, R.id.descriptionView)
-        private val sceneView: SimpleDraweeView by bindView(itemView, R.id.sceneView)
-        private val backgroundView: ImageView by bindView(itemView, R.id.backgroundView)
+        private val npcBannerView: NPCBannerView by bindView(itemView, R.id.npcBannerView)
         private val namePlate: TextView by bindView(itemView, R.id.namePlate)
 
         init {
             descriptionView.movementMethod = LinkMovementMethod.getInstance()
         }
 
-        fun bind(shop: Shop, shopSpriteSuffix: String?) {
-            DataBindingUtils.loadImage(sceneView, shop.identifier + "_scene" + shopSpriteSuffix)
-
-            backgroundView.scaleType = ImageView.ScaleType.FIT_START
-
-            DataBindingUtils.loadImage(shop.identifier + "_background" + shopSpriteSuffix, {
-                val aspectRatio = it.width / it.height.toFloat()
-                val height = itemView.context.resources.getDimension(R.dimen.shop_height).toInt()
-                val width = Math.round(height * aspectRatio)
-                val drawable = BitmapDrawable(itemView.context.resources, Bitmap.createScaledBitmap(it, width, height, false))
-                drawable.tileModeX = Shader.TileMode.REPEAT
-                Observable.just(drawable)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Action1 {
-                            backgroundView.backgroundCompat = it
-                        }, RxErrorHandler.handleEmptyError())
-            })
+        fun bind(shop: Shop, shopSpriteSuffix: String) {
+            npcBannerView.shopSpriteSuffix = shopSpriteSuffix
+            npcBannerView.identifier = shop.identifier
 
             descriptionView.text = Html.fromHtml(shop.notes)
             namePlate.setText(shop.npcNameResource)
