@@ -19,6 +19,7 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     private val titleView: LinearLayout by bindView(R.id.title_view)
     private val titleLabel: TextView by bindView(R.id.titleTextView)
     private val caretView: ImageView by bindView(R.id.caretView)
+    public val infoIconView: ImageView by bindView(R.id.infoIconView)
     private var preferences: SharedPreferences? = null
     private val padding = context?.resources?.getDimension(R.dimen.spacing_large)?.toInt() ?: 0
 
@@ -49,9 +50,7 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
         return (separatorView.background as? ColorDrawable)?.color ?: 0
     }
     set(value) {
-        if (value != null) {
-            separatorView.setBackgroundColor(value)
-        }
+        separatorView.setBackgroundColor(value)
     }
 
     private fun showViews() {
@@ -122,6 +121,12 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
         if (color != null && color != 0) {
             caretColor = color
             titleLabel.setTextColor(color)
+        }
+
+        if (attributes?.getBoolean(R.styleable.CollapsibleSectionView_hasAdditionalInfo, false) == true) {
+            infoIconView.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
+        } else {
+            infoIconView.visibility = View.GONE
         }
     }
 

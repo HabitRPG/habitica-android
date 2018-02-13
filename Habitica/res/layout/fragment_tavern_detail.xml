@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         app:title="@string/world_boss"
         app:identifier="tavernWorldBoss"
+        app:hasAdditionalInfo="true"
         android:visibility="gone">
         <com.habitrpg.android.habitica.ui.views.social.QuestProgressView
             android:id="@+id/questProgressView"

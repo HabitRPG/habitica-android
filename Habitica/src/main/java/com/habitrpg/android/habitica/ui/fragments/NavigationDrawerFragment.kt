@@ -177,6 +177,7 @@ class NavigationDrawerFragment : DialogFragment() {
         subscriptions?.add(userRepository.getUser().subscribe(Action1 {
             setUsername(it.profile.name)
             avatarView.setAvatar(it)
+            questMenuView.configure(it)
         }, RxErrorHandler.handleEmptyError()))
 
         messagesButton.setOnClickListener { setSelection(SIDEBAR_INBOX) }

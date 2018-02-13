@@ -73,5 +73,6 @@
         <attr name="title" />
         <attr name="color" format="color" />
         <attr name="identifier" />
+        <attr name="hasAdditionalInfo" format="boolean" />
     </declare-styleable>
 </resources>

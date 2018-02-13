@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.bindView
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ValueBar
@@ -31,6 +32,9 @@ class QuestMenuView : LinearLayout {
     private val healthBarView: ValueBar by bindView(R.id.healthBarView)
     private val topView: LinearLayout by bindView(R.id.topView)
     private val closeButton: AppCompatImageButton by bindView(R.id.closeButton)
+    private val bottomView: ViewGroup by bindView(R.id.bottomView)
+    private val pendingDamageIconView: ImageView by bindView(R.id.pendingDamageIconView)
+    private val pendingDamageTextView: TextView by bindView(R.id.pendingDamageTextView)
 
     private var questContent: QuestContent? = null
 
@@ -49,6 +53,8 @@ class QuestMenuView : LinearLayout {
         healthBarView.setIcon(HabiticaIconsHelper.imageOfHeartDarkBg())
         healthBarView.setLabelVisibility(View.GONE)
 
+        pendingDamageIconView.setImageBitmap(HabiticaIconsHelper.imageOfDamage())
+
         closeButton.setOnClickListener {
             hideBossArt()
             val preferences = context.getSharedPreferences("collapsible_sections", 0)
@@ -65,10 +71,17 @@ class QuestMenuView : LinearLayout {
     fun configure(questContent: QuestContent) {
         this.questContent = questContent
         healthBarView.maxValue = questContent.boss.hp.toDouble()
-        healthBarView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
+        bottomView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
         bossArtView.setBackgroundColor(questContent.colors?.mediumColor ?: 0)
-        DataBindingUtils.loadImage(bossArtView, "quest_"+questContent?.key)
+        DataBindingUtils.loadImage(bossArtView, "quest_"+questContent.key)
         bossNameView.text = questContent.boss.name
+    }
+
+    fun configure(user: User) {
+        val party = user.party
+        val quest = party.quest
+        val progress = quest.progress
+        pendingDamageTextView.text = String.format("%.01f", (user.party?.quest?.progress?.up ?: 0))
     }
 
     fun hideBossArt() {

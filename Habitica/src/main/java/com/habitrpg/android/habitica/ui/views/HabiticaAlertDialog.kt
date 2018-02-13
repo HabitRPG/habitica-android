@@ -1,19 +1,16 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.bindView
-
-/**
- * Created by phillip on 01.02.18.
- */
+import com.habitrpg.android.habitica.extensions.layoutInflater
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
 
@@ -21,6 +18,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
     private val titleTextView: TextView by bindView(view, R.id.titleTextView)
     private val subtitleTextView: TextView by bindView(view, R.id.subtitleTextView)
     private val messageTextView: TextView by bindView(view, R.id.messageTextView)
+    private val contentViewContainer: ViewGroup by bindView(view, R.id.contentViewContainer)
 
     init {
         setView(view)
@@ -36,6 +34,10 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
 
     fun setTitleBackground(colorId: Int) {
         titleTextView.setBackgroundColor(ContextCompat.getColor(context, colorId))
+    }
+
+    fun setTitleBackgroundColor(color: Int) {
+        titleTextView.setBackgroundColor(color)
     }
 
     fun setSubtitle(subtitle: CharSequence?) {
@@ -62,5 +64,28 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
 
     fun setMessage(messageId: Int) {
         setMessage(context.getString(messageId))
+    }
+
+    fun setAdditionalContentView(layoutResID: Int) {
+        val inflater = context.layoutInflater
+        setAdditionalContentView(inflater.inflate(layoutResID, contentViewContainer, false))
+    }
+
+    fun setAdditionalContentView(view: View?) {
+        contentViewContainer.removeAllViewsInLayout()
+        if (view != null) {
+            contentViewContainer.visibility = View.VISIBLE
+        } else {
+            contentViewContainer.visibility = View.GONE
+        }
+        contentViewContainer.addView(view)
+    }
+
+    fun getContentView(): View? {
+        return if (contentViewContainer.childCount > 0) {
+            contentViewContainer.getChildAt(0)
+        } else {
+            null
+        }
     }
 }

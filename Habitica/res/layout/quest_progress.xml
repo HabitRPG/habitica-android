@@ -16,7 +16,7 @@
         android:paddingTop="@dimen/spacing_large"
         android:paddingBottom="@dimen/spacing_large"
         android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large">
+        android:paddingRight="12dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"

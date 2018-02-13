@@ -50,7 +50,7 @@ class UserDeserializer : JsonDeserializer<User> {
             user.party = context.deserialize(obj.get("party"), UserParty::class.java)
             if (user.party != null && user.party.quest != null) {
                 user.party.quest.id = user.id
-                if (!obj.get("party").asJsonObject.get("quest").asJsonObject.has("RSVPNeeded")) {
+                if (!obj.getAsJsonObject("party").getAsJsonObject("quest").has("RSVPNeeded")) {
                     val realm = Realm.getDefaultInstance()
                     val quest = realm.where(Quest::class.java).equalTo("id", user.id).findFirst()
                     if (quest != null && quest.isValid) {
@@ -91,9 +91,9 @@ class UserDeserializer : JsonDeserializer<User> {
         }
         if (obj.has("purchased")) {
             user.purchased = context.deserialize(obj.get("purchased"), Purchases::class.java)
-            if (obj.get("purchased").asJsonObject.has("plan")) {
-                if (obj.get("purchased").asJsonObject.get("plan").asJsonObject.has("mysteryItems")) {
-                    user.purchased.plan.mysteryItemCount = obj.get("purchased").asJsonObject.get("plan").asJsonObject.get("mysteryItems").asJsonArray.size()
+            if (obj.getAsJsonObject("purchased").has("plan")) {
+                if (obj.getAsJsonObject("purchased").getAsJsonObject("plan").has("mysteryItems")) {
+                    user.purchased.plan.mysteryItemCount = obj.getAsJsonObject("purchased").getAsJsonObject("plan").getAsJsonArray("mysteryItems").size()
                 }
             }
         }

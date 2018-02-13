@@ -58,17 +58,39 @@
                 android:textColor="@color/white"
                 android:textSize="12sp"/>
         </LinearLayout>
-        <com.habitrpg.android.habitica.ui.views.ValueBar
-            android:id="@+id/healthBarView"
+        <LinearLayout
+            android:id="@+id/bottomView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            tools:background="@color/brand_50"
             android:paddingLeft="@dimen/spacing_medium"
-            android:paddingRight="@dimen/spacing_large"
-            android:paddingTop="@dimen/spacing_medium"
-            android:paddingBottom="@dimen/spacing_small"
-            app:barForegroundColor="@color/red_100"
-            app:barBackgroundColor="@color/white_15_alpha"
-            tools:background="@color/brand_50"/>
+            android:paddingRight="@dimen/spacing_large">
+            <com.habitrpg.android.habitica.ui.views.ValueBar
+                android:id="@+id/healthBarView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="@dimen/spacing_medium"
+                android:paddingBottom="@dimen/spacing_small"
+                app:barForegroundColor="@color/red_100"
+                app:barBackgroundColor="@color/white_15_alpha"/>
+            <ImageView
+                android:id="@+id/pendingDamageIconView"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="@dimen/spacing_medium"
+                android:layout_marginRight="@dimen/spacing_small"/>
+            <TextView
+                android:id="@+id/pendingDamageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                tools:text="+1"
+                />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

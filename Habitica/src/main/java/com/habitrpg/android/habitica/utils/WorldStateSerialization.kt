@@ -27,6 +27,7 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
             if (progressObj.has("rage")) {
                 progress.rage = progressObj["rage"].asDouble
             }
+            state.progress = progress
         }
         if (worldBossObject.has("extra")) {
             val extra = worldBossObject["extra"].asJsonObject

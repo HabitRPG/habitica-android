@@ -1,13 +1,16 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.PorterDuff
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -15,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.TextView
 
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -38,16 +42,19 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
 import com.habitrpg.android.habitica.extensions.backgroundCompat
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.members.PlayerTier
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import kotlinx.android.synthetic.main.shop_header.*
 import kotlinx.android.synthetic.main.fragment_tavern_detail.*
 import org.greenrobot.eventbus.EventBus
+import org.w3c.dom.Text
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
@@ -155,6 +162,33 @@ class TavernDetailFragment : BaseFragment() {
         reportButton.setOnClickListener {
             EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_ABOUT))
         }
+
+        worldBossSection.infoIconView.setOnClickListener {
+            showWorldBossInfoDialog()
+        }
+    }
+
+    private fun showWorldBossInfoDialog() {
+        context.notNull { val alert = HabiticaAlertDialog(it)
+            val quest = questProgressView.quest
+            val bossName = quest?.boss?.name ?: ""
+            alert.setTitle(R.string.world_boss_description_title)
+            alert.setTitleBackgroundColor(quest?.colors?.mediumColor ?: 0)
+            alert.setSubtitle(it.getString(R.string.world_boss_description_subtitle, bossName))
+            alert.setAdditionalContentView(R.layout.world_boss_description_view)
+
+            val descriptionView = alert.getContentView()
+            val promptView: TextView? = descriptionView?.findViewById(R.id.worldBossActionPromptView)
+            promptView?.text = it.getString(R.string.world_boss_action_prompt, bossName)
+            promptView?.setTextColor(quest?.colors?.mediumColor ?: 0)
+            val background = ContextCompat.getDrawable(it, R.drawable.rounded_border)
+            background?.setColorFilter(quest?.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
+            promptView?.backgroundCompat = background
+
+            alert.setButton(AlertDialog.BUTTON_POSITIVE, it.getString(R.string.close), { dialog, _ ->
+                dialog.dismiss()
+            })
+            alert.show() }
     }
 
     private fun updatePausedState() {
