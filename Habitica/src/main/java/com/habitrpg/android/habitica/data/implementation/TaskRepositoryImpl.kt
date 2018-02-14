@@ -79,6 +79,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                         result.manaDelta = res.mp - stats.getMp()
                         result.goldDelta = res.gp - stats.getGp()
                         result.hasLeveledUp = res.lvl > stats.getLvl()
+                        result.questDamage = res._tmp.quest?.progressDelta
                         if (res._tmp != null) {
                             result.drop = res._tmp.drop
                         }

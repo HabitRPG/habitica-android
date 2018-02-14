@@ -26,7 +26,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*

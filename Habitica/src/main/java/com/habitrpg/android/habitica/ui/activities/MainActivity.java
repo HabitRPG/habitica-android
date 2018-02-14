@@ -97,6 +97,7 @@ import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
@@ -116,7 +117,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -125,9 +125,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 import static android.os.Build.VERSION.SDK_INT;
-import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LEVEL_FOR_SKILLS;
 import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
-import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
 public class MainActivity extends BaseActivity implements TutorialView.OnTutorialReaction {
 
@@ -507,7 +505,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 if (!user.hasClass() && !hasSpecialItems) {
                     item.setVisible(false);
                 } else {
-                    if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
+                    if (user.getStats().getLvl() < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
                         item.setAdditionalInfo(getString(R.string.unlock_lvl_11));
                     } else {
                         item.setAdditionalInfo(null);
@@ -595,16 +593,16 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         final String rewardKey = event.Reward.getId();
 
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            showSnackbar(floatingMenuWrapper, getString(R.string.no_gold), SnackbarDisplayType.FAILURE);
+            HabiticaSnackbar.Companion.showSnackbar(floatingMenuWrapper, getString(R.string.no_gold), SnackbarDisplayType.FAILURE);
             return;
         }
 
-        if (Objects.equals(rewardKey, "potion")) {
+        if ("potion".equals(rewardKey)) {
             int currentHp = user.getStats().getHp().intValue();
             int maxHp = user.getStats().getMaxHealth();
 
             if (currentHp == maxHp) {
-                showSnackbar(floatingMenuWrapper, getString(R.string.no_potion), SnackbarDisplayType.FAILURE_BLUE);
+                HabiticaSnackbar.Companion.showSnackbar(floatingMenuWrapper, getString(R.string.no_potion), SnackbarDisplayType.FAILURE_BLUE);
                 return;
             }
         }
@@ -623,11 +621,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                                     }
                                     soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                                 }
-                                showSnackbar(floatingMenuWrapper, null, snackbarMessage, new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()), ContextCompat.getColor(this, R.color.yellow_10), "-"+ event.Reward.getValue(), SnackbarDisplayType.NORMAL);
+                        HabiticaSnackbar.Companion.showSnackbar(floatingMenuWrapper, null, snackbarMessage, new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()), ContextCompat.getColor(this, R.color.yellow_10), "-"+ event.Reward.getValue(), SnackbarDisplayType.NORMAL);
                             }, RxErrorHandler.handleEmptyError());
         } else {
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
-                    .subscribe(res -> showSnackbar(floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
+                    .subscribe(res -> HabiticaSnackbar.Companion.showSnackbar(floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
                             new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfGold()),
                             ContextCompat.getColor(this, R.color.yellow_10),
                             "-"+ ((int) event.Reward.getValue()),
@@ -704,7 +702,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         final Pet pet = event.usingPet;
         this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
                 .subscribe(feedResponse -> {
-                    showSnackbar(floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
+                    HabiticaSnackbar.Companion.showSnackbar(floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
                         FrameLayout mountWrapper = (FrameLayout) View.inflate(this, R.layout.pet_imageview, null);
                         SimpleDraweeView mountImageView = (SimpleDraweeView) mountWrapper.findViewById(R.id.pet_imageview);
@@ -738,7 +736,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     public void displayTaskScoringResponse(TaskScoringResult data) {
         if (user != null && data != null) {
             notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
-                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.hasLeveledUp))
+                    user, data.getExperienceDelta(), data.getHealthDelta(), data.getGoldDelta(), data.getManaDelta(), data.getQuestDamage(), data.getHasLeveledUp()))
                     .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
         }
 
@@ -966,7 +964,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Subscribe
     public void showSnackBarEvent(ShowSnackbarEvent event) {
-        showSnackbar(floatingMenuWrapper, event.leftImage, event.title, event.text, event.specialView, event.rightIcon, event.rightTextColor, event.rightText, event.type);
+        HabiticaSnackbar.Companion.showSnackbar(floatingMenuWrapper, event.leftImage, event.title, event.text, event.specialView, event.rightIcon, event.rightTextColor, event.rightText, event.type);
     }
 
     public boolean isAppBarExpanded() {

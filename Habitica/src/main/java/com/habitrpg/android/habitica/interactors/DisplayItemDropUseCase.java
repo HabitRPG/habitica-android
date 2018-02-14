@@ -30,10 +30,10 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
             TaskScoringResult data = requestValues.data;
 
             if (data != null) {
-                if (data.drop != null) {
+                if (data.getDrop() != null) {
                     new Handler().postDelayed(() -> {
-                        HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView,
-                                data.drop.getDialog(), HabiticaSnackbar.SnackbarDisplayType.DROP);
+                        HabiticaSnackbar.Companion.showSnackbar(requestValues.snackbarTargetView,
+                                data.getDrop().getDialog(), HabiticaSnackbar.SnackbarDisplayType.DROP);
                         soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                     }, 3000L);
                 }

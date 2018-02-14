@@ -25,7 +25,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import kotlinx.android.synthetic.main.fragment_skills.*
 import org.greenrobot.eventbus.Subscribe
 import rx.Observable

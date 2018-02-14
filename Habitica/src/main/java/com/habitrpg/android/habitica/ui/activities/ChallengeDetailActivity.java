@@ -408,7 +408,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     @Subscribe
     public void onEvent(final BuyRewardCommand event) {
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.no_gold), HabiticaSnackbar.SnackbarDisplayType.FAILURE);
+            HabiticaSnackbar.Companion.showSnackbar(floatingMenuWrapper, getString(R.string.no_gold), HabiticaSnackbar.SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -416,7 +416,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         if (event.Reward.getSpecialTag() == null || !event.Reward.getSpecialTag().equals("item")) {
 
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
-                    .subscribe(res -> HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_purchase_reward), HabiticaSnackbar.SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
+                    .subscribe(res -> HabiticaSnackbar.Companion.showSnackbar(floatingMenuWrapper, getString(R.string.notification_purchase_reward), HabiticaSnackbar.SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
         }
 
     }
@@ -424,7 +424,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     public void onTaskDataReceived(TaskScoringResult data) {
         if (user != null) {
             notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
-                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.hasLeveledUp));
+                    user, data.getExperienceDelta(), data.getHealthDelta(), data.getGoldDelta(), data.getManaDelta(), data.getQuestDamage(), data.getHasLeveledUp()));
         }
 
         displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))

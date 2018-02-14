@@ -47,6 +47,7 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 
@@ -61,7 +62,6 @@ import io.realm.RealmResults;
 import rx.Observable;
 
 import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
-import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.showSnackbar;
 
 public class FullProfileActivity extends BaseActivity {
     @Inject
@@ -186,7 +186,7 @@ public class FullProfileActivity extends BaseActivity {
         final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     socialRepository.postPrivateMessage(userId, emojiEditText.getText().toString())
-                            .subscribe(postChatMessageResult -> showSnackbar((ViewGroup) FullProfileActivity.this.fullprofile_scrollview.getChildAt(0),
+                            .subscribe(postChatMessageResult -> HabiticaSnackbar.Companion.showSnackbar((ViewGroup) FullProfileActivity.this.fullprofile_scrollview.getChildAt(0),
                                     String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL), RxErrorHandler.handleEmptyError());
 
                     UiUtils.dismissKeyboard(this);
