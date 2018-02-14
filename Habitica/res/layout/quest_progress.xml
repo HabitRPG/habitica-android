@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:text="@string/boss_art"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            style="@style/Body1" />
         <TextView
             android:id="@+id/artCreditTextView"
             android:layout_width="wrap_content"
@@ -55,22 +55,38 @@
             android:paddingLeft="@dimen/spacing_large"
             android:paddingRight="@dimen/spacing_large"
             android:layout_gravity="center_horizontal" /></FrameLayout>
-    <TextView
-        android:id="@+id/bossNameView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Quest Boss"
-        android:textStyle="bold"
         android:layout_marginBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:textColor="@color/white"/>
+        android:layout_marginTop="@dimen/spacing_large">
+        <TextView
+            android:id="@+id/bossNameView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Quest Boss"
+            style="@style/Body1"
+            android:textColor="@color/white"/>
+        <ImageView
+            android:id="@+id/pendingDamageIconView"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginRight="@dimen/spacing_small"/>
+        <TextView
+            android:id="@+id/pendingDamageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:textColor="@color/red_100"/>
+    </LinearLayout>
     <com.habitrpg.android.habitica.ui.views.ValueBar
         android:id="@+id/bossHealthView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:barForegroundColor="@color/red_100"
+        app:barForegroundColor="@color/red_50"
         app:textColor="@color/white"
         app:barBackgroundColor="@color/white_15_alpha"
         android:paddingLeft="@dimen/spacing_large"
@@ -80,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Boss Rage"
-        android:textStyle="bold"
+        style="@style/Body1"
         android:layout_marginBottom="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_large"
         android:paddingLeft="@dimen/spacing_large"

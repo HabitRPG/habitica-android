@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.extensions.bindView
 class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     private val iconView: ImageView by bindView(R.id.ic_header)
+    private val secondaryIconView: ImageView by bindView(R.id.secondaryIconView)
     private val valueTextView: TextView by bindView(R.id.valueLabel)
     private val descriptionTextView: TextView by bindView(R.id.descriptionLabel)
     private val progressBar: HabiticaProgressBar by bindView(R.id.progressBar)
@@ -71,6 +72,16 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
     fun setIcon(bitmap: Bitmap) {
         iconView.setImageBitmap(bitmap)
         iconView.visibility = View.VISIBLE
+    }
+
+    fun setSecondaryIcon(iconRes: Drawable) {
+        secondaryIconView.setImageDrawable(iconRes)
+        secondaryIconView.visibility = View.VISIBLE
+    }
+
+    fun setSecondaryIcon(bitmap: Bitmap) {
+        secondaryIconView.setImageBitmap(bitmap)
+        secondaryIconView.visibility = View.VISIBLE
     }
 
     fun setValueText(valueText: String) {

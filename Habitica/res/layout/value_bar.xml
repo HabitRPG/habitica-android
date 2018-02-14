@@ -31,21 +31,27 @@
         android:layout_toRightOf="@id/ic_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp">
+        android:layout_marginTop="2dp">
+        <ImageView
+            android:id="@+id/secondaryIconView"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/valueLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="50/50"
-            />
+            android:textSize="12sp"
+            tools:text="50/50" />
         <TextView
             android:id="@+id/descriptionLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center|right"
             android:layout_weight="1"
-            tools:text="Health"/>
+            android:textSize="12sp"
+            tools:text="Health" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -31,6 +31,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.interfaces.DraweeController
 import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.user.User
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
@@ -45,6 +46,8 @@ class QuestProgressView : LinearLayout {
     private val questImageSeparator: View by bindView(R.id.questImageSeparator)
     private val questImageCaretView: ImageView by bindView(R.id.caretView)
     private val bossNameView: TextView by bindView(R.id.bossNameView)
+    private val pendingDamageIconView: ImageView by bindView(R.id.pendingDamageIconView)
+    private val pendingDamageTextView: TextView by bindView(R.id.pendingDamageTextView)
     private val bossHealthView: ValueBar by bindView(R.id.bossHealthView)
     private val rageMeterView: TextView by bindView(R.id.rageMeterView)
     private val bossRageView: ValueBar by bindView(R.id.bossRageView)
@@ -91,6 +94,8 @@ class QuestProgressView : LinearLayout {
                 showQuestImage()
             }
         }
+
+        pendingDamageIconView.setImageBitmap(HabiticaIconsHelper.imageOfDamage())
 
         rageStrikeDescriptionView.setOnClickListener { showStrikeDescriptionAlert() }
 
@@ -173,6 +178,10 @@ class QuestProgressView : LinearLayout {
         updateCaretImage()
         questDescriptionSection.caretColor = quest.colors?.extraLightColor ?: 0
         artCreditTextView.setTextColor(quest.colors?.extraLightColor ?: 0)
+    }
+
+    fun configure(user: User) {
+        pendingDamageTextView.text = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F) )
     }
 
     private fun setupRageStrikeViews() {

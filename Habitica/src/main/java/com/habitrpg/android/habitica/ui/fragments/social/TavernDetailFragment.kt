@@ -125,6 +125,8 @@ class TavernDetailFragment : BaseFragment() {
                 }, RxErrorHandler.handleEmptyError()))
 
         socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+
+        user.notNull { questProgressView.configure(it) }
     }
 
     override fun onDestroy() {
