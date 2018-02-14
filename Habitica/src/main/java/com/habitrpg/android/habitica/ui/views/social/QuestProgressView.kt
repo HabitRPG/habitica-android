@@ -176,7 +176,7 @@ class QuestProgressView : LinearLayout {
         rageStrikeDescriptionView.text = context.getString(R.string.rage_strike_count, progress?.activeRageStrikeNumber, progress?.rageStrikes?.size ?: 0)
 
         rageStrikeContainer.removeAllViews()
-        progress?.rageStrikes?.forEach { strike ->
+        progress?.rageStrikes?.sortedByDescending { it.wasHit }?.forEach { strike ->
             val iconView = ImageView(context)
             if (strike.wasHit) {
                 DataBindingUtils.loadImage("rage_strike_${strike.key}", {
