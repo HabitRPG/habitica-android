@@ -16,7 +16,8 @@
         android:paddingTop="@dimen/spacing_large"
         android:paddingBottom="@dimen/spacing_large"
         android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="12dp">
+        android:paddingRight="12dp"
+        android:gravity="center_vertical">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -24,6 +25,14 @@
             android:text="@string/boss_art"
             android:textColor="@color/white"
             android:textSize="16sp" />
+        <TextView
+            android:id="@+id/artCreditTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By @AnnDeLune"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:layout_marginRight="@dimen/spacing_medium"/>
         <ImageView
             android:id="@+id/caretView"
             android:layout_width="18dp"

@@ -41,6 +41,7 @@ class QuestProgressView : LinearLayout {
     private val questImageWrapper: FrameLayout by bindView(R.id.questImageWrapper)
     private val questImageView: SimpleDraweeView by bindView(R.id.questImageView)
     private val questImageTitle: View by bindView(R.id.questImageTitle)
+    private val artCreditTextView: TextView by bindView(R.id.artCreditTextView)
     private val questImageSeparator: View by bindView(R.id.questImageSeparator)
     private val questImageCaretView: ImageView by bindView(R.id.caretView)
     private val bossNameView: TextView by bindView(R.id.bossNameView)
@@ -171,6 +172,7 @@ class QuestProgressView : LinearLayout {
         }
         updateCaretImage()
         questDescriptionSection.caretColor = quest.colors?.extraLightColor ?: 0
+        artCreditTextView.setTextColor(quest.colors?.extraLightColor ?: 0)
     }
 
     private fun setupRageStrikeViews() {
