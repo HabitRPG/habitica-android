@@ -56,6 +56,7 @@ public class WrapContentDraweeView extends SimpleDraweeView {
                 .setControllerListener(listener)
                 .setCallerContext(callerContext)
                 .setUri(uri)
+                .setAutoPlayAnimations(true)
                 .setOldController(getController())
                 .build();
         setController(controller);

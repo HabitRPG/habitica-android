@@ -25,6 +25,10 @@ import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.*
 import io.realm.RealmList
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
+import android.widget.FrameLayout
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.drawee.interfaces.DraweeController
 import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import rx.Observable
@@ -34,6 +38,7 @@ import rx.functions.Action1
 
 class QuestProgressView : LinearLayout {
 
+    private val questImageWrapper: FrameLayout by bindView(R.id.questImageWrapper)
     private val questImageView: SimpleDraweeView by bindView(R.id.questImageView)
     private val questImageTitle: View by bindView(R.id.questImageTitle)
     private val questImageSeparator: View by bindView(R.id.questImageSeparator)
@@ -111,11 +116,6 @@ class QuestProgressView : LinearLayout {
         super.onDraw(canvas)
     }
 
-    fun setData(quest: QuestContent, progress: Quest?) {
-        this.quest = quest
-        this.progress = progress
-    }
-
     private fun configure() {
         val quest = this.quest
         val progress = this.progress
@@ -157,7 +157,7 @@ class QuestProgressView : LinearLayout {
             }
         }
         questDescriptionView.text = MarkdownParser.parseMarkdown(quest.notes)
-        DataBindingUtils.loadImage(questImageView, "quest_"+quest.key)
+        DataBindingUtils.loadImage(questImageView, "quest_"+quest.key, "gif")
         val lightColor =  quest.colors?.lightColor
         if (lightColor != null) {
             questDescriptionSection.separatorColor = lightColor
@@ -167,7 +167,7 @@ class QuestProgressView : LinearLayout {
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     intArrayOf(ContextCompat.getColor(context, R.color.transparent), lightColor))
             gradientDrawable.cornerRadius = 0f
-            questImageView.backgroundCompat = gradientDrawable
+            questImageWrapper.backgroundCompat = gradientDrawable
         }
     }
 

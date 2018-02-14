@@ -45,6 +45,8 @@ import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.PlayerTier
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
@@ -150,32 +152,14 @@ class TavernDetailFragment : BaseFragment() {
         }
 
         worldBossSection.infoIconView.setOnClickListener {
-            showWorldBossInfoDialog()
+            val context = this.context
+            val quest = questProgressView.quest
+            if (context != null && quest != null) {
+                showWorldBossInfoDialog(context, quest)
+            }
         }
     }
 
-    private fun showWorldBossInfoDialog() {
-        context.notNull { val alert = HabiticaAlertDialog(it)
-            val quest = questProgressView.quest
-            val bossName = quest?.boss?.name ?: ""
-            alert.setTitle(R.string.world_boss_description_title)
-            alert.setTitleBackgroundColor(quest?.colors?.mediumColor ?: 0)
-            alert.setSubtitle(it.getString(R.string.world_boss_description_subtitle, bossName))
-            alert.setAdditionalContentView(R.layout.world_boss_description_view)
-
-            val descriptionView = alert.getContentView()
-            val promptView: TextView? = descriptionView?.findViewById(R.id.worldBossActionPromptView)
-            promptView?.text = it.getString(R.string.world_boss_action_prompt, bossName)
-            promptView?.setTextColor(quest?.colors?.mediumColor ?: 0)
-            val background = ContextCompat.getDrawable(it, R.drawable.rounded_border)
-            background?.setColorFilter(quest?.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
-            promptView?.backgroundCompat = background
-
-            alert.setButton(AlertDialog.BUTTON_POSITIVE, it.getString(R.string.close), { dialog, _ ->
-                dialog.dismiss()
-            })
-            alert.show() }
-    }
 
     private fun updatePausedState() {
         if (innButton == null) {
@@ -210,5 +194,29 @@ class TavernDetailFragment : BaseFragment() {
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
+    }
+
+    companion object {
+
+        private fun showWorldBossInfoDialog(context: Context, quest: QuestContent) {
+            val alert = HabiticaAlertDialog(context)
+            val bossName = quest.boss.name ?: ""
+            alert.setTitle(R.string.world_boss_description_title)
+            alert.setTitleBackgroundColor(quest.colors?.mediumColor ?: 0)
+            alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))
+            alert.setAdditionalContentView(R.layout.world_boss_description_view)
+
+            val descriptionView = alert.getContentView()
+            val promptView: TextView? = descriptionView?.findViewById(R.id.worldBossActionPromptView)
+            promptView?.text = context.getString(R.string.world_boss_action_prompt, bossName)
+            promptView?.setTextColor(quest.colors?.mediumColor ?: 0)
+            val background = ContextCompat.getDrawable(context, R.drawable.rounded_border)
+            background?.setColorFilter(quest.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
+            promptView?.backgroundCompat = background
+
+            alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+                dialog.dismiss()
+            })
+            alert.show() }
     }
 }

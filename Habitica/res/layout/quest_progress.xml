@@ -33,14 +33,19 @@
         android:id="@+id/questImageSeparator"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
-    <com.habitrpg.android.habitica.ui.views.WrapContentDraweeView
-        android:id="@+id/questImageView"
+    <FrameLayout
+        android:id="@+id/questImageWrapper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:paddingBottom="@dimen/spacing_large"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"/>
+        android:layout_height="wrap_content">
+        <com.habitrpg.android.habitica.ui.views.WrapContentDraweeView
+            android:id="@+id/questImageView"
+            android:layout_width="219dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:paddingBottom="@dimen/spacing_large"
+            android:paddingLeft="@dimen/spacing_large"
+            android:paddingRight="@dimen/spacing_large"
+            android:layout_gravity="center_horizontal" /></FrameLayout>
     <TextView
         android:id="@+id/bossNameView"
         android:layout_width="match_parent"
