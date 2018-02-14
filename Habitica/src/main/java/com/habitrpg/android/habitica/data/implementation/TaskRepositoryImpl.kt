@@ -98,6 +98,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                             stats.setMp(res.mp)
                             stats.setGp(res.gp)
                             stats.setLvl(res.lvl)
+                            user.party?.quest?.progress?.up = (user.party?.quest?.progress?.up ?: 0F) + (res._tmp.quest?.progressDelta?.toFloat() ?: 0F)
                             user.stats = stats
                         }
                     }
