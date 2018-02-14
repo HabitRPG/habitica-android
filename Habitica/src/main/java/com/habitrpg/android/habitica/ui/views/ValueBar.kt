@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.bindView
+import java.text.NumberFormat
 
 class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
@@ -19,6 +20,8 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
     private val valueTextView: TextView by bindView(R.id.valueLabel)
     private val descriptionTextView: TextView by bindView(R.id.descriptionLabel)
     private val progressBar: HabiticaProgressBar by bindView(R.id.progressBar)
+
+    private val formatter = NumberFormat.getInstance()
 
     var currentValue: Double = 0.0
     set(value) {
@@ -32,9 +35,17 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
             updateBar()
         }
 
+    var barHeight: Int? = null
+    set(value) {
+        field = value
+        if (value != null) {
+            progressBar.layoutParams.height = value
+        }
+    }
+
     private fun updateBar() {
         this.progressBar.set(currentValue, maxValue)
-        this.setValueText(currentValue.toInt().toString() + "/" + maxValue.toInt())
+        this.setValueText(formatter.format(currentValue) + "/" + formatter.format(maxValue.toInt()))
     }
 
     init {
@@ -50,6 +61,8 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
         progressBar.barBackgroundColor = attributes?.getColor(R.styleable.ValueBar_barBackgroundColor, 0) ?: 0
 
 
+        barHeight = attributes?.getDimension(R.styleable.ValueBar_barHeight, context.resources.getDimension(R.dimen.bar_size))?.toInt()
+
         val textColor = attributes?.getColor(R.styleable.ValueBar_textColor, 0) ?: 0
         if (textColor != 0) {
             valueTextView.setTextColor(textColor)
@@ -62,6 +75,9 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
         }
 
         descriptionTextView.text = attributes?.getString(R.styleable.ValueBar_description)
+
+        formatter.maximumFractionDigits = 1
+        formatter.isGroupingUsed = true
     }
 
     fun setIcon(iconRes: Drawable) {

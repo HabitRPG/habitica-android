@@ -89,6 +89,7 @@
         app:barForegroundColor="@color/red_50"
         app:textColor="@color/white"
         app:barBackgroundColor="@color/white_15_alpha"
+        app:barHeight="8dp"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large" />
     <TextView
@@ -109,6 +110,7 @@
         app:barForegroundColor="@color/orange_100"
         app:textColor="@color/white"
         app:barBackgroundColor="@color/white_15_alpha"
+        app:barHeight="8dp"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large"
         android:layout_marginBottom="@dimen/spacing_large"/>
@@ -124,6 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Rage Strikes: 1/3"
+        style="@style/Body1"
         android:background="@drawable/layout_rounded_bg_white_15"
         android:gravity="center"
         android:paddingTop="@dimen/spacing_small"
@@ -151,6 +154,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:lineSpacingExtra="2dp"/>
     </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
 </LinearLayout>

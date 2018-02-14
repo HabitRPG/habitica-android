@@ -42,6 +42,7 @@
         <attr name="barBackgroundColor" />
         <attr name="textColor" format="color" />
         <attr name="barIconDrawable" format="integer" />
+        <attr name="barHeight" format="dimension" />
         <attr name="lightBackground" format="boolean" />
         <attr name="description" format="string" />
     </declare-styleable>

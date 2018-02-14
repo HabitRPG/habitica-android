@@ -36,6 +36,7 @@
             android:id="@+id/secondaryIconView"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
+            android:layout_marginRight="@dimen/spacing_small"
             android:visibility="gone"/>
         <TextView
             android:id="@+id/valueLabel"

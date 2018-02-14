@@ -8945,8 +8945,335 @@ public class HabiticaIcons {
         
         canvas.restore();
     }
-    
-    
+
+    private static class CacheForRage {
+        private static Paint paint = new Paint();
+        private static RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
+        private static RectF resizedFrame = new RectF();
+        private static RectF bezierRect = new RectF();
+        private static Path bezierPath = new Path();
+        private static RectF bezier2Rect = new RectF();
+        private static Path bezier2Path = new Path();
+        private static RectF bezier3Rect = new RectF();
+        private static Path bezier3Path = new Path();
+        private static RectF bezier4Rect = new RectF();
+        private static Path bezier4Path = new Path();
+        private static RectF bezier5Rect = new RectF();
+        private static Path bezier5Path = new Path();
+        private static RectF bezier6Rect = new RectF();
+        private static Path bezier6Path = new Path();
+        private static RectF bezier7Rect = new RectF();
+        private static Path bezier7Path = new Path();
+        private static RectF bezier8Rect = new RectF();
+        private static Path bezier8Path = new Path();
+        private static RectF bezier9Rect = new RectF();
+        private static Path bezier9Path = new Path();
+        private static RectF bezier10Rect = new RectF();
+        private static Path bezier10Path = new Path();
+        private static RectF bezier11Rect = new RectF();
+        private static Path bezier11Path = new Path();
+        private static RectF bezier12Rect = new RectF();
+        private static Path bezier12Path = new Path();
+        private static RectF bezier13Rect = new RectF();
+        private static Path bezier13Path = new Path();
+        private static RectF bezier14Rect = new RectF();
+        private static Path bezier14Path = new Path();
+    }
+
+    public static void drawRage(Canvas canvas) {
+        HabiticaIcons.drawRage(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit);
+    }
+
+    public static void drawRage(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
+        // General Declarations
+        Paint paint = CacheForRage.paint;
+
+        // Local Colors
+        int fillColor94 = Color.argb(89, 180, 89, 27);
+        int fillColor3 = Color.argb(128, 255, 255, 255);
+        int fillColor92 = Color.argb(255, 90, 228, 178);
+        int fillColor15 = Color.argb(89, 27, 153, 107);
+        int fillColor5 = Color.argb(64, 255, 255, 255);
+        int fillColor93 = Color.argb(255, 244, 120, 37);
+        int fillColor14 = Color.argb(255, 36, 204, 143);
+
+        // Resize to Target Frame
+        canvas.save();
+        RectF resizedFrame = CacheForRage.resizedFrame;
+        HabiticaIcons.resizingBehaviorApply(resizing, CacheForRage.originalFrame, targetFrame, resizedFrame);
+        canvas.translate(resizedFrame.left, resizedFrame.top);
+        canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
+
+        // Group
+        {
+            // Bezier
+            RectF bezierRect = CacheForRage.bezierRect;
+            bezierRect.set(2f, 1f, 15.33f, 17f);
+            Path bezierPath = CacheForRage.bezierPath;
+            bezierPath.reset();
+            bezierPath.moveTo(2f, 7f);
+            bezierPath.lineTo(8.67f, 1f);
+            bezierPath.lineTo(15.33f, 7f);
+            bezierPath.lineTo(8.67f, 17f);
+            bezierPath.lineTo(2f, 7f);
+            bezierPath.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor14);
+            canvas.drawPath(bezierPath, paint);
+
+            // Bezier 2
+            RectF bezier2Rect = CacheForRage.bezier2Rect;
+            bezier2Rect.set(2f, 1f, 15.33f, 17f);
+            Path bezier2Path = CacheForRage.bezier2Path;
+            bezier2Path.reset();
+            bezier2Path.moveTo(2f, 7f);
+            bezier2Path.lineTo(8.67f, 1f);
+            bezier2Path.lineTo(15.33f, 7f);
+            bezier2Path.lineTo(8.67f, 17f);
+            bezier2Path.lineTo(2f, 7f);
+            bezier2Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor14);
+            canvas.drawPath(bezier2Path, paint);
+
+            // Bezier 3
+            RectF bezier3Rect = CacheForRage.bezier3Rect;
+            bezier3Rect.set(8.67f, 2.8f, 13.6f, 7.2f);
+            Path bezier3Path = CacheForRage.bezier3Path;
+            bezier3Path.reset();
+            bezier3Path.moveTo(13.6f, 7.2f);
+            bezier3Path.lineTo(8.67f, 6.2f);
+            bezier3Path.lineTo(8.67f, 2.8f);
+            bezier3Path.lineTo(13.6f, 7.2f);
+            bezier3Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor5);
+            canvas.drawPath(bezier3Path, paint);
+
+            // Bezier 4
+            RectF bezier4Rect = CacheForRage.bezier4Rect;
+            bezier4Rect.set(3.73f, 2.8f, 8.67f, 7.2f);
+            Path bezier4Path = CacheForRage.bezier4Path;
+            bezier4Path.reset();
+            bezier4Path.moveTo(8.67f, 6.2f);
+            bezier4Path.lineTo(3.73f, 7.2f);
+            bezier4Path.lineTo(8.67f, 2.8f);
+            bezier4Path.lineTo(8.67f, 6.2f);
+            bezier4Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor3);
+            canvas.drawPath(bezier4Path, paint);
+
+            // Bezier 5
+            RectF bezier5Rect = CacheForRage.bezier5Rect;
+            bezier5Rect.set(3.73f, 6.2f, 8.67f, 14.6f);
+            Path bezier5Path = CacheForRage.bezier5Path;
+            bezier5Path.reset();
+            bezier5Path.moveTo(8.67f, 6.2f);
+            bezier5Path.lineTo(8.67f, 14.6f);
+            bezier5Path.lineTo(3.73f, 7.2f);
+            bezier5Path.lineTo(8.67f, 6.2f);
+            bezier5Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor92);
+            canvas.drawPath(bezier5Path, paint);
+
+            // Bezier 6
+            RectF bezier6Rect = CacheForRage.bezier6Rect;
+            bezier6Rect.set(8.67f, 6.2f, 13.6f, 14.6f);
+            Path bezier6Path = CacheForRage.bezier6Path;
+            bezier6Path.reset();
+            bezier6Path.moveTo(13.6f, 7.2f);
+            bezier6Path.lineTo(8.67f, 14.6f);
+            bezier6Path.lineTo(8.67f, 6.2f);
+            bezier6Path.lineTo(13.6f, 7.2f);
+            bezier6Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor15);
+            canvas.drawPath(bezier6Path, paint);
+
+            // Bezier 7
+            RectF bezier7Rect = CacheForRage.bezier7Rect;
+            bezier7Rect.set(2f, 1f, 15.33f, 17f);
+            Path bezier7Path = CacheForRage.bezier7Path;
+            bezier7Path.reset();
+            bezier7Path.moveTo(15.33f, 7f);
+            bezier7Path.lineTo(8.67f, 1f);
+            bezier7Path.lineTo(2f, 7f);
+            bezier7Path.lineTo(3.33f, 9f);
+            bezier7Path.lineTo(2f, 11f);
+            bezier7Path.lineTo(8.67f, 17f);
+            bezier7Path.lineTo(15.33f, 11f);
+            bezier7Path.lineTo(14f, 9f);
+            bezier7Path.lineTo(15.33f, 7f);
+            bezier7Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor93);
+            canvas.drawPath(bezier7Path, paint);
+
+            // Bezier 8
+            RectF bezier8Rect = CacheForRage.bezier8Rect;
+            bezier8Rect.set(8.67f, 2.8f, 13.6f, 7.2f);
+            Path bezier8Path = CacheForRage.bezier8Path;
+            bezier8Path.reset();
+            bezier8Path.moveTo(13.6f, 7.2f);
+            bezier8Path.lineTo(8.67f, 6.2f);
+            bezier8Path.lineTo(8.67f, 2.8f);
+            bezier8Path.lineTo(13.6f, 7.2f);
+            bezier8Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor5);
+            canvas.drawPath(bezier8Path, paint);
+
+            // Bezier 9
+            RectF bezier9Rect = CacheForRage.bezier9Rect;
+            bezier9Rect.set(3.73f, 2.8f, 8.67f, 7.2f);
+            Path bezier9Path = CacheForRage.bezier9Path;
+            bezier9Path.reset();
+            bezier9Path.moveTo(8.67f, 6.2f);
+            bezier9Path.lineTo(3.73f, 7.2f);
+            bezier9Path.lineTo(8.67f, 2.8f);
+            bezier9Path.lineTo(8.67f, 6.2f);
+            bezier9Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor3);
+            canvas.drawPath(bezier9Path, paint);
+
+            // Bezier 10
+            RectF bezier10Rect = CacheForRage.bezier10Rect;
+            bezier10Rect.set(3.73f, 3.4f, 13.6f, 14.6f);
+            Path bezier10Path = CacheForRage.bezier10Path;
+            bezier10Path.reset();
+            bezier10Path.moveTo(8.67f, 6.2f);
+            bezier10Path.lineTo(8.67f, 14.6f);
+            bezier10Path.lineTo(7.37f, 12.65f);
+            bezier10Path.lineTo(3.73f, 7.2f);
+            bezier10Path.lineTo(8.67f, 6.2f);
+            bezier10Path.close();
+            bezier10Path.moveTo(8.67f, 11.8f);
+            bezier10Path.lineTo(8.67f, 3.4f);
+            bezier10Path.lineTo(9.96f, 5.35f);
+            bezier10Path.lineTo(13.6f, 10.8f);
+            bezier10Path.lineTo(8.67f, 11.8f);
+            bezier10Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor5);
+            canvas.drawPath(bezier10Path, paint);
+
+            // Bezier 11
+            RectF bezier11Rect = CacheForRage.bezier11Rect;
+            bezier11Rect.set(3.73f, 6.2f, 13.6f, 15.2f);
+            Path bezier11Path = CacheForRage.bezier11Path;
+            bezier11Path.reset();
+            bezier11Path.moveTo(13.6f, 7.2f);
+            bezier11Path.lineTo(8.67f, 14.6f);
+            bezier11Path.lineTo(8.67f, 6.2f);
+            bezier11Path.lineTo(13.6f, 7.2f);
+            bezier11Path.close();
+            bezier11Path.moveTo(3.73f, 10.8f);
+            bezier11Path.lineTo(8.67f, 11.8f);
+            bezier11Path.lineTo(8.67f, 15.2f);
+            bezier11Path.lineTo(3.73f, 10.8f);
+            bezier11Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor94);
+            canvas.drawPath(bezier11Path, paint);
+
+            // Bezier 12
+            RectF bezier12Rect = CacheForRage.bezier12Rect;
+            bezier12Rect.set(8.67f, 10.8f, 13.6f, 15.2f);
+            Path bezier12Path = CacheForRage.bezier12Path;
+            bezier12Path.reset();
+            bezier12Path.moveTo(8.67f, 11.8f);
+            bezier12Path.lineTo(13.6f, 10.8f);
+            bezier12Path.lineTo(8.67f, 15.2f);
+            bezier12Path.lineTo(8.67f, 11.8f);
+            bezier12Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor3);
+            canvas.drawPath(bezier12Path, paint);
+
+            // Bezier 13
+            RectF bezier13Rect = CacheForRage.bezier13Rect;
+            bezier13Rect.set(3.73f, 3.4f, 8.67f, 11.8f);
+            Path bezier13Path = CacheForRage.bezier13Path;
+            bezier13Path.reset();
+            bezier13Path.moveTo(3.73f, 10.8f);
+            bezier13Path.lineTo(8.67f, 3.4f);
+            bezier13Path.lineTo(8.67f, 11.8f);
+            bezier13Path.lineTo(3.73f, 10.8f);
+            bezier13Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor5);
+            canvas.drawPath(bezier13Path, paint);
+
+            // Bezier 14
+            RectF bezier14Rect = CacheForRage.bezier14Rect;
+            bezier14Rect.set(5.5f, 4.67f, 11.83f, 13.33f);
+            Path bezier14Path = CacheForRage.bezier14Path;
+            bezier14Path.reset();
+            bezier14Path.moveTo(5.5f, 10.53f);
+            bezier14Path.lineTo(6.54f, 9f);
+            bezier14Path.lineTo(5.5f, 7.47f);
+            bezier14Path.lineTo(8.67f, 4.67f);
+            bezier14Path.lineTo(11.83f, 7.47f);
+            bezier14Path.lineTo(10.79f, 9f);
+            bezier14Path.lineTo(11.83f, 10.53f);
+            bezier14Path.lineTo(8.67f, 13.33f);
+            bezier14Path.lineTo(5.5f, 10.53f);
+            bezier14Path.close();
+
+            paint.reset();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(fillColor3);
+            canvas.drawPath(bezier14Path, paint);
+        }
+
+        canvas.restore();
+    }
+
+
+
     // Canvas Images
     // Tab
     
@@ -9424,6 +9751,18 @@ public class HabiticaIcons {
         HabiticaIcons.drawRageStrikeActive(canvas, context, rageStrikeNPC);
         
         return imageOfRageStrikeActive;
+    }
+
+    private static Bitmap imageOfRage = null;
+    public static Bitmap imageOfRage() {
+        if (imageOfRage != null)
+            return imageOfRage;
+
+        imageOfRage = Bitmap.createBitmap(18, 18, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfRage);
+        HabiticaIcons.drawRage(canvas);
+
+        return imageOfRage;
     }
     
     

@@ -115,6 +115,7 @@ class TavernDetailFragment : BaseFragment() {
 
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .filter { it.hasActiveQuest }
+                .doOnNext { descriptionView.setText(R.string.tavern_description_world_boss) }
                 .filter { it.quest?.rageStrikes?.any { it.key == "tavern" } }
                 .filter { it.quest?.rageStrikes?.filter { it.key == "tavern" }?.get(0)?.wasHit == true }
                 .subscribe(Action1 {

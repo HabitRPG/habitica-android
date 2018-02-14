@@ -96,6 +96,8 @@ class QuestProgressView : LinearLayout {
         }
 
         pendingDamageIconView.setImageBitmap(HabiticaIconsHelper.imageOfDamage())
+        bossHealthView.setSecondaryIcon(HabiticaIconsHelper.imageOfHeartDarkBg())
+        bossRageView.setSecondaryIcon(HabiticaIconsHelper.imageOfRage())
 
         rageStrikeDescriptionView.setOnClickListener { showStrikeDescriptionAlert() }
 
@@ -138,7 +140,7 @@ class QuestProgressView : LinearLayout {
             if (quest.boss.hasRage()) {
                 rageMeterView.visibility = View.VISIBLE
                 bossRageView.visibility = View.VISIBLE
-                rageMeterView.text = quest.boss.rage?.title
+                rageMeterView.text = context.getString(R.string.rage_attack, quest.boss.rage?.title)
                 bossRageView.set(progress.progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
                 if (progress.hasRageStrikes()) {
                     setupRageStrikeViews()

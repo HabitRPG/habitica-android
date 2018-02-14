@@ -103,7 +103,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View) {
     }
 
     private fun setHpBarData(value: Float, valueMax: Int) {
-        if (valueMax == 0) {
+        if (valueMax != 0) {
             cachedMaxHealth = valueMax
         }
         hpBar.set(Math.ceil(value.toDouble()), cachedMaxHealth.toDouble())

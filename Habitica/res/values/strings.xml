@@ -776,4 +776,6 @@
     <string name="world_boss_description_subtitle">%s attacks!</string>
     <string name="questShop_owner_long">Ian the Quest Guide</string>
     <string name="seasonalShop_owner_long">Seasonal Sorceress</string>
+    <string name="rage_attack" formatted="false">Rage attack: %s</string>
+    <string name="tavern_description_world_boss">Oh dear, pay no heed to the monster below -- this is still a safe haven to chat on your breaks.</string>
 </resources>

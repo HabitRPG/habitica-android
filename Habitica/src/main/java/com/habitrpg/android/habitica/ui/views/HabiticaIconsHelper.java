@@ -562,4 +562,18 @@ public class HabiticaIconsHelper {
 
         return imageOfRageStrikeActive;
     }
+
+    private static Bitmap imageOfRage = null;
+    public static Bitmap imageOfRage() {
+        if (imageOfRage != null)
+            return imageOfRage;
+
+        int size = scaleSize(18);
+        imageOfRage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfRage);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawRage(canvas);
+
+        return imageOfRage;
+    }
 }
