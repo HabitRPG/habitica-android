@@ -41,6 +41,7 @@ class QuestProgressView : LinearLayout {
 
     private val questImageWrapper: FrameLayout by bindView(R.id.questImageWrapper)
     private val questImageView: SimpleDraweeView by bindView(R.id.questImageView)
+    private val questFlourishesImageView: SimpleDraweeView by bindView(R.id.questFlourishesImageView)
     private val questImageTitle: View by bindView(R.id.questImageTitle)
     private val artCreditTextView: TextView by bindView(R.id.artCreditTextView)
     private val questImageSeparator: View by bindView(R.id.questImageSeparator)
@@ -101,6 +102,10 @@ class QuestProgressView : LinearLayout {
 
         rageStrikeDescriptionView.setOnClickListener { showStrikeDescriptionAlert() }
 
+        val density = resources.displayMetrics.density
+
+        questDescriptionSection.setCaretOffset((12 * density).toInt())
+
         preferences = context.getSharedPreferences("collapsible_sections", 0)
         if (preferences?.getBoolean("boss_art_collapsed", false) == true) {
             hideQuestImage()
@@ -140,7 +145,7 @@ class QuestProgressView : LinearLayout {
             if (quest.boss.hasRage()) {
                 rageMeterView.visibility = View.VISIBLE
                 bossRageView.visibility = View.VISIBLE
-                rageMeterView.text = context.getString(R.string.rage_attack, quest.boss.rage?.title)
+                rageMeterView.text = quest.boss.rage?.title
                 bossRageView.set(progress.progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
                 if (progress.hasRageStrikes()) {
                     setupRageStrikeViews()
@@ -166,6 +171,7 @@ class QuestProgressView : LinearLayout {
         }
         questDescriptionView.text = MarkdownParser.parseMarkdown(quest.notes)
         DataBindingUtils.loadImage(questImageView, "quest_"+quest.key, "gif")
+        DataBindingUtils.loadImage(questFlourishesImageView, "quest_"+quest.key+"_flourishes")
         val lightColor =  quest.colors?.lightColor
         if (lightColor != null) {
             questDescriptionSection.separatorColor = lightColor
@@ -312,7 +318,7 @@ class QuestProgressView : LinearLayout {
 
 
     private fun showQuestImage() {
-        questImageView.visibility = View.VISIBLE
+        questImageWrapper.visibility = View.VISIBLE
         DataBindingUtils.loadImage(questImageView, "quest_"+quest?.key)
         val editPreferences = preferences?.edit()
         editPreferences?.putBoolean("boss_art_collapsed", false)
@@ -321,7 +327,7 @@ class QuestProgressView : LinearLayout {
     }
 
     private fun hideQuestImage() {
-        questImageView.visibility = View.GONE
+        questImageWrapper.visibility = View.GONE
         val editPreferences = preferences?.edit()
         editPreferences?.putBoolean("boss_art_collapsed", true)
         editPreferences?.apply()

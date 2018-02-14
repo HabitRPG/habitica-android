@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:parentTag="android.widget.LinearLayout">
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
@@ -14,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
         android:gravity="center_vertical">
         <TextView
             android:id="@+id/titleTextView"
@@ -42,6 +42,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="center"
-            android:layout_marginRight="16dp" />
+            android:paddingRight="32dp" />
     </LinearLayout>
 </merge>

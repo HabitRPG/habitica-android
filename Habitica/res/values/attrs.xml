@@ -45,6 +45,7 @@
         <attr name="barHeight" format="dimension" />
         <attr name="lightBackground" format="boolean" />
         <attr name="description" format="string" />
+        <attr name="labelSpacing" format="dimension" />
     </declare-styleable>
     <declare-styleable name="HabiticaProgressBar">
         <attr name="barForegroundColor" />
@@ -81,5 +82,6 @@
         <attr name="color" format="color" />
         <attr name="identifier" />
         <attr name="hasAdditionalInfo" format="boolean" />
+        <attr name="titleSize" format="dimension" />
     </declare-styleable>
 </resources>

@@ -27,11 +27,12 @@
         android:orientation="horizontal" />
 
     <LinearLayout
+        android:id="@+id/labelWrapper"
         android:layout_below="@id/progressBar"
         android:layout_toRightOf="@id/ic_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
+        android:paddingTop="4dp">
         <ImageView
             android:id="@+id/secondaryIconView"
             android:layout_width="@dimen/icon_size"

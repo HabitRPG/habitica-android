@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -72,8 +73,8 @@ class ChatBarView : FrameLayout {
 
                 val navbarHeight = NavbarUtils.getNavbarHeight(context)
                 val finalHeight = currentHeight + navbarHeight
-                chatBarContainer.layoutParams.height = finalHeight
-                invalidate()
+                layoutParams.height = finalHeight
+                (parent as? View)?.invalidate()
             }
         }
     }

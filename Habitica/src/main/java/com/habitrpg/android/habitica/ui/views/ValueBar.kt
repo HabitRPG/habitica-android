@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +21,7 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
     private val valueTextView: TextView by bindView(R.id.valueLabel)
     private val descriptionTextView: TextView by bindView(R.id.descriptionLabel)
     private val progressBar: HabiticaProgressBar by bindView(R.id.progressBar)
+    private val labelWrapper: ViewGroup by bindView(R.id.labelWrapper)
 
     private val formatter = NumberFormat.getInstance()
 
@@ -45,7 +47,7 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
 
     private fun updateBar() {
         this.progressBar.set(currentValue, maxValue)
-        this.setValueText(formatter.format(currentValue) + "/" + formatter.format(maxValue.toInt()))
+        this.setValueText(formatter.format(currentValue) + " / " + formatter.format(maxValue.toInt()))
     }
 
     init {
@@ -60,6 +62,10 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
         progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0
         progressBar.barBackgroundColor = attributes?.getColor(R.styleable.ValueBar_barBackgroundColor, 0) ?: 0
 
+        val labelSpacing = attributes?.getDimension(R.styleable.ValueBar_labelSpacing, context.resources.getDimension(R.dimen.spacing_small))
+        if (labelSpacing != null) {
+            labelWrapper.setPadding(0, labelSpacing.toInt(), 0, 0)
+        }
 
         barHeight = attributes?.getDimension(R.styleable.ValueBar_barHeight, context.resources.getDimension(R.dimen.bar_size))?.toInt()
 

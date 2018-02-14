@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:text="@string/boss_art"
             android:textColor="@color/white"
-            style="@style/Body1" />
+            android:textSize="16sp" />
         <TextView
             android:id="@+id/artCreditTextView"
             android:layout_width="wrap_content"
@@ -35,8 +35,8 @@
             android:layout_marginRight="@dimen/spacing_medium"/>
         <ImageView
             android:id="@+id/caretView"
-            android:layout_width="18dp"
-            android:layout_height="18dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <View
         android:id="@+id/questImageSeparator"
@@ -45,7 +45,8 @@
     <FrameLayout
         android:id="@+id/questImageWrapper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clipChildren="true">
         <com.habitrpg.android.habitica.ui.views.WrapContentDraweeView
             android:id="@+id/questImageView"
             android:layout_width="219dp"
@@ -54,11 +55,21 @@
             android:paddingBottom="@dimen/spacing_large"
             android:paddingLeft="@dimen/spacing_large"
             android:paddingRight="@dimen/spacing_large"
-            android:layout_gravity="center_horizontal" /></FrameLayout>
+            android:layout_gravity="center_horizontal" />
+        <com.habitrpg.android.habitica.ui.views.WrapContentDraweeView
+            android:id="@+id/questFlourishesImageView"
+            android:layout_width="310dp"
+            android:layout_height="219dp"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:paddingBottom="@dimen/spacing_large"
+            android:paddingLeft="@dimen/spacing_large"
+            android:paddingRight="@dimen/spacing_large"
+            android:layout_gravity="center_horizontal" />
+    </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_medium"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large"
         android:layout_marginTop="@dimen/spacing_large">
@@ -90,19 +101,33 @@
         app:textColor="@color/white"
         app:barBackgroundColor="@color/white_15_alpha"
         app:barHeight="8dp"
+        app:labelSpacing="@dimen/spacing_medium"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large" />
-    <TextView
-        android:id="@+id/rageMeterView"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Boss Rage"
-        style="@style/Body1"
-        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_large"
         android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
-        android:textColor="@color/white"/>
+        android:paddingRight="@dimen/spacing_large">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rage_attack"
+            style="@style/Body1"
+            android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/rageMeterView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Boss Rage"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:textColor="@color/white"/>
+    </LinearLayout>
     <com.habitrpg.android.habitica.ui.views.ValueBar
         android:id="@+id/bossRageView"
         android:layout_width="match_parent"
@@ -111,6 +136,7 @@
         app:textColor="@color/white"
         app:barBackgroundColor="@color/white_15_alpha"
         app:barHeight="8dp"
+        app:labelSpacing="@dimen/spacing_medium"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large"
         android:layout_marginBottom="@dimen/spacing_large"/>

@@ -143,4 +143,8 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
             isCollapsed = true
         }
     }
+
+    fun setCaretOffset(offset: Int) {
+        caretView.setPadding(0, 0, offset, 0)
+    }
 }

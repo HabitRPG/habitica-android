@@ -10,4 +10,5 @@
     android:textColor="@color/white"
     android:paddingLeft="@dimen/drawer_padding"
     android:paddingRight="@dimen/drawer_padding"
-    android:textAllCaps="true"/>
+    android:textAllCaps="true"
+    android:gravity="center_vertical"/>
