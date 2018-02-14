@@ -3,7 +3,6 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/white"
               android:choiceMode="singleChoice"
               android:dividerHeight="0dp"
@@ -14,7 +13,7 @@
         <LinearLayout
             android:id="@+id/menuHeaderView"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="88dp"
             android:background="@color/brand_200"
             android:paddingTop="24dp"
             android:paddingLeft="16dp"
@@ -41,8 +40,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:singleLine="true"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 tools:text="Habitica"
+                style="@style/Body1"
                 android:textColor="@color/white"/>
 
             <ImageButton

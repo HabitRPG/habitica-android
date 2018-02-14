@@ -97,6 +97,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         var backgroundTintColor: Int = 0
 
         private val titleTextView: TextView? by bindOptionalView(itemView, R.id.titleTextView)
+        private val pillView: TextView? by bindOptionalView(itemView, R.id.pillView)
         private val additionalInfoView: TextView? by bindOptionalView(itemView, R.id.additionalInfoView)
 
         fun bind(drawerItem: HabiticaDrawerItem, isSelected: Boolean) {
@@ -107,35 +108,42 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                 titleTextView?.setTextColor(tintColor)
             } else {
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
-                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_50))
+                titleTextView?.setTextColor(ContextCompat.getColor(itemView.context, R.color.gray_10))
             }
 
-            val additionalInfoView = this.additionalInfoView
-            if (additionalInfoView != null) {
-                if (drawerItem.additionalInfo != null) {
-                    additionalInfoView.visibility = View.VISIBLE
-                    additionalInfoView.text = drawerItem.additionalInfo
-                    if (drawerItem.additionalInfoAsPill) {
+            if (drawerItem.additionalInfo == null) {
+                pillView?.visibility = View.GONE
+                additionalInfoView?.visibility = View.GONE
+            } else {
+                if (drawerItem.additionalInfoAsPill) {
+                    additionalInfoView?.visibility = View.GONE
+                    val pillView = this.pillView
+                    if (pillView != null) {
+                        pillView.visibility = View.VISIBLE
+                        pillView.text = drawerItem.additionalInfo
                         val drawable = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg)
                         if (drawable != null) {
                             DrawableCompat.setTint(drawable, backgroundTintColor)
 
-                            val pL = additionalInfoView.paddingLeft
-                            val pT = additionalInfoView.paddingTop
-                            val pR = additionalInfoView.paddingRight
-                            val pB = additionalInfoView.paddingBottom
+                            val pL = pillView.paddingLeft
+                            val pT = pillView.paddingTop
+                            val pR = pillView.paddingRight
+                            val pB = pillView.paddingBottom
 
-                            additionalInfoView.backgroundCompat = drawable
-                            additionalInfoView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
-                            additionalInfoView.setPadding(pL, pT, pR, pB)
+                            pillView.backgroundCompat = drawable
+                            pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
+                            pillView.setPadding(pL, pT, pR, pB)
                         }
-                    } else {
+                    }
+                } else {
+                    pillView?.visibility = View.GONE
+                    val additionalInfoView = this.additionalInfoView
+                    if (additionalInfoView != null) {
+                        additionalInfoView.visibility = View.VISIBLE
                         additionalInfoView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.transparent))
                         additionalInfoView.setTextColor(tintColor)
                         additionalInfoView.setPadding(0, 0, 0,0)
                     }
-                } else {
-                    additionalInfoView.visibility = View.GONE
                 }
             }
         }

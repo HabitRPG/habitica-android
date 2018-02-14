@@ -13,33 +13,21 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/bar_icon_padding"
         android:layout_marginEnd="@dimen/bar_icon_padding"
-        android:layout_alignTop="@+id/bar_full"
-        android:layout_alignBottom="@id/bar_full"
+        android:layout_alignTop="@+id/progressBar"
+        android:layout_alignBottom="@id/progressBar"
         android:scaleType="center"
         android:contentDescription="Bar Icon"
         android:visibility="gone"/>
-    <LinearLayout
-        android:id="@+id/bar_full"
+    <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+        android:id="@+id/progressBar"
         android:layout_toRightOf="@id/ic_header"
         android:layout_toEndOf="@id/ic_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_size"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <View
-            android:id="@+id/bar"
-            android:layout_width="0dip"
-            android:layout_height="match_parent" />
-
-        <View
-            android:id="@+id/empty_bar_space"
-            android:layout_width="0dip"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        android:orientation="horizontal" />
 
     <LinearLayout
-        android:layout_below="@id/bar_full"
+        android:layout_below="@id/progressBar"
         android:layout_toRightOf="@id/ic_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

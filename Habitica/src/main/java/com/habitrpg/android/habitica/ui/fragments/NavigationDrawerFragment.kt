@@ -107,7 +107,7 @@ class NavigationDrawerFragment : DialogFragment() {
         menuHeaderView.setBackgroundColor(questContent.colors?.darkColor ?: 0)
         questMenuView.configure(quest)
         questMenuView.configure(questContent)
-        adapter.tintColor = questContent.colors?.lightColor ?: 0
+        adapter.tintColor = questContent.colors?.extraLightColor ?: 0
         adapter.backgroundTintColor = questContent.colors?.darkColor ?: 0
 
 

@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
 import com.habitrpg.android.habitica.ui.views.ValueBar
 
 class QuestMenuView : LinearLayout {
@@ -29,7 +30,8 @@ class QuestMenuView : LinearLayout {
     private val bossArtView: SimpleDraweeView by bindView(R.id.bossArtView)
     private val bossNameView: TextView by bindView(R.id.bossNameView)
     private val typeTextView: TextView by bindView(R.id.typeTextView)
-    private val healthBarView: ValueBar by bindView(R.id.healthBarView)
+    private val heartIconView: ImageView by bindView(R.id.heartIconView)
+    private val healthBarView: HabiticaProgressBar by bindView(R.id.healthBarView)
     private val topView: LinearLayout by bindView(R.id.topView)
     private val closeButton: AppCompatImageButton by bindView(R.id.closeButton)
     private val bottomView: ViewGroup by bindView(R.id.bottomView)
@@ -50,8 +52,7 @@ class QuestMenuView : LinearLayout {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.quest_menu_view, this)
 
-        healthBarView.setIcon(HabiticaIconsHelper.imageOfHeartDarkBg())
-        healthBarView.setLabelVisibility(View.GONE)
+        heartIconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartDarkBg())
 
         pendingDamageIconView.setImageBitmap(HabiticaIconsHelper.imageOfDamage())
 
@@ -78,9 +79,6 @@ class QuestMenuView : LinearLayout {
     }
 
     fun configure(user: User) {
-        val party = user.party
-        val quest = party.quest
-        val progress = quest.progress
         pendingDamageTextView.text = String.format("%.01f", (user.party?.quest?.progress?.up ?: 0))
     }
 

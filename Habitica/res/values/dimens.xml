@@ -124,5 +124,6 @@
     <dimen name="drawer_padding">16dp</dimen>
     <dimen name="snackbar_image_size">46dp</dimen>
     <dimen name="bullet_size">6dp</dimen>
+    <dimen name="icon_size">18dp</dimen>
 
 </resources>

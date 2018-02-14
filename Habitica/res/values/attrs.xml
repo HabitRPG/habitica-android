@@ -4,6 +4,8 @@
     <attr name="title" format="string" />
     <attr name="identifier" format="string" />
     <attr name="hasLightBackground" format="boolean" />
+    <attr name="barForegroundColor" format="color" />
+    <attr name="barBackgroundColor" format="color" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
         <attr name="showMount" format="boolean" />
@@ -36,12 +38,16 @@
         <attr name="categoryTitle" format="string" />
     </declare-styleable>
     <declare-styleable name="ValueBar">
-        <attr name="barForegroundColor" format="color" />
-        <attr name="barBackgroundColor" format="color" />
+        <attr name="barForegroundColor" />
+        <attr name="barBackgroundColor" />
         <attr name="textColor" format="color" />
         <attr name="barIconDrawable" format="integer" />
         <attr name="lightBackground" format="boolean" />
         <attr name="description" format="string" />
+    </declare-styleable>
+    <declare-styleable name="HabiticaProgressBar">
+        <attr name="barForegroundColor" />
+        <attr name="barBackgroundColor" />
     </declare-styleable>
     <declare-styleable name="CurrencyView">
         <attr name="currency" format="string" />

@@ -26,6 +26,7 @@
             android:id="@+id/topView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="40dp"
             android:orientation="vertical"
             android:paddingLeft="@dimen/spacing_large"
             android:paddingRight="@dimen/spacing_large"
@@ -61,20 +62,25 @@
         <LinearLayout
             android:id="@+id/bottomView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             tools:background="@color/brand_50"
             android:paddingLeft="@dimen/spacing_medium"
             android:paddingRight="@dimen/spacing_large">
-            <com.habitrpg.android.habitica.ui.views.ValueBar
+            <ImageView
+                android:id="@+id/heartIconView"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_marginRight="@dimen/spacing_small"/>
+            <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
                 android:id="@+id/healthBarView"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="8dp"
                 android:layout_weight="1"
                 android:paddingTop="@dimen/spacing_medium"
                 android:paddingBottom="@dimen/spacing_small"
-                app:barForegroundColor="@color/red_100"
+                app:barForegroundColor="@color/red_50"
                 app:barBackgroundColor="@color/white_15_alpha"/>
             <ImageView
                 android:id="@+id/pendingDamageIconView"
@@ -87,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 tools:text="+1"
                 />
         </LinearLayout>
