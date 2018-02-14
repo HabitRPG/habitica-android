@@ -204,14 +204,14 @@ class TavernDetailFragment : BaseFragment() {
             val alert = HabiticaAlertDialog(context)
             val bossName = quest.boss.name ?: ""
             alert.setTitle(R.string.world_boss_description_title)
-            alert.setTitleBackgroundColor(quest.colors?.mediumColor ?: 0)
+            alert.setTitleBackgroundColor(quest.colors?.lightColor ?: 0)
             alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))
             alert.setAdditionalContentView(R.layout.world_boss_description_view)
 
             val descriptionView = alert.getContentView()
             val promptView: TextView? = descriptionView?.findViewById(R.id.worldBossActionPromptView)
             promptView?.text = context.getString(R.string.world_boss_action_prompt, bossName)
-            promptView?.setTextColor(quest.colors?.mediumColor ?: 0)
+            promptView?.setTextColor(quest.colors?.lightColor ?: 0)
             val background = ContextCompat.getDrawable(context, R.drawable.rounded_border)
             background?.setColorFilter(quest.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
             promptView?.backgroundCompat = background
