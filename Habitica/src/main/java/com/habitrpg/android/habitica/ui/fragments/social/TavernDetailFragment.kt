@@ -193,6 +193,7 @@ class TavernDetailFragment : BaseFragment() {
             val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
             container.setPadding(0, padding, 0, padding)
         }
+        playerTiersView.invalidate()
     }
 
     override fun injectFragment(component: AppComponent) {

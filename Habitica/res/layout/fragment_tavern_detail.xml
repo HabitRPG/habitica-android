@@ -89,7 +89,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/staff_moderators"
-        app:identifier="tavernModerators">
+        app:identifier="tavernModerators"
+        android:visibility="gone">
     </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
     <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
         android:id="@+id/playerTiersView"
