@@ -169,6 +169,8 @@ class QuestProgressView : LinearLayout {
             gradientDrawable.cornerRadius = 0f
             questImageWrapper.backgroundCompat = gradientDrawable
         }
+        updateCaretImage()
+        questDescriptionSection.caretColor = quest.colors?.extraLightColor ?: 0
     }
 
     private fun setupRageStrikeViews() {
@@ -297,19 +299,27 @@ class QuestProgressView : LinearLayout {
 
 
     private fun showQuestImage() {
-        questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), true))
         questImageView.visibility = View.VISIBLE
         DataBindingUtils.loadImage(questImageView, "quest_"+quest?.key)
         val editPreferences = preferences?.edit()
         editPreferences?.putBoolean("boss_art_collapsed", false)
         editPreferences?.apply()
+        updateCaretImage()
     }
 
     private fun hideQuestImage() {
-        questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), false))
         questImageView.visibility = View.GONE
         val editPreferences = preferences?.edit()
         editPreferences?.putBoolean("boss_art_collapsed", true)
         editPreferences?.apply()
+        updateCaretImage()
+    }
+
+    private fun updateCaretImage() {
+        if (questImageView.visibility == View.VISIBLE) {
+            questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(quest?.colors?.extraLightColor ?: 0, true))
+        } else {
+            questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(quest?.colors?.extraLightColor ?: 0, false))
+        }
     }
 }

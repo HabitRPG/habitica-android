@@ -42,6 +42,10 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     }
 
     var caretColor: Int = 0
+    set(value) {
+        field = value
+        setCaretImage()
+    }
 
     var identifier: String? = null
 
@@ -102,10 +106,10 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     }
 
     init {
+        View.inflate(context, R.layout.view_collapsible_section, this)
         context.notNull {
             caretColor = ContextCompat.getColor(it, R.color.black_50_alpha)
         }
-        View.inflate(context, R.layout.view_collapsible_section, this)
         orientation = LinearLayout.VERTICAL
         titleView.setOnClickListener {
             isCollapsed = !isCollapsed
