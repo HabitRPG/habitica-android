@@ -198,7 +198,7 @@ class TavernDetailFragment : BaseFragment() {
 
     companion object {
 
-        private fun showWorldBossInfoDialog(context: Context, quest: QuestContent) {
+        fun showWorldBossInfoDialog(context: Context, quest: QuestContent) {
             val alert = HabiticaAlertDialog(context)
             val bossName = quest.boss.name ?: ""
             alert.setTitle(R.string.world_boss_description_title)

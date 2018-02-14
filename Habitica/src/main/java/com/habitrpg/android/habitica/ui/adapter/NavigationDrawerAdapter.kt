@@ -139,10 +139,9 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                     pillView?.visibility = View.GONE
                     val additionalInfoView = this.additionalInfoView
                     if (additionalInfoView != null) {
+                        additionalInfoView.text = drawerItem.additionalInfo
                         additionalInfoView.visibility = View.VISIBLE
-                        additionalInfoView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.transparent))
                         additionalInfoView.setTextColor(tintColor)
-                        additionalInfoView.setPadding(0, 0, 0,0)
                     }
                 }
             }

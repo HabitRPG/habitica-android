@@ -36,6 +36,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmen
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment
 import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment
+import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment
@@ -43,6 +44,7 @@ import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import kotlinx.android.synthetic.main.drawer_main.*
+import kotlinx.android.synthetic.main.fragment_tavern_detail.*
 import rx.functions.Action1
 import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
@@ -126,6 +128,13 @@ class NavigationDrawerFragment : DialogFragment() {
             it.additionalInfoAsPill = false
         }
         adapter.notifyDataSetChanged()
+
+        questMenuView.setOnClickListener {
+            val context = this.context
+            if (context != null) {
+                TavernDetailFragment.showWorldBossInfoDialog(context, questContent)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
