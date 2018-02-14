@@ -774,4 +774,6 @@
     <string name="world_boss_description_4">Check the Tavern to see Boss progress and Rage attacks</string>
     <string name="world_boss_action_prompt" formatted="false">Defeat the Boss to earn special rewards and save Habitica from %s’s Terror!</string>
     <string name="world_boss_description_subtitle">%s attacks!</string>
+    <string name="questShop_owner_long">Ian the Quest Guide</string>
+    <string name="seasonalShop_owner_long">Seasonal Sorceress</string>
 </resources>

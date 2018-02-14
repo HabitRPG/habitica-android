@@ -288,8 +288,8 @@ class QuestProgressView : LinearLayout {
         return when (key) {
             "market" -> context.getString(R.string.market_owner_long)
             "tavern" -> context.getString(R.string.tavern_owner_long)
-            "questShop" -> context.getString(R.string.questShop_owner)
-            "seasonalShop" -> context.getString(R.string.seasonalShop_owner)
+            "questShop" -> context.getString(R.string.questShop_owner_long)
+            "seasonalShop" -> context.getString(R.string.seasonalShop_owner_long)
             "stable" -> context.getString(R.string.stable_owner_long)
             else -> ""
         }
