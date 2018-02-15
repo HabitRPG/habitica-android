@@ -3,13 +3,13 @@ package com.habitrpg.android.habitica.models
 
 class SetupCustomization {
 
-    lateinit var key: String
+    var key: String = ""
     var drawableId: Int? = null
     var colorId: Int? = null
-    lateinit var text: String
-    lateinit var path: String
-    lateinit var category: String
-    lateinit var subcategory: String
+    var text: String = ""
+    var path: String = ""
+    var category: String = ""
+    var subcategory: String = ""
 
     companion object {
 
