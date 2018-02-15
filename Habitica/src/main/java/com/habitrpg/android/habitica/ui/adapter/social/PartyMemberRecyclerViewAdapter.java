@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.members.Member;
+import com.habitrpg.android.habitica.models.members.MemberPreferences;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -100,6 +101,8 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Mem
             lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 
             classLabel.setText(user.getStats().getTranslatedClassName(context));
+
+            MemberPreferences preferences = user.getPreferences();
 
             int colorResourceID;
             switch (user.getStats().habitClass) {

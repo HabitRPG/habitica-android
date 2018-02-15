@@ -81,6 +81,8 @@ public class MemberSerialization implements JsonDeserializer<Member> {
             member.setContributor(context.deserialize(obj.get("contributor"), ContributorInfo.class));
         }
 
+        member.setId(member.getId());
+
         realm.close();
         return member;
     }
