@@ -112,6 +112,8 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
             if (user != null && user?.preferences?.dailyDueDefaultView == true) {
                 taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
             }
+        } else if (Task.TYPE_TODO == classType) {
+            taskFilterHelper.setActiveFilter(Task.TYPE_TODO, Task.FILTER_ACTIVE)
         }
 
         mItemTouchCallback = object : ItemTouchHelper.Callback() {

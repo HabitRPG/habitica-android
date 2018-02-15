@@ -54,6 +54,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         }
         this.data = unfilteredData
         this.updateOnModification = true
+        filter()
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
@@ -139,7 +140,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
     private fun getContentView(parent: ViewGroup, layoutResource: Int): View =
             LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
-    override fun filter() {
+    final override fun filter() {
         if (unfilteredData == null) {
             return
         }
