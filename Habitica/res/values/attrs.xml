@@ -5,6 +5,7 @@
     <attr name="identifier" format="string" />
     <attr name="hasLightBackground" format="boolean" />
     <attr name="barForegroundColor" format="color" />
+    <attr name="barPendingColor" format="color" />
     <attr name="barBackgroundColor" format="color" />
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
@@ -39,8 +40,10 @@
     </declare-styleable>
     <declare-styleable name="ValueBar">
         <attr name="barForegroundColor" />
+        <attr name="barPendingColor" />
         <attr name="barBackgroundColor" />
-        <attr name="textColor" format="color" />
+        <attr name="valueTextColor" format="color" />
+        <attr name="descriptionTextColor" format="color" />
         <attr name="barIconDrawable" format="integer" />
         <attr name="barHeight" format="dimension" />
         <attr name="lightBackground" format="boolean" />
@@ -49,6 +52,7 @@
     </declare-styleable>
     <declare-styleable name="HabiticaProgressBar">
         <attr name="barForegroundColor" />
+        <attr name="barPendingColor" />
         <attr name="barBackgroundColor" />
     </declare-styleable>
     <declare-styleable name="CurrencyView">

@@ -18,6 +18,7 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
 
     private val iconView: ImageView by bindView(R.id.ic_header)
     private val secondaryIconView: ImageView by bindView(R.id.secondaryIconView)
+    private val descriptionIconView: ImageView by bindView(R.id.descriptionIconView)
     private val valueTextView: TextView by bindView(R.id.valueLabel)
     private val descriptionTextView: TextView by bindView(R.id.descriptionLabel)
     private val progressBar: HabiticaProgressBar by bindView(R.id.progressBar)
@@ -30,6 +31,12 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
         field = value
         updateBar()
     }
+
+    var pendingValue: Double = 0.0
+        set(value) {
+            field = value
+            updateBar()
+        }
 
     var maxValue: Double = 0.0
         set(value) {
@@ -45,8 +52,16 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
         }
     }
 
+    var description: String = ""
+    set(value) {
+        field = value
+        descriptionTextView.text = description
+    }
+
     private fun updateBar() {
-        this.progressBar.set(currentValue, maxValue)
+        this.progressBar.pendingValue = pendingValue
+        this.progressBar.currentValue = currentValue
+        this.progressBar.maxValue = maxValue
         this.setValueText(formatter.format(currentValue) + " / " + formatter.format(maxValue.toInt()))
     }
 
@@ -60,6 +75,7 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
         setLightBackground(attributes?.getBoolean(R.styleable.ValueBar_lightBackground, false) == true)
 
         progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0
+        progressBar.barPendingColor = attributes?.getColor(R.styleable.ValueBar_barPendingColor, 0) ?: 0
         progressBar.barBackgroundColor = attributes?.getColor(R.styleable.ValueBar_barBackgroundColor, 0) ?: 0
 
         val labelSpacing = attributes?.getDimension(R.styleable.ValueBar_labelSpacing, context.resources.getDimension(R.dimen.spacing_small))
@@ -69,10 +85,13 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
 
         barHeight = attributes?.getDimension(R.styleable.ValueBar_barHeight, context.resources.getDimension(R.dimen.bar_size))?.toInt()
 
-        val textColor = attributes?.getColor(R.styleable.ValueBar_textColor, 0) ?: 0
-        if (textColor != 0) {
-            valueTextView.setTextColor(textColor)
-            descriptionTextView.setTextColor(textColor)
+        val valueTextColor = attributes?.getColor(R.styleable.ValueBar_valueTextColor, 0) ?: 0
+        if (valueTextColor != 0) {
+            valueTextView.setTextColor(valueTextColor)
+        }
+        val descriptionTextColor = attributes?.getColor(R.styleable.ValueBar_descriptionTextColor, 0) ?: 0
+        if (descriptionTextColor != 0) {
+            descriptionTextView.setTextColor(descriptionTextColor)
         }
 
         val iconRes = attributes?.getDrawable(R.styleable.ValueBar_barIconDrawable)
@@ -104,6 +123,16 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
     fun setSecondaryIcon(bitmap: Bitmap) {
         secondaryIconView.setImageBitmap(bitmap)
         secondaryIconView.visibility = View.VISIBLE
+    }
+
+    fun setDescriptionIcon(iconRes: Drawable) {
+        descriptionIconView.setImageDrawable(iconRes)
+        descriptionIconView.visibility = View.VISIBLE
+    }
+
+    fun setDescriptionIcon(bitmap: Bitmap) {
+        descriptionIconView.setImageBitmap(bitmap)
+        descriptionIconView.visibility = View.VISIBLE
     }
 
     fun setValueText(valueText: String) {

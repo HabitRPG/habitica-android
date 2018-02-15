@@ -7,6 +7,7 @@ import io.realm.annotations.PrimaryKey
 open class QuestProgress : RealmObject() {
 
     @PrimaryKey
+    var id: String? = null
     var key: String? = null
     var hp: Double = 0.0
     var rage: Double = 0.0

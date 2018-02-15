@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -94,13 +95,13 @@ public class PartyDetailFragment extends BaseFragment {
     private User user;
 
     @Override
-    public void injectFragment(AppComponent component) {
+    public void injectFragment(@NonNull AppComponent component) {
         component.inject(this);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_party_detail, container, false);
     }
@@ -114,7 +115,7 @@ public class PartyDetailFragment extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         refreshLayout.setOnRefreshListener(this::refreshParty);
@@ -142,7 +143,7 @@ public class PartyDetailFragment extends BaseFragment {
         titleView.setText(party.getName());
         descriptionView.setText(MarkdownParser.parseMarkdown(party.getDescription()));
 
-        if (quest != null) {
+        if (quest != null && !quest.getKey().isEmpty()) {
             newQuestButton.setVisibility(View.GONE);
             questDetailButton.setVisibility(View.VISIBLE);
             questImageWrapper.setVisibility(View.VISIBLE);
@@ -180,6 +181,8 @@ public class PartyDetailFragment extends BaseFragment {
                 questParticipantResponseWrapper.setVisibility(View.GONE);
             }
         }
+
+        questProgressView.configure(user);
     }
 
     private boolean showParticipantButtons() {

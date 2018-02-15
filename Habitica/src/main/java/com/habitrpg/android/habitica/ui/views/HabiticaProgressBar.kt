@@ -10,16 +10,24 @@ import com.habitrpg.android.habitica.extensions.bindView
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 
-class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     private val barView: View by bindView(R.id.bar)
-    private val barEmptySpace: View by bindView(R.id.empty_bar_space)
+    private val pendingBarView: View by bindView(R.id.pendingBar)
+    private val barEmptySpace: View by bindView(R.id.emptyBarSpace)
+    private val pendingEmptyBarSpace: View by bindView(R.id.pendingEmptyBarSpace)
 
     var barForegroundColor: Int = 0
     set(value) {
         field = value
         DataBindingUtils.setRoundedBackground(barView, value)
     }
+
+    var barPendingColor: Int = 0
+        set(value) {
+            field = value
+            DataBindingUtils.setRoundedBackground(pendingBarView, value)
+        }
 
     var barBackgroundColor: Int = 0
     set(value) {
@@ -35,6 +43,12 @@ class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : LinearLayou
             updateBar()
         }
 
+    var pendingValue: Double = 0.0
+        set(value) {
+            field = value
+            updateBar()
+        }
+
     var maxValue: Double = 0.0
         set(value) {
             field = value
@@ -42,9 +56,15 @@ class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : LinearLayou
         }
 
     private fun updateBar() {
-        val percent = Math.min(1.0, currentValue / maxValue)
-
-        this.setBarWeight(percent)
+        val remainingValue = currentValue - pendingValue
+        val remainingPercent = if (remainingValue < 0) {
+            0.0
+        } else {
+            Math.min(1.0, remainingValue / maxValue)
+        }
+        val pendingPercent = Math.min(1.0, currentValue / maxValue)
+        this.setBarWeight(remainingPercent)
+        this.setPendingBarWeight(pendingPercent)
     }
 
     init {
@@ -56,14 +76,18 @@ class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : LinearLayou
                 0, 0)
 
         barForegroundColor = attributes?.getColor(R.styleable.HabiticaProgressBar_barForegroundColor, 0) ?: 0
+        barPendingColor = attributes?.getColor(R.styleable.HabiticaProgressBar_barPendingColor, 0) ?: 0
         barBackgroundColor = attributes?.getColor(R.styleable.HabiticaProgressBar_barBackgroundColor, 0) ?: 0
-
     }
 
 
     private fun setBarWeight(percent: Double) {
         setLayoutWeight(barView, percent)
         setLayoutWeight(barEmptySpace, 1.0f - percent)
+    }
+    private fun setPendingBarWeight(percent: Double) {
+        setLayoutWeight(pendingBarView, percent)
+        setLayoutWeight(pendingEmptyBarSpace, 1.0f - percent)
     }
 
 
@@ -72,15 +96,15 @@ class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : LinearLayou
         maxValue = valueMax
     }
 
-    private fun setLayoutWeight(view: View?, weight: Double) {
-        view!!.clearAnimation()
+    private fun setLayoutWeight(view: View, weight: Double) {
+        view.clearAnimation()
         val layout = view.layoutParams as LinearLayout.LayoutParams
         if (weight == 0.0 || weight == 1.0) {
             layout.weight = weight.toFloat()
             view.layoutParams = layout
         } else if (layout.weight.toDouble() != weight) {
             val anim = DataBindingUtils.LayoutWeightAnimation(view, weight.toFloat())
-            anim.duration = 1250
+            anim.duration = 300
             view.startAnimation(anim)
         }
     }

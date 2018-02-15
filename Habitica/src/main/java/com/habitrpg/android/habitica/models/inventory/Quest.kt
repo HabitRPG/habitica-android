@@ -9,6 +9,10 @@ import io.realm.annotations.PrimaryKey
 open class Quest : RealmObject() {
     @PrimaryKey
     var id: String? = null
+    set(value) {
+        field = value
+        progress?.id = value
+    }
     var key: String = ""
     set(value) {
         field = value
