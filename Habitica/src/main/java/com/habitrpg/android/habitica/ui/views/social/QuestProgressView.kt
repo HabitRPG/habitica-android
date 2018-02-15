@@ -89,7 +89,7 @@ class QuestProgressView : LinearLayout {
 
         questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), true))
         questImageTitle.setOnClickListener {
-            if (questImageView.visibility == View.VISIBLE) {
+            if (questImageWrapper.visibility == View.VISIBLE) {
                 hideQuestImage()
             } else {
                 showQuestImage()
@@ -335,7 +335,7 @@ class QuestProgressView : LinearLayout {
     }
 
     private fun updateCaretImage() {
-        if (questImageView.visibility == View.VISIBLE) {
+        if (questImageWrapper.visibility == View.VISIBLE) {
             questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(quest?.colors?.extraLightColor ?: 0, true))
         } else {
             questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(quest?.colors?.extraLightColor ?: 0, false))
