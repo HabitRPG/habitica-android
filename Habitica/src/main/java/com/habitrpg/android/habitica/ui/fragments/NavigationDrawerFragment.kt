@@ -160,6 +160,7 @@ class NavigationDrawerFragment : DialogFragment() {
         setHasOptionsMenu(true)
 
         context?.notNull {recyclerView.setPadding(0, 0, 0,  NavbarUtils.getNavbarHeight(it)) }
+        recyclerView.clipToPadding = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -220,6 +221,7 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(SIDEBAR_STABLE, context.getString(R.string.sidebar_stable)))
             items.add(HabiticaDrawerItem(SIDEBAR_PURCHASE, context.getString(R.string.sidebar_purchaseGems)))
             items.add(HabiticaDrawerItem(SIDEBAR_ABOUT_HEADER, context.getString(R.string.sidebar_about), true))
+            items.add(HabiticaDrawerItem(SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
             items.add(HabiticaDrawerItem(SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
             items.add(HabiticaDrawerItem(SIDEBAR_ABOUT, context.getString(R.string.sidebar_about)))
         }
