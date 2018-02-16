@@ -88,7 +88,9 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setGridSpanCount(view.width)
-        recyclerView.layoutManager = layoutManager
+        if (recyclerView.layoutManager == null) {
+            recyclerView.layoutManager = layoutManager
+        }
         recyclerView.addItemDecoration(MarginDecoration(context))
 
         recyclerView.adapter = adapter

@@ -97,17 +97,26 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         }.doOnNext({ localRepository.save(it) })
     }
 
-    override fun getGroup(id: String): Observable<Group> {
+    override fun getGroup(id: String?): Observable<Group> {
+        if (id == null) {
+            return Observable.just(null)
+        }
         return localRepository.getGroup(id)
     }
 
-    override fun leaveGroup(id: String): Observable<Group> {
+    override fun leaveGroup(id: String?): Observable<Group> {
+        if (id == null) {
+            return Observable.just(null)
+        }
         return apiClient.leaveGroup(id)
                 .flatMap { localRepository.getGroup(id).first() }
                 .doOnNext { group -> localRepository.executeTransaction { group.isMember = false } }
     }
 
-    override fun joinGroup(id: String): Observable<Group> {
+    override fun joinGroup(id: String?): Observable<Group> {
+        if (id == null) {
+            return Observable.just(null)
+        }
         return apiClient.joinGroup(id)
                 .doOnNext { group ->
                     group?.isMember = true
@@ -115,7 +124,10 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 }
     }
 
-    override fun updateGroup(group: Group, name: String, description: String, leader: String, privacy: String): Observable<Void> {
+    override fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, privacy: String?): Observable<Void> {
+        if (group == null) {
+            return Observable.just(null)
+        }
         val copiedGroup = localRepository.getUnmanagedCopy(group)
         copiedGroup.name = name
         copiedGroup.description = description
@@ -188,16 +200,22 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 .doOnNext { localRepository.updateRSVPNeeded(user, false) }
     }
 
-    override fun leaveQuest(partyId: String): Observable<Void> {
+    override fun leaveQuest(partyId: String?): Observable<Void> {
         return apiClient.leaveQuest(partyId)
     }
 
-    override fun cancelQuest(partyId: String): Observable<Void> {
+    override fun cancelQuest(partyId: String?): Observable<Void> {
+        if (partyId == null) {
+            return Observable.just(null)
+        }
         return apiClient.cancelQuest(partyId)
                 .doOnNext { localRepository.removeQuest(partyId) }
     }
 
-    override fun abortQuest(partyId: String): Observable<Quest> {
+    override fun abortQuest(partyId: String?): Observable<Quest> {
+        if (partyId == null) {
+            return Observable.just(null)
+        }
         return apiClient.abortQuest(partyId)
                 .doOnNext { localRepository.removeQuest(partyId) }
     }

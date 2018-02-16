@@ -348,8 +348,12 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.updateItem(item)
     }
 
-    fun setUsername(name: String) {
-        toolbarTitle.text = name
+    fun setUsername(name: String?) {
+        if (name?.isNotEmpty() == true) {
+            toolbarTitle.text = name
+        } else {
+            toolbarTitle.text = "Habitica"
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

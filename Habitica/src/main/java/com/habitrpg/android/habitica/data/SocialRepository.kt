@@ -35,13 +35,13 @@ interface SocialRepository : BaseRepository {
     fun postGroupChat(groupId: String, message: String): Observable<PostChatMessageResult>
 
     fun retrieveGroup(id: String): Observable<Group>
-    fun getGroup(id: String): Observable<Group>
+    fun getGroup(id: String?): Observable<Group>
 
-    fun leaveGroup(id: String): Observable<Group>
+    fun leaveGroup(id: String?): Observable<Group>
 
-    fun joinGroup(id: String): Observable<Group>
+    fun joinGroup(id: String?): Observable<Group>
 
-    fun updateGroup(group: Group, name: String, description: String, leader: String, privacy: String): Observable<Void>
+    fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, privacy: String?): Observable<Void>
 
     fun retrieveGroups(type: String): Observable<List<Group>>
     fun getGroups(type: String): Observable<RealmResults<Group>>
@@ -62,11 +62,11 @@ interface SocialRepository : BaseRepository {
     fun acceptQuest(user: User, partyId: String): Observable<Void>
     fun rejectQuest(user: User, partyId: String): Observable<Void>
 
-    fun leaveQuest(partyId: String): Observable<Void>
+    fun leaveQuest(partyId: String?): Observable<Void>
 
-    fun cancelQuest(partyId: String): Observable<Void>
+    fun cancelQuest(partyId: String?): Observable<Void>
 
-    fun abortQuest(partyId: String): Observable<Quest>
+    fun abortQuest(partyId: String?): Observable<Quest>
 
     fun rejectGroupInvite(groupId: String): Observable<Void>
 

@@ -101,7 +101,9 @@ public class QuestDetailFragment extends BaseMainFragment {
     public void onResume() {
         super.onResume();
         getCompositeSubscription().add(socialRepository.getGroup(partyId).subscribe(this::updateParty, RxErrorHandler.handleEmptyError()));
-        getCompositeSubscription().add(inventoryRepository.getQuestContent(questKey).subscribe(this::updateQuestContent, RxErrorHandler.handleEmptyError()));
+        if (questKey != null) {
+            getCompositeSubscription().add(inventoryRepository.getQuestContent(questKey).subscribe(this::updateQuestContent, RxErrorHandler.handleEmptyError()));
+        }
     }
 
 

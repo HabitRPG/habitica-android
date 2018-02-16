@@ -365,7 +365,11 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         if (activeFragment != null && activeFragment.get() != null && activeFragment.get().tabLayout == null) {
             activeFragment = null;
             if (drawerFragment != null) {
-                drawerFragment.setSelection(this.sharedPreferences.getString("lastActivePosition", NavigationDrawerFragment.SIDEBAR_TASKS), true);
+                String selection = NavigationDrawerFragment.SIDEBAR_TASKS;
+                try {
+                    selection = this.sharedPreferences.getString("lastActivePosition", NavigationDrawerFragment.SIDEBAR_TASKS);
+                } catch (java.lang.RuntimeException ignored) {}
+                drawerFragment.setSelection(selection, true);
             }
         }
     }

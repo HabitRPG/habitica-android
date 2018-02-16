@@ -135,6 +135,9 @@ public class PartyDetailFragment extends BaseFragment {
     }
 
     private void updateParty(Group party) {
+        if (party == null) {
+            return;
+        }
         this.party = party;
         this.quest = party.getQuest();
         if (titleView == null) {
