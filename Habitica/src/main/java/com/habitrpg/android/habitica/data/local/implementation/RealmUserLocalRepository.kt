@@ -53,8 +53,9 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun getSkills(user: User): Observable<RealmResults<Skill>> {
+        val habitClass = if (user.preferences.disableClasses) "none" else user.stats.habitClass
         return realm.where(Skill::class.java)
-                .equalTo("habitClass", user.stats.getHabitClass())
+                .equalTo("habitClass", habitClass)
                 .lessThanOrEqualTo("lvl", user.stats.lvl)
                 .findAll()
                 .asObservable()
