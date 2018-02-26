@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
+import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -95,6 +96,7 @@ import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil;
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
@@ -220,6 +222,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
     private TutorialView activeTutorialView;
     private NavigationDrawerFragment drawerFragment;
     private ActionBarDrawerToggle drawerToggle;
+    private KeyboardUtil keyboardUtil;
 
 
     @Override
@@ -302,6 +305,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
+
+        this.keyboardUtil = new KeyboardUtil(this, this.findViewById(android.R.id.content));
+        this.keyboardUtil.enable();
     }
 
     @Override
@@ -582,6 +588,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         userRepository.close();
         tagRepository.close();
         inventoryRepository.close();
+        keyboardUtil.disable();
         super.onDestroy();
     }
 

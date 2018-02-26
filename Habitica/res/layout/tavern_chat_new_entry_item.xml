@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:paddingLeft="@dimen/spacing_medium"
+        android:paddingRight="@dimen/spacing_medium">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,7 +30,9 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
-                app:hintEnabled="false">
+                app:hintEnabled="false"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_medium">
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/chatEditText"
                     android:layout_width="match_parent"
@@ -37,7 +40,13 @@
                     android:layout_margin="5dp"
                     android:hint="@string/write_message"
                     android:textColor="@android:color/black"
-                    android:inputType="textCapSentences|textMultiLine"/>
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lineSpacingExtra="2dp"
+                    android:background="@drawable/rounded_border"
+                    android:paddingLeft="@dimen/spacing_medium"
+                    android:paddingRight="@dimen/spacing_medium"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"/>
             </android.support.design.widget.TextInputLayout>
             <ImageButton
                 android:id="@+id/sendButton"
