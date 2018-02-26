@@ -588,7 +588,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         userRepository.close();
         tagRepository.close();
         inventoryRepository.close();
-        keyboardUtil.disable();
+        if (keyboardUtil != null) {
+            keyboardUtil.disable();
+        }
         super.onDestroy();
     }
 
