@@ -52,7 +52,7 @@ class EquipmentDetailFragment : BaseMainFragment() {
         recyclerView.addItemDecoration(DividerItemDecoration(getActivity()!!, DividerItemDecoration.VERTICAL))
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        inventoryRepository.getOwnedEquipment(type).first().subscribe(Action1<RealmResults<Equipment>> { this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError())
+        type?.let { inventoryRepository.getOwnedEquipment(it).first().subscribe(Action1<RealmResults<Equipment>> { this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError()) }
     }
 
     override fun onDestroy() {

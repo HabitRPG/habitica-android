@@ -72,8 +72,13 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
 
         communityGuidelinesView.visibility = View.GONE
 
-        view.invalidate()
-        view.forceLayout()
+    }
+
+    override fun onAttach(context: Context?) {
+        view?.invalidate()
+        view?.forceLayout()
+
+        super.onAttach(context)
     }
 
     private fun loadMessages() {

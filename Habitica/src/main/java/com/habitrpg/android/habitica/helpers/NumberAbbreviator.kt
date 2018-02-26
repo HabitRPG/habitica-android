@@ -17,7 +17,7 @@ object NumberAbbreviator {
             usedNumber /= 1000
         }
 
-        val formatter = DecimalFormat("###.##" + abbreviationForCounter(context, counter))
+        val formatter = DecimalFormat("###.##" + abbreviationForCounter(context, counter).replace(".", ""))
         formatter.roundingMode = RoundingMode.FLOOR
         return formatter.format(usedNumber)
     }

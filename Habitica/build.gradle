@@ -84,7 +84,7 @@ dependencies {
     // IAP Handling / Verification
     implementation 'org.solovyev.android:checkout:1.2.1'
     //Facebook
-    implementation('com.facebook.android:facebook-android-sdk:4.19.0') {
+    implementation('com.facebook.android:facebook-android-sdk:4.30.0') {
         transitive = true
     }
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
