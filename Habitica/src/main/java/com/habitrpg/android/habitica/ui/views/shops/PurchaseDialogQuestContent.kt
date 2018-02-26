@@ -82,7 +82,7 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
                 val view = inflater.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as ViewGroup
                 val imageView = view.findViewById<ImageView>(R.id.imageView)
                 imageView.scaleType = ImageView.ScaleType.CENTER
-                imageView.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
+                imageView.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
                 val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
                 titleTextView.text = context.getString(R.string.experience_reward, questContent.drop.exp)
                 rewardsList.addView(view)
@@ -92,7 +92,7 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
                 val view = inflater.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as ViewGroup
                 val imageView = view.findViewById<ImageView>(R.id.imageView)
                 imageView.scaleType = ImageView.ScaleType.CENTER
-                imageView.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
+                imageView.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
                 val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
                 titleTextView.text = context.getString(R.string.gold_reward, questContent.drop.gp)
                 rewardsList.addView(view)
