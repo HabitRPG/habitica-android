@@ -267,6 +267,7 @@
   <string name="feed">Maitinti</string>
   <string name="hatch_with">Užauginti gyvūną su %s</string>
   <string name="hatched_pet_title">Užauginai %1$s %2$s!</string>
+  <string name="evolved_pet_title">Prisijaukinai %1$s %2$s, lekiame paskraidyti!</string>
   <string name="close">Uždaryti</string>
   <string name="share">Dalintis</string>
   <string name="notification_pet_fed">Pašėrei savo %1$s %2$s!</string>

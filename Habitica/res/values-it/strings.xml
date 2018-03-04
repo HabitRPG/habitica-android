@@ -301,6 +301,7 @@
   <string name="feed">Dai da mangiare</string>
   <string name="hatch_with">Fai nascere un animale con %s</string>
   <string name="hatched_pet_title">È nato un %2$s %1$s!</string>
+  <string name="evolved_pet_title">Hai appena addomesticato %2$s %1$s, andiamo a farci un giro!</string>
   <string name="close">Chiudi</string>
   <string name="share">Condividi</string>
   <string name="notification_pet_fed">Hai dato da mangiare al tuo %1$s %2$s!</string>

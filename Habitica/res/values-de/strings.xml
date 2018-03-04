@@ -301,6 +301,7 @@
   <string name="feed">Füttern</string>
   <string name="hatch_with">Haustier mit %s ausbrüten</string>
   <string name="hatched_pet_title">Du hast ein %1$s %2$s ausgebrütet!</string>
+  <string name="evolved_pet_title">%1$s %2$s wurde gezähmt. Es ist an der Zeit aufzusitzen!</string>
   <string name="close">Schließen</string>
   <string name="share">Teilen</string>
   <string name="notification_pet_fed">Du hast Dein/e/n %1$s %2$s gefüttert!</string>

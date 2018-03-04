@@ -283,6 +283,7 @@
   <string name="feed">喂食</string>
   <string name="hatch_with">用%s孵化宠物</string>
   <string name="hatched_pet_title">你孵化了一个 %1$s %2$s！</string>
+  <string name="evolved_pet_title">你驯养了%1$s %2$s，去骑几圈吧！</string>
   <string name="close">关闭</string>
   <string name="share">分享</string>
   <string name="notification_pet_fed">你喂食了你的%1$s %2$s！</string>

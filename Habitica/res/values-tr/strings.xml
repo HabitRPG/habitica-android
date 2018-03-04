@@ -301,6 +301,7 @@
   <string name="feed">Besle</string>
   <string name="hatch_with">Evcil hayvanı %s ile üret</string>
   <string name="hatched_pet_title">%1$s %2$s ürettin!</string>
+  <string name="evolved_pet_title">%1$s %2$s yetiştirildi, haydi biraz dolaşalım!</string>
   <string name="close">Kapat</string>
   <string name="share">Paylaş</string>
   <string name="notification_pet_fed">%1$s %2$s besledin!</string>

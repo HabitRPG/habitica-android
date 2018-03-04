@@ -301,6 +301,7 @@
   <string name="feed">Nourrir</string>
   <string name="hatch_with">Faire éclore le familier avec %s</string>
   <string name="hatched_pet_title">Votre %1$s %2$s a éclos !</string>
+  <string name="evolved_pet_title">Votre %1$s %2$s a grandi, baladez-vous dessus !</string>
   <string name="close">Fermer</string>
   <string name="share">Partager</string>
   <string name="notification_pet_fed">Vous avez nourri votre %1$s %2$s !</string>

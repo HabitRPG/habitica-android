@@ -260,6 +260,7 @@
   <string name="feed">האכילו</string>
   <string name="hatch_with">הבקיעו חיית מחמד עם %s</string>
   <string name="hatched_pet_title">הבקעתם %1$s %2$s!</string>
+  <string name="evolved_pet_title">הצלחתם לאלף %1$s %2$s!, בואו נצא לרכיבה!</string>
   <string name="close">סיגרו</string>
   <string name="share">שתפו</string>
   <string name="notification_pet_fed">האכלתם את ה %1$s %2$s שלכם!</string>

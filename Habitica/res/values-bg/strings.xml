@@ -301,6 +301,7 @@
   <string name="feed">Хранене</string>
   <string name="hatch_with">Излюпване на любимец с %s</string>
   <string name="hatched_pet_title">Вие излюпихте %1$s %2$s!</string>
+  <string name="evolved_pet_title">Вие укротихте %1$s %2$s, хайде да пояздим!</string>
   <string name="close">Затваряне</string>
   <string name="share">Споделяне</string>
   <string name="notification_pet_fed">Вие нахранихте своя(та/то) %1$s %2$s!</string>
