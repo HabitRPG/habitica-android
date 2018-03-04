@@ -54,7 +54,7 @@ Setup Habitica build config files by simply copying the example habitica files.
 
     $ cp habitica.properties.example habitica.properties
     $ cp habitica.resources.example habitica.resources
-    $ cp Habitica/google-services.json.example Habitica/google-services.json (Get .json from Firebase Console)
+    $ cp Habitica/google-services.json.example Habitica/google-services.json # Get .json from Firebase Console
 
 Note: this is the default production `habitica.properties` file for habitica.com. If you
 want to use a local habitica server, please modify the values in the properties file accordingly.
