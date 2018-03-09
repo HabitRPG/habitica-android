@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -93,7 +94,7 @@ public class QuestDetailFragment extends BaseMainFragment {
 
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -108,7 +109,7 @@ public class QuestDetailFragment extends BaseMainFragment {
 
 
     private void updateParty(Group group) {
-        if (questTitleView == null || group.getQuest() == null) {
+        if (questTitleView == null || group == null|| group.getQuest() == null) {
             return;
         }
         party = group;

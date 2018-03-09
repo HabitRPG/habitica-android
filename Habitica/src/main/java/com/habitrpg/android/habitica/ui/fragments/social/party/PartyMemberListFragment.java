@@ -42,9 +42,7 @@ public class PartyMemberListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
-        }
+        view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
         return view;
     }
 

@@ -85,9 +85,7 @@ public class AvatarSetupFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_setup_avatar, container, false);
-        }
+        view = inflater.inflate(R.layout.fragment_setup_avatar, container, false);
 
         setUnbinder(ButterKnife.bind(this, view));
         this.adapter = new CustomizationSetupAdapter();

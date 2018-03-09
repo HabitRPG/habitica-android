@@ -30,3 +30,4 @@ file_filter = Habitica/res/values-<lang>/strings.xml
 source_file = Habitica/res/values/strings.xml
 source_lang = en
 type = ANDROID
+

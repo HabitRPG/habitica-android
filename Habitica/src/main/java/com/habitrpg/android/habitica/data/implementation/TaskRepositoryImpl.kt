@@ -115,7 +115,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return apiClient.scoreChecklistItem(taskId, itemId)
                 .flatMap { localRepository.getTask(taskId).first() }
                 .doOnNext { task ->
-                    val updatedItem: ChecklistItem? = task.checklist.lastOrNull { itemId == it.id }
+                    val updatedItem: ChecklistItem? = task.checklist?.lastOrNull { itemId == it.id }
                     if (updatedItem != null) {
                         localRepository.executeTransaction { updatedItem.completed = !updatedItem.completed }
                     }
@@ -132,18 +132,27 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             return Observable.just(task)
         }
         lastTaskAction = now
-        if (task.tags.size > 0) {
-            val tags = RealmList(*localRepository.getUnmanagedCopy(task.tags).toTypedArray())
-            task.tags = tags
+        task.tags?.let {
+            if (it.size > 0) {
+                val tags = RealmList(*localRepository.getUnmanagedCopy(it).toTypedArray())
+                task.tags = tags
+            }
         }
-        if (task.checklist.size > 0) {
-            val checklist = RealmList(*localRepository.getUnmanagedCopy(task.checklist).toTypedArray())
-            task.checklist = checklist
+
+        task.checklist?.let {
+            if (it.size > 0) {
+                val checklist = RealmList(*localRepository.getUnmanagedCopy(it).toTypedArray())
+                task.checklist = checklist
+            }
         }
-        if (task.reminders.size > 0) {
-            val reminders = RealmList(*localRepository.getUnmanagedCopy(task.reminders).toTypedArray())
-            task.reminders = reminders
+
+        task.reminders?.let {
+            if (it.size > 0) {
+                val reminders = RealmList(*localRepository.getUnmanagedCopy(it).toTypedArray())
+                task.reminders = reminders
+            }
         }
+
         return apiClient.createTask(task)
                 .map { task1 ->
                     task1.dateCreated = Date()
@@ -158,10 +167,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             return Observable.just(task)
         }
         lastTaskAction = now
-        val id = task.id
-        if (id == null) {
-            return Observable.just(task)
-        }
+        val id = task.id ?: return Observable.just(task)
         return localRepository.getTaskCopy(id).first()
                 .flatMap { task1 -> apiClient.updateTask(id, task1) }
                 .map { task1 ->

@@ -564,7 +564,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         } else {
             try {
                 super.onBackPressed();
-            } catch (IllegalStateException ignored) {}
+            } catch (Exception ignored) {}
             if (this.activeFragment != null && activeFragment.get() != null) {
                 this.activeFragment.get().updateUserData(user);
             }

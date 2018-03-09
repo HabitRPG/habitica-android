@@ -40,16 +40,13 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         removeOldTasks(userId, sortedTasks)
 
         val allChecklistItems = ArrayList<ChecklistItem>()
-        for (t in sortedTasks) {
-            allChecklistItems.addAll(t.checklist)
-        }
+        sortedTasks.forEach { it.checklist?.let { it1 -> allChecklistItems.addAll(it1) } }
         removeOldChecklists(allChecklistItems)
 
         val allReminders = ArrayList<RemindersItem>()
-        for (t in sortedTasks) {
-            allReminders.addAll(t.reminders)
-        }
+        sortedTasks.forEach { it.reminders?.let { it1 -> allReminders.addAll(it1) } }
         removeOldReminders(allReminders)
+
         realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(sortedTasks) }
     }
 
@@ -93,8 +90,8 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val tasksToDelete = localTasks.filterNot { onlineTaskList.contains(it) }
         realm.executeTransaction {
             for (localTask in tasksToDelete) {
-                localTask.checklist.deleteAllFromRealm()
-                localTask.reminders.deleteAllFromRealm()
+                localTask.checklist?.deleteAllFromRealm()
+                localTask.reminders?.deleteAllFromRealm()
                 localTask.deleteFromRealm()
             }
         }
@@ -110,8 +107,8 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val tasksToDelete = localTasks.filterNot { onlineTaskList.contains(it) }
         realm.executeTransaction {
             for (localTask in tasksToDelete) {
-                localTask.checklist.deleteAllFromRealm()
-                localTask.reminders.deleteAllFromRealm()
+                localTask.checklist?.deleteAllFromRealm()
+                localTask.reminders?.deleteAllFromRealm()
                 localTask.deleteFromRealm()
             }
         }

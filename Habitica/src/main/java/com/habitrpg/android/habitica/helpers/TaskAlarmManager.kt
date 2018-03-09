@@ -33,21 +33,24 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
     }
 
     private fun setAlarmsForTask(task: Task) {
-        val reminders = task.reminders
-        for (reminder in reminders) {
-            var currentReminder = reminder
-            if (task.type == Task.TYPE_DAILY) {
-                //Ensure that we set to the next available time
-                currentReminder = this.setTimeForDailyReminder(currentReminder, task)
+        task.reminders?.let {
+            for (reminder in it) {
+                var currentReminder = reminder
+                if (task.type == Task.TYPE_DAILY) {
+                    //Ensure that we set to the next available time
+                    currentReminder = this.setTimeForDailyReminder(currentReminder, task)
+                }
+                this.setAlarmForRemindersItem(task, currentReminder)
             }
-            this.setAlarmForRemindersItem(task, currentReminder)
         }
+
     }
 
     private fun removeAlarmsForTask(task: Task) {
-        val reminders = task.reminders
-        for (reminder in reminders) {
-            this.removeAlarmForRemindersItem(reminder)
+        task.reminders?.let {
+            for (reminder in it) {
+                this.removeAlarmForRemindersItem(reminder)
+            }
         }
     }
 
@@ -78,12 +81,12 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
     }
 
     private fun setTimeForDailyReminder(remindersItem: RemindersItem?, task: Task): RemindersItem? {
-        val oldTime = remindersItem!!.time
+        val oldTime = remindersItem?.time
         val newTime = task.getNextReminderOccurence(oldTime) ?: return null
         val calendar = Calendar.getInstance()
         calendar.time = newTime
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), oldTime.hours, oldTime.minutes, 0)
-        remindersItem.time = calendar.time
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), oldTime?.hours ?: 0, oldTime?.minutes ?: 0, 0)
+        remindersItem?.time = calendar.time
         return remindersItem
     }
 
@@ -124,20 +127,18 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         sender.cancel()
         am.cancel(sender)
-
     }
 
     companion object {
-        val TASK_ID_INTENT_KEY = "TASK_ID"
-        val TASK_NAME_INTENT_KEY = "TASK_NAME"
+        const val TASK_ID_INTENT_KEY = "TASK_ID"
+        const val TASK_NAME_INTENT_KEY = "TASK_NAME"
 
         fun scheduleDailyReminder(context: Context?) {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             if (prefs.getBoolean("use_reminder", false)) {
-
                 val timeval = prefs.getString("reminder_time", "19:00")
 
-                val pieces = timeval!!.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                val pieces = timeval?.split(":".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray() ?: return
                 val hour = Integer.parseInt(pieces[0])
                 val minute = Integer.parseInt(pieces[1])
                 val cal = Calendar.getInstance()

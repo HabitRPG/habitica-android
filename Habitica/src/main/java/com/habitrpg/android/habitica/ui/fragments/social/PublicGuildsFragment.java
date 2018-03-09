@@ -47,19 +47,17 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            setUnbinder(ButterKnife.bind(this, view));
-            recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
-            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-            viewAdapter = new PublicGuildsRecyclerViewAdapter(null, true);
-            viewAdapter.setMemberGuildIDs(this.memberGuildIDs);
-            viewAdapter.apiClient = this.apiClient;
-            recyclerView.setAdapter(viewAdapter);
-            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
-            this.fetchGuilds();
-        }
+        setUnbinder(ButterKnife.bind(this, view));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        viewAdapter = new PublicGuildsRecyclerViewAdapter(null, true);
+        viewAdapter.setMemberGuildIDs(this.memberGuildIDs);
+        viewAdapter.apiClient = this.apiClient;
+        recyclerView.setAdapter(viewAdapter);
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
+        this.fetchGuilds();
         return view;
     }
 

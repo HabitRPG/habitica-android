@@ -65,25 +65,23 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-            android.support.v4.app.FragmentActivity context = getActivity();
+        android.support.v4.app.FragmentActivity context = getActivity();
 
-            layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-            if (layoutManager == null) {
-                layoutManager = new LinearLayoutManager(context);
+        if (layoutManager == null) {
+            layoutManager = new LinearLayoutManager(context);
 
-                recyclerView.setLayoutManager(layoutManager);
-            }
-            if (recyclerView.getAdapter() == null) {
-                this.setInnerAdapter();
-            }
-            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
+            recyclerView.setLayoutManager(layoutManager);
         }
+        if (recyclerView.getAdapter() == null) {
+            this.setInnerAdapter();
+        }
+        recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
 
         return view;
     }

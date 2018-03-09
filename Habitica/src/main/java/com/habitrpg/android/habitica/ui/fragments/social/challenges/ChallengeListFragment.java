@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -92,7 +93,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     }
 
     @Override
-    public void injectFragment(AppComponent component) {
+    public void injectFragment(@NonNull AppComponent component) {
         component.inject(this);
     }
 

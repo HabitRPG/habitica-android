@@ -16,8 +16,12 @@ class WorldStateSerialization: JsonDeserializer<WorldState> {
         if (worldBossObject == null) {
             return state
         }
-        state.worldBossActive = worldBossObject["active"].asBoolean
-        state.worldBossKey = worldBossObject["key"].asString
+        if (worldBossObject.has("active") && !worldBossObject["active"].isJsonNull) {
+            state.worldBossActive = worldBossObject["active"].asBoolean
+        }
+        if (worldBossObject.has("key") && !worldBossObject["key"].isJsonNull) {
+            state.worldBossKey = worldBossObject["key"].asString
+        }
         if (worldBossObject.has("progress")) {
             val progress = QuestProgress()
             val progressObj = worldBossObject.getAsJsonObject("progress")

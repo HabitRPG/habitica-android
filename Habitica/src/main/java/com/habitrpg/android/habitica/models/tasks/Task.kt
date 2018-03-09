@@ -28,7 +28,7 @@ open class Task : RealmObject, Parcelable {
     @Stats.StatsTypes
     var attribute: String? = Stats.STRENGTH
     var value: Double = 0.0
-    var tags: RealmList<Tag> = RealmList()
+    var tags: RealmList<Tag>? = RealmList()
     var dateCreated: Date? = null
     var position: Int? = 0
     var group: TaskGroupPlan? = null
@@ -39,8 +39,8 @@ open class Task : RealmObject, Parcelable {
     var counterDown: Int? = 0
     //todos/dailies
     var completed: Boolean = false
-    var checklist: RealmList<ChecklistItem> = RealmList()
-    var reminders: RealmList<RemindersItem> = RealmList()
+    var checklist: RealmList<ChecklistItem>? = RealmList()
+    var reminders: RealmList<RemindersItem>? = RealmList()
     //dailies
     var frequency: String? = null
     var everyX: Int? = 0
@@ -83,7 +83,7 @@ open class Task : RealmObject, Parcelable {
     private var weeksOfMonth: MutableList<Int>? = null
 
     val completedChecklistCount: Int
-        get() = checklist.count { it.completed }
+        get() = checklist?.count { it.completed } ?: 0
 
     val lightTaskColor: Int
         get() {
@@ -128,7 +128,7 @@ open class Task : RealmObject, Parcelable {
         get() = isDue == true && !completed
 
     val isChecklistDisplayActive: Boolean
-        get() = this.isDisplayedActive && this.checklist.size != this.completedChecklistCount
+        get() = this.isDisplayedActive && this.checklist?.size != this.completedChecklistCount
 
     val isGroupTask: Boolean
         get() = group?.approvalApproved == true
@@ -140,11 +140,11 @@ open class Task : RealmObject, Parcelable {
     @Retention(AnnotationRetention.SOURCE)
     annotation class TaskTypes
 
-    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags.mapTo(ArrayList()) { it.getId() }.containsAll(tagIdList)
+    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.getId() }?.containsAll(tagIdList) ?: false
 
     fun checkIfDue(): Boolean? = isDue == true
 
-    fun getNextReminderOccurence(oldTime: Date): Date? {
+    fun getNextReminderOccurence(oldTime: Date?): Date? {
         val today = Calendar.getInstance()
 
         val newTime = GregorianCalendar()
