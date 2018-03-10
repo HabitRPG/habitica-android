@@ -57,7 +57,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     private fun removeOldChallenges(userId: String, onlineChallenges: List<Challenge>) {
-        val challenges = realm.where(Challenge::class.java).equalTo("userId", userId).findAll().createSnapshot()
+        val challenges = realm.where(Challenge::class.java).equalTo("isParticipating", true).findAll().createSnapshot()
         val challengesToDelete = challenges.filterNot { onlineChallenges.contains(it) }
         realm.executeTransaction {
             for (challenge in challengesToDelete) {

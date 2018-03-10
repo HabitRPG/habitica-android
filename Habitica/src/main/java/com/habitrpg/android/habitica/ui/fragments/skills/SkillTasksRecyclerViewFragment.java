@@ -45,11 +45,7 @@ public class SkillTasksRecyclerViewFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        }
-
-        return view;
+        return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
     @Override

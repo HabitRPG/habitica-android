@@ -349,10 +349,12 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     fun setUsername(name: String?) {
-        if (name != null && name.isNotEmpty()) {
-            toolbarTitle.text = name
-        } else {
-            toolbarTitle.text = "Habitica"
+        if (toolbarTitle != null) {
+            if (name != null && name.isNotEmpty()) {
+                toolbarTitle.text = name
+            } else {
+                toolbarTitle.text = "Habitica"
+            }
         }
     }
 

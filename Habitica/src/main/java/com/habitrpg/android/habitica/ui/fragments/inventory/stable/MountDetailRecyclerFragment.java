@@ -37,28 +37,26 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.usesTabLayout = false;
         super.onCreateView(inflater, container, savedInstanceState);
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-            layoutManager = new GridLayoutManager(getActivity(), 2);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
 
-            adapter = (MountDetailRecyclerAdapter) recyclerView.getAdapter();
-            if (adapter == null) {
-                adapter = new MountDetailRecyclerAdapter(null, true);
-                adapter.context = this.getActivity();
-                adapter.itemType = this.animalType;
-                recyclerView.setAdapter(adapter);
-                recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
-                this.loadItems();
+        adapter = (MountDetailRecyclerAdapter) recyclerView.getAdapter();
+        if (adapter == null) {
+            adapter = new MountDetailRecyclerAdapter(null, true);
+            adapter.context = this.getActivity();
+            adapter.itemType = this.animalType;
+            recyclerView.setAdapter(adapter);
+            recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
+            this.loadItems();
 
-                getCompositeSubscription().add(adapter.getEquipEvents()
-                        .flatMap(key -> inventoryRepository.equip(user, "mount", key))
-                        .subscribe(items -> {}, RxErrorHandler.handleEmptyError()));
-            }
+            getCompositeSubscription().add(adapter.getEquipEvents()
+                    .flatMap(key -> inventoryRepository.equip(user, "mount", key))
+                    .subscribe(items -> {}, RxErrorHandler.handleEmptyError()));
         }
 
         if (savedInstanceState != null) {

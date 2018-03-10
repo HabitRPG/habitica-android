@@ -73,9 +73,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_items, container, false);
-        }
+        view = inflater.inflate(R.layout.fragment_items, container, false);
         setUnbinder(ButterKnife.bind(this, view));
 
         recyclerView.setEmptyView(emptyView);
