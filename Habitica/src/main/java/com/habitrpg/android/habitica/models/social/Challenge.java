@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.social;
 
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -63,5 +64,13 @@ public class Challenge extends RealmObject {
         }
 
         return map;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass().equals(Challenge.class) && this.id != null) {
+            return this.id.equals(((Challenge)obj).id);
+        }
+        return super.equals(obj);
     }
 }
