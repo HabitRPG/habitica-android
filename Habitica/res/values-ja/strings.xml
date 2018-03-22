@@ -297,6 +297,7 @@
   <string name="feed">えさをやる</string>
   <string name="hatch_with">%s でペットをかえす</string>
   <string name="hatched_pet_title">%1$s%2$sが生まれた!</string>
+  <string name="evolved_pet_title">%1$s%2$s はあなたに懐きました。 一緒に出かけましょう!</string>
   <string name="close">閉じる</string>
   <string name="share">共有する</string>
   <string name="notification_pet_fed">%1$s%2$sにえさをやった!</string>

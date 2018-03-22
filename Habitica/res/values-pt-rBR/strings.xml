@@ -301,6 +301,7 @@
   <string name="feed">Alimentar</string>
   <string name="hatch_with">Chocar mascote com %s</string>
   <string name="hatched_pet_title">Você chocou um %1$s %2$s!</string>
+  <string name="evolved_pet_title">Você domou %1$s %2$s, vamos dar um passeio!</string>
   <string name="close">Fechar</string>
   <string name="share">Compartilhar</string>
   <string name="notification_pet_fed">Você alimentou seu %1$s %2$s!</string>

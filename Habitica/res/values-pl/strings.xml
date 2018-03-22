@@ -298,6 +298,7 @@
   <string name="feed">Nakarm</string>
   <string name="hatch_with">Wykluj za pomocą %s</string>
   <string name="hatched_pet_title">Wyklułeś/as %1$s %2$s!</string>
+  <string name="evolved_pet_title">Oswoiłeś: %1$s %2$s, chodźmy na przejażdżkę!</string>
   <string name="close">Zamknij</string>
   <string name="share">Podziel się</string>
   <string name="notification_pet_fed">Nakarmiłeś/aś %1$s %2$s!</string>

@@ -301,6 +301,7 @@
   <string name="feed">Voeder</string>
   <string name="hatch_with">Laat huisdier uitkomen met %s</string>
   <string name="hatched_pet_title">Je hebt een %1$s %2$s laten uitkomen!</string>
+  <string name="evolved_pet_title">Je hebt %1$s %2$s getemd; laten we op weg gaan!</string>
   <string name="close">Sluiten</string>
   <string name="share">Delen</string>
   <string name="notification_pet_fed">Je hebt je %1$s %2$s gevoederd!</string>

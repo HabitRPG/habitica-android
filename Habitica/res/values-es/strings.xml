@@ -302,6 +302,7 @@
   <string name="feed">Alimentar</string>
   <string name="hatch_with">Criar mascota con %s</string>
   <string name="hatched_pet_title">¡Ha nacido un/a %2$s %1$s!</string>
+  <string name="evolved_pet_title">Has dominado a %2$s %1$s, ¡vamos a dar una vuelta!</string>
   <string name="close">Cerrar</string>
   <string name="share">Compartir</string>
   <string name="notification_pet_fed">¡Tu %2$s %1$s ha comido!</string>

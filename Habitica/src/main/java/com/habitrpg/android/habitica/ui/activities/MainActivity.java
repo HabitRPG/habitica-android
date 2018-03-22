@@ -724,7 +724,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                         String colorName = event.usingPet.getColorText();
                         String animalName = event.usingPet.getAnimalText();
                         AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                                .setTitle(getString(R.string.hatched_pet_title, colorName, animalName))
+                                .setTitle(getString(R.string.evolved_pet_title, colorName, animalName))
                                 .setView(mountWrapper)
                                 .setPositiveButton(R.string.close, (hatchingDialog, which) -> hatchingDialog.dismiss())
                                 .setNeutralButton(R.string.share, (hatchingDialog, which) -> {

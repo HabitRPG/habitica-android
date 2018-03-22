@@ -301,6 +301,7 @@
   <string name="feed">Покормить</string>
   <string name="hatch_with">Вылупить питомца с помощью %s</string>
   <string name="hatched_pet_title">У вас вылупился %1$s %2$s!</string>
+  <string name="evolved_pet_title">%1$s %2$s ждет в стойлах, пора покататься!</string>
   <string name="close">Закрыть</string>
   <string name="share">Поделиться</string>
   <string name="notification_pet_fed">Вы покормили вашего %1$s %2$s!</string>
