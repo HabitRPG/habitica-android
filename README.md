@@ -58,3 +58,6 @@ Setup Habitica build config files by simply copying the example habitica files.
 
 Note: this is the default production `habitica.properties` file for habitica.com. If you
 want to use a local habitica server, please modify the values in the properties file accordingly.
+
+Building also requires a google-services.json file:  Register/Login to Firebase, create new project called Habitica, create two apps, com.habitrpg.android.habitica and com.habitrpg.android.habitica.debug.
+Download google-services.json, copy to Habitica/google-services.json.
