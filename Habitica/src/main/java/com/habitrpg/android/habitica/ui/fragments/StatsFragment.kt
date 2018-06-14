@@ -129,8 +129,12 @@ class StatsFragment: BaseMainFragment() {
 
     private fun showBulkAllocateDialog() {
         context.notNull { context ->
-            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.getComponent())
-            dialog.show()
+            user?.stats?.getLvl()?.let {
+                if (it >= 10) {
+                    val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.getComponent())
+                    dialog.show()
+                }
+            }
         }
     }
 
