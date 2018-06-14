@@ -122,7 +122,10 @@ class StatsFragment: BaseMainFragment() {
 
         statsAllocationButton.setOnClickListener {
             if (user?.stats?.points ?: 0 > 0) {
-                showBulkAllocateDialog()
+                val lvl = user?.stats?.getLvl()
+                if (lvl != null && lvl >= 10) {
+                    showBulkAllocateDialog()
+                }
             }
         }
     }
