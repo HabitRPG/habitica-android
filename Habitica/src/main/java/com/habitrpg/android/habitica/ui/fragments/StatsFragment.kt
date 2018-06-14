@@ -126,7 +126,6 @@ class StatsFragment: BaseMainFragment() {
                 if (lvl != null && lvl >= 10) {
                     showBulkAllocateDialog()
                 }
-
             }
         }
     }
