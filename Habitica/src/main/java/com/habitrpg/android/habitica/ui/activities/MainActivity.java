@@ -382,11 +382,15 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Override
     protected void onPause() {
+        updateWidgets()
+        super.onPause();
+    }
+    
+    private void updateWidgets() {
         updateWidget(AvatarStatsWidgetProvider.class);
         updateWidget(TodoListWidgetProvider.class);
         updateWidget(DailiesWidgetProvider.class);
         updateWidget(HabitButtonWidgetProvider.class);
-        super.onPause();
     }
 
     private void updateWidget(Class widgetClass) {
