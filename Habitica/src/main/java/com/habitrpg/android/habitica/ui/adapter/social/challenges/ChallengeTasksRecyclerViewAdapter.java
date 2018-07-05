@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.github.underscore.$;
+import com.github.underscore.U;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
@@ -89,7 +89,7 @@ public class ChallengeTasksRecyclerViewAdapter
     }
 
     public int addTaskUnder(Task taskToAdd, Task taskAbove) {
-        int position = $.findIndex(this.getContent(), t -> t.getId().equals(taskAbove.getId()));
+        int position = U.findIndex(this.getContent(), t -> t.getId().equals(taskAbove.getId()));
 
         getContent().add(position + 1, taskToAdd);
         filter();
@@ -127,7 +127,7 @@ public class ChallengeTasksRecyclerViewAdapter
     }
 
     public List<Task> getTaskList(){
-        return $.map(getContent(), t -> t);
+        return U.map(getContent(), t -> t);
     }
 
 

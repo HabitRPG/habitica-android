@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.novoda:bintray-release:0.5.0'
+        classpath 'com.novoda:bintray-release:0.8.0'
     }
 }
 
@@ -62,10 +62,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'org.glassfish:javax.json:1.0.4'
     implementation 'com.google.android.gms:play-services:11.4.2'
-    implementation 'com.google.code.gson:gson:2.8.0'
-    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.loopj.android:android-async-http:1.4.9'
-    implementation 'org.solovyev.android:checkout:1.0.1@aar'
+    implementation 'org.solovyev.android:checkout:1.2.1@aar'
     androidTestImplementation 'org.mockito:mockito-core:2.8.9'
     androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
     androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'

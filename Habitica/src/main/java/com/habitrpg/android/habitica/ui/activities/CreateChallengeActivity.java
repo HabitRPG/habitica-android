@@ -30,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.github.underscore.$;
+import com.github.underscore.U;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
@@ -220,7 +220,7 @@ public class CreateChallengeActivity extends BaseActivity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setMessage($.join(errorMessages, "\n"));
+                .setMessage(U.join(errorMessages, "\n"));
 
         AlertDialog alert = builder.create();
         alert.show();

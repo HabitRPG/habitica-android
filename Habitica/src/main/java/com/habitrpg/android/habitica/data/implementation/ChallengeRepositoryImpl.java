@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation;
 
-import com.github.underscore.$;
+import com.github.underscore.U;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
@@ -38,12 +38,12 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
 
 
     private TasksOrder getTaskOrders(List<Task> taskList) {
-        Map<String, List<Task>> stringListMap = $.groupBy(taskList, t -> t.getType());
+        Map<String, List<Task>> stringListMap = U.groupBy(taskList, t -> t.getType());
 
         TasksOrder tasksOrder = new TasksOrder();
 
         for (Map.Entry<String, List<Task>> entry : stringListMap.entrySet()) {
-            List<String> taskIdList = $.map(entry.getValue(), t -> t.getId());
+            List<String> taskIdList = U.map(entry.getValue(), t -> t.getId());
 
             switch (entry.getKey()) {
                 case Task.TYPE_HABIT:
@@ -87,8 +87,8 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
     public Observable<Challenge> updateChallenge(Challenge challenge, List<Task> fullTaskList,
                                                  List<Task> addedTaskList, List<Task> updatedTaskList, List<String> removedTaskList) {
 
-        ArrayList<Observable> observablesToWait = new ArrayList<>($.map(updatedTaskList, t -> apiClient.updateTask(t.getId(), t)));
-        observablesToWait.addAll($.map(removedTaskList, apiClient::deleteTask));
+        ArrayList<Observable> observablesToWait = new ArrayList<>(U.map(updatedTaskList, t -> apiClient.updateTask(t.getId(), t)));
+        observablesToWait.addAll(U.map(removedTaskList, apiClient::deleteTask));
 
         if (addedTaskList.size() != 0) {
             observablesToWait.add(addChallengeTasks(challenge.id, addedTaskList));

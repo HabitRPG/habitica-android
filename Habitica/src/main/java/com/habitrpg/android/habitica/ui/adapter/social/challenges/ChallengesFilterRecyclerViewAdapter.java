@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
-import com.github.underscore.$;
+import com.github.underscore.U;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.social.Group;
 
@@ -64,7 +64,7 @@ public class ChallengesFilterRecyclerViewAdapter extends RecyclerView.Adapter<Ch
 
     public void selectAll(List<Group> groupsToCheck){
         for (ChallengeViewHolder h : holderList) {
-            h.checkbox.setChecked($.find(groupsToCheck, g -> h.group.getId().equals(g.getId())).isPresent());
+            h.checkbox.setChecked(U.find(groupsToCheck, g -> h.group.getId().equals(g.getId())).isPresent());
         }
     }
     public List<Group> getCheckedEntries(){

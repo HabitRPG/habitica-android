@@ -64,16 +64,16 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val drawerItem = getItem(position)
         if (getItemViewType(position) == 0) {
             (holder as DrawerItemViewHolder?)?.tintColor = tintColor
-            holder?.backgroundTintColor = backgroundTintColor
-            holder?.bind(drawerItem, drawerItem.identifier == selectedItem)
-            holder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem.identifier) }
+            holder.backgroundTintColor = backgroundTintColor
+            holder.bind(drawerItem, drawerItem.identifier == selectedItem)
+            holder.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem.identifier) }
         } else {
             (holder as SectionHeaderViewHolder?)?.backgroundTintColor = backgroundTintColor
-            holder?.bind(drawerItem)
+            holder.bind(drawerItem)
         }
     }
 
@@ -83,7 +83,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     override fun getItemViewType(position: Int): Int = if (getItem(position).isHeader) 1 else 0
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0) {
             DrawerItemViewHolder(parent?.inflate(R.layout.drawer_main_item))
         } else {
