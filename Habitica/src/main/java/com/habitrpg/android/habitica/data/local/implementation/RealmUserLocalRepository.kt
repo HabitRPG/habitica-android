@@ -46,6 +46,12 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
+    override fun saveMessages(messages: List<ChatMessage>) {
+        realm.executeTransaction {
+            it.insertOrUpdate(messages)
+        }
+    }
+
     private fun removeOldTags(userId: String, onlineTags: List<Tag>) {
         val tags = realm.where(Tag::class.java).equalTo("userId", userId).findAll().createSnapshot()
         val tagsToDelete = tags.filterNot { onlineTags.contains(it) }

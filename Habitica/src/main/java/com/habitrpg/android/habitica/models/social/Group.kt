@@ -36,8 +36,6 @@ open class Group : RealmObject() {
 
     var privacy: String? = null
 
-    var chat: RealmList<ChatMessage>? = null
-
     var members: RealmList<User>? = null
 
     var challengeCount: Int = 0

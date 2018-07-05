@@ -12,12 +12,12 @@ public class Server {
 
     private Server(String addr, boolean attachSuffix) {
         if (attachSuffix) {
-            if (addr.endsWith("/api/v3") || addr.endsWith("/api/v3/")) {
+            if (addr.endsWith("/api/v4") || addr.endsWith("/api/v4/")) {
                 this.addr = addr;
             } else if (addr.endsWith("/")) {
-                this.addr = addr + "api/v3/";
+                this.addr = addr + "api/v4/";
             } else {
-                this.addr = addr + "/api/v3/";
+                this.addr = addr + "/api/v4/";
             }
         } else {
             this.addr = addr;

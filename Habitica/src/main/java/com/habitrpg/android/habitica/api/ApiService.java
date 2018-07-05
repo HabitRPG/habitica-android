@@ -69,6 +69,10 @@ public interface ApiService {
     @PUT("user/")
     Observable<HabitResponse<User>> registrationLanguage(@Header("Accept-Language") String registrationLanguage);
 
+
+    @GET("inbox/messages")
+    Observable<HabitResponse<List<ChatMessage>>> getInboxMessages();
+
     @GET("user/in-app-rewards")
     Observable<HabitResponse<List<ShopItem>>> retrieveInAppRewards();
     @GET("user/inventory/buy")

@@ -229,6 +229,7 @@ public interface ApiClient {
     boolean hasAuthenticationKeys();
 
     Observable<User> retrieveUser(boolean withTasks);
+    Observable<List<ChatMessage>> retrieveInboxMessages();
 
     <T> Observable.Transformer<HabitResponse<T>, T> configureApiCallObserver();
 

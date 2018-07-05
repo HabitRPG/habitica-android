@@ -36,9 +36,6 @@ class UserDeserializer : JsonDeserializer<User> {
         }
         if (obj.has("inbox")) {
             user.inbox = context.deserialize(obj.get("inbox"), Inbox::class.java)
-            for (message in user.inbox.messages) {
-                message.isInboxMessage = true
-            }
         }
         if (obj.has("preferences")) {
             user.preferences = context.deserialize(obj.get("preferences"), Preferences::class.java)

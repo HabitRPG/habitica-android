@@ -104,9 +104,9 @@ class TavernDetailFragment : BaseFragment() {
         bindButtons()
 
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
-                .doOnNext({  if (!it.hasActiveQuest) worldBossSection.visibility = View.GONE })
+                .doOnNext {  if (!it.hasActiveQuest) worldBossSection.visibility = View.GONE }
                 .filter { it.hasActiveQuest }
-                .doOnNext({ questProgressView.progress = it.quest})
+                .doOnNext { questProgressView.progress = it.quest}
                 .flatMap { inventoryRepository.getQuestContent(it.quest?.key).first() }
                 .subscribe(Action1 {
                     questProgressView.quest = it
@@ -218,9 +218,9 @@ class TavernDetailFragment : BaseFragment() {
             background?.setColorFilter(quest.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
             promptView?.backgroundCompat = background
 
-            alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+            alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
                 dialog.dismiss()
-            })
+            }
             alert.show() }
     }
 }

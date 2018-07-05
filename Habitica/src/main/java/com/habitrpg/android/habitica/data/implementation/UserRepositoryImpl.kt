@@ -49,7 +49,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             lastSync = Date()
             return apiClient.retrieveUser(withTasks)
-                    .doOnNext({ localRepository.saveUser(it) })
+                    .doOnNext { localRepository.saveUser(it) }
                     .doOnNext { user ->
                         if (withTasks) {
                             taskRepository.saveTasks(user.id, user.tasksOrder, user.tasks)
@@ -72,6 +72,15 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun getInboxMessages(replyToUserID: String?): Observable<RealmResults<ChatMessage>> =
             localRepository.getInboxMessages(userId, replyToUserID)
+
+    override fun retrieveInboxMessages(): Observable<List<ChatMessage>> {
+        return apiClient.retrieveInboxMessages().doOnNext { messages ->
+            messages.forEach {
+                it.isInboxMessage = true
+            }
+            localRepository.save(messages)
+        }
+    }
 
     override fun revive(user: User): Observable<User> =
             apiClient.revive().map { newUser -> mergeUser(user, newUser) }

@@ -91,10 +91,18 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 newGroup
             }
         }
-        return observable.map { group ->
-            group.chat?.forEach { it.groupId = group.id }
-            group
-        }.doOnNext({ localRepository.save(it) })
+        return Observable.zip(observable.doOnNext { localRepository.save(it) }, retrieveGroupChat(id)
+                .map {
+                    it.forEach {
+                        it.groupId = id
+                    }
+                    return@map it
+                }
+                .doOnNext { localRepository.save(it) }
+        ) { group, _ ->
+            return@zip group
+        }
+
     }
 
     override fun getGroup(id: String?): Observable<Group> {

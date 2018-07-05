@@ -47,9 +47,6 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
         if (obj.has("type")) {
             group.type = obj.get("type").asString
         }
-        if (obj.has("chat")) {
-            group.chat = context.deserialize(obj.get("chat"), object : TypeToken<RealmList<ChatMessage>>() {}.type)
-        }
         if (obj.has("leader")) {
             if (obj.get("leader").isJsonPrimitive) {
                 group.leaderID = obj.get("leader").asString

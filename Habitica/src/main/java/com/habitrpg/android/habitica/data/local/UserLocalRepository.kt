@@ -16,6 +16,8 @@ interface UserLocalRepository : BaseLocalRepository {
 
     fun saveUser(user: User)
 
+    fun saveMessages(messages: List<ChatMessage>)
+
     fun getSkills(user: User): Observable<RealmResults<Skill>>
 
     fun getSpecialItems(user: User): Observable<RealmResults<Skill>>

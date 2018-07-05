@@ -813,6 +813,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                         pushNotificationManager.setUser(user1);
                         pushNotificationManager.addPushDeviceUsingStoredToken();
                     })
+                    .flatMap(user1 -> userRepository.retrieveInboxMessages())
                     .flatMap(user1 -> inventoryRepository.retrieveContent(false))
                     .flatMap(contentResult -> inventoryRepository.retrieveWorldState())
                     .subscribe(user1 -> {}, RxErrorHandler.handleEmptyError());

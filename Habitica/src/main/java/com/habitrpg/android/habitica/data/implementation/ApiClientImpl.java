@@ -377,6 +377,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         return userObservable;
     }
 
+    public Observable<List<ChatMessage>> retrieveInboxMessages() {
+        return apiService.getInboxMessages().compose(configureApiCallObserver());
+    }
+
     public boolean hasAuthenticationKeys() {
         return this.hostConfig.getUser() != null;
     }

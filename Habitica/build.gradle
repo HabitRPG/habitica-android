@@ -105,7 +105,7 @@ dependencies {
     //Tests
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.assertj:assertj-core:2.6.0'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.3'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testImplementation 'org.robolectric:robolectric:3.8'
     testImplementation 'org.robolectric:shadows-multidex:3.8'
     testImplementation 'org.robolectric:shadows-support-v4:3.3.2'
@@ -123,7 +123,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:11.4.2'
     implementation 'org.apmem.tools:layouts:1.10@aar'
     implementation 'com.roughike:bottom-bar:2.3.1'
-    implementation 'io.realm:android-adapters:3.0.0'
+    implementation 'io.realm:android-adapters:2.1.1'
     implementation(project(':seeds-sdk')) {
         exclude group: 'com.google.android.gms'
         exclude group: 'com.android.support', module: 'multidex'
