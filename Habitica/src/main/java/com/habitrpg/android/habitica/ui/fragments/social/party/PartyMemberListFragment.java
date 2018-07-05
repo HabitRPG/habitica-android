@@ -85,7 +85,7 @@ public class PartyMemberListFragment extends BaseFragment {
         if (partyId == null) {
             return;
         }
-        socialRepository.getGroupMembers(partyId).first().subscribe(users -> {
+        socialRepository.getGroupMembers(partyId).firstElement().subscribe(users -> {
             if (adapter != null) {
                 adapter.updateData(users);
             }

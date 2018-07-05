@@ -7,21 +7,21 @@ import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
+import io.reactivex.Flowable
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
-import rx.Observable
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
 
-    override fun getTutorialSteps(): Observable<RealmResults<TutorialStep>> = realm.where(TutorialStep::class.java).findAll().asObservable()
-                .filter({ it.isLoaded })
+    override fun getTutorialSteps(): Flowable<RealmResults<TutorialStep>> = realm.where(TutorialStep::class.java).findAll().asFlowable()
+                .filter { it.isLoaded }
 
-    override fun getUser(userID: String): Observable<User> {
+    override fun getUser(userID: String): Flowable<User> {
         return realm.where(User::class.java)
                 .equalTo("id", userID)
                 .findAll()
-                .asObservable()
+                .asFlowable()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
                 .map { users -> users.first() }
     }
@@ -72,17 +72,17 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getSkills(user: User): Observable<RealmResults<Skill>> {
+    override fun getSkills(user: User): Flowable<RealmResults<Skill>> {
         val habitClass = if (user.preferences.disableClasses) "none" else user.stats.habitClass
         return realm.where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
                 .lessThanOrEqualTo("lvl", user.stats.lvl)
                 .findAll()
-                .asObservable()
-                .filter({ it.isLoaded })
+                .asFlowable()
+                .filter { it.isLoaded }
     }
 
-    override fun getSpecialItems(user: User): Observable<RealmResults<Skill>> {
+    override fun getSpecialItems(user: User): Flowable<RealmResults<Skill>> {
         val specialItems = user.items.special
         val ownedItems = ArrayList<String>()
         if (specialItems != null) {
@@ -105,25 +105,27 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         return realm.where(Skill::class.java)
                 .`in`("key", ownedItems.toTypedArray())
                 .findAll()
-                .asObservable()
-                .filter({ it.isLoaded })
+                .asFlowable()
+                .filter { it.isLoaded }
     }
 
-    override fun getInboxMessages(userId: String, replyToUserID: String?): Observable<RealmResults<ChatMessage>> {
+    override fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
                 .equalTo("uuid", replyToUserID)
-                .findAllSorted("timestamp", Sort.DESCENDING)
-                .asObservable()
-                .filter({ it.isLoaded })
+                .sort("timestamp", Sort.DESCENDING)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
     }
 
-    override fun getInboxOverviewList(userId: String): Observable<RealmResults<ChatMessage>> {
+    override fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
                 .distinct("uuid")
                 .sort("timestamp", Sort.DESCENDING)
-                .asObservable()
-                .filter({ it.isLoaded })
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
     }
 }

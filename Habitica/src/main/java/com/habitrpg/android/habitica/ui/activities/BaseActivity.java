@@ -19,7 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return destroyed;
     }
 
-    protected CompositeSubscription compositeSubscription;
+    protected CompositeDisposable compositeSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         injectActivity(HabiticaBaseApplication.getComponent());
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
-        compositeSubscription = new CompositeSubscription();
+        compositeSubscription = new CompositeDisposable();
     }
 
     @Override
@@ -78,8 +78,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         destroyed = true;
 
-        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
-            compositeSubscription.unsubscribe();
+        if (compositeSubscription != null && !compositeSubscription.isDisposed()) {
+            compositeSubscription.dispose();
         }
         super.onDestroy();
     }
@@ -98,11 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             alwaysFinishActivitiesInt = Settings.System.getInt(getApplicationContext().getContentResolver(), Settings.System.ALWAYS_FINISH_ACTIVITIES, 0);
         }
 
-        if (alwaysFinishActivitiesInt == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return alwaysFinishActivitiesInt == 1;
     }
 
     void showDeveloperOptionsScreen() {

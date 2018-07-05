@@ -1,33 +1,31 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.android.habitica.models.tasks.*
+import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
-import rx.Observable
-import kotlin.collections.ArrayList
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
-    override fun getTasks(taskType: String, userID: String): Observable<RealmResults<Task>> {
+    override fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>> {
         return realm.where(Task::class.java)
                 .equalTo("type", taskType)
                 .equalTo("userId", userID)
-                .findAllSorted("position")
-                .asObservable()
+                .sort("position")
+                .findAll()
+                .asFlowable()
                 .filter({ it.isLoaded })
                 .retry(1)
     }
 
-    override fun getTasks(userId: String): Observable<RealmResults<Task>> {
+    override fun getTasks(userId: String): Flowable<RealmResults<Task>> {
         return realm.where(Task::class.java).equalTo("userId", userId)
-                .findAllSorted("position")
-                .asObservable()
+                .sort("position")
+                .findAll()
+                .asFlowable()
                 .filter({ it.isLoaded })
     }
 
@@ -143,17 +141,17 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getTask(taskId: String): Observable<Task> {
-        return realm.where(Task::class.java).equalTo("id", taskId).findFirstAsync().asObservable<RealmObject>()
+    override fun getTask(taskId: String): Flowable<Task> {
+        return realm.where(Task::class.java).equalTo("id", taskId).findFirstAsync().asFlowable<RealmObject>()
                 .filter { realmObject -> realmObject.isLoaded }
                 .cast(Task::class.java)
     }
 
-    override fun getTaskCopy(taskId: String): Observable<Task> {
+    override fun getTaskCopy(taskId: String): Flowable<Task> {
         return getTask(taskId)
                 .map { task ->
                     if (task.isManaged && task.isValid) {
-                        return@map realm.copyFromRealm<Task>(task)
+                        return@map realm.copyFromRealm(task)
                     } else {
                         return@map task
                     }
@@ -180,15 +178,15 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getTaskAtPosition(taskType: String, position: Int): Observable<Task> {
-        return realm.where(Task::class.java).equalTo("type", taskType).equalTo("position", position).findFirstAsync().asObservable<RealmObject>()
+    override fun getTaskAtPosition(taskType: String, position: Int): Flowable<Task> {
+        return realm.where(Task::class.java).equalTo("type", taskType).equalTo("position", position).findFirstAsync().asFlowable<RealmObject>()
                 .filter { realmObject -> realmObject.isLoaded }
                 .cast(Task::class.java)
     }
 
-    override fun updateIsdue(daily: TaskList): Observable<TaskList> {
-        return Observable.just(realm.where(Task::class.java).equalTo("type", "daily").findAll())
-                .first()
+    override fun updateIsdue(daily: TaskList): Maybe<TaskList> {
+        return Flowable.just(realm.where(Task::class.java).equalTo("type", "daily").findAll())
+                .firstElement()
                 .map { tasks ->
                     realm.beginTransaction()
                     tasks.filter { daily.tasks.containsKey(it.id) }.forEach { it.isDue = daily.tasks[it.id]?.isDue }

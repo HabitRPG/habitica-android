@@ -78,7 +78,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         Seeds.sharedInstance().recordSeedsIAPEvent(purchase.sku, 19.99);
                     }
                 }, throwable -> {
-                    if (throwable.getClass().equals(retrofit2.adapter.rxjava.HttpException.class)) {
+                    if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
                         HttpException error = (HttpException)throwable;
                         ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                         if (error.code() == 401) {
@@ -107,7 +107,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
                         EventBus.getDefault().post(new UserSubscribedEvent());
                     }, throwable -> {
-                        if (throwable.getClass().equals(retrofit2.adapter.rxjava.HttpException.class)) {
+                        if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
                             HttpException error = (HttpException) throwable;
                             ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {

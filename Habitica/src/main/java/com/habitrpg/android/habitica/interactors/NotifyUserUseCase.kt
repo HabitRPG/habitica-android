@@ -22,17 +22,17 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import rx.Observable
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 class NotifyUserUseCase @Inject
 constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread,
             private val levelUpUseCase: LevelUpUseCase, private val userRepository: UserRepository) : UseCase<NotifyUserUseCase.RequestValues, Stats>(threadExecutor, postExecutionThread) {
 
-    override fun buildUseCaseObservable(requestValues: RequestValues): Observable<Stats> {
-        return Observable.defer {
+    override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Stats> {
+        return Flowable.defer {
             if (requestValues.user == null) {
-                return@defer Observable . just < Stats >(null)
+                return@defer Flowable.empty<Stats>()
             }
             val stats = requestValues.user.stats
 
@@ -47,7 +47,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
                 if (view != null && type != null) {
                     HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
                 }
-                return@defer Observable.just<Stats>(stats)
+                return@defer Flowable.just(stats)
             }
         }
     }

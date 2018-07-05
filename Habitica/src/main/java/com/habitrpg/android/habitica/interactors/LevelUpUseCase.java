@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats> {
 
@@ -37,8 +37,8 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
     }
 
     @Override
-    protected Observable<Stats> buildUseCaseObservable(RequestValues requestValues) {
-        return Observable.defer(() -> {
+    protected Flowable<Stats> buildUseCaseObservable(RequestValues requestValues) {
+        return Flowable.defer(() -> {
             soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp);
 
             SuppressedModals suppressedModals = requestValues.user.getPreferences().getSuppressModals();
@@ -47,7 +47,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
                     checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null, requestValues.activity))
                             .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError());
 
-                    return Observable.just(requestValues.user.getStats());
+                    return Flowable.just(requestValues.user.getStats());
                 }
             }
 
@@ -80,7 +80,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
                 alert.show();
             }
 
-            return Observable.just(requestValues.user.getStats());
+            return Flowable.just(requestValues.user.getStats());
 
         });
     }

@@ -9,11 +9,9 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import kotlinx.android.synthetic.main.fragment_viewpager.*
-import rx.functions.Action1
 import javax.inject.Inject
 
 class TavernFragment : BaseMainFragment() {

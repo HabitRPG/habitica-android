@@ -48,7 +48,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
@@ -87,7 +87,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
                     if (user == null) {
                         return userRepository.retrieveUser(true);
                     } else {
-                        return Observable.just(user);
+                        return Flowable.just(user);
                     }
                 })
                 .subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError()));
@@ -212,8 +212,8 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
     public void onUserReceived(User user) {
         if (completedSetup) {
-            if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
-                compositeSubscription.unsubscribe();
+            if (compositeSubscription != null && !compositeSubscription.isDisposed()) {
+                compositeSubscription.dispose();
             }
             this.startMainActivity();
             return;

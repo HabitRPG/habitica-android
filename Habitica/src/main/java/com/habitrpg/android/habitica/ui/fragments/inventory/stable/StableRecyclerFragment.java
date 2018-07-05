@@ -30,7 +30,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public class StableRecyclerFragment extends BaseFragment {
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
@@ -132,18 +133,18 @@ public class StableRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        Observable<? extends Animal> observable;
+        Flowable<? extends Animal> observable;
 
         if ("pets".equals(itemType)) {
-            observable = inventoryRepository.getPets().first().flatMap(Observable::from);
+            observable = inventoryRepository.getPets().firstElement().toFlowable().flatMap(Flowable::fromIterable);
         } else {
-            observable = inventoryRepository.getMounts().first().flatMap(Observable::from);
+            observable = inventoryRepository.getMounts().firstElement().toFlowable().flatMap(Flowable::fromIterable);
         }
 
         observable.toList().flatMap(unsortedAnimals -> {
             List<Object> items = new ArrayList<>();
             if (unsortedAnimals.size() == 0) {
-                return Observable.just(items);
+                return Single.just(items);
             }
             String lastSectionTitle = "";
 
@@ -181,7 +182,7 @@ public class StableRecyclerFragment extends BaseFragment {
                     }
                 }
             }
-            return Observable.just(items);
+            return Single.just(items);
         }).subscribe(items -> adapter.setItemList(items), RxErrorHandler.handleEmptyError());
     }
 }

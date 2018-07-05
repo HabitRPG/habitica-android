@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.RequestValues, Void> {
 
@@ -25,8 +25,8 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
     }
 
     @Override
-    protected Observable<Void> buildUseCaseObservable(RequestValues requestValues) {
-        return Observable.defer(() -> {
+    protected Flowable<Void> buildUseCaseObservable(RequestValues requestValues) {
+        return Flowable.defer(() -> {
             TaskScoringResult data = requestValues.data;
 
             if (data != null) {
@@ -39,7 +39,7 @@ public class DisplayItemDropUseCase extends UseCase<DisplayItemDropUseCase.Reque
                 }
             }
 
-            return Observable.just(null);
+            return Flowable.empty();
         });
     }
 

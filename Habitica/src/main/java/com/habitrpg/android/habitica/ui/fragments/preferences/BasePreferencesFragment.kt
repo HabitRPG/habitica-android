@@ -7,8 +7,8 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import rx.functions.Action1
-import rx.subscriptions.CompositeSubscription
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -21,19 +21,19 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     internal open var user: User? = null
 
-    internal val compositeSubscription = CompositeSubscription()
+    internal val compositeSubscription = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        userRepository.getUser(userId).first().subscribe(Action1<User> {
+        userRepository.getUser(userId).firstElement().subscribe(Consumer<User> {
             this.user = it
         }, RxErrorHandler.handleEmptyError())
     }
 
     override fun onDestroy() {
         userRepository.close()
-        compositeSubscription.unsubscribe()
+        compositeSubscription.dispose()
         super.onDestroy()
     }
 

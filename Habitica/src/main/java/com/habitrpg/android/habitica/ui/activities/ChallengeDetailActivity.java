@@ -45,6 +45,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTas
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
+import com.habitrpg.android.habitica.utils.Action1;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -62,7 +63,6 @@ import javax.inject.Named;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.functions.Action1;
 
 
 public class ChallengeDetailActivity extends BaseActivity {
@@ -148,14 +148,14 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         List<Task> fullList = new ArrayList<>();
 
-        userRepository.getUser(userId).first().subscribe(user -> {
+        userRepository.getUser(userId).firstElement().subscribe(user -> {
             ChallengeDetailActivity.this.user = user;
             createTaskRecyclerFragment(fullList);
         }, RxErrorHandler.handleEmptyError());
 
         if (challengeId != null) {
             challengeRepository.getChallengeTasks(challengeId)
-                    .first()
+                    .firstElement()
                     .subscribe(taskList -> {
                         ArrayList<Task> resultList = new ArrayList<>();
 

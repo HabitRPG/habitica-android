@@ -21,8 +21,9 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 
 public class ChallengeTasksRecyclerViewAdapter
         extends SortableTasksRecyclerViewAdapter<BaseTaskViewHolder> {
@@ -84,8 +85,8 @@ public class ChallengeTasksRecyclerViewAdapter
         return TYPE_HEADER;
     }
 
-    public Observable<Task> addItemObservable(){
-        return addItemSubject;
+    public Flowable<Task> addItemObservable(){
+        return addItemSubject.toFlowable(BackpressureStrategy.BUFFER);
     }
 
     public int addTaskUnder(Task taskToAdd, Task taskAbove) {
@@ -165,7 +166,7 @@ public class ChallengeTasksRecyclerViewAdapter
             addBtn = (Button) itemView.findViewById(R.id.btn_add_task);
             addBtn.setClickable(true);
             addBtn.setOnClickListener(view -> callback.onNext(newTask));
-            context = itemView.getContext();
+            setContext(itemView.getContext());
         }
 
         @Override
@@ -184,7 +185,7 @@ public class ChallengeTasksRecyclerViewAdapter
 
             divider_name = (TextView) itemView.findViewById(R.id.divider_name);
 
-            context = itemView.getContext();
+            setContext(itemView.getContext());
         }
 
         @Override

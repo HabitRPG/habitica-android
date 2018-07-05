@@ -19,10 +19,11 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
-import rx.Observable;
-import rx.subjects.PublishSubject;
 
 public class MountDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Mount, MountDetailRecyclerAdapter.MountViewHolder> {
 
@@ -36,8 +37,8 @@ public class MountDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Mount, 
     }
 
 
-    public Observable<String> getEquipEvents() {
-        return equipEvents.asObservable();
+    public Flowable<String> getEquipEvents() {
+        return equipEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
     @Override

@@ -72,7 +72,7 @@ public class QrCodeManager {
         this.qrCodeWrapper = (FrameLayout) qrLayout.findViewById(R.id.qrCodeWrapper);
 
         if (userRepository != null) {
-            userRepository.getUser(userId).first().subscribe(avatarView::setAvatar, RxErrorHandler.handleEmptyError());
+            userRepository.getUser(userId).firstElement().subscribe(avatarView::setAvatar, RxErrorHandler.handleEmptyError());
         }
 
         this.displayQrCode();

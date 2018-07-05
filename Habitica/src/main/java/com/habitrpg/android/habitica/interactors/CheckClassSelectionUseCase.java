@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 import static com.habitrpg.android.habitica.ui.activities.MainActivity.SELECT_CLASS_RESULT;
 
@@ -23,9 +23,8 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
     }
 
     @Override
-    protected Observable<Void> buildUseCaseObservable(RequestValues requestValues) {
-        return Observable.defer(() -> {
-
+    protected Flowable<Void> buildUseCaseObservable(RequestValues requestValues) {
+        return Flowable.defer(() -> {
             User user = requestValues.user;
 
             if(requestValues.selectClassEvent == null) {
@@ -41,7 +40,7 @@ public class CheckClassSelectionUseCase extends UseCase<CheckClassSelectionUseCa
                 displayClassSelectionActivity(user, requestValues.selectClassEvent, requestValues.activity);
             }
 
-            return Observable.just(null);
+            return Flowable.empty();
         });
     }
 

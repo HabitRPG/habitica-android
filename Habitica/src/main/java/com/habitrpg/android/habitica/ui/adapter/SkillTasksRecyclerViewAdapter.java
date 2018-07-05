@@ -14,10 +14,11 @@ import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
-import rx.Observable;
-import rx.subjects.PublishSubject;
 
 
 public class SkillTasksRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.ViewHolder> {
@@ -53,10 +54,9 @@ public class SkillTasksRecyclerViewAdapter extends RealmRecyclerViewAdapter<Task
         }
     }
 
-    public Observable<Task> getTaskSelectionEvents() {
-        return taskSelectionEvents.asObservable();
+    public Flowable<Task> getTaskSelectionEvents() {
+        return taskSelectionEvents.toFlowable(BackpressureStrategy.DROP);
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

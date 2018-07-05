@@ -40,7 +40,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver {
         this.intent = intent;
         this.context = context;
 
-        this.userRepository.getUser().first().subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError());
+        this.userRepository.getUser().firstElement().subscribe(this::onUserReceived, RxErrorHandler.handleEmptyError());
     }
 
     public void onUserReceived(User user) {

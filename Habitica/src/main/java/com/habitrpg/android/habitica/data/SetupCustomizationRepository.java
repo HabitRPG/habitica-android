@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface SetupCustomizationRepository {
 
-    public List<SetupCustomization> getCustomizations(String type, User user);
-    public List<SetupCustomization> getCustomizations(String type, String subtype, User user);
+    List<SetupCustomization> getCustomizations(String type, User user);
+    List<SetupCustomization> getCustomizations(String type, String subtype, User user);
 }

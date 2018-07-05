@@ -26,10 +26,12 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
+import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.Observable
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_skills.*
 import org.greenrobot.eventbus.Subscribe
-import rx.Observable
-import rx.functions.Action1
 
 class SkillsFragment : BaseMainFragment() {
 
@@ -73,9 +75,9 @@ class SkillsFragment : BaseMainFragment() {
         adapter?.mana = this.user?.stats?.getMp()
 
         user?.let {
-            Observable.concat<Skill>(userRepository.getSkills(it).first().flatMap( { Observable.from(it) }), userRepository.getSpecialItems(it).first().flatMap( { Observable.from(it) }))
+            Observable.concat(userRepository.getSkills(it).firstElement().toObservable().flatMap { Observable.fromIterable(it) }, userRepository.getSpecialItems(it).firstElement().toObservable().flatMap { Observable.fromIterable(it) })
                     .toList()
-                    .subscribe(Action1 { skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -117,7 +119,7 @@ class SkillsFragment : BaseMainFragment() {
                     ContextCompat.getColor(context!!, R.color.blue_10), "-" + usedSkill?.mana,
                     HabiticaSnackbar.SnackbarDisplayType.BLUE)
         }
-        userRepository.retrieveUser(false).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        userRepository.retrieveUser(false).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
 
@@ -145,7 +147,7 @@ class SkillsFragment : BaseMainFragment() {
             return
         }
         displayProgressDialog()
-        val observable: Observable<SkillResponse> = if (taskId != null) {
+        val observable: Flowable<SkillResponse> = if (taskId != null) {
             userRepository.useSkill(user, skill.key, skill.target, taskId)
         } else {
             userRepository.useSkill(user, skill.key, skill.target)

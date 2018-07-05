@@ -23,8 +23,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import javax.inject.Inject;
 
-import rx.functions.Action1;
-
 public class GuildFragment extends BaseMainFragment {
 
     @Inject

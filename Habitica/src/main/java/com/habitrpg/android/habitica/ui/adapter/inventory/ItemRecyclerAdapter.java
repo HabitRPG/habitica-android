@@ -30,11 +30,12 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
-import rx.Observable;
-import rx.subjects.PublishSubject;
 
 public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecyclerAdapter.ItemViewHolder> {
 
@@ -53,8 +54,8 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
         super(data, autoUpdate);
     }
 
-    public Observable<Item> getSellItemEvents() {
-        return sellItemEvents.asObservable();
+    public Flowable<Item> getSellItemEvents() {
+        return sellItemEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
     @Override
@@ -77,8 +78,8 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
         ownedPets = pets;
     }
 
-    public Observable<QuestContent> getQuestInvitationEvents() {
-        return questInvitationEvents.asObservable();
+    public Flowable<QuestContent> getQuestInvitationEvents() {
+        return questInvitationEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

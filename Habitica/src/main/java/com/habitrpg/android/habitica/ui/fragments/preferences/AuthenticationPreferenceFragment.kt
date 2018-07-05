@@ -22,8 +22,8 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
+import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
-import rx.functions.Action1
 
 class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
@@ -94,7 +94,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                     .setPositiveButton(R.string.change) { thisDialog, _ ->
                         thisDialog.dismiss()
                         userRepository.updateEmail(emailEditText?.text.toString(), passwordEditText?.text.toString())
-                                .subscribe(Action1 {
+                                .subscribe(Consumer {
                                     configurePreference(findPreference("email"), emailEditText?.text.toString())
                                 }, RxErrorHandler.handleEmptyError())
                     }
@@ -118,7 +118,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                     .setPositiveButton(R.string.change) { thisDialog, _ ->
                         thisDialog.dismiss()
                         userRepository.updateLoginName(loginNameEditText?.text.toString(), passwordEditText?.text.toString())
-                                .subscribe(Action1 {
+                                .subscribe(Consumer {
                                     configurePreference(findPreference("login_name"), loginNameEditText?.text.toString())
                                 }, RxErrorHandler.handleEmptyError())
                     }

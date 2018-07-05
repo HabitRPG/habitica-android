@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
@@ -18,10 +19,10 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_stats.*
-import rx.functions.Action1
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -85,7 +86,7 @@ class StatsFragment: BaseMainFragment() {
         distributeClassHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
         distributeTaskHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(Action1 {
+        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer {
             user = it
             updateStats()
             updateAttributePoints()
@@ -108,7 +109,7 @@ class StatsFragment: BaseMainFragment() {
         }
 
         automaticAllocationSwitch.setOnCheckedChangeListener{ _, isChecked ->
-            userRepository.updateUser(user, "preferences.automaticAllocation", isChecked).subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
+            userRepository.updateUser(user, "preferences.automaticAllocation", isChecked).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         }
 
         strengthStatsView.allocateAction = { allocatePoint(Stats.STRENGTH) }
@@ -138,7 +139,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun changeAutoAllocationMode(@Stats.AutoAllocationTypes allocationMode: String) {
-        userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
+        userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         distributeEvenlyButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         distributeClassButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         distributeTaskButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
@@ -151,7 +152,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun allocatePoint(@Stats.StatsTypes stat: String) {
-        userRepository.allocatePoint(user, stat).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        userRepository.allocatePoint(user, stat).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     private fun updateAttributePoints() {
@@ -181,7 +182,9 @@ class StatsFragment: BaseMainFragment() {
                 val points = user?.stats?.points ?: 0
                 numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)
                 numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-                numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.button_gray_100)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.button_gray_100)
+                }
                 leftSparklesView.visibility = View.VISIBLE
                 rightSparklesView.visibility = View.VISIBLE
             } else {
@@ -242,9 +245,9 @@ class StatsFragment: BaseMainFragment() {
         outfitList.add(outfit.shield)
         outfitList.add(outfit.weapon)
 
-        inventoryRepository.getItems(outfitList).first()
+        inventoryRepository.getItems(outfitList).firstElement()
                 .retry(1)
-                .subscribe(Action1 {
+                .subscribe(Consumer {
             val userStatComputer = UserStatComputer()
             val statsRows = userStatComputer.computeClassBonus(it, user)
 

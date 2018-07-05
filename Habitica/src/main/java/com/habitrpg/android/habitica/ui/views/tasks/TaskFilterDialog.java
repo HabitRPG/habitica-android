@@ -43,6 +43,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnCheckedChangeListener {
 
@@ -213,8 +215,8 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         if (this.getWindow() != null) {
             this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
-        repository.updateTags(editedTags.values()).subscribe(tag -> editedTags.remove(tag.getId()), RxErrorHandler.handleEmptyError());
-        repository.createTags(createdTags.values()).subscribe(tag -> createdTags.remove(tag.getId()), RxErrorHandler.handleEmptyError());
+        repository.updateTags(editedTags.values()).toObservable() .flatMap(tags -> Observable.fromIterable(tags)).subscribe(tag -> editedTags.remove(tag.id), RxErrorHandler.handleEmptyError());
+        repository.createTags(createdTags.values()).toObservable() .flatMap(tags -> Observable.fromIterable(tags)).subscribe(tag -> createdTags.remove(tag.getId()), RxErrorHandler.handleEmptyError());
         repository.deleteTags(deletedTags).subscribe(tags1 -> deletedTags.clear(), RxErrorHandler.handleEmptyError());
     }
 

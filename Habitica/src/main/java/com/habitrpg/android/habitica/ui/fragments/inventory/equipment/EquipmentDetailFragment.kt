@@ -15,9 +15,9 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
-import rx.functions.Action1
 import javax.inject.Inject
 
 class EquipmentDetailFragment : BaseMainFragment() {
@@ -39,8 +39,8 @@ class EquipmentDetailFragment : BaseMainFragment() {
         this.adapter.equippedGear = this.equippedGear
         this.adapter.isCostume = this.isCostume
         this.adapter.type = this.type
-        this.adapter.equipEvents.flatMap<Items> { key -> inventoryRepository.equipGear(user, key, isCostume!!) }
-                .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        this.adapter.equipEvents.flatMapMaybe { key -> inventoryRepository.equipGear(user, key, isCostume ?: false).firstElement() }
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         return v
     }
 
@@ -52,7 +52,7 @@ class EquipmentDetailFragment : BaseMainFragment() {
         recyclerView.addItemDecoration(DividerItemDecoration(getActivity()!!, DividerItemDecoration.VERTICAL))
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        type?.let { inventoryRepository.getOwnedEquipment(it).first().subscribe(Action1<RealmResults<Equipment>> { this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError()) }
+        type?.let { inventoryRepository.getOwnedEquipment(it).firstElement().subscribe(Consumer<RealmResults<Equipment>> { this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError()) }
     }
 
     override fun onDestroy() {

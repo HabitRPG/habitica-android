@@ -108,7 +108,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
 
     private void loadItems() {
         if (animalType != null && animalGroup != null) {
-            inventoryRepository.getMounts(animalType, animalGroup).first().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
+            inventoryRepository.getMounts(animalType, animalGroup).firstElement().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
         }
     }
 

@@ -37,8 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import rx.android.schedulers.AndroidSchedulers;
-
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class PartyFragment extends BaseMainFragment {
 
@@ -71,7 +70,7 @@ public class PartyFragment extends BaseMainFragment {
         if (userHasParty()) {
             if (user != null) {
                 getCompositeSubscription().add(socialRepository.getGroup(user.getParty().getId())
-                        .first()
+                        .firstElement()
                         //delay, so that realm can save party first
                         .delay(500, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())

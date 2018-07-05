@@ -20,9 +20,9 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.UiUtils
+import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_inbox.*
-import rx.functions.Action1
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -39,7 +39,7 @@ class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, 
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        this.socialRepository.markPrivateMessagesRead(user).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        this.socialRepository.markPrivateMessagesRead(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 
         return inflater.inflate(R.layout.fragment_inbox, container, false)
     }
@@ -53,7 +53,7 @@ class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, 
     }
 
     private fun loadMessages() {
-        userRepository.getInboxOverviewList().subscribe(Action1<RealmResults<ChatMessage>> {
+        userRepository.getInboxOverviewList().subscribe(Consumer<RealmResults<ChatMessage>> {
             setInboxMessages(it)
         }, RxErrorHandler.handleEmptyError())
     }
@@ -115,7 +115,7 @@ class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, 
     override fun onRefresh() {
         inbox_refresh_layout.isRefreshing = true
         this.userRepository.retrieveInboxMessages()
-                .subscribe(Action1<List<ChatMessage>> {
+                .subscribe(Consumer<List<ChatMessage>> {
                     inbox_refresh_layout.isRefreshing = false
                 }, RxErrorHandler.handleEmptyError())
     }

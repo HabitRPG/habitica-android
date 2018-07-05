@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.interactors;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public abstract class UseCase<Q extends UseCase.RequestValues, T> {
 
@@ -17,12 +17,12 @@ public abstract class UseCase<Q extends UseCase.RequestValues, T> {
     }
 
     /**
-     * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
+     * Builds an {@link rx.Flowable} which will be used when executing the current {@link UseCase}.
      */
-    protected abstract Observable<T> buildUseCaseObservable(Q requestValues);
+    protected abstract Flowable<T> buildUseCaseObservable(Q requestValues);
 
     @SuppressWarnings("unchecked")
-    public Observable<T> observable(Q requestValues) {
+    public Flowable<T> observable(Q requestValues) {
         return this.buildUseCaseObservable(requestValues)
                 .subscribeOn(postExecutionThread.getScheduler())
                 .observeOn(postExecutionThread.getScheduler());

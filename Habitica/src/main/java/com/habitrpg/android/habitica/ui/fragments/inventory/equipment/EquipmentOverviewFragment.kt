@@ -8,10 +8,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_equipment_overview.*
-import rx.functions.Action1
 import javax.inject.Inject
 
 class EquipmentOverviewFragment : BaseMainFragment() {
@@ -50,12 +49,12 @@ class EquipmentOverviewFragment : BaseMainFragment() {
 
         costumeSwitch.isChecked = user?.preferences?.costume ?: false
 
-        costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
+        costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
 
         setImageNames()
 
         if (this.nameMapping.isEmpty()) {
-            compositeSubscription.add(inventoryRepository.ownedEquipment.subscribe(Action1 {
+            compositeSubscription.add(inventoryRepository.ownedEquipment.subscribe(Consumer {
                 for (gear in it) {
                     this.nameMapping[gear.key ?: ""] = gear.text
                 }

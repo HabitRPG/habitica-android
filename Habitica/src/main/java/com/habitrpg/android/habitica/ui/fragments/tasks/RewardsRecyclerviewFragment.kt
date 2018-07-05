@@ -15,14 +15,14 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
-import rx.functions.Action1
 import java.util.*
 
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        inventoryRepository.retrieveInAppRewards().subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        inventoryRepository.retrieveInAppRewards().subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -45,7 +45,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        inventoryRepository.inAppRewards.subscribe(Action1 {
+        inventoryRepository.inAppRewards.subscribe(Consumer {
             (recyclerAdapter as RewardsRecyclerViewAdapter?)?.updateItemRewards(it)
         }, RxErrorHandler.handleEmptyError())
     }
@@ -59,7 +59,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                 .flatMap<List<ShopItem>> { inventoryRepository.retrieveInAppRewards() }
                 .doOnTerminate {
                     refreshLayout?.isRefreshing = false
-                }.subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     private fun setGridSpanCount(width: Int) {

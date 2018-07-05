@@ -15,7 +15,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
@@ -29,7 +29,7 @@ public class ApiModule {
 
     @Provides
     public GsonConverterFactory providesGsonConverterFactory() {
-        return ApiClientImpl.createGsonFactory();
+        return ApiClientImpl.Companion.createGsonFactory();
     }
 
     @Provides
@@ -48,7 +48,7 @@ public class ApiModule {
     public MaintenanceApiService providesMaintenanceApiService(GsonConverterFactory gsonConverter, HostConfig hostConfig) {
         Retrofit adapter = new Retrofit.Builder()
                 .baseUrl("https://habitica-assets.s3.amazonaws.com/mobileApp/endpoint/")
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(gsonConverter)
                 .build();
         return adapter.create(MaintenanceApiService.class);

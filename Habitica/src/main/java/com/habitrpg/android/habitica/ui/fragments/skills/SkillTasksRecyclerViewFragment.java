@@ -22,7 +22,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import butterknife.BindView;
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public class SkillTasksRecyclerViewFragment extends BaseFragment {
     @Inject
@@ -57,7 +57,7 @@ public class SkillTasksRecyclerViewFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        taskRepository.getTasks(taskType, userId).first().subscribe(tasks -> adapter.updateData(tasks), RxErrorHandler.handleEmptyError());
+        taskRepository.getTasks(taskType, userId).firstElement().subscribe(tasks -> adapter.updateData(tasks), RxErrorHandler.handleEmptyError());
         recyclerView.setAdapter(adapter);
 
         layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -70,7 +70,7 @@ public class SkillTasksRecyclerViewFragment extends BaseFragment {
         recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
     }
 
-    public Observable<Task> getTaskSelectionEvents() {
+    public Flowable<Task> getTaskSelectionEvents() {
         return adapter.getTaskSelectionEvents();
     }
 }

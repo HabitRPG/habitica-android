@@ -3,12 +3,12 @@ package com.habitrpg.android.habitica.data;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.WorldState;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public interface ContentRepository extends BaseRepository {
 
-    Observable<ContentResult> retrieveContent();
-    Observable<ContentResult> retrieveContent(boolean forced);
+    Flowable<ContentResult> retrieveContent();
+    Flowable<ContentResult> retrieveContent(boolean forced);
 
-    Observable<WorldState> retrieveWorldState();
+    Flowable<WorldState> retrieveWorldState();
 }

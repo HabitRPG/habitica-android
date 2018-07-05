@@ -5,36 +5,33 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.RectF
+import android.graphics.drawable.GradientDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.*
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
 import io.realm.RealmList
-import android.graphics.drawable.GradientDrawable
-import android.net.Uri
-import android.widget.FrameLayout
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.drawee.interfaces.DraweeController
-import com.habitrpg.android.habitica.extensions.backgroundCompat
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.User
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Action1
 
 
 class QuestProgressView : LinearLayout {
@@ -200,10 +197,10 @@ class QuestProgressView : LinearLayout {
         progress?.rageStrikes?.sortedByDescending { it.wasHit }?.forEach { strike ->
             val iconView = ImageView(context)
             if (strike.wasHit) {
-                DataBindingUtils.loadImage("rage_strike_${strike.key}", {
+                DataBindingUtils.loadImage("rage_strike_${strike.key}") {
                     Observable.just(it)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Action1 {
+                            .subscribe(Consumer {
                                 val displayDensity = resources.displayMetrics.density
                                 val width = it.width * displayDensity
                                 val height = it.height * displayDensity
@@ -213,7 +210,7 @@ class QuestProgressView : LinearLayout {
                                     showActiveStrikeAlert(strike.key)
                                 }
                             }, RxErrorHandler.handleEmptyError())
-                })
+                }
             } else {
                 iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeInactive())
                 iconView.setOnClickListener { showPendingStrikeAlert() }

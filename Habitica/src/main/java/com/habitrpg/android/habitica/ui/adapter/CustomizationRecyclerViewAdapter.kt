@@ -13,14 +13,16 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
 import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
+import io.reactivex.subjects.PublishSubject
 import org.greenrobot.eventbus.EventBus
-import rx.Observable
-import rx.subjects.PublishSubject
 import java.util.*
 
 class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -120,16 +122,16 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         this.notifyDataSetChanged()
     }
 
-    fun getSelectCustomizationEvents(): Observable<Customization> {
-        return selectCustomizationEvents.asObservable()
+    fun getSelectCustomizationEvents(): Flowable<Customization> {
+        return selectCustomizationEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    fun getUnlockCustomizationEvents(): Observable<Customization> {
-        return unlockCustomizationEvents.asObservable()
+    fun getUnlockCustomizationEvents(): Flowable<Customization> {
+        return unlockCustomizationEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    fun getUnlockSetEvents(): Observable<CustomizationSet> {
-        return unlockSetEvents.asObservable()
+    fun getUnlockSetEvents(): Flowable<CustomizationSet> {
+        return unlockSetEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     internal inner class CustomizationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -184,7 +186,10 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
                                 EventBus.getDefault().post(event)
                                 return@setPositiveButton
                             }
-                            unlockCustomizationEvents.onNext(customization)
+
+                            customization.notNull {
+                                unlockCustomizationEvents.onNext(it)
+                            }
                         }
                         .setTitle(itemView.context.getString(R.string.purchase_customization))
                         .setView(dialogContent)
@@ -197,7 +202,9 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
                 return
             }
 
-            selectCustomizationEvents.onNext(customization)
+            customization.notNull {
+                selectCustomizationEvents.onNext(it)
+            }
         }
     }
 
@@ -248,7 +255,9 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
                                     .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
                                     .forEach { set?.customizations?.add(it) }
                         }
-                        unlockSetEvents.onNext(set)
+                        set.notNull {
+                            unlockSetEvents.onNext(it)
+                        }
                     }
                     .setTitle(context.getString(R.string.purchase_set_title, set?.text))
                     .setView(dialogContent)

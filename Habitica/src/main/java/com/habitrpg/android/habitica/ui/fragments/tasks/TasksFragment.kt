@@ -6,12 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.github.clans.fab.FloatingActionButton
 import com.github.clans.fab.FloatingActionMenu
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -26,8 +21,8 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
+import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
-import rx.functions.Action1
 import java.util.*
 import javax.inject.Inject
 
@@ -235,7 +230,7 @@ class TasksFragment : BaseMainFragment() {
         if (bottomNavigation == null) {
             return
         }
-        tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(Action1 { tutorialSteps ->
+        tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
             val activeTutorialFragments = ArrayList<String>()
             for (step in tutorialSteps) {
                 var id = -1

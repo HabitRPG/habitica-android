@@ -108,7 +108,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(ShowChallengeDetailDialogCommand cmd) {
-        challengeRepository.getChallenge(cmd.challengeId).first().subscribe(challenge -> ChallengeDetailDialogHolder.showDialog(getActivity(), challengeRepository, challenge,
+        challengeRepository.getChallenge(cmd.challengeId).firstElement().subscribe(challenge -> ChallengeDetailDialogHolder.showDialog(getActivity(), challengeRepository, challenge,
         challenge1 -> {
             // challenge left
         }), RxErrorHandler.handleEmptyError());

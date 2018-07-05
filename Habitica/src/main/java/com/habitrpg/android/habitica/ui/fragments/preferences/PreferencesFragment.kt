@@ -26,7 +26,7 @@ import com.habitrpg.android.habitica.prefs.TimePreference
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import rx.functions.Action1
+import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 
@@ -49,7 +49,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         val userID = preferenceManager.sharedPreferences.getString(context?.getString(R.string.SP_userID), null)
         if (userID != null) {
-            compositeSubscription.add(userRepository.getUser(userID).subscribe(Action1 { this@PreferencesFragment.setUser(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(userRepository.getUser(userID).subscribe(Consumer { this@PreferencesFragment.setUser(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -166,7 +166,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val pieces = timeval?.split(":".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
                 if (pieces != null) {
                     val hour = Integer.parseInt(pieces[0])
-                    userRepository.changeCustomDayStart(hour).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                    userRepository.changeCustomDayStart(hour).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 }
             }
             "language" -> {
@@ -182,7 +182,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
                 userRepository.updateLanguage(user, languageHelper.languageCode)
                         .flatMap<ContentResult> { inventoryRepository.retrieveContent(true) }
-                        .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                     val intent = Intent(activity, MainActivity::class.java)
@@ -197,12 +197,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 userRepository.updateUser(user, "preferences.sound", newAudioTheme)
-                        .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 soundManager.soundTheme = newAudioTheme
                 soundManager.preloadAllFiles()
             }
             "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
-                    .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 

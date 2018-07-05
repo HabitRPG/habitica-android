@@ -8,8 +8,8 @@ import android.support.v7.preference.PreferenceCategory
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import rx.Observable
-import rx.functions.Action1
+import io.reactivex.Flowable
+import io.reactivex.functions.Consumer
 
 class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -55,13 +55,13 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
         val profileCategory = findPreference("profile") as? PreferenceCategory
         configurePreference(profileCategory?.findPreference(key), sharedPreferences?.getString(key, ""))
         if (sharedPreferences != null) {
-            val observable: Observable<User>? = when (key) {
+            val observable: Flowable<User>? = when (key) {
                 "display_name" -> userRepository.updateUser(user, "profile.name", sharedPreferences.getString(key, ""))
                 "photo_url" -> userRepository.updateUser(user, "profile.photo", sharedPreferences.getString(key, ""))
                 "about" -> userRepository.updateUser(user, "profile.blurb", sharedPreferences.getString(key, ""))
                 else -> null
             }
-            observable?.subscribe(Action1 {}, RxErrorHandler.handleEmptyError())
+            observable?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         }
     }
 

@@ -1,71 +1,72 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.ChatMessageLike
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
+import io.reactivex.Flowable
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
-import rx.Observable
-import rx.functions.Action1
 import java.util.*
 
 
 class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), SocialLocalRepository {
 
-    override fun getPublicGuilds(): Observable<RealmResults<Group>> = realm.where(Group::class.java)
+    override fun getPublicGuilds(): Flowable<RealmResults<Group>> = realm.where(Group::class.java)
                 .equalTo("type", "guild")
                 .equalTo("privacy", "public")
-                .findAllSorted("memberCount", Sort.DESCENDING)
-                .asObservable()
-                .filter({ it.isLoaded })
+                .sort("memberCount", Sort.DESCENDING)
+            .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
 
-    override fun getUserGroups(): Observable<RealmResults<Group>> = realm.where(Group::class.java)
+    override fun getUserGroups(): Flowable<RealmResults<Group>> = realm.where(Group::class.java)
                 .equalTo("type", "guild")
                 .equalTo("isMember", true)
-                .findAllSorted("memberCount", Sort.DESCENDING)
-                .asObservable()
-                .filter({ it.isLoaded })
+                .sort("memberCount", Sort.DESCENDING)
+            .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
 
-    override fun getGroups(type: String): Observable<RealmResults<Group>> {
+    override fun getGroups(type: String): Flowable<RealmResults<Group>> {
         return realm.where(Group::class.java)
                 .equalTo("type", type)
                 .findAllAsync()
-                .asObservable()
-                .filter({ it.isLoaded })
+                .asFlowable()
+                .filter { it.isLoaded }
     }
 
-    override fun getGroup(id: String): Observable<Group> {
+    override fun getGroup(id: String): Flowable<Group> {
         return realm.where(Group::class.java)
                 .equalTo("id", id)
                 .findAll()
-                .asObservable()
+                .asFlowable()
                 .filter { group -> group.isLoaded && group.isValid && !group.isEmpty() }
                 .map { groups -> groups.first() }
     }
 
-    override fun getGroupChat(groupId: String): Observable<RealmResults<ChatMessage>> {
+    override fun getGroupChat(groupId: String): Flowable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("groupId", groupId)
-                .findAllSorted("timestamp", Sort.DESCENDING)
-                .asObservable()
-                .filter({ it.isLoaded })
+                .sort("timestamp", Sort.DESCENDING)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
     }
 
     override fun deleteMessage(id: String) {
-        getMessage(id).first().subscribe(Action1 { chatMessage -> realm.executeTransaction { chatMessage.deleteFromRealm() } }, RxErrorHandler.handleEmptyError())
+        getMessage(id).firstElement().subscribe { chatMessage -> realm.executeTransaction { chatMessage.deleteFromRealm() } }
     }
 
-    override fun getGroupMembers(partyId: String): Observable<RealmResults<Member>> {
+    override fun getGroupMembers(partyId: String): Flowable<RealmResults<Member>> {
         return realm.where(Member::class.java)
                 .equalTo("party.id", partyId)
                 .findAllAsync()
-                .asObservable()
-                .filter({ it.isLoaded })
+                .asFlowable()
+                .filter { it.isLoaded }
     }
 
     override fun updateRSVPNeeded(user: User?, newValue: Boolean) {
@@ -136,10 +137,10 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
 
-    private fun getMessage(id: String): Observable<ChatMessage> {
+    private fun getMessage(id: String): Flowable<ChatMessage> {
         return realm.where(ChatMessage::class.java).equalTo("id", id)
                 .findAllAsync()
-                .asObservable()
+                .asFlowable()
                 .filter { messages -> messages.isLoaded && messages.isValid && !messages.isEmpty() }
                 .map { messages -> messages.first() }
     }

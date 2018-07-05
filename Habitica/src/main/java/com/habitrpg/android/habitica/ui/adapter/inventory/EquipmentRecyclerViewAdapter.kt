@@ -1,26 +1,20 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
-import android.net.Uri
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.inventory.Equipment
-
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import rx.Observable
-import rx.subjects.PublishSubject
 
 class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>(data, autoUpdate) {
 

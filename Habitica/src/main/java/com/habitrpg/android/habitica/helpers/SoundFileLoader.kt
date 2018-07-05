@@ -4,15 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
 import com.habitrpg.android.habitica.HabiticaApplication
+import io.reactivex.Maybe
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okio.Okio
-import rx.Observable
-import rx.schedulers.Schedulers
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 // based on http://stackoverflow.com/questions/29838565/downloading-files-using-okhttp-okio-and-rxjava
 class SoundFileLoader(private val context: Context) {
@@ -25,8 +26,8 @@ class SoundFileLoader(private val context: Context) {
         }
 
     @SuppressLint("SetWorldReadable", "ObsoleteSdkInt")
-    fun download(files: List<SoundFile>): Observable<List<SoundFile>> {
-        return Observable.from(files)
+    fun download(files: List<SoundFile>): Single<List<SoundFile>> {
+        return Observable.fromIterable(files)
                 .flatMap({ audioFile ->
                     val file = File(getFullAudioFilePath(audioFile))
                     if (file.exists() && file.length() > 5000) {
@@ -46,7 +47,7 @@ class SoundFileLoader(private val context: Context) {
                                 throw IOException()
                             }
                         } catch (io: IOException) {
-                            sub.onCompleted()
+                            sub.onComplete()
                             return@create
                         }
 
@@ -57,20 +58,19 @@ class SoundFileLoader(private val context: Context) {
                                 sink.flush()
                                 sink.close()
                             } catch (io: IOException) {
-                                sub.onCompleted()
+                                sub.onComplete()
                                 return@create
                             }
 
                             file.setReadable(true, false)
                             audioFile.file = file
                             sub.onNext(audioFile)
-                            sub.onCompleted()
+                            sub.onComplete()
                         }
                     }
                     fileObservable.subscribeOn(Schedulers.io())
                 }, 5)
                 .toList()
-                .map({ ArrayList(it) })
     }
 
     private fun getFullAudioFilePath(soundFile: SoundFile): String =

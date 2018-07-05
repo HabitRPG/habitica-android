@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import io.realm.Realm
 
 
-internal open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ContentLocalRepository {
+open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ContentLocalRepository {
 
     override fun saveContent(contentResult: ContentResult) {
         realm.executeTransactionAsync { realm1 ->

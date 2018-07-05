@@ -13,10 +13,10 @@ import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
+import io.reactivex.Flowable
+import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import rx.Observable
-import rx.functions.Action1
 import java.util.*
 
 class TaskAlarmManager(private var context: Context, private var taskRepository: TaskRepository, private var userId: String) {
@@ -60,15 +60,16 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
     fun addAlarmForTaskId(taskId: String) {
         taskRepository.getTaskCopy(taskId)
                 .filter { task -> task.isValid && task.isManaged && Task.TYPE_DAILY == task.type }
-                .first()
-                .subscribe(Action1 { this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+                .firstElement()
+                .subscribe(Consumer { this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
     }
 
     fun scheduleAllSavedAlarms() {
         taskRepository.getTaskCopies(userId)
-                .first()
-                .flatMap<Task>({ Observable.from(it) })
-                .subscribe(Action1 { this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+                .firstElement()
+                .toFlowable()
+                .flatMap<Task> { Flowable.fromIterable(it) }
+                .subscribe(Consumer { this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
 
         scheduleDailyReminder(context)
         val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()

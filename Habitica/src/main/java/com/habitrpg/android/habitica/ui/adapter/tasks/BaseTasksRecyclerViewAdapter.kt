@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -14,17 +13,12 @@ import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
-import io.realm.RealmResults
-
-import java.util.ArrayList
-
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
+import java.util.*
 import javax.inject.Inject
-
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Action1
-import rx.functions.Func1
-import rx.schedulers.Schedulers
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskType: String, private val taskFilterHelper: TaskFilterHelper?, private val layoutResource: Int,
                                                                      newContext: Context, private val userID: String?) : RecyclerView.Adapter<VH>() {
@@ -101,8 +95,8 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
 
     fun loadContent(forced: Boolean) {
         if (this.content == null || forced) {
-            taskRepository!!.getTasks(this.taskType, this.userID!!)
-                    .flatMap<Task>({ Observable.from(it) })
+            taskRepository.getTasks(this.taskType, this.userID!!)
+                    .flatMap<Task> { Flowable.fromIterable(it) }
                     .map { task ->
                         task.parseMarkdown()
                         task
@@ -110,7 +104,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .toList()
-                    .subscribe(Action1 { this.setTasks(it) }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { this.setTasks(it) }, RxErrorHandler.handleEmptyError())
         }
     }
 

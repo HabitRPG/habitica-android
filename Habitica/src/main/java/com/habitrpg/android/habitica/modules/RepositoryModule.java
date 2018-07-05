@@ -121,8 +121,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient, RemoteConfigManager remoteConfigManager) {
-        return new InventoryRepositoryImpl(localRepository, apiClient, remoteConfigManager);
+    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient) {
+        return new InventoryRepositoryImpl(localRepository, apiClient);
     }
 
 

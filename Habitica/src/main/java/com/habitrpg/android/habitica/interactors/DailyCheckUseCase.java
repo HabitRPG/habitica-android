@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.models.user.User;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public class DailyCheckUseCase extends UseCase<DailyCheckUseCase.RequestValues, TaskScoringResult> {
 
@@ -26,7 +26,7 @@ public class DailyCheckUseCase extends UseCase<DailyCheckUseCase.RequestValues, 
     }
 
     @Override
-    protected Observable<TaskScoringResult> buildUseCaseObservable(RequestValues requestValues) {
+    protected Flowable<TaskScoringResult> buildUseCaseObservable(RequestValues requestValues) {
         return taskRepository.taskChecked(requestValues.user, requestValues.task, requestValues.up, false).doOnNext(res -> soundManager.loadAndPlayAudio(SoundManager.SoundDaily));
     }
 

@@ -198,7 +198,7 @@ public class ItemRecyclerFragment extends BaseFragment {
                 itemClass = SpecialItem.class;
                 break;
         }
-        inventoryRepository.getOwnedItems(itemClass, user).first().subscribe(items -> {
+        inventoryRepository.getOwnedItems(itemClass, user).firstElement().subscribe(items -> {
             if (items.size() > 0) {
                 adapter.updateData((OrderedRealmCollection<Item>) items);
             }

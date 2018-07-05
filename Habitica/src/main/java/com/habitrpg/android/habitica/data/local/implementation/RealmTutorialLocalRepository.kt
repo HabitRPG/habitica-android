@@ -2,17 +2,17 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TutorialLocalRepository
 import com.habitrpg.android.habitica.models.TutorialStep
+import io.reactivex.Flowable
 import io.realm.Realm
 import io.realm.RealmResults
-import rx.Observable
 
 
 class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TutorialLocalRepository {
 
-    override fun getTutorialStep(key: String): Observable<TutorialStep> {
+    override fun getTutorialStep(key: String): Flowable<TutorialStep> {
         return realm.where(TutorialStep::class.java).equalTo("identifier", key)
                 .findAllAsync()
-                .asObservable()
+                .asFlowable()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid }
                 .map { steps ->
                     return@map if (steps.isEmpty()) {
@@ -29,11 +29,11 @@ class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(real
                 .cast(TutorialStep::class.java)
     }
 
-    override fun getTutorialSteps(keys: List<String>): Observable<RealmResults<TutorialStep>> {
+    override fun getTutorialSteps(keys: List<String>): Flowable<RealmResults<TutorialStep>> {
         return realm.where(TutorialStep::class.java)
                 .`in`("identifier", keys.toTypedArray())
                 .findAll()
-                .asObservable()
-                .filter({ it.isLoaded })
+                .asFlowable()
+                .filter { it.isLoaded }
     }
 }

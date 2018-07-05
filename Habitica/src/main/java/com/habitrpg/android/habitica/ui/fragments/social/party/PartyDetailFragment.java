@@ -152,7 +152,7 @@ public class PartyDetailFragment extends BaseFragment {
             questImageWrapper.setVisibility(View.VISIBLE);
             Handler mainHandler = new Handler(getContext().getMainLooper());
             mainHandler.postDelayed(() -> inventoryRepository.getQuestContent(quest.getKey())
-                    .first()
+                    .firstElement()
                     .subscribe(PartyDetailFragment.this::updateQuestContent, RxErrorHandler.handleEmptyError()), 500);
         } else {
             newQuestButton.setVisibility(View.VISIBLE);

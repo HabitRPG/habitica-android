@@ -1,5 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,17 +19,12 @@ import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import kotlinx.android.synthetic.main.fragment_group_info.*
-import rx.functions.Action1
-import javax.inject.Inject
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import android.content.Intent
-import android.net.Uri
+import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.fragment_group_info.*
+import javax.inject.Inject
 
 
 class GroupInformationFragment : BaseFragment() {
@@ -46,7 +46,7 @@ class GroupInformationFragment : BaseFragment() {
         if (user != null) {
             setUser(user)
         } else {
-            compositeSubscription.add(userRepository.getUser().subscribe(Action1 {
+            compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
                 user = it
                 setUser(user)
             }, RxErrorHandler.handleEmptyError()))
@@ -69,7 +69,7 @@ class GroupInformationFragment : BaseFragment() {
                         .flatMap { userRepository.retrieveUser(false) }
                         .flatMap { socialRepository.retrieveGroup("party") }
                         .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
-                        .subscribe(Action1 {  }, RxErrorHandler.handleEmptyError())
+                        .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError())
             }
         })
 
@@ -77,7 +77,7 @@ class GroupInformationFragment : BaseFragment() {
             val userId = user?.invitations?.party?.id
             if (userId != null) {
                 socialRepository.rejectGroupInvite(userId)
-                        .subscribe(Action1 { setInvitation(null) }, RxErrorHandler.handleEmptyError())
+                        .subscribe(Consumer { setInvitation(null) }, RxErrorHandler.handleEmptyError())
             }
         })
 

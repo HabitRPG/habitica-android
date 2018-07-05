@@ -6,17 +6,14 @@ import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.android.habitica.models.tasks.*
 import com.habitrpg.android.habitica.models.user.User
+import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmResults
-import rx.Observable
-import rx.functions.Action1
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,22 +22,22 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     private var lastTaskAction: Long = 0
 
-    override fun getTasks(taskType: String, userID: String): Observable<RealmResults<Task>> =
+    override fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>> =
             this.localRepository.getTasks(taskType, userID)
 
-    override fun getTasks(userId: String): Observable<RealmResults<Task>> =
+    override fun getTasks(userId: String): Flowable<RealmResults<Task>> =
             this.localRepository.getTasks(userId)
 
     override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
         localRepository.saveTasks(userId, order, tasks)
     }
 
-    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Observable<TaskList> {
-        return this.apiClient.getTasks()
+    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList> {
+        return this.apiClient.tasks
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
-    override fun retrieveCompletedTodos(userId: String): Observable<TaskList> {
+    override fun retrieveCompletedTodos(userId: String): Flowable<TaskList> {
         return this.apiClient.getTasks("completedTodos")
                 .doOnNext { taskList ->
                     val tasks = taskList.tasks
@@ -50,20 +47,20 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Observable<TaskList> {
+    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return this.apiClient.getTasks("dailys", formatter.format(dueDate))
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
-    override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Observable<TaskScoringResult?> {
+    override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Flowable<TaskScoringResult?> {
         val now = Date().time
         val id = task.id
         if (lastTaskAction > now - 500 && !force) {
-            return Observable.just(null)
+            return Flowable.empty()
         }
         if (id == null) {
-            return Observable.just(null)
+            return Flowable.empty()
         }
         lastTaskAction = now
         return this.apiClient.postTaskDirection(id, (if (up) TaskDirection.up else TaskDirection.down).toString())
@@ -106,14 +103,14 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean): Observable<TaskScoringResult?> {
-        return localRepository.getTask(taskId).first()
-                .flatMap { task -> taskChecked(user, task, up, force) }
+    override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean): Maybe<TaskScoringResult?> {
+        return localRepository.getTask(taskId).firstElement()
+                .flatMap { task -> taskChecked(user, task, up, force).singleElement() }
     }
 
-    override fun scoreChecklistItem(taskId: String, itemId: String): Observable<Task> {
+    override fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task> {
         return apiClient.scoreChecklistItem(taskId, itemId)
-                .flatMap { localRepository.getTask(taskId).first() }
+                .flatMapMaybe { localRepository.getTask(taskId).firstElement() }
                 .doOnNext { task ->
                     val updatedItem: ChecklistItem? = task.checklist?.lastOrNull { itemId == it.id }
                     if (updatedItem != null) {
@@ -122,14 +119,14 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun getTask(taskId: String): Observable<Task> = localRepository.getTask(taskId)
+    override fun getTask(taskId: String): Flowable<Task> = localRepository.getTask(taskId)
 
-    override fun getTaskCopy(taskId: String): Observable<Task> = localRepository.getTaskCopy(taskId)
+    override fun getTaskCopy(taskId: String): Flowable<Task> = localRepository.getTaskCopy(taskId)
 
-    override fun createTask(task: Task): Observable<Task> {
+    override fun createTask(task: Task): Flowable<Task> {
         val now = Date().time
         if (lastTaskAction > now - 500) {
-            return Observable.just(task)
+            return Flowable.empty()
         }
         lastTaskAction = now
         task.tags?.let {
@@ -158,26 +155,26 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     task1.dateCreated = Date()
                     task1
                 }
-                .doOnNext({ localRepository.saveTask(it) })
+                .doOnNext { localRepository.saveTask(it) }
     }
 
-    override fun updateTask(task: Task): Observable<Task> {
+    override fun updateTask(task: Task): Maybe<Task> {
         val now = Date().time
         if (lastTaskAction > now - 500 || !task.isValid) {
-            return Observable.just(task)
+            return Maybe.just(task)
         }
         lastTaskAction = now
-        val id = task.id ?: return Observable.just(task)
-        return localRepository.getTaskCopy(id).first()
-                .flatMap { task1 -> apiClient.updateTask(id, task1) }
+        val id = task.id ?: return Maybe.just(task)
+        return localRepository.getTaskCopy(id).firstElement()
+                .flatMap { task1 -> apiClient.updateTask(id, task1).singleElement() }
                 .map { task1 ->
                     task1.position = task.position
                     task1
                 }
-                .doOnNext({ localRepository.saveTask(it) })
+                .doOnSuccess { localRepository.saveTask(it) }
     }
 
-    override fun deleteTask(taskId: String): Observable<Void> {
+    override fun deleteTask(taskId: String): Flowable<Void> {
         return apiClient.deleteTask(taskId)
                 .doOnNext { localRepository.deleteTask(taskId) }
     }
@@ -186,7 +183,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.saveTask(task)
     }
 
-    override fun createTasks(newTasks: List<Task>): Observable<List<Task>> = apiClient.createTasks(newTasks)
+    override fun createTasks(newTasks: List<Task>): Flowable<List<Task>> = apiClient.createTasks(newTasks)
 
     override fun markTaskCompleted(taskId: String, isCompleted: Boolean) {
         localRepository.markTaskCompleted(taskId, isCompleted)
@@ -204,38 +201,38 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.swapTaskPosition(firstPosition, secondPosition)
     }
 
-    override fun updateTaskPosition(taskType: String, oldPosition: Int, newPosition: Int): Observable<List<String>> {
+    override fun updateTaskPosition(taskType: String, oldPosition: Int, newPosition: Int): Maybe<List<String>> {
         return localRepository.getTaskAtPosition(taskType, oldPosition)
-                .first()
+                .firstElement()
                 .flatMap { task ->
                     if (task.isValid) {
-                        return@flatMap apiClient.postTaskNewPosition(task.id ?: "", newPosition)
+                        return@flatMap apiClient.postTaskNewPosition(task.id ?: "", newPosition).firstElement()
                     }
-                    return@flatMap Observable.just<List<String>>(ArrayList())
+                    return@flatMap Maybe.just<List<String>>(ArrayList())
                 }
-                .doOnNext({ localRepository.updateTaskPositions(it) })
+                .doOnSuccess { localRepository.updateTaskPositions(it) }
     }
 
-    override fun getUnmanagedTask(taskid: String): Observable<Task> =
-            getTask(taskid).map({ localRepository.getUnmanagedCopy(it) })
+    override fun getUnmanagedTask(taskid: String): Flowable<Task> =
+            getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
     override fun updateTaskInBackground(task: Task) {
-        updateTask(task).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        updateTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     override fun createTaskInBackground(task: Task) {
-        createTask(task).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        createTask(task).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
-    override fun getTaskCopies(userId: String): Observable<List<Task>> =
-            getTasks(userId).map({ localRepository.getUnmanagedCopy(it) })
+    override fun getTaskCopies(userId: String): Flowable<List<Task>> =
+            getTasks(userId).map { localRepository.getUnmanagedCopy(it) }
 
-    override fun getTaskCopies(tasks: List<Task>): Observable<List<Task>> =
-            Observable.just(localRepository.getUnmanagedCopy(tasks))
+    override fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>> =
+            Flowable.just(localRepository.getUnmanagedCopy(tasks))
 
-    override fun updateDailiesIsDue(date: Date): Observable<TaskList> {
+    override fun updateDailiesIsDue(date: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return apiClient.getTasks("dailys", formatter.format(date))
-                .flatMap({ localRepository.updateIsdue(it) })
+                .flatMapMaybe { localRepository.updateIsdue(it) }
     }
 }

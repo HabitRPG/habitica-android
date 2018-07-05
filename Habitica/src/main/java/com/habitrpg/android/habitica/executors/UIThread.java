@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.executors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @Singleton
 public class UIThread implements PostExecutionThread {

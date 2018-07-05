@@ -73,7 +73,7 @@ public class HabitButtonWidgetActivity extends BaseActivity {
         compositeSubscription.add(adapter.getTaskSelectionEvents().subscribe(task -> taskSelected(task.getId()), RxErrorHandler.handleEmptyError()));
         recyclerView.setAdapter(adapter);
 
-        taskRepository.getTasks(Task.TYPE_HABIT, userId).first().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
+        taskRepository.getTasks(Task.TYPE_HABIT, userId).firstElement().subscribe(adapter::updateData, RxErrorHandler.handleEmptyError());
     }
 
     public void taskSelected(String taskId) {

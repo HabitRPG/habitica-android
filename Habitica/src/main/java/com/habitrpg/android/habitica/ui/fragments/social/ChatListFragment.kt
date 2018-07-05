@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -25,13 +26,13 @@ import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
+import io.reactivex.functions.Action
+import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
-import rx.functions.Action0
-import rx.functions.Action1
 import javax.inject.Inject
 
 class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -73,7 +74,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             if (savedInstanceState.containsKey("userId")) {
                 this.userId = savedInstanceState.getString("userId")
                 if (this.userId != null) {
-                    userRepository.getUser(userId!!).subscribe(Action1 { habitRPGUser -> this.user = habitRPGUser }, RxErrorHandler.handleEmptyError())
+                    userRepository.getUser(userId!!).subscribe(Consumer { habitRPGUser -> this.user = habitRPGUser }, RxErrorHandler.handleEmptyError())
                 }
             }
 
@@ -103,19 +104,22 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
-        compositeSubscription.add(chatAdapter?.userLabelClickEvents?.subscribe(Action1 { userId -> FullProfileActivity.open(context, userId) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.deleteMessageEvents?.subscribe(Action1 { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.flagMessageEvents?.subscribe(Action1 { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.copyMessageAsTodoEvents?.subscribe(Action1{ this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.copyMessageEvents?.subscribe(Action1 { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.likeMessageEvents?.flatMap<ChatMessage>( { socialRepository.likeMessage(it) })?.subscribe(Action1 { }, RxErrorHandler.handleEmptyError()))
+        chatAdapter.notNull {
+            compositeSubscription.add(it.userLabelClickEvents.subscribe(Consumer { userId -> FullProfileActivity.open(context, userId) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.deleteMessageEvents.subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.flagMessageEvents.subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.copyMessageAsTodoEvents.subscribe(Consumer{ this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.copyMessageEvents.subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.likeMessageEvents.flatMap<ChatMessage> { socialRepository.likeMessage(it) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        }
+
 
         chatBarView.sendAction = { sendChatMessage(it) }
 
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        socialRepository.getGroupChat(groupId).first().subscribe(Action1<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())
+        socialRepository.getGroupChat(groupId).firstElement().subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())
 
         if (user?.flags?.isCommunityGuidelinesAccepted == true) {
             communityGuidelinesView.visibility = View.GONE
@@ -124,7 +128,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse("https://habitica.com/static/community-guidelines")
                 context?.startActivity(i)
-                userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
             }
         }
         onRefresh()
@@ -133,7 +137,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onRefresh() {
         refreshLayout.isRefreshing = true
-        socialRepository.retrieveGroupChat(groupId).subscribe(Action1 {}, RxErrorHandler.handleEmptyError(), Action0 { refreshLayout?.isRefreshing = false })
+        socialRepository.retrieveGroupChat(groupId).doOnEvent { _, _ -> refreshLayout?.isRefreshing = false }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
     }
 
     fun setNavigatedToFragment(groupId: String) {
@@ -167,7 +171,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             builder.setMessage(R.string.chat_flag_confirmation)
                     .setPositiveButton(R.string.flag_confirm) { _, _ ->
                         socialRepository.flagMessage(chatMessage)
-                                .subscribe(Action1 {
+                                .subscribe(Consumer {
                                     val activity = activity as MainActivity?
                                     showSnackbar(activity!!.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL)
                                 }, RxErrorHandler.handleEmptyError())
@@ -184,7 +188,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                     .setTitle(R.string.confirm_delete_tag_title)
                     .setMessage(R.string.confirm_delete_tag_message)
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
+                    .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
                     .setNegativeButton(android.R.string.no, null).show()
         }
     }
@@ -216,7 +220,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun sendChatMessage(chatText: String) {
-        socialRepository.postGroupChat(groupId, chatText).subscribe(Action1 {
+        socialRepository.postGroupChat(groupId, chatText).subscribe(Consumer {
             recyclerView?.scrollToPosition(0)
         }, RxErrorHandler.handleEmptyError())
     }

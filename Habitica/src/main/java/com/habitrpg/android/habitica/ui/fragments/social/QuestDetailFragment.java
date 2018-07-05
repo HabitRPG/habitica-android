@@ -115,7 +115,7 @@ public class QuestDetailFragment extends BaseMainFragment {
         party = group;
         quest = group.getQuest();
         setQuestParticipants(group.getQuest().getParticipants());
-        socialRepository.getMember(quest.getLeader()).first().subscribe(member -> {
+        socialRepository.getMember(quest.getLeader()).firstElement().subscribe(member -> {
             if (getContext() != null && questLeaderView != null && member != null) {
                 questLeaderView.setText(getContext().getString(R.string.quest_leader_header, member.getDisplayName()));
             }

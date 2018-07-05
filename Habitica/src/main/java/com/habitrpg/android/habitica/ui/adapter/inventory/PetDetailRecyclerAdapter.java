@@ -24,11 +24,12 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
-import rx.Observable;
-import rx.subjects.PublishSubject;
 
 public class PetDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Pet, PetDetailRecyclerAdapter.PetViewHolder> {
 
@@ -41,8 +42,8 @@ public class PetDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Pet, PetD
         super(data, autoUpdate);
     }
 
-    public Observable<String> getEquipEvents() {
-        return equipEvents.asObservable();
+    public Flowable<String> getEquipEvents() {
+        return equipEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
     @Override

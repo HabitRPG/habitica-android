@@ -5,38 +5,35 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
-
-import java.util.Date
-
-import rx.Observable
-import rx.functions.Action1
+import io.reactivex.Flowable
+import java.util.*
 
 abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
 
     private var lastContentSync = 0L
     private var lastWorldStateSync = 0L
 
-    override fun retrieveContent(): Observable<ContentResult> {
+    override fun retrieveContent(): Flowable<ContentResult> {
         return retrieveContent(false)
     }
 
-    override fun retrieveContent(forced: Boolean): Observable<ContentResult> {
+    override fun retrieveContent(forced: Boolean): Flowable<ContentResult> {
         val now = Date().time
         return if (forced || now - this.lastContentSync > 3600000) {
             lastContentSync = now
-            apiClient.getContent().doOnNext({ localRepository.saveContent(it) })
+            apiClient.content.doOnNext({ localRepository.saveContent(it) })
         } else {
-            Observable.just(null)
+            Flowable.empty()
         }
     }
 
-    override fun retrieveWorldState(): Observable<WorldState> {
+    override fun retrieveWorldState(): Flowable<WorldState> {
         val now = Date().time
         return if (now - this.lastWorldStateSync > 3600000) {
             lastWorldStateSync = now
-            apiClient.getWorldState().doOnNext({ localRepository.saveWorldState(it) })
+            apiClient.worldState.doOnNext({ localRepository.saveWorldState(it) })
         } else {
-            Observable.just(null)
+            Flowable.empty()
         }
     }
 }

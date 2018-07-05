@@ -14,9 +14,10 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.functions.Consumer
 import io.realm.RealmResults
-import rx.Observable
-import rx.functions.Action1
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -24,28 +25,28 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     private var lastSync: Date? = null
 
-    override fun getUser(): Observable<User> = getUser(userId)
-    override fun getInboxOverviewList(): Observable<RealmResults<ChatMessage>> = localRepository.getInboxOverviewList(userId)
+    override fun getUser(): Flowable<User> = getUser(userId)
+    override fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxOverviewList(userId)
 
 
-    override fun getUser(userID: String): Observable<User> = localRepository.getUser(userID)
+    override fun getUser(userID: String): Flowable<User> = localRepository.getUser(userID)
 
-    override fun updateUser(user: User?, updateData: Map<String, Any>): Observable<User> {
+    override fun updateUser(user: User?, updateData: Map<String, Any>): Flowable<User> {
         return if (user == null) {
-            Observable.just(User())
+            Flowable.just(User())
         } else apiClient.updateUser(updateData).map { newUser -> mergeUser(user, newUser) }
     }
 
-    override fun updateUser(user: User?, key: String, value: Any): Observable<User> {
+    override fun updateUser(user: User?, key: String, value: Any): Flowable<User> {
         val updateData = HashMap<String, Any>()
         updateData[key] = value
         return updateUser(user, updateData)
     }
 
-    override fun retrieveUser(withTasks: Boolean): Observable<User> =
+    override fun retrieveUser(withTasks: Boolean): Flowable<User> =
             retrieveUser(withTasks, false)
 
-    override fun retrieveUser(withTasks: Boolean, forced: Boolean): Observable<User> {
+    override fun retrieveUser(withTasks: Boolean, forced: Boolean): Flowable<User> {
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             lastSync = Date()
             return apiClient.retrieveUser(withTasks)
@@ -59,10 +60,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                         val calendar = GregorianCalendar()
                         val timeZone = calendar.timeZone
                         val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
-                        if (offset != user?.preferences?.timezoneOffset ?: 0) {
+                        if (offset != user.preferences?.timezoneOffset ?: 0) {
                             return@flatMap updateUser(user, "preferences.timezoneOffset", offset.toString())
                         } else {
-                            return@flatMap Observable.just(user)
+                            return@flatMap Flowable.just(user)
                         }
                     }
         } else {
@@ -70,10 +71,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun getInboxMessages(replyToUserID: String?): Observable<RealmResults<ChatMessage>> =
+    override fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>> =
             localRepository.getInboxMessages(userId, replyToUserID)
 
-    override fun retrieveInboxMessages(): Observable<List<ChatMessage>> {
+    override fun retrieveInboxMessages(): Flowable<List<ChatMessage>> {
         return apiClient.retrieveInboxMessages().doOnNext { messages ->
             messages.forEach {
                 it.isInboxMessage = true
@@ -82,7 +83,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun revive(user: User): Observable<User> =
+    override fun revive(user: User): Flowable<User> =
             apiClient.revive().map { newUser -> mergeUser(user, newUser) }
 
     override fun resetTutorial(user: User?) {
@@ -95,21 +96,21 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     updateData
                 }
                 .flatMap { updateData -> updateUser(user, updateData) }
-                .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
-    override fun sleep(user: User): Observable<User> {
+    override fun sleep(user: User): Flowable<User> {
         localRepository.executeTransaction { user.preferences.isSleep = !user.preferences.sleep }
         return apiClient.sleep().map { user }
     }
 
-    override fun getSkills(user: User): Observable<RealmResults<Skill>> =
+    override fun getSkills(user: User): Flowable<RealmResults<Skill>> =
             localRepository.getSkills(user)
 
-    override fun getSpecialItems(user: User): Observable<RealmResults<Skill>> =
+    override fun getSpecialItems(user: User): Flowable<RealmResults<Skill>> =
             localRepository.getSpecialItems(user)
 
-    override fun useSkill(user: User?, key: String, target: String, taskId: String): Observable<SkillResponse> {
+    override fun useSkill(user: User?, key: String, target: String, taskId: String): Flowable<SkillResponse> {
         return apiClient.useSkill(key, target, taskId).doOnNext { skillResponse ->
             if (user != null) {
                 mergeUser(user, skillResponse.user)
@@ -117,7 +118,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         }
     }
 
-    override fun useSkill(user: User?, key: String, target: String): Observable<SkillResponse> {
+    override fun useSkill(user: User?, key: String, target: String): Flowable<SkillResponse> {
         return apiClient.useSkill(key, target)
                 .map { response ->
                     response.hpDiff = response.user.stats.getHp() - (user?.stats?.getHp() ?: 0.0)
@@ -132,13 +133,13 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun changeClass(): Observable<User> = apiClient.changeClass().flatMap { retrieveUser(false, true) }
+    override fun changeClass(): Flowable<User> = apiClient.changeClass().flatMap { retrieveUser(false, true) }
 
-    override fun disableClasses(): Observable<User> = apiClient.disableClasses().flatMap { retrieveUser(false, true) }
+    override fun disableClasses(): Flowable<User> = apiClient.disableClasses().flatMap { retrieveUser(false, true) }
 
-    override fun changeClass(selectedClass: String): Observable<User> = apiClient.changeClass(selectedClass)
+    override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass)
 
-    override fun unlockPath(user: User, customization: Customization): Observable<UnlockResponse> {
+    override fun unlockPath(user: User, customization: Customization): Flowable<UnlockResponse> {
         return apiClient.unlockPath(customization.path)
                 .doOnNext { unlockResponse ->
                     val copiedUser = localRepository.getUnmanagedCopy(user)
@@ -150,13 +151,13 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun unlockPath(user: User, set: CustomizationSet): Observable<UnlockResponse> {
+    override fun unlockPath(user: User, set: CustomizationSet): Flowable<UnlockResponse> {
         var path = ""
         for (customization in set.customizations) {
             path = path + "," + customization.path
         }
         if (path.isEmpty()) {
-            return Observable.just(null)
+            return Flowable.just(null)
         }
         path = path.substring(1)
         return apiClient.unlockPath(path)
@@ -174,39 +175,39 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         runCron(ArrayList())
     }
 
-    override fun readNotification(id: String): Observable<List<*>> = apiClient.readNotification(id)
+    override fun readNotification(id: String): Flowable<List<*>> = apiClient.readNotification(id)
 
-    override fun changeCustomDayStart(dayStartTime: Int): Observable<User> {
+    override fun changeCustomDayStart(dayStartTime: Int): Flowable<User> {
         val updateObject = HashMap<String, Any>()
         updateObject["dayStart"] = dayStartTime
         return apiClient.changeCustomDayStart(updateObject)
     }
 
-    override fun updateLanguage(user: User?, languageCode: String): Observable<User> {
+    override fun updateLanguage(user: User?, languageCode: String): Flowable<User> {
         return updateUser(user, "preferences.language", languageCode)
                 .doOnNext { apiClient.setLanguageCode(languageCode) }
     }
 
-    override fun resetAccount(): Observable<User> {
+    override fun resetAccount(): Flowable<User> {
         return apiClient.resetAccount().flatMap { retrieveUser(true, true) }
     }
 
-    override fun deleteAccount(password: String): Observable<Void> =
+    override fun deleteAccount(password: String): Flowable<Void> =
             apiClient.deleteAccount(password)
 
-    override fun sendPasswordResetEmail(email: String): Observable<Void> =
+    override fun sendPasswordResetEmail(email: String): Flowable<Void> =
             apiClient.sendPasswordResetEmail(email)
 
-    override fun updateLoginName(newLoginName: String, password: String): Observable<Void> =
+    override fun updateLoginName(newLoginName: String, password: String): Flowable<Void> =
             apiClient.updateLoginName(newLoginName, password)
 
-    override fun updateEmail(newEmail: String, password: String): Observable<Void> =
+    override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
             apiClient.updateEmail(newEmail, password)
 
-    override fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Observable<Void> =
+    override fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void> =
             apiClient.updatePassword(newPassword, oldPassword, oldPasswordConfirmation)
 
-    override fun allocatePoint(user: User?, stat: String): Observable<Stats> {
+    override fun allocatePoint(user: User?, stat: String): Flowable<Stats> {
         if (user != null && user.isManaged) {
             localRepository.executeTransaction {
                 when (stat) {
@@ -233,7 +234,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Observable<Stats> =
+    override fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> =
             apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception)
                     .doOnNext { stats ->
                         if (user != null && user.isManaged) {
@@ -249,7 +250,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     }
 
     override fun runCron(tasks: MutableList<Task>) {
-        var observable: Observable<Any> = localRepository.getUser(userId).first()
+        var observable: Maybe<Any> = localRepository.getUser(userId).firstElement()
                 .filter { it.needsCron }
                 .map {  user -> localRepository.executeTransaction {
                     user.needsCron = false
@@ -259,13 +260,13 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
         if (tasks.isNotEmpty()) {
             for (task in tasks) {
-                observable = observable.flatMap { taskRepository.taskChecked(null, task, true, true) }
+                observable = observable.flatMap { taskRepository.taskChecked(null, task, true, true).firstElement() }
             }
-            observable.toList()
+            observable
         }
-        observable.flatMap { apiClient.runCron() }
-                .flatMap { this.retrieveUser(true, true) }
-                .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        observable.flatMap { apiClient.runCron().firstElement() }
+                .flatMap { this.retrieveUser(true, true).firstElement() }
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     private fun mergeUser(oldUser: User?, newUser: User): User? {

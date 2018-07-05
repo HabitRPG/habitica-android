@@ -456,7 +456,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         enableRepeatables();
 
         tagRepository.getTags(userId)
-                .first()
+                .firstElement()
                 .subscribe(loadedTags -> {
                             tags = loadedTags;
                             createTagsCheckBoxes();
@@ -465,7 +465,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         if (taskId != null) {
             taskRepository.getTask(taskId)
-                    .first()
+                    .firstElement()
                     .subscribe(task -> {
                         this.task = task;
                         if (task != null) {

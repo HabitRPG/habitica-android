@@ -58,7 +58,7 @@ import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public class CreateChallengeActivity extends BaseActivity {
     public static final String CHALLENGE_ID_KEY = "challengeId";
@@ -159,7 +159,7 @@ public class CreateChallengeActivity extends BaseActivity {
             savingInProgress = true;
             ProgressDialog dialog = ProgressDialog.show(this, "", "Saving challenge data. Please wait...", true, false);
 
-            Observable<Challenge> observable;
+            Flowable<Challenge> observable;
 
             if (editMode) {
                 observable = updateChallenge();
@@ -503,7 +503,7 @@ public class CreateChallengeActivity extends BaseActivity {
         return c;
     }
 
-    private Observable<Challenge> createChallenge() {
+    private Flowable<Challenge> createChallenge() {
         Challenge c = getChallengeData();
 
         List<Task> taskList = challengeTasks.getTaskList();
@@ -515,7 +515,7 @@ public class CreateChallengeActivity extends BaseActivity {
         return challengeRepository.createChallenge(c, taskList);
     }
 
-    private Observable<Challenge> updateChallenge() {
+    private Flowable<Challenge> updateChallenge() {
         Challenge c = getChallengeData();
 
         List<Task> taskList = challengeTasks.getTaskList();

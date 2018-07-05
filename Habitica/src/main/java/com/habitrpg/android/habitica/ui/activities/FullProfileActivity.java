@@ -58,8 +58,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.Flowable;
 import io.realm.RealmResults;
-import rx.Observable;
 
 import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
 
@@ -358,7 +358,7 @@ public class FullProfileActivity extends BaseActivity {
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
     }
 
-    private Observable<RealmResults<Equipment>> loadItemDataByOutfit(Outfit outfit) {
+    private Flowable<RealmResults<Equipment>> loadItemDataByOutfit(Outfit outfit) {
         ArrayList<String> outfitList = new ArrayList<>();
         outfitList.add(outfit.getArmor());
         outfitList.add(outfit.getBack());

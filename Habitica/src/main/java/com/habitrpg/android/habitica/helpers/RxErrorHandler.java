@@ -8,9 +8,8 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import java.io.EOFException;
 import java.io.IOException;
 
+import io.reactivex.functions.Consumer;
 import retrofit2.HttpException;
-import rx.functions.Action1;
-import rx.plugins.RxJavaHooks;
 
 public class RxErrorHandler {
 
@@ -21,14 +20,14 @@ public class RxErrorHandler {
         instance = new RxErrorHandler();
         instance.crashlyticsProxy = crashlyticsProxy;
 
-        RxJavaHooks.setOnError(handleEmptyError());
+        //RxJavaHooks.setOnError(handleEmptyError());
     }
 
-    public static Action1<Throwable> handleEmptyError() {
+    public static Consumer<Throwable> handleEmptyError() {
         //Can't be turned into a lambda, because it then doesn't work for some reason.
-        return new Action1<Throwable>() {
+        return new Consumer<Throwable>() {
             @Override
-            public void call(Throwable throwable) {
+            public void accept(Throwable throwable) {
                 RxErrorHandler.reportError(throwable);
             }
         };

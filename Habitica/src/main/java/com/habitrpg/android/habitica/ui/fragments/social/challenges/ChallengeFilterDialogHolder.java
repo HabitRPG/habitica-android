@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter;
+import com.habitrpg.android.habitica.utils.Action1;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,7 +23,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.functions.Action1;
 
 class ChallengeFilterDialogHolder {
 

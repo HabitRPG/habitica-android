@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.models.user.User;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public class HabitScoreUseCase extends UseCase<HabitScoreUseCase.RequestValues, TaskScoringResult> {
 
@@ -26,7 +26,7 @@ public class HabitScoreUseCase extends UseCase<HabitScoreUseCase.RequestValues, 
     }
 
     @Override
-    protected Observable<TaskScoringResult> buildUseCaseObservable(RequestValues requestValues) {
+    protected Flowable<TaskScoringResult> buildUseCaseObservable(RequestValues requestValues) {
         return taskRepository
                 .taskChecked(requestValues.user, requestValues.habit, requestValues.up, false)
                 .doOnNext(res -> soundManager.loadAndPlayAudio(requestValues.up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit));

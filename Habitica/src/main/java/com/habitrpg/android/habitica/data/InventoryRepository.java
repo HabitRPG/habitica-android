@@ -21,72 +21,72 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Flowable;
 import io.realm.RealmResults;
-import rx.Observable;
 
 
 public interface InventoryRepository extends ContentRepository {
-    Observable<QuestContent> getQuestContent(String key);
+    Flowable<QuestContent> getQuestContent(String key);
 
-    Observable<RealmResults<Equipment>> getItems(List<String> searchedKeys);
+    Flowable<RealmResults<Equipment>> getItems(List<String> searchedKeys);
 
     long getArmoireRemainingCount();
 
-    Observable<RealmResults<ShopItem>> getInAppRewards();
-    Observable<List<ShopItem>> retrieveInAppRewards();
+    Flowable<RealmResults<ShopItem>> getInAppRewards();
+    Flowable<List<ShopItem>> retrieveInAppRewards();
 
-    Observable<RealmResults<Equipment>> getOwnedEquipment(@NotNull String type);
-    Observable<RealmResults<Equipment>> getOwnedEquipment();
+    Flowable<RealmResults<Equipment>> getOwnedEquipment(@NotNull String type);
+    Flowable<RealmResults<Equipment>> getOwnedEquipment();
 
-    Observable<? extends RealmResults<? extends Item>> getOwnedItems(Class<? extends Item> itemClass, User user);
-    Observable<? extends Map<String, Item>> getOwnedItems(@NotNull User user);
+    Flowable<? extends RealmResults<? extends Item>> getOwnedItems(Class<? extends Item> itemClass, User user);
+    Flowable<? extends Map<String, Item>> getOwnedItems(@NotNull User user);
 
-    Observable<Equipment> getEquipment(String key);
+    Flowable<Equipment> getEquipment(String key);
 
-    Observable<Equipment> openMysteryItem(User user);
+    Flowable<Equipment> openMysteryItem(User user);
 
     void saveEquipment(Equipment equipment);
 
-    Observable<RealmResults<Mount>> getMounts();
-    Observable<RealmResults<Mount>> getMounts(@NotNull String type, @NotNull String group);
+    Flowable<RealmResults<Mount>> getMounts();
+    Flowable<RealmResults<Mount>> getMounts(@NotNull String type, @NotNull String group);
 
-    Observable<RealmResults<Mount>> getOwnedMounts();
-    Observable<RealmResults<Mount>> getOwnedMounts(@NotNull String animalType, @NotNull String animalGroup);
+    Flowable<RealmResults<Mount>> getOwnedMounts();
+    Flowable<RealmResults<Mount>> getOwnedMounts(@NotNull String animalType, @NotNull String animalGroup);
 
-    Observable<RealmResults<Pet>> getPets();
-    Observable<RealmResults<Pet>> getPets(@NotNull String type, @NotNull String group);
+    Flowable<RealmResults<Pet>> getPets();
+    Flowable<RealmResults<Pet>> getPets(@NotNull String type, @NotNull String group);
 
-    Observable<RealmResults<Pet>> getOwnedPets();
-    Observable<RealmResults<Pet>> getOwnedPets(@NotNull String type, @NotNull String group);
+    Flowable<RealmResults<Pet>> getOwnedPets();
+    Flowable<RealmResults<Pet>> getOwnedPets(@NotNull String type, @NotNull String group);
 
     void updateOwnedEquipment(User user);
 
     void changeOwnedCount(String type, String key, int amountToAdd);
 
-    Observable<User> sellItem(User user, String type, String key);
-    Observable<User> sellItem(User user, Item item);
+    Flowable<User> sellItem(User user, String type, String key);
+    Flowable<User> sellItem(User user, Item item);
 
-    Observable<Items> equipGear(User user, String equipment, boolean asCostume);
-    Observable<Items> equip(User user, String type, String key);
+    Flowable<Items> equipGear(User user, String equipment, boolean asCostume);
+    Flowable<Items> equip(User user, String type, String key);
 
-    Observable<FeedResponse> feedPet(Pet pet, Food food);
+    Flowable<FeedResponse> feedPet(Pet pet, Food food);
 
-    Observable<Items> hatchPet(Egg egg, HatchingPotion hatchingPotion);
+    Flowable<Items> hatchPet(Egg egg, HatchingPotion hatchingPotion);
 
-    Observable<Quest> inviteToQuest(QuestContent quest);
+    Flowable<Quest> inviteToQuest(QuestContent quest);
 
-    Observable<BuyResponse> buyItem(User user, String id, double value);
+    Flowable<BuyResponse> buyItem(User user, String id, double value);
 
-    Observable<Shop> retrieveShopInventory(String identifier);
-    Observable<Shop> retrieveMarketGear();
+    Flowable<Shop> retrieveShopInventory(String identifier);
+    Flowable<Shop> retrieveMarketGear();
 
-    Observable<Void> purchaseMysterySet(String categoryIdentifier);
+    Flowable<Void> purchaseMysterySet(String categoryIdentifier);
 
-    Observable<Void> purchaseHourglassItem(String purchaseType, String key);
+    Flowable<Void> purchaseHourglassItem(String purchaseType, String key);
 
-    Observable<Void> purchaseQuest(String key);
+    Flowable<Void> purchaseQuest(String key);
 
-    Observable<Void> purchaseItem(String purchaseType, String key);
+    Flowable<Void> purchaseItem(String purchaseType, String key);
 
-    Observable<List<ShopItem>> togglePinnedItem(ShopItem item);
+    Flowable<List<ShopItem>> togglePinnedItem(ShopItem item);
 }

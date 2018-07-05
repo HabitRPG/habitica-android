@@ -4,25 +4,24 @@ import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
-
+import io.reactivex.Flowable
 import io.realm.RealmResults
-import rx.Observable
 
 interface UserLocalRepository : BaseLocalRepository {
 
-    fun getTutorialSteps(): Observable<RealmResults<TutorialStep>>
+    fun getTutorialSteps(): Flowable<RealmResults<TutorialStep>>
 
-    fun getUser(userID: String): Observable<User>
+    fun getUser(userID: String): Flowable<User>
 
     fun saveUser(user: User)
 
     fun saveMessages(messages: List<ChatMessage>)
 
-    fun getSkills(user: User): Observable<RealmResults<Skill>>
+    fun getSkills(user: User): Flowable<RealmResults<Skill>>
 
-    fun getSpecialItems(user: User): Observable<RealmResults<Skill>>
+    fun getSpecialItems(user: User): Flowable<RealmResults<Skill>>
 
-    fun getInboxMessages(userId: String, replyToUserID: String?): Observable<RealmResults<ChatMessage>>
+    fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
 
-    fun getInboxOverviewList(userId: String): Observable<RealmResults<ChatMessage>>
+    fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>>
 }

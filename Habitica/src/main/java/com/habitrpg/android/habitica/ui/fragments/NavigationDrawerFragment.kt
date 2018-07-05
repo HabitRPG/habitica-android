@@ -43,10 +43,9 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.drawer_main.*
-import kotlinx.android.synthetic.main.fragment_tavern_detail.*
-import rx.functions.Action1
-import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 
 /**
@@ -71,7 +70,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private lateinit var adapter: NavigationDrawerAdapter
 
-    private var subscriptions: CompositeSubscription? = null
+    private var subscriptions: CompositeDisposable? = null
 
     val isDrawerOpen: Boolean
         get() = drawerLayout?.isDrawerOpen(fragmentContainerView!!) ?: false
@@ -144,7 +143,7 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             NavigationDrawerAdapter(0, 0)
         }
-        subscriptions = CompositeSubscription()
+        subscriptions = CompositeDisposable()
         HabiticaBaseApplication.getComponent().inject(this)
         super.onCreate(savedInstanceState)
 
@@ -172,19 +171,19 @@ class NavigationDrawerFragment : DialogFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         initializeMenuItems()
 
-        subscriptions?.add(adapter.getItemSelectionEvents().subscribe(Action1 {
+        subscriptions?.add(adapter.getItemSelectionEvents().subscribe(Consumer {
             setSelection(it, true)
         }, RxErrorHandler.handleEmptyError()))
 
         subscriptions?.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .doOnNext({  quest = it.quest })
                 .filter { it.hasActiveQuest }
-                .flatMap { inventoryRepository.getQuestContent(it.quest?.key).first() }
-                .subscribe(Action1 {
+                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key).firstElement() }
+                .subscribe(Consumer {
                    questContent = it
                 }, RxErrorHandler.handleEmptyError()))
 
-        subscriptions?.add(userRepository.getUser().subscribe(Action1 {
+        subscriptions?.add(userRepository.getUser().subscribe(Consumer {
             setUsername(it.profile.name)
             avatarView.setAvatar(it)
             questMenuView.configure(it)
@@ -195,7 +194,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     override fun onDestroy() {
-        subscriptions?.clear()
+        subscriptions?.dispose()
         socialRepository.close()
         inventoryRepository.close()
         userRepository.close()

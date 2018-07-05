@@ -54,8 +54,8 @@ public class SkillMemberActivity extends BaseActivity {
         recyclerView.setAdapter(viewAdapter);
 
         userRepository.getUser()
-                .first()
-                .flatMap(user -> socialRepository.getGroupMembers(user.getParty().id))
+                .firstElement()
+                .flatMap(user -> socialRepository.getGroupMembers(user.getParty().id).firstElement())
                 .subscribe(viewAdapter::updateData, RxErrorHandler.handleEmptyError());
     }
 }

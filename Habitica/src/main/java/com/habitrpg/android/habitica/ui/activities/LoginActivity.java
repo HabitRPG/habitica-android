@@ -79,10 +79,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.exceptions.Exceptions;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Flowable;
+import io.reactivex.exceptions.Exceptions;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.habitrpg.android.habitica.R.id.password;
 
@@ -90,7 +90,7 @@ import static com.habitrpg.android.habitica.R.id.password;
  * @author Mickael Goubin
  */
 public class LoginActivity extends BaseActivity
-        implements Action1<UserAuthResponse> {
+        implements Consumer<UserAuthResponse> {
     static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     private final static String TAG_ADDRESS = "address";
     private final static String TAG_USERID = "user";
@@ -439,7 +439,7 @@ public class LoginActivity extends BaseActivity
     }
 
     @Override
-    public void call(UserAuthResponse userAuthResponse) {
+    public void accept(UserAuthResponse userAuthResponse) {
         try {
             saveTokens(userAuthResponse.getToken(), userAuthResponse.getId());
         } catch (Exception e) {
@@ -485,9 +485,9 @@ public class LoginActivity extends BaseActivity
     private void handleGoogleLoginResult() {
         String scopesString = Scopes.PROFILE + " " + Scopes.EMAIL;
         String scopes = "oauth2:" + scopesString;
-        Observable.defer(() -> {
+        Flowable.defer(() -> {
             try {
-                return Observable.just(GoogleAuthUtil.getToken(LoginActivity.this, googleEmail, scopes));
+                return Flowable.just(GoogleAuthUtil.getToken(LoginActivity.this, googleEmail, scopes));
             } catch (IOException | GoogleAuthException e) {
                 throw Exceptions.propagate(e);
             }

@@ -32,8 +32,8 @@ import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Flowable;
 import io.realm.RealmResults;
-import rx.Observable;
 
 public class ChallengeListFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -109,7 +109,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     }
 
     private void loadLocalChallenges() {
-        Observable<RealmResults<Challenge>> observable;
+        Flowable<RealmResults<Challenge>> observable;
 
         if (viewUserChallengesOnly && user != null) {
             observable = challengeRepository.getUserChallenges(user.getId());
@@ -117,7 +117,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
             observable = challengeRepository.getChallenges();
         }
 
-        observable.first().subscribe(challenges -> {
+        observable.firstElement().subscribe(challenges -> {
             if (challenges.size() == 0) {
                 fetchOnlineChallenges();
             }

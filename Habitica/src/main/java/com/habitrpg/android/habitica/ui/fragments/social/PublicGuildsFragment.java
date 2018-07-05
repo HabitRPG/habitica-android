@@ -80,7 +80,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     private void fetchGuilds() {
         if (this.socialRepository != null) {
             this.socialRepository.getPublicGuilds()
-                    .first()
+                    .firstElement()
                     .subscribe(groups -> {
                         if (PublicGuildsFragment.this.viewAdapter != null) {
                             PublicGuildsFragment.this.viewAdapter.updateData(groups);
@@ -96,7 +96,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
 
         MenuItem searchItem = menu.findItem(R.id.action_guild_search);
         SearchView guildSearchView = (SearchView) searchItem.getActionView();
-        SearchView.SearchAutoComplete theTextArea = (SearchView.SearchAutoComplete) guildSearchView.findViewById(R.id.search_src_text);
+        SearchView.SearchAutoComplete theTextArea = guildSearchView.findViewById(R.id.search_src_text);
         theTextArea.setHintTextColor(ContextCompat.getColor(getContext(), R.color.white));
         guildSearchView.setQueryHint(getString(R.string.guild_search_hint));
         guildSearchView.setOnQueryTextListener(this);

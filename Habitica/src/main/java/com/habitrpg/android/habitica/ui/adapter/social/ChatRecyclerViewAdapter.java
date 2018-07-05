@@ -28,12 +28,14 @@ import java.lang.reflect.Field;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subjects.PublishSubject;
 
 public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessage, ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
 
@@ -75,32 +77,32 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
         }
     }
 
-    public Observable<ChatMessage> getLikeMessageEvents() {
-        return likeMessageEvents.asObservable();
+    public Flowable<ChatMessage> getLikeMessageEvents() {
+        return likeMessageEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
-    public Observable<String> getUserLabelClickEvents() {
-        return userLabelClickEvents.asObservable();
+    public Flowable<String> getUserLabelClickEvents() {
+        return userLabelClickEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
-    public Observable<String> getPrivateMessageClickEvents() {
-        return privateMessageClickEvents.asObservable();
+    public Flowable<String> getPrivateMessageClickEvents() {
+        return privateMessageClickEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
-    public Observable<ChatMessage> getDeleteMessageEvents() {
-        return deleteMessageEvents.asObservable();
+    public Flowable<ChatMessage> getDeleteMessageEvents() {
+        return deleteMessageEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
-    public Observable<ChatMessage> getFlagMessageEvents() {
-        return flatMessageEvents.asObservable();
+    public Flowable<ChatMessage> getFlagMessageEvents() {
+        return flatMessageEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
-    public Observable<ChatMessage> getCopyMessageAsTodoEvents() {
-        return copyMessageAsTodoEvents.asObservable();
+    public Flowable<ChatMessage> getCopyMessageAsTodoEvents() {
+        return copyMessageAsTodoEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
-    public Observable<ChatMessage> getCopyMessageEvents() {
-        return copyMessageEvents.asObservable();
+    public Flowable<ChatMessage> getCopyMessageEvents() {
+        return copyMessageEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
 
@@ -177,7 +179,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 messageText.setText(chatMessage.getParsedText());
                 if (msg.getParsedText() == null) {
                     messageText.setText(chatMessage.getText());
-                    Observable.just(chatMessage.getText())
+                    Maybe.just(chatMessage.getText())
                             .map(MarkdownParser::parseMarkdown)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())

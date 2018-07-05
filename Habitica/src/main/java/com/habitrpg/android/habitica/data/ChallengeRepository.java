@@ -8,14 +8,14 @@ import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.realm.RealmResults;
-import rx.Observable;
 
 public interface ChallengeRepository extends BaseRepository  {
-    Observable<Challenge> getChallenge(String challengeId);
-    Observable<TaskList> getChallengeTasks(String challengeId);
+    Flowable<Challenge> getChallenge(String challengeId);
+    Flowable<TaskList> getChallengeTasks(String challengeId);
 
-    Observable<Challenge> createChallenge(Challenge challenge, List<Task> taskList);
+    Flowable<Challenge> createChallenge(Challenge challenge, List<Task> taskList);
 
     /**
      *
@@ -26,16 +26,16 @@ public interface ChallengeRepository extends BaseRepository  {
      * @param removedTaskList tasks that has be to be removed
      * @return Observable with the updated challenge
      */
-    Observable<Challenge> updateChallenge(Challenge challenge, List<Task> fullTaskList,
+    Flowable<Challenge> updateChallenge(Challenge challenge, List<Task> fullTaskList,
                                           List<Task> addedTaskList, List<Task> updatedTaskList, List<String> removedTaskList);
-    Observable<Void> deleteChallenge(String challengeId);
+    Flowable<Void> deleteChallenge(String challengeId);
 
-    Observable<RealmResults<Challenge>> getChallenges();
-    Observable<RealmResults<Challenge>> getUserChallenges(String userId);
+    Flowable<RealmResults<Challenge>> getChallenges();
+    Flowable<RealmResults<Challenge>> getUserChallenges(String userId);
 
-    Observable<List<Challenge>> retrieveChallenges(User user);
+    Flowable<List<Challenge>> retrieveChallenges(User user);
 
-    Observable<Void> leaveChallenge(Challenge challenge, LeaveChallengeBody leaveChallengeBody);
+    Flowable<Void> leaveChallenge(Challenge challenge, LeaveChallengeBody leaveChallengeBody);
 
-    Observable<Challenge> joinChallenge(Challenge challenge);
+    Flowable<Challenge> joinChallenge(Challenge challenge);
 }

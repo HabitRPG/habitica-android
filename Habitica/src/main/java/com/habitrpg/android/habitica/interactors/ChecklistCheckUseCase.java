@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 public class ChecklistCheckUseCase extends UseCase<ChecklistCheckUseCase.RequestValues, Task> {
 
@@ -20,7 +20,7 @@ public class ChecklistCheckUseCase extends UseCase<ChecklistCheckUseCase.Request
     }
 
     @Override
-    protected Observable<Task> buildUseCaseObservable(ChecklistCheckUseCase.RequestValues requestValues) {
+    protected Flowable<Task> buildUseCaseObservable(ChecklistCheckUseCase.RequestValues requestValues) {
         return taskRepository.scoreChecklistItem(requestValues.taskId, requestValues.itemId);
     }
 

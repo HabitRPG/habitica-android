@@ -22,10 +22,11 @@ import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
-import rx.Observable;
-import rx.subjects.PublishSubject;
 
 public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Member, PartyMemberRecyclerViewAdapter.MemberViewHolder> {
 
@@ -56,8 +57,8 @@ public class PartyMemberRecyclerViewAdapter extends RealmRecyclerViewAdapter<Mem
         }
     }
 
-    public Observable<String> getUserClickedEvents() {
-        return userClickedEvents.asObservable();
+    public Flowable<String> getUserClickedEvents() {
+        return userClickedEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
     class MemberViewHolder extends RecyclerView.ViewHolder {

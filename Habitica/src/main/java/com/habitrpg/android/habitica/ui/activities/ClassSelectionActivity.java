@@ -22,9 +22,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
 
-public class ClassSelectionActivity extends BaseActivity implements Action1<User> {
+public class ClassSelectionActivity extends BaseActivity implements Consumer<User> {
 
     String currentClass;
     Boolean isInitialSelection;
@@ -216,7 +216,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
     }
 
     @Override
-    public void call(User user) {
+    public void accept(User user) {
         if (shouldFinish) {
             if (progressDialog != null) {
                 progressDialog.dismiss();

@@ -24,17 +24,13 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder
-import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
 import org.greenrobot.eventbus.EventBus
-import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Action1
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -94,7 +90,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
         recyclerView.adapter = adapter
 
         if (this.classType != null) {
-            taskRepository.getTasks(this.classType ?: "", userID).first().subscribe(Action1 { this.recyclerAdapter?.updateUnfilteredData(it)
+            taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer { this.recyclerAdapter?.updateUnfilteredData(it)
                 this.recyclerAdapter?.filter()
             }, RxErrorHandler.handleEmptyError())
         }
@@ -158,7 +154,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
                     taskRepository.updateTaskPosition(classType ?: "", fromPosition, viewHolder.adapterPosition)
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Action1 { recyclerAdapter?.ignoreUpdates = false
+                            .subscribe(Consumer { recyclerAdapter?.ignoreUpdates = false
                             recyclerAdapter?.notifyDataSetChanged()}, RxErrorHandler.handleEmptyError())
                     this.fromPosition = null
                 }
@@ -236,7 +232,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
 
         if (Task.TYPE_REWARD == className) {
             compositeSubscription.add(taskRepository.getTasks(this.className, userID)
-                    .subscribe(Action1 { recyclerAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(Consumer { recyclerAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -260,7 +256,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
         userRepository.retrieveUser(true, true)
                 .doOnTerminate {
                     refreshLayout?.isRefreshing = false
-                }.subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     fun setActiveFilter(activeFilter: String) {
@@ -270,7 +266,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
         recyclerAdapter?.filter()
 
         if (activeFilter == Task.FILTER_COMPLETED) {
-            compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe(Action1 {}, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
         }
     }
 

@@ -25,10 +25,10 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.UiUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
+import io.reactivex.functions.Action
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_inbox_message_list.*
 import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
-import rx.functions.Action0
-import rx.functions.Action1
 import javax.inject.Inject
 
 class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -60,11 +60,14 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         chatAdapter?.setSendingUser(this.user)
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
-        compositeSubscription.add(chatAdapter?.userLabelClickEvents?.subscribe(Action1<String> { FullProfileActivity.open(context, it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.deleteMessageEvents?.subscribe(Action1<ChatMessage> { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.flagMessageEvents?.subscribe(Action1<ChatMessage> { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.copyMessageAsTodoEvents?.subscribe(Action1<ChatMessage> { this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(chatAdapter?.copyMessageEvents?.subscribe(Action1<ChatMessage> { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+        chatAdapter.notNull {
+            compositeSubscription.add(it.userLabelClickEvents.subscribe(Consumer<String> { FullProfileActivity.open(context, it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.deleteMessageEvents.subscribe(Consumer<ChatMessage> { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.flagMessageEvents.subscribe(Consumer<ChatMessage> { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.copyMessageAsTodoEvents.subscribe(Consumer<ChatMessage> { this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.copyMessageEvents.subscribe(Consumer<ChatMessage> { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+        }
+
 
         chatBarView.sendAction = { sendMessage(it) }
 
@@ -84,8 +87,8 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
     private fun loadMessages() {
         if (user?.isManaged == true) {
             userRepository.getInboxMessages(replyToUserUUID)
-                    .first()
-                    .subscribe(Action1 { this.chatAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError())
+                    .firstElement()
+                    .subscribe(Consumer { this.chatAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -107,9 +110,9 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
     private fun refreshUserInbox() {
         this.swipeRefreshLayout?.isRefreshing = true
         this.userRepository.retrieveUser(true)
-                .subscribe(Action1<User> {
+                .subscribe(Consumer<User> {
                     user = it
-                }, RxErrorHandler.handleEmptyError(), Action0 {
+                }, RxErrorHandler.handleEmptyError(), Action {
                     swipeRefreshLayout?.isRefreshing = false
                 })
     }
@@ -121,7 +124,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
     private fun sendMessage(chatText: String) {
         replyToUserUUID?.notNull {
             socialRepository.postPrivateMessage(it, chatText)
-                    .subscribe(Action1 { this.refreshUserInbox() }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { this.refreshUserInbox() }, RxErrorHandler.handleEmptyError())
             UiUtils.dismissKeyboard(getActivity())
         }
     }
@@ -146,7 +149,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         builder.setMessage(R.string.chat_flag_confirmation)
                 .setPositiveButton(R.string.flag_confirm) { _, _ ->
                     socialRepository.flagMessage(chatMessage)
-                            .subscribe(Action1 {
+                            .subscribe(Consumer {
                                 val activity = getActivity() as MainActivity?
                                 showSnackbar(activity!!.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, HabiticaSnackbar.SnackbarDisplayType.NORMAL)
                             }, RxErrorHandler.handleEmptyError())
@@ -162,7 +165,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
                     .setTitle(R.string.confirm_delete_tag_title)
                     .setMessage(R.string.confirm_delete_tag_message)
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
+                    .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
                     .setNegativeButton(android.R.string.no, null).show()
         }
     }

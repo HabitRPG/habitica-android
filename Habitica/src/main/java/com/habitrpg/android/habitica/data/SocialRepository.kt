@@ -8,69 +8,68 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
-
-import java.util.HashMap
-
+import io.reactivex.Flowable
+import io.reactivex.Single
 import io.realm.RealmResults
-import rx.Observable
+import java.util.*
 
 interface SocialRepository : BaseRepository {
-    fun getPublicGuilds(): Observable<RealmResults<Group>>
+    fun getPublicGuilds(): Flowable<RealmResults<Group>>
 
-    fun getUserChallenges(): Observable<List<Challenge>>
+    fun getUserChallenges(): Flowable<List<Challenge>>
 
-    fun getUserGroups(): Observable<RealmResults<Group>>
-    fun retrieveGroupChat(groupId: String): Observable<List<ChatMessage>>
-    fun getGroupChat(groupId: String): Observable<RealmResults<ChatMessage>>
+    fun getUserGroups(): Flowable<RealmResults<Group>>
+    fun retrieveGroupChat(groupId: String): Single<List<ChatMessage>>
+    fun getGroupChat(groupId: String): Flowable<RealmResults<ChatMessage>>
 
     fun markMessagesSeen(seenGroupId: String)
 
-    fun flagMessage(chatMessage: ChatMessage): Observable<Void>
+    fun flagMessage(chatMessage: ChatMessage): Flowable<Void>
 
-    fun likeMessage(chatMessage: ChatMessage): Observable<ChatMessage>
+    fun likeMessage(chatMessage: ChatMessage): Flowable<ChatMessage>
 
-    fun deleteMessage(chatMessage: ChatMessage): Observable<Void>
+    fun deleteMessage(chatMessage: ChatMessage): Flowable<Void>
 
-    fun postGroupChat(groupId: String, messageObject: HashMap<String, String>): Observable<PostChatMessageResult>
-    fun postGroupChat(groupId: String, message: String): Observable<PostChatMessageResult>
+    fun postGroupChat(groupId: String, messageObject: HashMap<String, String>): Flowable<PostChatMessageResult>
+    fun postGroupChat(groupId: String, message: String): Flowable<PostChatMessageResult>
 
-    fun retrieveGroup(id: String): Observable<Group>
-    fun getGroup(id: String?): Observable<Group>
+    fun retrieveGroup(id: String): Flowable<Group>
+    fun getGroup(id: String?): Flowable<Group>
 
-    fun leaveGroup(id: String?): Observable<Group>
+    fun leaveGroup(id: String?): Flowable<Group>
 
-    fun joinGroup(id: String?): Observable<Group>
+    fun joinGroup(id: String?): Flowable<Group>
 
-    fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, privacy: String?): Observable<Void>
+    fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, privacy: String?): Flowable<Void>
 
-    fun retrieveGroups(type: String): Observable<List<Group>>
-    fun getGroups(type: String): Observable<RealmResults<Group>>
+    fun retrieveGroups(type: String): Flowable<List<Group>>
+    fun getGroups(type: String): Flowable<RealmResults<Group>>
 
-    fun postPrivateMessage(messageObject: HashMap<String, String>): Observable<PostChatMessageResult>
-    fun postPrivateMessage(recipientId: String, message: String): Observable<PostChatMessageResult>
+    fun postPrivateMessage(messageObject: HashMap<String, String>): Flowable<PostChatMessageResult>
+    fun postPrivateMessage(recipientId: String, message: String): Flowable<PostChatMessageResult>
 
 
-    fun getGroupMembers(id: String): Observable<RealmResults<Member>>
-    fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Observable<List<Member>>
+    fun getGroupMembers(id: String): Flowable<RealmResults<Member>>
+    fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Flowable<List<Member>>
 
-    fun inviteToGroup(id: String, inviteData: Map<String, Any>): Observable<List<String>>
+    fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<String>>
 
-    fun getMember(userId: String?): Observable<Member>
+    fun getMember(userId: String?): Flowable<Member>
 
-    fun markPrivateMessagesRead(user: User?): Observable<Void>
+    fun markPrivateMessagesRead(user: User?): Flowable<Void>
 
-    fun acceptQuest(user: User, partyId: String): Observable<Void>
-    fun rejectQuest(user: User, partyId: String): Observable<Void>
+    fun acceptQuest(user: User, partyId: String): Flowable<Void>
+    fun rejectQuest(user: User, partyId: String): Flowable<Void>
 
-    fun leaveQuest(partyId: String?): Observable<Void>
+    fun leaveQuest(partyId: String?): Flowable<Void>
 
-    fun cancelQuest(partyId: String?): Observable<Void>
+    fun cancelQuest(partyId: String?): Flowable<Void>
 
-    fun abortQuest(partyId: String?): Observable<Quest>
+    fun abortQuest(partyId: String?): Flowable<Quest>
 
-    fun rejectGroupInvite(groupId: String): Observable<Void>
+    fun rejectGroupInvite(groupId: String): Flowable<Void>
 
-    fun forceStartQuest(party: Group): Observable<Quest>
+    fun forceStartQuest(party: Group): Flowable<Quest>
 
-    fun getMemberAchievements(userId: String?): Observable<AchievementResult>
+    fun getMemberAchievements(userId: String?): Flowable<AchievementResult>
 }

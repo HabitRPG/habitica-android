@@ -2,64 +2,42 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.PorterDuff
-import android.graphics.Shader
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-
-import javax.inject.Inject
-import javax.inject.Named
-
-import com.facebook.common.executors.CallerThreadExecutor
-import com.facebook.common.references.CloseableReference
-import com.facebook.datasource.DataSource
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
-import com.facebook.imagepipeline.image.CloseableImage
-import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
 import com.habitrpg.android.habitica.extensions.backgroundCompat
-import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
-import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.PlayerTier
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import kotlinx.android.synthetic.main.shop_header.*
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_tavern_detail.*
+import kotlinx.android.synthetic.main.shop_header.*
 import org.greenrobot.eventbus.EventBus
-import org.w3c.dom.Text
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Action1
+import javax.inject.Inject
+import javax.inject.Named
 
 class TavernDetailFragment : BaseFragment() {
 
@@ -89,7 +67,7 @@ class TavernDetailFragment : BaseFragment() {
 
         shopSpriteSuffix = configManager.shopSpriteSuffix()
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(Action1 {
+        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer {
             this.user = it
             this.updatePausedState()
         }, RxErrorHandler.handleEmptyError()))
@@ -107,8 +85,8 @@ class TavernDetailFragment : BaseFragment() {
                 .doOnNext {  if (!it.hasActiveQuest) worldBossSection.visibility = View.GONE }
                 .filter { it.hasActiveQuest }
                 .doOnNext { questProgressView.progress = it.quest}
-                .flatMap { inventoryRepository.getQuestContent(it.quest?.key).first() }
-                .subscribe(Action1 {
+                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key).firstElement() }
+                .subscribe(Consumer {
                     questProgressView.quest = it
                     worldBossSection.visibility = View.VISIBLE
                 }, RxErrorHandler.handleEmptyError()))
@@ -116,16 +94,16 @@ class TavernDetailFragment : BaseFragment() {
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .filter { it.hasActiveQuest }
                 .doOnNext { descriptionView.setText(R.string.tavern_description_world_boss) }
-                .filter { it.quest?.rageStrikes?.any { it.key == "tavern" } }
+                .filter { it.quest?.rageStrikes?.any { it.key == "tavern" } ?: false }
                 .filter { it.quest?.rageStrikes?.filter { it.key == "tavern" }?.get(0)?.wasHit == true }
-                .subscribe(Action1 {
+                .subscribe(Consumer {
                     val key = it.quest?.key
                     if (key != null) {
                         shopSpriteSuffix = key
                     }
                 }, RxErrorHandler.handleEmptyError()))
 
-        socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+        socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 
         user.notNull { questProgressView.configure(it) }
     }
@@ -139,7 +117,7 @@ class TavernDetailFragment : BaseFragment() {
 
     private fun bindButtons() {
         innButton.setOnClickListener {
-            user?.notNull { userRepository.sleep(it).subscribe(Action1 { }, RxErrorHandler.handleEmptyError()) }
+            user?.notNull { userRepository.sleep(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
         }
         guidelinesButton.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)

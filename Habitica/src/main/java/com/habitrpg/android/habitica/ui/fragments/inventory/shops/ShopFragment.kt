@@ -22,9 +22,10 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import org.greenrobot.eventbus.Subscribe
-import rx.functions.Action1
 import javax.inject.Inject
 
 class ShopFragment : BaseFragment() {
@@ -109,9 +110,9 @@ class ShopFragment : BaseFragment() {
 
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .filter { it.hasActiveQuest }
-                .filter { it.quest?.rageStrikes?.any { it.key == shopIdentifier } }
+                .filter { it.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false }
                 .filter { it.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
-                .subscribe(Action1 {
+                .subscribe(Consumer {
                     adapter?.shopSpriteSuffix = "_"+it.quest?.key
                 }, RxErrorHandler.handleEmptyError()))
 
@@ -141,7 +142,7 @@ class ShopFragment : BaseFragment() {
                     }
                     shop1
                 }
-                .subscribe(Action1 {
+                .subscribe(Consumer {
                     this.shop = it
                     this.adapter?.setShop(it)
                 }, RxErrorHandler.handleEmptyError())
@@ -150,26 +151,26 @@ class ShopFragment : BaseFragment() {
 
         user.notNull {
             compositeSubscription.add(this.inventoryRepository.getOwnedItems(it)
-                    .subscribe(Action1 { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
+                    .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         }
         compositeSubscription.add(this.inventoryRepository.inAppRewards
                 .map<List<String>> { it.map { it.key } }
-                .subscribe(Action1 { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
+                .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun loadMarketGear() {
         inventoryRepository.retrieveMarketGear()
-                .zipWith(inventoryRepository.ownedEquipment.first().map { it.map { it.key } }, { shop, equipment ->
+                .zipWith(inventoryRepository.ownedEquipment.map { it.map { it.key } }, BiFunction<Shop, List<String?>, Shop> { shop, equipment ->
                     for (category in shop.categories) {
-                        val items = category.items.filter({
+                        val items = category.items.filter {
                             !equipment.contains(it.key)
-                        }).sortedBy { it.locked }
+                        }.sortedBy { it.locked }
                         category.items.clear()
                         category.items.addAll(items)
                     }
                     shop
                 })
-                .subscribe(Action1 {
+                .subscribe(Consumer<Shop> {
                     this.gearCategories = it.categories
                     adapter?.gearCategories = it.categories
                 }, RxErrorHandler.handleEmptyError())

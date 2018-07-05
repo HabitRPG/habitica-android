@@ -10,8 +10,8 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_avatar_overview.*
-import rx.functions.Action1
 
 class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedListener {
 
@@ -19,8 +19,8 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         super.onCreate(savedInstanceState)
 
         if (apiClient != null) {
-            apiClient.getContent()
-                    .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+            apiClient.content
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -105,7 +105,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
 
         if (this.user != null && this.user!!.preferences.size != newSize) {
             userRepository.updateUser(user, "preferences.size", newSize)
-                    .subscribe(Action1 { }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 

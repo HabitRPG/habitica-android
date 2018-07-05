@@ -11,10 +11,9 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.views.stats.StatsSliderView
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.dialog_bulk_allocate.*
-import rx.Subscription
-import rx.functions.Action1
 import javax.inject.Inject
 
 class BulkAllocateStatsDialog(context: Context, component: AppComponent) : AlertDialog(context) {
@@ -22,7 +21,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent) : Alert
     @Inject
     lateinit var userRepository: UserRepository
 
-    var subscription: Subscription? = null
+    var subscription: Disposable? = null
 
     private var allocatedPoints: Int
         get() {
@@ -87,7 +86,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent) : Alert
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        subscription = userRepository.getUser().subscribe(Action1 {
+        subscription = userRepository.getUser().subscribe(Consumer {
             user = it
         }, RxErrorHandler.handleEmptyError())
 
@@ -146,7 +145,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent) : Alert
     }
 
     override fun dismiss() {
-        subscription?.unsubscribe()
+        subscription?.dispose()
         super.dismiss()
     }
 

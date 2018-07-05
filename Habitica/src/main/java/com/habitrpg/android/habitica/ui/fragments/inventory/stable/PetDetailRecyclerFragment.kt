@@ -2,11 +2,9 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -15,18 +13,15 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.user.Items
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
-
 import org.greenrobot.eventbus.Subscribe
-import rx.functions.Action1
-
 import javax.inject.Inject
 
 class PetDetailRecyclerFragment : BaseMainFragment() {
@@ -74,7 +69,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
         compositeSubscription.add(adapter.equipEvents
                 .flatMap<Items> { key -> inventoryRepository.equip(user, "pet", key) }
-                .subscribe(Action1 { }, RxErrorHandler.handleEmptyError()))
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
         finalView.post { setGridSpanCount(finalView.width) }
     }
@@ -100,8 +95,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
     private fun loadItems() {
         if (animalType.isNotEmpty() && animalGroup.isNotEmpty()) {
-            inventoryRepository.getPets(animalType, animalGroup).first().subscribe(Action1<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError())
-            inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(Action1<RealmResults<Mount>> { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError())
+            inventoryRepository.getPets(animalType, animalGroup).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError())
+            inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(Consumer<RealmResults<Mount>> { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError())
         }
     }
 

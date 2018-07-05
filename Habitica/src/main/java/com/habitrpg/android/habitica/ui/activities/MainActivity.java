@@ -12,7 +12,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
-import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -123,8 +122,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType;
@@ -1030,9 +1029,9 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
                 })
                 .setMessage("");
 
-        Observable.just(null)
+        Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
+                .subscribe(() -> {
                     final AlertDialog dialog = builder.create();
                     dialog.show();
                 }, RxErrorHandler.handleEmptyError());

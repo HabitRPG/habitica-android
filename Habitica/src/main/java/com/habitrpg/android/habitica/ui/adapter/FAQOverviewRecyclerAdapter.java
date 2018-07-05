@@ -17,8 +17,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.subjects.PublishSubject;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 
 public class FAQOverviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -68,8 +69,8 @@ public class FAQOverviewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         return this.articles == null ? 1 : this.articles.size()+1;
     }
 
-    public Observable<Void> getResetWalkthroughEvents() {
-        return resetWalkthroughEvents.asObservable();
+    public Flowable<Void> getResetWalkthroughEvents() {
+        return resetWalkthroughEvents.toFlowable(BackpressureStrategy.DROP);
     }
 
     class FAQArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
