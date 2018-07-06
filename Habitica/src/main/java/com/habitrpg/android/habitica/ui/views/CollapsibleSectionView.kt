@@ -10,8 +10,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 

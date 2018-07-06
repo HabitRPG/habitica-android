@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.shops.Shop

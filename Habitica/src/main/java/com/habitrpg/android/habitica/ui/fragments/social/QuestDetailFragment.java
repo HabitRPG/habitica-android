@@ -165,7 +165,8 @@ public class QuestDetailFragment extends BaseMainFragment {
             return;
         }
         questTitleView.setText(questContent.getText());
-        questDescriptionView.setText(MarkdownParser.parseMarkdown(questContent.getNotes()));
+        //TODO: FIX
+        //questDescriptionView.setText(MarkdownParser.parseMarkdown(questContent.getNotes()));
         DataBindingUtils.INSTANCE.loadImage(questScrollImageView, "inventory_quest_scroll_"+questContent.getKey());
     }
 

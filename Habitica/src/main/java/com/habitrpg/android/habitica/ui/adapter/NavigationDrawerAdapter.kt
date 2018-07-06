@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.backgroundCompat
-import com.habitrpg.android.habitica.extensions.bindOptionalView
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable

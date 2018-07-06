@@ -188,9 +188,11 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showSubscriptionStatusDialog() {
-        val view = SubscriptionDetailsView(context)
-        view.setPlan(user?.purchased?.plan)
         context.notNull { context ->
+            val view = SubscriptionDetailsView(context)
+            user?.purchased?.plan?.notNull {
+                view.setPlan(it)
+            }
             val dialog = AlertDialog.Builder(context)
                     .setView(view)
                     .setTitle(R.string.subscription_status)

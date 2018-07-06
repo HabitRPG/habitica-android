@@ -49,16 +49,16 @@ public class StableFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
-                        fragment.itemType = "pets";
+                        fragment.setItemType("pets");
                         break;
                     }
                     case 1: {
-                        fragment.itemType = "mounts";
+                        fragment.setItemType("mounts");
                         break;
                     }
                 }
-                fragment.user = StableFragment.this.user;
-                fragment.itemTypeText = this.getPageTitle(position).toString();
+                fragment.setUser(StableFragment.this.user);
+                fragment.setItemTypeText(this.getPageTitle(position).toString());
 
                 return fragment;
             }

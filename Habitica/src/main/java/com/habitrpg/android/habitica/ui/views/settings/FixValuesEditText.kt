@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import butterknife.ButterKnife
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper

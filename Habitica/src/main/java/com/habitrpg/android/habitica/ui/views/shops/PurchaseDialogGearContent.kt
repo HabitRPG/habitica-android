@@ -5,7 +5,7 @@ import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.ShopItem
 

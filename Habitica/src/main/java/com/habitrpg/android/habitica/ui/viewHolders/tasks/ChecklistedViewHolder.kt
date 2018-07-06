@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.EventBus
 
 import butterknife.BindView
 import butterknife.OnClick
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer

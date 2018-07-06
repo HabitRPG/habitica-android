@@ -1,13 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.AppComponent
@@ -31,7 +28,6 @@ abstract class BaseFragment : DialogFragment() {
 
     var tutorialStepIdentifier: String? = null
     var tutorialText: String? = null
-    var unbinder: Unbinder? = null
     protected var tutorialCanBeDeferred = true
     var tutorialTexts: MutableList<String> = ArrayList()
 
@@ -65,15 +61,6 @@ abstract class BaseFragment : DialogFragment() {
     }
 
     abstract fun injectFragment(component: AppComponent)
-
-    @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        if (unbinder == null) {
-            unbinder = ButterKnife.bind(this, view)
-        }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -114,10 +101,6 @@ abstract class BaseFragment : DialogFragment() {
     override fun onDestroyView() {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
-        }
-        if (unbinder != null) {
-            unbinder!!.unbind()
-            unbinder = null
         }
         if (!compositeSubscription.isDisposed) {
             compositeSubscription.dispose()

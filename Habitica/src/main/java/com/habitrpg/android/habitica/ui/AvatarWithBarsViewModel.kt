@@ -11,11 +11,11 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.BoughtGemsEvent
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
-import com.habitrpg.android.habitica.extensions.bindView
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ValueBar

@@ -9,5 +9,7 @@ public class TaskGroupPlan extends RealmObject {
     @PrimaryKey
     String task_id;
 
-    public boolean approvalRequested, approvalApproved, approvalRequired;
+    public boolean approvalRequested;
+    public boolean approvalApproved;
+    public boolean approvalRequired;
 }

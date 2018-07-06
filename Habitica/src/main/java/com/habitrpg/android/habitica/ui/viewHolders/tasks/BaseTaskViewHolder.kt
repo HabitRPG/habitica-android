@@ -8,13 +8,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.TaskTappedEvent
-import com.habitrpg.android.habitica.extensions.bindColor
-import com.habitrpg.android.habitica.extensions.bindOptionalView
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.bindColor
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer

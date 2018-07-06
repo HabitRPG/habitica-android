@@ -14,9 +14,9 @@ import java.util.Map;
 
 import io.realm.Realm;
 
-public class PetMapDeserializer implements JsonDeserializer<HashMap<String, Pet>> {
+public class PetMapDeserializer implements JsonDeserializer<Map<String, Pet>> {
     @Override
-    public HashMap<String, Pet> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Map<String, Pet> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         HashMap<String, Pet> vals = new HashMap<>();
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();

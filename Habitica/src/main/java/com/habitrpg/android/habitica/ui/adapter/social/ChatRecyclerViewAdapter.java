@@ -180,7 +180,7 @@ public class ChatRecyclerViewAdapter extends RealmRecyclerViewAdapter<ChatMessag
                 if (msg.getParsedText() == null) {
                     messageText.setText(chatMessage.getText());
                     Maybe.just(chatMessage.getText())
-                            .map(MarkdownParser::parseMarkdown)
+                            .map(MarkdownParser.INSTANCE::parseMarkdown)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(parsedText -> {

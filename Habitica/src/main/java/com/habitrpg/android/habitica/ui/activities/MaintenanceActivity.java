@@ -55,7 +55,7 @@ public class MaintenanceActivity extends BaseActivity {
         this.titleTextView.setText(data.getString("title"));
 
         imageView.setImageURI(Uri.parse(data.getString("imageUrl")));
-        this.descriptionTextView.setText(MarkdownParser.parseMarkdown(data.getString("description")));
+        this.descriptionTextView.setText(MarkdownParser.INSTANCE.parseMarkdown(data.getString("description")));
         this.descriptionTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
         isDeprecationNotice = data.getBoolean("deprecationNotice");

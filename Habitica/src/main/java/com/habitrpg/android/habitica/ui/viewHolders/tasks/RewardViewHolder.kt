@@ -8,7 +8,7 @@ import butterknife.OnClick
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.TaskTappedEvent
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.ItemDetailDialog

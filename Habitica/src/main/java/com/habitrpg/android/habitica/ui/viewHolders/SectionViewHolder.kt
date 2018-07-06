@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

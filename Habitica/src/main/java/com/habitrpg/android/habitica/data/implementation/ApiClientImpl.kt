@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
+import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
@@ -686,103 +687,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         private const val TAG = "ApiClientImpl"
 
         fun createGsonFactory(): GsonConverterFactory {
-            val taskTagClassListType = object : TypeToken<RealmList<Tag>>() {
-
-            }.type
-            val skillListType = object : TypeToken<List<Skill>>() {
-
-            }.type
-            val customizationListType = object : TypeToken<RealmList<Customization>>() {
-
-            }.type
-            val tutorialStepListType = object : TypeToken<RealmList<TutorialStep>>() {
-
-            }.type
-            val faqArticleListType = object : TypeToken<RealmList<FAQArticle>>() {
-
-            }.type
-            val itemDataListType = object : TypeToken<RealmList<Equipment>>() {
-
-            }.type
-            val eggListType = object : TypeToken<RealmList<Egg>>() {
-
-            }.type
-            val foodListType = object : TypeToken<RealmList<Food>>() {
-
-            }.type
-            val hatchingPotionListType = object : TypeToken<RealmList<HatchingPotion>>() {
-
-            }.type
-            val questContentListType = object : TypeToken<RealmList<QuestContent>>() {
-
-            }.type
-            val petMapType = object : TypeToken<Map<String, Pet>>() {
-
-            }.type
-            val mountMapType = object : TypeToken<Map<String, Mount>>() {
-
-            }.type
-            val petListType = object : TypeToken<RealmList<Pet>>() {
-
-            }.type
-            val mountListType = object : TypeToken<RealmList<Mount>>() {
-
-            }.type
-            val questCollectListType = object : TypeToken<RealmList<QuestCollect>>() {
-
-            }.type
-            val chatMessageListType = object : TypeToken<RealmList<ChatMessage>>() {
-
-            }.type
-            val challengeListType = object : TypeToken<List<Challenge>>() {
-
-            }.type
-            val challengeRealmListType = object : TypeToken<RealmList<Challenge>>() {
-
-            }.type
-            val questDropItemListType = object : TypeToken<RealmList<QuestDropItem>>() {
-
-            }.type
-
-            //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
-            val gson = GsonBuilder()
-                    .registerTypeAdapter(taskTagClassListType, TaskTagDeserializer())
-                    .registerTypeAdapter(Boolean::class.java, BooleanAsIntAdapter())
-                    .registerTypeAdapter(Boolean::class.javaPrimitiveType, BooleanAsIntAdapter())
-                    .registerTypeAdapter(skillListType, SkillDeserializer())
-                    .registerTypeAdapter(TaskList::class.java, TaskListDeserializer())
-                    .registerTypeAdapter(Purchases::class.java, PurchasedDeserializer())
-                    .registerTypeAdapter(customizationListType, CustomizationDeserializer())
-                    .registerTypeAdapter(tutorialStepListType, TutorialStepListDeserializer())
-                    .registerTypeAdapter(faqArticleListType, FAQArticleListDeserilializer())
-                    .registerTypeAdapter(Group::class.java, GroupSerialization())
-                    .registerTypeAdapter(Date::class.java, DateDeserializer())
-                    .registerTypeAdapter(itemDataListType, EquipmentListDeserializer())
-                    .registerTypeAdapter(eggListType, EggListDeserializer())
-                    .registerTypeAdapter(foodListType, FoodListDeserializer())
-                    .registerTypeAdapter(hatchingPotionListType, HatchingPotionListDeserializer())
-                    .registerTypeAdapter(questContentListType, QuestListDeserializer())
-                    .registerTypeAdapter(petListType, PetListDeserializer())
-                    .registerTypeAdapter(mountListType, MountListDeserializer())
-                    .registerTypeAdapter(petMapType, PetMapDeserializer())
-                    .registerTypeAdapter(mountMapType, MountMapDeserializer())
-                    .registerTypeAdapter(ChatMessage::class.java, ChatMessageDeserializer())
-                    .registerTypeAdapter(Task::class.java, TaskSerializer())
-                    .registerTypeAdapter(ContentResult::class.java, ContentDeserializer())
-                    .registerTypeAdapter(FeedResponse::class.java, FeedResponseDeserializer())
-                    .registerTypeAdapter(Challenge::class.java, ChallengeDeserializer())
-                    .registerTypeAdapter(User::class.java, UserDeserializer())
-                    .registerTypeAdapter(questCollectListType, QuestCollectDeserializer())
-                    .registerTypeAdapter(chatMessageListType, ChatMessageListDeserializer())
-                    .registerTypeAdapter(challengeListType, ChallengeListDeserializer())
-                    .registerTypeAdapter(challengeRealmListType, ChallengeListDeserializer())
-                    .registerTypeAdapter(questDropItemListType, QuestDropItemsListSerialization())
-                    .registerTypeAdapter(Quest::class.java, QuestDeserializer())
-                    .registerTypeAdapter(Member::class.java, MemberSerialization())
-                    .registerTypeAdapter(WorldState::class.java, WorldStateSerialization())
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                    .create()
-            return GsonConverterFactory.create(gson)
+            return GSonFactoryCreator.create()
         }
     }
 }

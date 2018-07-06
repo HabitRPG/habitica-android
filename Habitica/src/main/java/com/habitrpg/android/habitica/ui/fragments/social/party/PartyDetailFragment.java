@@ -144,7 +144,8 @@ public class PartyDetailFragment extends BaseFragment {
             return;
         }
         titleView.setText(party.getName());
-        descriptionView.setText(MarkdownParser.parseMarkdown(party.getDescription()));
+        //TODO: FIX
+        //descriptionView.setText(MarkdownParser.parseMarkdown(party.getDescription()));
 
         if (quest != null && !quest.getKey().isEmpty()) {
             newQuestButton.setVisibility(View.GONE);
@@ -216,8 +217,8 @@ public class PartyDetailFragment extends BaseFragment {
     @OnClick(R.id.new_quest_button)
     public void inviteNewQuest() {
         ItemRecyclerFragment fragment = new ItemRecyclerFragment();
-        fragment.itemType = "quests";
-        fragment.itemTypeText = getString(R.string.quest);
+        fragment.setItemType("quests");
+        fragment.setItemTypeText(getString(R.string.quest));
         fragment.show(getFragmentManager(), "questDialog");
     }
 

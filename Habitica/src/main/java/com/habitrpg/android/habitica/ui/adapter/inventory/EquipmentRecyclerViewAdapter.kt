@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import io.reactivex.subjects.PublishSubject

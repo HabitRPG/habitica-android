@@ -356,7 +356,7 @@ public class ChallengeDetailActivity extends BaseActivity {
             if (challengeName != null) {
                 challengeName.setText(EmojiParser.parseEmojis(challenge.name));
             }
-            challengeDescription.setText(MarkdownParser.parseMarkdown(challenge.description));
+            challengeDescription.setText(MarkdownParser.INSTANCE.parseMarkdown(challenge.description));
 
             memberCountTextView.setText(String.valueOf(challenge.memberCount));
 
@@ -370,7 +370,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         @OnClick(R.id.btn_show_more)
         void onShowMore() {
-            ChallengeDetailDialogHolder.showDialog(ChallengeDetailActivity.this,
+            ChallengeDetailDialogHolder.Companion.showDialog(ChallengeDetailActivity.this,
                     ChallengeDetailActivity.this.challengeRepository,
                     challenge,
                     challenge1 -> ChallengeDetailActivity.this.onBackPressed());

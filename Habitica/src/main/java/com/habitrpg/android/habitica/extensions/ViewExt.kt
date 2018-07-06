@@ -11,11 +11,6 @@ fun View.setScaledPadding(context: Context?, left: Int, top: Int, right: Int, bo
     this.setPadding(left.dpToPx(context), top.dpToPx(context), right.dpToPx(context), bottom.dpToPx(context))
 }
 
-fun <T : View> View.bindView(@IdRes res: Int) : Lazy<T> {
-    @Suppress("UNCHECKED_CAST")
-    return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
-}
-
 var <T : View> T.backgroundCompat: Drawable?
 get() {
     return background

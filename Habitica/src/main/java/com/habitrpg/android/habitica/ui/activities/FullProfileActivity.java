@@ -225,7 +225,7 @@ public class FullProfileActivity extends BaseActivity {
 
         String blurbText = profile.getBlurb();
         if (blurbText != null && !blurbText.isEmpty()) {
-            blurbTextView.setText(MarkdownParser.parseMarkdown(blurbText));
+            blurbTextView.setText(MarkdownParser.INSTANCE.parseMarkdown(blurbText));
         }
         userIdText.setText(userId);
         copyUserIdButton.setVisibility(View.VISIBLE);

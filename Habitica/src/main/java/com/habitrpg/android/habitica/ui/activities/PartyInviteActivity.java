@@ -118,7 +118,7 @@ public class PartyInviteActivity extends BaseActivity {
             public Fragment getItem(int position) {
 
                 PartyInviteFragment fragment = new PartyInviteFragment();
-                fragment.isEmailInvite = position == 0;
+                fragment.setEmailInvite(position == 0);
                 if (fragments.size() > position) {
                     fragments.set(position, fragment);
                 } else {

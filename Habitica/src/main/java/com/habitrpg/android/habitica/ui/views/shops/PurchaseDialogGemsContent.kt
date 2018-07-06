@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.views.shops
 import android.content.Context
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.shops.ShopItem
 
 internal class PurchaseDialogGemsContent(context: Context) : PurchaseDialogContent(context) {

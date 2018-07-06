@@ -53,29 +53,29 @@ public class ItemsFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
-                        fragment.itemType = "eggs";
+                        fragment.setItemType("eggs");
                         break;
                     }
                     case 1: {
-                        fragment.itemType = "hatchingPotions";
+                        fragment.setItemType("hatchingPotions");
                         break;
                     }
                     case 2: {
-                        fragment.itemType = "food";
+                        fragment.setItemType("food");
                         break;
                     }
                     case 3: {
-                        fragment.itemType = "quests";
+                        fragment.setItemType("quests");
                         break;
                     }
                     case 4: {
-                        fragment.itemType = "special";
+                        fragment.setItemType("special");
                     }
                 }
-                fragment.isHatching = false;
-                fragment.isFeeding = false;
-                fragment.itemTypeText = this.getPageTitle(position).toString();
-                fragment.user = ItemsFragment.this.user;
+                fragment.setHatching(false);
+                fragment.setFeeding(false);
+                fragment.setItemTypeText(this.getPageTitle(position).toString());
+                fragment.setUser(ItemsFragment.this.user);
 
                 return fragment;
             }
@@ -116,14 +116,14 @@ public class ItemsFragment extends BaseMainFragment {
         if (event.usingEgg == null || event.usingHatchingPotion == null) {
             ItemRecyclerFragment fragment = new ItemRecyclerFragment();
             if (event.usingEgg != null) {
-                fragment.itemType = "hatchingPotions";
-                fragment.hatchingItem = event.usingEgg;
+                fragment.setItemType("hatchingPotions");
+                fragment.setHatchingItem(event.usingEgg);
             } else {
-                fragment.itemType = "eggs";
-                fragment.hatchingItem = event.usingHatchingPotion;
+                fragment.setItemType("eggs");
+                fragment.setHatchingItem(event.usingHatchingPotion);
             }
-            fragment.isHatching = true;
-            fragment.isFeeding = false;
+            fragment.setHatching(true);
+            fragment.setFeeding(false);
             fragment.show(getFragmentManager(), "hatchingDialog");
         }
     }

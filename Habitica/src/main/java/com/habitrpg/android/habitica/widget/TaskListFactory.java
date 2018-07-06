@@ -106,7 +106,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         if (taskList.size() > position) {
             Task task = taskList.get(position);
 
-            CharSequence parsedText = MarkdownParser.parseMarkdown(task.getText());
+            CharSequence parsedText = MarkdownParser.INSTANCE.parseMarkdown(task.getText());
 
             SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
             EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false);

@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 import android.view.View
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.tasks.Task
 
 class DailyViewHolder(itemView: View) : ChecklistedViewHolder(itemView) {

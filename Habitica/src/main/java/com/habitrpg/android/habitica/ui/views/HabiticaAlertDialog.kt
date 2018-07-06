@@ -8,15 +8,15 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.layoutInflater
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
 
     private val view: LinearLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as LinearLayout
-    private val titleTextView: TextView by bindView(view, R.id.titleTextView)
-    private val subtitleTextView: TextView by bindView(view, R.id.subtitleTextView)
-    private val messageTextView: TextView by bindView(view, R.id.messageTextView)
+    private val titleTextView: TextView by bindView(R.id.titleTextView)
+    private val subtitleTextView: TextView by bindView(R.id.subtitleTextView)
+    private val messageTextView: TextView by bindView(R.id.messageTextView)
 
     private var additionalContentView: View? = null
 

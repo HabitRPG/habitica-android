@@ -8,7 +8,7 @@ import android.widget.TextView
 import butterknife.OnClick
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.HabitScoreEvent
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.tasks.Task
 import org.greenrobot.eventbus.EventBus
 

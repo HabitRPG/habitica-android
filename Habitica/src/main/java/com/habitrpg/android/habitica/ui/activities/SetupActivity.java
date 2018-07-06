@@ -255,9 +255,9 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
             switch (position) {
                 case 1: {
                     avatarSetupFragment = new AvatarSetupFragment();
-                    avatarSetupFragment.activity = SetupActivity.this;
+                    avatarSetupFragment.setActivity(SetupActivity.this);
                     avatarSetupFragment.setUser(user);
-                    avatarSetupFragment.width = pager.getWidth();
+                    avatarSetupFragment.setWidth(pager.getWidth());
                     fragment = avatarSetupFragment;
                     break;
                 }

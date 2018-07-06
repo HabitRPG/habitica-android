@@ -14,9 +14,9 @@ import java.util.Map;
 
 import io.realm.Realm;
 
-public class MountMapDeserializer implements JsonDeserializer<HashMap<String, Mount>> {
+public class MountMapDeserializer implements JsonDeserializer<Map<String, Mount>> {
     @Override
-    public HashMap<String, Mount> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Map<String, Mount> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         HashMap<String, Mount> vals = new HashMap<>();
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();

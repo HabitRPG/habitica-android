@@ -187,7 +187,7 @@ public class GroupFormActivity extends BaseActivity {
         Intent resultIntent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putString("name", this.groupNameEditText.getText().toString());
-        bundle.putString("description", MarkdownParser.parseCompiled(this.groupDescriptionEditText.getText()));
+        bundle.putString("description", MarkdownParser.INSTANCE.parseCompiled(this.groupDescriptionEditText.getText()));
         bundle.putString("leader", this.groupLeader);
         resultIntent.putExtras(bundle);
         setResult(Activity.RESULT_OK, resultIntent);

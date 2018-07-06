@@ -11,7 +11,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.text.NumberFormat
 
 class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {

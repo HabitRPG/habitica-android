@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.events.TaskTappedEvent
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -133,33 +134,37 @@ class TasksFragment : BaseMainFragment() {
     }
 
     private fun showFilterDialog() {
-        val dialog = TaskFilterDialog(context, HabiticaBaseApplication.getComponent())
-        if (user != null) {
-            dialog.setTags(user?.tags?.createSnapshot())
-        }
-        dialog.setActiveTags(taskFilterHelper.tags)
-        if (activeFragment != null) {
-            val taskType = activeFragment?.classType
-            if (taskType != null) {
-                dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
+        context.notNull {
+            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.getComponent())
+            if (user != null) {
+                dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
             }
-        }
-        dialog.setListener { activeTaskFilter, activeTags ->
-            if (viewFragmentsDictionary == null) {
-                return@setListener
+            dialog.setActiveTags(taskFilterHelper.tags)
+            if (activeFragment != null) {
+                val taskType = activeFragment?.classType
+                if (taskType != null) {
+                    dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
+                }
             }
-            val activePos = viewPager?.currentItem ?: 0
-            viewFragmentsDictionary?.get(activePos - 1)?.recyclerAdapter?.filter()
-            viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter?.filter()
-            taskFilterHelper.tags = activeTags
-            if (activeTaskFilter != null) {
-                activeFragment?.setActiveFilter(activeTaskFilter)
-            }
-            viewFragmentsDictionary?.values?.forEach { it.recyclerAdapter?.filter() }
-            updateFilterIcon()
+            dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
 
+                override fun onFilterCompleted(activeTaskFilter: String?, activeTags: List<String>?) {
+                    if (viewFragmentsDictionary == null) {
+                        return
+                    }
+                    val activePos = viewPager?.currentItem ?: 0
+                    viewFragmentsDictionary?.get(activePos - 1)?.recyclerAdapter?.filter()
+                    viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter?.filter()
+                    taskFilterHelper.tags = activeTags
+                    if (activeTaskFilter != null) {
+                        activeFragment?.setActiveFilter(activeTaskFilter)
+                    }
+                    viewFragmentsDictionary?.values?.forEach { it.recyclerAdapter?.filter() }
+                    updateFilterIcon()
+                }
+            })
+            dialog.show()
         }
-        dialog.show()
     }
 
     private fun refresh() {

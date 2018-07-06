@@ -1087,7 +1087,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     private boolean saveTask(Task task) {
 
-        String text = MarkdownParser.parseCompiled(taskText.getText());
+        String text = MarkdownParser.INSTANCE.parseCompiled(taskText.getText());
         if (text == null || text.isEmpty()) {
             return false;
         }
@@ -1099,7 +1099,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskRepository.executeTransaction(realm -> {
             try {
                 task.setText(text);
-                task.setNotes(MarkdownParser.parseCompiled(taskNotes.getText()));
+                task.setNotes(MarkdownParser.INSTANCE.parseCompiled(taskNotes.getText()));
             } catch (IllegalArgumentException ignored) {
 
             }
