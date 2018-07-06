@@ -105,12 +105,12 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
         chatAdapter.notNull {
-            compositeSubscription.add(it.userLabelClickEvents.subscribe(Consumer { userId -> FullProfileActivity.open(context, userId) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.deleteMessageEvents.subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.flagMessageEvents.subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.copyMessageAsTodoEvents.subscribe(Consumer{ this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.copyMessageEvents.subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.likeMessageEvents.flatMap<ChatMessage> { socialRepository.likeMessage(it) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer { userId -> FullProfileActivity.open(context, userId) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getCopyMessageAsTodoFlowable().subscribe(Consumer{ this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getLikeMessageFlowable().flatMap<ChatMessage> { socialRepository.likeMessage(it) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
 
 

@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import android.widget.RelativeLayout
 import android.widget.TextView
-import butterknife.ButterKnife
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -153,7 +152,7 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
 
     private fun changeFilter(challengeFilterOptions: ChallengeFilterOptions) {
         filterOptions = challengeFilterOptions
-        challengeAdapter?.filter(filterOptions)
+        challengeAdapter?.filter(challengeFilterOptions)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

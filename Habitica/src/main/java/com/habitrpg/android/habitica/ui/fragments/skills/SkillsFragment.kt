@@ -72,7 +72,7 @@ class SkillsFragment : BaseMainFragment() {
             return
         }
 
-        adapter?.mana = this.user?.stats?.getMp()
+        adapter?.mana = this.user?.stats?.getMp() ?: 0.toDouble()
 
         user?.let {
             Observable.concat(userRepository.getSkills(it).firstElement().toObservable().flatMap { Observable.fromIterable(it) }, userRepository.getSpecialItems(it).firstElement().toObservable().flatMap { Observable.fromIterable(it) })
@@ -108,7 +108,7 @@ class SkillsFragment : BaseMainFragment() {
 
     private fun displaySkillResult(usedSkill: Skill?, response: SkillResponse) {
         removeProgressDialog()
-        adapter?.setMana(response.user.stats.mp)
+        adapter?.mana = response.user.stats.mp
         val activity = activity ?: return
         if ("special" == usedSkill?.habitClass) {
             showSnackbar(activity.getFloatingMenuWrapper(), context!!.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)

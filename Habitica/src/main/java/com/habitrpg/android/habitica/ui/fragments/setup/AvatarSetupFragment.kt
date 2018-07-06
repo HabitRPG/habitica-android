@@ -118,7 +118,7 @@ class AvatarSetupFragment : BaseFragment() {
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser && context != null) {
-            speechBubbleView?.animateText(context?.getString(R.string.avatar_setup_description))
+            speechBubbleView?.animateText(context?.getString(R.string.avatar_setup_description) ?: "")
         }
     }
 

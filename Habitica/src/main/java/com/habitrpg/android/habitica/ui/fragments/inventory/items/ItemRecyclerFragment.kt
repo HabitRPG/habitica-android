@@ -99,11 +99,11 @@ class ItemRecyclerFragment : BaseFragment() {
             recyclerView?.adapter = adapter
 
             adapter?.notNull {
-                compositeSubscription.add(it.sellItemEvents
+                compositeSubscription.add(it.getSellItemFlowable()
                         .flatMap { item -> inventoryRepository.sellItem(user, item) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
-                compositeSubscription.add(it.questInvitationEvents
+                compositeSubscription.add(it.getQuestInvitationFlowable()
                         .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
                         .subscribe(Consumer { EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_PARTY)) }, RxErrorHandler.handleEmptyError()))
             }

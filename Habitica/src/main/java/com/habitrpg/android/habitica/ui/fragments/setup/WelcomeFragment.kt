@@ -34,7 +34,7 @@ class WelcomeFragment : BaseFragment() {
 
         resetViews()
 
-        speechBubbleView?.animateText(context?.getString(R.string.welcome_text))
+        speechBubbleView?.animateText(context?.getString(R.string.welcome_text) ?: "")
 
         heartIconView?.setImageBitmap(HabiticaIconsHelper.imageOfHeartLightBg())
         expIconView?.setImageBitmap(HabiticaIconsHelper.imageOfExperience())

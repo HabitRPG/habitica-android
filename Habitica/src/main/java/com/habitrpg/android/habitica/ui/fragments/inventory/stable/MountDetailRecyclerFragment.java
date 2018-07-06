@@ -48,13 +48,12 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
         adapter = (MountDetailRecyclerAdapter) recyclerView.getAdapter();
         if (adapter == null) {
             adapter = new MountDetailRecyclerAdapter(null, true);
-            adapter.context = this.getActivity();
-            adapter.itemType = this.animalType;
+            adapter.setItemType(this.animalType);
             recyclerView.setAdapter(adapter);
             recyclerView.setItemAnimator(new SafeDefaultItemAnimator());
             this.loadItems();
 
-            getCompositeSubscription().add(adapter.getEquipEvents()
+            getCompositeSubscription().add(adapter.getEquipFlowable()
                     .flatMap(key -> inventoryRepository.equip(user, "mount", key))
                     .subscribe(items -> {}, RxErrorHandler.handleEmptyError()));
         }

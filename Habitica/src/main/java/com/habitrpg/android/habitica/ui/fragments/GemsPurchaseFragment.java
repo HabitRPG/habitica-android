@@ -73,7 +73,7 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
         Drawable heartDrawable = new BitmapDrawable(getResources(), HabiticaIconsHelper.imageOfHeartLarge());
         supportTextView.setCompoundDrawables(null, heartDrawable, null, null);
 
-        gems84View.seedsImageButton.setOnClickListener(v -> ((GemPurchaseActivity) this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
+        gems84View.getSeedsImageButton().setOnClickListener(v -> ((GemPurchaseActivity) this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
     }
 
     @Override

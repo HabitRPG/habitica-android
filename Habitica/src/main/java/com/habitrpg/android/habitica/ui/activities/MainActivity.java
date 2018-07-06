@@ -458,7 +458,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
             });
 
             displayDeathDialogIfNeeded();
-            YesterdailyDialog.showDialogIfNeeded(this, user.getId(), userRepository, taskRepository);
+            YesterdailyDialog.Companion.showDialogIfNeeded(this, user.getId(), userRepository, taskRepository);
 
             displayNewInboxMessagesBadge();
         }
@@ -833,7 +833,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         TutorialView view = new TutorialView(this, step, this);
         this.activeTutorialView = view;
         view.setTutorialText(text);
-        view.onReaction = this;
+        view.setOnReaction(this);
         view.setCanBeDeferred(canBeDeferred);
         this.overlayLayout.addView(view);
 
@@ -848,7 +848,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
         TutorialView view = new TutorialView(this, step, this);
         this.activeTutorialView = view;
         view.setTutorialTexts(texts);
-        view.onReaction = this;
+        view.setOnReaction(this);
         view.setCanBeDeferred(canBeDeferred);
         this.overlayLayout.addView(view);
 

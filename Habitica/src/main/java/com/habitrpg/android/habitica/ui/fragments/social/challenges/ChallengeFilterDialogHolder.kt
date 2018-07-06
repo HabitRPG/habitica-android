@@ -53,11 +53,10 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
     }
 
     private fun fillChallengeGroups() {
-
         this.groupRecyclerView?.layoutManager = LinearLayoutManager(context)
         adapter = ChallengesFilterRecyclerViewAdapter(getGroups(challengesViewed))
         if (currentFilter != null && currentFilter?.showByGroups != null) {
-            adapter?.selectAll(currentFilter?.showByGroups)
+            adapter?.selectAll(currentFilter?.showByGroups ?: emptyList())
         }
 
         this.groupRecyclerView?.adapter = adapter

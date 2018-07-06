@@ -69,23 +69,23 @@ public class YesterdailyDialogTests extends BaseTestCase {
     @Test
     public void showsDialogIfNeededAndTasks() throws Exception {
         when(mockTasks.size()).thenReturn(1);
-        YesterdailyDialog.showDialogIfNeeded(mockContext, "", mockUserRepository, mockTaskRepository);
+        YesterdailyDialog.Companion.showDialogIfNeeded(mockContext, "", mockUserRepository, mockTaskRepository);
         verifyNew(YesterdailyDialog.class).withArguments(any(Context.class), any(UserRepository.class), any(List.class));
     }
 
     @Test
     public void doesntShowDialogIfAlreadyShown() throws Exception {
         when(mockTasks.size()).thenReturn(1);
-        YesterdailyDialog.isDisplaying = true;
-        YesterdailyDialog.showDialogIfNeeded(mockContext, "", mockUserRepository, mockTaskRepository);
+        YesterdailyDialog.Companion.setIsDisplaying(true);
+        YesterdailyDialog.Companion.showDialogIfNeeded(mockContext, "", mockUserRepository, mockTaskRepository);
         verifyNew(YesterdailyDialog.class, times(0)).withArguments(any(Context.class), any(UserRepository.class), any(List.class));
     }
 
     @Test
     public void doesntShowDialogIfNoTasks() throws Exception {
         when(mockTasks.size()).thenReturn(0);
-        YesterdailyDialog.isDisplaying = true;
-        YesterdailyDialog.showDialogIfNeeded(mockContext, "", mockUserRepository, mockTaskRepository);
+        YesterdailyDialog.Companion.setIsDisplaying(true);
+        YesterdailyDialog.Companion.showDialogIfNeeded(mockContext, "", mockUserRepository, mockTaskRepository);
         verifyNew(YesterdailyDialog.class, times(0)).withArguments(any(Context.class), any(UserRepository.class), any(List.class));
     }
 
@@ -93,8 +93,8 @@ public class YesterdailyDialogTests extends BaseTestCase {
     public void doesntShowDialogIfNotNeeded() throws Exception {
         testUser.setNeedsCron(false);
         when(mockTasks.size()).thenReturn(1);
-        YesterdailyDialog.isDisplaying = true;
-        YesterdailyDialog.showDialogIfNeeded(mockContext, "", mockUserRepository, mockTaskRepository);
+        YesterdailyDialog.Companion.setIsDisplaying(true);
+        YesterdailyDialog.Companion.showDialogIfNeeded(mockContext, "", mockUserRepository, mockTaskRepository);
         verifyNew(YesterdailyDialog.class, times(0)).withArguments(any(Context.class), any(UserRepository.class), any(List.class));
     }
 

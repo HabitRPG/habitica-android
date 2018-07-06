@@ -1,0 +1,147 @@
+package com.habitrpg.android.habitica.ui.adapter.setup
+
+import android.content.Context
+import android.graphics.PorterDuff
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.events.commands.EquipCommand
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand
+import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.models.SetupCustomization
+import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.helpers.bindView
+import org.greenrobot.eventbus.EventBus
+import java.util.*
+
+class CustomizationSetupAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var userSize: String? = null
+    var user: User? = null
+    private var customizationList: List<SetupCustomization> = emptyList()
+
+    fun setCustomizationList(newCustomizationList: List<SetupCustomization>) {
+        this.customizationList = newCustomizationList
+        this.notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return CustomizationViewHolder(parent.inflate(R.layout.setup_customization_item))
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as CustomizationViewHolder).bind(customizationList[position])
+    }
+
+    override fun getItemCount(): Int {
+        return customizationList.size
+    }
+
+    private fun isCustomizationActive(customization: SetupCustomization): Boolean {
+        val prefs = this.user?.preferences ?: return false
+        when (customization.category) {
+            "body" -> {
+                when (customization.subcategory) {
+                    "size" -> return customization.key == prefs.size
+                    "shirt" -> return customization.key == prefs.shirt
+                }
+            }
+            "skin" -> return customization.key == prefs.skin
+            "background" -> return customization.key == prefs.background
+            "hair" -> {
+                when (customization.subcategory) {
+                    "bangs" -> return Integer.parseInt(customization.key) == prefs.hair?.bangs
+                    "base" -> return Integer.parseInt(customization.key) == prefs.hair?.base
+                    "color" -> return customization.key == prefs.hair?.color
+                    "flower" -> return Integer.parseInt(customization.key) == prefs.hair?.flower
+                    "beard" -> return Integer.parseInt(customization.key) == prefs.hair?.beard
+                    "mustache" -> return Integer.parseInt(customization.key) == prefs.hair?.mustache
+                }
+            }
+            "extras" -> {
+                when (customization.subcategory) {
+                    "glasses" -> return customization.key == this.user?.items?.gear?.equipped?.eyeWear || "eyewear_base_0" == this.user?.items?.gear?.equipped?.eyeWear && customization.key.isEmpty()
+                    "flower" -> return Integer.parseInt(customization.key) == prefs.hair?.flower
+                    "wheelchair" -> return "chair_" + customization.key == prefs.chair || customization.key == prefs.chair || customization.key == "none" && prefs.chair == null
+                }
+            }
+        }
+        return false
+    }
+
+    internal inner class CustomizationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        private val imageView: ImageView by bindView(R.id.imageView)
+        private val textView: TextView by bindView(R.id.textView)
+
+        var customization: SetupCustomization? = null
+
+        var context: Context
+
+        init {
+            itemView.setOnClickListener(this)
+
+            context = itemView.context
+        }
+
+        fun bind(customization: SetupCustomization) {
+            this.customization = customization
+
+            when {
+                customization.drawableId != null -> imageView.setImageResource(customization.drawableId ?: 0)
+                customization.colorId != null -> {
+                    val drawable = ContextCompat.getDrawable(context, R.drawable.setup_customization_circle)
+                    drawable?.setColorFilter(ContextCompat.getColor(context, customization.colorId ?: 0), PorterDuff.Mode.MULTIPLY)
+                    imageView.setImageDrawable(drawable)
+                }
+                else -> imageView.setImageDrawable(null)
+            }
+            textView.text = customization.text
+            if ("0" != customization.key && "flower" == customization.subcategory) {
+                if (isCustomizationActive(customization)) {
+                    imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg_selected)
+                } else {
+                    imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg)
+                }
+            } else {
+                if (isCustomizationActive(customization)) {
+                    imageView.setBackgroundResource(R.drawable.setup_customization_bg_selected)
+                    textView.setTextColor(ContextCompat.getColor(context, R.color.white))
+                } else {
+                    imageView.setBackgroundResource(R.drawable.setup_customization_bg)
+                    textView.setTextColor(ContextCompat.getColor(context, R.color.white_50_alpha))
+                }
+            }
+        }
+
+        override fun onClick(v: View) {
+            customization.notNull { selectedCustomization ->
+                if (selectedCustomization.path == "glasses") {
+                    val command = EquipCommand()
+                    if (selectedCustomization.key.isEmpty()) {
+                        command.key = user?.items?.gear?.equipped?.eyeWear
+                    } else {
+                        command.key = selectedCustomization.key
+                    }
+                    command.type = "equipped"
+                    EventBus.getDefault().post(command)
+                } else {
+                    val command = UpdateUserCommand()
+                    val updateData = HashMap<String, Any>()
+                    val updatePath = "preferences." + selectedCustomization.path
+                    updateData[updatePath] = selectedCustomization.key
+
+                    command.updateData = updateData
+
+                    EventBus.getDefault().post(command)
+                }
+            }
+
+        }
+    }
+}

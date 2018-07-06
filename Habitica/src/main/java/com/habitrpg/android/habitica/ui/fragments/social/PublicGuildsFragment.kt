@@ -48,7 +48,7 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
 
         recyclerView?.layoutManager = LinearLayoutManager(this.activity)
         recyclerView?.addItemDecoration(DividerItemDecoration(getActivity()!!, DividerItemDecoration.VERTICAL))
-        viewAdapter.setMemberGuildIDs(this.memberGuildIDs)
+        viewAdapter.setMemberGuildIDs(this.memberGuildIDs?.toMutableList() ?: mutableListOf<String>())
         viewAdapter.apiClient = this.apiClient
         viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
         recyclerView?.adapter = viewAdapter

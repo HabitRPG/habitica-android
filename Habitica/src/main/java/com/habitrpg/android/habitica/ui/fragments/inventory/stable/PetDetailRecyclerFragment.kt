@@ -67,7 +67,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         this.loadItems()
 
-        compositeSubscription.add(adapter.equipEvents
+        compositeSubscription.add(adapter.getEquipFlowable()
                 .flatMap<Items> { key -> inventoryRepository.equip(user, "pet", key) }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 

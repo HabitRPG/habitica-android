@@ -40,7 +40,7 @@ class FAQOverviewFragment : BaseMainFragment() {
         resetViews()
 
         adapter = FAQOverviewRecyclerAdapter()
-        adapter?.resetWalkthroughEvents?.subscribe(Consumer { this.userRepository.resetTutorial(user) }, RxErrorHandler.handleEmptyError())
+        adapter?.getResetWalkthroughEvents()?.subscribe(Consumer { this.userRepository.resetTutorial(user) }, RxErrorHandler.handleEmptyError())
         adapter?.activity = activity
         recyclerView?.layoutManager = LinearLayoutManager(activity)
         recyclerView?.addItemDecoration(DividerItemDecoration(getActivity()!!, DividerItemDecoration.VERTICAL))

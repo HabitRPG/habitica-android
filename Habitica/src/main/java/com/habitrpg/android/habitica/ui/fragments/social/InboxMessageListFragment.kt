@@ -61,11 +61,11 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter.notNull {
-            compositeSubscription.add(it.userLabelClickEvents.subscribe(Consumer<String> { FullProfileActivity.open(context, it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.deleteMessageEvents.subscribe(Consumer<ChatMessage> { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.flagMessageEvents.subscribe(Consumer<ChatMessage> { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.copyMessageAsTodoEvents.subscribe(Consumer<ChatMessage> { this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.copyMessageEvents.subscribe(Consumer<ChatMessage> { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer<String> { FullProfileActivity.open(context, it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer<ChatMessage> { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer<ChatMessage> { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getCopyMessageAsTodoFlowable().subscribe(Consumer<ChatMessage> { this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getCopyMessageFlowable().subscribe(Consumer<ChatMessage> { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
         }
 
 
