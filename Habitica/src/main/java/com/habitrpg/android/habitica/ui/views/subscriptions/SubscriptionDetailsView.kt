@@ -10,12 +10,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import butterknife.OnClick
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
+import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class SubscriptionDetailsView : LinearLayout {
 
@@ -41,6 +40,8 @@ class SubscriptionDetailsView : LinearLayout {
 
     private fun setupView() {
         inflate(R.layout.subscription_details)
+
+        visitWebsiteButton.setOnClickListener { openSubscriptionWebsite() }
     }
 
     fun setPlan(plan: SubscriptionPlan) {
@@ -93,7 +94,6 @@ class SubscriptionDetailsView : LinearLayout {
         }
     }
 
-    @OnClick(R.id.visitWebsiteButton)
     fun openSubscriptionWebsite() {
         if (plan?.paymentMethod != null) {
             val intent: Intent = if (plan?.paymentMethod == "Google") {

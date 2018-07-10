@@ -23,7 +23,7 @@ import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
-class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, autoUpdate: Boolean, private val context: Context) : RealmRecyclerViewAdapter<Member, PartyMemberRecyclerViewAdapter.MemberViewHolder>(data, autoUpdate) {
+class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Member, PartyMemberRecyclerViewAdapter.MemberViewHolder>(data, autoUpdate) {
 
     private val userClickedEvents = PublishSubject.create<String>()
 
@@ -60,9 +60,9 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.stats)
 
-            lvl.text = context.getString(R.string.user_level, user.stats.getLvl())
+            lvl.text = itemView.context.getString(R.string.user_level, user.stats.getLvl())
 
-            classLabel.text = user.stats.getTranslatedClassName(context)
+            classLabel.text = user.stats.getTranslatedClassName(itemView.context)
 
             val colorResourceID: Int = when (user.stats.habitClass) {
                 Stats.HEALER -> {
@@ -79,7 +79,7 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
                 }
                 else -> R.color.task_gray
             }
-            ViewHelper.SetBackgroundTint(classBackground, ContextCompat.getColor(context, colorResourceID))
+            ViewHelper.SetBackgroundTint(classBackground, ContextCompat.getColor(itemView.context, colorResourceID))
             userName.text = user.profile.name
 
             itemView.isClickable = true

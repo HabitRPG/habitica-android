@@ -262,7 +262,7 @@ public class PartyFragment extends BaseMainFragment {
                     case 0: {
                         if (user.hasParty()) {
                             PartyDetailFragment detailFragment = new PartyDetailFragment();
-                            detailFragment.partyId = user.getParty().id;
+                            detailFragment.setPartyId(user.getParty().id);
                             fragment = detailFragment;
                         } else {
                             fragment = GroupInformationFragment.Companion.newInstance(null, user);

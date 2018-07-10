@@ -62,13 +62,13 @@ public class SkillTasksActivity extends BaseActivity {
                 SkillTasksRecyclerViewFragment fragment = new SkillTasksRecyclerViewFragment();
                 switch (position) {
                     case 0:
-                        fragment.taskType = Task.TYPE_HABIT;
+                        fragment.setTaskType(Task.TYPE_HABIT);
                         break;
                     case 1:
-                        fragment.taskType = Task.TYPE_DAILY;
+                        fragment.setTaskType(Task.TYPE_DAILY);
                         break;
                     default:
-                        fragment.taskType = Task.TYPE_TODO;
+                        fragment.setTaskType(Task.TYPE_TODO);
                 }
 
                 compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe(task -> taskSelected(task), RxErrorHandler.handleEmptyError()));

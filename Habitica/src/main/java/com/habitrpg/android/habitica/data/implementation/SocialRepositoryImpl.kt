@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.AchievementResult
 import com.habitrpg.android.habitica.models.inventory.Quest
@@ -196,34 +197,34 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun getUserGroups(): Flowable<RealmResults<Group>> = localRepository.getUserGroups()
 
-    override fun acceptQuest(user: User, partyId: String): Flowable<Void> {
+    override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)
-                .doOnNext { localRepository.updateRSVPNeeded(user, false) }
+                .doOnNext {
+                    user.notNull {
+                        localRepository.updateRSVPNeeded(it, false)
+                    }
+                }
     }
 
-    override fun rejectQuest(user: User, partyId: String): Flowable<Void> {
+    override fun rejectQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.rejectQuest(partyId)
-                .doOnNext { localRepository.updateRSVPNeeded(user, false) }
+                .doOnNext {
+                    user.notNull {
+                        localRepository.updateRSVPNeeded(it, false)
+                    }
+                }
     }
 
-    override fun leaveQuest(partyId: String?): Flowable<Void> {
-        return if (partyId == null) {
-            Flowable.empty()
-        } else apiClient.leaveQuest(partyId)
+    override fun leaveQuest(partyId: String): Flowable<Void> {
+        return apiClient.leaveQuest(partyId)
     }
 
-    override fun cancelQuest(partyId: String?): Flowable<Void> {
-        if (partyId == null) {
-            return Flowable.empty()
-        }
+    override fun cancelQuest(partyId: String): Flowable<Void> {
         return apiClient.cancelQuest(partyId)
                 .doOnNext { localRepository.removeQuest(partyId) }
     }
 
-    override fun abortQuest(partyId: String?): Flowable<Quest> {
-        if (partyId == null) {
-            return Flowable.empty()
-        }
+    override fun abortQuest(partyId: String): Flowable<Quest> {
         return apiClient.abortQuest(partyId)
                 .doOnNext { localRepository.removeQuest(partyId) }
     }

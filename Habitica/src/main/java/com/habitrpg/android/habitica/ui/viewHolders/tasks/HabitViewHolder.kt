@@ -5,7 +5,6 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.OnClick
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.HabitScoreEvent
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -30,6 +29,11 @@ class HabitViewHolder(itemView: View) : BaseTaskViewHolder(itemView) {
             }
             return isVisible
         }
+
+    init {
+        btnPlus.setOnClickListener { onPlusButtonClicked() }
+        btnMinus.setOnClickListener { onMinusButtonClicked() }
+    }
 
     override fun bindHolder(newTask: Task, position: Int) {
         this.task = newTask
@@ -82,7 +86,6 @@ class HabitViewHolder(itemView: View) : BaseTaskViewHolder(itemView) {
         super.bindHolder(newTask, position)
     }
 
-    @OnClick(R.id.btnPlus)
     fun onPlusButtonClicked() {
         val event = HabitScoreEvent()
         event.Up = true
@@ -90,7 +93,6 @@ class HabitViewHolder(itemView: View) : BaseTaskViewHolder(itemView) {
         EventBus.getDefault().post(event)
     }
 
-    @OnClick(R.id.btnMinus)
     fun onMinusButtonClicked() {
         val event = HabitScoreEvent()
         event.Up = false

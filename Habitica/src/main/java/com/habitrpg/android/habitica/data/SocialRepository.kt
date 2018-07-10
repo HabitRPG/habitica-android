@@ -58,14 +58,14 @@ interface SocialRepository : BaseRepository {
 
     fun markPrivateMessagesRead(user: User?): Flowable<Void>
 
-    fun acceptQuest(user: User, partyId: String): Flowable<Void>
-    fun rejectQuest(user: User, partyId: String): Flowable<Void>
+    fun acceptQuest(user: User?, partyId: String): Flowable<Void>
+    fun rejectQuest(user: User?, partyId: String): Flowable<Void>
 
-    fun leaveQuest(partyId: String?): Flowable<Void>
+    fun leaveQuest(partyId: String): Flowable<Void>
 
-    fun cancelQuest(partyId: String?): Flowable<Void>
+    fun cancelQuest(partyId: String): Flowable<Void>
 
-    fun abortQuest(partyId: String?): Flowable<Quest>
+    fun abortQuest(partyId: String): Flowable<Quest>
 
     fun rejectGroupInvite(groupId: String): Flowable<Void>
 
