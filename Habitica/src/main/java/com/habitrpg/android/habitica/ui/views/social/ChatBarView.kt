@@ -9,13 +9,12 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.bindView
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 
 class ChatBarView : FrameLayout {
@@ -23,8 +22,12 @@ class ChatBarView : FrameLayout {
     private val chatBarContainer: LinearLayout by bindView(R.id.chatBarContainer)
     private val sendButton: ImageButton by bindView(R.id.sendButton)
     private val chatEditText: AppCompatEditText by bindView(R.id.chatEditText)
+    private val textIndicator: TextView by bindView(R.id.text_indicator)
+    private val indicatorSpacing: View by bindView(R.id.indicator_spacing)
 
     private var navBarAccountedHeightCalculated = false
+
+    private var maxChatLength = 200
 
     var sendAction: ((String) -> Unit)? = null
 
@@ -47,13 +50,31 @@ class ChatBarView : FrameLayout {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setSendButtonEnabled(chatEditText.text.isNotEmpty())
+                setSendButtonEnabled(chatEditText.text.isNotEmpty() && chatEditText.text.length <= maxChatLength)
+                updateTextIndicator(chatEditText.text.toString())
             }
         })
 
         sendButton.setOnClickListener { sendButtonPressed() }
 
         resizeForDrawingUnderNavbar()
+    }
+
+    private fun updateTextIndicator(text: String) {
+        if (chatEditText.lineCount >= 3) {
+            textIndicator.visibility = View.VISIBLE
+            indicatorSpacing.visibility = View.VISIBLE
+            textIndicator.text = "${text.length}/${maxChatLength}"
+            val color = when {
+                text.length > maxChatLength -> R.color.red_50
+                text.length > (maxChatLength * 0.95) -> R.color.yellow_5
+                else -> R.color.gray_400
+            }
+            textIndicator.setTextColor(ContextCompat.getColor(context, color))
+        } else {
+            textIndicator.visibility = View.GONE
+            indicatorSpacing.visibility = View.GONE
+        }
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {

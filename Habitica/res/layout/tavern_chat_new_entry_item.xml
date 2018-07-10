@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:id="@+id/chatBarContainer"
         android:layout_width="match_parent"
@@ -46,17 +47,39 @@
                     android:paddingLeft="@dimen/spacing_medium"
                     android:paddingRight="@dimen/spacing_medium"
                     android:paddingTop="4dp"
-                    android:paddingBottom="4dp"/>
+                    android:paddingBottom="4dp"
+                    tools:height="200dp"/>
             </android.support.design.widget.TextInputLayout>
-            <ImageButton
-                android:id="@+id/sendButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                android:tint="@color/gray_400"
-                android:src="@drawable/ic_send_grey_600_24dp"
-                android:contentDescription="@string/send"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:gravity="bottom">
+                <TextView
+                    android:id="@+id/text_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="100/150"
+                    android:visibility="gone"
+                    />
+                <View
+                    android:id="@+id/indicator_spacing"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"/>
+                <ImageButton
+                    android:id="@+id/sendButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@color/transparent"
+                    android:tint="@color/gray_400"
+                    android:src="@drawable/ic_send_grey_600_24dp"
+                    android:contentDescription="@string/send"/>
+            </LinearLayout>
         </LinearLayout>
         <TextView
             android:id="@+id/communityGuidelinesView"

@@ -382,7 +382,7 @@ public class MainActivity extends BaseActivity implements TutorialView.OnTutoria
 
     @Override
     protected void onPause() {
-        updateWidgets()
+        updateWidgets();
         super.onPause();
     }
     
