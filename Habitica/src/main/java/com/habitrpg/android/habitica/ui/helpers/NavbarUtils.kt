@@ -34,7 +34,7 @@ object NavbarUtils {
 
     private fun isPortrait(context: Context): Boolean {
         val res = context.resources
-        return res.getBoolean(R.bool.bb_bottom_bar_is_portrait_mode)
+        return res.getBoolean(R.bool.is_portrait_mode)
     }
 
     /**
