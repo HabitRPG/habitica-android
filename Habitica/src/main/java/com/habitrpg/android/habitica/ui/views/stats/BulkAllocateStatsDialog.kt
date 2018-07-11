@@ -16,7 +16,7 @@ import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.dialog_bulk_allocate.*
 import javax.inject.Inject
 
-class BulkAllocateStatsDialog(context: Context, component: AppComponent) : AlertDialog(context) {
+class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : AlertDialog(context) {
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -57,7 +57,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent) : Alert
     }
 
     init {
-        component.inject(this)
+        component?.inject(this)
 
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.dialog_bulk_allocate, null)

@@ -15,6 +15,8 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 public class LocalNotificationActionReceiver extends BroadcastReceiver {
@@ -33,7 +35,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        HabiticaBaseApplication.getComponent().inject(this);
+        Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
         this.resources = context.getResources();
 
         this.action = intent.getAction();

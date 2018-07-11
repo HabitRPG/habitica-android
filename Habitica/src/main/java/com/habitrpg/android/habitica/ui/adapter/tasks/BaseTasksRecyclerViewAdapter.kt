@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -34,7 +35,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
         this.setHasStableIds(true)
         this.context = newContext.applicationContext
         this.filteredContent = ArrayList()
-        injectThis(HabiticaBaseApplication.getComponent())
+        HabiticaBaseApplication.component.notNull { injectThis(it) }
 
         if (loadFromDatabase()) {
             this.loadContent(true)

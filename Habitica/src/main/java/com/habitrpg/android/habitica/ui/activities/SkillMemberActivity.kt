@@ -29,8 +29,8 @@ class SkillMemberActivity : BaseActivity() {
         return R.layout.activity_skill_members
     }
 
-    override fun injectActivity(component: AppComponent) {
-        component.inject(this)
+    override fun injectActivity(component: AppComponent?) {
+        component?.inject(this)
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {

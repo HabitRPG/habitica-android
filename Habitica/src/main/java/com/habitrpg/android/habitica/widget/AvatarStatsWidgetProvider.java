@@ -22,6 +22,8 @@ import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -42,7 +44,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
     private void setUp() {
         if (userRepository == null) {
-            HabiticaBaseApplication.getComponent().inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
         }
     }
 

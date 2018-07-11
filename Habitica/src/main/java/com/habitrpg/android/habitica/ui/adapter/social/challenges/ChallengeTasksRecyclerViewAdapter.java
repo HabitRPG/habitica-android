@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.social.challenges;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ public class ChallengeTasksRecyclerViewAdapter
         return addItemSubject.toFlowable(BackpressureStrategy.BUFFER);
     }
 
-    public int addTaskUnder(Task taskToAdd, Task taskAbove) {
+    public int addTaskUnder(Task taskToAdd, @Nullable Task taskAbove) {
         int position = U.findIndex(this.getContent(), t -> t.getId().equals(taskAbove.getId()));
 
         getContent().add(position + 1, taskToAdd);
@@ -159,18 +160,18 @@ public class ChallengeTasksRecyclerViewAdapter
         private PublishSubject<Task> callback;
         private Task newTask;
 
-        public AddItemViewHolder(View itemView, PublishSubject<Task> callback) {
-            super(itemView, false);
+        AddItemViewHolder(View itemView, PublishSubject<Task> callback) {
+            super(itemView);
             this.callback = callback;
 
-            addBtn = (Button) itemView.findViewById(R.id.btn_add_task);
+            addBtn = itemView.findViewById(R.id.btn_add_task);
             addBtn.setClickable(true);
             addBtn.setOnClickListener(view -> callback.onNext(newTask));
             setContext(itemView.getContext());
         }
 
         @Override
-        public void bindHolder(Task newTask, int position) {
+        public void bindHolder(@NonNull Task newTask, int position) {
             this.newTask = newTask;
             addBtn.setText(newTask.getText());
         }
@@ -180,16 +181,16 @@ public class ChallengeTasksRecyclerViewAdapter
 
         private TextView divider_name;
 
-        public DividerViewHolder(View itemView) {
-            super(itemView, false);
+        DividerViewHolder(View itemView) {
+            super(itemView);
 
-            divider_name = (TextView) itemView.findViewById(R.id.divider_name);
+            divider_name = itemView.findViewById(R.id.divider_name);
 
             setContext(itemView.getContext());
         }
 
         @Override
-        public void bindHolder(Task newTask, int position) {
+        public void bindHolder(@NonNull Task newTask, int position) {
             divider_name.setText(newTask.getText());
         }
     }

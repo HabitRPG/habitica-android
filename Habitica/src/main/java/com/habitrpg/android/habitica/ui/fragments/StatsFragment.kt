@@ -133,7 +133,7 @@ class StatsFragment: BaseMainFragment() {
 
     private fun showBulkAllocateDialog() {
         context.notNull { context ->
-            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.getComponent())
+            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.component)
             dialog.show()
         }
     }

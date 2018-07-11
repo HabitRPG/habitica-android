@@ -105,14 +105,15 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
         chatAdapter.notNull {
-            compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer { userId -> FullProfileActivity.open(context, userId) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer { userId ->
+                context.notNull { FullProfileActivity.open(it, userId) }
+            }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getCopyMessageAsTodoFlowable().subscribe(Consumer{ this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getLikeMessageFlowable().flatMap<ChatMessage> { socialRepository.likeMessage(it) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
-
 
         chatBarView.sendAction = { sendChatMessage(it) }
 
@@ -160,7 +161,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         clipMan.primaryClip = messageText
         val activity = activity as MainActivity?
         if (activity != null) {
-            showSnackbar(activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL)
+            showSnackbar(activity.floatingMenuWrapper, getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL)
         }
     }
 
@@ -173,7 +174,9 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                         socialRepository.flagMessage(chatMessage)
                                 .subscribe(Consumer {
                                     val activity = activity as MainActivity?
-                                    showSnackbar(activity!!.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL)
+                                    activity?.floatingMenuWrapper.notNull {
+                                        showSnackbar(it, "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL)
+                                    }
                                 }, RxErrorHandler.handleEmptyError())
                     }
                     .setNegativeButton(R.string.action_cancel) { _, _ -> }
@@ -199,7 +202,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         clipboard.primaryClip = clip
         val activity = activity as MainActivity?
         if (activity != null) {
-            HabiticaSnackbar.showSnackbar(activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+            HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
         }
     }
 

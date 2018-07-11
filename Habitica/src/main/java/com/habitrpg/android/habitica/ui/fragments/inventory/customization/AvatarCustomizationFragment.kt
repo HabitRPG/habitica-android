@@ -141,13 +141,13 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         layoutManager.spanCount = spanCount
     }
 
-    override fun updateUserData(user: User) {
+    override fun updateUserData(user: User?) {
         super.updateUserData(user)
-        this.adapter.gemBalance = (user.balance * 4).toInt()
+        this.adapter.gemBalance = user?.gemCount ?: 0
         this.updateActiveCustomization()
         if (adapter.customizationList.size != 0) {
             val ownedCustomizations = ArrayList<String>()
-            user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
+            user?.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
             adapter.updateOwnership(ownedCustomizations)
         } else {
             this.loadCustomizations()
@@ -155,7 +155,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     }
 
     private fun updateActiveCustomization() {
-        if (this.type == null || this.user == null || this.user!!.preferences == null) {
+        if (this.type == null || user?.preferences == null) {
             return
         }
         val prefs = this.user?.preferences

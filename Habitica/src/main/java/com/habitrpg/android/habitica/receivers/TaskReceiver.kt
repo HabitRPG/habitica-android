@@ -10,6 +10,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import com.habitrpg.android.habitica.HabiticaApplication
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -22,7 +23,7 @@ class TaskReceiver : BroadcastReceiver() {
     lateinit var taskAlarmManager: TaskAlarmManager
 
     override fun onReceive(context: Context, intent: Intent) {
-        HabiticaApplication.getComponent().inject(this)
+        HabiticaBaseApplication.component?.inject(this)
         val extras = intent.extras
         if (extras != null) {
             val taskTitle = extras.getString(TaskAlarmManager.TASK_NAME_INTENT_KEY)

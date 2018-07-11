@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class FirstDayOfTheWeekHelper {
 
     private int firstDayOfTheWeek;
-    private int dailyTaskFormOffset;
+    public int dailyTaskFormOffset;
 
     private FirstDayOfTheWeekHelper(int dailyTaskFormOffset, int firstDayOfTheWeek) {
         this.dailyTaskFormOffset = dailyTaskFormOffset;

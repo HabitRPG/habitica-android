@@ -7,6 +7,8 @@ import android.content.Intent;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 public class TaskAlarmBootReceiver extends BroadcastReceiver {
@@ -16,7 +18,7 @@ public class TaskAlarmBootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent arg1) {
-        HabiticaApplication.getComponent().inject(this);
+        Objects.requireNonNull(HabiticaApplication.Companion.getComponent()).inject(this);
         taskAlarmManager.scheduleAllSavedAlarms();
     }
 

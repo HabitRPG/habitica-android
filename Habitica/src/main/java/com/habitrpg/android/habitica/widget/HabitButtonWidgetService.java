@@ -28,6 +28,7 @@ import net.pherth.android.emoji_library.EmojiHandler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -51,7 +52,7 @@ public class HabitButtonWidgetService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-        HabiticaBaseApplication.getComponent().inject(this);
+        Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
         this.appWidgetManager = AppWidgetManager.getInstance(this);
         ComponentName thisWidget = new ComponentName(this, HabitButtonWidgetProvider.class);
         allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);

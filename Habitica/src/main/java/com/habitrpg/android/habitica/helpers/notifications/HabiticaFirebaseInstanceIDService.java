@@ -4,6 +4,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.habitrpg.android.habitica.HabiticaApplication;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 /**
@@ -16,7 +18,7 @@ public class HabiticaFirebaseInstanceIDService extends FirebaseInstanceIdService
 
     @Override
     public void onTokenRefresh() {
-        HabiticaApplication.getComponent().inject(this);
+        Objects.requireNonNull(HabiticaApplication.Companion.getComponent()).inject(this);
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         pushNotificationManager.setRefreshedToken(refreshedToken);
     }

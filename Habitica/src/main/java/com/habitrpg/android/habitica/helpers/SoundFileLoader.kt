@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
 import com.habitrpg.android.habitica.HabiticaApplication
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -21,7 +22,7 @@ class SoundFileLoader(private val context: Context) {
 
     private val externalCacheDir: String?
         get() {
-            val cacheDir = HabiticaApplication.getInstance(context).getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS)
+            val cacheDir = HabiticaBaseApplication.getInstance(context).getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS)
             return cacheDir?.path
         }
 

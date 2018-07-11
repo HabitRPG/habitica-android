@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
@@ -18,6 +19,8 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,7 +42,7 @@ public class NotificationPublisher extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         if (taskRepository == null) {
-            HabiticaApplication.getComponent().inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
         }
 
         boolean check_dailies = intent.getBooleanExtra(CHECK_DAILIES, false);

@@ -48,7 +48,9 @@ class PartyMemberListFragment : BaseFragment() {
 
         recyclerView?.layoutManager = LinearLayoutManager(context)
         adapter = PartyMemberRecyclerViewAdapter(null, true)
-        adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(context, userId) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
+        context.notNull {
+            adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(it, userId) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
+        }
         recyclerView?.adapter = adapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
@@ -59,7 +61,7 @@ class PartyMemberListFragment : BaseFragment() {
 
     private fun refreshMembers() {
         setRefreshing(true)
-        socialRepository.retrieveGroupMembers(partyId!!, true).doOnComplete { setRefreshing(false) }.subscribe(Consumer { users -> }, RxErrorHandler.handleEmptyError())
+        socialRepository.retrieveGroupMembers(partyId!!, true).doOnComplete { setRefreshing(false) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     private fun setRefreshing(isRefreshing: Boolean) {

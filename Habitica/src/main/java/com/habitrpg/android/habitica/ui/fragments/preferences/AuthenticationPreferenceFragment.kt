@@ -35,7 +35,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.getComponent().inject(this)
+        HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
     }
 
@@ -155,7 +155,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     private fun deleteAccount(password: String) {
         val dialog = ProgressDialog.show(context, context?.getString(R.string.deleting_account), null, true)
         userRepository.deleteAccount(password).subscribe({ _ ->
-            HabiticaApplication.logout(context)
+            context.notNull { HabiticaBaseApplication.logout(it) }
             activity?.finish()
         }) { throwable ->
             dialog.dismiss()

@@ -42,6 +42,12 @@ class SkillsFragment : BaseMainFragment() {
     private var selectedSkill: Skill? = null
     private var progressDialog: ProgressDialog? = null
 
+    override var user: User? = null
+        set(value) {
+            field = value
+            checkUserLoadSkills()
+        }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         adapter = SkillsRecyclerViewAdapter()
@@ -81,12 +87,6 @@ class SkillsFragment : BaseMainFragment() {
         }
     }
 
-    override fun setUser(user: User?) {
-        super.setUser(user)
-
-        checkUserLoadSkills()
-    }
-
     @Subscribe
     fun onEvent(command: UseSkillCommand) {
         val skill = command.skill
@@ -111,9 +111,9 @@ class SkillsFragment : BaseMainFragment() {
         adapter?.mana = response.user.stats.mp
         val activity = activity ?: return
         if ("special" == usedSkill?.habitClass) {
-            showSnackbar(activity.getFloatingMenuWrapper(), context!!.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
+            showSnackbar(activity.floatingMenuWrapper, context!!.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
         } else {
-            showSnackbar(activity.getFloatingMenuWrapper(), null,
+            showSnackbar(activity.floatingMenuWrapper, null,
                     context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
                     ContextCompat.getColor(context!!, R.color.blue_10), "-" + usedSkill?.mana,

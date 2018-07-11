@@ -29,7 +29,7 @@ import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: AppComponent) : AlertDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog(context), RadioGroup.OnCheckedChangeListener {
 
     @Inject
     lateinit var repository: TagRepository
@@ -55,7 +55,7 @@ class TaskFilterDialog(context: Context, component: AppComponent) : AlertDialog(
     private var isEditing: Boolean = false
 
     init {
-        component.inject(this)
+        component?.inject(this)
         addIcon = ContextCompat.getDrawable(context, R.drawable.ic_add_purple_300_36dp)
 
         val inflater = LayoutInflater.from(context)

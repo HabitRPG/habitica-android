@@ -87,8 +87,8 @@ class ShopsFragment : BaseMainFragment() {
             }
         }
 
-        if (tabLayout != null && viewPager != null) {
-            tabLayout!!.setupWithViewPager(viewPager)
+        if (viewPager != null) {
+            tabLayout?.setupWithViewPager(viewPager)
         }
     }
 
@@ -99,7 +99,7 @@ class ShopsFragment : BaseMainFragment() {
         } else getString(R.string.sidebar_shops)
     }
 
-    override fun updateUserData(user: User) {
+    override fun updateUserData(user: User?) {
         super.updateUserData(user)
         updateCurrencyView()
     }

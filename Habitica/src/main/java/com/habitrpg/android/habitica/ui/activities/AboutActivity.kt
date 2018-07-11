@@ -61,8 +61,8 @@ class AboutActivity : BaseActivity() {
         tabLayout.setupWithViewPager(pager)
     }
 
-    override fun injectActivity(component: AppComponent) {
-        component.inject(this)
+    override fun injectActivity(component: AppComponent?) {
+        component?.inject(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

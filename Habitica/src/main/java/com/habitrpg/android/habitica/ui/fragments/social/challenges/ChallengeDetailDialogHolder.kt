@@ -236,7 +236,7 @@ class ChallengeDetailDialogHolder private constructor(view: View, private val co
     }
 
     private fun openLeaderProfile() {
-        FullProfileActivity.open(context, challenge?.leaderId)
+        FullProfileActivity.open(context, challenge?.leaderId ?: "")
     }
 
     private fun openChallengeActivity() {

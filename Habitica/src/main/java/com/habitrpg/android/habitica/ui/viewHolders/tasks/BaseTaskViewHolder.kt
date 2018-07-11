@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers
 import net.pherth.android.emoji_library.EmojiTextView
 import org.greenrobot.eventbus.EventBus
 
-abstract class BaseTaskViewHolder @JvmOverloads constructor(itemView: View, useButterKnife: Boolean = true) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
 
     var task: Task? = null
@@ -65,7 +65,7 @@ abstract class BaseTaskViewHolder @JvmOverloads constructor(itemView: View, useB
 
     init {
 
-        itemView.setOnClickListener(this)
+        itemView.setOnClickListener { onClick(it) }
         itemView.isClickable = true
 
         //Re enable when we find a way to only react when a link is tapped.

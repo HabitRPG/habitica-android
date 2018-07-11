@@ -20,7 +20,7 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.getComponent().inject(this)
+        HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
     }
 

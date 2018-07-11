@@ -144,7 +144,7 @@ class NavigationDrawerFragment : DialogFragment() {
             NavigationDrawerAdapter(0, 0)
         }
         subscriptions = CompositeDisposable()
-        HabiticaBaseApplication.getComponent().inject(this)
+        HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {

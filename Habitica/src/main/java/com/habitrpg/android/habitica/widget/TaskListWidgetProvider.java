@@ -18,6 +18,8 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -35,7 +37,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
 
     private void setUp(Context context) {
         if (apiClient == null) {
-            HabiticaBaseApplication.getComponent().inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
         }
     }
 

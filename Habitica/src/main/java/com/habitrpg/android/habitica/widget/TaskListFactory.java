@@ -22,6 +22,7 @@ import net.pherth.android.emoji_library.EmojiHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -54,7 +55,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         this.taskType = taskType;
 
         if (userID == null) {
-            HabiticaApplication.getComponent().inject(this);
+            Objects.requireNonNull(HabiticaApplication.Companion.getComponent()).inject(this);
         }
         this.loadData();
     }

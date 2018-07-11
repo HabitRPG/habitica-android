@@ -61,7 +61,9 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter.notNull {
-            compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer<String> { FullProfileActivity.open(context, it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer<String> {
+                context.notNull { context -> FullProfileActivity.open(context, it) }
+            }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer<ChatMessage> { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer<ChatMessage> { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getCopyMessageAsTodoFlowable().subscribe(Consumer<ChatMessage> { this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
@@ -140,7 +142,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         clipMan.primaryClip = messageText
         val activity = getActivity() as MainActivity?
         if (activity != null) {
-            showSnackbar(activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+            showSnackbar(activity.floatingMenuWrapper, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
         }
     }
 
@@ -151,7 +153,9 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
                     socialRepository.flagMessage(chatMessage)
                             .subscribe(Consumer {
                                 val activity = getActivity() as MainActivity?
-                                showSnackbar(activity!!.getFloatingMenuWrapper(), "Flagged message by " + chatMessage.user, HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                                activity?.floatingMenuWrapper.notNull {
+                                    showSnackbar(it, "Flagged message by " + chatMessage.user, HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                                }
                             }, RxErrorHandler.handleEmptyError())
                 }
                 .setNegativeButton(R.string.action_cancel) { dialog, id -> }

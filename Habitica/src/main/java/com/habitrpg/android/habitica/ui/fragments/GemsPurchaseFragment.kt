@@ -86,7 +86,7 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         this.listener = listener
     }
 
-    override fun setBillingRequests(billingRequests: BillingRequests) {
+    override fun setBillingRequests(billingRequests: BillingRequests?) {
         this.billingRequests = billingRequests
     }
 

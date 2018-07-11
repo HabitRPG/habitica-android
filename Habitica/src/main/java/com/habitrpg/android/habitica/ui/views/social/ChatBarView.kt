@@ -14,8 +14,8 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.bindView
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class ChatBarView : FrameLayout {
 

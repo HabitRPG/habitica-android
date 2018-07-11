@@ -19,7 +19,7 @@ class APIPreferenceFragment: BasePreferencesFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.getComponent().inject(this)
+        HabiticaBaseApplication.component?.inject(this)
 
         qrCodeManager = QrCodeManager(userRepository, this.context)
 

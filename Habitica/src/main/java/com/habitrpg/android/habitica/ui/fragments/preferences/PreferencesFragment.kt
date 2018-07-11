@@ -44,7 +44,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     private var classSelectionPreference: Preference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.getComponent().inject(this)
+        HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
 
         val userID = preferenceManager.sharedPreferences.getString(context?.getString(R.string.SP_userID), null)
@@ -82,7 +82,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when(preference.key) {
             "logout" -> {
-                HabiticaApplication.logout(context)
+                context.notNull { HabiticaBaseApplication.logout(it) }
                 activity?.finish()
             }
             "choose_class" -> {

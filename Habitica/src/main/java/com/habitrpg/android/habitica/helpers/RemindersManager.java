@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class RemindersManager {
     private DateFormat dateFormater;
 
     public RemindersManager(String taskType) {
-        HabiticaBaseApplication.getComponent().inject(this);
+        Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
         if (taskType.equals("todo")) {
             dateFormater = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
         } else {

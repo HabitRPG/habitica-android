@@ -135,7 +135,7 @@ class TasksFragment : BaseMainFragment() {
 
     private fun showFilterDialog() {
         context.notNull {
-            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.getComponent())
+            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.component)
             if (user != null) {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
             }
@@ -378,7 +378,7 @@ class TasksFragment : BaseMainFragment() {
     override val displayedClassName: String?
         get() = null
 
-    override fun customTitle(): String? = null
+    override fun customTitle(): String = ""
 
     override fun addToBackStack(): Boolean = false
 

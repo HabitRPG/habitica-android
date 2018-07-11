@@ -4,6 +4,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.habitrpg.android.habitica.HabiticaApplication;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 /**
@@ -16,7 +18,7 @@ public class HabiticaFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        HabiticaApplication.getComponent().inject(this);
+        Objects.requireNonNull(HabiticaApplication.Companion.getComponent()).inject(this);
         pushNotificationManager.displayNotification(remoteMessage);
     }
 }

@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -42,7 +43,9 @@ abstract class BaseFragment : DialogFragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectFragment(HabiticaBaseApplication.getComponent())
+        HabiticaBaseApplication.component.notNull {
+            injectFragment(it)
+        }
         this.showsDialog = false
         super.onCreate(savedInstanceState)
     }
@@ -107,8 +110,10 @@ abstract class BaseFragment : DialogFragment() {
         }
 
         super.onDestroyView()
-        val refWatcher = HabiticaApplication.getInstance(context).refWatcher
-        refWatcher.watch(this)
+        context.notNull {
+            val refWatcher = HabiticaBaseApplication.getInstance(it).refWatcher
+            refWatcher?.watch(this)
+        }
     }
 
     override fun onDestroy() {

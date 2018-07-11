@@ -15,6 +15,8 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.modules.AppModule;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -31,7 +33,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
     private void setUp() {
         if (taskRepository == null) {
-            HabiticaBaseApplication.getComponent().inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
         }
     }
 

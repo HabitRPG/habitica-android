@@ -40,7 +40,7 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
-class PurchaseDialog(context: Context, component: AppComponent, val item: ShopItem) : AlertDialog(context) {
+class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopItem) : AlertDialog(context) {
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -133,7 +133,7 @@ class PurchaseDialog(context: Context, component: AppComponent, val item: ShopIt
             }
         }
     init {
-        component.inject(this)
+        component?.inject(this)
 
         setView(customView)
 

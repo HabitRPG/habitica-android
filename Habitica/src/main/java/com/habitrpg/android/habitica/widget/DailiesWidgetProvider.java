@@ -8,6 +8,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.data.ApiClient;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 public class DailiesWidgetProvider extends TaskListWidgetProvider {
@@ -22,8 +24,7 @@ public class DailiesWidgetProvider extends TaskListWidgetProvider {
 
     private void setUp(Context context) {
         if (apiClient == null) {
-            HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
-            application.getComponent().inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
         }
     }
 

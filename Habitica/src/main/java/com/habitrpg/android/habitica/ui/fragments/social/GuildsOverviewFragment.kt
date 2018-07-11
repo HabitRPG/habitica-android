@@ -107,8 +107,9 @@ class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, SwipeRe
             fragment = publicGuildsFragment
         } else {
             val guildIndex = (v.parent as ViewGroup).indexOfChild(v)
+            val guildId = this.guilds?.get(guildIndex)?.id ?: return
             val guildFragment = GuildFragment()
-            guildFragment.setGuildId(this.guilds?.get(guildIndex)?.id)
+            guildFragment.setGuildId(guildId)
             guildFragment.isMember = true
             fragment = guildFragment
         }

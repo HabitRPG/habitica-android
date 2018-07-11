@@ -26,8 +26,8 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
                 .commit()
     }
 
-    override fun injectActivity(component: AppComponent) {
-        component.inject(this)
+    override fun injectActivity(component: AppComponent?) {
+        component?.inject(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

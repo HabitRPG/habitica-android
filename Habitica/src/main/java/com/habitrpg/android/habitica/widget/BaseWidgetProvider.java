@@ -17,6 +17,8 @@ import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 
@@ -74,7 +76,7 @@ public abstract class BaseWidgetProvider extends AppWidgetProvider {
 
     protected void showToastForTaskDirection(Context context, TaskScoringResult data, String userID) {
         if (userRepository == null) {
-            HabiticaApplication.getComponent().inject(this);
+            Objects.requireNonNull(HabiticaApplication.Companion.getComponent()).inject(this);
         }
         if (data != null) {
             Pair<SpannableStringBuilder, HabiticaSnackbar.SnackbarDisplayType> pair = NotifyUserUseCase.Companion.getNotificationAndAddStatsToUserAsText(context, data.getExperienceDelta(), data.getHealthDelta(), data.getGoldDelta(), data.getManaDelta());

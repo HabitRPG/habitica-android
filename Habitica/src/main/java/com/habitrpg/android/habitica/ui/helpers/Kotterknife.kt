@@ -13,12 +13,6 @@ import java.util.*
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-object ButterKnife {
-    fun reset(target: Any) {
-        LazyRegistry.reset(target)
-    }
-}
-
 fun <V : View> View.bindView(@IdRes id: Int)
         : ReadOnlyProperty<View, V> = required(id, viewFinder)
 
