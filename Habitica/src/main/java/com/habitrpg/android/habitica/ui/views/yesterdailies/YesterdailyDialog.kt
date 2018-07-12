@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit
 
 class YesterdailyDialog private constructor(context: Context, private val userRepository: UserRepository, private val taskRepository: TaskRepository, private val tasks: List<Task>) : AlertDialog(context) {
 
-    private val yesterdailiesList: LinearLayout by bindView(R.id.yesterdailies_list)
+    private lateinit var yesterdailiesList: LinearLayout
 
     private val taskGray: Int by bindColor(context, R.color.task_gray)
 
@@ -39,6 +39,9 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         ) { _, _ -> }
 
         this.setOnDismissListener { runCron() }
+
+        //Can't use by bindView() because the view doesn't seem to be available through that yet
+        yesterdailiesList = view.findViewById(R.id.yesterdailies_list)
 
         createTaskViews(inflater)
     }
