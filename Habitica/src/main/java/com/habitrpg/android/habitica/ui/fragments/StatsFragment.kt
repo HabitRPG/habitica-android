@@ -123,7 +123,7 @@ class StatsFragment: BaseMainFragment() {
 
         statsAllocationButton.setOnClickListener {
             if (user?.stats?.points ?: 0 > 0) {
-                val lvl = user?.stats?.getLvl()
+                val lvl = user?.stats?.lvl
                 if (lvl != null && lvl >= 10) {
                     showBulkAllocateDialog()
                 }
@@ -204,7 +204,7 @@ class StatsFragment: BaseMainFragment() {
 
     private fun updateStats() {
         val currentUser = user ?: return
-        val levelStat = Math.min(currentUser.stats.getLvl() / 2.0f, 50f).toInt()
+        val levelStat = Math.min((currentUser.stats.lvl ?: 0) / 2.0f, 50f).toInt()
 
         totalStrength = levelStat
         totalIntelligence = levelStat

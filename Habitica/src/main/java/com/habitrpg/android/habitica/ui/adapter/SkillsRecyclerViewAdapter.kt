@@ -51,7 +51,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         private val magicDrawable: Drawable
         private val skillImageView: SimpleDraweeView by bindView(R.id.skill_image)
         private val skillNameTextView: TextView by bindView(R.id.skill_text)
-        private val skillNotesTextView: TextView by bindView(R.id.skill_image)
+        private val skillNotesTextView: TextView by bindView(R.id.skill_notes)
         private val priceButton: Button by bindView(itemView, R.id.price_button)
 
         var skill: Skill? = null

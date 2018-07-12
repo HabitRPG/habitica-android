@@ -300,7 +300,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun addLevelAttributes(user: Member) {
-        val byLevelStat = Math.min(user.stats.getLvl() / 2.0f, 50f)
+        val byLevelStat = Math.min((user.stats.lvl ?: 0) / 2.0f, 50f)
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false)
     }
@@ -353,10 +353,10 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun addNormalAddBuffAttributes(stats: Stats) {
-        val buffs = stats.getBuffs()
+        val buffs = stats.buffs
 
-        addAttributeRow(getString(R.string.profile_allocated), stats.getStr().toFloat(), stats.get_int().toFloat(), stats.getCon().toFloat(), stats.getPer().toFloat(), true, false)
-        addAttributeRow(getString(R.string.profile_boosts), buffs.getStr(), buffs.get_int(), buffs.getCon(), buffs.getPer(), true, false)
+        addAttributeRow(getString(R.string.profile_allocated), stats.str?.toFloat() ?: 0f, stats._int?.toFloat() ?: 0f, stats.con?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
+        addAttributeRow(getString(R.string.profile_boosts), buffs?.getStr() ?: 0f, buffs?.get_int() ?: 0f, buffs?.getCon() ?: 0f, buffs?.getPer() ?: 0f, true, false)
 
         // Summary row
         addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, false, true)

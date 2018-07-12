@@ -60,7 +60,7 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.stats)
 
-            lvl.text = itemView.context.getString(R.string.user_level, user.stats.getLvl())
+            lvl.text = itemView.context.getString(R.string.user_level, user.stats.lvl)
 
             classLabel.text = user.stats.getTranslatedClassName(itemView.context)
 

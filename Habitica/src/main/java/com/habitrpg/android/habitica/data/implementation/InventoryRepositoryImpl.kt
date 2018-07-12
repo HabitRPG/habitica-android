@@ -190,21 +190,21 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                         copiedUser.items = buyResponse.items
                     }
                     if (buyResponse.hp != null) {
-                        copiedUser.stats.setHp(buyResponse.hp)
+                        copiedUser.stats.hp = buyResponse.hp
                     }
                     if (buyResponse.exp != null) {
-                        copiedUser.stats.setExp(buyResponse.exp)
+                        copiedUser.stats.exp = buyResponse.exp
                     }
                     if (buyResponse.mp != null) {
-                        copiedUser.stats.setMp(buyResponse.mp)
+                        copiedUser.stats.mp = buyResponse.mp
                     }
                     if (buyResponse.gp != null) {
-                        copiedUser.stats.setGp(buyResponse.gp)
+                        copiedUser.stats.gp = buyResponse.gp
                     } else {
-                        copiedUser.stats.setGp(copiedUser.stats.getGp()!! - value)
+                        copiedUser.stats.gp = copiedUser.stats.gp ?: 0 - value
                     }
                     if (buyResponse.lvl != null) {
-                        copiedUser.stats.setLvl(buyResponse.lvl)
+                        copiedUser.stats.lvl = buyResponse.lvl
                     }
                     localRepository.save(copiedUser)
                 }

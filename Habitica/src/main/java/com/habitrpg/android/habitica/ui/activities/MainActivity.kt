@@ -188,7 +188,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         setupToolbar(toolbar)
 
-        avatarInHeader = AvatarWithBarsViewModel(this, avatarWithBars)
+        avatarInHeader = AvatarWithBarsViewModel(this, avatarWithBars, userRepository)
         sideAvatarView = AvatarView(this, true, false, false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -202,11 +202,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             avatarWithBars.setPadding(px.toInt(), statusBarHeight, px.toInt(), 0)
         }
 
-        userRepository.getUser(hostConfig.user)
+        compositeSubscription.add(userRepository.getUser(hostConfig.user)
                 .subscribe(Consumer { newUser ->
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
-                }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
@@ -340,13 +340,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private fun setUserData() {
         if (user != null) {
-
             val preferences = user?.preferences
 
             preferences?.language.notNull { apiClient.setLanguageCode(it) }
             preferences?.language.notNull { soundManager.soundTheme = it }
             runOnUiThread {
-                updateHeader()
                 updateSidebar()
                 if (activeFragment != null && activeFragment?.get() != null) {
                     activeFragment?.get()?.updateUserData(user)
@@ -387,13 +385,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }*/
     }
 
-    private fun updateHeader() {
-        user.notNull { avatarInHeader?.updateData(it) }
-        if (activeFragment != null) {
-            setTranslatedFragmentTitle(activeFragment?.get())
-        }
-    }
-
     private fun updateSidebar() {
         drawerFragment?.setUsername(user?.profile?.name)
 
@@ -411,7 +402,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             if (user?.hasClass() == false && (!hasSpecialItems)) {
                 item.isVisible = false
             } else {
-                if (user?.stats?.getLvl() ?: 0 < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)) {
+                if (user?.stats?.lvl ?: 0 < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)) {
                     item.additionalInfo = getString(R.string.unlock_lvl_11)
                 } else {
                     item.additionalInfo = null
@@ -493,13 +484,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     fun onEvent(event: BuyRewardCommand) {
         val rewardKey = event.Reward.id
 
-        if (user?.stats?.getGp() ?: 0.toDouble() < event.Reward.value) {
+        if (user?.stats?.gp ?: 0.toDouble() < event.Reward.value) {
             HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.no_gold), SnackbarDisplayType.FAILURE)
             return
         }
 
         if ("potion" == rewardKey) {
-            val currentHp = user?.stats?.getHp()?.toInt()
+            val currentHp = user?.stats?.gp?.toInt()
             val maxHp = user?.stats?.maxHealth
 
             if (currentHp == maxHp) {
@@ -646,7 +637,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private fun displayDeathDialogIfNeeded() {
 
-        if (user?.stats?.getHp() == null || user?.stats?.getHp() ?: 0.toDouble() > 0) {
+        if (user?.stats?.hp ?: 0.0 > 0) {
             return
         }
 

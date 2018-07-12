@@ -216,7 +216,7 @@ public class User extends RealmObject implements Avatar {
 
     @Override
     public boolean hasClass() {
-        return getPreferences() != null && getFlags() != null && (!getPreferences().getDisableClasses() && getFlags().getClassSelected() && getStats().habitClass.length() != 0);
+        return getPreferences() != null && getFlags() != null && (!getPreferences().getDisableClasses() && getFlags().getClassSelected() && getStats().getHabitClass().length() != 0);
     }
 
     public void setBalance(double balance) {

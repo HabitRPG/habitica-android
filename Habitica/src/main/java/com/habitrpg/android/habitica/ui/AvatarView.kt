@@ -139,7 +139,7 @@ class AvatarView : View {
                         }
 
                         override fun onFailure(id: String?, throwable: Throwable?) {
-                            Log.e(TAG, "Error loading layer: " + layerName, throwable)
+                            Log.e(TAG, "Error loading layer: $layerName", throwable)
                             onLayerComplete()
                         }
                     })
@@ -162,20 +162,20 @@ class AvatarView : View {
 
         val mountName = avatar.currentMount
         if (showMount && !TextUtils.isEmpty(mountName)) {
-            layerMap[LayerType.MOUNT_BODY] = "Mount_Body_" + mountName
-            layerMap[LayerType.MOUNT_HEAD] = "Mount_Head_" + mountName
+            layerMap[LayerType.MOUNT_BODY] = "Mount_Body_$mountName"
+            layerMap[LayerType.MOUNT_HEAD] = "Mount_Head_$mountName"
             if (resetHasAttributes) hasMount = true
         }
 
         val petName = avatar.currentPet
         if (showPet && !TextUtils.isEmpty(petName)) {
-            layerMap[LayerType.PET] = "Pet-" + petName
+            layerMap[LayerType.PET] = "Pet-$petName"
             if (resetHasAttributes) hasPet = true
         }
 
         val backgroundName = avatar.background
         if (showBackground && !TextUtils.isEmpty(backgroundName)) {
-            layerMap[LayerType.BACKGROUND] = "background_" + backgroundName
+            layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
             if (resetHasAttributes) hasBackground = true
         }
 
@@ -202,25 +202,25 @@ class AvatarView : View {
 
         var hasVisualBuffs = false
 
-        if (avatar.stats != null && avatar.stats.getBuffs() != null) {
-            val buffs = avatar.stats.getBuffs()
+        if (avatar.stats != null && avatar.stats.buffs != null) {
+            val buffs = avatar.stats.buffs
 
-            if (buffs.snowball) {
+            if (buffs?.snowball == true) {
                 layerMap[AvatarView.LayerType.VISUAL_BUFF] = "snowman"
                 hasVisualBuffs = true
             }
 
-            if (buffs.seafoam) {
+            if (buffs?.seafoam == true) {
                 layerMap[AvatarView.LayerType.VISUAL_BUFF] = "seafoam_star"
                 hasVisualBuffs = true
             }
 
-            if (buffs.shinySeed) {
-                layerMap[AvatarView.LayerType.VISUAL_BUFF] = "avatar_floral_" + avatar.stats.getHabitClass()
+            if (buffs?.shinySeed == true) {
+                layerMap[AvatarView.LayerType.VISUAL_BUFF] = "avatar_floral_" + avatar.stats.habitClass
                 hasVisualBuffs = true
             }
 
-            if (buffs.spookySparkles) {
+            if (buffs?.spookySparkles == true) {
                 layerMap[AvatarView.LayerType.VISUAL_BUFF] = "ghost"
                 hasVisualBuffs = true
             }

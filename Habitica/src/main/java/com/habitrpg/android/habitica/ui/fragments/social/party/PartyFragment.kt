@@ -45,7 +45,7 @@ class PartyFragment : BaseMainFragment() {
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
 
-    private val viewPager: ViewPager? by bindView(R.id.viewpager)
+    private val viewPager: ViewPager? by bindView(R.id.viewPager)
     private var group: Group? = null
     private var partyMemberListFragment: PartyMemberListFragment? = null
     private var chatListFragment: ChatListFragment? = null

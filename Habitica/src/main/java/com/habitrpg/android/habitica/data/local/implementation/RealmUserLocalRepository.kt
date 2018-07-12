@@ -76,7 +76,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val habitClass = if (user.preferences.disableClasses) "none" else user.stats.habitClass
         return realm.where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
-                .lessThanOrEqualTo("lvl", user.stats.lvl)
+                .lessThanOrEqualTo("lvl", user.stats.lvl ?: 0)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }

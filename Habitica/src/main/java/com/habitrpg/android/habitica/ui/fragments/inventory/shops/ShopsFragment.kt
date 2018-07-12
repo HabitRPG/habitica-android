@@ -108,7 +108,7 @@ class ShopsFragment : BaseMainFragment() {
         if (user == null) {
             return
         }
-        currencyView.gold = user?.stats?.getGp()?.toDouble() ?: 0.0
+        currencyView.gold = user?.stats?.gp ?: 0.0
         currencyView.gems = user?.gemCount?.toDouble() ?: 0.0
         currencyView.hourglasses = user?.hourglassCount?.toDouble() ?: 0.0
     }

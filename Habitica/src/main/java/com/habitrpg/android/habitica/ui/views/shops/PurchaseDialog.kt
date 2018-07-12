@@ -152,7 +152,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
 
     private fun setUser(user: User) {
         this.user = user
-        currencyView.gold = user.stats.getGp()
+        currencyView.gold = user.stats.gp ?: 0.0
         currencyView.gems = user.gemCount.toDouble()
         currencyView.hourglasses = user.hourglassCount.toDouble()
 

@@ -155,7 +155,7 @@ public class Member extends RealmObject implements Avatar {
 
     @Override
     public boolean hasClass() {
-        return getPreferences() != null && (!getPreferences().getDisableClasses() && getStats().habitClass.length() != 0);
+        return getPreferences() != null && (!getPreferences().getDisableClasses() && getStats().getHabitClass().length() != 0);
     }
 
     public void setEquipped(Outfit equipped) {

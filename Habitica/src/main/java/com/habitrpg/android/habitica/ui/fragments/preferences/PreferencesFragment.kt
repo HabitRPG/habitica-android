@@ -226,7 +226,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     fun setUser(user: User?) {
         this.user = user
-        if (10 <= user?.stats?.getLvl() ?: 0) {
+        if (10 <= user?.stats?.lvl ?: 0) {
             if (user?.flags?.classSelected == true) {
                 if (user.preferences.disableClasses) {
                     classSelectionPreference?.title = getString(R.string.enable_class)

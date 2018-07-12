@@ -121,9 +121,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun useSkill(user: User?, key: String, target: String): Flowable<SkillResponse> {
         return apiClient.useSkill(key, target)
                 .map { response ->
-                    response.hpDiff = response.user.stats.getHp() - (user?.stats?.getHp() ?: 0.0)
-                    response.expDiff = response.user.stats.getExp() - (user?.stats?.getExp() ?: 0.0)
-                    response.goldDiff = response.user.stats.getGp() - (user?.stats?.getGp() ?: 0.0)
+                    response.hpDiff = response.user.stats.hp ?: 0 - (user?.stats?.hp ?: 0.0)
+                    response.expDiff = response.user.stats.exp ?: 0 - (user?.stats?.exp ?: 0.0)
+                    response.goldDiff = response.user.stats.gp ?: 0 - (user?.stats?.gp ?: 0.0)
                     response
                 }
                 .doOnNext { skillResponse ->
@@ -211,12 +211,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (user != null && user.isManaged) {
             localRepository.executeTransaction {
                 when (stat) {
-                    Stats.STRENGTH -> user.stats.str += 1
-                    Stats.INTELLIGENCE -> user.stats._int += 1
-                    Stats.CONSTITUTION -> user.stats.con += 1
-                    Stats.PERCEPTION -> user.stats.per += 1
+                    Stats.STRENGTH -> user.stats.str = user.stats.str?.inc()
+                    Stats.INTELLIGENCE -> user.stats._int = user.stats._int?.inc()
+                    Stats.CONSTITUTION -> user.stats.con= user.stats.con?.inc()
+                    Stats.PERCEPTION -> user.stats.per = user.stats.per?.inc()
                 }
-                user.stats.points -= 1
+                user.stats.points = user.stats.points?.dec()
             }
         }
         return apiClient.allocatePoint(stat)

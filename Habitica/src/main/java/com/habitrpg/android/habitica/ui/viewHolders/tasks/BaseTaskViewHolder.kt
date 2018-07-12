@@ -30,13 +30,13 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
     private val titleTextView: EmojiTextView by bindView(itemView, R.id.checkedTextView)
     private val notesTextView: EmojiTextView by bindView(itemView, R.id.notesTextView)
     internal val rightBorderView: View? by bindOptionalView(itemView, R.id.rightBorderView)
-    protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
     protected val specialTaskTextView: TextView? by bindOptionalView(itemView, R.id.specialTaskText)
-    private val iconViewChallenge: ImageView by bindView(itemView, R.id.iconviewChallenge)
+    private val iconViewChallenge: ImageView? by bindView(itemView, R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? by bindOptionalView(itemView, R.id.iconviewReminder)
-    private val iconViewTag: ImageView by bindView(itemView, R.id.iconviewTag)
-    private val taskIconWrapper: LinearLayout by bindView(itemView, R.id.taskIconWrapper)
-    private val approvalRequiredTextView: TextView by bindView(itemView, R.id.approvalRequiredTextField)
+    private val iconViewTag: ImageView? by bindView(itemView, R.id.iconviewTag)
+    private val taskIconWrapper: LinearLayout? by bindView(itemView, R.id.taskIconWrapper)
+    private val approvalRequiredTextView: TextView? by bindView(itemView, R.id.approvalRequiredTextField)
+    protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
 
     private var openTaskDisabled: Boolean = false
     private var taskActionsDisabled: Boolean = false
@@ -48,10 +48,10 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
             if (iconViewReminder?.visibility == View.VISIBLE) {
                 isVisible = true
             }
-            if (iconViewTag.visibility == View.VISIBLE) {
+            if (iconViewTag?.visibility == View.VISIBLE) {
                 isVisible = true
             }
-            if (iconViewChallenge.visibility == View.VISIBLE) {
+            if (iconViewChallenge?.visibility == View.VISIBLE) {
                 isVisible = true
             }
             if (iconViewReminder?.visibility == View.VISIBLE) {
@@ -118,18 +118,18 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
 
         rightBorderView?.setBackgroundResource(newTask.lightTaskColor)
         iconViewReminder?.visibility = if (newTask.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
-        iconViewTag.visibility = if (newTask.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
+        iconViewTag?.visibility = if (newTask.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
 
-        iconViewChallenge.visibility = View.GONE
+        iconViewChallenge?.visibility = View.GONE
 
         configureSpecialTaskTextView(newTask)
 
-        taskIconWrapper.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
+        taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
 
         if (newTask.isPendingApproval) {
-            approvalRequiredTextView.visibility = View.VISIBLE
+            approvalRequiredTextView?.visibility = View.VISIBLE
         } else {
-            approvalRequiredTextView.visibility = View.GONE
+            approvalRequiredTextView?.visibility = View.GONE
         }
 
     }
