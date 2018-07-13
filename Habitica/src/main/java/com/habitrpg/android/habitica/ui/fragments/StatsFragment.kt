@@ -204,7 +204,7 @@ class StatsFragment: BaseMainFragment() {
 
     private fun updateStats() {
         val currentUser = user ?: return
-        val levelStat = Math.min((currentUser.stats.lvl ?: 0) / 2.0f, 50f).toInt()
+        val levelStat = Math.min((currentUser.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
         totalStrength = levelStat
         totalIntelligence = levelStat
@@ -225,14 +225,14 @@ class StatsFragment: BaseMainFragment() {
         constitutionStatsView.buffValue = currentUser.stats?.buffs?.con?.toInt() ?: 0
         perceptionStatsView.buffValue = currentUser.stats?.buffs?.per?.toInt() ?: 0
 
-        totalStrength += currentUser.stats?.str?.toInt() ?: 0
-        totalIntelligence += currentUser.stats?._int?.toInt() ?: 0
-        totalConstitution += currentUser.stats?.con?.toInt() ?: 0
-        totalPerception += currentUser.stats?.per?.toInt() ?: 0
-        strengthStatsView.allocatedValue = currentUser.stats?.str?.toInt() ?: 0
-        intelligenceStatsView.allocatedValue = currentUser.stats?._int?.toInt() ?: 0
-        constitutionStatsView.allocatedValue = currentUser.stats?.con?.toInt() ?: 0
-        perceptionStatsView.allocatedValue = currentUser.stats?.per?.toInt() ?: 0
+        totalStrength += currentUser.stats?.str ?: 0
+        totalIntelligence += currentUser.stats?._int ?: 0
+        totalConstitution += currentUser.stats?.con ?: 0
+        totalPerception += currentUser.stats?.per ?: 0
+        strengthStatsView.allocatedValue = currentUser.stats?.str ?: 0
+        intelligenceStatsView.allocatedValue = currentUser.stats?._int ?: 0
+        constitutionStatsView.allocatedValue = currentUser.stats?.con ?: 0
+        perceptionStatsView.allocatedValue = currentUser.stats?.per ?: 0
 
         val outfit = currentUser.items.gear.equipped
         val outfitList = ArrayList<String>()

@@ -19,6 +19,8 @@ open class ChatMessage : RealmObject() {
     set(value) {
         field = value
         likes?.forEach { it.messageId = value }
+        userStyles?.id = id
+        contributor?.userId = id
     }
 
     var text: String? = null
@@ -46,34 +48,7 @@ open class ChatMessage : RealmObject() {
 
     var isInboxMessage: Boolean = false
 
-    val contributorColor: Int
-        get() {
-            var rColor = android.R.color.black
-
-            val level = contributor?.level
-            if (level != null) {
-                if (ContributorInfo.CONTRIBUTOR_COLOR_DICT.get(level, -1) > 0) {
-                    rColor = ContributorInfo.CONTRIBUTOR_COLOR_DICT[level]
-                }
-            }
-
-            if (backer?.npc != null) {
-                rColor = android.R.color.black
-            }
-
-            return rColor
-        }
-
-    val contributorForegroundColor: Int
-        get() {
-            var rColor = android.R.color.white
-
-            if (backer?.npc != null) {
-                rColor = R.color.contributor_npc_font
-            }
-
-            return rColor
-        }
+    var userStyles: UserStyles? = null
 
     val isSystemMessage: Boolean
         get() = uuid == "system"

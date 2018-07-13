@@ -71,11 +71,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                         val stats = user.stats
 
                         result.taskValueDelta = res.delta
-                        result.healthDelta = res.hp - (stats.hp ?: 0.0)
-                        result.experienceDelta = res.exp - (stats.exp ?: 0.0)
-                        result.manaDelta = res.mp - (stats.mp ?: 0.0)
-                        result.goldDelta = res.gp - (stats.gp ?: 0.0)
-                        result.hasLeveledUp = res.lvl > stats.lvl ?: 0
+                        result.healthDelta = res.hp - (stats?.hp ?: 0.0)
+                        result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
+                        result.manaDelta = res.mp - (stats?.mp ?: 0.0)
+                        result.goldDelta = res.gp - (stats?.gp ?: 0.0)
+                        result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
                         result.questDamage = res._tmp.quest?.progressDelta
                         if (res._tmp != null) {
                             result.drop = res._tmp.drop
@@ -90,11 +90,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                                     task.completed = up
                                 }
                             }
-                            stats.hp = res.hp
-                            stats.exp = res.exp
-                            stats.mp = res.mp
-                            stats.gp = res.gp
-                            stats.lvl = res.lvl
+                            stats?.hp = res.hp
+                            stats?.exp = res.exp
+                            stats?.mp = res.mp
+                            stats?.gp = res.gp
+                            stats?.lvl = res.lvl
                             user.party?.quest?.progress?.up = (user.party?.quest?.progress?.up ?: 0F) + (res._tmp.quest?.progressDelta?.toFloat() ?: 0F)
                             user.stats = stats
                         }

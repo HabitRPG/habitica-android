@@ -88,7 +88,7 @@ class FixCharacterValuesActivity: BaseActivity() {
         levelEditText.text = user.stats?.lvl.toString()
         streakEditText.text = user.streakCount.toString()
 
-        when (user.stats.habitClass) {
+        when (user.stats?.habitClass) {
             Stats.WARRIOR -> {
                 levelEditText.iconBackgroundColor = ContextCompat.getColor(this, R.color.red_500)
                 levelEditText.setIconBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())

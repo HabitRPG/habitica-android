@@ -290,14 +290,6 @@ public class User extends RealmObject implements Avatar {
     }
 
     @Override
-    public String getBackground() {
-        if (getPreferences() != null) {
-            return getPreferences().getBackground();
-        }
-        return "";
-    }
-
-    @Override
     public boolean getSleep() {
         return getPreferences() != null && getPreferences().getSleep();
     }

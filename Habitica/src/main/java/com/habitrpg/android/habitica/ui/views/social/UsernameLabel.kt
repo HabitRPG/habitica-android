@@ -17,7 +17,7 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
     private val textView = TextView(context)
     private val tierIconView = ImageView(context)
 
-    var username: String = ""
+    var username: String? = ""
     set(value) {
         textView.text = value
     }

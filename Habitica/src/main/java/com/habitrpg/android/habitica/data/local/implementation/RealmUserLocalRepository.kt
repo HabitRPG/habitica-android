@@ -73,17 +73,17 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun getSkills(user: User): Flowable<RealmResults<Skill>> {
-        val habitClass = if (user.preferences.disableClasses) "none" else user.stats.habitClass
+        val habitClass = if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
         return realm.where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
-                .lessThanOrEqualTo("lvl", user.stats.lvl ?: 0)
+                .lessThanOrEqualTo("lvl", user.stats?.lvl ?: 0)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
 
     override fun getSpecialItems(user: User): Flowable<RealmResults<Skill>> {
-        val specialItems = user.items.special
+        val specialItems = user.items?.special
         val ownedItems = ArrayList<String>()
         if (specialItems != null) {
             if (specialItems.snowball > 0) {

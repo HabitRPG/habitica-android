@@ -11,20 +11,24 @@ import com.habitrpg.android.habitica.models.user.Stats;
  */
 
 public interface Avatar {
+    @Nullable
     String getCurrentMount();
 
+    @Nullable
     String getCurrentPet();
-
-    String getBackground();
 
     boolean getSleep();
 
+    @Nullable
     Stats getStats();
 
+    @Nullable
     AvatarPreferences getPreferences();
 
+    @Nullable
     Integer getGemCount();
 
+    @Nullable
     Integer getHourglassCount();
 
     @Nullable

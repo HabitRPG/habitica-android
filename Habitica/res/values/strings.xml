@@ -301,12 +301,12 @@
     <string name="quest.invitation">Quest Invitation</string>
     <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="quest.invitation.text">You have been invited to participate in a quest!</string>
-    <string name="ago_1day">1 day ago</string>
-    <string name="ago_days">%d days ago</string>
-    <string name="ago_1Minute">1 minute ago</string>
-    <string name="ago_minutes">%d minutes ago</string>
-    <string name="ago_hours">%d hours ago</string>
-    <string name="ago_1hour">1 hour ago</string>
+    <string name="ago_1day">1d ago</string>
+    <string name="ago_days">%dd ago</string>
+    <string name="ago_1Minute">1m ago</string>
+    <string name="ago_minutes">%dm ago</string>
+    <string name="ago_hours">%dh ago</string>
+    <string name="ago_1hour">1h ago</string>
     <string name="today">Today</string>
     <string name="sidebar_items">Items</string>
     <string name="eggs">Eggs</string>
@@ -779,4 +779,7 @@
     <string name="seasonalShop_owner_long">Seasonal Sorceress</string>
     <string name="rage_attack">Rage attack:</string>
     <string name="tavern_description_world_boss">Oh dear, pay no heed to the monster below -- this is still a safe haven to chat on your breaks.</string>
+    <string name="report">Report</string>
+    <string name="like">Like</string>
+    <string name="reply">Reply</string>
 </resources>

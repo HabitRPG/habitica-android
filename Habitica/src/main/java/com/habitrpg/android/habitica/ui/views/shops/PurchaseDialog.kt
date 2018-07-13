@@ -111,7 +111,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
             return
         }
 
-        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user.stats.habitClass != shopItem.habitClass) {
+        if (shopItem.habitClass != "special" && user.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_100))
@@ -152,9 +152,9 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
 
     private fun setUser(user: User) {
         this.user = user
-        currencyView.gold = user.stats.gp ?: 0.0
+        currencyView.gold = user.stats?.gp ?: 0.0
         currencyView.gems = user.gemCount.toDouble()
-        currencyView.hourglasses = user.hourglassCount.toDouble()
+        currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
 
         if ("gems" == shopItem.purchaseType) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0

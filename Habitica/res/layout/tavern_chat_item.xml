@@ -3,89 +3,84 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@color/gray_600"
+    android:paddingLeft="@dimen/chat_horizontal_inset"
+    android:paddingRight="@dimen/chat_horizontal_inset"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_small">
+    <com.habitrpg.android.habitica.ui.RoundedFrameLayout
+        android:layout_width="@dimen/avatar_chat_size"
+        android:layout_height="@dimen/avatar_chat_size"
+        android:clipChildren="true"
+        android:layout_marginRight="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:background="@drawable/rounded_avatar_bg">
+        <com.habitrpg.android.habitica.ui.AvatarView
+            android:id="@+id/avatar_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            app:showMount="false"
+            app:showPet="false" />
+    </com.habitrpg.android.habitica.ui.RoundedFrameLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            style="@style/CardContent.Compact">
+            style="@style/CardContent.Compact"
+            android:background="@drawable/layout_rounded_bg"
+            android:padding="@dimen/spacing_medium">
             <LinearLayout
-                    android:layout_width="fill_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1.0"
+                android:baselineAligned="false"
+                android:gravity="center_vertical">
+                <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+                    android:id="@+id/user_label"
+                    style="@style/ChatMessageUserTextViewStyle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:weightSum="1.0"
-                    android:baselineAligned="false">
-
-                <LinearLayout
+                    android:clickable="true"
+                    tools:text="Username"
+                    android:focusable="true" />
+                <TextView
+                    android:id="@+id/ago_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    tools:text="2d ago"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_300"
+                    android:layout_marginLeft="@dimen/spacing_medium"
+                    android:layout_marginStart="@dimen/spacing_medium"/>
+                <View
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
-
-                    <LinearLayout
-                        android:id="@+id/user_background_layout"
-                        android:layout_width="wrap_content"
-
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/layout_rounded_bg">
-
-                        <TextView
-                            android:id="@+id/user_label"
-                            style="@style/ChatMessageUserTextViewStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:ellipsize="middle"
-                            android:lines="1"
-                            android:singleLine="true"
-                            tools:text="Username" />
-                    </LinearLayout>
-                </LinearLayout>
-
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/like_background_layout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:gravity="right">
+                    android:layout_gravity="center_vertical|right"
 
-                    <LinearLayout
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/layout_rounded_bg">
+
+                    <TextView
+                        android:id="@+id/tvLikes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|right"
-                        android:layout_margin="5dp">
-
-
-                        <LinearLayout
-                            android:id="@+id/like_background_layout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical|right"
-
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/layout_rounded_bg">
-
-                            <TextView
-                                android:id="@+id/tvLikes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:clickable="true"
-                                android:gravity="center_vertical" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/btn_options"
-                            android:layout_width="25dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="0.06"
-                            android:src="@drawable/ic_action_more_vert" />
-                    </LinearLayout>
+                        android:layout_margin="5dp"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:focusable="true" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -96,15 +91,42 @@
                 android:layout_margin="8dp"
                 android:lineSpacingMultiplier="1.0"
                 tools:text="This is the chat message"/>
-
-            <TextView
-                android:id="@+id/ago_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|right"
-                android:layout_marginRight="8dp"
-                android:singleLine="true"
-                android:lines="1"
-                android:ellipsize="end"/>
+            <LinearLayout
+                android:id="@+id/buttons_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="36dp">
+                <Button
+                    android:id="@+id/reply_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_300"
+                    android:text="@string/reply" />
+                <Button
+                    android:id="@+id/copy_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_300"
+                    android:text="@string/copy" />
+                <Button
+                    android:id="@+id/report_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_300"
+                    android:text="@string/report" />
+                <Button
+                    android:id="@+id/delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_300"
+                    android:text="@string/delete" />
+            </LinearLayout>
         </LinearLayout>
 </LinearLayout>

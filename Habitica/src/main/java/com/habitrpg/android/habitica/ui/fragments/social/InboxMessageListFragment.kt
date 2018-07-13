@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -64,10 +65,9 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
             compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer<String> {
                 context.notNull { context -> FullProfileActivity.open(context, it) }
             }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer<ChatMessage> { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer<ChatMessage> { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getCopyMessageAsTodoFlowable().subscribe(Consumer<ChatMessage> { this.copyMessageAsTodo(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getCopyMessageFlowable().subscribe(Consumer<ChatMessage> { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
         }
 
 

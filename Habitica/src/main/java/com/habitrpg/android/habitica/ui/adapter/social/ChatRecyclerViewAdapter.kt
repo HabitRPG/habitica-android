@@ -3,13 +3,11 @@ package com.habitrpg.android.habitica.ui.adapter.social
 import android.content.Context
 import android.content.res.Resources
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.text.method.LinkMovementMethod
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
@@ -17,9 +15,11 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -33,13 +33,13 @@ import net.pherth.android.emoji_library.EmojiTextView
 class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean) : RealmRecyclerViewAdapter<ChatMessage, ChatRecyclerViewAdapter.ChatRecyclerViewHolder>(data, autoUpdate) {
     private var uuid: String = ""
     private var sendingUser: User? = null
+    private var expandedMessageId: String? = null
 
     private val likeMessageEvents = PublishSubject.create<ChatMessage>()
     private val userLabelClickEvents = PublishSubject.create<String>()
-    private val privateMessageClickEvents = PublishSubject.create<String>()
     private val deleteMessageEvents = PublishSubject.create<ChatMessage>()
     private val flagMessageEvents = PublishSubject.create<ChatMessage>()
-    private val copyMessageAsTodoEvents = PublishSubject.create<ChatMessage>()
+    private val replyMessageEvents = PublishSubject.create<String>()
     private val copyMessageEvents = PublishSubject.create<ChatMessage>()
 
     init {
@@ -66,10 +66,6 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         return userLabelClickEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    fun getPrivateMessageClickFlowable(): Flowable<String> {
-        return privateMessageClickEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
     fun getFlagMessageClickFlowable(): Flowable<ChatMessage> {
         return flagMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
@@ -78,8 +74,8 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         return deleteMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    fun getCopyMessageAsTodoFlowable(): Flowable<ChatMessage> {
-        return copyMessageAsTodoEvents.toFlowable(BackpressureStrategy.DROP)
+    fun getReplyMessageEvents(): Flowable<String> {
+        return replyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     fun getCopyMessageFlowable(): Flowable<ChatMessage> {
@@ -87,23 +83,39 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
     }
 
 
-    inner class ChatRecyclerViewHolder(itemView: View, private val userId: String, private val isTavern: Boolean) : RecyclerView.ViewHolder(itemView), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+    inner class ChatRecyclerViewHolder(itemView: View, private val userId: String, private val isTavern: Boolean) : RecyclerView.ViewHolder(itemView) {
 
-        private val btnOptions: ImageView by bindView(R.id.btn_options)
-        private val userBackground: LinearLayout by bindView(R.id.user_background_layout)
-        private val userLabel: TextView by bindView(R.id.user_label)
+        private val avatarView: AvatarView by bindView(R.id.avatar_view)
+        private val userLabel: UsernameLabel by bindView(R.id.user_label)
         private val messageText: EmojiTextView by bindView(R.id.message_text)
         private val agoLabel: TextView by bindView(R.id.ago_label)
         private val likeBackground: LinearLayout by bindView(R.id.like_background_layout)
         private val tvLikes: TextView by bindView(R.id.tvLikes)
+        private val buttonsWrapper: LinearLayout by bindView(R.id.buttons_wrapper)
+        private val replyButton: Button by bindView(R.id.reply_button)
+        private val copyButton: Button by bindView(R.id.copy_button)
+        private val reportButton: Button by bindView(R.id.report_button)
+        private val deleteButton: Button by bindView(R.id.delete_button)
 
         val context: Context = itemView.context
         val res: Resources = itemView.resources
         private var chatMessage: ChatMessage? = null
 
         init {
-            btnOptions.setOnClickListener(this)
-            tvLikes.setOnClickListener { toggleLike() }
+            itemView.setOnClickListener {
+                expandedMessageId = if (expandedMessageId == chatMessage?.id) {
+                    null
+                } else {
+                    chatMessage?.id
+                }
+                notifyItemChanged(adapterPosition)
+            }
+            tvLikes.setOnClickListener { chatMessage.notNull { likeMessageEvents.onNext(it) } }
+            userLabel.setOnClickListener { chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
+            replyButton.setOnClickListener { chatMessage?.text.notNull { replyMessageEvents.onNext(it) } }
+            copyButton.setOnClickListener { chatMessage.notNull { copyMessageEvents.onNext(it) } }
+            reportButton.setOnClickListener { chatMessage.notNull { flagMessageEvents.onNext(it) } }
+            deleteButton.setOnClickListener { chatMessage.notNull { deleteMessageEvents.onNext(it) } }
         }
 
         fun bind(msg: ChatMessage) {
@@ -112,25 +124,20 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             setLikeProperties()
 
             if (msg.sent != null && msg.sent == "true" && sendingUser != null) {
-                DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser!!.contributorColor)
+                userLabel.tier = sendingUser?.contributor?.level ?: 0
             } else {
-                DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.contributorColor)
+                userLabel.tier = msg.contributor?.level ?: 0
             }
 
             if (msg.sent != null && msg.sent == "true") {
-                userLabel.text = sendingUser?.profile?.name
+                userLabel.username = sendingUser?.profile?.name
             } else {
                 if (msg.user != null && msg.user?.isNotEmpty() == true) {
-                    userLabel.text = msg.user
+                    userLabel.username = msg.user
                 } else {
-                    userLabel.setText(R.string.system)
+                    userLabel.username = context.getString(R.string.system)
                 }
             }
-
-            userLabel.isClickable = true
-            userLabel.setOnClickListener { view -> userLabelClickEvents.onNext(msg.uuid ?: "") }
-
-            DataBindingUtils.setForegroundTintColor(userLabel, msg.contributorForegroundColor)
 
             messageText.text = chatMessage?.parsedText
             if (msg.parsedText == null) {
@@ -147,6 +154,18 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             this.messageText.movementMethod = LinkMovementMethod.getInstance()
 
             agoLabel.text = msg.getAgoString(res)
+
+            msg.userStyles.notNull {
+                avatarView.setAvatar(it)
+            }
+
+            if (expandedMessageId == msg.id) {
+                buttonsWrapper.visibility = View.VISIBLE
+                deleteButton.visibility = if (shouldShowDelete()) View.VISIBLE else View.GONE
+                replyButton.visibility = if (chatMessage?.isInboxMessage == true) View.GONE else View.VISIBLE
+            } else {
+                buttonsWrapper.visibility = View.GONE
+            }
         }
 
         private fun setLikeProperties() {
@@ -173,91 +192,8 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             tvLikes.setTextColor(ContextCompat.getColor(context, foregroundColorRes))
         }
 
-        override fun onClick(v: View) {
-            if (chatMessage != null) {
-                if (btnOptions === v) {
-                    val popupMenu = PopupMenu(context, v)
-
-                    //set my own listener giving the View that activates the event onClick (i.e. YOUR ImageView)
-                    popupMenu.setOnMenuItemClickListener(this)
-                    //inflate your PopUpMenu
-                    popupMenu.menuInflater.inflate(R.menu.chat_message, popupMenu.menu)
-
-                    // Force icons to show
-                    var menuHelper: Any? = null
-                    var argTypes: Array<Class<*>>
-                    try {
-                        val fMenuHelper = PopupMenu::class.java.getDeclaredField("mPopup")
-                        fMenuHelper.isAccessible = true
-                        menuHelper = fMenuHelper.get(popupMenu)
-                        argTypes = arrayOf(Boolean::class.java)
-                        menuHelper?.javaClass?.getDeclaredMethod("setForceShowIcon", *argTypes)?.invoke(menuHelper, true)
-                    } catch (ignored: Exception) {
-                    }
-
-
-                    popupMenu.menu.findItem(R.id.menu_chat_delete).isVisible = shouldShowDelete(chatMessage)
-                    popupMenu.menu.findItem(R.id.menu_chat_flag).isVisible = chatMessage?.uuid != "system"
-                    popupMenu.menu.findItem(R.id.menu_chat_copy_as_todo).isVisible = false
-                    popupMenu.menu.findItem(R.id.menu_chat_send_pm).isVisible = false
-
-                    popupMenu.show()
-
-                    // Try to force some horizontal offset
-                    try {
-                        val fListPopup = menuHelper?.javaClass?.getDeclaredField("mPopup")
-                        fListPopup?.isAccessible = true
-                        val listPopup = fListPopup?.get(menuHelper)
-                        argTypes = arrayOf(Int::class.java)
-                        val listPopupClass = listPopup?.javaClass
-
-                        // Get the width of the popup window
-                        val width = listPopupClass?.getDeclaredMethod("getWidth")?.invoke(listPopup) as Int?
-
-                        // Invoke setHorizontalOffset() with the negative width to move left by that distance
-                        listPopupClass?.getDeclaredMethod("setHorizontalOffset", *argTypes)?.invoke(listPopup, -(width ?: 0))
-
-                        // Invoke show() to update the window's position
-                        listPopupClass?.getDeclaredMethod("show")?.invoke(listPopup)
-                    } catch (ignored: Exception) {
-
-                    }
-
-                }
-            }
-        }
-
-        private fun shouldShowDelete(chatMsg: ChatMessage?): Boolean {
-            return chatMsg?.isSystemMessage != true && (chatMsg?.uuid == userId || user?.contributor != null && user.contributor.admin)
-        }
-
-        fun toggleLike() {
-            chatMessage.notNull { likeMessageEvents.onNext(it) }
-        }
-
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            chatMessage.notNull {
-                when (item.itemId) {
-                    R.id.menu_chat_delete -> {
-                        deleteMessageEvents.onNext(it)
-                    }
-                    R.id.menu_chat_flag -> {
-                        flagMessageEvents.onNext(it)
-                    }
-                    R.id.menu_chat_copy_as_todo -> {
-                        copyMessageAsTodoEvents.onNext(it)
-                    }
-
-                    R.id.menu_chat_send_pm -> {
-                        privateMessageClickEvents.onNext(it.uuid ?: "")
-                    }
-
-                    R.id.menu_chat_copy -> {
-                        copyMessageEvents.onNext(it)
-                    }
-                }
-            }
-            return false
+        private fun shouldShowDelete(): Boolean {
+            return chatMessage?.isSystemMessage != true && (chatMessage?.uuid == userId || user?.contributor != null && user.contributor.admin)
         }
     }
 }

@@ -43,7 +43,6 @@ class SpeechBubbleView(context: Context, attrs: AttributeSet) : FrameLayout(cont
         this.setOnClickListener(this)
     }
 
-
     fun setConfirmationButtonVisibility(visibility: Int) {
         confirmationButtons.visibility = visibility
     }

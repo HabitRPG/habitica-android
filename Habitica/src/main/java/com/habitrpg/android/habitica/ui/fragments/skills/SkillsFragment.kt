@@ -108,7 +108,7 @@ class SkillsFragment : BaseMainFragment() {
 
     private fun displaySkillResult(usedSkill: Skill?, response: SkillResponse) {
         removeProgressDialog()
-        adapter?.mana = response.user.stats.mp ?: 0.0
+        adapter?.mana = response.user.stats?.mp ?: 0.0
         val activity = activity ?: return
         if ("special" == usedSkill?.habitClass) {
             showSnackbar(activity.floatingMenuWrapper, context!!.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)

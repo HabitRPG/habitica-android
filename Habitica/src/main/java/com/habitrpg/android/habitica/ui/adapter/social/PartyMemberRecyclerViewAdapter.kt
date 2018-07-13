@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -58,13 +57,13 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
         fun bind(user: Member) {
             avatarView.setAvatar(user)
 
-            AvatarWithBarsViewModel.setHpBarData(hpBar, user.stats)
+            user.stats.notNull { AvatarWithBarsViewModel.setHpBarData(hpBar, it) }
 
-            lvl.text = itemView.context.getString(R.string.user_level, user.stats.lvl)
+            lvl.text = itemView.context.getString(R.string.user_level, user.stats?.lvl)
 
-            classLabel.text = user.stats.getTranslatedClassName(itemView.context)
+            classLabel.text = user.stats?.getTranslatedClassName(itemView.context)
 
-            val colorResourceID: Int = when (user.stats.habitClass) {
+            val colorResourceID: Int = when (user.stats?.habitClass) {
                 Stats.HEALER -> {
                     R.color.class_healer
                 }

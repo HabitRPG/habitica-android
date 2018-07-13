@@ -103,7 +103,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         val newSize: String = if (position == 0) "slim" else "broad"
 
-        if (this.user != null && this.user!!.preferences.size != newSize) {
+        if (this.user != null && this.user!!.preferences?.size != newSize) {
             userRepository.updateUser(user, "preferences.size", newSize)
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }

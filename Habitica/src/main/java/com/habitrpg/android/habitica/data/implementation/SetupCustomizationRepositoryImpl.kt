@@ -86,15 +86,15 @@ constructor(private val context: Context) : SetupCustomizationRepository {
             "body" -> {
                     return when (subcategory) {
                         "size" -> sizes
-                        "shirt" -> getShirts(user.preferences.size ?: "slim")
+                        "shirt" -> getShirts(user.preferences?.size ?: "slim")
                         else -> emptyList()
                     }
             }
             "skin" -> return skins
             "hair" -> {
                     return when (subcategory) {
-                        "bangs" -> getBangs(user.preferences.hair!!.color)
-                        "ponytail" -> getHairBases(user.preferences.hair!!.color)
+                        "bangs" -> getBangs(user.preferences?.hair!!.color)
+                        "ponytail" -> getHairBases(user.preferences?.hair!!.color)
                         "color" -> hairColors
                         else -> emptyList()
                     }

@@ -7,23 +7,22 @@ import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.social.Backer
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.ChatMessageLike
+import com.habitrpg.android.habitica.models.social.UserStyles
 import com.habitrpg.android.habitica.models.user.ContributorInfo
 import io.realm.RealmList
 import java.lang.reflect.Type
+import java.util.*
 
 class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): ChatMessage {
         val message = ChatMessage()
         val obj = json.asJsonObject
-        if (obj.has("id")) {
-            message.id = obj.get("id").asString
-        }
         if (obj.has("text") && !obj.get("text").isJsonNull && obj.get("text").isJsonPrimitive) {
             message.text = obj.get("text").asString
         }
         if (obj.has("timestamp")) {
-            message.timestamp = obj.get("timestamp").asLong
+            message.timestamp = context.deserialize<Date>(obj.get("timestamp"), Date::class.java).time
         }
         if (obj.has("likes")) {
             message.likes = RealmList()
@@ -64,6 +63,13 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
 
         if (obj.has("sent")) {
             message.sent = obj.get("sent").asString
+        }
+
+        if (obj.has("userStyles")) {
+            message.userStyles = context.deserialize<UserStyles>(obj.get("userStyles"), UserStyles::class.java)
+        }
+        if (obj.has("id")) {
+            message.id = obj.get("id").asString
         }
 
         return message

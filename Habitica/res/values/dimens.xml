@@ -125,5 +125,7 @@
     <dimen name="snackbar_image_size">46dp</dimen>
     <dimen name="bullet_size">6dp</dimen>
     <dimen name="icon_size">18dp</dimen>
+    <dimen name="chat_horizontal_inset">16dp</dimen>
+    <dimen name="avatar_chat_size">36dp</dimen>
 
 </resources>

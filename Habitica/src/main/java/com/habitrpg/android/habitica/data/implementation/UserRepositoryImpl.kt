@@ -100,7 +100,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun sleep(user: User): Flowable<User> {
-        localRepository.executeTransaction { user.preferences.isSleep = !user.preferences.sleep }
+        localRepository.executeTransaction { user.preferences?.isSleep = !(user.preferences?.sleep ?: false) }
         return apiClient.sleep().map { user }
     }
 
@@ -121,9 +121,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun useSkill(user: User?, key: String, target: String): Flowable<SkillResponse> {
         return apiClient.useSkill(key, target)
                 .map { response ->
-                    response.hpDiff = response.user.stats.hp ?: 0 - (user?.stats?.hp ?: 0.0)
-                    response.expDiff = response.user.stats.exp ?: 0 - (user?.stats?.exp ?: 0.0)
-                    response.goldDiff = response.user.stats.gp ?: 0 - (user?.stats?.gp ?: 0.0)
+                    response.hpDiff = response.user.stats?.hp ?: 0 - (user?.stats?.hp ?: 0.0)
+                    response.expDiff = response.user.stats?.exp ?: 0 - (user?.stats?.exp ?: 0.0)
+                    response.goldDiff = response.user.stats?.gp ?: 0 - (user?.stats?.gp ?: 0.0)
                     response
                 }
                 .doOnNext { skillResponse ->
@@ -211,24 +211,24 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (user != null && user.isManaged) {
             localRepository.executeTransaction {
                 when (stat) {
-                    Stats.STRENGTH -> user.stats.str = user.stats.str?.inc()
-                    Stats.INTELLIGENCE -> user.stats._int = user.stats._int?.inc()
-                    Stats.CONSTITUTION -> user.stats.con= user.stats.con?.inc()
-                    Stats.PERCEPTION -> user.stats.per = user.stats.per?.inc()
+                    Stats.STRENGTH -> user.stats?.str = user.stats?.str?.inc()
+                    Stats.INTELLIGENCE -> user.stats?._int = user.stats?._int?.inc()
+                    Stats.CONSTITUTION -> user.stats?.con= user.stats?.con?.inc()
+                    Stats.PERCEPTION -> user.stats?.per = user.stats?.per?.inc()
                 }
-                user.stats.points = user.stats.points?.dec()
+                user.stats?.points = user.stats?.points?.dec()
             }
         }
         return apiClient.allocatePoint(stat)
                 .doOnNext { stats ->
                     if (user != null && user.isManaged) {
                         localRepository.executeTransaction {
-                            user.stats.str = stats.str
-                            user.stats.con = stats.con
-                            user.stats.per = stats.per
-                            user.stats._int = stats._int
-                            user.stats.points = stats.points
-                            user.stats.mp = stats.mp
+                            user.stats?.str = stats.str
+                            user.stats?.con = stats.con
+                            user.stats?.per = stats.per
+                            user.stats?._int = stats._int
+                            user.stats?.points = stats.points
+                            user.stats?.mp = stats.mp
                         }
                     }
                 }
@@ -239,12 +239,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     .doOnNext { stats ->
                         if (user != null && user.isManaged) {
                             localRepository.executeTransaction {
-                                user.stats.str = stats.str
-                                user.stats.con = stats.con
-                                user.stats.per = stats.per
-                                user.stats._int = stats._int
-                                user.stats.points = stats.points
-                                user.stats.mp = stats.mp
+                                user.stats?.str = stats.str
+                                user.stats?.con = stats.con
+                                user.stats?.per = stats.per
+                                user.stats?._int = stats._int
+                                user.stats?.points = stats.points
+                                user.stats?.mp = stats.mp
                             }
                         }
                     }
@@ -288,7 +288,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             copiedUser.flags = newUser.flags
         }
         if (newUser.stats != null) {
-            copiedUser.stats.merge(newUser.stats)
+            copiedUser.stats?.merge(newUser.stats)
         }
 
         localRepository.saveUser(copiedUser)

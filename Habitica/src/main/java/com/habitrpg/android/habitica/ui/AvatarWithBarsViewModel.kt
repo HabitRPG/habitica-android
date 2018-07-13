@@ -59,7 +59,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
     fun updateData(user: Avatar) {
         userObject = user
 
-        val stats = user.stats
+        val stats = user.stats ?: return
 
         var userClass = ""
 
@@ -69,13 +69,13 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
             userClass = stats.getTranslatedClassName(context)
         }
 
-        mpBar.visibility = if (stats.habitClass == null || stats.lvl ?: 0 < 10 || user.preferences.disableClasses) View.GONE else View.VISIBLE
+        mpBar.visibility = if (stats.habitClass == null || stats.lvl ?: 0 < 10 || user.preferences?.disableClasses == true) View.GONE else View.VISIBLE
 
         if (!user.hasClass()) {
-            lvlText.text = context.getString(R.string.user_level, user.stats.lvl)
+            lvlText.text = context.getString(R.string.user_level, stats.lvl)
             lvlText.setCompoundDrawables(null, null, null, null)
         } else {
-            lvlText.text = context.getString(R.string.user_level_with_class, user.stats.lvl, userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1))
+            lvlText.text = context.getString(R.string.user_level_with_class, stats.lvl, userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1))
             var drawable: Drawable? = null
             when (stats.habitClass) {
                 Stats.WARRIOR -> drawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfWarriorDarkBg())
@@ -93,7 +93,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
 
         currencyView.gold = stats.gp ?: 0.0
         if (user is User) {
-            currencyView.hourglasses = user.getHourglassCount().toDouble()
+            currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
             currencyView.gems = user.gemCount.toDouble()
         }
 

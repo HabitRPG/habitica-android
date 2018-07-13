@@ -173,7 +173,7 @@ class AvatarView : View {
             if (resetHasAttributes) hasPet = true
         }
 
-        val backgroundName = avatar.background
+        val backgroundName = avatar.preferences?.background
         if (showBackground && !TextUtils.isEmpty(backgroundName)) {
             layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
             if (resetHasAttributes) hasBackground = true
@@ -202,8 +202,8 @@ class AvatarView : View {
 
         var hasVisualBuffs = false
 
-        if (avatar.stats != null && avatar.stats.buffs != null) {
-            val buffs = avatar.stats.buffs
+        if (avatar.stats != null && avatar.stats?.buffs != null) {
+            val buffs = avatar.stats?.buffs
 
             if (buffs?.snowball == true) {
                 layerMap[AvatarView.LayerType.VISUAL_BUFF] = "snowman"
@@ -216,7 +216,7 @@ class AvatarView : View {
             }
 
             if (buffs?.shinySeed == true) {
-                layerMap[AvatarView.LayerType.VISUAL_BUFF] = "avatar_floral_" + avatar.stats.habitClass
+                layerMap[AvatarView.LayerType.VISUAL_BUFF] = "avatar_floral_" + avatar.stats?.habitClass
                 hasVisualBuffs = true
             }
 

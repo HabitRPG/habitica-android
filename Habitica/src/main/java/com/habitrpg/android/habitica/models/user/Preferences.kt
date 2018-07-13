@@ -105,7 +105,7 @@ open class Preferences : RealmObject(), AvatarPreferences {
         return userId
     }
 
-    fun setUserId(userId: String) {
+    fun setUserId(userId: String?) {
         this.userId = userId
         if (hair?.isManaged == false) {
             hair?.userId = userId

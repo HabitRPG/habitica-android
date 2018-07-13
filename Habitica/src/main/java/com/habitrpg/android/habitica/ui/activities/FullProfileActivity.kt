@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.AchievementGroup
@@ -73,7 +74,7 @@ class FullProfileActivity : BaseActivity() {
 
     private var userId = ""
     private var userName: String? = null
-    private var avatarWithBars = AvatarWithBarsViewModel(this, avatar_with_bars)
+    private var avatarWithBars: AvatarWithBarsViewModel? = null
     private var attributeStrSum = 0f
     private var attributeIntSum = 0f
     private var attributeConSum = 0f
@@ -92,12 +93,14 @@ class FullProfileActivity : BaseActivity() {
 
         socialRepository.getMember(this.userId).subscribe(Consumer { this.updateView(it) }, RxErrorHandler.handleEmptyError())
 
-        avatarWithBars.valueBarLabelsToBlack()
+        avatarWithBars?.valueBarLabelsToBlack()
 
         avatar_with_bars.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
         attributeRows.clear()
         attributesCardView.setOnClickListener { toggleAttributeDetails() }
+
+        avatarWithBars = AvatarWithBarsViewModel(this, avatar_with_bars)
     }
 
     override fun onDestroy() {
@@ -186,11 +189,11 @@ class FullProfileActivity : BaseActivity() {
 
 
         avatarView.setAvatar(user)
-        avatarWithBars.updateData(user)
+        avatarWithBars?.updateData(user)
 
         loadItemDataByOutfit(user.equipped).subscribe(Consumer { gear -> this.gotGear(gear, user) }, RxErrorHandler.handleEmptyError())
 
-        if (user.preferences.costume) {
+        if (user.preferences?.costume == true) {
             loadItemDataByOutfit(user.costume).subscribe(Consumer<RealmResults<Equipment>> { this.gotCostume(it) }, RxErrorHandler.handleEmptyError())
         } else {
             costumeCard.visibility = View.GONE
@@ -300,7 +303,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun addLevelAttributes(user: Member) {
-        val byLevelStat = Math.min((user.stats.lvl ?: 0) / 2.0f, 50f)
+        val byLevelStat = Math.min((user.stats?.lvl ?: 0) / 2.0f, 50f)
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false)
     }
@@ -341,7 +344,7 @@ class FullProfileActivity : BaseActivity() {
             }
         }
 
-        addNormalAddBuffAttributes(user.stats)
+        user.stats.notNull { addNormalAddBuffAttributes(it) }
     }
 
     private fun gotCostume(obj: List<Equipment>) {
