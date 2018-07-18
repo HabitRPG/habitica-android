@@ -526,9 +526,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     .subscribe(Consumer { buyResponse ->
                         var snackbarMessage = getString(R.string.successful_purchase, event.Reward.text)
                         if (event.Reward.id == "armoire") {
+                            var dropArticle = buyResponse.armoire["dropArticle"]
+                            if (buyResponse.armoire["dropArticle"] == null || buyResponse.armoire["dropArticle"].equals("null",true)) {
+                                dropArticle = ""
+                            }
                             snackbarMessage = when {
                                 buyResponse.armoire["type"] == "gear" -> applicationContext.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
-                                buyResponse.armoire["type"] == "food" -> applicationContext.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"], buyResponse.armoire["dropText"])
+                                buyResponse.armoire["type"] == "food" -> applicationContext.getString(R.string.armoireFood, dropArticle, buyResponse.armoire["dropText"])
                                 else -> applicationContext.getString(R.string.armoireExp)
                             }
                             soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop)
