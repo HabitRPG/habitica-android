@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.invitations.Invitations
-import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.*
@@ -84,7 +84,10 @@ class UserDeserializer : JsonDeserializer<User> {
             user.tasksOrder = context.deserialize(obj.get("tasksOrder"), TasksOrder::class.java)
         }
         if (obj.has("challenges")) {
-            user.challenges = context.deserialize(obj.get("challenges"), object : TypeToken<RealmList<Challenge>>() {}.type)
+            user.challenges = RealmList()
+            obj.getAsJsonArray("challenges").forEach {
+                user.challenges.add(ChallengeMembership(user.id, it.asString))
+            }
         }
         if (obj.has("purchased")) {
             user.purchased = context.deserialize(obj.get("purchased"), Purchases::class.java)

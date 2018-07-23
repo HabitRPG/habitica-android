@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -72,4 +73,7 @@ interface SocialRepository : BaseRepository {
     fun forceStartQuest(party: Group): Flowable<Quest>
 
     fun getMemberAchievements(userId: String?): Flowable<AchievementResult>
+
+    fun getGroupMembership(id: String): Flowable<GroupMembership>
+    fun getGroupMemberships(): Flowable<RealmResults<GroupMembership>>
 }

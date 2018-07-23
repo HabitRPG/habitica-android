@@ -71,10 +71,10 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
                     continue
                 }
                 val group = Group()
-                group.id = challenge.groupId
+                group.id = challenge.groupId ?: ""
                 group.name = challenge.groupName
 
-                groupMap[challenge.groupName] = group
+                groupMap[challenge.groupName ?: ""] = group
             }
         }
 
@@ -92,11 +92,11 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
     }
 
 
-    fun allClicked() {
+    private fun allClicked() {
         this.adapter?.selectAll()
     }
 
-    fun noneClicked() {
+    private fun noneClicked() {
         this.adapter?.deSelectAll()
     }
 

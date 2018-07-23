@@ -91,8 +91,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    ChallengeRepository providesChallengeRepository(ChallengeLocalRepository localRepository, ApiClient apiClient) {
-        return new ChallengeRepositoryImpl(localRepository, apiClient);
+    ChallengeRepository providesChallengeRepository(ChallengeLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
+        return new ChallengeRepositoryImpl(localRepository, apiClient, userId);
     }
 
     @Provides

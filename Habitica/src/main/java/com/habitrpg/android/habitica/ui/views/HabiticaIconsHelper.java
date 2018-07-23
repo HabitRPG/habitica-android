@@ -3,8 +3,11 @@ package com.habitrpg.android.habitica.ui.views;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 
 /**
  * Created by phillip on 05.09.17.
@@ -262,7 +265,7 @@ public class HabiticaIconsHelper {
         imageOfItemIndicatorNumber = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfItemIndicatorNumber);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawItemIndicator(canvas, false, false);
+        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), false, false);
 
         return imageOfItemIndicatorNumber;
     }
@@ -276,8 +279,7 @@ public class HabiticaIconsHelper {
         imageOfItemIndicatorLocked = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfItemIndicatorLocked);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawItemIndicator(canvas, true, false);
-
+        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), true, false);
         return imageOfItemIndicatorLocked;
     }
 
@@ -290,7 +292,7 @@ public class HabiticaIconsHelper {
         imageOfItemIndicatorLimited = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfItemIndicatorLimited);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawItemIndicator(canvas, false, true);
+        HabiticaIcons.drawItemIndicator(canvas, Color.parseColor("#C3C0C7"), false, true);
 
         return imageOfItemIndicatorLimited;
     }
@@ -474,7 +476,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfInfoIcon = null;
-    public static Bitmap imageOfInfoIcon() {
+    public static Bitmap imageOfInfoIcon(@ColorInt int iconColor) {
         if (imageOfInfoIcon != null)
             return imageOfInfoIcon;
 
@@ -482,7 +484,7 @@ public class HabiticaIconsHelper {
         imageOfInfoIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfInfoIcon);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawInfoIcon(canvas);
+        HabiticaIcons.drawInfoIcon(canvas, iconColor);
 
         return imageOfInfoIcon;
     }
@@ -575,5 +577,28 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawRage(canvas);
 
         return imageOfRage;
+    }
+
+    public static Bitmap imageOfLocked(@ColorInt int lockColor) {
+        Bitmap imageOfLocked = Bitmap.createBitmap(scaleSize(15), scaleSize(17), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfLocked);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawLocked(canvas, lockColor);
+
+        return imageOfLocked;
+    }
+
+    private static Bitmap imageOfParticipantsIcon = null;
+    public static Bitmap imageOfParticipantIcon() {
+        if (imageOfParticipantsIcon != null)
+            return imageOfParticipantsIcon;
+
+        int size = scaleSize(20);
+        imageOfParticipantsIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfParticipantsIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawParticipantsIcon(canvas);
+
+        return imageOfParticipantsIcon;
     }
 }

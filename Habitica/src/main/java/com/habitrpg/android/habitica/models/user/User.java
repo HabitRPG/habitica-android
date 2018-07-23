@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.models.PushDevice;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.invitations.Invitations;
 import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.ChallengeMembership;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
@@ -51,7 +52,7 @@ public class User extends RealmObject implements Avatar {
     @Ignore
     private TasksOrder tasksOrder;
 
-    private RealmList<Challenge> challenges;
+    private RealmList<ChallengeMembership> challenges;
 
     private Date lastCron;
     private Boolean needsCron;
@@ -310,11 +311,11 @@ public class User extends RealmObject implements Avatar {
         this.tags = tags;
     }
 
-    public RealmList<Challenge> getChallenges() {
+    public RealmList<ChallengeMembership> getChallenges() {
         return challenges;
     }
 
-    public void setChallenges(RealmList<Challenge> challenges) {
+    public void setChallenges(RealmList<ChallengeMembership> challenges) {
         this.challenges = challenges;
     }
 

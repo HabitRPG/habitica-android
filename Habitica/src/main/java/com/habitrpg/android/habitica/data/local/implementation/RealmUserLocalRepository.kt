@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.TutorialStep
-import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
@@ -42,7 +42,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             removeOldTags(user.id, user.tags)
         }
         if (user.challenges != null) {
-            removeOldChallenges(user.challenges)
+            removeOldChallenges(user.id, user.challenges)
         }
     }
 
@@ -62,12 +62,12 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    private fun removeOldChallenges(onlineChallenges: List<Challenge>) {
-        val challenges = realm.where(Challenge::class.java).equalTo("isParticipating", true).findAll().createSnapshot()
-        val challengesToDelete = challenges.filterNot { onlineChallenges.contains(it) }
+    private fun removeOldChallenges(userID: String, onlineChallenges: List<ChallengeMembership>) {
+        val memberships = realm.where(ChallengeMembership::class.java).equalTo("userID", userID).findAll().createSnapshot()
+        val membershipsToDelete = memberships.filterNot { onlineChallenges.contains(it) }
         realm.executeTransaction {
-            for (challenge in challengesToDelete) {
-                challenge.isParticipating = false
+            membershipsToDelete.forEach {
+                it.deleteFromRealm()
             }
         }
     }

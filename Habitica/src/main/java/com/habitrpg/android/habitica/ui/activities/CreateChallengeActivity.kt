@@ -360,7 +360,7 @@ class CreateChallengeActivity : BaseActivity() {
     }
 
     private fun fillControlsByChallenge() {
-        challengeRepository.getChallenge(challengeId).subscribe(Consumer { challenge ->
+        /*challengeRepository.getChallenge(challengeId).subscribe(Consumer { challenge ->
 
             createChallengeTitle.setText(challenge.name)
             createChallengeDescription.setText(challenge.description)
@@ -377,13 +377,7 @@ class CreateChallengeActivity : BaseActivity() {
             }
 
             checkPrizeAndMinimumForTavern()
-
-            challengeRepository.getChallengeTasks(challengeId).doOnComplete { editMode = true }.subscribe(Consumer { tasks ->
-                for (task in tasks.tasks.values) {
-                    addOrUpdateTaskInList(task)
-                }
-            }, RxErrorHandler.handleEmptyError())
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError())*/
     }
 
     private fun openNewTaskActivity(type: String?, task: Task?) {

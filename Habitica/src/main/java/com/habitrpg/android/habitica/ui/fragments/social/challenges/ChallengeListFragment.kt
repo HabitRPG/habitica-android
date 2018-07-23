@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.modules.AppModule
@@ -69,6 +70,8 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
         resetViews()
 
         challengeAdapter = ChallengesListViewAdapter(null, true, viewUserChallengesOnly, userId)
+        challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe(Consumer { openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
+                .notNull { compositeSubscription.add(it) }
 
         swipeRefreshLayout?.setOnRefreshListener(this)
 
@@ -81,7 +84,14 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
         recyclerView?.setEmptyView(emptyView)
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
+        challengeAdapter?.updateUnfilteredData(challenges)
         loadLocalChallenges()
+    }
+
+    private fun openDetailFragment(challengeID: String) {
+        val detailFragment = ChallengeDetailFragment()
+        detailFragment.challengeID = challengeID
+        this.activity?.displayFragment(detailFragment)
     }
 
     override fun injectFragment(component: AppComponent) {
@@ -93,32 +103,32 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
     }
 
     private fun setRefreshing(state: Boolean) {
-        if (swipeRefreshLayout != null && swipeRefreshLayout!!.visibility == View.VISIBLE) {
-            swipeRefreshLayout!!.isRefreshing = state
-        }
+        swipeRefreshLayout?.isRefreshing = state
     }
 
     private fun loadLocalChallenges() {
         val observable: Flowable<RealmResults<Challenge>> = if (viewUserChallengesOnly && user != null) {
-            challengeRepository.getUserChallenges(user?.id)
+            challengeRepository.getUserChallenges(user?.id ?: "")
         } else {
-            challengeRepository.challenges
+            challengeRepository.getChallenges()
         }
 
-        observable.firstElement().subscribe(Consumer { challenges ->
+        compositeSubscription.add(observable.firstElement().subscribe(Consumer { challenges ->
             if (challenges.size == 0) {
                 fetchOnlineChallenges()
             }
             this.challenges = challenges
-            challengeAdapter!!.updateUnfilteredData(challenges)
-        }, RxErrorHandler.handleEmptyError())
+            challengeAdapter?.updateUnfilteredData(challenges)
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun fetchOnlineChallenges() {
         setRefreshing(true)
-        challengeRepository.retrieveChallenges(user).doOnComplete {
-            setRefreshing(false)
-        } .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        user.notNull {
+            challengeRepository.retrieveChallenges(it).doOnComplete {
+                setRefreshing(false)
+            } .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        }
     }
 
     override fun customTitle(): String {
@@ -141,13 +151,15 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
     }
 
     private fun showFilterDialog() {
-        ChallengeFilterDialogHolder.showDialog(getActivity()!!,
-                challenges ?: emptyList(),
-                filterOptions, object : Action1<ChallengeFilterOptions> {
-            override fun call(t: ChallengeFilterOptions) {
-                changeFilter(t)
-            }
-        })
+        activity.notNull {
+            ChallengeFilterDialogHolder.showDialog(it,
+                    challenges ?: emptyList(),
+                    filterOptions, object : Action1<ChallengeFilterOptions> {
+                override fun call(t: ChallengeFilterOptions) {
+                    changeFilter(t)
+                }
+            })
+        }
     }
 
     private fun changeFilter(challengeFilterOptions: ChallengeFilterOptions) {
@@ -159,7 +171,7 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        val id = item!!.itemId
+        val id = item?.itemId
 
         when (id) {
             R.id.action_create_challenge -> {

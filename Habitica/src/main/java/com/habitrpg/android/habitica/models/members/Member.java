@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.models.members;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.Avatar;
 import com.habitrpg.android.habitica.models.social.UserParty;
@@ -19,10 +21,15 @@ public class Member extends RealmObject implements Avatar {
     @SerializedName("_id")
     private String id;
     private Stats stats;
+    @Nullable
     private Inbox inbox;
+    @Nullable
     private MemberPreferences preferences;
+    @Nullable
     private Profile profile;
+    @Nullable
     private UserParty party;
+    @Nullable
     private ContributorInfo contributor;
 
     private Outfit costume;
@@ -73,6 +80,7 @@ public class Member extends RealmObject implements Avatar {
         }
     }
 
+    @Nullable
     public Stats getStats() {
         return stats;
     }
@@ -84,6 +92,7 @@ public class Member extends RealmObject implements Avatar {
         }
     }
 
+    @Nullable
     public Inbox getInbox() {
         return inbox;
     }
@@ -95,6 +104,7 @@ public class Member extends RealmObject implements Avatar {
         }
     }
 
+    @Nullable
     public Profile getProfile() {
         return profile;
     }
@@ -106,6 +116,7 @@ public class Member extends RealmObject implements Avatar {
         }
     }
 
+    @Nullable
     public ContributorInfo getContributor() {
         return contributor;
     }
@@ -117,6 +128,7 @@ public class Member extends RealmObject implements Avatar {
         }
     }
 
+    @Nullable
     public UserParty getParty() {
         return party;
     }

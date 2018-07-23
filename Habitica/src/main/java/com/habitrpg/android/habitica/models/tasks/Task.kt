@@ -85,6 +85,19 @@ open class Task : RealmObject, Parcelable {
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
 
+    val extraLightTaskColor: Int
+        get() {
+            return when {
+                this.value < -20 -> return R.color.maroon_500
+                this.value < -10 -> return R.color.red_500
+                this.value < -1 -> return R.color.orange_500
+                this.value < 1 -> return R.color.yellow_500
+                this.value < 5 -> return R.color.green_500
+                this.value < 10 -> return R.color.teal_500
+                else -> R.color.blue_500
+            }
+        }
+
     val lightTaskColor: Int
         get() {
             return when {

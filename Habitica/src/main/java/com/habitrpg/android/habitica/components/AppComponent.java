@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
-import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
@@ -79,9 +78,8 @@ import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeListFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
@@ -230,8 +228,6 @@ public interface AppComponent {
 
     void inject(ChallengeListFragment challengeListFragment);
 
-    void inject(ChallengeDetailActivity challengeDetailActivity);
-
     void inject(ApiClient apiClient);
 
     void inject(TaskListWidgetProvider taskListWidgetProvider);
@@ -249,8 +245,6 @@ public interface AppComponent {
     void inject(SubscriptionFragment subscriptionFragment);
 
     void inject(ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter);
-
-    void inject(ChallengeTasksRecyclerViewFragment challengeTasksRecyclerViewFragment);
 
     void inject(TaskListFactory taskListFactory);
 
@@ -271,8 +265,6 @@ public interface AppComponent {
     void inject(NotificationPublisher notificationPublisher);
 
     void inject(CreateChallengeActivity createChallengeActivity);
-
-    void inject(ChallengeDetailDialogHolder challengeDetailDialogHolder);
 
     void inject(TavernDetailFragment tavernDetailFragment);
 
@@ -299,4 +291,6 @@ public interface AppComponent {
     void inject(WelcomeFragment welcomeFragment);
 
     void inject(@NotNull NavigationDrawerFragment navigationDrawerFragment);
+
+    void inject(@NotNull ChallengeDetailFragment challengeDetailFragment);
 }

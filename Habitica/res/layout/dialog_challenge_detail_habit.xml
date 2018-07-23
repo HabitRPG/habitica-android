@@ -4,45 +4,26 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
-              android:background="@drawable/border_1f000000"
+              android:background="@drawable/border_1f000000_white"
               android:weightSum="3"
-              android:baselineAligned="false">
+              android:baselineAligned="false"
+    android:minHeight="60dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+    <FrameLayout
+        android:id="@+id/lock_icon_background_plus"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_700"
+        android:layout_marginRight="@dimen/spacing_large"
+        android:layout_marginTop="0.5dp"
+        android:layout_marginBottom="0.5dp">
         <ImageView
-            android:id="@+id/plus_img_tinted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:layout_marginEnd="15.5dp"
-            android:layout_marginLeft="14.5dp"
-            android:layout_marginRight="15.5dp"
-            android:layout_marginStart="14.5dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/plus"
-            android:tint="#4d000000"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/plus_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:layout_marginEnd="15.5dp"
-            android:layout_marginLeft="14.5dp"
-            android:layout_marginRight="15.5dp"
-            android:layout_marginStart="14.5dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/plus"
-            android:tint="#1f000000"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-    </LinearLayout>
+            android:id="@+id/lock_icon_plus"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:scaleType="center"/>
+    </FrameLayout>
 
 
     <LinearLayout
@@ -63,40 +44,20 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+    <FrameLayout
+        android:id="@+id/lock_icon_background_minus"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_700"
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginTop="0.5dp"
+        android:layout_marginBottom="0.5dp">
         <ImageView
-            android:id="@+id/minus_img_tinted"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginBottom="18dp"
-            android:layout_marginEnd="15.5dp"
-            android:layout_marginLeft="14.5dp"
-            android:layout_marginRight="15.5dp"
-            android:layout_marginStart="14.5dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/minus"
-            android:tint="#4d000000"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/minus_img"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginBottom="18dp"
-            android:layout_marginEnd="15.5dp"
-            android:layout_marginLeft="14.5dp"
-            android:layout_marginRight="15.5dp"
-            android:layout_marginStart="14.5dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/minus"
-            android:tint="#1f000000"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-    </LinearLayout>
+            android:id="@+id/lock_icon_minus"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:scaleType="center"/>
+    </FrameLayout>
 
 </LinearLayout>

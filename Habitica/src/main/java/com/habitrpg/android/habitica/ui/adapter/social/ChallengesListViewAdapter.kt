@@ -8,14 +8,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.playseeds.android.sdk.inappmessaging.Log
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
+import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import net.pherth.android.emoji_library.EmojiParser
@@ -25,13 +27,22 @@ import org.greenrobot.eventbus.EventBus
 class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUpdate: Boolean, private val viewUserChallengesOnly: Boolean, private val userId: String) : RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>(data, autoUpdate) {
     private var unfilteredData: OrderedRealmCollection<Challenge>? = null
 
+    private val openChallengeFragmentEvents = PublishSubject.create<String>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
         return ChallengeViewHolder(parent.inflate(R.layout.challenge_item), viewUserChallengesOnly)
     }
 
     override fun onBindViewHolder(holder: ChallengeViewHolder, position: Int) {
-        data.notNull {
-            holder.bind(it[position])
+        data?.get(position).notNull { challenge ->
+            holder.bind(challenge)
+            holder.itemView.setOnClickListener {
+                if (challenge.isManaged) {
+                    challenge.id.notNull {
+                        openChallengeFragmentEvents.onNext(it)
+                    }
+                }
+            }
         }
     }
 
@@ -70,7 +81,11 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         }
     }
 
-    class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    fun getOpenDetailFragmentFlowable(): Flowable<String> {
+        return openChallengeFragmentEvents.toFlowable(BackpressureStrategy.DROP)
+    }
+
+    class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : RecyclerView.ViewHolder(itemView) {
 
         private val challengeName: EmojiTextView by bindView(R.id.challenge_name)
         private val challengeDescription: TextView by bindView(R.id.challenge_group_name)
@@ -87,8 +102,6 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         private var challenge: Challenge? = null
 
         init {
-            itemView.setOnClickListener(this)
-
             gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())
 
             if (!viewUserChallengesOnly) {
@@ -99,7 +112,8 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         fun bind(challenge: Challenge) {
             this.challenge = challenge
 
-            challengeName.text = EmojiParser.parseEmojis(challenge.name.trim { it <= ' ' })
+            Log.e(challenge.id + challenge.name)
+            challengeName.text = EmojiParser.parseEmojis(challenge.name?.trim { it <= ' ' })
             challengeDescription.text = challenge.groupName
 
             officialChallengeLayout.visibility = if (challenge.official) View.VISIBLE else View.GONE
@@ -109,7 +123,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
                 challengeParticipatingTextView.visibility = View.GONE
                 arrowImage.visibility = View.VISIBLE
             } else {
-                challengeParticipatingTextView.visibility = if (challenge.isParticipating) View.VISIBLE else View.GONE
+                //challengeParticipatingTextView.visibility = if (challenge.isParticipating) View.VISIBLE else View.GONE
 
                 leaderName.text = itemView.context.getString(R.string.byLeader, challenge.leaderName)
                 participantCount.text = challenge.memberCount.toString()
@@ -118,16 +132,6 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
             }
 
             gemPrizeTextView.text = challenge.prize.toString()
-        }
-
-        override fun onClick(view: View) {
-            if (challenge != null && challenge!!.isManaged && challenge!!.isManaged) {
-                if (viewUserChallengesOnly) {
-                    EventBus.getDefault().post(ShowChallengeDetailActivityCommand(challenge!!.id))
-                } else {
-                    EventBus.getDefault().post(ShowChallengeDetailDialogCommand(challenge!!.id))
-                }
-            }
         }
     }
 }

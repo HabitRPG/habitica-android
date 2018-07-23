@@ -156,6 +156,10 @@ class FullProfileActivity : BaseActivity() {
     private fun updateView(user: Member) {
         val profile = user.profile
 
+        if (profile == null) {
+            return
+        }
+
         userName = profile.name
 
         title = profile.name

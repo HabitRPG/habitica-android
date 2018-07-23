@@ -82,9 +82,12 @@ class StatsFragment: BaseMainFragment() {
 
         leftSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
         rightSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesRight())
-        distributeEvenlyHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
-        distributeClassHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
-        distributeTaskHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon())
+        context.notNull {
+            val color = ContextCompat.getColor(it, R.color.brand_200)
+            distributeEvenlyHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
+            distributeClassHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
+            distributeTaskHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
+        }
 
         compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer {
             user = it

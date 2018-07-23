@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.ChatMessageLike
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.Realm
@@ -15,6 +16,35 @@ import java.util.*
 
 class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), SocialLocalRepository {
 
+    override fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership> = realm.where(GroupMembership::class.java)
+            .equalTo("userID", userId)
+            .equalTo("groupID", id)
+            .findAll()
+            .asFlowable()
+            .filter { it.isLoaded }
+            .map { it.first() }
+
+    override fun getGroupMemberships(userId: String): Flowable<RealmResults<GroupMembership>> = realm.where(GroupMembership::class.java)
+            .equalTo("userID", userId)
+            .findAll()
+            .asFlowable()
+            .filter { it.isLoaded }
+
+    override fun updateMembership(userId: String, id: String, isMember: Boolean) {
+        if (isMember) {
+            realm.executeTransaction {
+                realm.insertOrUpdate(GroupMembership(userId, id))
+            }
+        } else {
+            val membership = realm.where(GroupMembership::class.java).equalTo("userID", userId).equalTo("groupID", id).findFirst()
+            if (membership != null) {
+                realm.executeTransaction {
+                    membership.deleteFromRealm()
+                }
+            }
+        }
+    }
+
     override fun getPublicGuilds(): Flowable<RealmResults<Group>> = realm.where(Group::class.java)
                 .equalTo("type", "guild")
                 .equalTo("privacy", "public")
@@ -23,13 +53,24 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 .asFlowable()
                 .filter { it.isLoaded }
 
-    override fun getUserGroups(): Flowable<RealmResults<Group>> = realm.where(Group::class.java)
-                .equalTo("type", "guild")
-                .equalTo("isMember", true)
-                .sort("memberCount", Sort.DESCENDING)
+    override fun getUserGroups(userID: String): Flowable<RealmResults<Group>> = realm.where(GroupMembership::class.java)
+            .equalTo("userID", userID)
             .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
+            .asFlowable()
+            .filter { it.isLoaded }
+            .flatMap {
+                realm.where(Group::class.java)
+                        .equalTo("type", "guild")
+                        .`in`("id", it.map {
+                            return@map it.groupID
+                        }.toTypedArray())
+                        .sort("memberCount", Sort.DESCENDING)
+                        .findAll()
+                        .asFlowable()
+                        .filter { it.isLoaded }
+            }
+
+
 
     override fun getGroups(type: String): Flowable<RealmResults<Group>> {
         return realm.where(Group::class.java)

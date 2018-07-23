@@ -3,14 +3,16 @@ package com.habitrpg.android.habitica.data.local
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
+import io.realm.Realm
 import io.realm.RealmResults
 
 interface SocialLocalRepository : BaseLocalRepository {
     fun getPublicGuilds(): Flowable<RealmResults<Group>>
 
-    fun getUserGroups(): Flowable<RealmResults<Group>>
+    fun getUserGroups(userID: String): Flowable<RealmResults<Group>>
     fun getGroups(type: String): Flowable<RealmResults<Group>>
 
     fun getGroup(id: String): Flowable<Group>
@@ -34,4 +36,7 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun saveChatMessages(groupId: String?, chatMessages: List<ChatMessage>)
 
     fun doesGroupExist(id: String): Boolean
+    fun updateMembership(userId: String, id: String, isMember: Boolean)
+    fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership>
+    fun getGroupMemberships(userId: String): Flowable<RealmResults<GroupMembership>>
 }

@@ -79,7 +79,7 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
                 else -> R.color.task_gray
             }
             ViewHelper.SetBackgroundTint(classBackground, ContextCompat.getColor(itemView.context, colorResourceID))
-            userName.text = user.profile.name
+            userName.text = user.profile?.name
 
             itemView.isClickable = true
             itemView.setOnClickListener { userClickedEvents.onNext(user.id) }

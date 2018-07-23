@@ -782,4 +782,7 @@
     <string name="report">Report</string>
     <string name="like">Like</string>
     <string name="reply">Reply</string>
+    <string name="challenge_prize">Challenge Prize</string>
+    <string name="challenge_categories">Challenge Categories</string>
+    <string name="created_challenge">Created Challenge</string>
 </resources>
