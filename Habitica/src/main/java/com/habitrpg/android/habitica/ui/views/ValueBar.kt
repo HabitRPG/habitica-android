@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import java.math.RoundingMode
 import java.text.NumberFormat
 
 class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
@@ -26,7 +27,7 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
 
     private val formatter = NumberFormat.getInstance()
 
-    var currentValue: Double = 0.0
+    private var currentValue: Double = 0.0
     set(value) {
         field = value
         updateBar()
@@ -38,7 +39,7 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
             updateBar()
         }
 
-    var maxValue: Double = 0.0
+    private var maxValue: Double = 0.0
         set(value) {
             field = value
             updateBar()
@@ -102,6 +103,7 @@ class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
         descriptionTextView.text = attributes?.getString(R.styleable.ValueBar_description)
 
         formatter.maximumFractionDigits = 1
+        formatter.roundingMode = RoundingMode.UP
         formatter.isGroupingUsed = true
     }
 
