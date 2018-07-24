@@ -28,7 +28,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
-import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
@@ -456,7 +455,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == SELECT_CLASS_RESULT) {
             retrieveUser()
         } else if (requestCode == GEM_PURCHASE_REQUEST) {

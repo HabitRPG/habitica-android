@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.TextUtils
+import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.Menu
@@ -134,7 +135,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     private var taskType: String? = null
     private var taskId: String? = null
-    private var popup: EmojiPopup? = EmojiPopup(emojiToggle0.rootView, this, ContextCompat.getColor(this, R.color.brand))
+    private var popup: EmojiPopup? = null
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_task_form
@@ -142,6 +143,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        popup = EmojiPopup(emojiToggle0.rootView, this, ContextCompat.getColor(this, R.color.brand))
 
         val intent = intent
         val bundle = intent.extras
@@ -350,8 +353,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             taskText.requestFocus()
         }
 
-        addChecklistItemButton.setOnClickListener { addChecklistItem() }
-        newRemindersEditText.setOnClickListener { selectNewReminderTime() }
     }
 
     override fun onDestroy() {
@@ -631,6 +632,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         val callback = SimpleItemTouchHelperCallback(checklistAdapter)
         val mItemTouchHelper = ItemTouchHelper(callback)
         mItemTouchHelper.attachToRecyclerView(recyclerView)
+        addChecklistItemButton.setOnClickListener { addChecklistItem() }
     }
 
     private fun populateChecklistRecyclerView() {
@@ -665,6 +667,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         val callback = SimpleItemTouchHelperCallback(remindersAdapter)
         val mItemTouchHelper = ItemTouchHelper(callback)
         mItemTouchHelper.attachToRecyclerView(remindersRecyclerView)
+        newRemindersEditText.setOnClickListener { selectNewReminderTime() }
     }
 
     private fun populateRemindersRecyclerView() {

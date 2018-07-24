@@ -62,9 +62,9 @@ class CreateChallengeActivity : BaseActivity() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     internal lateinit var userId: String
 
-    private var challengeTasks = ChallengeTasksRecyclerViewAdapter(null, 0, this, "", null, false, true)
+    private lateinit var challengeTasks: ChallengeTasksRecyclerViewAdapter
 
-    private var locationAdapter = GroupArrayAdapter(this)
+    private lateinit var locationAdapter: GroupArrayAdapter
     private var challengeId: String? = null
     private var editMode: Boolean = false
 
@@ -172,7 +172,7 @@ class CreateChallengeActivity : BaseActivity() {
         }
 
         // all "Add {*}"-Buttons are one task itself, so we need atleast more than 4
-        if (challengeTasks.taskList?.size ?: 0 <= 4) {
+        if (challengeTasks.taskList.size <= 4) {
             createChallengeTaskError.visibility = View.VISIBLE
             errorMessages.add(getString(R.string.challenge_create_error_no_tasks))
         } else {
@@ -193,6 +193,9 @@ class CreateChallengeActivity : BaseActivity() {
 
         val intent = intent
         val bundle = intent.extras
+
+        challengeTasks = ChallengeTasksRecyclerViewAdapter(null, 0, this, "", null, false, true)
+        locationAdapter = GroupArrayAdapter(this)
 
         if (bundle != null) {
             challengeId = bundle.getString(CHALLENGE_ID_KEY, null)
@@ -223,7 +226,7 @@ class CreateChallengeActivity : BaseActivity() {
         openNewTaskActivity(null, tappedEvent.Task)
     }
 
-    fun onAddGem() {
+    private fun onAddGem() {
         var stringValue = createChallengePrize.text.toString()
         if (stringValue.isEmpty()) {
             stringValue = "0"
@@ -236,7 +239,7 @@ class CreateChallengeActivity : BaseActivity() {
         checkPrizeAndMinimumForTavern()
     }
 
-    fun onRemoveGem() {
+    private fun onRemoveGem() {
         var stringValue = createChallengePrize.text.toString()
         if (stringValue.isEmpty()) {
             stringValue = "0"
@@ -299,15 +302,15 @@ class CreateChallengeActivity : BaseActivity() {
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         socialRepository.getGroups("guild").subscribe(Consumer { groups ->
-            val tavern = Group()
-            tavern.id = "00000000-0000-4000-A000-000000000000"
-            tavern.name = getString(R.string.sidebar_tavern)
-
-            locationAdapter.add(tavern)
-
-            for (group in groups) {
-                locationAdapter.add(group)
+            if (groups.first { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
+                val tavern = Group()
+                tavern.id = "00000000-0000-4000-A000-000000000000"
+                tavern.name = getString(R.string.sidebar_tavern)
+                locationAdapter.add(tavern)
             }
+
+            locationAdapter.clear()
+            locationAdapter.addAll(groups)
         }, RxErrorHandler.handleEmptyError())
 
         challengeLocationSpinner.adapter = locationAdapter
@@ -359,24 +362,24 @@ class CreateChallengeActivity : BaseActivity() {
     }
 
     private fun fillControlsByChallenge() {
-        /*challengeRepository.getChallenge(challengeId).subscribe(Consumer { challenge ->
+        challengeId.notNull {
+            challengeRepository.getChallenge(it).subscribe(Consumer { challenge ->
+                createChallengeTitle.setText(challenge.name)
+                createChallengeDescription.setText(challenge.description)
+                createChallengeTag.setText(challenge.shortName)
+                createChallengePrize.setText(challenge.prize.toString())
 
-            createChallengeTitle.setText(challenge.name)
-            createChallengeDescription.setText(challenge.description)
-            createChallengeTag.setText(challenge.shortName)
-            createChallengePrize.setText(challenge.prize.toString())
+                for (i in 0 until locationAdapter.count) {
+                    val group = locationAdapter.getItem(i)
 
-            for (i in 0 until locationAdapter.count) {
-                val group = locationAdapter.getItem(i)
-
-                if (group != null && challenge.groupId == group.id) {
-                    challengeLocationSpinner.setSelection(i)
-                    break
+                    if (group != null && challenge.groupId == group.id) {
+                        challengeLocationSpinner.setSelection(i)
+                        break
+                    }
                 }
-            }
-
-            checkPrizeAndMinimumForTavern()
-        }, RxErrorHandler.handleEmptyError())*/
+                checkPrizeAndMinimumForTavern()
+            }, RxErrorHandler.handleEmptyError())
+        }
     }
 
     private fun openNewTaskActivity(type: String?, task: Task?) {

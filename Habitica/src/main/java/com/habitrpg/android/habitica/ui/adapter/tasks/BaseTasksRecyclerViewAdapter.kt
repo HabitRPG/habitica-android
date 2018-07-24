@@ -45,10 +45,10 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
     protected abstract fun injectThis(component: AppComponent)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val item = filteredContent!![position]
-
-        holder.bindHolder(item, position)
-
+        val item = filteredContent?.get(position)
+        if (item != null) {
+            holder.bindHolder(item, position)
+        }
         /*if (this.displayedChecklist != null && ChecklistedViewHolder.class.isAssignableFrom(holder.getClass())) {
             ChecklistedViewHolder checklistedHolder = (ChecklistedViewHolder) holder;
             checklistedHolder.setDisplayChecklist(this.displayedChecklist == position);
