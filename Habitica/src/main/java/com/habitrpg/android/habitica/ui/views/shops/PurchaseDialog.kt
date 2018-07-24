@@ -158,7 +158,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
 
         if ("gems" == shopItem.purchaseType) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
-            val maxGems = user.purchased.plan.totalNumberOfGems()
+            val maxGems = user.purchased?.plan?.totalNumberOfGems() ?: 0
             if (maxGems > 0) {
                 limitedTextView.text = context.getString(R.string.gems_left_max, gemsLeft, maxGems)
             } else {

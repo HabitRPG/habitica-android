@@ -98,8 +98,8 @@ class GroupInformationFragment : BaseFragment() {
     }
 
     private fun setUser(user: User?) {
-        if (group == null && user != null && user.invitations != null && user.invitations.party.id != null) {
-            setInvitation(user.invitations.party)
+        if (group == null && user?.invitations?.party?.id != null) {
+            setInvitation(user.invitations?.party)
         } else {
             setInvitation(null)
         }

@@ -131,11 +131,11 @@ class ShopFragment : BaseFragment() {
                 .map { shop1 ->
                     if (shop1.identifier == Shop.MARKET) {
                         val user = user
-                        if (user != null && user.isValid && user.purchased.plan.isActive) {
+                        if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
                             val specialCategory = ShopCategory()
                             specialCategory.text = getString(R.string.special)
                             val item = ShopItem.makeGemItem(context?.resources)
-                            item.limitedNumberLeft = user.purchased.plan.numberOfGemsLeft()
+                            item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft()
                             specialCategory.items.add(item)
                             shop1.categories.add(specialCategory)
                         }

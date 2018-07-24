@@ -64,13 +64,13 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     override fun getOwnedItems(itemClass: Class<out Item>, user: User?): Flowable<out RealmResults<out Item>> {
         var query = realm.where(itemClass)
         if (SpecialItem::class.java.isAssignableFrom(itemClass)) {
-            if (user != null && user.purchased != null && user.purchased.plan != null) {
+            if (user?.purchased?.plan != null) {
                 val mysticItem: SpecialItem = if (query.count() == 0L) {
                     SpecialItem.makeMysteryItem(context)
                 } else {
                     getUnmanagedCopy((query.findFirst() as SpecialItem?)!!)
                 }
-                mysticItem.owned = user.purchased.plan.mysteryItemCount
+                mysticItem.owned = user.purchased?.plan?.mysteryItemCount
                 this.save(mysticItem)
             }
         } else {
@@ -220,10 +220,10 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
         val item = realm.where(SpecialItem::class.java).equalTo("isMysteryItem", true).findFirst()
         realm.executeTransaction {
             if (item != null && item.isValid) {
-                item.setOwned(item.owned!! - 1)
+                item.owned = item.owned - 1
             }
-            if (user.isValid && user.purchased != null && user.purchased.plan != null) {
-                user.purchased.plan.mysteryItemCount -= 1
+            if (user.isValid) {
+                user.purchased?.plan?.mysteryItemCount = (user.purchased?.plan?.mysteryItemCount ?: 0) - 1
             }
         }
     }

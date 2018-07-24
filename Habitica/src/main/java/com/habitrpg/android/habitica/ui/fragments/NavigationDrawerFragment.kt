@@ -184,7 +184,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 }, RxErrorHandler.handleEmptyError()))
 
         subscriptions?.add(userRepository.getUser().subscribe(Consumer {
-            setUsername(it.profile.name)
+            setUsername(it.profile?.name)
             avatarView.setAvatar(it)
             questMenuView.configure(it)
         }, RxErrorHandler.handleEmptyError()))

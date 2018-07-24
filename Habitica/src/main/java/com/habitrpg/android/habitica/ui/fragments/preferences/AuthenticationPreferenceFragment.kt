@@ -58,12 +58,10 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             "email" -> showEmailDialog()
             "change_password" -> showChangePasswordDialog()
             "subscription_status" -> {
-                if (user != null && user!!.purchased != null && user!!.purchased.plan != null) {
-                    val plan = user!!.purchased.plan
-                    if (plan.isActive) {
-                        showSubscriptionStatusDialog()
-                        return super.onPreferenceTreeClick(preference)
-                    }
+                val plan = user?.purchased?.plan
+                if (plan?.isActive == true) {
+                    showSubscriptionStatusDialog()
+                    return super.onPreferenceTreeClick(preference)
                 }
                 EventBus.getDefault().post(OpenGemPurchaseFragmentCommand())
             }

@@ -118,7 +118,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                     localRepository.executeTransaction { realm ->
                         if (user != null) {
                             if (user1.items != null) {
-                                user1.items.userId = user.id
+                                user1.items?.userId = user.id
                                 val items = realm.copyToRealmOrUpdate(user1.items)
                                 user.items = items
                             } else {
@@ -147,13 +147,13 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                     }
                     localRepository.executeTransaction {
                         val newEquipped = items.gear.equipped
-                        val oldEquipped = user.items.gear.equipped
+                        val oldEquipped = user.items?.gear?.equipped
                         val newCostume = items.gear.costume
-                        val oldCostume = user.items.gear.costume
-                        oldEquipped.updateWith(newEquipped)
-                        oldCostume.updateWith(newCostume)
-                        user.items.currentMount = items.currentMount
-                        user.items.currentPet = items.currentPet
+                        val oldCostume = user.items?.gear?.costume
+                        oldEquipped?.updateWith(newEquipped)
+                        oldCostume?.updateWith(newCostume)
+                        user.items?.currentMount = items.currentMount
+                        user.items?.currentPet = items.currentPet
                         user.balance = user.balance
                     }
                 }

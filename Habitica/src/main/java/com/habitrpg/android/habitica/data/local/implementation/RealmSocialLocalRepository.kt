@@ -111,9 +111,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun updateRSVPNeeded(user: User?, newValue: Boolean) {
-        if (user?.party?.quest != null) {
-            realm.executeTransaction { user.party.quest.RSVPNeeded = newValue }
-        }
+        realm.executeTransaction { user?.party?.quest?.RSVPNeeded = newValue }
     }
 
     override fun likeMessage(chatMessage: ChatMessage, userId: String, liked: Boolean) {

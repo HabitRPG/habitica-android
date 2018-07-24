@@ -160,7 +160,7 @@ class PartyInviteActivity : BaseActivity() {
         }
         inviteData["uuids"] = invites
 
-        this.socialRepository.inviteToGroup(user.party.getId(), inviteData)
+        this.socialRepository.inviteToGroup(user.party?.id ?: "", inviteData)
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 

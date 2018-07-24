@@ -7,36 +7,26 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-
+import android.view.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
-
-import java.util.ArrayList
-import java.util.Collections
-import java.util.HashMap
-import java.util.concurrent.TimeUnit
-
-import javax.inject.Inject
-
+import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
+import java.util.*
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class PartyFragment : BaseMainFragment() {
 
@@ -63,22 +53,23 @@ class PartyFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         viewPager?.currentItem = 0
+
+        compositeSubscription.add(userRepository.getUser()
+                .filter { user?.party?.id != null }
+                .map { user?.party?.id }
+                .flatMap { socialRepository.getGroup(it) }
+                .firstElement()
+                //delay, so that realm can save party first
+                .delay(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Consumer { group ->
+                    this@PartyFragment.group = group
+                    updateGroupUI()
+                }, RxErrorHandler.handleEmptyError()))
 
         // Get the full group data
         if (userHasParty()) {
-            if (user != null) {
-                compositeSubscription.add(socialRepository.getGroup(user?.party?.id)
-                        .firstElement()
-                        //delay, so that realm can save party first
-                        .delay(500, TimeUnit.MILLISECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer { group ->
-                            this@PartyFragment.group = group
-                            updateGroupUI()
-                        }, RxErrorHandler.handleEmptyError()))
-            }
             socialRepository.retrieveGroup("party")
                     .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
@@ -90,6 +81,7 @@ class PartyFragment : BaseMainFragment() {
     }
 
     private fun userHasParty(): Boolean {
+        user.notNull { Log.e("PARTY ${it.party}") }
         return user?.party?.id != null
     }
 
@@ -110,22 +102,18 @@ class PartyFragment : BaseMainFragment() {
     }
 
     private fun updateGroupUI() {
-        if (viewPagerAdapter != null) {
-            viewPagerAdapter!!.notifyDataSetChanged()
+        viewPagerAdapter?.notifyDataSetChanged()
+
+        if (group == null) {
+            tabLayout?.visibility = View.GONE
+            return
+        } else {
+            tabLayout?.visibility = View.VISIBLE
         }
 
-        if (tabLayout != null) {
-            if (group == null) {
-                tabLayout?.visibility = View.GONE
-                return
-            } else {
-                tabLayout?.visibility = View.VISIBLE
-            }
-        }
+        partyMemberListFragment?.setPartyId(group?.id ?: "")
 
-        partyMemberListFragment?.setPartyId(group!!.id)
-
-        chatListFragment?.seenGroupId = group!!.id
+        chatListFragment?.seenGroupId = group?.id ?: ""
 
         this.activity?.supportInvalidateOptionsMenu()
     }
@@ -246,7 +234,7 @@ class PartyFragment : BaseMainFragment() {
                     0 -> {
                         if (user!!.hasParty()) {
                             val detailFragment = PartyDetailFragment()
-                            detailFragment.partyId = user!!.party.id
+                            detailFragment.partyId = user?.party?.id
                             fragment = detailFragment
                         } else {
                             fragment = GroupInformationFragment.newInstance(null, user)
@@ -255,8 +243,8 @@ class PartyFragment : BaseMainFragment() {
                     1 -> {
                         if (chatListFragment == null) {
                             chatListFragment = ChatListFragment()
-                            if (user!!.hasParty()) {
-                                chatListFragment!!.configure(user!!.party.id, user, false)
+                            if (user?.hasParty() == true) {
+                                chatListFragment?.configure(user?.party?.id ?: "", user, false)
                             }
                         }
                         fragment = chatListFragment
@@ -264,8 +252,8 @@ class PartyFragment : BaseMainFragment() {
                     2 -> {
                         if (partyMemberListFragment == null) {
                             partyMemberListFragment = PartyMemberListFragment()
-                            if (user!!.hasParty()) {
-                                partyMemberListFragment!!.setPartyId(user!!.party.id)
+                            if (user?.hasParty() == true) {
+                                partyMemberListFragment?.setPartyId(user?.party?.id ?: "")
                             }
                         }
                         fragment = partyMemberListFragment

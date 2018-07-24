@@ -112,8 +112,8 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         val user = User()
         user.preferences = preferences
         user.items = Items()
-        user.items.gear = Gear()
-        user.items.gear.equipped = outfit
+        user.items?.gear = Gear()
+        user.items?.gear?.equipped = outfit
         return user
     }
 

@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
+import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
@@ -80,19 +81,17 @@ class OldQuestProgressView : LinearLayout {
 
             if (progress != null) {
                 val inflater = LayoutInflater.from(context)
-                if (progress.collect != null) {
-                    for (collect in progress.collect!!) {
-                        val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
-                        val view = inflater.inflate(R.layout.quest_collect, collectionContainer, false)
-                        val iconView = view.findViewById<View>(R.id.icon_view) as SimpleDraweeView
-                        val nameView = view.findViewById<View>(R.id.name_view) as TextView
-                        val valueView = view.findViewById<View>(R.id.value_view) as ValueBar
-                        DataBindingUtils.loadImage(iconView, "quest_" + quest.key + "_" + collect.key)
-                        nameView.text = contentCollect.text
-                        valueView.set(collect.count.toDouble(), contentCollect.count.toDouble())
+                for (collect in progress.collect ?: emptyList<QuestProgressCollect>()) {
+                    val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
+                    val view = inflater.inflate(R.layout.quest_collect, collectionContainer, false)
+                    val iconView = view.findViewById<View>(R.id.icon_view) as SimpleDraweeView
+                    val nameView = view.findViewById<View>(R.id.name_view) as TextView
+                    val valueView = view.findViewById<View>(R.id.value_view) as ValueBar
+                    DataBindingUtils.loadImage(iconView, "quest_" + quest.key + "_" + collect.key)
+                    nameView.text = contentCollect.text
+                    valueView.set(collect.count.toDouble(), contentCollect.count.toDouble())
 
-                        collectionContainer.addView(view)
-                    }
+                    collectionContainer.addView(view)
                 }
             }
         }

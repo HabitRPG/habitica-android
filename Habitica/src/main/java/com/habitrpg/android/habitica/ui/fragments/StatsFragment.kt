@@ -237,16 +237,18 @@ class StatsFragment: BaseMainFragment() {
         constitutionStatsView.allocatedValue = currentUser.stats?.con ?: 0
         perceptionStatsView.allocatedValue = currentUser.stats?.per ?: 0
 
-        val outfit = currentUser.items.gear.equipped
+        val outfit = currentUser.items?.gear?.equipped
         val outfitList = ArrayList<String>()
-        outfitList.add(outfit.armor)
-        outfitList.add(outfit.back)
-        outfitList.add(outfit.body)
-        outfitList.add(outfit.eyeWear)
-        outfitList.add(outfit.head)
-        outfitList.add(outfit.headAccessory)
-        outfitList.add(outfit.shield)
-        outfitList.add(outfit.weapon)
+        outfit.notNull { thisOutfit ->
+            outfitList.add(thisOutfit.armor)
+            outfitList.add(thisOutfit.back)
+            outfitList.add(thisOutfit.body)
+            outfitList.add(thisOutfit.eyeWear)
+            outfitList.add(thisOutfit.head)
+            outfitList.add(thisOutfit.headAccessory)
+            outfitList.add(thisOutfit.shield)
+            outfitList.add(thisOutfit.weapon)
+        }
 
         inventoryRepository.getItems(outfitList).firstElement()
                 .retry(1)

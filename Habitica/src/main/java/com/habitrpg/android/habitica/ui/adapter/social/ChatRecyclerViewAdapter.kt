@@ -43,7 +43,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
     private val copyMessageEvents = PublishSubject.create<ChatMessage>()
 
     init {
-        if (user != null) this.uuid = user.id
+        this.uuid = user?.id ?: ""
     }
 
     fun setSendingUser(user: User?) {
@@ -193,7 +193,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         }
 
         private fun shouldShowDelete(): Boolean {
-            return chatMessage?.isSystemMessage != true && (chatMessage?.uuid == userId || user?.contributor != null && user.contributor.admin)
+            return chatMessage?.isSystemMessage != true && (chatMessage?.uuid == userId || user?.contributor?.admin == true)
         }
     }
 }

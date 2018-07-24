@@ -143,13 +143,13 @@ class PartyDetailFragment : BaseFragment() {
     }
 
     private fun updateUser(user: User?) {
-        if (user == null || user.party == null || user.party.quest == null) {
+        if (user?.party?.quest == null) {
             return
         }
         this.user = user
 
         var invitationVisibility = View.GONE
-        if (user.invitations != null && user.invitations.party != null && user.invitations.party.id != null) {
+        if (user.invitations?.party?.id != null) {
             invitationVisibility = View.VISIBLE
         }
 

@@ -51,7 +51,7 @@ class SkillMemberActivity : BaseActivity() {
 
         userRepository.getUser()
                 .firstElement()
-                .flatMap { user -> socialRepository.getGroupMembers(user.party.id).firstElement() }
+                .flatMap { user -> socialRepository.getGroupMembers(user.party?.id ?: "").firstElement() }
                 .subscribe(Consumer { viewAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError())
     }
 }

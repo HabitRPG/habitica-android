@@ -32,17 +32,15 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .findFirst()
         if (oldUser != null && oldUser.isValid) {
             if (user.needsCron && !oldUser.needsCron) {
-                if (user.lastCron.before(oldUser.lastCron)) {
+                if (user.lastCron?.before(oldUser.lastCron) == true) {
                     user.needsCron = false
                 }
             }
         }
         realm.executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
-        if (user.tags != null) {
-            removeOldTags(user.id, user.tags)
-        }
+        removeOldTags(user.id ?: "", user.tags)
         if (user.challenges != null) {
-            removeOldChallenges(user.id, user.challenges)
+            removeOldChallenges(user.id ?: "", user.challenges ?: emptyList())
         }
     }
 

@@ -53,7 +53,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     .doOnNext { localRepository.saveUser(it) }
                     .doOnNext { user ->
                         if (withTasks) {
-                            taskRepository.saveTasks(user.id, user.tasksOrder, user.tasks)
+                            val id = user.id
+                            val tasksOrder = user.tasksOrder
+                            val tasks = user.tasks
+                            if (id != null && tasksOrder != null && tasks != null) {
+                                taskRepository.saveTasks(id, tasksOrder, tasks)
+                            }
                         }
                     }
                     .flatMap { user ->
@@ -262,7 +267,6 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             for (task in tasks) {
                 observable = observable.flatMap { taskRepository.taskChecked(null, task, true, true).firstElement() }
             }
-            observable
         }
         observable.flatMap { apiClient.runCron().firstElement() }
                 .flatMap { this.retrieveUser(true, true).firstElement() }
