@@ -88,6 +88,15 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                                 task.value = task.value + res.delta
                                 if (Task.TYPE_DAILY == task.type || Task.TYPE_TODO == task.type) {
                                     task.completed = up
+                                    if (Task.TYPE_DAILY == task.type) {
+                                        task.streak = (task.streak ?: 0) + 1
+                                    }
+                                }else if (Task.TYPE_HABIT == task.type) {
+                                    if (up) {
+                                        task.counterUp = (task.counterUp ?: 0) + 1
+                                    } else {
+                                        task.counterDown = (task.counterDown ?: 0) + 1
+                                    }
                                 }
                             }
                             stats?.hp = res.hp
