@@ -67,10 +67,10 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
     protected fun getContentView(parent: ViewGroup, layoutResource: Int): View =
             LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
-    fun updateTask(task: Task) {
+    private fun updateTask(task: Task) {
         if (taskType != task.type)
             return
-        var i: Int = 0
+        var i = 0
         while (i < this.content!!.size) {
             if (content!![i].id == task.id) {
                 break
@@ -88,13 +88,15 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
             filteredContent = content
         } else {
             filteredContent = ArrayList()
-            filteredContent!!.addAll(this.taskFilterHelper.filter(content))
+            content.notNull {
+                filteredContent?.addAll(this.taskFilterHelper.filter(it))
+            }
         }
 
         this.notifyDataSetChanged()
     }
 
-    fun loadContent(forced: Boolean) {
+    private fun loadContent(forced: Boolean) {
         if (this.content == null || forced) {
             taskRepository.getTasks(this.taskType, this.userID!!)
                     .flatMap<Task> { Flowable.fromIterable(it) }
@@ -116,37 +118,4 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
     }
 
     open fun loadFromDatabase(): Boolean = true
-
-    fun checkTask(task: Task, completed: Boolean?) {
-        if (taskType != task.type)
-            return
-
-        if (completed!! && task.type == "todo") {
-            // remove from the list
-            content!!.remove(task)
-        }
-        this.updateTask(task)
-        filter()
-    }
-
-    fun addTask(task: Task) {
-        if (taskType != task.type)
-            return
-
-        content!!.add(0, task)
-        filter()
-    }
-
-    fun removeTask(deletedTaskId: String) {
-        val taskToDelete: Task? = content?.firstOrNull { it.id == deletedTaskId }
-
-        if (taskToDelete != null) {
-            content?.remove(taskToDelete)
-            filter()
-        }
-    }
-
-    open fun setDailyResetOffset(dayStart: Int) {
-
-    }
 }

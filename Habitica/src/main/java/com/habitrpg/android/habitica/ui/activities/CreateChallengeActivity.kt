@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.*
-import com.github.underscore.U
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -181,7 +180,7 @@ class CreateChallengeActivity : BaseActivity() {
         }
 
         val builder = AlertDialog.Builder(this)
-                .setMessage(U.join(errorMessages, "\n"))
+                .setMessage(errorMessages.joinToString("\n"))
 
         val alert = builder.create()
         alert.show()

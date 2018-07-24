@@ -14,14 +14,17 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 
 abstract class InsufficientCurrencyDialog(context: Context) : AlertDialog(context) {
 
-    protected val imageView: ImageView by bindView(R.id.imageView)
-    protected val textView: TextView by bindView(R.id.textView)
+    protected var imageView: ImageView
+    protected var textView: TextView
 
     init {
 
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.dialog_insufficient_currency, null)
         setView(view)
+
+        imageView = view.findViewById(R.id.imageView)
+        textView = view.findViewById(R.id.textView)
 
         this.setButton(AlertDialog.BUTTON_NEUTRAL, context.getString(R.string.close)) { _, _ -> this.dismiss() }
     }

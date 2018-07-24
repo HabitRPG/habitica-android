@@ -23,7 +23,6 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 import java.util.*
@@ -34,13 +33,14 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
     @Inject
     lateinit var repository: TagRepository
 
-    private val taskTypeTitle: TextView by bindView(R.id.task_type_title)
-    private val taskFilters: RadioGroup by bindView(R.id.task_filter_wrapper)
-    private val allTaskFilter: RadioButton by bindView(R.id.all_task_filter)
-    private val secondTaskFilter: RadioButton by bindView(R.id.second_task_filter)
-    private val thirdTaskFilter: RadioButton by bindView(R.id.third_task_filter)
-    private val tagsEditButton: Button by bindView(R.id.tag_edit_button)
-    private val tagsList: LinearLayout by bindView(R.id.tags_list)
+    private var taskTypeTitle: TextView
+    private var taskFilters: RadioGroup
+    private var allTaskFilter: RadioButton
+    private var secondTaskFilter: RadioButton
+    private var thirdTaskFilter: RadioButton
+    private var tagsEditButton: Button
+    private var tagsList: LinearLayout
+
     private var taskType: String? = null
     private var listener: OnFilterCompletedListener? = null
 
@@ -60,11 +60,19 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
 
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.dialog_task_filter, null)
+        setTitle(R.string.filters)
+        setView(view)
+
+        taskTypeTitle = view.findViewById(R.id.task_type_title)
+        taskFilters = view.findViewById(R.id.task_filter_wrapper)
+        allTaskFilter = view.findViewById(R.id.all_task_filter)
+        secondTaskFilter = view.findViewById(R.id.second_task_filter)
+        thirdTaskFilter = view.findViewById(R.id.third_task_filter)
+        tagsEditButton = view.findViewById(R.id.tag_edit_button)
+        tagsList = view.findViewById(R.id.tags_list)
 
         taskFilters.setOnCheckedChangeListener(this)
 
-        setTitle(R.string.filters)
-        setView(view)
         this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.done)) { _, _ ->
             if (isEditing) {
                 stopEditing()
@@ -78,7 +86,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
         tagsEditButton.setOnClickListener { editButtonClicked() }
     }
 
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val clearButton = getButton(AlertDialog.BUTTON_NEUTRAL)
         if (clearButton != null) {
@@ -262,7 +270,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
         return -1
     }
 
-    fun setTaskType(taskType: String, activeFilter: String) {
+    fun setTaskType(taskType: String, activeFilter: String?) {
         this.taskType = taskType
         when (taskType) {
             Task.TYPE_HABIT -> {
@@ -358,6 +366,6 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
 
     interface OnFilterCompletedListener {
 
-        fun onFilterCompleted(activeTaskFilter: String?, activeTags: List<String>?)
+        fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>)
     }
 }

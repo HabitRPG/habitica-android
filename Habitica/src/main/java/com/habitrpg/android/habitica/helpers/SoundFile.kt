@@ -22,7 +22,7 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
     }
 
     fun play() {
-        if (isPlaying) {
+        if (isPlaying || file?.path == null) {
             return
         }
 

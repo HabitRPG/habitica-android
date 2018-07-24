@@ -14,14 +14,17 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
 
     private val view: LinearLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as LinearLayout
-    private val titleTextView: TextView by bindView(R.id.titleTextView)
-    private val subtitleTextView: TextView by bindView(R.id.subtitleTextView)
-    private val messageTextView: TextView by bindView(R.id.messageTextView)
+    private var titleTextView: TextView
+    private var subtitleTextView: TextView
+    private var messageTextView: TextView
 
     private var additionalContentView: View? = null
 
     init {
         setView(view)
+        titleTextView = view.findViewById(R.id.titleTextView)
+        subtitleTextView = view.findViewById(R.id.subtitleTextView)
+        messageTextView = view.findViewById(R.id.messageTextView)
     }
 
     override fun setTitle(title: CharSequence?) {

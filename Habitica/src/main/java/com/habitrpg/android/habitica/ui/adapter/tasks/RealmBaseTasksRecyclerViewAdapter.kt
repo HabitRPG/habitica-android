@@ -141,9 +141,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
             LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
     final override fun filter() {
-        if (unfilteredData == null) {
-            return
-        }
+        val unfilteredData = this.unfilteredData ?: return
 
         if (taskFilterHelper != null) {
             val query = taskFilterHelper.createQuery(unfilteredData)

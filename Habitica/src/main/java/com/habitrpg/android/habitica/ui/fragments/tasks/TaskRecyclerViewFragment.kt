@@ -260,9 +260,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
     }
 
     fun setActiveFilter(activeFilter: String) {
-        if (classType != null) {
-            taskFilterHelper.setActiveFilter(classType, activeFilter)
-        }
+        taskFilterHelper.setActiveFilter(classType ?: "", activeFilter)
         recyclerAdapter?.filter()
 
         if (activeFilter == Task.FILTER_COMPLETED) {
@@ -271,7 +269,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
     }
 
     companion object {
-        private val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
+        private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
 
         fun newInstance(context: Context?, user: User?, classType: String): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()

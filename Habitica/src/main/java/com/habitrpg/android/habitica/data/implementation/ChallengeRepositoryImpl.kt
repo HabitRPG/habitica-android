@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import com.github.underscore.U
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
@@ -53,12 +52,12 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
     }
 
     private fun getTaskOrders(taskList: List<Task>): TasksOrder {
-        val stringListMap = U.groupBy(taskList) { t -> t.type }
+        val stringListMap = taskList.groupBy { t -> t.type }
 
         val tasksOrder = TasksOrder()
 
         for ((key, value) in stringListMap) {
-            val taskIdList = U.map<String, Task>(value) { t -> t.id }
+            val taskIdList = value.map { t -> t.id }
 
             when (key) {
                 Task.TYPE_HABIT -> tasksOrder.habits = taskIdList

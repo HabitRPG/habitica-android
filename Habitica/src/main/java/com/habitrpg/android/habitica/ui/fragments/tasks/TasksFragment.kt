@@ -35,8 +35,8 @@ class TasksFragment : BaseMainFragment() {
     @Inject
     lateinit var tagRepository: TagRepository
 
-    internal var refreshItem: MenuItem? = null
-    internal var floatingMenu: FloatingActionMenu? = null
+    private var refreshItem: MenuItem? = null
+    private var floatingMenu: FloatingActionMenu? = null
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
 
     private var displayingTaskForm: Boolean = false
@@ -71,7 +71,7 @@ class TasksFragment : BaseMainFragment() {
         todoFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_TODO) }
         val rewardFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_reward)
         rewardFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_REWARD) }
-        floatingMenu?.setOnMenuButtonLongClickListener { this.onFloatingMenuLongClicked(it) }
+        floatingMenu?.setOnMenuButtonLongClickListener { this.onFloatingMenuLongClicked() }
 
         loadTaskLists()
 
@@ -95,7 +95,7 @@ class TasksFragment : BaseMainFragment() {
         super.onDestroy()
     }
 
-    private fun onFloatingMenuLongClicked(view: View): Boolean {
+    private fun onFloatingMenuLongClicked(): Boolean {
         val currentFragment = activeFragment
         if (currentFragment != null) {
             val className = currentFragment.className
@@ -148,7 +148,7 @@ class TasksFragment : BaseMainFragment() {
             }
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
 
-                override fun onFilterCompleted(activeTaskFilter: String?, activeTags: List<String>?) {
+                override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {
                     if (viewFragmentsDictionary == null) {
                         return
                     }
@@ -329,10 +329,6 @@ class TasksFragment : BaseMainFragment() {
 
     //endregion Events
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -383,7 +379,7 @@ class TasksFragment : BaseMainFragment() {
     override fun addToBackStack(): Boolean = false
 
     companion object {
-        private val TASK_CREATED_RESULT = 1
-        private val TASK_UPDATED_RESULT = 2
+        private const val TASK_CREATED_RESULT = 1
+        private const val TASK_UPDATED_RESULT = 2
     }
 }
