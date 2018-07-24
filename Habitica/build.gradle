@@ -116,7 +116,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:11.4.2'
     implementation 'com.google.firebase:firebase-messaging:11.4.2'
     implementation 'com.google.android.gms:play-services-auth:11.4.2'
-    implementation 'org.apmem.tools:layouts:1.10@aar'
     implementation 'com.roughike:bottom-bar:2.3.1'
     implementation 'io.realm:android-adapters:3.0.0'
     implementation(project(':seeds-sdk')) {
