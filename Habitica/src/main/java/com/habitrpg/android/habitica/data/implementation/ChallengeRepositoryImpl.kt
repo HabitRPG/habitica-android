@@ -120,13 +120,13 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
                 .doOnNext { localRepository.saveChallenges(it) }
     }
 
-    override fun leaveChallenge(challenge: Challenge, leaveChallengeBody: LeaveChallengeBody): Flowable<Void> {
-        return apiClient.leaveChallenge(challenge.id ?: "", leaveChallengeBody)
+    override fun leaveChallenge(challenge: Challenge, keepTasks: String): Flowable<Void> {
+        return apiClient.leaveChallenge(challenge.id ?: "", LeaveChallengeBody(keepTasks))
                 .doOnNext { localRepository.setParticipating(userId, challenge.id ?: "", false) }
     }
 
     override fun joinChallenge(challenge: Challenge): Flowable<Challenge> {
         return apiClient.joinChallenge(challenge.id ?: "")
-                .doOnNext { localRepository.setParticipating(userId, challenge.id ?: "", false) }
+                .doOnNext { localRepository.setParticipating(userId, challenge.id ?: "", true) }
     }
 }

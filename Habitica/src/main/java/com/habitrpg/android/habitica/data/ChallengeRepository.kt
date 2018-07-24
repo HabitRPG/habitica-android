@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.data
 
-import com.habitrpg.android.habitica.models.LeaveChallengeBody
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
-import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
@@ -38,7 +36,7 @@ interface ChallengeRepository : BaseRepository {
     fun getUserChallenges(userId: String): Flowable<RealmResults<Challenge>>
 
 
-    fun leaveChallenge(challenge: Challenge, leaveChallengeBody: LeaveChallengeBody): Flowable<Void>
+    fun leaveChallenge(challenge: Challenge, keepTasks: String): Flowable<Void>
 
     fun joinChallenge(challenge: Challenge): Flowable<Challenge>
 

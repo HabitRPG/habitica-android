@@ -32,6 +32,7 @@ import java.util.*
 import javax.inject.Inject
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.support.v7.app.AlertDialog
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.models.members.Member
 
@@ -58,6 +59,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     private val taskGrouplayout: LinearLayout? by bindView(R.id.task_group_layout)
 
     var challengeID: String? = null
+    var challenge: Challenge? = null
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
@@ -125,6 +127,9 @@ class ChallengeDetailFragment: BaseMainFragment() {
             }, RxErrorHandler.handleEmptyError()))
         }
 
+        joinButton?.setOnClickListener { challenge.notNull { challengeRepository.joinChallenge(it).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
+        leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
+
         refresh()
     }
 
@@ -137,6 +142,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     private fun set(challenge: Challenge) {
+        this.challenge = challenge
         challengeName?.text = EmojiParser.parseEmojis(challenge.name)
         challengeDescription?.text = MarkdownParser.parseMarkdown(challenge.description)
         challengeLeaderLabel?.username = challenge.leaderName
@@ -295,5 +301,42 @@ class ChallengeDetailFragment: BaseMainFragment() {
             Challenge.TASK_ORDER_REWARDS -> context?.getString(if (count == 1) R.string.reward else R.string.rewards)
             else -> context?.getString(if (count == 1) R.string.todo else R.string.todos)
         } ?: ""
+    }
+
+    private fun showChallengeLeaveDialog() {
+        context.notNull {
+            AlertDialog.Builder(it)
+                    .setTitle(this.getString(R.string.challenge_leave_title))
+                    .setMessage(this.getString(R.string.challenge_leave_text, challenge?.name ?: ""))
+                    .setPositiveButton(R.string.yes) { dialog, _ ->
+                        dialog.dismiss()
+                        challenge.notNull {
+                            showRemoveTasksDialog(Consumer { keepTasks ->
+                                challengeRepository.leaveChallenge(it, keepTasks).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                            })
+                        }
+                    }
+                    .setNegativeButton(R.string.no) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+        }
+    }
+
+    private fun showRemoveTasksDialog(callback: Consumer<String>) {
+        context.notNull {
+            AlertDialog.Builder(it)
+                    .setTitle(this.getString(R.string.challenge_remove_tasks_title))
+                    .setMessage(this.getString(R.string.challenge_remove_tasks_text))
+                    .setPositiveButton(R.string.remove_tasks) { dialog, _ ->
+                        callback.accept("remove-all")
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(R.string.keep_tasks) { dialog, _ ->
+                        callback.accept("keep-all")
+                        dialog.dismiss()
+                    }
+                    .show()
+        }
     }
 }
