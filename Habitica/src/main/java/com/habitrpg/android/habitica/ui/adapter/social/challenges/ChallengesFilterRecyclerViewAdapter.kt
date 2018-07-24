@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import com.github.underscore.U
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.social.Group
@@ -68,7 +67,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : Recycler
 
     fun selectAll(groupsToCheck: List<Group>) {
         for (h in holderList) {
-            h.checkbox.isChecked = U.find(groupsToCheck) { g -> h.group?.id == g.id }.isPresent
+            h.checkbox.isChecked =groupsToCheck.find { g -> h.group?.id == g.id } != null
         }
     }
 
