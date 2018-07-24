@@ -10,6 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
+import com.instabug.bug.BugReporting
+import com.instabug.bug.invocation.InvocationMode
+import com.instabug.bug.invocation.InvocationOption
 import kotlinx.android.synthetic.main.fragment_about.*
 
 class AboutFragment : Fragment() {
@@ -55,8 +58,8 @@ class AboutFragment : Fragment() {
         sourceCodeLink.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         twitter.setOnClickListener { openBrowserLink(twitterLink) }
         sourceCodeButton.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
-        reportBug.setOnClickListener { sendEmail("[Android] Bugreport") }
-        sendFeedback.setOnClickListener { sendEmail("[Android] Feedback") }
+        reportBug.setOnClickListener { BugReporting.invoke(InvocationMode.NEW_BUG, InvocationOption.COMMENT_FIELD_REQUIRED) }
+        sendFeedback.setOnClickListener { BugReporting.invoke(InvocationMode.NEW_FEEDBACK, InvocationOption.COMMENT_FIELD_REQUIRED)}
         googlePlayStoreButton.setOnClickListener { openGooglePlay() }
     }
 

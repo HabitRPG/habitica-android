@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data
 
+import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.inventory.Equipment
@@ -23,6 +24,8 @@ import retrofit2.HttpException
 
 
 interface ApiClient {
+
+    val hostConfig: HostConfig
 
     val status: Flowable<Status>
 

@@ -15,6 +15,10 @@ import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import io.reactivex.disposables.CompositeDisposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import com.instabug.library.InstabugTrackingDelegate
+import android.view.MotionEvent
+
+
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -40,6 +44,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
             return alwaysFinishActivitiesInt == 1
         }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        InstabugTrackingDelegate.notifyActivityGotTouchEvent(ev, this)
+        return super.dispatchTouchEvent(ev)
+    }
 
     override fun isDestroyed(): Boolean {
         return destroyed

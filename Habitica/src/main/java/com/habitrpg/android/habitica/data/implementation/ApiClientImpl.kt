@@ -64,7 +64,7 @@ import javax.net.ssl.SSLException
 
 class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 //private HostConfig mConfig;
-(private val gsonConverter: GsonConverterFactory, private val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val popupNotificationsManager: PopupNotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
+(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val popupNotificationsManager: PopupNotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
     private val retrofitAdapter: Retrofit
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
