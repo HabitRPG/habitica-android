@@ -227,6 +227,10 @@
     <style name="Pill.White">
         <item name="android:background">@drawable/pill_bg_white</item>
     </style>
+    <style name="Pill.Purple">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/pill_bg_purple_300</item>
+    </style>
 
     <style name="Pill.Selected">
         <item name="android:textColor">@color/white</item>

@@ -34,6 +34,7 @@ open class Challenge : RealmObject() {
     var leader: User? = null
     @Ignore
     var tasksOrder: TasksOrder? = null
+    var summary: String? = null
 
     fun getTasksOrder(): HashMap<String, Array<String>> {
         val map = HashMap<String, Array<String>>()

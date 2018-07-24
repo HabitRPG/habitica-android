@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -26,6 +27,7 @@ import org.greenrobot.eventbus.EventBus
 
 class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUpdate: Boolean, private val viewUserChallengesOnly: Boolean, private val userId: String) : RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>(data, autoUpdate) {
     private var unfilteredData: OrderedRealmCollection<Challenge>? = null
+    var challengeMemberships: OrderedRealmCollection<ChallengeMembership>? = null
 
     private val openChallengeFragmentEvents = PublishSubject.create<String>()
 
@@ -35,7 +37,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
 
     override fun onBindViewHolder(holder: ChallengeViewHolder, position: Int) {
         data?.get(position).notNull { challenge ->
-            holder.bind(challenge)
+            holder.bind(challenge, challengeMemberships?.first { challenge.id == it.challengeID } != null)
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged) {
                     challenge.id.notNull {
@@ -88,14 +90,10 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
     class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : RecyclerView.ViewHolder(itemView) {
 
         private val challengeName: EmojiTextView by bindView(R.id.challenge_name)
-        private val challengeDescription: TextView by bindView(R.id.challenge_group_name)
-        private val leaderParticipantLayout: LinearLayout by bindView(R.id.leaderParticipantLayout)
-        private val leaderName: TextView by bindView(R.id.leaderName)
+        private val challengeDescription: TextView by bindView(R.id.challenge_shorttext)
         private val participantCount: TextView by bindView(R.id.participantCount)
-        private val officialChallengeLayout: LinearLayout by bindView(R.id.officialHabiticaChallengeLayout)
-        private val challengeParticipatingTextView: View by bindView(R.id.challenge_is_participating)
-        private val memberCountTextView: TextView by bindView(R.id.memberCountTextView)
-        private val arrowImage: LinearLayout by bindView(R.id.arrowImage)
+        private val officialChallengeLayout: TextView by bindView(R.id.official_challenge_view)
+        private val challengeParticipatingTextView: View by bindView(R.id.is_joined_label)
         private val gemPrizeTextView: TextView by bindView(R.id.gemPrizeTextView)
         private val gemIconView: ImageView by bindView(R.id.gem_icon)
 
@@ -109,27 +107,21 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
             }
         }
 
-        fun bind(challenge: Challenge) {
+        fun bind(challenge: Challenge, isParticipating: Boolean) {
             this.challenge = challenge
 
             Log.e(challenge.id + challenge.name)
             challengeName.text = EmojiParser.parseEmojis(challenge.name?.trim { it <= ' ' })
-            challengeDescription.text = challenge.groupName
+            challengeDescription.text = challenge.summary
 
             officialChallengeLayout.visibility = if (challenge.official) View.VISIBLE else View.GONE
 
             if (viewUserChallengesOnly) {
-                leaderParticipantLayout.visibility = View.GONE
                 challengeParticipatingTextView.visibility = View.GONE
-                arrowImage.visibility = View.VISIBLE
             } else {
-                //challengeParticipatingTextView.visibility = if (challenge.isParticipating) View.VISIBLE else View.GONE
-
-                leaderName.text = itemView.context.getString(R.string.byLeader, challenge.leaderName)
-                participantCount.text = challenge.memberCount.toString()
-                leaderParticipantLayout.visibility = View.VISIBLE
-                arrowImage.visibility = View.GONE
+                challengeParticipatingTextView.visibility = if (isParticipating) View.VISIBLE else View.GONE
             }
+            participantCount.text = challenge.memberCount.toString()
 
             gemPrizeTextView.text = challenge.prize.toString()
         }

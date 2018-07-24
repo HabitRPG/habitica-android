@@ -785,4 +785,5 @@
     <string name="challenge_prize">Challenge Prize</string>
     <string name="challenge_categories">Challenge Categories</string>
     <string name="created_challenge">Created Challenge</string>
+    <string name="joined">Joined</string>
 </resources>
