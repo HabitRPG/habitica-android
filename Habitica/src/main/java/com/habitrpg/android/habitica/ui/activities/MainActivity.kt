@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
@@ -69,6 +70,7 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -142,6 +144,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var drawerFragment: NavigationDrawerFragment? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var keyboardUtil: KeyboardUtil? = null
+    private var resumeFromActivity = false
 
     private val statusBarHeight: Int
         get() {
@@ -257,8 +260,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     override fun onResume() {
         super.onResume()
 
-        retrieveUser()
-        this.checkMaintenance()
+        if(!resumeFromActivity){
+            retrieveUser()
+            this.checkMaintenance()
+        }
+        resumeFromActivity = false
+
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < Date().time - 86400000) {
             try {
@@ -288,6 +295,21 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     override fun onPause() {
         updateWidgets()
         super.onPause()
+    }
+
+    override fun startActivity(intent: Intent?) {
+        resumeFromActivity = true
+        super.startActivity(intent)
+    }
+
+    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+        resumeFromActivity = true
+        super.startActivityForResult(intent, requestCode)
+    }
+
+    override fun startActivity(intent: Intent?, options: Bundle?) {
+        resumeFromActivity = true
+        super.startActivity(intent, options)
     }
 
     private fun updateWidgets() {
@@ -499,7 +521,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
 
         if (event.Reward.specialTag != null && event.Reward.specialTag == "item") {
-            inventoryRepository.buyItem(user, event.Reward.id, event.Reward.value)
+            val id = event.Reward.id ?: return
+            inventoryRepository.buyItem(user, id, event.Reward.value)
                     .subscribe(Consumer { buyResponse ->
                         var snackbarMessage = getString(R.string.successful_purchase, event.Reward.text)
                         if (event.Reward.id == "armoire") {
@@ -801,7 +824,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private fun checkMaintenance() {
         this.maintenanceService.maintenanceStatus
-                .compose(apiClient.configureApiCallObserver())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Consumer { maintenanceResponse ->
                     if (maintenanceResponse == null) {
                         return@Consumer

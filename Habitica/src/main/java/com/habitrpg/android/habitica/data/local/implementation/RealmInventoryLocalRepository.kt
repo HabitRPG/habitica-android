@@ -216,7 +216,10 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .cast(Item::class.java)
     }
 
-    override fun decrementMysteryItemCount(user: User) {
+    override fun decrementMysteryItemCount(user: User?) {
+        if (user == null) {
+            return
+        }
         val item = realm.where(SpecialItem::class.java).equalTo("isMysteryItem", true).findFirst()
         realm.executeTransaction {
             if (item != null && item.isValid) {

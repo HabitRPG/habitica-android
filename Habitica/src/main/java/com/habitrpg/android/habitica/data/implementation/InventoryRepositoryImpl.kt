@@ -55,7 +55,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getEquipment(key)
     }
 
-    override fun openMysteryItem(user: User): Flowable<Equipment> {
+    override fun openMysteryItem(user: User?): Flowable<Equipment> {
         return apiClient.openMysteryItem().doOnNext { itemData ->
             itemData.owned = true
             localRepository.save(itemData)
@@ -107,7 +107,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         localRepository.changeOwnedCount(type, key, amountToAdd)
     }
 
-    override fun sellItem(user: User, type: String, key: String): Flowable<User> {
+    override fun sellItem(user: User?, type: String, key: String): Flowable<User> {
         return localRepository.getItem(type, key)
                 .flatMap { item -> sellItem(user, item) }
     }
@@ -135,7 +135,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 }
     }
 
-    override fun equipGear(user: User, key: String, asCostume: Boolean): Flowable<Items> {
+    override fun equipGear(user: User?, key: String, asCostume: Boolean): Flowable<Items> {
         return equip(user, if (asCostume) "costume" else "equipped", key)
     }
 
@@ -181,9 +181,12 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 .doOnNext { localRepository.changeOwnedCount(quest, -1) }
     }
 
-    override fun buyItem(user: User, key: String, value: Double): Flowable<BuyResponse> {
-        return apiClient.buyItem(key)
+    override fun buyItem(user: User?, id: String, value: Double): Flowable<BuyResponse> {
+        return apiClient.buyItem(id)
                 .doOnNext { buyResponse ->
+                    if (user == null) {
+                        return@doOnNext
+                    }
                     val copiedUser = localRepository.getUnmanagedCopy(user)
                     if (buyResponse.items != null) {
                         buyResponse.items.userId = user.id

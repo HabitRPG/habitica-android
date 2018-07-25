@@ -41,7 +41,7 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
-import com.habitrpg.android.habitica.ui.helpers.UiUtils
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
@@ -556,10 +556,10 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.start()
-        UiUtils.dismissKeyboard(this)
+        KeyboardUtil.dismissKeyboard(this)
     }
 
-    fun onForgotPasswordClicked() {
+    private fun onForgotPasswordClicked() {
         val input = EditText(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)

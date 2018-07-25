@@ -153,14 +153,14 @@ class ShopFragment : BaseFragment() {
             compositeSubscription.add(this.inventoryRepository.getOwnedItems(it)
                     .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         }
-        compositeSubscription.add(this.inventoryRepository.inAppRewards
+        compositeSubscription.add(this.inventoryRepository.getInAppRewards()
                 .map<List<String>> { it.map { it.key } }
                 .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun loadMarketGear() {
         inventoryRepository.retrieveMarketGear()
-                .zipWith(inventoryRepository.ownedEquipment.map { it.map { it.key } }, BiFunction<Shop, List<String?>, Shop> { shop, equipment ->
+                .zipWith(inventoryRepository.getOwnedEquipment().map { it.map { it.key } }, BiFunction<Shop, List<String?>, Shop> { shop, equipment ->
                     for (category in shop.categories) {
                         val items = category.items.filter {
                             !equipment.contains(it.key)

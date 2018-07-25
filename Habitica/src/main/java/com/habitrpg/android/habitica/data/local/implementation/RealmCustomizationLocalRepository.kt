@@ -10,7 +10,7 @@ import java.util.*
 
 class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), CustomizationLocalRepository {
 
-    override fun getCustomizations(type: String, category: String, onlyAvailable: Boolean): Flowable<RealmResults<Customization>> {
+    override fun getCustomizations(type: String, category: String?, onlyAvailable: Boolean): Flowable<RealmResults<Customization>> {
         var query = realm.where(Customization::class.java)
                 .equalTo("type", type)
                 .equalTo("category", category)

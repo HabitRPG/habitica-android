@@ -62,7 +62,7 @@ class FAQOverviewFragment : BaseMainFragment() {
         if (user == null || adapter == null) {
             return
         }
-        faqRepository.articles.subscribe(Consumer { adapter?.setArticles(it) }, RxErrorHandler.handleEmptyError())
+        faqRepository.getArticles().subscribe(Consumer { adapter?.setArticles(it) }, RxErrorHandler.handleEmptyError())
     }
 
     override fun customTitle(): String {

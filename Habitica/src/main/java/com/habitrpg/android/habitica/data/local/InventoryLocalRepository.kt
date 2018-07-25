@@ -42,7 +42,7 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getItem(type: String, key: String): Flowable<Item>
 
-    fun decrementMysteryItemCount(user: User)
+    fun decrementMysteryItemCount(user: User?)
     fun saveInAppRewards(onlineItems: List<ShopItem>)
 
     fun changePetFeedStatus(key: String?, feedStatus: Int)

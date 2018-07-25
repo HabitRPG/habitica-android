@@ -77,14 +77,14 @@ constructor(private val context: Context) : SetupCustomizationRepository {
                 SetupCustomization.createSkin("6bd049", R.color.skin_6bd049)
         )
 
-    override fun getCustomizations(category: String, user: User): List<SetupCustomization> {
-        return getCustomizations(category, null, user)
+    override fun getCustomizations(type: String, user: User): List<SetupCustomization> {
+        return getCustomizations(type, null, user)
     }
 
-    override fun getCustomizations(category: String, subcategory: String?, user: User): List<SetupCustomization> {
-        when (category) {
+    override fun getCustomizations(type: String, subtype: String?, user: User): List<SetupCustomization> {
+        when (type) {
             "body" -> {
-                    return when (subcategory) {
+                    return when (subtype) {
                         "size" -> sizes
                         "shirt" -> getShirts(user.preferences?.size ?: "slim")
                         else -> emptyList()
@@ -92,7 +92,7 @@ constructor(private val context: Context) : SetupCustomizationRepository {
             }
             "skin" -> return skins
             "hair" -> {
-                    return when (subcategory) {
+                    return when (subtype) {
                         "bangs" -> getBangs(user.preferences?.hair!!.color)
                         "ponytail" -> getHairBases(user.preferences?.hair!!.color)
                         "color" -> hairColors
@@ -100,7 +100,7 @@ constructor(private val context: Context) : SetupCustomizationRepository {
                     }
             }
             "extras" -> {
-                return when (subcategory) {
+                return when (subtype) {
                     "flower" -> flowers
                     "glasses" -> glasses
                     "wheelchair" -> wheelchairs

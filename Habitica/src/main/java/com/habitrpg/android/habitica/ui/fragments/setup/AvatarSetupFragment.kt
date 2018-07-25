@@ -126,9 +126,8 @@ class AvatarSetupFragment : BaseFragment() {
     }
 
     private fun loadCustomizations() {
-        if (this.user == null || this.adapter == null || this.activeCategory == null) {
-            return
-        }
+        val user = this.user ?: return
+        val activeCategory = this.activeCategory ?: return
 
         this.adapter?.setCustomizationList(customizationRepository.getCustomizations(activeCategory, activeSubCategory, user))
     }
@@ -151,7 +150,7 @@ class AvatarSetupFragment : BaseFragment() {
     }
 
 
-    fun selectedBodyCategory() {
+    private fun selectedBodyCategory() {
         activateButton(bodyButton)
         this.activeCategory = "body"
         this.subCategoryTabs?.removeAllTabs()
@@ -161,7 +160,7 @@ class AvatarSetupFragment : BaseFragment() {
         loadCustomizations()
     }
 
-    fun selectedSkinCategory() {
+    private fun selectedSkinCategory() {
         activateButton(skinButton)
         this.activeCategory = "skin"
         this.subCategoryTabs?.removeAllTabs()
@@ -170,7 +169,7 @@ class AvatarSetupFragment : BaseFragment() {
         loadCustomizations()
     }
 
-    fun selectedHairCategory() {
+    private fun selectedHairCategory() {
         activateButton(hairButton)
         this.activeCategory = "hair"
         this.subCategoryTabs?.removeAllTabs()
@@ -181,7 +180,7 @@ class AvatarSetupFragment : BaseFragment() {
         loadCustomizations()
     }
 
-    fun selectedExtrasCategory() {
+    private fun selectedExtrasCategory() {
         activateButton(extrasButton)
         this.activeCategory = "extras"
         this.subCategoryTabs?.removeAllTabs()
@@ -192,10 +191,8 @@ class AvatarSetupFragment : BaseFragment() {
         loadCustomizations()
     }
 
-    fun randomizeCharacter() {
-        if (user == null) {
-            return
-        }
+    private fun randomizeCharacter() {
+        val user = this.user ?: return
         val command = UpdateUserCommand()
         val updateData = HashMap<String, Any>()
         updateData["preferences.size"] = chooseRandomKey(customizationRepository.getCustomizations("body", "size", user), false)

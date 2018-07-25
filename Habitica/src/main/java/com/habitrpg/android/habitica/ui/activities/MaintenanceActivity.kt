@@ -15,7 +15,9 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
 import net.pherth.android.emoji_library.EmojiTextView
 import javax.inject.Inject
 
@@ -66,7 +68,8 @@ class MaintenanceActivity : BaseActivity() {
         super.onResume()
         if (!isDeprecationNotice) {
             this.maintenanceService.maintenanceStatus
-                    .compose(apiClient.configureApiCallObserver())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(Consumer { maintenanceResponse ->
                         if (!maintenanceResponse.activeMaintenance) {
                             finish()

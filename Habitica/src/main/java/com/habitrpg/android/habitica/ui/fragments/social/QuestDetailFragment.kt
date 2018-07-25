@@ -87,7 +87,7 @@ class QuestDetailFragment : BaseMainFragment() {
         super.onResume()
         compositeSubscription.add(socialRepository.getGroup(partyId).subscribe(Consumer { this.updateParty(it) }, RxErrorHandler.handleEmptyError()))
         if (questKey != null) {
-            compositeSubscription.add(inventoryRepository.getQuestContent(questKey).subscribe(Consumer { this.updateQuestContent(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getQuestContent(questKey ?: "").subscribe(Consumer { this.updateQuestContent(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 

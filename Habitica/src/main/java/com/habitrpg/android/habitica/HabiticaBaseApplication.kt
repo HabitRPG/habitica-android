@@ -10,6 +10,7 @@ import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import android.preference.PreferenceManager
+import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatDelegate
 import android.util.Log
 
@@ -50,7 +51,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
-abstract class HabiticaBaseApplication : Application() {
+abstract class HabiticaBaseApplication : MultiDexApplication() {
     var refWatcher: RefWatcher? = null
     @Inject
     internal lateinit var lazyApiHelper: ApiClient

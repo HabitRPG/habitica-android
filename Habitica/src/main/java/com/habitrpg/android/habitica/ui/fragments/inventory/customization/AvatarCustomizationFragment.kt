@@ -114,14 +114,11 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     }
 
     private fun loadCustomizations() {
-        if (user == null) {
-            return
-        }
+        val type = this.type ?: return
         compositeSubscription.add(customizationRepository.getCustomizations(type, category, true).subscribe(Consumer<RealmResults<Customization>> { adapter.setCustomizations(it) }, RxErrorHandler.handleEmptyError()))
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"
             compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe(Consumer<RealmResults<Customization>> { adapter.additionalSetItems = it }, RxErrorHandler.handleEmptyError()))
-
         }
     }
 

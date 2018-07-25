@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -43,6 +44,9 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var configManager: RemoteConfigManager
+
     private var isTavern: Boolean = false
     internal var layoutManager: LinearLayoutManager? = null
     private var groupId: String = ""
@@ -117,6 +121,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         chatBarView.sendAction = { sendChatMessage(it) }
+        chatBarView.maxChatLength = configManager.maxChatLength()
 
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()

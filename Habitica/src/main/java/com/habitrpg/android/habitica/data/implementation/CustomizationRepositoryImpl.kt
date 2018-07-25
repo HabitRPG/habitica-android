@@ -10,7 +10,7 @@ import io.realm.RealmResults
 
 class CustomizationRepositoryImpl(localRepository: CustomizationLocalRepository, apiClient: ApiClient) : ContentRepositoryImpl<CustomizationLocalRepository>(localRepository, apiClient), CustomizationRepository {
 
-    override fun getCustomizations(type: String, category: String, onlyAvailable: Boolean): Flowable<RealmResults<Customization>> {
+    override fun getCustomizations(type: String, category: String?, onlyAvailable: Boolean): Flowable<RealmResults<Customization>> {
         return localRepository.getCustomizations(type, category, onlyAvailable)
     }
 }

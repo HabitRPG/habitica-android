@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
+import android.content.DialogInterface
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
@@ -49,11 +50,11 @@ class RewardViewHolder(itemView: View) : BaseTaskViewHolder(itemView) {
         if (isItem) {
             val dialog = ItemDetailDialog(context)
             dialog.setTitle(task?.text)
-            dialog.setDescription(task?.notes)
+            dialog.setDescription(task?.notes ?: "")
             dialog.setImage("shop_" + this.task?.id)
             dialog.setCurrency("gold")
             dialog.setValue(task!!.value)
-            dialog.setBuyListener { _, _ -> this.buyReward() }
+            dialog.setBuyListener( DialogInterface.OnClickListener { _, _ -> this.buyReward() })
             dialog.show()
         } else {
             val event = TaskTappedEvent()

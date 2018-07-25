@@ -120,9 +120,9 @@ class StableRecyclerFragment : BaseFragment() {
 
     private fun loadItems() {
         val observable: Flowable<out Animal> = if ("pets" == itemType) {
-            inventoryRepository.pets.firstElement().toFlowable().flatMap { Flowable.fromIterable(it) }
+            inventoryRepository.getPets().firstElement().toFlowable().flatMap { Flowable.fromIterable(it) }
         } else {
-            inventoryRepository.mounts.firstElement().toFlowable().flatMap { Flowable.fromIterable(it) }
+            inventoryRepository.getMounts().firstElement().toFlowable().flatMap { Flowable.fromIterable(it) }
         }
 
         observable.toList().flatMap { unsortedAnimals ->

@@ -33,8 +33,8 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.UiUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
@@ -142,9 +142,9 @@ class FullProfileActivity : BaseActivity() {
                                         String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL)
                             }, RxErrorHandler.handleEmptyError())
 
-                    UiUtils.dismissKeyboard(this)
+                    KeyboardUtil.dismissKeyboard(this)
                 }
-                .setNegativeButton(android.R.string.cancel) { _, _ -> UiUtils.dismissKeyboard(this) }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> KeyboardUtil.dismissKeyboard(this) }
 
                 .create()
 
@@ -154,11 +154,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun updateView(user: Member) {
-        val profile = user.profile
-
-        if (profile == null) {
-            return
-        }
+        val profile = user.profile ?: return
 
         userName = profile.name
 

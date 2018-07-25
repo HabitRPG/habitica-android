@@ -124,6 +124,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'multidex'
     }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 
@@ -135,6 +137,7 @@ android {
         applicationId "com.habitrpg.android.habitica"
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STORE", "\"google\""
+        multiDexEnabled true
     }
 
     lintOptions {
@@ -161,7 +164,7 @@ android {
         release {
             signingConfig signingConfigs.release
             debuggable false
-            multiDexEnabled false
+            multiDexEnabled true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"

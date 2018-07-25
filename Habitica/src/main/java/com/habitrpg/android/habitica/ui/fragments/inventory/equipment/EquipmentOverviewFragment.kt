@@ -54,7 +54,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         setImageNames()
 
         if (this.nameMapping.isEmpty()) {
-            compositeSubscription.add(inventoryRepository.ownedEquipment.subscribe(Consumer {
+            compositeSubscription.add(inventoryRepository.getOwnedEquipment().subscribe(Consumer {
                 for (gear in it) {
                     this.nameMapping[gear.key ?: ""] = gear.text
                 }

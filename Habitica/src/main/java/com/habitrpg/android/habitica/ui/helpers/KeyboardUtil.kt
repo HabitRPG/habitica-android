@@ -77,17 +77,12 @@ class KeyboardUtil(activity: Activity, private val contentView: View) {
         }
     }
 
-
-
-    /**
-     * Helper to hide the keyboard
-     *
-     * @param act
-     */
-    fun hideKeyboard(act: Activity?) {
-        if (act != null && act.currentFocus != null) {
-            val inputMethodManager = act.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(act.currentFocus?.windowToken, 0)
+    companion object {
+        fun dismissKeyboard(act: Activity?) {
+            if (act != null && act.currentFocus != null) {
+                val inputMethodManager = act.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(act.currentFocus?.windowToken, 0)
+            }
         }
     }
 }

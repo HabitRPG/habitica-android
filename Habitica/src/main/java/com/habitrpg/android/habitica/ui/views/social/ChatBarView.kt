@@ -27,7 +27,7 @@ class ChatBarView : FrameLayout {
 
     private var navBarAccountedHeightCalculated = false
 
-    private var maxChatLength = 200
+    internal var maxChatLength = 200
 
     var sendAction: ((String) -> Unit)? = null
 

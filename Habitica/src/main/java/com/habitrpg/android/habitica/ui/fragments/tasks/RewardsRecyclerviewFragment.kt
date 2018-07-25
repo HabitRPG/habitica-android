@@ -45,7 +45,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        inventoryRepository.inAppRewards.subscribe(Consumer {
+        inventoryRepository.getInAppRewards().subscribe(Consumer {
             (recyclerAdapter as RewardsRecyclerViewAdapter?)?.updateItemRewards(it)
         }, RxErrorHandler.handleEmptyError())
     }

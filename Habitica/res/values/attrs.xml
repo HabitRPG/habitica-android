@@ -21,7 +21,7 @@
         <attr name="showSeedsPromo" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="MaxHeightScrollView">
+    <declare-styleable name="MaxHeightLinearLayout">
         <attr name="maxHeightMultiplier" format="float" />
     </declare-styleable>
     <declare-styleable name="SubscriptionOptionView">

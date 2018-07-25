@@ -178,7 +178,7 @@ class NavigationDrawerFragment : DialogFragment() {
         subscriptions?.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .doOnNext({  quest = it.quest })
                 .filter { it.hasActiveQuest }
-                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key).firstElement() }
+                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
                 .subscribe(Consumer {
                    questContent = it
                 }, RxErrorHandler.handleEmptyError()))

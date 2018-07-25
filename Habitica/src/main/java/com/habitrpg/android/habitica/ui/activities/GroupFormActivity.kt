@@ -16,8 +16,8 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.UiUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import net.pherth.android.emoji_library.EmojiEditText
 import net.pherth.android.emoji_library.EmojiPopup
@@ -152,13 +152,13 @@ class GroupFormActivity : BaseActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
-        UiUtils.dismissKeyboard(this)
+        KeyboardUtil.dismissKeyboard(this)
         return true
     }
 
     override fun onBackPressed() {
         finish()
-        UiUtils.dismissKeyboard(this)
+        KeyboardUtil.dismissKeyboard(this)
     }
 
     private fun finishActivitySuccessfuly() {
@@ -170,7 +170,7 @@ class GroupFormActivity : BaseActivity() {
         resultIntent.putExtras(bundle)
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
-        UiUtils.dismissKeyboard(this)
+        KeyboardUtil.dismissKeyboard(this)
     }
 
     private inner class EmojiClickListener(internal var view: EmojiEditText) : View.OnClickListener {

@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.UiUtils
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_inbox.*
@@ -94,7 +94,7 @@ class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, 
                     openInboxMessages(uuidEditText.text.toString(), "")
                 }
                 .setNeutralButton(getString(R.string.action_cancel)) { dialog, _ ->
-                    UiUtils.dismissKeyboard(thisActivity)
+                    KeyboardUtil.dismissKeyboard(thisActivity)
                     dialog.cancel()
                 }
                 .create()

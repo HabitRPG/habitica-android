@@ -11,11 +11,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.helpers.UiUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.functions.Consumer
@@ -83,8 +84,8 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
 
     override fun onQueryTextSubmit(s: String): Boolean {
         viewAdapter.filter.filter(s)
-        if (this.activity != null) {
-            UiUtils.dismissKeyboard(this.activity!!)
+        activity.notNull {
+            KeyboardUtil.dismissKeyboard(it)
         }
         return true
     }

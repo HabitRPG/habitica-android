@@ -130,7 +130,7 @@ class PartyDetailFragment : BaseFragment() {
             questImageWrapper?.visibility = View.VISIBLE
             val mainHandler = Handler(context?.mainLooper)
             mainHandler.postDelayed({
-                inventoryRepository.getQuestContent(quest?.key)
+                inventoryRepository.getQuestContent(quest?.key ?: "")
                         .firstElement()
                         .subscribe(Consumer<QuestContent> { this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
             }, 500)

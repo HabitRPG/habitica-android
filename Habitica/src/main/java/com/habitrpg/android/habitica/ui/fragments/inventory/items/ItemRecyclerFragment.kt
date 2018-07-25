@@ -117,24 +117,28 @@ class ItemRecyclerFragment : BaseFragment() {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
         }
 
-        if (this.isHatching) {
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            this.titleView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
-            this.titleView?.visibility = View.VISIBLE
-            this.footerView?.text = getString(R.string.hatching_market_info)
-            this.footerView?.visibility = View.VISIBLE
-            this.openMarketButton?.visibility = View.VISIBLE
-        } else if (this.isFeeding) {
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            this.titleView?.text = getString(R.string.dialog_feeding, this.feedingPet?.colorText, this.feedingPet?.animalText)
-            this.titleView?.visibility = View.VISIBLE
-            this.footerView?.text = getString(R.string.feeding_market_info)
-            this.footerView?.visibility = View.VISIBLE
-            this.openMarketButton?.visibility = View.VISIBLE
-        } else {
-            this.titleView?.visibility = View.GONE
-            this.footerView?.visibility = View.GONE
-            this.openMarketButton?.visibility = View.GONE
+        when {
+            this.isHatching -> {
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                this.titleView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
+                this.titleView?.visibility = View.VISIBLE
+                this.footerView?.text = getString(R.string.hatching_market_info)
+                this.footerView?.visibility = View.VISIBLE
+                this.openMarketButton?.visibility = View.VISIBLE
+            }
+            this.isFeeding -> {
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                this.titleView?.text = getString(R.string.dialog_feeding, this.feedingPet?.colorText, this.feedingPet?.animalText)
+                this.titleView?.visibility = View.VISIBLE
+                this.footerView?.text = getString(R.string.feeding_market_info)
+                this.footerView?.visibility = View.VISIBLE
+                this.openMarketButton?.visibility = View.VISIBLE
+            }
+            else -> {
+                this.titleView?.visibility = View.GONE
+                this.footerView?.visibility = View.GONE
+                this.openMarketButton?.visibility = View.GONE
+            }
         }
 
         openMarketButton?.setOnClickListener {
@@ -164,13 +168,13 @@ class ItemRecyclerFragment : BaseFragment() {
     }
 
     private fun loadItems() {
-        var itemClass: Class<out Item>? = null
-        when (itemType) {
-            "eggs" -> itemClass = Egg::class.java
-            "hatchingPotions" -> itemClass = HatchingPotion::class.java
-            "food" -> itemClass = Food::class.java
-            "quests" -> itemClass = QuestContent::class.java
-            "special" -> itemClass = SpecialItem::class.java
+        val itemClass: Class<out Item> = when (itemType) {
+            "eggs" -> Egg::class.java
+            "hatchingPotions" -> HatchingPotion::class.java
+            "food" -> Food::class.java
+            "quests" -> QuestContent::class.java
+            "special" -> SpecialItem::class.java
+            else -> Egg::class.java
         }
         inventoryRepository.getOwnedItems(itemClass, user).firstElement().subscribe(Consumer { items ->
             if (items.size > 0) {
@@ -178,7 +182,7 @@ class ItemRecyclerFragment : BaseFragment() {
             }
         }, RxErrorHandler.handleEmptyError())
 
-        compositeSubscription.add(inventoryRepository?.ownedPets.subscribe(Consumer { adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository?.getOwnedPets().subscribe(Consumer { adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun openMarket() {
@@ -187,6 +191,6 @@ class ItemRecyclerFragment : BaseFragment() {
 
     companion object {
 
-        private val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
+        private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
     }
 }

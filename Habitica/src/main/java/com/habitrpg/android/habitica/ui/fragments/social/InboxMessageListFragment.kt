@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -22,8 +21,8 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.helpers.UiUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.functions.Action
@@ -127,7 +126,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         replyToUserUUID?.notNull {
             socialRepository.postPrivateMessage(it, chatText)
                     .subscribe(Consumer { this.refreshUserInbox() }, RxErrorHandler.handleEmptyError())
-            UiUtils.dismissKeyboard(getActivity())
+            KeyboardUtil.dismissKeyboard(getActivity())
         }
     }
 

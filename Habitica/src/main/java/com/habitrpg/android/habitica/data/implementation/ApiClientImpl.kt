@@ -71,7 +71,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     private val apiService: ApiService
 
     private val apiCallTransformer = FlowableTransformer<HabitResponse<Any>, Any> { observable ->
-        observable.map { habitResponse ->
+        observable
+                .filter { it.data != null }
+                .map { habitResponse ->
             if (habitResponse.notifications != null) {
                 popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
             }
