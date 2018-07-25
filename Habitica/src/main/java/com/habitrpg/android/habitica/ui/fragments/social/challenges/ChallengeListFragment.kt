@@ -141,7 +141,7 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
         inflater?.inflate(R.menu.menu_list_challenges, menu)
 
 
-        val badgeLayout = MenuItemCompat.getActionView(menu!!.findItem(R.id.action_search)) as RelativeLayout?
+        val badgeLayout = MenuItemCompat.getActionView(menu?.findItem(R.id.action_search)) as? RelativeLayout
         if (badgeLayout != null) {
             val filterCountTextView = badgeLayout.findViewById<TextView>(R.id.badge_textview)
             filterCountTextView.text = null
@@ -167,6 +167,7 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
         challengeAdapter?.filter(challengeFilterOptions)
     }
 
+    @Suppress("ReturnCount")
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long

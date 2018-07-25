@@ -64,12 +64,11 @@ class ChallengesOverviewFragment : BaseMainFragment() {
             override fun getItem(position: Int): Fragment? {
                 val fragment = Fragment()
 
-                when (position) {
-                    0 -> return userChallengesFragment
-                    1 -> return availableChallengesFragment
+                return when (position) {
+                    0 -> userChallengesFragment
+                    1 -> availableChallengesFragment
+                    else -> fragment
                 }
-
-                return fragment
             }
 
             override fun getCount(): Int {
@@ -77,11 +76,11 @@ class ChallengesOverviewFragment : BaseMainFragment() {
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                when (position) {
-                    0 -> return getString(R.string.my_challenges)
-                    1 -> return getString(R.string.public_challenges)
+                return when (position) {
+                    0 -> getString(R.string.my_challenges)
+                    1 -> getString(R.string.public_challenges)
+                    else -> ""
                 }
-                return ""
             }
         }
         viewPager?.adapter = statePagerAdapter

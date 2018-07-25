@@ -189,14 +189,14 @@ class PartyDetailFragment : BaseFragment() {
         }
     }
 
-    fun inviteNewQuest() {
+    private fun inviteNewQuest() {
         val fragment = ItemRecyclerFragment()
         fragment.itemType = "quests"
         fragment.itemTypeText = getString(R.string.quest)
         fragment.show(fragmentManager, "questDialog")
     }
 
-    fun leaveParty() {
+    private fun leaveParty() {
         val builder = AlertDialog.Builder(activity)
                 .setMessage(R.string.leave_party_confirmation)
                 .setPositiveButton(R.string.yes) { _, _ ->
@@ -206,14 +206,14 @@ class PartyDetailFragment : BaseFragment() {
         builder.show()
     }
 
-    fun onQuestAccept() {
+    private fun onQuestAccept() {
         partyId.notNull {
             socialRepository.acceptQuest(user, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
 
-    fun onQuestReject() {
+    private fun onQuestReject() {
         partyId.notNull {
             socialRepository.rejectQuest(user, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
@@ -240,7 +240,7 @@ class PartyDetailFragment : BaseFragment() {
             fragment.questKey = party?.quest?.key
         }
         if (activity != null) {
-            val activity = activity as MainActivity?
+            val activity = activity as? MainActivity
             activity?.displayFragment(fragment)
         }
     }

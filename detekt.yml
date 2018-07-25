@@ -150,14 +150,14 @@ complexity:
   ComplexMethod:
     threshold: 10
   TooManyFunctions:
-    threshold: 10
+    threshold: 40
   ComplexCondition:
-    threshold: 3
+    threshold: 5
   LabeledExpression:
     active: false
   StringLiteralDuplication:
     active: true
-    threshold: 2
+    threshold: 4
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: true
     ignoreStringsRegex: '$^'
@@ -210,13 +210,13 @@ formatting:
     autoCorrect: true
   ExpressionBodySyntax:
     active: false
-    autoCorrect: false
+    autoCorrect: true
   ExpressionBodySyntaxLineBreaks:
     active: false
-    autoCorrect: false
+    autoCorrect: true
   OptionalReturnKeyword:
     active: true
-    autoCorrect: false
+    autoCorrect: true
 
 style:
   active: true
@@ -242,17 +242,17 @@ style:
   ModifierOrder:
     active: true
   MagicNumber:
-    active: true
+    active: false
     ignoreNumbers: '-1,0,1,2'
     ignoreHashCodeFunction: false
-    ignorePropertyDeclaration: false
+    ignorePropertyDeclaration: true
     ignoreAnnotation: false
   WildcardImport:
-    active: true
+    active: false
   SafeCast:
     active: true
   MaxLineLength:
-    active: true
+    active: false
     maxLineLength: 120
     excludePackageStatements: false
     excludeImportStatements: false

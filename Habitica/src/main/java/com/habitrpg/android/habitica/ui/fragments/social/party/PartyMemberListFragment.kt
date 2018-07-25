@@ -61,7 +61,7 @@ class PartyMemberListFragment : BaseFragment() {
 
     private fun refreshMembers() {
         setRefreshing(true)
-        socialRepository.retrieveGroupMembers(partyId!!, true).doOnComplete { setRefreshing(false) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        socialRepository.retrieveGroupMembers(partyId ?: "", true).doOnComplete { setRefreshing(false) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     private fun setRefreshing(isRefreshing: Boolean) {
@@ -76,7 +76,7 @@ class PartyMemberListFragment : BaseFragment() {
         if (partyId == null) {
             return
         }
-        socialRepository.getGroupMembers(partyId!!).firstElement().subscribe(Consumer { users ->
+        socialRepository.getGroupMembers(partyId ?: "").firstElement().subscribe(Consumer { users ->
             adapter?.updateData(users)
         }, RxErrorHandler.handleEmptyError())
     }

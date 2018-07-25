@@ -72,14 +72,14 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.menu_public_guild, menu)
+        inflater?.inflate(R.menu.menu_public_guild, menu)
 
-        val searchItem = menu!!.findItem(R.id.action_guild_search)
-        val guildSearchView = searchItem.actionView as SearchView
-        val theTextArea = guildSearchView.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
-        theTextArea.setHintTextColor(ContextCompat.getColor(context!!, R.color.white))
-        guildSearchView.queryHint = getString(R.string.guild_search_hint)
-        guildSearchView.setOnQueryTextListener(this)
+        val searchItem = menu?.findItem(R.id.action_guild_search)
+        val guildSearchView = searchItem?.actionView as? SearchView
+        val theTextArea = guildSearchView?.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
+        context.notNull { theTextArea?.setHintTextColor(ContextCompat.getColor(it, R.color.white)) }
+        guildSearchView?.queryHint = getString(R.string.guild_search_hint)
+        guildSearchView?.setOnQueryTextListener(this)
     }
 
     override fun onQueryTextSubmit(s: String): Boolean {

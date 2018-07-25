@@ -3,14 +3,12 @@ package com.habitrpg.android.habitica.ui
 
 import android.annotation.TargetApi
 import android.content.Context
-import android.content.res.TypedArray
 import android.os.Build
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
-
 import com.habitrpg.android.habitica.R
 
 class MaxHeightLinearLayout : LinearLayout {
@@ -53,8 +51,8 @@ class MaxHeightLinearLayout : LinearLayout {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var heightMeasurement = heightMeasureSpec
 
-        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        windowManager.defaultDisplay.getMetrics(displaymetrics)
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
+        windowManager?.defaultDisplay?.getMetrics(displaymetrics)
         val height = (displaymetrics.heightPixels * maxHeight).toInt()
         heightMeasurement = Math.min(heightMeasurement, View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.AT_MOST))
 

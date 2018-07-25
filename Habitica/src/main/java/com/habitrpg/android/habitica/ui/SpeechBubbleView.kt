@@ -67,9 +67,7 @@ class SpeechBubbleView(context: Context, attrs: AttributeSet) : FrameLayout(cont
         if (textView.isAnimating) {
             textView.stopTextAnimation()
         } else {
-            if (showNextListener != null) {
-                showNextListener!!.showNextStep()
-            }
+            showNextListener?.showNextStep()
         }
     }
 

@@ -30,8 +30,8 @@ class PartyInviteFragment : BaseFragment() {
         get() {
             val values = ArrayList<String>()
             for (i in 0 until (invitationWrapper?.childCount ?: 0)) {
-                val valueEditText = invitationWrapper?.getChildAt(i) as EditText
-                if (valueEditText.text.toString().isNotEmpty()) {
+                val valueEditText = invitationWrapper?.getChildAt(i) as? EditText
+                if (valueEditText?.text?.toString()?.isNotEmpty() == true) {
                     values.add(valueEditText.text.toString())
                 }
             }
@@ -64,7 +64,7 @@ class PartyInviteFragment : BaseFragment() {
         component.inject(this)
     }
 
-    fun addInviteField() {
+    private fun addInviteField() {
         val editText = EditText(context)
 
         if (isEmailInvite) {
@@ -76,7 +76,7 @@ class PartyInviteFragment : BaseFragment() {
         invitationWrapper?.addView(editText)
     }
 
-    fun startQRInvite() {
+    private fun startQRInvite() {
         val scanIntegrator = IntentIntegrator(activity)
         scanIntegrator.initiateScan()
     }

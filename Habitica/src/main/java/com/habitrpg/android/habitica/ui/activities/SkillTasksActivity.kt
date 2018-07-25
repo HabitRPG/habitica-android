@@ -70,12 +70,12 @@ class SkillTasksActivity : BaseActivity() {
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                when (position) {
-                    0 -> return getString(R.string.habits)
-                    1 -> return getString(R.string.dailies)
-                    2 -> return getString(R.string.todos)
+                return when (position) {
+                    0 -> getString(R.string.habits)
+                    1 -> getString(R.string.dailies)
+                    2 -> getString(R.string.todos)
+                    else -> ""
                 }
-                return ""
             }
         }
 

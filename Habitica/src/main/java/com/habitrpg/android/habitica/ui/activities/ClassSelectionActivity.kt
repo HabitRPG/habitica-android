@@ -51,9 +51,9 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         val preferences = Preferences()
         preferences.setHair(Hair())
         preferences.costume = false
-        preferences.setSize(bundle.getString("size")!!)
-        preferences.setSkin(bundle.getString("skin")!!)
-        preferences.setShirt(bundle.getString("shirt")!!)
+        preferences.setSize(bundle.getString("size") ?: "slim")
+        preferences.setSkin(bundle.getString("skin") ?: "")
+        preferences.setShirt(bundle.getString("shirt") ?: "")
         preferences.hair?.bangs = bundle.getInt("hairBangs")
         preferences.hair?.base = bundle.getInt("hairBase")
         preferences.hair?.color = bundle.getString("hairColor")
@@ -117,23 +117,23 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         return user
     }
 
-    fun healerSelected() {
+    private fun healerSelected() {
         displayConfirmationDialogForClass(getString(R.string.healer), Stats.HEALER)
     }
 
-    fun mageSelected() {
+    private fun mageSelected() {
         displayConfirmationDialogForClass(getString(R.string.mage), Stats.MAGE)
     }
 
-    fun rogueSelected() {
+    private fun rogueSelected() {
         displayConfirmationDialogForClass(getString(R.string.rogue), Stats.ROGUE)
     }
 
-    fun warriorSelected() {
+    private fun warriorSelected() {
         displayConfirmationDialogForClass(getString(R.string.warrior), Stats.WARRIOR)
     }
 
-    fun optOutSelected() {
+    private fun optOutSelected() {
         if (!this.isInitialSelection && this.classWasUnset == false) {
             return
         }

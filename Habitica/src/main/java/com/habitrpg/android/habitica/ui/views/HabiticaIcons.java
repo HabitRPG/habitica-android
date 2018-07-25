@@ -12918,7 +12918,6 @@ class PaintCodeDashPathEffect {
     }
 }
 
-
 class PaintCodeStaticLayout {
     private StaticLayout layout;
     private int width;

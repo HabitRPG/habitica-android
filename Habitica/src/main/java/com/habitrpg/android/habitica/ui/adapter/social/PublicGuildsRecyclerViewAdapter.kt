@@ -34,7 +34,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuildViewHolder {
         val guildViewHolder = GuildViewHolder(parent.inflate(R.layout.item_public_guild))
         guildViewHolder.itemView.setOnClickListener { v ->
-            val guild = v.tag as Group
+            val guild = v.tag as? Group ?: return@setOnClickListener
             val guildFragment = GuildFragment()
             guildFragment.setGuildId(guild.id)
             guildFragment.isMember = isInGroup(guild)
@@ -43,11 +43,11 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             EventBus.getDefault().post(event)
         }
         guildViewHolder.joinLeaveButton.setOnClickListener { v ->
-            val guild = v.tag as Group
+            val guild = v.tag as? Group ?: return@setOnClickListener
             val isMember = this.memberGuildIDs.contains(guild.id)
             if (isMember) {
-                this@PublicGuildsRecyclerViewAdapter.apiClient!!.leaveGroup(guild.id)
-                        .subscribe(Consumer {
+                this@PublicGuildsRecyclerViewAdapter.apiClient?.leaveGroup(guild.id)
+                        ?.subscribe(Consumer {
                             memberGuildIDs.remove(guild.id)
                             if (data != null) {
                                 val indexOfGroup = data!!.indexOf(guild)
@@ -55,12 +55,12 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
                             }
                         }, RxErrorHandler.handleEmptyError())
             } else {
-                this@PublicGuildsRecyclerViewAdapter.apiClient!!.joinGroup(guild.id)
-                        .subscribe(Consumer { group ->
+                this@PublicGuildsRecyclerViewAdapter.apiClient?.joinGroup(guild.id)
+                        ?.subscribe(Consumer { group ->
                             memberGuildIDs.add(group.id)
                             if (data != null) {
-                                val indexOfGroup = data!!.indexOf(group)
-                                notifyItemChanged(indexOfGroup)
+                                val indexOfGroup = data?.indexOf(group)
+                                notifyItemChanged(indexOfGroup ?: 0)
                             }
                         }, RxErrorHandler.handleEmptyError())
             }

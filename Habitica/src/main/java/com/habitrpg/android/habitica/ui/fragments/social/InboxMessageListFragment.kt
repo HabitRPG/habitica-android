@@ -136,23 +136,23 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
     }
 
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {
-        val clipMan = getActivity()?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipMan = getActivity()?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
-        clipMan.primaryClip = messageText
-        val activity = getActivity() as MainActivity?
+        clipMan?.primaryClip = messageText
+        val activity = getActivity() as? MainActivity
         if (activity != null) {
             showSnackbar(activity.floatingMenuWrapper, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
         }
     }
 
     private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-        val builder = AlertDialog.Builder(getActivity()!!)
+        val activity = getActivity() as? MainActivity ?: return
+        val builder = AlertDialog.Builder(activity)
         builder.setMessage(R.string.chat_flag_confirmation)
                 .setPositiveButton(R.string.flag_confirm) { _, _ ->
                     socialRepository.flagMessage(chatMessage)
                             .subscribe(Consumer {
-                                val activity = getActivity() as MainActivity?
-                                activity?.floatingMenuWrapper.notNull {
+                                activity.floatingMenuWrapper.notNull {
                                     showSnackbar(it, "Flagged message by " + chatMessage.user, HabiticaSnackbar.SnackbarDisplayType.NORMAL)
                                 }
                             }, RxErrorHandler.handleEmptyError())

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -41,9 +42,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val obj = this.itemList[position]
         if (obj.javaClass == String::class.java) {
-            (holder as SectionViewHolder).bind(obj as String)
+            (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
         } else {
-            (holder as StableViewHolder).bind(itemList[position] as Animal)
+            (obj as? Animal).notNull { (holder as? StableViewHolder)?.bind(it) }
 
         }
     }
@@ -75,7 +76,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ownedTextView.visibility = View.VISIBLE
             this.imageView.alpha = 1.0f
             if (item.numberOwned > 0) {
-                this.ownedTextView.text = animal!!.numberOwned.toString()
+                this.ownedTextView.text = animal?.numberOwned?.toString()
                 if (itemType == "pets") {
                     DataBindingUtils.loadImage(this.imageView, "Pet-" + item.key)
                 } else {
@@ -96,12 +97,12 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         val fragment = PetDetailRecyclerFragment()
                         fragment.animalType = animal.animal
                         fragment.animalGroup = animal.animalGroup
-                        activity!!.displayFragment(fragment)
+                        activity?.displayFragment(fragment)
                     } else {
                         val fragment = MountDetailRecyclerFragment()
                         fragment.animalType = animal.animal
                         fragment.animalGroup = animal.animalGroup
-                        activity!!.displayFragment(fragment)
+                        activity?.displayFragment(fragment)
                     }
                 }
             }

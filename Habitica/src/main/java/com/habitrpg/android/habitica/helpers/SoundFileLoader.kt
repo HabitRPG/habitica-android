@@ -26,7 +26,7 @@ class SoundFileLoader(private val context: Context) {
             return cacheDir?.path
         }
 
-    @SuppressLint("SetWorldReadable", "ObsoleteSdkInt")
+    @SuppressLint("SetWorldReadable", "ObsoleteSdkInt", "ReturnCount")
     fun download(files: List<SoundFile>): Single<List<SoundFile>> {
         return Observable.fromIterable(files)
                 .flatMap({ audioFile ->

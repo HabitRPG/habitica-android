@@ -66,15 +66,15 @@ class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnT
         }
     }
 
-    fun completeButtonClicked() {
+    private fun completeButtonClicked() {
         this.onReaction?.onTutorialCompleted(this.step)
     }
 
-    fun dismissButtonClicked() {
+    private fun dismissButtonClicked() {
         this.onReaction?.onTutorialDeferred(this.step)
     }
 
-    fun backgroundClicked() {
+    private fun backgroundClicked() {
         speechBubbleView.onClick(speechBubbleView)
     }
 

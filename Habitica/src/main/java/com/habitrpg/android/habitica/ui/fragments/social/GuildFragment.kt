@@ -83,20 +83,21 @@ class GuildFragment : BaseMainFragment() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         if (this.activity != null && this.guild != null) {
             if (this.isMember) {
-                if (this.user != null && this.user!!.id == this.guild!!.leaderID) {
-                    this.activity!!.menuInflater.inflate(R.menu.guild_admin, menu)
+                if (this.user != null && this.user?.id == this.guild?.leaderID) {
+                    this.activity?.menuInflater?.inflate(R.menu.guild_admin, menu)
                 } else {
-                    this.activity!!.menuInflater.inflate(R.menu.guild_member, menu)
+                    this.activity?.menuInflater?.inflate(R.menu.guild_member, menu)
                 }
             } else {
-                this.activity!!.menuInflater.inflate(R.menu.guild_nonmember, menu)
+                this.activity?.menuInflater?.inflate(R.menu.guild_nonmember, menu)
             }
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    @Suppress("ReturnCount")
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val id = item!!.itemId
+        val id = item?.itemId
 
         when (id) {
             R.id.menu_guild_join -> {
@@ -136,7 +137,7 @@ class GuildFragment : BaseMainFragment() {
                     }
                     1 -> {
                         chatListFragment = ChatListFragment()
-                        chatListFragment!!.configure(this@GuildFragment.guildId!!, user, false)
+                        chatListFragment?.configure(this@GuildFragment.guildId ?: "", user, false)
                         fragment = chatListFragment
                     }
                     else -> fragment = Fragment()
@@ -161,13 +162,13 @@ class GuildFragment : BaseMainFragment() {
         viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1 && this@GuildFragment.guild != null) {
-                    chatListFragment!!.setNavigatedToFragment(this@GuildFragment.guild!!.id)
+                    chatListFragment?.setNavigatedToFragment(this@GuildFragment.guild?.id ?: "")
                 }
             }
 
             override fun onPageSelected(position: Int) {
                 if (position == 1 && this@GuildFragment.guild != null && chatListFragment != null) {
-                    chatListFragment!!.setNavigatedToFragment(this@GuildFragment.guild!!.id)
+                    chatListFragment?.setNavigatedToFragment(this@GuildFragment.guild?.id ?: "")
                 }
             }
 
@@ -198,12 +199,12 @@ class GuildFragment : BaseMainFragment() {
         when (requestCode) {
             GroupFormActivity.GROUP_FORM_ACTIVITY -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val bundle = data!!.extras
+                    val bundle = data?.extras
                     this.socialRepository.updateGroup(this.guild,
-                            bundle!!.getString("name"),
-                            bundle.getString("description"),
-                            bundle.getString("leader"),
-                            bundle.getString("privacy"))
+                            bundle?.getString("name"),
+                            bundle?.getString("description"),
+                            bundle?.getString("leader"),
+                            bundle?.getString("privacy"))
                             .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 }
             }

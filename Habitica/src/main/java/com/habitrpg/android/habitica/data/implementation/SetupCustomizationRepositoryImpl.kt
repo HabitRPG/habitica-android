@@ -1,18 +1,14 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
-
-import java.util.ArrayList
-import java.util.Arrays
-
+import java.util.*
 import javax.inject.Inject
 
-
+@Suppress("StringLiteralDuplication")
 class SetupCustomizationRepositoryImpl @Inject
 constructor(private val context: Context) : SetupCustomizationRepository {
 
@@ -82,33 +78,33 @@ constructor(private val context: Context) : SetupCustomizationRepository {
     }
 
     override fun getCustomizations(type: String, subtype: String?, user: User): List<SetupCustomization> {
-        when (type) {
+        return when (type) {
             "body" -> {
-                    return when (subtype) {
+                    when (subtype) {
                         "size" -> sizes
                         "shirt" -> getShirts(user.preferences?.size ?: "slim")
                         else -> emptyList()
                     }
             }
-            "skin" -> return skins
+            "skin" -> skins
             "hair" -> {
-                    return when (subtype) {
-                        "bangs" -> getBangs(user.preferences?.hair!!.color)
-                        "ponytail" -> getHairBases(user.preferences?.hair!!.color)
+                    when (subtype) {
+                        "bangs" -> getBangs(user.preferences?.hair?.color ?: "")
+                        "ponytail" -> getHairBases(user.preferences?.hair?.color ?: "")
                         "color" -> hairColors
                         else -> emptyList()
                     }
             }
             "extras" -> {
-                return when (subtype) {
+                when (subtype) {
                     "flower" -> flowers
                     "glasses" -> glasses
                     "wheelchair" -> wheelchairs
                     else -> emptyList()
                 }
             }
+            else -> emptyList()
         }
-        return ArrayList()
     }
 
     private fun getHairBases(color: String): List<SetupCustomization> {

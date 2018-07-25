@@ -19,8 +19,6 @@ import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
-import java.util.*
-
 
 class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, private val userId: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient), SocialRepository {
     override fun getGroupMembership(id: String): Flowable<GroupMembership> {

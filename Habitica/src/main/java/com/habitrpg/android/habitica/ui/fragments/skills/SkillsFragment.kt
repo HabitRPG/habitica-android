@@ -111,7 +111,7 @@ class SkillsFragment : BaseMainFragment() {
         adapter?.mana = response.user.stats?.mp ?: 0.0
         val activity = activity ?: return
         if ("special" == usedSkill?.habitClass) {
-            showSnackbar(activity.floatingMenuWrapper, context!!.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
+            showSnackbar(activity.floatingMenuWrapper, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
         } else {
             showSnackbar(activity.floatingMenuWrapper, null,
                     context?.getString(R.string.used_skill_without_mana, usedSkill?.text),

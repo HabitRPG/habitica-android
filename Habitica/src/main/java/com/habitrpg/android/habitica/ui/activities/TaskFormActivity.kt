@@ -203,7 +203,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             attributeWrapper.visibility = View.GONE
         }
 
-        if (taskType == "habit") {
+        if (taskType == Task.TYPE_HABIT) {
             taskWrapper.removeView(startDateLayout)
 
             mainWrapper.removeView(checklistWrapper)
@@ -215,7 +215,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             mainWrapper.removeView(actionsLayout)
         }
 
-        if (taskType == "daily") {
+        if (taskType == Task.TYPE_DAILY) {
             val frequencyAdapter = ArrayAdapter.createFromResource(this,
                     R.array.daily_frequencies, android.R.layout.simple_spinner_item)
             frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -226,7 +226,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             mainWrapper.removeView(startDateLayout)
         }
 
-        if (taskType == "todo") {
+        if (taskType == Task.TYPE_TODO) {
             dueDatePickerLayout.removeView(dueDatePickerText)
             //Allows user to decide if they want to add a due date or not
             dueDateCheckBox.setOnCheckedChangeListener { buttonView, _ ->
@@ -240,7 +240,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             mainWrapper.removeView(dueDateLayout)
         }
 
-        if (taskType != "reward") {
+        if (taskType != Task.TYPE_REWARD) {
             taskValueLayout.visibility = View.GONE
         } else {
 
@@ -251,20 +251,20 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             attributeWrapper.visibility = View.GONE
         }
 
-        if (taskType == "todo" || taskType == "daily") {
+        if (taskType == Task.TYPE_TODO || taskType == Task.TYPE_DAILY) {
             createCheckListRecyclerView()
             createRemindersRecyclerView()
         }
 
         // Emoji keyboard stuff
         var isTodo = false
-        if (taskType == "todo") {
+        if (taskType == Task.TYPE_TODO) {
             isTodo = true
         }
 
         // If it's a to-do, change the emojiToggle2 to the actual emojiToggle2 (prevents NPEs when not a to-do task)
         emojiToggle2 = if (isTodo) {
-            findViewById<View>(R.id.emoji_toggle_btn2) as ImageButton
+            findViewById<View>(R.id.emoji_toggle_btn2) as? ImageButton
         } else {
             emojiToggle0
         }
@@ -293,13 +293,13 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             if (currentFocus == null || !isEmojiEditText(currentFocus) || emojicon == null) {
                 return@setOnEmojiconClickedListener
             }
-            val emojiEditText = currentFocus as EmojiEditText
-            val start = emojiEditText.selectionStart
-            val end = emojiEditText.selectionEnd
+            val emojiEditText = currentFocus as? EmojiEditText
+            val start = emojiEditText?.selectionStart ?: 0
+            val end = emojiEditText?.selectionEnd ?: 0
             if (start < 0) {
-                emojiEditText.append(emojicon.emoji)
+                emojiEditText?.append(emojicon.emoji)
             } else {
-                emojiEditText.text.replace(Math.min(start, end),
+                emojiEditText?.text?.replace(Math.min(start, end),
                         Math.max(start, end), emojicon.emoji, 0,
                         emojicon.emoji.length)
             }
@@ -330,7 +330,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 )
 
         if (taskId != null) {
-            taskRepository.getTask(taskId!!)
+            taskRepository.getTask(taskId ?: "")
                     .firstElement()
                     .subscribe(Consumer { task ->
                         this.task = task
@@ -338,7 +338,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                             populate(task)
 
                             setTitle(task)
-                            if (taskType == "todo" || taskType == "daily") {
+                            if (taskType == Task.TYPE_TODO || taskType == Task.TYPE_DAILY) {
                                 populateChecklistRecyclerView()
                                 populateRemindersRecyclerView()
                             }
@@ -349,7 +349,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
             btnDelete.isEnabled = true
         } else {
-            setTitle(null as Task?)
+            //setTitle(null as? Task)
             taskText.requestFocus()
         }
 
@@ -380,9 +380,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         repeatablesFrequencyContainer.layoutParams = repeatablesFrequencyContainerParams
     }
 
-    // @TODO: abstract business logic to Presenter and only modify view?
     private fun enableRepeatables() {
-        if (!remoteConfigManager.repeatablesAreEnabled() || taskType != "daily") {
+        if (!remoteConfigManager.repeatablesAreEnabled() || taskType != Task.TYPE_DAILY) {
             repeatablesLayout.visibility = View.INVISIBLE
             val repeatablesLayoutParams = repeatablesLayout.layoutParams
             repeatablesLayoutParams.height = 0
@@ -431,27 +430,29 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 generateSummary()
                 val r = resources
 
-                // @TODO: remove magic numbers
+                when (position) {
+                    2 -> {
+                        hideWeekOptions()
 
-                if (position == 2) {
-                    hideWeekOptions()
+                        val repeatablesOnSpinnerParams = repeatablesOnSpinner.layoutParams
+                        repeatablesOnSpinnerParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72f, r.displayMetrics).toInt()
+                        repeatablesOnSpinner.layoutParams = repeatablesOnSpinnerParams
 
-                    val repeatablesOnSpinnerParams = repeatablesOnSpinner.layoutParams
-                    repeatablesOnSpinnerParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72f, r.displayMetrics).toInt()
-                    repeatablesOnSpinner.layoutParams = repeatablesOnSpinnerParams
+                        val repeatablesOnTitleParams = reapeatablesOnTextView.layoutParams
+                        repeatablesOnTitleParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, r.displayMetrics).toInt()
+                        reapeatablesOnTextView.layoutParams = repeatablesOnTitleParams
+                    }
+                    1 -> {
+                        hideMonthOptions()
 
-                    val repeatablesOnTitleParams = reapeatablesOnTextView.layoutParams
-                    repeatablesOnTitleParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, r.displayMetrics).toInt()
-                    reapeatablesOnTextView.layoutParams = repeatablesOnTitleParams
-                } else if (position == 1) {
-                    hideMonthOptions()
-
-                    val repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.layoutParams
-                    repeatablesFrequencyContainerParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 220f, r.displayMetrics).toInt()
-                    repeatablesFrequencyContainer.layoutParams = repeatablesFrequencyContainerParams
-                } else {
-                    hideWeekOptions()
-                    hideMonthOptions()
+                        val repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.layoutParams
+                        repeatablesFrequencyContainerParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 220f, r.displayMetrics).toInt()
+                        repeatablesFrequencyContainer.layoutParams = repeatablesFrequencyContainerParams
+                    }
+                    else -> {
+                        hideWeekOptions()
+                        hideMonthOptions()
+                    }
                 }
             }
 
@@ -486,17 +487,17 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         val dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                 Integer.toString(Calendar.getInstance().firstDayOfWeek))
         firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek))
-        val weekdaysTemp = ArrayList(Arrays.asList(*weekdays))
+        val weekdaysTemp = weekdays.asList()
         Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0)
         weekdays = weekdaysTemp.toTypedArray()
 
         for (i in 0..6) {
             val weekdayRow = layoutInflater.inflate(R.layout.row_checklist, this.repeatablesFrequencyContainer, false)
-            val checkbox = weekdayRow.findViewById<View>(R.id.checkbox) as CheckBox
-            checkbox.text = weekdays[i]
-            checkbox.isChecked = true
-            checkbox.setOnClickListener { generateSummary() }
-            repeatablesWeekDayCheckboxes.add(checkbox)
+            val checkbox = weekdayRow.findViewById<View>(R.id.checkbox) as? CheckBox
+            checkbox?.text = weekdays[i]
+            checkbox?.isChecked = true
+            checkbox?.setOnClickListener { generateSummary() }
+            checkbox.notNull { repeatablesWeekDayCheckboxes.add(it) }
             repeatablesFrequencyContainer.addView(weekdayRow)
         }
 
@@ -690,13 +691,13 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun createTagsCheckBoxes() {
         this.tagsContainerLinearLayout.removeAllViews()
         for ((position, tag) in (tags ?: emptyList()).withIndex()) {
-            val row = layoutInflater.inflate(R.layout.row_checklist, this.tagsContainerLinearLayout, false) as TableRow
-            val checkbox = row.findViewById<View>(R.id.checkbox) as CheckBox
-            row.id = position
-            checkbox.text = tag.name // set text Name
-            checkbox.id = position
+            val row = layoutInflater.inflate(R.layout.row_checklist, this.tagsContainerLinearLayout, false) as? TableRow
+            val checkbox = row?.findViewById<View>(R.id.checkbox) as? CheckBox
+            row?.id = position
+            checkbox?.text = tag.name // set text Name
+            checkbox?.id = position
             //This is to check if the tag was selected by the user. Similar to onClickListener
-            checkbox.setOnCheckedChangeListener { buttonView, _ ->
+            checkbox?.setOnCheckedChangeListener { buttonView, _ ->
                 if (buttonView.isChecked) {
                     if (selectedTags?.contains(tag) == false) {
                         selectedTags?.add(tag)
@@ -707,9 +708,9 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                     }
                 }
             }
-            checkbox.isChecked = taskFilterHelper.isTagChecked(tag.getId())
+            checkbox?.isChecked = taskFilterHelper.isTagChecked(tag.getId())
             tagsContainerLinearLayout.addView(row)
-            tagCheckBoxList?.add(checkbox)
+            checkbox.notNull { tagCheckBoxList?.add(it) }
         }
 
         if (task != null) {
@@ -728,10 +729,10 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 title = resources.getString(R.string.action_edit) + " " + task.text
             } else {
                 when (taskType) {
-                    "todo" -> title = resources.getString(R.string.new_todo)
-                    "daily" -> title = resources.getString(R.string.new_daily)
-                    "habit" -> title = resources.getString(R.string.new_habit)
-                    "reward" -> title = resources.getString(R.string.new_reward)
+                    Task.TYPE_TODO -> title = resources.getString(R.string.new_todo)
+                    Task.TYPE_DAILY -> title = resources.getString(R.string.new_daily)
+                    Task.TYPE_HABIT -> title = resources.getString(R.string.new_habit)
+                    Task.TYPE_REWARD -> title = resources.getString(R.string.new_reward)
                 }
             }
 
@@ -747,25 +748,27 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             val dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().firstDayOfWeek))
             firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek))
-            val weekdaysTemp = ArrayList(Arrays.asList(*weekdays))
+            val weekdaysTemp = weekdays.asList()
             Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0)
             weekdays = weekdaysTemp.toTypedArray()
 
             for (i in 0..6) {
                 val weekdayRow = layoutInflater.inflate(R.layout.row_checklist, this.frequencyContainer, false)
-                val checkbox = weekdayRow.findViewById<View>(R.id.checkbox) as CheckBox
-                checkbox.text = weekdays[i]
-                checkbox.isChecked = true
-                this.weekdayCheckboxes.add(checkbox)
+                val checkbox = weekdayRow.findViewById<View>(R.id.checkbox) as? CheckBox
+                checkbox?.text = weekdays[i]
+                checkbox?.isChecked = true
+                checkbox.notNull {
+                    this.weekdayCheckboxes.add(it)
+                }
                 this.frequencyContainer.addView(weekdayRow)
             }
         } else {
             val dayRow = layoutInflater.inflate(R.layout.row_number_picker, this.frequencyContainer, false)
-            this.frequencyPicker = dayRow.findViewById<View>(R.id.numberPicker) as NumberPicker
+            this.frequencyPicker = dayRow.findViewById<View>(R.id.numberPicker) as? NumberPicker
             this.frequencyPicker?.minValue = 1
             this.frequencyPicker?.maxValue = 366
-            val tv = dayRow.findViewById<View>(R.id.label) as TextView
-            tv.text = resources.getString(R.string.frequency_daily)
+            val tv = dayRow.findViewById<View>(R.id.label) as? TextView
+            tv?.text = resources.getString(R.string.frequency_daily)
             this.frequencyContainer.addView(dayRow)
         }
 
@@ -841,12 +844,12 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             }
         }
 
-        if (task.type == "habit") {
+        if (task.type == Task.TYPE_HABIT) {
             positiveCheckBox.isChecked = task.up ?: false
             negativeCheckBox.isChecked = task.down ?: false
         }
 
-        if (task.type == "daily") {
+        if (task.type == Task.TYPE_DAILY) {
 
             if (task.startDate != null) {
                 startDateListener?.setCalendar(task.startDate)
@@ -874,7 +877,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             populateRepeatables(task)
         }
 
-        if (task.type == "todo") {
+        if (task.type == Task.TYPE_TODO) {
             if (task.dueDate != null) {
                 dueDateCheckBox.isChecked = true
                 dueDateListener?.setCalendar(task.dueDate)
@@ -899,6 +902,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
+    @Suppress("ReturnCount")
     private fun saveTask(task: Task): Boolean {
 
         val text = MarkdownParser.parseCompiled(taskText.text)
@@ -955,12 +959,12 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             }
 
             when (task.type) {
-                "habit" -> {
+                Task.TYPE_HABIT -> {
                     task.up = positiveCheckBox.isChecked
                     task.down = negativeCheckBox.isChecked
                 }
 
-                "daily" -> {
+                Task.TYPE_DAILY -> {
                     task.startDate = Date(startDateListener?.getCalendar()?.timeInMillis ?: Date().time)
 
                     if (this.dailyFrequencySpinner.selectedItemPosition == 0) {
@@ -1036,7 +1040,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                     }
                 }
 
-                "todo" -> {
+                Task.TYPE_TODO -> {
                     if (dueDateCheckBox.isChecked) {
                         task.dueDate = Date(dueDateListener?.getCalendar()?.timeInMillis ?: Date().time)
                     } else {
@@ -1044,7 +1048,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                     }
                 }
 
-                "reward" -> {
+                Task.TYPE_REWARD -> {
                     val value = taskValue.text.toString()
                     if (!value.isEmpty()) {
                         val localFormat = DecimalFormat.getInstance(Locale.getDefault())
@@ -1119,10 +1123,10 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun dismissKeyboard() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         val currentFocus = currentFocus
         if (currentFocus != null) {
-            imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+            imm?.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }
         popup?.dismiss()
         popup = null
@@ -1165,6 +1169,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             updateDateText()
         }
 
+        @Suppress("UnsafeCast")
         fun getCalendar(): Calendar {
             return calendar.clone() as Calendar
         }
@@ -1194,8 +1199,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                     view.isFocusableInTouchMode = true
                     view.requestFocus()
                     popup?.showAtBottomPending()
-                    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+                    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
                     changeEmojiKeyboardIcon(true)
                 }
             } else {

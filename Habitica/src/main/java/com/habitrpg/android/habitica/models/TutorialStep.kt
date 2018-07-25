@@ -22,5 +22,5 @@ open class TutorialStep : RealmObject() {
     var displayedOn: Date? = null
 
     fun shouldDisplay(): Boolean =
-            !this.wasCompleted && (this.displayedOn == null || Date().time - this.displayedOn!!.time > 86400000)
+            !this.wasCompleted && (this.displayedOn == null || Date().time - (displayedOn?.time ?: 0) > 86400000)
 }

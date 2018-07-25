@@ -56,11 +56,11 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
     }
 
     override fun getItemId(position: Int): Long {
-        val task = filteredContent!![position]
-        return task.id!!.hashCode().toLong()
+        val task = filteredContent?.get(position)
+        return task?.id?.hashCode()?.toLong() ?: 0
     }
 
-    override fun getItemCount(): Int = if (filteredContent != null) filteredContent!!.size else 0
+    override fun getItemCount(): Int =filteredContent?.size ?: 0
 
     internal fun getContentView(parent: ViewGroup): View = getContentView(parent, layoutResource)
 
@@ -71,14 +71,14 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
         if (taskType != task.type)
             return
         var i = 0
-        while (i < this.content!!.size) {
-            if (content!![i].id == task.id) {
+        while (i < this.content?.size ?: 0) {
+            if (content?.get(i)?.id == task.id) {
                 break
             }
             ++i
         }
-        if (i < content!!.size) {
-            content!![i] = task
+        if (i < content?.size ?: 0) {
+            content?.set(i, task)
         }
         filter()
     }
@@ -98,7 +98,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
 
     private fun loadContent(forced: Boolean) {
         if (this.content == null || forced) {
-            taskRepository.getTasks(this.taskType, this.userID!!)
+            taskRepository.getTasks(this.taskType, this.userID ?: "")
                     .flatMap<Task> { Flowable.fromIterable(it) }
                     .map { task ->
                         task.parseMarkdown()
@@ -113,7 +113,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
 
     fun setTasks(tasks: List<Task>) {
         this.content = ArrayList()
-        this.content!!.addAll(tasks)
+        this.content?.addAll(tasks)
         filter()
     }
 

@@ -31,20 +31,6 @@ abstract class BaseActivity : AppCompatActivity() {
     private val habiticaApplication: HabiticaApplication
         get() = application as HabiticaApplication
 
-    //Check for "Don't keep Activities" Developer setting
-    //TODO: Make this check obsolete.
-    internal val isAlwaysFinishActivitiesOptionEnabled: Boolean
-        get() {
-            var alwaysFinishActivitiesInt = 0
-            alwaysFinishActivitiesInt = if (Build.VERSION.SDK_INT >= 17) {
-                Settings.System.getInt(applicationContext.contentResolver, Settings.Global.ALWAYS_FINISH_ACTIVITIES, 0)
-            } else {
-                Settings.System.getInt(applicationContext.contentResolver, Settings.System.ALWAYS_FINISH_ACTIVITIES, 0)
-            }
-
-            return alwaysFinishActivitiesInt == 1
-        }
-
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         InstabugTrackingDelegate.notifyActivityGotTouchEvent(ev, this)
         return super.dispatchTouchEvent(ev)
@@ -94,16 +80,10 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         destroyed = true
 
-        if (compositeSubscription != null && !compositeSubscription!!.isDisposed) {
-            compositeSubscription!!.dispose()
+        if (!compositeSubscription.isDisposed) {
+            compositeSubscription.dispose()
         }
         super.onDestroy()
-    }
-
-    internal fun showDeveloperOptionsScreen() {
-        val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
-        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-        startActivity(intent)
     }
 
     @Subscribe

@@ -135,8 +135,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 }
     }
 
-    override fun equipGear(user: User?, key: String, asCostume: Boolean): Flowable<Items> {
-        return equip(user, if (asCostume) "costume" else "equipped", key)
+    override fun equipGear(user: User?, equipment: String, asCostume: Boolean): Flowable<Items> {
+        return equip(user, if (asCostume) "costume" else "equipped", equipment)
     }
 
     override fun equip(user: User?, type: String, key: String): Flowable<Items> {

@@ -120,16 +120,17 @@ class PartyFragment : BaseMainFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         if (this.group != null && this.user != null) {
-            if (this.group!!.leaderID == this.user!!.id) {
-                inflater!!.inflate(R.menu.menu_party_admin, menu)
+            if (this.group?.leaderID == this.user?.id) {
+                inflater?.inflate(R.menu.menu_party_admin, menu)
             } else {
-                inflater!!.inflate(R.menu.menu_party, menu)
+                inflater?.inflate(R.menu.menu_party, menu)
             }
         }
     }
 
+    @Suppress("ReturnCount")
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val id = item!!.itemId
+        val id = item?.itemId
 
         when (id) {
             R.id.menu_invite_item -> {
@@ -147,7 +148,7 @@ class PartyFragment : BaseMainFragment() {
                         .setMessage(context?.getString(R.string.leave_party_confirmation))
                         .setPositiveButton(context?.getString(R.string.yes)) { _, _ ->
                             if (this.group != null) {
-                                this.socialRepository.leaveGroup(this.group!!.id)
+                                this.socialRepository.leaveGroup(this.group?.id ?: "")
                                         .subscribe(Consumer { activity?.supportFragmentManager?.beginTransaction()?.remove(this@PartyFragment)?.commit() }, RxErrorHandler.handleEmptyError())
                             }
                         }
@@ -162,10 +163,10 @@ class PartyFragment : BaseMainFragment() {
 
     private fun displayEditForm() {
         val bundle = Bundle()
-        bundle.putString("groupID", if (this.group != null) this.group!!.id else null)
-        bundle.putString("name", this.group!!.name)
-        bundle.putString("description", this.group!!.description)
-        bundle.putString("leader", this.group!!.leaderID)
+        bundle.putString("groupID", group?.id)
+        bundle.putString("name", this.group?.name)
+        bundle.putString("description", this.group?.description)
+        bundle.putString("leader", this.group?.leaderID)
 
         val intent = Intent(activity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
@@ -178,12 +179,14 @@ class PartyFragment : BaseMainFragment() {
         when (requestCode) {
             GroupFormActivity.GROUP_FORM_ACTIVITY -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val needsSaving = false
-                    val bundle = data!!.extras
+                    val bundle = data?.extras
                     if (this.group == null) {
                         return
                     }
-                    this.socialRepository.updateGroup(this.group, bundle!!.getString("name"), bundle.getString("description"), bundle.getString("leader"), bundle.getString("privacy"))
+                    this.socialRepository.updateGroup(this.group, bundle?.getString("name"),
+                            bundle?.getString("description"),
+                            bundle?.getString("leader"),
+                            bundle?.getString("privacy"))
                             .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 }
             }
@@ -191,7 +194,7 @@ class PartyFragment : BaseMainFragment() {
                 if (resultCode == Activity.RESULT_OK) {
                     val inviteData = HashMap<String, Any>()
                     inviteData["inviter"] = user?.profile?.name ?: ""
-                    if (data!!.getBooleanExtra(PartyInviteActivity.IS_EMAIL_KEY, false)) {
+                    if (data?.getBooleanExtra(PartyInviteActivity.IS_EMAIL_KEY, false) == true) {
                         val emails = data.getStringArrayExtra(PartyInviteActivity.EMAILS_KEY)
                         val invites = ArrayList<HashMap<String, String>>()
                         for (email in emails) {
@@ -202,13 +205,13 @@ class PartyFragment : BaseMainFragment() {
                         }
                         inviteData["emails"] = invites
                     } else {
-                        val userIDs = data.getStringArrayExtra(PartyInviteActivity.USER_IDS_KEY)
+                        val userIDs = data?.getStringArrayExtra(PartyInviteActivity.USER_IDS_KEY)
                         val invites = ArrayList<String>()
                         Collections.addAll(invites, *userIDs)
                         inviteData["uuids"] = invites
                     }
                     if (this.group != null) {
-                        this.socialRepository.inviteToGroup(this.group!!.id, inviteData)
+                        this.socialRepository.inviteToGroup(this.group?.id ?: "", inviteData)
                                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                     }
                 }
@@ -222,8 +225,6 @@ class PartyFragment : BaseMainFragment() {
             return
         }
 
-        val party = this.user!!.party ?: return
-
         viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): Fragment? {
@@ -232,7 +233,7 @@ class PartyFragment : BaseMainFragment() {
 
                 when (position) {
                     0 -> {
-                        if (user!!.hasParty()) {
+                        if (user?.hasParty() == true) {
                             val detailFragment = PartyDetailFragment()
                             detailFragment.partyId = user?.party?.id
                             fragment = detailFragment
@@ -273,12 +274,12 @@ class PartyFragment : BaseMainFragment() {
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                when (position) {
-                    0 -> return context!!.getString(R.string.party)
-                    1 -> return context!!.getString(R.string.chat)
-                    2 -> return context!!.getString(R.string.members)
-                }
-                return ""
+                return when (position) {
+                    0 -> context?.getString(R.string.party)
+                    1 -> context?.getString(R.string.chat)
+                    2 -> context?.getString(R.string.members)
+                    else -> ""
+                } ?: ""
             }
         }
         this.viewPager?.adapter = viewPagerAdapter
@@ -286,13 +287,13 @@ class PartyFragment : BaseMainFragment() {
         viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1 && group != null) {
-                    chatListFragment?.setNavigatedToFragment(group!!.id)
+                    chatListFragment?.setNavigatedToFragment(group?.id ?: "")
                 }
             }
 
             override fun onPageSelected(position: Int) {
                 if (position == 1 && group != null) {
-                       chatListFragment?.setNavigatedToFragment(group!!.id)
+                       chatListFragment?.setNavigatedToFragment(group?.id ?: "")
                 }
             }
 

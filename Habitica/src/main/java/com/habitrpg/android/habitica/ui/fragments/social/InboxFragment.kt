@@ -84,21 +84,21 @@ class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, 
         assert(this.activity != null)
         this.chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
 
-        val scaneQRCodeButton = chooseRecipientDialogView?.findViewById<View>(R.id.scanQRCodeButton) as Button
+        val scaneQRCodeButton = chooseRecipientDialogView?.findViewById<View>(R.id.scanQRCodeButton) as? Button
 
         this.activity.notNull { thisActivity ->
             val alert = AlertDialog.Builder(thisActivity)
             .setTitle(getString(R.string.choose_recipient_title))
                 .setPositiveButton(getString(R.string.action_continue)) { _, _ ->
-                    val uuidEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as EditText
-                    openInboxMessages(uuidEditText.text.toString(), "")
+                    val uuidEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
+                    openInboxMessages(uuidEditText?.text?.toString() ?: "", "")
                 }
                 .setNeutralButton(getString(R.string.action_cancel)) { dialog, _ ->
                     KeyboardUtil.dismissKeyboard(thisActivity)
                     dialog.cancel()
                 }
                 .create()
-            scaneQRCodeButton.setOnClickListener {
+            scaneQRCodeButton?.setOnClickListener {
                 val scanIntegrator = IntentIntegrator(getActivity())
                 scanIntegrator.initiateScan(this)
             }

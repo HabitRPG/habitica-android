@@ -166,8 +166,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
     private fun addHabits(habits: ArrayList<Task>) {
         val taskGroup = taskGrouplayout?.inflate(R.layout.dialog_challenge_detail_task_group)
-        val groupName = taskGroup?.findViewById(R.id.task_group_name) as TextView?
-        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as LinearLayout?
+        val groupName = taskGroup?.findViewById(R.id.task_group_name) as? TextView
+        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as? LinearLayout
 
         groupName?.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, habits.size)
         taskGroup?.findViewById<TextView>(R.id.task_count_view)?.text = habits.size.toString()
@@ -176,7 +176,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
         for (i in 0 until size) {
             val task = habits[i]
             val entry = tasksLayout?.inflate(R.layout.dialog_challenge_detail_habit)
-            val habitTitle = entry?.findViewById(R.id.habit_title) as TextView?
+            val habitTitle = entry?.findViewById(R.id.habit_title) as? TextView
 
             entry?.findViewById<ImageView>(R.id.lock_icon_plus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#DFDEDF")))
             entry?.findViewById<ImageView>(R.id.lock_icon_minus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#DFDEDF")))
@@ -205,8 +205,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
     private fun addDailys(dailies: ArrayList<Task>) {
         val taskGroup = taskGrouplayout?.inflate(R.layout.dialog_challenge_detail_task_group)
-        val groupName = taskGroup?.findViewById(R.id.task_group_name) as TextView?
-        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as LinearLayout?
+        val groupName = taskGroup?.findViewById(R.id.task_group_name) as? TextView
+        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as? LinearLayout
 
         val size = dailies.size
         groupName?.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_DAILYS, size)
@@ -215,7 +215,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
         for (i in 0 until size) {
             val task = dailies[i]
             val entry = tasksLayout?.inflate(R.layout.dialog_challenge_detail_daily)
-            val title = entry?.findViewById(R.id.daily_title) as TextView?
+            val title = entry?.findViewById(R.id.daily_title) as? TextView?
             title?.text = EmojiParser.parseEmojis(task.text)
             entry?.findViewById<ImageView>(R.id.lock_icon)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#949494")))
             context.notNull {
@@ -229,7 +229,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
                 checklistIndicatorWrapper?.visibility = View.VISIBLE
 
-                val checkListAllTextView = entry?.findViewById<View>(R.id.checkListAllTextView) as TextView?
+                val checkListAllTextView = entry?.findViewById<View>(R.id.checkListAllTextView) as? TextView
                 checkListAllTextView?.text = task.checklist?.size.toString()
             }
             tasksLayout?.addView(entry)
@@ -239,8 +239,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
     private fun addTodos(todos: ArrayList<Task>) {
         val taskGroup = taskGrouplayout?.inflate(R.layout.dialog_challenge_detail_task_group)
-        val groupName = taskGroup?.findViewById(R.id.task_group_name) as TextView?
-        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as LinearLayout?
+        val groupName = taskGroup?.findViewById(R.id.task_group_name) as? TextView
+        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as? LinearLayout
 
         val size = todos.size
         groupName?.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_TODOS, size)
@@ -249,7 +249,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
         for (i in 0 until size) {
             val task = todos[i]
             val entry = tasksLayout?.inflate(R.layout.dialog_challenge_detail_todo)
-            val title = entry?.findViewById(R.id.todo_title) as TextView?
+            val title = entry?.findViewById(R.id.todo_title) as? TextView
             title?.text = EmojiParser.parseEmojis(task.text)
             entry?.findViewById<ImageView>(R.id.lock_icon)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#949494")))
             context.notNull {
@@ -264,7 +264,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
                 checklistIndicatorWrapper?.visibility = View.VISIBLE
 
-                val checkListAllTextView = entry?.findViewById<View>(R.id.checkListAllTextView) as TextView?
+                val checkListAllTextView = entry?.findViewById<View>(R.id.checkListAllTextView) as? TextView
                 checkListAllTextView?.text = task.checklist?.size.toString()
             }
             tasksLayout?.addView(entry)
@@ -274,9 +274,9 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
     private fun addRewards(rewards: ArrayList<Task>) {
         val taskGroup = taskGrouplayout?.inflate(R.layout.dialog_challenge_detail_task_group)
-        val groupName = taskGroup?.findViewById(R.id.task_group_name) as TextView?
+        val groupName = taskGroup?.findViewById(R.id.task_group_name) as? TextView
 
-        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as LinearLayout?
+        val tasksLayout = taskGroup?.findViewById(R.id.tasks_layout) as? LinearLayout
 
         val size = rewards.size
         groupName?.text =  getLabelByTypeAndCount(Challenge.TASK_ORDER_REWARDS, size)
@@ -286,8 +286,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
             val task = rewards[i]
 
             val entry = tasksLayout?.inflate(R.layout.dialog_challenge_detail_reward)
-            (entry?.findViewById<View>(R.id.gold_icon) as ImageView?)?.setImageBitmap(HabiticaIconsHelper.imageOfGold())
-            val title = entry?.findViewById<View>(R.id.reward_title) as TextView?
+            (entry?.findViewById<View>(R.id.gold_icon) as? ImageView)?.setImageBitmap(HabiticaIconsHelper.imageOfGold())
+            val title = entry?.findViewById<View>(R.id.reward_title) as? TextView
             title?.text = EmojiParser.parseEmojis(task.text)
             tasksLayout?.addView(entry)
         }

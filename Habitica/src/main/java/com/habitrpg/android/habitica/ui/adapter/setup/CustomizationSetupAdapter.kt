@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-class CustomizationSetupAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
 
     var userSize: String? = null
     var user: User? = null
@@ -30,18 +30,19 @@ class CustomizationSetupAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         this.notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomizationViewHolder {
         return CustomizationViewHolder(parent.inflate(R.layout.setup_customization_item))
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as CustomizationViewHolder).bind(customizationList[position])
+    override fun onBindViewHolder(holder: CustomizationViewHolder, position: Int) {
+        holder.bind(customizationList[position])
     }
 
     override fun getItemCount(): Int {
         return customizationList.size
     }
 
+    @Suppress("ReturnCount")
     private fun isCustomizationActive(customization: SetupCustomization): Boolean {
         val prefs = this.user?.preferences ?: return false
         when (customization.category) {

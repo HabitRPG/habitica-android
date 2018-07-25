@@ -61,7 +61,7 @@ class GroupInformationFragment : BaseFragment() {
             qrCodeManager.setUpView(qrLayout)
         }
 
-        buttonPartyInviteAccept.setOnClickListener({
+        buttonPartyInviteAccept.setOnClickListener {
             val userId = user?.invitations?.party?.id
             if (userId != null) {
                 socialRepository.joinGroup(userId)
@@ -71,21 +71,21 @@ class GroupInformationFragment : BaseFragment() {
                         .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
                         .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError())
             }
-        })
+        }
 
-        buttonPartyInviteReject.setOnClickListener({
+        buttonPartyInviteReject.setOnClickListener {
             val userId = user?.invitations?.party?.id
             if (userId != null) {
                 socialRepository.rejectGroupInvite(userId)
                         .subscribe(Consumer { setInvitation(null) }, RxErrorHandler.handleEmptyError())
             }
-        })
+        }
 
         userIdView.setOnClickListener {
-            val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = ClipData.newPlainText(context?.getString(R.string.user_id), user?.id)
-            clipboard.primaryClip = clip
-            val activity = activity as MainActivity?
+            clipboard?.primaryClip = clip
+            val activity = activity as? MainActivity
             if (activity != null) {
                 HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.id_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
             }

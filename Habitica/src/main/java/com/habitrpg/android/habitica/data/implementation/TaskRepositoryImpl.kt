@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.*
@@ -53,13 +54,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
     }
 
+    @Suppress("ReturnCount")
     override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Flowable<TaskScoringResult?> {
         val now = Date().time
         val id = task.id
-        if (lastTaskAction > now - 500 && !force) {
-            return Flowable.empty()
-        }
-        if (id == null) {
+        if (lastTaskAction > now - 500 && !force || id == null) {
             return Flowable.empty()
         }
         lastTaskAction = now
@@ -91,7 +90,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                                     if (Task.TYPE_DAILY == task.type) {
                                         task.streak = (task.streak ?: 0) + 1
                                     }
-                                }else if (Task.TYPE_HABIT == task.type) {
+                                } else if (Task.TYPE_HABIT == task.type) {
                                     if (up) {
                                         task.counterUp = (task.counterUp ?: 0) + 1
                                     } else {
@@ -140,21 +139,24 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         lastTaskAction = now
         task.tags?.let {
             if (it.size > 0) {
-                val tags = RealmList(*localRepository.getUnmanagedCopy(it).toTypedArray())
+                val tags = RealmList<Tag>()
+                tags.addAll(localRepository.getUnmanagedCopy(it))
                 task.tags = tags
             }
         }
 
         task.checklist?.let {
             if (it.size > 0) {
-                val checklist = RealmList(*localRepository.getUnmanagedCopy(it).toTypedArray())
+                val checklist = RealmList<ChecklistItem>()
+                checklist.addAll(localRepository.getUnmanagedCopy(it))
                 task.checklist = checklist
             }
         }
 
         task.reminders?.let {
             if (it.size > 0) {
-                val reminders = RealmList(*localRepository.getUnmanagedCopy(it).toTypedArray())
+                val reminders = RealmList<RemindersItem>()
+                reminders.addAll(localRepository.getUnmanagedCopy(it))
                 task.reminders = reminders
             }
         }
@@ -167,6 +169,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .doOnNext { localRepository.saveTask(it) }
     }
 
+    @Suppress("ReturnCount")
     override fun updateTask(task: Task): Maybe<Task> {
         val now = Date().time
         if (lastTaskAction > now - 500 || !task.isValid) {
@@ -214,10 +217,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         return localRepository.getTaskAtPosition(taskType, oldPosition)
                 .firstElement()
                 .flatMap { task ->
-                    if (task.isValid) {
-                        return@flatMap apiClient.postTaskNewPosition(task.id ?: "", newPosition).firstElement()
+                    return@flatMap if (task.isValid) {
+                         apiClient.postTaskNewPosition(task.id ?: "", newPosition).firstElement()
+                    } else {
+                        Maybe.just<List<String>>(ArrayList())
                     }
-                    return@flatMap Maybe.just<List<String>>(ArrayList())
                 }
                 .doOnSuccess { localRepository.updateTaskPositions(it) }
     }

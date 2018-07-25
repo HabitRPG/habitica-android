@@ -59,21 +59,23 @@ class TaskFilterHelper {
         if (!task.containsAllTagIds(tagsId)) {
             return false
         }
-        if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
+        return if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
             when (activeFilter) {
-                Task.FILTER_ACTIVE -> return if (task.type == Task.TYPE_DAILY) {
+                Task.FILTER_ACTIVE -> if (task.type == Task.TYPE_DAILY) {
                     task.isDisplayedActive
                 } else {
                     !task.completed
                 }
-                Task.FILTER_GRAY -> return task.completed || !task.isDisplayedActive
-                Task.FILTER_WEAK -> return task.value < 0
-                Task.FILTER_STRONG -> return task.value >= 0
-                Task.FILTER_DATED -> return task.dueDate != null
-                Task.FILTER_COMPLETED -> return task.completed
+                Task.FILTER_GRAY -> task.completed || !task.isDisplayedActive
+                Task.FILTER_WEAK -> task.value < 0
+                Task.FILTER_STRONG -> task.value >= 0
+                Task.FILTER_DATED -> task.dueDate != null
+                Task.FILTER_COMPLETED -> task.completed
+                else -> true
             }
+        } else {
+            true
         }
-        return true
     }
 
     fun setActiveFilter(type: String, activeFilter: String) {

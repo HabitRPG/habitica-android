@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
 class TaskAlarmManager(private var context: Context, private var taskRepository: TaskRepository, private var userId: String) {
-    private val am: AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val am: AlarmManager? = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
     init {
         EventBus.getDefault().register(this)
@@ -110,7 +110,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         val previousSender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_NO_CREATE)
         if (previousSender != null) {
             previousSender.cancel()
-            am.cancel(previousSender)
+            am?.cancel(previousSender)
         }
 
         val sender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_CANCEL_CURRENT)

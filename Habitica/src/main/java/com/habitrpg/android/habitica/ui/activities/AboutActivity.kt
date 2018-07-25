@@ -83,12 +83,9 @@ class AboutActivity : BaseActivity() {
     private inner class PagerAdapter(fm: FragmentManager, internal var mNumOfTabs: Int) : FragmentStatePagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment? {
-
-            when (position) {
-                0 ->
-
-                    return AboutFragment()
-                1 -> return LibsBuilder()
+            return when (position) {
+                0 -> AboutFragment()
+                1 -> LibsBuilder()
                         //Pass the fields of your application to the lib so it can find all external lib information
                         .withFields(R.string::class.java.fields)
                         .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
@@ -99,19 +96,16 @@ class AboutActivity : BaseActivity() {
                         .withAboutVersionShownCode(true)
                         .withAboutVersionShownName(true)
                         .supportFragment()
-                else -> return null
+                else -> null
             }
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            if (position == 0) {
-                return getString(R.string.about_title)
-            } else if (position == 1) {
-                return getString(R.string.about_libraries)
+            return when (position) {
+                0 -> getString(R.string.about_title)
+                1 -> getString(R.string.about_libraries)
+                else -> ""
             }
-
-
-            return getString(R.string.about_versionhistory)
         }
 
         override fun getCount(): Int {

@@ -98,14 +98,14 @@ class AchievementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             val customView = LayoutInflater.from(context)
                     .inflate(R.layout.dialog_achievement_details, null)
-            val achievementImage = customView.findViewById<View>(R.id.achievement_image) as ImageView
-            achievementImage.setImageDrawable(draweeView.drawable)
+            val achievementImage = customView.findViewById<View>(R.id.achievement_image) as ImageView?
+            achievementImage?.setImageDrawable(draweeView.drawable)
 
-            val titleView = customView.findViewById<View>(R.id.achievement_title) as TextView
-            titleView.text = achievement?.title
+            val titleView = customView.findViewById<View>(R.id.achievement_title) as TextView?
+            titleView?.text = achievement?.title
 
-            val textView = customView.findViewById<View>(R.id.achievement_text) as TextView
-            textView.text = achievement?.text
+            val textView = customView.findViewById<View>(R.id.achievement_text) as TextView?
+            textView?.text = achievement?.text
 
             b.setView(customView)
             b.setPositiveButton(R.string.profile_achievement_ok) { _, _ -> }

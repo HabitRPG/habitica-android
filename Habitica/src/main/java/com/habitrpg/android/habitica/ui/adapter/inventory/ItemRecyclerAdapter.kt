@@ -105,7 +105,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boole
                 imageName = "Pet_" + type + "_" + item.key
 
                 if (isHatching) {
-                    disabled = this.isPetOwned!!
+                    disabled = this.isPetOwned ?: false
                 }
             }
             DataBindingUtils.loadImage(imageView, imageName ?: "head_0")

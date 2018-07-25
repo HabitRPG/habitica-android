@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
-import android.content.Context
 import android.content.res.Resources
 import android.support.v7.widget.RecyclerView
 import android.view.View

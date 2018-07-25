@@ -89,11 +89,11 @@ class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, SwipeRe
         }
         this.guildIDs = ArrayList()
         this.guildsListView?.removeAllViewsInLayout()
-        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         for (guild in guilds) {
-            val entry = inflater.inflate(R.layout.plain_list_item, this.guildsListView, false) as TextView
-            entry.text = guild.name
-            entry.setOnClickListener(this)
+            val entry = inflater?.inflate(R.layout.plain_list_item, this.guildsListView, false) as? TextView
+            entry?.text = guild.name
+            entry?.setOnClickListener(this)
             this.guildsListView?.addView(entry)
             this.guildIDs?.add(guild.id)
         }

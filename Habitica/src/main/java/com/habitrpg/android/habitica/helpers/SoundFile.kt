@@ -18,9 +18,6 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
     val filePath: String
         get() = theme + "_" + fileName + ".mp3"
 
-    init {
-    }
-
     fun play() {
         if (isPlaying || file?.path == null) {
             return
