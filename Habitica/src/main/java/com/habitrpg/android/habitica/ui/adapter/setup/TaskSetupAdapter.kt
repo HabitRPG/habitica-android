@@ -18,9 +18,9 @@ import java.util.*
 class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>() {
 
     var checkedList: MutableList<Boolean> = mutableListOf()
-    private var taskList: Array<Array<String>> = emptyArray()
+    private var taskList: List<List<String>> = emptyList()
 
-    fun setTaskList(taskList: Array<Array<String>>) {
+    fun setTaskList(taskList: List<List<String>>) {
         this.taskList = taskList
         this.checkedList = ArrayList()
         for (ignored in this.taskList) {
@@ -45,7 +45,7 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
         private val icon: Drawable?
         private val textView: TextView by bindView(R.id.textView)
 
-        private var taskGroup: Array<String>? = null
+        private var taskGroup: List<String>? = null
         private var isChecked: Boolean? = null
 
         var context: Context = itemView.context
@@ -57,7 +57,7 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
             icon?.setColorFilter(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY)
         }
 
-        fun bind(taskGroup: Array<String>, isChecked: Boolean?) {
+        fun bind(taskGroup: List<String>, isChecked: Boolean?) {
             this.taskGroup = taskGroup
             this.isChecked = isChecked
 

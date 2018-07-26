@@ -31,8 +31,8 @@ class TaskSetupFragment : BaseFragment() {
     private val avatarView: AvatarView? by bindView(R.id.avatarView)
     private val speechBubbleView: SpeechBubbleView? by bindView(R.id.speech_bubble)
     internal var adapter: TaskSetupAdapter = TaskSetupAdapter()
-    private var taskGroups: Array<Array<String>> = arrayOf()
-    private var tasks: Array<Array<Any>> = arrayOf()
+    private var taskGroups: List<List<String>> = listOf()
+    private var tasks: List<List<Any>> = listOf()
     private var user: User? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -83,15 +83,15 @@ class TaskSetupFragment : BaseFragment() {
     }
 
     private fun setTasks() {
-        this.taskGroups = arrayOf(arrayOf(getString(R.string.setup_group_work), "work"), arrayOf(getString(R.string.setup_group_exercise), "exercise"), arrayOf(getString(R.string.setup_group_health), "healthWellness"), arrayOf(getString(R.string.setup_group_school), "school"), arrayOf(getString(R.string.setup_group_teams), "teams"), arrayOf(getString(R.string.setup_group_chores), "chores"), arrayOf(getString(R.string.setup_group_creativity), "creativity"), arrayOf(getString(R.string.setuP_group_other), "other"))
+        this.taskGroups = listOf(listOf(getString(R.string.setup_group_work), "work"), listOf(getString(R.string.setup_group_exercise), "exercise"), listOf(getString(R.string.setup_group_health), "healthWellness"), listOf(getString(R.string.setup_group_school), "school"), listOf(getString(R.string.setup_group_teams), "teams"), listOf(getString(R.string.setup_group_chores), "chores"), listOf(getString(R.string.setup_group_creativity), "creativity"), listOf(getString(R.string.setuP_group_other), "other"))
 
-        this.tasks = arrayOf(arrayOf("work", "habit", getString(R.string.setup_task_work_1), true, false), arrayOf<Any>("work", "daily", getString(R.string.setup_task_work_2)), arrayOf<Any>("work", "todo", getString(R.string.setup_task_work_3)),
-                arrayOf("exercise", "habit", getString(R.string.setup_task_exercise_1), true, false), arrayOf<Any>("exercise", "daily", getString(R.string.setup_task_exercise_2)), arrayOf<Any>("exercise", "todo", getString(R.string.setup_task_exercise_3)),
-                arrayOf("healthWellness", "habit", getString(R.string.setup_task_healthWellness_1), true, true), arrayOf<Any>("healthWellness", "daily", getString(R.string.setup_task_healthWellness_2)), arrayOf<Any>("healthWellness", "todo", getString(R.string.setup_task_healthWellness_3)),
-                arrayOf("school", "habit", getString(R.string.setup_task_school_1), true, true), arrayOf<Any>("school", "daily", getString(R.string.setup_task_school_2)), arrayOf<Any>("school", "todo", getString(R.string.setup_task_school_3)),
-                arrayOf("teams", "habit", getString(R.string.setup_task_teams_1), true, false), arrayOf<Any>("teams", "daily", getString(R.string.setup_task_teams_2)), arrayOf<Any>("teams", "todo", getString(R.string.setup_task_teams_3)),
-                arrayOf("chores", "habit", getString(R.string.setup_task_chores_1), true, false), arrayOf<Any>("chores", "daily", getString(R.string.setup_task_chores_2)), arrayOf<Any>("chores", "todo", getString(R.string.setup_task_chores_3)),
-                arrayOf("creativity", "habit", getString(R.string.setup_task_creativity_1), true, false), arrayOf<Any>("creativity", "daily", getString(R.string.setup_task_creativity_2)), arrayOf<Any>("creativity", "todo", getString(R.string.setup_task_creativity_3)))
+        this.tasks = listOf(listOf("work", Task.TYPE_HABIT, getString(R.string.setup_task_work_1), true, false), listOf("work", Task.TYPE_DAILY, getString(R.string.setup_task_work_2)), listOf("work", Task.TYPE_TODO, getString(R.string.setup_task_work_3)),
+                listOf("exercise", Task.TYPE_HABIT, getString(R.string.setup_task_exercise_1), true, false), listOf("exercise", Task.TYPE_DAILY, getString(R.string.setup_task_exercise_2)), listOf("exercise", Task.TYPE_TODO, getString(R.string.setup_task_exercise_3)),
+                listOf("healthWellness", Task.TYPE_HABIT, getString(R.string.setup_task_healthWellness_1), true, true), listOf("healthWellness", Task.TYPE_DAILY, getString(R.string.setup_task_healthWellness_2)), listOf("healthWellness", Task.TYPE_TODO, getString(R.string.setup_task_healthWellness_3)),
+                listOf("school", Task.TYPE_HABIT, getString(R.string.setup_task_school_1), true, true), listOf("school", Task.TYPE_DAILY, getString(R.string.setup_task_school_2)), listOf("school", Task.TYPE_TODO, getString(R.string.setup_task_school_3)),
+                listOf("teams", Task.TYPE_HABIT, getString(R.string.setup_task_teams_1), true, false), listOf("teams", Task.TYPE_DAILY, getString(R.string.setup_task_teams_2)), listOf("teams", Task.TYPE_TODO, getString(R.string.setup_task_teams_3)),
+                listOf("chores", Task.TYPE_HABIT, getString(R.string.setup_task_chores_1), true, false), listOf("chores", Task.TYPE_DAILY, getString(R.string.setup_task_chores_2)), listOf("chores", Task.TYPE_TODO, getString(R.string.setup_task_chores_3)),
+                listOf("creativity", Task.TYPE_HABIT, getString(R.string.setup_task_creativity_1), true, false), listOf("creativity", Task.TYPE_DAILY, getString(R.string.setup_task_creativity_2)), listOf("creativity", Task.TYPE_TODO, getString(R.string.setup_task_creativity_3)))
     }
 
     fun createSampleTasks(): List<Task> {
@@ -103,12 +103,12 @@ class TaskSetupFragment : BaseFragment() {
         }
         val tasks = ArrayList<Task>()
         for (task in this.tasks) {
-            val taskGroup = task[0] as String
+            val taskGroup = task[0] as? String
             if (groups.contains(taskGroup)) {
                 val taskObject: Task = if (task.size == 5) {
-                    this.makeTaskObject(task[1] as String, task[2] as String, task[3] as Boolean, task[4] as Boolean)
+                    this.makeTaskObject(task[1] as? String, task[2] as? String, task[3] as? Boolean, task[4] as? Boolean)
                 } else {
-                    this.makeTaskObject(task[1] as String, task[2] as String, null, null)
+                    this.makeTaskObject(task[1] as? String, task[2] as? String, null, null)
                 }
                 tasks.add(taskObject)
             }
@@ -116,18 +116,18 @@ class TaskSetupFragment : BaseFragment() {
         return tasks
     }
 
-    private fun makeTaskObject(type: String, text: String, up: Boolean?, down: Boolean?): Task {
+    private fun makeTaskObject(type: String?, text: String?, up: Boolean?, down: Boolean?): Task {
         val task = Task()
-        task.text = text
+        task.text = text ?: ""
         task.priority = 1.0f
-        task.type = type
+        task.type = type ?: ""
 
-        if (type == "habit") {
+        if (type == Task.TYPE_HABIT) {
             task.up = up
             task.down = down
         }
 
-        if (type == "daily") {
+        if (type == Task.TYPE_DAILY) {
             task.frequency = "weekly"
             task.startDate = Date()
             val days = Days()

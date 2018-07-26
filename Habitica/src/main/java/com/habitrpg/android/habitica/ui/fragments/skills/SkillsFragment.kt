@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.responses.SkillResponse
@@ -27,7 +28,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.Flowable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_skills.*
@@ -113,11 +113,13 @@ class SkillsFragment : BaseMainFragment() {
         if ("special" == usedSkill?.habitClass) {
             showSnackbar(activity.floatingMenuWrapper, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
         } else {
-            showSnackbar(activity.floatingMenuWrapper, null,
-                    context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
-                    BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
-                    ContextCompat.getColor(context!!, R.color.blue_10), "-" + usedSkill?.mana,
-                    HabiticaSnackbar.SnackbarDisplayType.BLUE)
+            context.notNull {
+                showSnackbar(activity.floatingMenuWrapper, null,
+                        context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
+                        BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
+                        ContextCompat.getColor(it, R.color.blue_10), "-" + usedSkill?.mana,
+                        HabiticaSnackbar.SnackbarDisplayType.BLUE)
+            }
         }
         userRepository.retrieveUser(false).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
@@ -152,7 +154,7 @@ class SkillsFragment : BaseMainFragment() {
         } else {
             userRepository.useSkill(user, skill.key, skill.target)
         }
-        observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) }) { throwable -> removeProgressDialog() }
+        observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) }) { removeProgressDialog() }
     }
 
     private fun displayProgressDialog() {

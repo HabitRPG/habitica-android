@@ -208,6 +208,7 @@ class AvatarSetupFragment : BaseFragment() {
         EventBus.getDefault().post(command)
     }
 
+    @Suppress("ReturnCount")
     private fun chooseRandomKey(customizations: List<SetupCustomization>, weighFirstOption: Boolean): String {
         if (customizations.isEmpty()) {
             return ""
@@ -227,12 +228,12 @@ class AvatarSetupFragment : BaseFragment() {
         this.activeButton = button
         this.activeButton?.setActive(true)
         val location = IntArray(2)
-        val params = this.caretView?.layoutParams as RelativeLayout.LayoutParams
+        val params = this.caretView?.layoutParams as? RelativeLayout.LayoutParams
         this.activeButton?.getLocationOnScreen(location)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             val r = resources
             val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40f, r.displayMetrics).toInt()
-            params.marginStart = location[0] + px
+            params?.marginStart = location[0] + px
             this.caretView?.layoutParams = params
         } else {
             caretView?.visibility = View.GONE

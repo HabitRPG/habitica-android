@@ -45,7 +45,7 @@ class StarView : AppCompatImageView {
     }
 
     private fun runBlink() {
-        if (blinkIndex >= blinkDurations!!.size) {
+        if (blinkIndex >= blinkDurations?.size ?: 0) {
             blinkIndex = 0
         }
         val animator = ObjectAnimator.ofFloat<View>(this, View.ALPHA, 0f)

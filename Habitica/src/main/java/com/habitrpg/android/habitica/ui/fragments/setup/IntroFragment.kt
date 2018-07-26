@@ -12,17 +12,18 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 
 class IntroFragment : BaseFragment() {
 
-    private val subtitleTextView: TextView? by bindView(R.id.subtitleTextView)
-    private val titleTextView: TextView? by bindView(R.id.titleTextView)
-    private val titleImageView: ImageView? by bindView(R.id.titleImageView)
-    private val descriptionTextView: TextView? by bindView(R.id.descriptionTextView)
-    private val imageView: ImageView? by bindView(R.id.imageView)
-    private val containerView: ViewGroup? by bindView(R.id.container_view)
+    private val subtitleTextView: TextView? by bindOptionalView(R.id.subtitleTextView)
+    private val titleTextView: TextView? by bindOptionalView(R.id.titleTextView)
+    private val titleImageView: ImageView? by bindOptionalView(R.id.titleImageView)
+    private val descriptionTextView: TextView? by bindOptionalView(R.id.descriptionTextView)
+    private val imageView: ImageView? by bindOptionalView(R.id.imageView)
+    private val containerView: ViewGroup? by bindOptionalView(R.id.container_view)
 
     private var image: Drawable? = null
     private var titleImage: Drawable? = null
@@ -93,6 +94,7 @@ class IntroFragment : BaseFragment() {
     }
 
     fun setDescription(text: String?) {
+        this.description = text
         descriptionTextView?.text = text
     }
 

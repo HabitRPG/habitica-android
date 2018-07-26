@@ -42,7 +42,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return container?.inflate(R.id.recyclerView)
+        return container?.inflate(R.layout.fragment_recyclerview)
     }
 
     override fun injectFragment(component: AppComponent) {
@@ -55,7 +55,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         taskRepository.getTasks(taskType ?: "", userId).firstElement().subscribe(Consumer { tasks -> adapter.updateData(tasks) }, RxErrorHandler.handleEmptyError())
         recyclerView?.adapter = adapter
 
-        layoutManager = recyclerView?.layoutManager as LinearLayoutManager?
+        layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
             layoutManager = LinearLayoutManager(context)
