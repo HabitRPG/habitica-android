@@ -19,6 +19,6 @@ open class QuestBoss : RealmObject() {
     var rage: QuestBossRage? = null
 
     fun hasRage(): Boolean {
-        return rage?.value != 0.0
+        return rage?.value ?: 0.0 > 0.0
     }
 }

@@ -78,7 +78,7 @@ class MaintenanceActivity : BaseActivity() {
         }
     }
 
-    fun openInPlayStore() {
+    private fun openInPlayStore() {
         val appPackageName = packageName
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))

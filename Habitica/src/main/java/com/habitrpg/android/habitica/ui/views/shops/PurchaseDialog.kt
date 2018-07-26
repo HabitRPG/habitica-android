@@ -176,7 +176,9 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
             priceLabel.cantAfford = true
         }
 
-        checkGearClass()
+        if (shopItem.isTypeGear) {
+            checkGearClass()
+        }
     }
 
     override fun dismiss() {

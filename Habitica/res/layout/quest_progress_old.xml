@@ -23,6 +23,14 @@
         app:valueTextColor="@color/red_100"
         app:labelSpacing="@dimen/spacing_medium"
         app:descriptionTextColor="@color/yellow_5"/>
+    <com.habitrpg.android.habitica.ui.views.ValueBar
+        android:id="@+id/bossRageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barForegroundColor="@color/orange_100"
+        app:lightBackground="true"
+        app:valueTextColor="@color/orange_100"
+        app:labelSpacing="@dimen/spacing_medium" />
     <LinearLayout
         android:id="@+id/collectionContainer"
         android:layout_width="match_parent"

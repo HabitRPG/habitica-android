@@ -89,7 +89,8 @@
                         android:background="@drawable/layout_rounded_bg_gray_700"
                         android:padding="@dimen/spacing_medium"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/spacing_medium">
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:visibility="gone">
                         <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/quest_scroll_image_view"
                             android:layout_width="@dimen/gear_image_size"
@@ -120,6 +121,7 @@
                             app:srcCompat="@drawable/ic_keyboard_arrow_right_gray_24dp"/>
                     </LinearLayout>
                     <FrameLayout
+                        android:visibility="gone"
                         android:id="@+id/quest_image_wrapper"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -134,6 +136,7 @@
                             android:layout_gravity="center_horizontal"/>
                     </FrameLayout>
                     <com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
+                        android:visibility="gone"
                         android:id="@+id/quest_progress_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

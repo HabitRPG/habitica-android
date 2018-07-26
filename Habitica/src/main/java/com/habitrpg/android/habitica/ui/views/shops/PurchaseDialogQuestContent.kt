@@ -39,6 +39,7 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     fun setQuestContent(questContent: QuestContent) {
+        rageMeterView.visibility = View.GONE
         if (questContent.isBossQuest) {
             questTypeTextView.setText(R.string.boss_quest)
             questCollectView.visibility = View.GONE
@@ -59,7 +60,7 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
 
         questDetailView.visibility = View.VISIBLE
 
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
         if (questContent.drop != null && questContent.drop.items != null) {
             questContent.drop.items
@@ -79,36 +80,36 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
             }
 
             if (questContent.drop.exp > 0) {
-                val view = inflater.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as ViewGroup
-                val imageView = view.findViewById<ImageView>(R.id.imageView)
-                imageView.scaleType = ImageView.ScaleType.CENTER
-                imageView.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
-                val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
-                titleTextView.text = context.getString(R.string.experience_reward, questContent.drop.exp)
+                val view = inflater?.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as? ViewGroup
+                val imageView = view?.findViewById<ImageView>(R.id.imageView)
+                imageView?.scaleType = ImageView.ScaleType.CENTER
+                imageView?.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
+                val titleTextView = view?.findViewById<TextView>(R.id.titleTextView)
+                titleTextView?.text = context.getString(R.string.experience_reward, questContent.drop.exp)
                 rewardsList.addView(view)
             }
 
             if (questContent.drop.gp > 0) {
-                val view = inflater.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as ViewGroup
-                val imageView = view.findViewById<ImageView>(R.id.imageView)
-                imageView.scaleType = ImageView.ScaleType.CENTER
-                imageView.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
-                val titleTextView = view.findViewById<TextView>(R.id.titleTextView)
-                titleTextView.text = context.getString(R.string.gold_reward, questContent.drop.gp)
+                val view = inflater?.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as? ViewGroup
+                val imageView = view?.findViewById<ImageView>(R.id.imageView)
+                imageView?.scaleType = ImageView.ScaleType.CENTER
+                imageView?.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
+                val titleTextView = view?.findViewById<TextView>(R.id.titleTextView)
+                titleTextView?.text = context.getString(R.string.gold_reward, questContent.drop.gp)
                 rewardsList.addView(view)
             }
         }
     }
 
-    private fun addRewardsRow(inflater: LayoutInflater, item: QuestDropItem, containerView: ViewGroup?) {
-        val view = inflater.inflate(R.layout.row_quest_reward, containerView, false) as ViewGroup
-        val imageView = view.findViewById<View>(R.id.imageView) as SimpleDraweeView
-        val titleTextView = view.findViewById<View>(R.id.titleTextView) as TextView
+    private fun addRewardsRow(inflater: LayoutInflater?, item: QuestDropItem, containerView: ViewGroup?) {
+        val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
+        val imageView = view?.findViewById(R.id.imageView) as? SimpleDraweeView
+        val titleTextView = view?.findViewById(R.id.titleTextView) as? TextView
         DataBindingUtils.loadImage(imageView, item.imageName)
         if (item.count > 1) {
-            titleTextView.text = context.getString(R.string.quest_reward_count, item.text, item.count)
+            titleTextView?.text = context.getString(R.string.quest_reward_count, item.text, item.count)
         } else {
-            titleTextView.text = item.text
+            titleTextView?.text = item.text
         }
         containerView?.addView(view)
     }

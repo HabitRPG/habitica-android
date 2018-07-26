@@ -137,7 +137,7 @@
                     android:id="@+id/rage_meter_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/pill_bg"
+                    style="@style/Pill"
                     android:gravity="right"
                     android:paddingBottom="2dp"
                     android:paddingLeft="8dp"
