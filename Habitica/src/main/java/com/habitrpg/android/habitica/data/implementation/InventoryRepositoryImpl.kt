@@ -117,21 +117,23 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 .map { user1 ->
                     localRepository.executeTransaction { realm ->
                         if (user != null) {
-                            if (user1.items != null) {
-                                user1.items?.userId = user.id
-                                val items = realm.copyToRealmOrUpdate(user1.items)
-                                user.items = items
+                            val items = user1.items
+                            if (items != null) {
+                                items.userId = user.id
+                                val newItems = realm.copyToRealmOrUpdate(items)
+                                user.items = newItems
                             } else {
                                 item.owned = item.owned - 1
                             }
-                            if (user.stats != null) {
-                                user1.stats?.userId = user.id
-                                val stats = realm.copyToRealmOrUpdate(user1.stats)
-                                user.stats = stats
+                            val stats = user1.stats
+                            if (stats != null) {
+                                stats.userId = user.id
+                                val newStats = realm.copyToRealmOrUpdate(stats)
+                                user.stats = newStats
                             }
                         }
                     }
-                    user
+                    user ?: user1
                 }
     }
 

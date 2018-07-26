@@ -57,7 +57,7 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         val tasksOrder = TasksOrder()
 
         for ((key, value) in stringListMap) {
-            val taskIdList = value.map { t -> t.id }
+            val taskIdList = value.map { t -> t.id ?: "" }
 
             when (key) {
                 Task.TYPE_HABIT -> tasksOrder.habits = taskIdList

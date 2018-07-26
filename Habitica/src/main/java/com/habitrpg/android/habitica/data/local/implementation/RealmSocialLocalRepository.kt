@@ -21,7 +21,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             .equalTo("groupID", id)
             .findAll()
             .asFlowable()
-            .filter { it.isLoaded }
+            .filter { it.isLoaded && it.isNotEmpty() }
             .map { it.first() }
 
     override fun getGroupMemberships(userId: String): Flowable<RealmResults<GroupMembership>> = realm.where(GroupMembership::class.java)

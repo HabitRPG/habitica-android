@@ -17,7 +17,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .sort("position")
                 .findAll()
                 .asFlowable()
-                .filter({ it.isLoaded })
+                .filter { it.isLoaded }
                 .retry(1)
     }
 
@@ -26,7 +26,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .sort("position")
                 .findAll()
                 .asFlowable()
-                .filter({ it.isLoaded })
+                .filter { it.isLoaded }
     }
 
     override fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: TaskList) {
@@ -150,10 +150,10 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun getTaskCopy(taskId: String): Flowable<Task> {
         return getTask(taskId)
                 .map { task ->
-                    if (task.isManaged && task.isValid) {
-                        return@map realm.copyFromRealm(task)
+                    return@map if (task.isManaged && task.isValid) {
+                         realm.copyFromRealm(task)
                     } else {
-                        return@map task
+                         task
                     }
                 }
     }

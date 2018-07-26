@@ -46,6 +46,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun retrieveUser(withTasks: Boolean): Flowable<User> =
             retrieveUser(withTasks, false)
 
+    @Suppress("ReturnCount")
     override fun retrieveUser(withTasks: Boolean, forced: Boolean): Flowable<User> {
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             lastSync = Date()
@@ -72,7 +73,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                         }
                     }
         } else {
-            return getUser()
+            return getUser().take(1)
         }
     }
 
@@ -273,9 +274,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
-    private fun mergeUser(oldUser: User?, newUser: User): User? {
+    private fun mergeUser(oldUser: User?, newUser: User): User {
         if (oldUser == null || !oldUser.isValid) {
-            return oldUser
+            return oldUser ?: newUser
         }
         val copiedUser: User = if (oldUser.isManaged) {
             localRepository.getUnmanagedCopy(oldUser)

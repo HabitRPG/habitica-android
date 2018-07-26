@@ -21,7 +21,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
         val now = Date().time
         return if (forced || now - this.lastContentSync > 3600000) {
             lastContentSync = now
-            apiClient.content.doOnNext({ localRepository.saveContent(it) })
+            apiClient.content.doOnNext { localRepository.saveContent(it) }
         } else {
             Flowable.empty()
         }
@@ -31,7 +31,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
         val now = Date().time
         return if (now - this.lastWorldStateSync > 3600000) {
             lastWorldStateSync = now
-            apiClient.worldState.doOnNext({ localRepository.saveWorldState(it) })
+            apiClient.worldState.doOnNext { localRepository.saveWorldState(it) }
         } else {
             Flowable.empty()
         }

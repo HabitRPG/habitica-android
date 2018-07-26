@@ -116,11 +116,11 @@ class PartyInviteActivity : BaseActivity() {
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                when (position) {
-                    0 -> return getString(R.string.by_email)
-                    1 -> return getString(R.string.invite_existing_users)
+                return when (position) {
+                    0 -> getString(R.string.by_email)
+                    1 -> getString(R.string.invite_existing_users)
+                    else -> ""
                 }
-                return ""
             }
         }
 
@@ -150,7 +150,7 @@ class PartyInviteActivity : BaseActivity() {
         }
 
         val toast = Toast.makeText(applicationContext,
-                "Invited: " + userIdToInvite!!, Toast.LENGTH_LONG)
+                "Invited: $userIdToInvite", Toast.LENGTH_LONG)
         toast.show()
 
         val inviteData = HashMap<String, Any>()

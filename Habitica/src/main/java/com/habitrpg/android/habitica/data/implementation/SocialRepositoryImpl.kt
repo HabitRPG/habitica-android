@@ -94,7 +94,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                     it.forEach {
                         it.groupId = id
                     }
-                    return@map it
+                    it
                 }
                 .doOnSuccess { localRepository.save(it) }.toFlowable(),
                 BiFunction<Group, List<ChatMessage>, Group> { group, _ ->
@@ -148,7 +148,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 .doOnNext { groups ->
                     if ("guilds" == type) {
                         val memberships = groups.map {
-                            return@map GroupMembership(userId, it.id)
+                            GroupMembership(userId, it.id)
                         }
                         localRepository.save(memberships)
                     }

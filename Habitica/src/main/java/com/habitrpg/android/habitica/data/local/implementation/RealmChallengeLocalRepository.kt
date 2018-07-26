@@ -39,7 +39,7 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
                 .equalTo("id", id)
                 .findAll()
                 .asFlowable()
-                .filter { realmObject -> realmObject.isLoaded }
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
                 .map { it.first() }
     }
 

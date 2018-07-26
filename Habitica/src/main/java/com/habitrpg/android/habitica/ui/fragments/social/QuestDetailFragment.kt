@@ -23,10 +23,7 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.helpers.*
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
@@ -40,20 +37,20 @@ class QuestDetailFragment : BaseMainFragment() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    private val questTitleView: TextView? by bindView(R.id.title_view)
-    private val questScrollImageView: SimpleDraweeView? by bindView(R.id.quest_scroll_image_view)
-    private val questLeaderView: TextView? by bindView(R.id.quest_leader_view)
-    private val questDescriptionView: TextView? by bindView(R.id.description_view)
-    private val questParticipantList: LinearLayout? by bindView(R.id.quest_participant_list)
-    private val participantHeader: TextView? by bindView(R.id.participants_header)
-    private val participantHeaderCount: TextView? by bindView(R.id.participants_header_count)
-    private val questParticipantResponseWrapper: ViewGroup? by bindView(R.id.quest_participant_response_wrapper)
-    private val questLeaderResponseWrapper: ViewGroup? by bindView(R.id.quest_leader_response_wrapper)
-    private val questAcceptButton: Button? by bindView(R.id.quest_accept_button)
-    private val questRejectButton: Button? by bindView(R.id.quest_reject_button)
-    private val questBeginButton: Button? by bindView(R.id.quest_begin_button)
-    private val questCancelButton: Button? by bindView(R.id.quest_cancel_button)
-    private val questAbortButton: Button? by bindView(R.id.quest_abort_button)
+    private val questTitleView: TextView? by bindOptionalView(R.id.title_view)
+    private val questScrollImageView: SimpleDraweeView? by bindOptionalView(R.id.quest_scroll_image_view)
+    private val questLeaderView: TextView? by bindOptionalView(R.id.quest_leader_view)
+    private val questDescriptionView: TextView? by bindOptionalView(R.id.description_view)
+    private val questParticipantList: LinearLayout? by bindOptionalView(R.id.quest_participant_list)
+    private val participantHeader: TextView? by bindOptionalView(R.id.participants_header)
+    private val participantHeaderCount: TextView? by bindOptionalView(R.id.participants_header_count)
+    private val questParticipantResponseWrapper: ViewGroup? by bindOptionalView(R.id.quest_participant_response_wrapper)
+    private val questLeaderResponseWrapper: ViewGroup? by bindOptionalView(R.id.quest_leader_response_wrapper)
+    private val questAcceptButton: Button? by bindOptionalView(R.id.quest_accept_button)
+    private val questRejectButton: Button? by bindOptionalView(R.id.quest_reject_button)
+    private val questBeginButton: Button? by bindOptionalView(R.id.quest_begin_button)
+    private val questCancelButton: Button? by bindOptionalView(R.id.quest_cancel_button)
+    private val questAbortButton: Button? by bindOptionalView(R.id.quest_abort_button)
 
     var partyId: String? = null
     var questKey: String? = null

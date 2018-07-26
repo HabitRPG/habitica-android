@@ -13,7 +13,7 @@ class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(real
         return realm.where(TutorialStep::class.java).equalTo("identifier", key)
                 .findAllAsync()
                 .asFlowable()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid }
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
                 .map { steps ->
                     return@map if (steps.isEmpty()) {
                         val step = TutorialStep()
