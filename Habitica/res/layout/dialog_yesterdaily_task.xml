@@ -34,8 +34,9 @@
                 android:button="@drawable/daily_checkbox"
                 android:gravity="center" />
         </FrameLayout>
-        <TextView
+        <net.pherth.android.emoji_library.EmojiTextView
             android:id="@+id/text_view"
+            style="@style/Subheader3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp" />
