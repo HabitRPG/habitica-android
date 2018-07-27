@@ -167,7 +167,7 @@
                 android:drawableRight="@drawable/ic_info_outline_black_24dp"
                 android:drawableTint="@color/brand_300"
                 android:gravity="center"
-                android:text="Tag"
+                android:text="@string/short_name"
                 android:textColor="#cc000000" />
 
             <android.support.design.widget.TextInputLayout

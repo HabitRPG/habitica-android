@@ -320,7 +320,7 @@ class ChallengeFormActivity : BaseActivity() {
             if (groups.first { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
                 val tavern = Group()
                 tavern.id = "00000000-0000-4000-A000-000000000000"
-                tavern.name = getString(R.string.sidebar_tavern)
+                tavern.name = getString(R.string.public_challenge)
                 locationAdapter.add(tavern)
             }
 

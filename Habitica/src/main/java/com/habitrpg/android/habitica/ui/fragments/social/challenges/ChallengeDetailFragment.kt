@@ -4,13 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -33,6 +26,7 @@ import java.util.*
 import javax.inject.Inject
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuInflater
@@ -144,6 +138,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
             return
         }
         inflater?.inflate(R.menu.menu_challenge_details, menu)
+        val editMenuItem = menu?.findItem(R.id.action_edit)
+        editMenuItem?.isVisible = isCreator
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
