@@ -23,7 +23,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
     var sku: String? = null
 
     init {
-        inflate(R.layout.purchase_subscription_view)
+        inflate(R.layout.purchase_subscription_view, true)
 
         val a = context.theme.obtainStyledAttributes(
                 attrs,

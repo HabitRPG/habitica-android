@@ -18,7 +18,7 @@ class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayou
     var sku: String? = null
 
     init {
-        inflate(R.layout.purchase_gem_view)
+        inflate(R.layout.purchase_gem_view, true)
 
         val a = context.theme.obtainStyledAttributes(
                 attrs,

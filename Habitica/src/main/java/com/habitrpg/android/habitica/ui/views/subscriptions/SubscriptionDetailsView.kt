@@ -39,7 +39,7 @@ class SubscriptionDetailsView : LinearLayout {
     }
 
     private fun setupView() {
-        inflate(R.layout.subscription_details)
+        inflate(R.layout.subscription_details, true)
 
         visitWebsiteButton.setOnClickListener { openSubscriptionWebsite() }
     }

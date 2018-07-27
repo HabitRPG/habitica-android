@@ -81,8 +81,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
-        if (context != null && context!!.resources != null) {
-            val itemWidth: Float = context!!.resources.getDimension(R.dimen.pet_width)
+        if (context != null && context?.resources != null) {
+            val itemWidth: Float = context?.resources?.getDimension(R.dimen.pet_width) ?: 120f
 
             spanCount = (width / itemWidth).toInt()
         }
@@ -120,6 +120,6 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
     }
 
     companion object {
-        private val ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY"
+        private const val ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY"
     }
 }

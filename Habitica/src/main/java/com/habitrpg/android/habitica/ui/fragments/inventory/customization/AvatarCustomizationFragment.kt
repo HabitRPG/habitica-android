@@ -52,7 +52,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
                 .flatMap<UnlockResponse> { customization ->
                     val user = this.user
-                    return@flatMap if (user != null) {
+                    if (user != null) {
                     userRepository.unlockPath(user, customization)
                     } else {
                         Flowable.empty()
@@ -62,7 +62,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         compositeSubscription.add(adapter.getUnlockSetEvents()
                 .flatMap<UnlockResponse> { set ->
                     val user = this.user
-                    return@flatMap if (user != null) {
+                    if (user != null) {
                         userRepository.unlockPath(user, set)
                     } else {
                         Flowable.empty()
