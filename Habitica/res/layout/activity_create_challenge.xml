@@ -42,7 +42,8 @@
                     android:textColorHighlight="@color/brand_500"
                     android:textColorHint="@color/brand_500"
 
-                    tools:text="Get in shape" />
+                    tools:text="Get in shape"
+                    android:inputType="text" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -183,7 +184,7 @@
 
                     android:hint="@string/identify_your_challenge_with_a_tag"
                     android:maxLines="1"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray_100"
                     android:textColorHint="#61000000" />
             </android.support.design.widget.TextInputLayout>
 

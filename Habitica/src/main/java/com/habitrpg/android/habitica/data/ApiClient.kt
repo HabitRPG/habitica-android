@@ -198,6 +198,7 @@ interface ApiClient {
     fun createChallenge(challenge: Challenge): Flowable<Challenge>
 
     fun createChallengeTasks(challengeId: String, tasks: List<Task>): Flowable<List<Task>>
+    fun createChallengeTask(challengeId: String, task: Task): Flowable<Task>
     fun updateChallenge(challenge: Challenge): Flowable<Challenge>
     fun deleteChallenge(challengeId: String): Flowable<Void>
 

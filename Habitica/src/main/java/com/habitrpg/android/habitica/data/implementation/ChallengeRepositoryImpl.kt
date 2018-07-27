@@ -71,7 +71,11 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
     }
 
     private fun addChallengeTasks(challenge: Challenge, addedTaskList: List<Task>): Flowable<Challenge> {
-        return apiClient.createChallengeTasks(challenge.id ?: "", addedTaskList).map { challenge }
+        return when {
+            addedTaskList.count() == 1 -> apiClient.createChallengeTask(challenge.id ?: "", addedTaskList[0]).map { challenge }
+            addedTaskList.count() > 1 -> apiClient.createChallengeTasks(challenge.id ?: "", addedTaskList).map { challenge }
+            else -> Flowable.just(challenge)
+        }
     }
 
     override fun createChallenge(challenge: Challenge, taskList: List<Task>): Flowable<Challenge> {

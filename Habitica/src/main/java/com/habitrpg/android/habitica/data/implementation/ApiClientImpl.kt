@@ -590,6 +590,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.createChallengeTasks(challengeId, tasks).compose(configureApiCallObserver())
     }
 
+    override fun createChallengeTask(challengeId: String, task: Task): Flowable<Task> {
+        return apiService.createChallengeTask(challengeId, task).compose(configureApiCallObserver())
+    }
+
     override fun updateChallenge(challenge: Challenge): Flowable<Challenge> {
         return apiService.updateChallenge(challenge.id, challenge).compose(configureApiCallObserver())
     }

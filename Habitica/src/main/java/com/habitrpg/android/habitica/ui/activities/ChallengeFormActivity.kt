@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import android.support.v7.widget.AppCompatCheckedTextView
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.*
 import android.widget.*
 import com.habitrpg.android.habitica.R
@@ -145,6 +147,19 @@ class ChallengeFormActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) {
+                val task = data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
+                if (task != null) {
+                    addOrUpdateTaskInList(task)
+                }
+            }
+        }
+    }
+
     private fun validateAllFields(): Boolean {
         val errorMessages = ArrayList<String>()
 
@@ -178,13 +193,13 @@ class ChallengeFormActivity : BaseActivity() {
         } else {
             createChallengeTaskError.visibility = View.GONE
         }
+        if (errorMessages.count() > 0) {
+            val builder = AlertDialog.Builder(this)
+                    .setMessage(errorMessages.joinToString("\n"))
 
-        val builder = AlertDialog.Builder(this)
-                .setMessage(errorMessages.joinToString("\n"))
-
-        val alert = builder.create()
-        alert.show()
-
+            val alert = builder.create()
+            alert.show()
+        }
         return errorMessages.size == 0
     }
 
@@ -408,7 +423,7 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = Intent(this, TaskFormActivity::class.java)
         intent.putExtras(bundle)
 
-        startActivityForResult(intent, 1)
+        startActivityForResult(intent, 1000)
     }
 
     private fun createChallenge(): Flowable<Challenge> {

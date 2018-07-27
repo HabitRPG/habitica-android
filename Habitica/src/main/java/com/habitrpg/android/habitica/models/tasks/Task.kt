@@ -196,11 +196,16 @@ open class Task : RealmObject, Parcelable {
         if (other == null) {
             return false
         }
-        if (Task::class.java.isAssignableFrom(other.javaClass)) {
-            val otherTask = other as Task
-            return this.id == otherTask.id
+        return if (Task::class.java.isAssignableFrom(other.javaClass)) {
+            val otherTask = other as? Task
+            this.id == otherTask?.id
+        } else {
+            super.equals(other)
         }
-        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
     }
 
     override fun describeContents(): Int = 0
@@ -268,7 +273,7 @@ open class Task : RealmObject, Parcelable {
 
     fun setWeeksOfMonth(weeksOfMonth: MutableList<Int>) {
         this.weeksOfMonth = weeksOfMonth
-        this.weeksOfMonthString = this.weeksOfMonth!!.toString()
+        this.weeksOfMonthString = this.weeksOfMonth?.toString()
     }
 
     fun getWeeksOfMonth(): List<Int>? {
@@ -279,7 +284,7 @@ open class Task : RealmObject, Parcelable {
                     val obj = JSONArray(weeksOfMonthString)
                     var i = 0
                     while (i < obj.length()) {
-                        weeksOfMonth!!.add(obj.getInt(i))
+                        weeksOfMonth?.add(obj.getInt(i))
                         i += 1
                     }
                 } catch (e: JSONException) {
@@ -295,7 +300,7 @@ open class Task : RealmObject, Parcelable {
 
     fun setDaysOfMonth(daysOfMonth: MutableList<Int>) {
         this.daysOfMonth = daysOfMonth
-        this.daysOfMonthString = this.daysOfMonth!!.toString()
+        this.daysOfMonthString = daysOfMonth.toString()
     }
 
     fun getDaysOfMonth(): List<Int>? {
@@ -306,7 +311,7 @@ open class Task : RealmObject, Parcelable {
                     val obj = JSONArray(daysOfMonthString)
                     var i = 0
                     while (i < obj.length()) {
-                        daysOfMonth!!.add(obj.getInt(i))
+                        daysOfMonth?.add(obj.getInt(i))
                         i += 1
                     }
                 } catch (e: JSONException) {
@@ -340,5 +345,12 @@ open class Task : RealmObject, Parcelable {
         const val FILTER_COMPLETED = "completed"
         const val FREQUENCY_WEEKLY = "weekly"
         const val FREQUENCY_DAILY = "daily"
+
+        @JvmField
+        val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {
+            override fun createFromParcel(source: Parcel): Task = Task(source)
+
+            override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
+        }
     }
 }

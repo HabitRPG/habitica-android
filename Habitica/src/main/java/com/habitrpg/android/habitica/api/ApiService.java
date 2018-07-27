@@ -312,6 +312,9 @@ public interface ApiService {
     @POST("tasks/challenge/{challengeId}")
     Flowable<HabitResponse<List<Task>>> createChallengeTasks(@Path("challengeId") String challengeId, @Body List<Task> tasks);
 
+    @POST("tasks/challenge/{challengeId}")
+    Flowable<HabitResponse<Task>> createChallengeTask(@Path("challengeId") String challengeId, @Body Task task);
+
     @PUT("challenges/{challengeId}")
     Flowable<HabitResponse<Challenge>> updateChallenge(@Path("challengeId") String challengeId, @Body Challenge challenge);
 

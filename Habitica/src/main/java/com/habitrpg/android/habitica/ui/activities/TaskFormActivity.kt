@@ -137,6 +137,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private var taskId: String? = null
     private var popup: EmojiPopup? = null
 
+    private var shouldSaveTask = true
+
     override fun getLayoutResId(): Int {
         return R.layout.activity_task_form
     }
@@ -146,13 +148,13 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
         popup = EmojiPopup(emojiToggle0.rootView, this, ContextCompat.getColor(this, R.color.brand))
 
-        val intent = intent
         val bundle = intent.extras
 
         taskType = bundle.getString(TASK_TYPE_KEY)
         task = bundle.getParcelable(PARCELABLE_TASK) as? Task
         taskId = bundle.getString(TASK_ID_KEY)
         taskBasedAllocation = bundle.getBoolean(ALLOCATION_MODE_KEY)
+        shouldSaveTask = bundle.getBoolean(SAVE_TO_DB)
         val showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true)
         tagCheckBoxList = ArrayList()
 
@@ -1096,6 +1098,10 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         }
 
         if (this.saveTask(thisTask) && thisTask.isValid) {
+            if (!shouldSaveTask) {
+                task = thisTask
+                return
+            }
             //send back to other elements.
             if (thisTask.id == null || thisTask.id?.isEmpty() == true) {
                 taskRepository.createTaskInBackground(thisTask)
@@ -1129,6 +1135,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         mainHandler.postDelayed({
             val resultIntent = Intent()
             resultIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, taskType)
+            resultIntent.putExtra(TaskFormActivity.PARCELABLE_TASK, task)
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }, 500)
