@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity
+import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
@@ -176,7 +176,7 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
 
         when (id) {
             R.id.action_create_challenge -> {
-                val intent = Intent(getActivity(), CreateChallengeActivity::class.java)
+                val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
                 startActivity(intent)
                 return true
             }

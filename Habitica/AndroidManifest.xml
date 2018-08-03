@@ -151,7 +151,7 @@
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.activities.CreateChallengeActivity"
+            android:name=".ui.activities.ChallengeFormActivity"
             android:theme="@style/AppTheme.ActionBar"
             android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="portrait"

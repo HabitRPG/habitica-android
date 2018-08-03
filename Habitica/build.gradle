@@ -124,14 +124,13 @@ dependencies {
         exclude group: 'com.android.support', module: 'multidex'
     }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     implementation 'com.android.support:multidex:1.0.3'
 }
 
 
 android {
-    compileSdkVersion sdk_version
-    buildToolsVersion build_tools_version
+    compileSdkVersion 28
+    buildToolsVersion '28.0.1'
 
     defaultConfig {
         applicationId "com.habitrpg.android.habitica"

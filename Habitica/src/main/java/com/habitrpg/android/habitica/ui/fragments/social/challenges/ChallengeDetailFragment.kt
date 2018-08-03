@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -33,8 +34,12 @@ import javax.inject.Inject
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.support.v7.app.AlertDialog
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 
 
 class ChallengeDetailFragment: BaseMainFragment() {
@@ -60,6 +65,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
     var challengeID: String? = null
     var challenge: Challenge? = null
+    var isCreator = false
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
@@ -76,8 +82,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
         gemAmountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfGem_36())
         memberCountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfParticipantIcon())
 
-        challengeID.notNull {
-            compositeSubscription.add(challengeRepository.getChallenge(it)
+        challengeID.notNull {id ->
+            compositeSubscription.add(challengeRepository.getChallenge(id)
                     .doOnNext {
                         set(it)
                     }
@@ -88,7 +94,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
                         return@flatMap socialRepository.getMember(creatorID)
                     }
                     .subscribe(Consumer { set(it)}, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(challengeRepository.getChallengeTasks(it).subscribe(Consumer { taskList ->
+            compositeSubscription.add(challengeRepository.getChallengeTasks(id).subscribe(Consumer { taskList ->
                 taskGrouplayout?.removeAllViewsInLayout()
 
                 val todos = ArrayList<Task>()
@@ -122,7 +128,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
                 }
             }, RxErrorHandler.handleEmptyError()))
 
-            compositeSubscription.add(challengeRepository.isChallengeMember(it).subscribe(Consumer { isMember ->
+            compositeSubscription.add(challengeRepository.isChallengeMember(id).subscribe(Consumer { isMember ->
                 setJoined(isMember)
             }, RxErrorHandler.handleEmptyError()))
         }
@@ -131,6 +137,26 @@ class ChallengeDetailFragment: BaseMainFragment() {
         leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        if (!isCreator) {
+            return
+        }
+        inflater?.inflate(R.menu.menu_challenge_details, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.action_edit) {
+            val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
+            val bundle = Bundle()
+            bundle.putString(ChallengeFormActivity.CHALLENGE_ID_KEY, challengeID)
+            intent.putExtras(bundle)
+            startActivity(intent)
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun refresh() {
@@ -155,6 +181,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
         challengeLeaderAvatarView?.setAvatar(creator)
         challengeLeaderLabel?.tier = creator.contributor?.level ?: 0
         challengeLeaderLabel?.username = creator.displayName
+        isCreator = creator.id == user?.id
+        this.activity?.invalidateOptionsMenu()
     }
 
     private fun setJoined(joined: Boolean) {

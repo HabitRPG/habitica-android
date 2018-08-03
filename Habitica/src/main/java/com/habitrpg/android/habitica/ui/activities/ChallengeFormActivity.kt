@@ -37,7 +37,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class CreateChallengeActivity : BaseActivity() {
+class ChallengeFormActivity : BaseActivity() {
 
     private val createChallengeTitleInputLayout: TextInputLayout by bindView(R.id.create_challenge_title_input_layout)
     private val createChallengeTitle: EditText by bindView(R.id.create_challenge_title)
@@ -378,6 +378,11 @@ class CreateChallengeActivity : BaseActivity() {
                     }
                 }
                 checkPrizeAndMinimumForTavern()
+            }, RxErrorHandler.handleEmptyError())
+            challengeRepository.getChallengeTasks(it).subscribe(Consumer { tasks ->
+                tasks.forEach { task ->
+                    addOrUpdateTaskInList(task)
+                }
             }, RxErrorHandler.handleEmptyError())
         }
     }

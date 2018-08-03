@@ -179,12 +179,12 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
     }
 
     override fun openOrCreateDatabase(name: String,
-                                      mode: Int, factory: SQLiteDatabase.CursorFactory): SQLiteDatabase {
+                                      mode: Int, factory: SQLiteDatabase.CursorFactory?): SQLiteDatabase {
         return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory)
     }
 
     override fun openOrCreateDatabase(name: String,
-                                      mode: Int, factory: SQLiteDatabase.CursorFactory, errorHandler: DatabaseErrorHandler?): SQLiteDatabase {
+                                      mode: Int, factory: SQLiteDatabase.CursorFactory?, errorHandler: DatabaseErrorHandler?): SQLiteDatabase {
         return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory, errorHandler)
     }
 

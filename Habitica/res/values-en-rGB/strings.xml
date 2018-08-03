@@ -302,11 +302,11 @@
   <string name="feed">Feed</string>
   <string name="hatch_with">Hatch pet with %s</string>
   <string name="hatched_pet_title">You hatched a %1$s %2$s!</string>
-  <string name="evolved_pet_title">You have tamed %1$s %2$s, let's go for a ride!</string>
+  <string name="evolved_pet_title">You have tamed %1$s %2$s, let\'s go for a ride!</string>
   <string name="close">Close</string>
   <string name="share">Share</string>
   <string name="notification_pet_fed">You fed your %1$s %2$s!</string>
-  <string name="sectionpets">Base Pets</string>
+  <string name="sectionpets">Base Pets</string>∂
   <string name="sectionpremiumPets">Magic Potion Pets</string>
   <string name="sectionquestPets">Quest Pets</string>
   <string name="sectionspecialPets">Rare Pets</string>

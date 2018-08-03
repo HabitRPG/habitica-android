@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
-import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
+import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity;
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
@@ -264,7 +264,7 @@ public interface AppComponent {
 
     void inject(NotificationPublisher notificationPublisher);
 
-    void inject(CreateChallengeActivity createChallengeActivity);
+    void inject(ChallengeFormActivity challengeFormActivity);
 
     void inject(TavernDetailFragment tavernDetailFragment);
 

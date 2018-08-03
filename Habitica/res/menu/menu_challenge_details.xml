@@ -2,18 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.habitrpg.android.habitica.TaskActivity">
-
-    <item
-        android:id="@+id/action_leave"
-        android:actionViewClass="android.widget.ImageButton"
-        android:icon="@drawable/leave_light"
-        android:title="@string/leave"
-        app:showAsAction="always" />
-
-    <group
-        android:id="@+id/challenge_edit_action_group">
     <item
         android:id="@+id/action_edit"
-        android:title="@string/edit_challenge" />
-    </group>
+        android:title="@string/action_edit" />
 </menu>
