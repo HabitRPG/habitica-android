@@ -132,7 +132,7 @@ class SkillsFragment : BaseMainFragment() {
             when (requestCode) {
                 TASK_SELECTION_ACTIVITY -> {
                     if (resultCode == Activity.RESULT_OK) {
-                        useSkill(selectedSkill, data.getStringExtra("task_id"))
+                        useSkill(selectedSkill, data.getStringExtra("taskID"))
                     }
                 }
                 MEMBER_SELECTION_ACTIVITY -> {

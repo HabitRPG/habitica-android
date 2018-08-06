@@ -150,6 +150,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         val bundle = intent.extras
 
         taskType = bundle.getString(TASK_TYPE_KEY)
+        task = bundle.getParcelable(PARCELABLE_TASK) as? Task
         taskId = bundle.getString(TASK_ID_KEY)
         taskBasedAllocation = bundle.getBoolean(ALLOCATION_MODE_KEY)
         val showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true)
@@ -348,6 +349,17 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                     }, RxErrorHandler.handleEmptyError())
 
             btnDelete.isEnabled = true
+        } else if (task != null) {
+            val thisTask = task
+            if (thisTask != null) {
+                populate(thisTask)
+
+                setTitle(thisTask)
+                if (taskType == Task.TYPE_TODO || taskType == Task.TYPE_DAILY) {
+                    populateChecklistRecyclerView()
+                    populateRemindersRecyclerView()
+                }
+            }
         } else {
             //setTitle(null as? Task)
             taskText.requestFocus()

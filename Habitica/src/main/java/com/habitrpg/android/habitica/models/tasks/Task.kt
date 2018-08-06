@@ -321,7 +321,11 @@ open class Task : RealmObject, Parcelable {
         return daysOfMonth
     }
 
-    companion object {
+    companion object CREATOR: Parcelable.Creator<Task> {
+        override fun createFromParcel(source: Parcel): Task = Task(source)
+
+        override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
+
         const val TYPE_HABIT = "habit"
         const val TYPE_TODO = "todo"
         const val TYPE_DAILY = "daily"
@@ -336,11 +340,5 @@ open class Task : RealmObject, Parcelable {
         const val FILTER_COMPLETED = "completed"
         const val FREQUENCY_WEEKLY = "weekly"
         const val FREQUENCY_DAILY = "daily"
-
-        val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {
-            override fun createFromParcel(source: Parcel): Task = Task(source)
-
-            override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
-        }
     }
 }

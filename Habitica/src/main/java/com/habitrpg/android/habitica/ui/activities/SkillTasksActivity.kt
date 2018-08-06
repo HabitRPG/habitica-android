@@ -85,7 +85,7 @@ class SkillTasksActivity : BaseActivity() {
 
     fun taskSelected(task: Task) {
         val resultIntent = Intent()
-        resultIntent.putExtra("task_id", task.id)
+        resultIntent.putExtra("taskID", task.id)
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
     }

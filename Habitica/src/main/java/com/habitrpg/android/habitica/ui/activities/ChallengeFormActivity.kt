@@ -390,9 +390,8 @@ class ChallengeFormActivity : BaseActivity() {
     private fun openNewTaskActivity(type: String?, task: Task?) {
         val bundle = Bundle()
 
-        if (task == null) {
-            bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
-        } else {
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
+        if (task != null) {
             bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task)
         }
 

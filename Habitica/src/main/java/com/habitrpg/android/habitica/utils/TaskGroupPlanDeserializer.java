@@ -16,9 +16,9 @@ public class TaskGroupPlanDeserializer implements JsonDeserializer<TaskGroupPlan
         TaskGroupPlan group = new TaskGroupPlan();
         JsonObject object = json.getAsJsonObject();
         JsonObject approvalObject = object.getAsJsonObject("approval");
-        group.approvalRequested = approvalObject.getAsJsonPrimitive("requested").getAsBoolean();
-        group.approvalApproved = approvalObject.getAsJsonPrimitive("approved").getAsBoolean();
-        group.approvalRequired = approvalObject.getAsJsonPrimitive("required").getAsBoolean();
+        group.setApprovalRequested(approvalObject.getAsJsonPrimitive("requested").getAsBoolean());
+        group.setApprovalApproved(approvalObject.getAsJsonPrimitive("approved").getAsBoolean());
+        group.setApprovalRequired(approvalObject.getAsJsonPrimitive("required").getAsBoolean());
 
         return null;
     }
