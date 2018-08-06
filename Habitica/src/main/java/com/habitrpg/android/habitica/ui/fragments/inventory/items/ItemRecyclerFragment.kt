@@ -182,7 +182,7 @@ class ItemRecyclerFragment : BaseFragment() {
             }
         }, RxErrorHandler.handleEmptyError())
 
-        compositeSubscription.add(inventoryRepository?.getOwnedPets().subscribe(Consumer { adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.getOwnedPets().subscribe(Consumer { adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun openMarket() {

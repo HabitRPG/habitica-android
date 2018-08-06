@@ -78,23 +78,23 @@ class GroupFormActivity : BaseActivity() {
             if (currentFocus == null || !isEmojiEditText(currentFocus) || emojicon == null) {
                 return@setOnEmojiconClickedListener
             }
-            val emojiEditText = currentFocus as EmojiEditText
-            val start = emojiEditText.selectionStart
-            val end = emojiEditText.selectionEnd
+            val emojiEditText = currentFocus as? EmojiEditText
+            val start = emojiEditText?.selectionStart ?: 0
+            val end = emojiEditText?.selectionEnd ?: 0
             if (start < 0) {
-                emojiEditText.append(emojicon.emoji)
+                emojiEditText?.append(emojicon.emoji)
             } else {
-                emojiEditText.text.replace(Math.min(start, end),
+                emojiEditText?.text?.replace(Math.min(start, end),
                         Math.max(start, end), emojicon.emoji, 0,
                         emojicon.emoji.length)
             }
         }
 
-        popup.setOnEmojiconBackspaceClickedListener { v ->
+        popup.setOnEmojiconBackspaceClickedListener { _ ->
             if (isEmojiEditText(currentFocus)) {
                 val event = KeyEvent(
                         0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL)
-                currentFocus!!.dispatchKeyEvent(event)
+                currentFocus?.dispatchKeyEvent(event)
             }
         }
 

@@ -374,11 +374,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 }, RxErrorHandler.handleEmptyError())
     }
 
-    fun handleFacebookLogin() {
+    private fun handleFacebookLogin() {
         loginManager.logInWithReadPermissions(this, listOf("user_friends"))
     }
 
-    fun handleGoogleLogin() {
+    private fun handleGoogleLogin() {
         if (!checkPlayServices()) {
             return
         }
@@ -403,6 +403,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         val scopes = "oauth2:$scopesString"
         Flowable.defer<String> {
             try {
+                @Suppress("Deprecation")
                 return@defer Flowable.just(GoogleAuthUtil.getToken(this, googleEmail, scopes))
             } catch (e: IOException) {
                 throw Exceptions.propagate(e)
@@ -432,10 +433,12 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             val statusCode = e
                     .connectionStatusCode
             GoogleApiAvailability.getInstance()
-            val dialog = GooglePlayServicesUtil.getErrorDialog(statusCode,
+            @Suppress("DEPRECATION")
+            GooglePlayServicesUtil.showErrorDialogFragment(statusCode,
                     this@LoginActivity,
-                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR)
-            dialog.show()
+                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) { _ ->
+
+            }
         } else if (e is UserRecoverableAuthException) {
             // Unable to authenticate, such as when the user has not yet granted
             // the app access to the account, but the user can fix this.
@@ -484,9 +487,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         val showLoginAlphaAnimation = ObjectAnimator.ofFloat<View>(showLoginButton, View.ALPHA, 0.toFloat())
         val scaleLogoAnimation = ValueAnimator.ofInt(logoView.measuredHeight, (logoView.measuredHeight * 0.75).toInt())
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
-            val `val` = valueAnimator.animatedValue as Int
+            val value = valueAnimator.animatedValue as? Int ?: 0
             val layoutParams = logoView.layoutParams
-            layoutParams.height = `val`
+            layoutParams.height = value
             logoView.layoutParams = layoutParams
         }
         if (isRegistering) {

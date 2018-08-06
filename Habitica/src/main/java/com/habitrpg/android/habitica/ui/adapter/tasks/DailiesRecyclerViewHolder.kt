@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 
 import io.realm.OrderedRealmCollection
 
-class DailiesRecyclerViewHolder(data: OrderedRealmCollection<Task>?, autoUpdate: Boolean, layoutResource: Int, dailyResetOffset: Int, taskFilterHelper: TaskFilterHelper) : RealmBaseTasksRecyclerViewAdapter<DailyViewHolder>(data, autoUpdate, layoutResource, taskFilterHelper) {
+class DailiesRecyclerViewHolder(data: OrderedRealmCollection<Task>?, autoUpdate: Boolean, layoutResource: Int, taskFilterHelper: TaskFilterHelper) : RealmBaseTasksRecyclerViewAdapter<DailyViewHolder>(data, autoUpdate, layoutResource, taskFilterHelper) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder =
             DailyViewHolder(getContentView(parent))

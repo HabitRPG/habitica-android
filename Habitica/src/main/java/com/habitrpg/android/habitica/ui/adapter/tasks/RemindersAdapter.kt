@@ -38,7 +38,9 @@ class RemindersAdapter(private val taskType: String) : RecyclerView.Adapter<Remi
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val time = reminders[position].time
         holder.reminderItemTextView.setText(remindersManager.reminderTimeToString(time))
+        @Suppress("DEPRECATION")
         holder.hour = time.hours
+        @Suppress("DEPRECATION")
         holder.minute = time.minutes
     }
 

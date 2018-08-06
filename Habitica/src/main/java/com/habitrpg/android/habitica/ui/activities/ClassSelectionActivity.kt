@@ -34,6 +34,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     @Inject
     lateinit var userRepository: UserRepository
 
+    @Suppress("DEPRECATION")
     private var progressDialog: ProgressDialog? = null
 
     override fun getLayoutResId(): Int {
@@ -189,6 +190,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     }
 
     private fun displayProgressDialog() {
+        @Suppress("DEPRECATION")
         progressDialog = ProgressDialog.show(this, getString(R.string.changing_class_progress), null, true)
     }
 

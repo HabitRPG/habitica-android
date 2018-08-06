@@ -76,6 +76,7 @@ class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context,
                 titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
             }
             if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                @Suppress("DEPRECATION")
                 titleWrapper.setBackgroundDrawable(backgroundDrawable)
             } else {
                 titleWrapper.background = backgroundDrawable

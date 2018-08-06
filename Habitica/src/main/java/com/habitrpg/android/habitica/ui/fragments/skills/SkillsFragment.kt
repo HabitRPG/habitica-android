@@ -40,6 +40,7 @@ class SkillsFragment : BaseMainFragment() {
 
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
+    @Suppress("DEPRECATION")
     private var progressDialog: ProgressDialog? = null
 
     override var user: User? = null
@@ -159,6 +160,7 @@ class SkillsFragment : BaseMainFragment() {
 
     private fun displayProgressDialog() {
         progressDialog?.dismiss()
+        @Suppress("DEPRECATION")
         progressDialog = ProgressDialog.show(activity, context?.getString(R.string.skill_progress_title), null, true)
     }
 

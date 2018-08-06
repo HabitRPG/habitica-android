@@ -22,6 +22,7 @@ set(value) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
         background = value
     } else {
+        @Suppress("DEPRECATION")
         setBackgroundDrawable(value)
     }
 }

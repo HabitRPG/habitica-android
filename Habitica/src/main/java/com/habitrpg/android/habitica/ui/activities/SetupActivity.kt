@@ -67,7 +67,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeSubscription?.add(userRepository.getUser(hostConfig.user)
+        compositeSubscription.add(userRepository.getUser(hostConfig.user)
                 .subscribe(Consumer { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
 
         val additionalData = HashMap<String, Any>()

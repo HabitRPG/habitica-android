@@ -157,7 +157,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
                                 }
                             }, RxErrorHandler.handleEmptyError())
                 }
-                .setNegativeButton(R.string.action_cancel) { dialog, id -> }
+                .setNegativeButton(R.string.action_cancel) { _, _ -> }
         builder.show()
     }
 
@@ -171,9 +171,5 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
                     .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
                     .setNegativeButton(android.R.string.no, null).show()
         }
-    }
-
-    private fun copyMessageAsTodo(chatMessage: ChatMessage) {
-
     }
 }

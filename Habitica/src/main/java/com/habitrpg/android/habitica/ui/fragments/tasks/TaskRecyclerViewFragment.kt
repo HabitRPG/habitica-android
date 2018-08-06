@@ -67,11 +67,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
                 HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
             }
             Task.TYPE_DAILY -> {
-                var dailyResetOffset = 0
-                if (user != null) {
-                    dailyResetOffset = user?.preferences?.dayStart ?: 0
-                }
-                DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, dailyResetOffset, taskFilterHelper)
+                DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, taskFilterHelper)
             }
             Task.TYPE_TODO -> {
                 TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)

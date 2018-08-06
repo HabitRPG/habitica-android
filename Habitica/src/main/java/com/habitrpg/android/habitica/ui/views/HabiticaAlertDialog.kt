@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.layoutInflater
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
@@ -69,7 +68,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
         setMessage(context.getString(messageId))
     }
 
-    fun setAdditionalContentView(layoutResID: Int, index: Int = -1) {
+    fun setAdditionalContentView(layoutResID: Int) {
         val inflater = context.layoutInflater
         setAdditionalContentView(inflater.inflate(layoutResID, view, false))
     }

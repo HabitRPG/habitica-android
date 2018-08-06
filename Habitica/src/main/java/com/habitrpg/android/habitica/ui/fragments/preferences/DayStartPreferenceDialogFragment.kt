@@ -28,6 +28,7 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             val lastHour: Int? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 picker?.hour
             } else {
+                @Suppress("DEPRECATION")
                 picker?.currentHour
             }
             return lastHour.toString() + ":00"
@@ -38,6 +39,7 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         wrapper.orientation = LinearLayout.VERTICAL
         picker = TimePicker(context)
         descriptionTextView = TextView(context)
+        @Suppress("DEPRECATION")
         descriptionTextView?.setTextColor(resources.getColor(R.color.textColorLight))
         val padding = resources.getDimension(R.dimen.card_padding).toInt()
         descriptionTextView?.setPadding(padding, padding, padding, padding)
@@ -72,7 +74,9 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             picker?.hour = lastHour
             picker?.minute = 0
         } else {
+            @Suppress("DEPRECATION")
             picker?.currentHour = lastHour
+            @Suppress("DEPRECATION")
             picker?.currentMinute = 0
         }
     }

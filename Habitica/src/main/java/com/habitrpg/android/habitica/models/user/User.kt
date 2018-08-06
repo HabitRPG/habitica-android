@@ -204,7 +204,7 @@ open class User : RealmObject(), Avatar {
     override fun getCurrentPet(): String? {
 
         return if (items != null) {
-            items!!.currentPet
+            items?.currentPet
         } else ""
     }
 
@@ -213,6 +213,6 @@ open class User : RealmObject(), Avatar {
     }
 
     fun hasParty(): Boolean {
-        return this.party != null && this.party!!.id != null && this.party!!.id.length > 0
+        return this.party?.id?.length ?: 0 > 0
     }
 }

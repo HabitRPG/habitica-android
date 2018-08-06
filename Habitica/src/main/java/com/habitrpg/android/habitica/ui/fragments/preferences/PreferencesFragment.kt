@@ -115,6 +115,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 return true
             }
             "reload_content" -> {
+                @Suppress("DEPRECATION")
                 val dialog = ProgressDialog.show(context, context?.getString(R.string.reloading_content), null, true)
                 inventoryRepository.retrieveContent(true).subscribe({
                     if (dialog.isShowing) {
@@ -175,10 +176,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 Locale.setDefault(languageHelper.locale)
                 val configuration = Configuration()
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
+                    @Suppress("Deprecation")
                     configuration.locale = languageHelper.locale
                 } else {
                     configuration.setLocale(languageHelper.locale)
                 }
+                @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
                 userRepository.updateLanguage(user, languageHelper.languageCode)
                         .flatMap<ContentResult> { inventoryRepository.retrieveContent(true) }
@@ -240,8 +243,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 classSelectionPreference?.isVisible = true
             }
         }
-        val cdsTimePreference = findPreference("cds_time") as TimePreference
-        cdsTimePreference.text = user?.preferences?.dayStart.toString() + ":00"
+        val cdsTimePreference = findPreference("cds_time") as? TimePreference
+        cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
         findPreference("dailyDueDefaultView").setDefaultValue(user?.preferences?.dailyDueDefaultView)
     }
 }

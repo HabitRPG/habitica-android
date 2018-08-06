@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.ui.helpers
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.net.Uri
-import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.view.View
@@ -21,6 +19,7 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
 import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.backgroundCompat
 
 object DataBindingUtils {
 
@@ -61,21 +60,17 @@ object DataBindingUtils {
     }
 
     fun setForegroundTintColor(view: TextView, color: Int) {
-        var color = color
-        if (color > 0) {
-            color = ContextCompat.getColor(view.context, color)
+        var thisColor = color
+        if (thisColor > 0) {
+            thisColor = ContextCompat.getColor(view.context, thisColor)
         }
-        view.setTextColor(color)
+        view.setTextColor(thisColor)
     }
 
     fun setRoundedBackground(view: View, color: Int) {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
         drawable?.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
-        if (Build.VERSION.SDK_INT < 16) {
-            view.setBackgroundDrawable(drawable)
-        } else {
-            view.background = drawable
-        }
+        view.backgroundCompat = drawable
     }
 
     fun setRoundedBackgroundInt(view: View, color: Int) {

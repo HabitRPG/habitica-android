@@ -55,7 +55,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
             finish()
         }
 
-        var layoutManager: LinearLayoutManager? = recyclerView.layoutManager as LinearLayoutManager?
+        var layoutManager: LinearLayoutManager? = recyclerView.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
             layoutManager = LinearLayoutManager(this)
@@ -64,7 +64,9 @@ class HabitButtonWidgetActivity : BaseActivity() {
         }
 
         adapter = SkillTasksRecyclerViewAdapter(null, true)
-        adapter?.getTaskSelectionEvents()?.subscribe(Consumer { task -> taskSelected(task.id) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription?.add(it) }
+        adapter?.getTaskSelectionEvents()?.subscribe(Consumer { task -> taskSelected(task.id) },
+                RxErrorHandler.handleEmptyError())
+                .notNull { compositeSubscription.add(it) }
         recyclerView.adapter = adapter
 
         taskRepository.getTasks(Task.TYPE_HABIT, userId).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError())

@@ -54,6 +54,7 @@ class FixCharacterValuesActivity: BaseActivity() {
         val id = item?.itemId
 
         if (id == R.id.action_save_changes) {
+            @Suppress("DEPRECATION")
             val progressDialog = ProgressDialog.show(this, getString(R.string.saving), "")
             val userInfo = HashMap<String, Any>()
             userInfo["stats.hp"] = healthEditText.getDoubleValue()

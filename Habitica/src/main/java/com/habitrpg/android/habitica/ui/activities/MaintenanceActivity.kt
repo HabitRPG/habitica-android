@@ -46,6 +46,7 @@ class MaintenanceActivity : BaseActivity() {
 
         this.titleTextView.text = data?.getString("title")
 
+        @Suppress("DEPRECATION")
         imageView.setImageURI(Uri.parse(data.getString("imageUrl")))
         this.descriptionTextView.text = MarkdownParser.parseMarkdown(data.getString("description"))
         this.descriptionTextView.movementMethod = LinkMovementMethod.getInstance()

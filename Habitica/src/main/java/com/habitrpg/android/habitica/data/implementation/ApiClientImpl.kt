@@ -164,6 +164,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
     override fun accept(throwable: Throwable) {
         val throwableClass = throwable.javaClass
+        @Suppress("DEPRECATION")
         if (SocketException::class.java.isAssignableFrom(throwableClass) || SSLException::class.java.isAssignableFrom(throwableClass)) {
             this.showConnectionProblemDialog(R.string.internal_error_api)
         } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass) {

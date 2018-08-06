@@ -9,7 +9,6 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.widget.FrameLayout
 
@@ -22,18 +21,18 @@ class RoundedCornerLayout : FrameLayout {
     private var cornerRadius: Float = CORNER_RADIUS
 
     constructor(context: Context) : super(context) {
-        init(context, null, 0)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(context, attrs, 0)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-        init(context, attrs, defStyle)
+        init(context)
     }
 
-    private fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
+    private fun init(context: Context) {
         val metrics = context.resources.displayMetrics
         cornerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CORNER_RADIUS, metrics)
 

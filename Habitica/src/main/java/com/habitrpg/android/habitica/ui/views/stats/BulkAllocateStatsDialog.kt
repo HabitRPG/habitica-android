@@ -72,6 +72,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
     }
 
     private fun saveChanges() {
+        @Suppress("DEPRECATION")
         val progressDialog = ProgressDialog.show(context, context.getString(R.string.allocating_points), null, true)
         userRepository.bulkAllocatePoints(user, strengthSliderView.currentValue, intelligenceSliderView.currentValue, constitutionSliderView.currentValue, perceptionSliderView.currentValue)
                 .subscribe({
@@ -131,16 +132,10 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
     }
 
     private fun getSliderWithHigherValue(firstSlider: StatsSliderView?, secondSlider: StatsSliderView?): StatsSliderView? {
-        if (firstSlider == null) {
-            return secondSlider
-        }
-        if (secondSlider == null) {
-            return firstSlider
-        }
-        if (firstSlider.currentValue > secondSlider.currentValue) {
-            return firstSlider
+        return if (firstSlider?.currentValue ?: 0 > secondSlider?.currentValue ?: 0) {
+            firstSlider
         } else {
-            return secondSlider
+            secondSlider
         }
     }
 

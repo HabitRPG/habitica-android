@@ -29,13 +29,14 @@ class AboutFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         //Gets the userId that was passed from MainActivity -> MainDrawerBuilder -> About Activity
-        userId = this.activity!!.intent.getStringExtra("userId")
+        userId = this.activity?.intent?.getStringExtra("userId") ?: ""
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
     private val versionName: String by lazy {
         try {
+            @Suppress("DEPRECATION")
             activity?.packageManager?.getPackageInfo(activity?.packageName, 0)?.versionName ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""
@@ -44,6 +45,7 @@ class AboutFragment : Fragment() {
 
     private val versionCode: Int by lazy {
         try {
+            @Suppress("DEPRECATION")
             activity?.packageManager?.getPackageInfo(activity?.packageName, 0)?.versionCode ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
             0

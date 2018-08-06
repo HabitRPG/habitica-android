@@ -73,31 +73,31 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
 
     abstract fun shouldDisplayAsActive(newTask: Task): Boolean
 
-    fun updateChecklistDisplay() {
+    private fun updateChecklistDisplay() {
         //This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
         if (this.shouldDisplayExpandedChecklist()) {
-            val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
             if (this.task?.checklist?.isValid == true) {
                 for (item in this.task?.checklist ?: emptyList<ChecklistItem>()) {
-                    val itemView = layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView, false) as LinearLayout
-                    val checkbox = itemView.findViewById<CheckBox>(R.id.checkBox)
-                    val textView = itemView.findViewById<EmojiTextView>(R.id.checkedTextView)
+                    val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false) as? LinearLayout
+                    val checkbox = itemView?.findViewById<CheckBox>(R.id.checkBox)
+                    val textView = itemView?.findViewById<EmojiTextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
-                    textView.text = item.text
+                    textView?.text = item.text
 
                     Observable.just(item.text)
-                            .map( { MarkdownParser.parseMarkdown(it) })
+                            .map { MarkdownParser.parseMarkdown(it) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer<CharSequence> { textView.setText(it) }, RxErrorHandler.handleEmptyError())
-                    checkbox.isChecked = item.completed
-                    checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+                            .subscribe(Consumer<CharSequence> { textView?.text = it }, RxErrorHandler.handleEmptyError())
+                    checkbox?.isChecked = item.completed
+                    checkbox?.setOnCheckedChangeListener { _, _ ->
                         val event = ChecklistCheckedCommand()
                         event.task = task
                         event.item = item
                         EventBus.getDefault().post(event)
                     }
-                    val checkboxHolder = itemView.findViewById<View>(R.id.checkBoxHolder) as ViewGroup
+                    val checkboxHolder = itemView?.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
                     expandCheckboxTouchArea(checkboxHolder, checkbox)
                     this.checklistView.addView(itemView)
                 }
@@ -111,12 +111,12 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
         }
     }
 
-    fun onChecklistIndicatorClicked() {
+    private fun onChecklistIndicatorClicked() {
         expandedChecklistRow = if (this.shouldDisplayExpandedChecklist()) null else adapterPosition
         if (this.shouldDisplayExpandedChecklist()) {
-            val recyclerView = this.checklistView.parent.parent as RecyclerView
-            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            layoutManager.scrollToPositionWithOffset(this.adapterPosition, 15)
+            val recyclerView = this.checklistView.parent.parent as? RecyclerView
+            val layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
+            layoutManager?.scrollToPositionWithOffset(this.adapterPosition, 15)
         }
         updateChecklistDisplay()
 
@@ -126,7 +126,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
         return expandedChecklistRow != null && adapterPosition == expandedChecklistRow
     }
 
-    fun expandCheckboxTouchArea(expandedView: View?, checkboxView: View) {
+    private fun expandCheckboxTouchArea(expandedView: View?, checkboxView: View?) {
         expandedView?.post {
             val rect = Rect()
             expandedView.getHitRect(rect)

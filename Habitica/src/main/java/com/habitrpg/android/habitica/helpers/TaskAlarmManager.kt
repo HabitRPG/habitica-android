@@ -86,6 +86,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         val newTime = task.getNextReminderOccurence(oldTime) ?: return null
         val calendar = Calendar.getInstance()
         calendar.time = newTime
+        @Suppress("DEPRECATION")
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), oldTime?.hours ?: 0, oldTime?.minutes ?: 0, 0)
         remindersItem?.time = calendar.time
         return remindersItem

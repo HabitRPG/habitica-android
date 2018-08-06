@@ -18,10 +18,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (apiClient != null) {
-            apiClient.content
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-        }
+        apiClient.content.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -37,10 +37,8 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
     fun bind(builder: AlertDialog.Builder, challengesViewed: List<Challenge>,
              currentFilter: ChallengeFilterOptions?,
              selectedGroupsCallback: Action1<ChallengeFilterOptions>) {
-        var dialogBuilder = builder
-        dialogBuilder = builder
-                .setPositiveButton(context.getString(R.string.done)) { _, _ -> doneClicked() }
-        this.dialog = dialogBuilder.show()
+        builder.setPositiveButton(context.getString(R.string.done)) { _, _ -> doneClicked() }
+                .show()
         this.challengesViewed = challengesViewed
         this.currentFilter = currentFilter
         this.selectedGroupsCallback = selectedGroupsCallback

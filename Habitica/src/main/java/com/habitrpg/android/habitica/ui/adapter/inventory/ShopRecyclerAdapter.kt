@@ -234,6 +234,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             npcBannerView.shopSpriteSuffix = shopSpriteSuffix
             npcBannerView.identifier = shop.identifier
 
+            @Suppress("DEPRECATION")
             descriptionView.text = Html.fromHtml(shop.notes)
             namePlate.setText(shop.npcNameResource)
         }

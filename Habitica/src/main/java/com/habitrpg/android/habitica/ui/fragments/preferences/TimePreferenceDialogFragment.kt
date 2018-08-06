@@ -25,7 +25,9 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 lastHour = picker.hour
                 lastMinute = picker.minute
             } else {
+                @Suppress("DEPRECATION")
                 lastHour = picker.currentHour
+                @Suppress("DEPRECATION")
                 lastMinute = picker.currentMinute
             }
             return lastHour.toString() + ":" + String.format(Locale.UK, "%02d", lastMinute)
@@ -46,7 +48,9 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             picker.hour = lastHour
             picker.minute = lastMinute
         } else {
+            @Suppress("DEPRECATION")
             picker.currentHour = lastHour
+            @Suppress("DEPRECATION")
             picker.currentMinute = lastMinute
         }
     }

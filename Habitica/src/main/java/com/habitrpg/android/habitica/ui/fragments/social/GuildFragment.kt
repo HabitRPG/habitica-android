@@ -108,7 +108,7 @@ class GuildFragment : BaseMainFragment() {
             R.id.menu_guild_leave -> {
                 this.socialRepository.leaveGroup(this.guild?.id)
                         .subscribe(Consumer {
-                            this.activity?.supportInvalidateOptionsMenu()
+                            this.activity?.invalidateOptionsMenu()
                         }, RxErrorHandler.handleEmptyError())
                 this.isMember = false
                 return true
@@ -151,11 +151,11 @@ class GuildFragment : BaseMainFragment() {
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                when (position) {
-                    0 -> return context!!.getString(R.string.guild)
-                    1 -> return context!!.getString(R.string.chat)
+                return when (position) {
+                    0 ->  context?.getString(R.string.guild)
+                    1 ->  context?.getString(R.string.chat)
+                    else -> ""
                 }
-                return ""
             }
         }
 
@@ -182,11 +182,11 @@ class GuildFragment : BaseMainFragment() {
 
     private fun displayEditForm() {
         val bundle = Bundle()
-        bundle.putString("groupID", this.guild!!.id)
-        bundle.putString("name", this.guild!!.name)
-        bundle.putString("description", this.guild!!.description)
-        bundle.putString("privacy", this.guild!!.privacy)
-        bundle.putString("leader", this.guild!!.leaderID)
+        bundle.putString("groupID", this.guild?.id)
+        bundle.putString("name", this.guild?.name)
+        bundle.putString("description", this.guild?.description)
+        bundle.putString("privacy", this.guild?.privacy)
+        bundle.putString("leader", this.guild?.leaderID)
 
         val intent = Intent(activity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
@@ -219,7 +219,7 @@ class GuildFragment : BaseMainFragment() {
 
             this.guild = group
         }
-        this.activity?.supportInvalidateOptionsMenu()
+        this.activity?.invalidateOptionsMenu()
     }
 
     override fun customTitle(): String {

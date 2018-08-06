@@ -176,10 +176,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         Locale.setDefault(languageHelper.locale)
         val configuration = Configuration()
         if (SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
+            @Suppress("Deprecation")
             configuration.locale = languageHelper.locale
         } else {
             configuration.setLocale(languageHelper.locale)
         }
+        @Suppress("Deprecation")
         resources.updateConfiguration(configuration,
                 resources.displayMetrics)
 
@@ -212,7 +214,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
-        drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as NavigationDrawerFragment
+        drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
 
         drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout)
         drawerFragment?.setSelection(NavigationDrawerFragment.SIDEBAR_TASKS, true)
@@ -502,6 +504,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     @Subscribe
+    @Suppress("ReturnCount")
     fun onEvent(event: BuyRewardCommand) {
         val rewardKey = event.Reward.id
 
@@ -584,8 +587,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
         this.inventoryRepository.hatchPet(event.usingEgg, event.usingHatchingPotion)
                 .subscribe(Consumer {
-                    val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as FrameLayout
-                    val petImageView = petWrapper.findViewById<View>(R.id.pet_imageview) as SimpleDraweeView
+                    val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
+                    val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
 
                     DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.key + "-" + event.usingHatchingPotion.key)
                     val potionName = event.usingHatchingPotion.text
@@ -600,7 +603,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                 val sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888)
                                 val canvas = Canvas(sharedImage)
                                 canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
-                                petImageView.drawable.draw(canvas)
+                                petImageView?.drawable?.draw(canvas)
                                 event1.shareImage = sharedImage
                                 EventBus.getDefault().post(event1)
                                 hatchingDialog.dismiss()
@@ -841,6 +844,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         if (maintenanceResponse.minBuild != null) {
                             try {
                                 val packageInfo = packageManager.getPackageInfo(packageName, 0)
+                                @Suppress("DEPRECATION")
                                 if (packageInfo.versionCode < maintenanceResponse.minBuild) {
                                     val intent = createMaintenanceIntent(maintenanceResponse, true)
                                     startActivity(intent)
@@ -877,7 +881,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val factory = LayoutInflater.from(this)
         val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
-        val imageView = view.findViewById<View>(R.id.imageView) as SimpleDraweeView
+        val imageView = view.findViewById<View>(R.id.imageView) as? SimpleDraweeView
         val imageKey = event.notification.data.rewardKey[0]
         DataBindingUtils.loadImage(imageView, imageKey)
 
@@ -893,11 +897,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         titleTextView.gravity = Gravity.CENTER_HORIZONTAL
         titleTextView.text = title
 
-        val youEarnedTexView = view.findViewById<View>(R.id.you_earned_message) as TextView
-        youEarnedTexView.text = youEarnedMessage
+        val youEarnedTexView = view.findViewById<View>(R.id.you_earned_message) as? TextView
+        youEarnedTexView?.text = youEarnedMessage
 
-        val nextUnlockTextView = view.findViewById<View>(R.id.next_unlock_message) as TextView
-        nextUnlockTextView.text = event.nextUnlockText
+        val nextUnlockTextView = view.findViewById<View>(R.id.next_unlock_message) as? TextView
+        nextUnlockTextView?.text = event.nextUnlockText
 
         val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
                 .setView(view)

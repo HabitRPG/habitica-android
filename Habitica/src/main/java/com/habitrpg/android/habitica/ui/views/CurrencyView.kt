@@ -34,13 +34,13 @@ class CurrencyView : android.support.v7.widget.AppCompatTextView {
         } catch (_: ArrayIndexOutOfBoundsException) {
             true
         }
-        visibility = GONE;
+        visibility = GONE
     }
 
     constructor(context: Context, currency: String, lightbackground: Boolean) : super(context) {
         this.lightBackground = lightbackground
         this.currency = currency
-        visibility = GONE;
+        visibility = GONE
     }
 
     private fun configureCurrency() {
@@ -105,7 +105,8 @@ class CurrencyView : android.support.v7.widget.AppCompatTextView {
 
     var cantAfford = false
     set(value) {
-        if (cantAfford) {
+        field = value
+        if (value) {
             this.setTextColor(ContextCompat.getColor(context, R.color.red_50))
             drawable?.alpha = 127
         } else {
@@ -115,10 +116,10 @@ class CurrencyView : android.support.v7.widget.AppCompatTextView {
     }
 
     private fun updateVisibility() {
-        if ("hourglasses" == this.currency) {
-            visibility = if ("0" == text) View.GONE else View.VISIBLE
+        visibility = if ("hourglasses" == this.currency) {
+            if ("0" == text) View.GONE else View.VISIBLE
         } else {
-            visibility = View.VISIBLE;
+            View.VISIBLE;
         }
     }
 }

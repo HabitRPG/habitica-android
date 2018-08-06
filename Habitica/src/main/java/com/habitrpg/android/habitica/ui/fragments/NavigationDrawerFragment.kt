@@ -231,6 +231,10 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.selectedItem = identifier
         closeDrawer()
 
+        if (!openSelection) {
+            return
+        }
+
         var fragment: BaseMainFragment? = null
         var newActivityClass: Class<*>? = null
 

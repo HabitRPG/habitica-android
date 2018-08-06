@@ -122,6 +122,7 @@ class ChallengeFormActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_save && !savingInProgress && validateAllFields()) {
             savingInProgress = true
+            @Suppress("DEPRECATION")
             val dialog = ProgressDialog.show(this, "", "Saving challenge data. Please wait...", true, false)
 
             val observable: Flowable<Challenge> = if (editMode) {

@@ -68,8 +68,8 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             "reset_account" -> showAccountResetConfirmation()
             "delete_account" -> showAccountDeleteConfirmation()
             else -> {
-                val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                clipMan.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
+                val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                clipMan?.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
                 Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -151,6 +151,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun deleteAccount(password: String) {
+        @Suppress("DEPRECATION")
         val dialog = ProgressDialog.show(context, context?.getString(R.string.deleting_account), null, true)
         userRepository.deleteAccount(password).subscribe({ _ ->
             context.notNull { HabiticaBaseApplication.logout(it) }
@@ -178,6 +179,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun resetAccount() {
+        @Suppress("DEPRECATION")
         val dialog = ProgressDialog.show(context, context?.getString(R.string.resetting_account), null, true)
         userRepository.resetAccount().subscribe({ _ -> dialog.dismiss() }) { throwable ->
             dialog.dismiss()

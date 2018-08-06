@@ -78,7 +78,7 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
 
         setView(contentViewLayout)
 
-        this.setButton(AlertDialog.BUTTON_NEGATIVE, context.getText(R.string.reward_dialog_dismiss)) { clickedDialog, which -> clickedDialog.dismiss() }
+        this.setButton(AlertDialog.BUTTON_NEGATIVE, context.getText(R.string.reward_dialog_dismiss)) { clickedDialog, _ -> clickedDialog.dismiss() }
     }
 
     fun setDescription(description: CharSequence) {

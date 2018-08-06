@@ -9,13 +9,13 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
-import kotlinx.android.synthetic.main.shop_header.*
 
 class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
@@ -40,7 +40,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         field = value
         if (value > 0) {
             itemDetailIndicator.text = value.toString()
-            itemDetailIndicator.background = countDrawable
+            itemDetailIndicator.backgroundCompat = countDrawable
             itemDetailIndicator.visibility = View.VISIBLE
         }
     }
@@ -72,7 +72,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             priceLabel.visibility = View.VISIBLE
             unlockLabel.visibility = View.GONE
         } else {
-            unlockLabel.setText(item.unlockCondition!!.readableUnlockConditionId())
+            unlockLabel.setText(item.unlockCondition?.readableUnlockConditionId() ?: 0)
             priceLabel.visibility = View.GONE
             unlockLabel.visibility = View.VISIBLE
         }
@@ -80,21 +80,13 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         itemDetailIndicator.text = null
         itemDetailIndicator.visibility = View.GONE
         if (item.isLimited) {
-            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                itemDetailIndicator.setBackgroundDrawable(limitedDrawable)
-            } else {
-                itemDetailIndicator.background = limitedDrawable
-            }
+            itemDetailIndicator.backgroundCompat = limitedDrawable
             itemDetailIndicator.visibility = View.VISIBLE
         }
 
         priceLabel.isLocked = item.locked || !canBuy
         if (item.locked) {
-            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                itemDetailIndicator.setBackgroundDrawable(lockedDrawable)
-            } else {
-                itemDetailIndicator.background = lockedDrawable
-            }
+            itemDetailIndicator.backgroundCompat = lockedDrawable
             itemDetailIndicator.visibility = View.VISIBLE
         }
     }

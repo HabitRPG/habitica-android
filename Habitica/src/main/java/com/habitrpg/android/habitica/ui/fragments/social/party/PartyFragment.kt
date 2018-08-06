@@ -115,7 +115,7 @@ class PartyFragment : BaseMainFragment() {
 
         chatListFragment?.seenGroupId = group?.id ?: ""
 
-        this.activity?.supportInvalidateOptionsMenu()
+        this.activity?.invalidateOptionsMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

@@ -28,6 +28,7 @@ object MarkdownParser {
         var output: CharSequence = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             Html.fromHtml(processor.markdownToHtml(EmojiParser.parseEmojis(input.trim { it <= ' ' })), FROM_HTML_MODE_LEGACY)
         } else {
+            @Suppress("DEPRECATION")
             Html.fromHtml(processor.markdownToHtml(EmojiParser.parseEmojis(input.trim { it <= ' ' })))
         }
         if (output.length >= 2) output = output.subSequence(0, output.length - 2)

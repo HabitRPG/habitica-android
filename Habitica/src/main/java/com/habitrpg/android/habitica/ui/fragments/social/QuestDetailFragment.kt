@@ -151,36 +151,36 @@ class QuestDetailFragment : BaseMainFragment() {
             return
         }
         questParticipantList?.removeAllViews()
-        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         var participantCount = 0
         for (participant in participants ?: emptyList()) {
             if (quest?.active == true && (participant.participatesInQuest == null || !participant.participatesInQuest)) {
                 continue
             }
-            val participantView = inflater.inflate(R.layout.quest_participant, questParticipantList, false)
-            val textView = participantView.findViewById<View>(R.id.participant_name) as TextView
-            textView.text = participant.displayName
-            val statusTextView = participantView.findViewById<View>(R.id.status_view) as TextView
+            val participantView = inflater?.inflate(R.layout.quest_participant, questParticipantList, false)
+            val textView = participantView?.findViewById<View>(R.id.participant_name) as? TextView
+            textView?.text = participant.displayName
+            val statusTextView = participantView?.findViewById<View>(R.id.status_view) as? TextView
             if (quest?.active == false) {
                 context.notNull {
                     when {
                         participant.participatesInQuest == null -> {
-                            statusTextView.setText(R.string.pending)
-                            statusTextView.setTextColor(ContextCompat.getColor(it, R.color.gray_200))
+                            statusTextView?.setText(R.string.pending)
+                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.gray_200))
                         }
                         participant.participatesInQuest -> {
-                            statusTextView.setText(R.string.accepted)
-                            statusTextView.setTextColor(ContextCompat.getColor(it, R.color.green_100))
+                            statusTextView?.setText(R.string.accepted)
+                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.green_100))
                         }
                         else -> {
-                            statusTextView.setText(R.string.declined)
-                            statusTextView.setTextColor(ContextCompat.getColor(it, R.color.red_100))
+                            statusTextView?.setText(R.string.declined)
+                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.red_100))
                         }
                     }
                 }
 
             } else {
-                statusTextView.visibility = View.GONE
+                statusTextView?.visibility = View.GONE
             }
             questParticipantList?.addView(participantView)
             if (quest?.active == true || participant.participatesInQuest != null && participant.participatesInQuest) {
@@ -204,20 +204,20 @@ class QuestDetailFragment : BaseMainFragment() {
         super.onDestroyView()
     }
 
-    fun onQuestAccept() {
+    private fun onQuestAccept() {
         partyId.notNull {
             socialRepository.acceptQuest(user, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
 
-    fun onQuestReject() {
+    private fun onQuestReject() {
         partyId.notNull {
             socialRepository.rejectQuest(user, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
-    fun onQuestBegin() {
+    private fun onQuestBegin() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(beginQuestMessage)
                 .setPositiveButton(R.string.yes) { _, _ ->
@@ -230,11 +230,12 @@ class QuestDetailFragment : BaseMainFragment() {
         builder.show()
     }
 
-    fun onQuestCancel() {
+    private fun onQuestCancel() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_cancel_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
                     partyId.notNull {
+                        @Suppress("DEPRECATION")
                         socialRepository.cancelQuest(it)
                                 .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }
@@ -242,11 +243,12 @@ class QuestDetailFragment : BaseMainFragment() {
         builder.show()
     }
 
-    fun onQuestAbort() {
+    private fun onQuestAbort() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_abort_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
                     partyId.notNull {
+                        @Suppress("DEPRECATION")
                         socialRepository.abortQuest(it)
                                 .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }

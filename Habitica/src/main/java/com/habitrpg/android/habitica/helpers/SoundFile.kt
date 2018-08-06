@@ -39,6 +39,7 @@ class SoundFile(val theme: String, private val fileName: String) : MediaPlayer.O
                         .build()
                 m.setAudioAttributes(attributes)
             } else {
+                @Suppress("Deprecation")
                 m.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
             }
             m.prepare()

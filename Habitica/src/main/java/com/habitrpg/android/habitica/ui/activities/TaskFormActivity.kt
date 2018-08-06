@@ -1169,6 +1169,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                     Integer.toString(Calendar.getInstance().firstDayOfWeek))
             val firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek))
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+                @Suppress("DEPRECATION")
                 datePickerDialog.datePicker.calendarView.firstDayOfWeek = firstDayOfTheWeekHelper.firstDayOfTheWeek
             } else {
                 datePickerDialog.datePicker.firstDayOfWeek = firstDayOfTheWeekHelper

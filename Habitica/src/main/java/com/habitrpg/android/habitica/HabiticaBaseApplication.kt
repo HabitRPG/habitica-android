@@ -86,7 +86,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         setupRealm()
         setupDagger()
         refWatcher = LeakCanary.install(this)
-        setupFacebookSdk()
         setupInstabug()
         createBillingAndCheckout()
         HabiticaIconsHelper.init(this)
@@ -148,7 +147,9 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         }
 
         val lastInstalledVersion = sharedPrefs.getInt("last_installed_version", 0)
+        @Suppress("DEPRECATION")
         if (lastInstalledVersion < info.versionCode) {
+            @Suppress("DEPRECATION")
             sharedPrefs.edit().putInt("last_installed_version", info.versionCode).apply()
             inventoryRepository.retrieveContent().subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
@@ -160,23 +161,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
     }
 
     protected abstract fun initDagger(): AppComponent
-
-    private fun setupFacebookSdk() {
-        var fbApiKey: String? = null
-        try {
-            val ai = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
-            val bundle = ai.metaData
-            fbApiKey = bundle.getString(FacebookSdk.APPLICATION_ID_PROPERTY)
-        } catch (e: PackageManager.NameNotFoundException) {
-            Log.e("FB Error", "Failed to load meta-data, NameNotFound: " + e.message)
-        } catch (e: NullPointerException) {
-            Log.e("FB Error", "Failed to load meta-data, NullPointer: " + e.message)
-        }
-
-        if (fbApiKey != null) {
-            FacebookSdk.sdkInitialize(applicationContext)
-        }
-    }
 
     override fun openOrCreateDatabase(name: String,
                                       mode: Int, factory: SQLiteDatabase.CursorFactory?): SQLiteDatabase {

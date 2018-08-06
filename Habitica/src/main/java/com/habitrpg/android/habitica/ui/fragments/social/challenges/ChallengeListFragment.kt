@@ -140,7 +140,7 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_list_challenges, menu)
 
-
+        @Suppress("Deprecation")
         val badgeLayout = MenuItemCompat.getActionView(menu?.findItem(R.id.action_search)) as? RelativeLayout
         if (badgeLayout != null) {
             val filterCountTextView = badgeLayout.findViewById<TextView>(R.id.badge_textview)
