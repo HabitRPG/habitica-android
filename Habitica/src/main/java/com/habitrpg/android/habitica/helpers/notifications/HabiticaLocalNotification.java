@@ -31,7 +31,7 @@ public abstract class HabiticaLocalNotification {
         Uri path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         this.notificationBuilder =
-                new NotificationCompat.Builder(context)
+                new NotificationCompat.Builder(context, "default")
                         .setSmallIcon(R.drawable.ic_gryphon_white)
                         .setContentTitle(title)
                         .setContentText(message)
