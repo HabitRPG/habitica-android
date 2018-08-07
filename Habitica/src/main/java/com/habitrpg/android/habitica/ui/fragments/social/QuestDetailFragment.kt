@@ -155,7 +155,7 @@ class QuestDetailFragment : BaseMainFragment() {
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         var participantCount = 0
         for (participant in participants ?: emptyList()) {
-            if (quest?.active == true && (participant.participatesInQuest == null || !participant.participatesInQuest)) {
+            if (quest?.active == true && participant.participatesInQuest == false) {
                 continue
             }
             val participantView = inflater?.inflate(R.layout.quest_participant, questParticipantList, false)
@@ -169,7 +169,7 @@ class QuestDetailFragment : BaseMainFragment() {
                             statusTextView?.setText(R.string.pending)
                             statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.gray_200))
                         }
-                        participant.participatesInQuest -> {
+                        participant.participatesInQuest == true -> {
                             statusTextView?.setText(R.string.accepted)
                             statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.green_100))
                         }
@@ -184,7 +184,7 @@ class QuestDetailFragment : BaseMainFragment() {
                 statusTextView?.visibility = View.GONE
             }
             questParticipantList?.addView(participantView)
-            if (quest?.active == true || participant.participatesInQuest != null && participant.participatesInQuest) {
+            if (quest?.active == true || participant.participatesInQuest == true) {
                 participantCount += 1
             }
         }

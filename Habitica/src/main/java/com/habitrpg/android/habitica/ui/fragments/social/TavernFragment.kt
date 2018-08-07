@@ -85,12 +85,12 @@ class TavernFragment : BaseMainFragment() {
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                when (position) {
-                    0 -> return context?.getString(R.string.inn)
-                    1 -> return context?.getString(R.string.chat)
-                    2 -> return context?.getString(R.string.world_quest)
+                return when (position) {
+                    0 -> context?.getString(R.string.inn)
+                    1 -> context?.getString(R.string.chat)
+                    2 -> context?.getString(R.string.world_quest)
+                    else -> ""
                 }
-                return ""
             }
         }
         tabLayout?.setupWithViewPager(viewPager)

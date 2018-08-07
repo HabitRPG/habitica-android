@@ -162,13 +162,13 @@ class GuildFragment : BaseMainFragment() {
         viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1 && this@GuildFragment.guild != null) {
-                    chatListFragment?.setNavigatedToFragment(this@GuildFragment.guild?.id ?: "")
+                    chatListFragment?.setNavigatedToFragment()
                 }
             }
 
             override fun onPageSelected(position: Int) {
                 if (position == 1 && this@GuildFragment.guild != null && chatListFragment != null) {
-                    chatListFragment?.setNavigatedToFragment(this@GuildFragment.guild?.id ?: "")
+                    chatListFragment?.setNavigatedToFragment()
                 }
             }
 
@@ -213,9 +213,9 @@ class GuildFragment : BaseMainFragment() {
 
     private fun setGroup(group: Group?) {
         if (group != null) {
-            guildInformationFragment?.setGroup(group)
+            guildInformationFragment?.group = group
 
-            this.chatListFragment?.seenGroupId = group.id
+            this.chatListFragment?.groupId = group.id
 
             this.guild = group
         }

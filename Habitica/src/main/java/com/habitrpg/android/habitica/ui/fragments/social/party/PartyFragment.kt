@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
@@ -22,7 +21,6 @@ import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
-import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import java.util.*
@@ -59,7 +57,7 @@ class PartyFragment : BaseMainFragment() {
         viewPager?.currentItem = 0
 
         compositeSubscription.add(userRepository.getUser()
-                .filter { user?.party?.id != null }
+                .filter { user?.party?.id?.isNotEmpty() == true }
                 .map { user?.party?.id }
                 .flatMap { socialRepository.getGroup(it) }
                 .firstElement()
@@ -84,8 +82,7 @@ class PartyFragment : BaseMainFragment() {
     }
 
     private fun userHasParty(): Boolean {
-        user.notNull { Log.e("PARTY ${it.party}") }
-        return user?.party?.id != null
+        return user?.party?.id?.isNotEmpty() == true
     }
 
     override fun onDestroyView() {
@@ -116,7 +113,7 @@ class PartyFragment : BaseMainFragment() {
 
         partyMemberListFragment?.setPartyId(group?.id ?: "")
 
-        chatListFragment?.seenGroupId = group?.id ?: ""
+        chatListFragment?.groupId = group?.id ?: ""
 
         this.activity?.invalidateOptionsMenu()
     }
@@ -290,13 +287,13 @@ class PartyFragment : BaseMainFragment() {
         viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1 && group != null) {
-                    chatListFragment?.setNavigatedToFragment(group?.id ?: "")
+                    chatListFragment?.setNavigatedToFragment()
                 }
             }
 
             override fun onPageSelected(position: Int) {
                 if (position == 1 && group != null) {
-                       chatListFragment?.setNavigatedToFragment(group?.id ?: "")
+                       chatListFragment?.setNavigatedToFragment()
                 }
             }
 

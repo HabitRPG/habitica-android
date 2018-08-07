@@ -39,7 +39,6 @@ import javax.inject.Inject
 
 class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    var seenGroupId: String = ""
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
@@ -49,7 +48,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var isTavern: Boolean = false
     internal var layoutManager: LinearLayoutManager? = null
-    private var groupId: String = ""
+    internal var groupId: String? = null
     private var user: User? = null
     private var userId: String? = null
     private var chatAdapter: ChatRecyclerViewAdapter? = null
@@ -126,7 +125,10 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        socialRepository.getGroupChat(groupId).firstElement().subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())
+        groupId.notNull { id ->
+            socialRepository.getGroupChat(id).firstElement()
+                    .subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())
+        }
 
         if (user?.flags?.isCommunityGuidelinesAccepted == true) {
             communityGuidelinesView.visibility = View.GONE
@@ -144,20 +146,24 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onRefresh() {
         refreshLayout.isRefreshing = true
-        socialRepository.retrieveGroupChat(groupId).doOnEvent { _, _ -> refreshLayout?.isRefreshing = false }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+        groupId.notNull {id ->
+            socialRepository.retrieveGroupChat(id)
+                    .doOnEvent { _, _ -> refreshLayout?.isRefreshing = false }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+        }
     }
 
-    fun setNavigatedToFragment(groupId: String) {
-        seenGroupId = groupId
+    fun setNavigatedToFragment() {
         navigatedOnceToFragment = true
 
         markMessagesAsSeen()
     }
 
     private fun markMessagesAsSeen() {
-        if (!isTavern && seenGroupId.isNotEmpty() && gotNewMessages && navigatedOnceToFragment) {
+        if (!isTavern && groupId?.isNotEmpty() == true && gotNewMessages && navigatedOnceToFragment) {
             gotNewMessages = false
-            socialRepository.markMessagesSeen(seenGroupId)
+            groupId.notNull {id ->
+                socialRepository.markMessagesSeen(id)
+            }
         }
     }
 
@@ -165,7 +171,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
         clipMan?.primaryClip = messageText
-        val activity = activity as MainActivity?
+        val activity = activity as? MainActivity
         if (activity != null) {
             showSnackbar(activity.floatingMenuWrapper, getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL)
         }
@@ -179,7 +185,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                     .setPositiveButton(R.string.flag_confirm) { _, _ ->
                         socialRepository.flagMessage(chatMessage)
                                 .subscribe(Consumer {
-                                    val activity = activity as MainActivity?
+                                    val activity = activity as? MainActivity
                                     activity?.floatingMenuWrapper.notNull {
                                         showSnackbar(it, "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL)
                                     }
@@ -219,8 +225,10 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun sendChatMessage(chatText: String) {
-        socialRepository.postGroupChat(groupId, chatText).subscribe(Consumer {
-            recyclerView?.scrollToPosition(0)
-        }, RxErrorHandler.handleEmptyError())
+        groupId.notNull {id ->
+            socialRepository.postGroupChat(id, chatText).subscribe(Consumer {
+                recyclerView?.scrollToPosition(0)
+            }, RxErrorHandler.handleEmptyError())
+        }
     }
 }

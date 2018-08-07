@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
+import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
@@ -61,7 +62,6 @@ import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
 import com.habitrpg.android.habitica.utils.UserDeserializer;
 import com.habitrpg.android.habitica.utils.WorldStateSerialization;
 
-import java.lang.reflect.Member;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;

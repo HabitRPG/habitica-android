@@ -82,7 +82,7 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
             userName.text = user.profile?.name
 
             itemView.isClickable = true
-            itemView.setOnClickListener { userClickedEvents.onNext(user.id) }
+            itemView.setOnClickListener { userClickedEvents.onNext(user.id ?: "") }
         }
     }
 }

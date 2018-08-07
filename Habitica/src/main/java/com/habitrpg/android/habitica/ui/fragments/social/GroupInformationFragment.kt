@@ -34,7 +34,11 @@ class GroupInformationFragment : BaseFragment() {
     @Inject
     lateinit var userRepository: UserRepository
 
-    private var group: Group? = null
+    var group: Group? = null
+    set(value) {
+        field = value
+        updateGroup(value)
+    }
     private var user: User? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -52,9 +56,7 @@ class GroupInformationFragment : BaseFragment() {
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        if (group != null) {
-            setGroup(group)
-        }
+        updateGroup(group)
 
         if (this.group == null) {
             val qrCodeManager = QrCodeManager(userRepository, this.context)
@@ -120,9 +122,7 @@ class GroupInformationFragment : BaseFragment() {
         component.inject(this)
     }
 
-    fun setGroup(group: Group?) {
-        this.group = group
-
+    private fun updateGroup(group: Group?) {
         if (noPartyWrapper == null) {
             return
         }
