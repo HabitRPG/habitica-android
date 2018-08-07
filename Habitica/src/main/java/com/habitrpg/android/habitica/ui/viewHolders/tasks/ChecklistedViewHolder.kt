@@ -84,12 +84,13 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
                     val textView = itemView?.findViewById<EmojiTextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
-
-                    Observable.just(item.text)
-                            .map { MarkdownParser.parseMarkdown(it) }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer<CharSequence> { textView?.text = it }, RxErrorHandler.handleEmptyError())
+                    if (item.text != null) {
+                        Observable.just(item.text)
+                                .map { MarkdownParser.parseMarkdown(it) }
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(Consumer<CharSequence> { textView?.text = it }, RxErrorHandler.handleEmptyError())
+                    }
                     checkbox?.isChecked = item.completed
                     checkbox?.setOnCheckedChangeListener { _, _ ->
                         val event = ChecklistCheckedCommand()

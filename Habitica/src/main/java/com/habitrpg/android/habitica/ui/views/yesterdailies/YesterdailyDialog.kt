@@ -82,7 +82,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                     configureChecklistView(checklistView, item)
                     checklistView.setOnClickListener {
                         item.completed = !item.completed
-                        taskRepository.scoreChecklistItem(task.id ?: "", item.id).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                        taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                         configureChecklistView(checklistView, item)
                     }
                     checklistContainer.addView(checklistView)

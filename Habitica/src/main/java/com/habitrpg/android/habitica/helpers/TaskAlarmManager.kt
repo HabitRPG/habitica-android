@@ -94,7 +94,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
 
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
         val now = Date()
-        if (remindersItem == null || remindersItem.time.before(now)) {
+        if (remindersItem == null || remindersItem.time?.before(now) == true) {
             return
         }
 
@@ -106,7 +106,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         intent.putExtra(TASK_NAME_INTENT_KEY, reminderItemTask.text)
         intent.putExtra(TASK_ID_INTENT_KEY, reminderItemTask.id)
 
-        val intentId = remindersItem.id.hashCode() and 0xfffffff
+        val intentId = remindersItem.id?.hashCode() ?: 0 and 0xfffffff
         //Cancel alarm if already exists
         val previousSender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_NO_CREATE)
         if (previousSender != null) {
@@ -124,7 +124,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
     private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
-        val intentId = remindersItem.id.hashCode() and 0xfffffff
+        val intentId = remindersItem.id?.hashCode() ?: 0 and 0xfffffff
         val sender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         sender.cancel()

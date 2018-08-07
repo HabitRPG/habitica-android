@@ -44,12 +44,11 @@ class TaskReceiver : BroadcastReceiver() {
         val notificationBuilder = NotificationCompat.Builder(context, "default")
                 .setSmallIcon(R.drawable.ic_gryphon_white)
                 .setContentTitle(taskTitle)
-                .setContentText(taskTitle)
                 .setSound(soundUri)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
 
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             /* Create or update. */
             val channel = NotificationChannel("default", "Habitica Notifications", NotificationManager.IMPORTANCE_DEFAULT)

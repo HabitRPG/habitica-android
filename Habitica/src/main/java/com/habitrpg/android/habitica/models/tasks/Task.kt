@@ -236,11 +236,11 @@ open class Task : RealmObject, Parcelable {
         dest.writeString(this.id)
     }
 
-    constructor() {}
+    constructor()
 
     protected constructor(`in`: Parcel) {
         this.userId = `in`.readString()
-        this.priority = `in`.readValue(Float::class.java.classLoader) as Float
+        this.priority = `in`.readValue(Float::class.java.classLoader) as? Float ?: 0f
         this.text = `in`.readString()
         this.notes = `in`.readString()
         this.attribute = `in`.readString()
@@ -251,16 +251,16 @@ open class Task : RealmObject, Parcelable {
         val tmpDateCreated = `in`.readLong()
         this.dateCreated = if (tmpDateCreated == -1L) null else Date(tmpDateCreated)
         this.position = `in`.readInt()
-        this.up = `in`.readValue(Boolean::class.java.classLoader) as Boolean
-        this.down = `in`.readValue(Boolean::class.java.classLoader) as Boolean
+        this.up = `in`.readValue(Boolean::class.java.classLoader) as? Boolean ?: false
+        this.down = `in`.readValue(Boolean::class.java.classLoader) as? Boolean ?: false
         this.completed = `in`.readByte().toInt() != 0
         this.checklist = RealmList()
         `in`.readList(this.checklist, ChecklistItem::class.java.classLoader)
         this.reminders = RealmList()
         `in`.readList(this.reminders, RemindersItem::class.java.classLoader)
         this.frequency = `in`.readString()
-        this.everyX = `in`.readValue(Int::class.java.classLoader) as Int
-        this.streak = `in`.readValue(Int::class.java.classLoader) as Int
+        this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1
+        this.streak = `in`.readValue(Int::class.java.classLoader) as? Int ?: 0
         val tmpStartDate = `in`.readLong()
         this.startDate = if (tmpStartDate == -1L) null else Date(tmpStartDate)
         this.repeat = `in`.readParcelable(Days::class.java.classLoader)

@@ -47,7 +47,6 @@ class CheckListAdapter : RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>()
         return items.size
     }
 
-
     override fun onItemDismiss(position: Int) {
         if (position >= 0 && position < items.size) {
             items.removeAt(position)

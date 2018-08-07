@@ -290,6 +290,7 @@ class TasksFragment : BaseMainFragment() {
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
         bundle.putString(TaskFormActivity.USER_ID_KEY, if (this.user != null) this.user?.id else null)
         bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode)
+        bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, true)
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
@@ -313,6 +314,7 @@ class TasksFragment : BaseMainFragment() {
         bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.id)
         bundle.putString(TaskFormActivity.USER_ID_KEY, if (this.user != null) this.user?.id else null)
         bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode)
+        bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, true)
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)

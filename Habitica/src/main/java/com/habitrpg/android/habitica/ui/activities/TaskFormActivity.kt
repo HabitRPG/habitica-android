@@ -662,7 +662,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     private fun addChecklistItem() {
         val text = newCheckListEditText.text.toString()
-        val item = ChecklistItem(text)
+        val item = ChecklistItem(null, text)
         checklistAdapter?.addItem(item)
         newCheckListEditText.setText("")
     }
@@ -1135,7 +1135,9 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         mainHandler.postDelayed({
             val resultIntent = Intent()
             resultIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, taskType)
-            resultIntent.putExtra(TaskFormActivity.PARCELABLE_TASK, task)
+            if (!shouldSaveTask) {
+                resultIntent.putExtra(TaskFormActivity.PARCELABLE_TASK, task)
+            }
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }, 500)
