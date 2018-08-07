@@ -53,7 +53,7 @@ class ItemRecyclerFragment : BaseFragment() {
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return container?.inflate(R.layout.fragment_items)
+        return inflater.inflate(R.layout.fragment_items, container, false)
     }
 
     override fun onDestroy() {
@@ -75,7 +75,7 @@ class ItemRecyclerFragment : BaseFragment() {
 
         val context = activity
 
-        layoutManager = recyclerView?.layoutManager as LinearLayoutManager?
+        layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
             layoutManager = LinearLayoutManager(context)
@@ -83,7 +83,7 @@ class ItemRecyclerFragment : BaseFragment() {
             recyclerView?.layoutManager = layoutManager
         }
 
-        adapter = recyclerView?.adapter as ItemRecyclerAdapter?
+        adapter = recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
             adapter = ItemRecyclerAdapter(null, true)
             adapter?.context = this.activity

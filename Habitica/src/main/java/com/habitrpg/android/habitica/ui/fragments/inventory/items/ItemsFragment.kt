@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.events.commands.HatchingCommand
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.resetViews
 
 import org.greenrobot.eventbus.Subscribe
 
@@ -30,6 +31,8 @@ class ItemsFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        resetViews()
 
         viewPager?.currentItem = 0
         setViewPagerAdapter()

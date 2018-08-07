@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +19,10 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
@@ -28,6 +30,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
+    private val recyclerView: RecyclerView by bindView(R.id.recyclerView)
 
     var adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter(null, true)
     var animalType: String = ""
@@ -56,6 +60,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val finalView = view
+
+        resetViews()
 
         layoutManager = GridLayoutManager(getActivity(), 2)
         recyclerView.layoutManager = layoutManager
