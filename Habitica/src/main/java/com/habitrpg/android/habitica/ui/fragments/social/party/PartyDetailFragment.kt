@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -92,6 +93,8 @@ class PartyDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        resetViews()
 
         refreshLayout?.setOnRefreshListener { this.refreshParty() }
 

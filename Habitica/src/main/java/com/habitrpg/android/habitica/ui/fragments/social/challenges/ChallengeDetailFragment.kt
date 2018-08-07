@@ -28,6 +28,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AlertDialog
+import android.text.method.LinkMovementMethod
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
@@ -78,6 +79,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
         gemAmountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfGem_36())
         memberCountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfParticipantIcon())
+        challengeDescription?.movementMethod = LinkMovementMethod.getInstance()
 
         challengeID.notNull {id ->
             compositeSubscription.add(challengeRepository.getChallenge(id)
