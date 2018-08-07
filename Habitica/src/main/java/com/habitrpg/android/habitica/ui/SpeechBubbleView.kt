@@ -23,7 +23,7 @@ class SpeechBubbleView(context: Context, attrs: AttributeSet) : FrameLayout(cont
     private var showNextListener: ShowNextListener? = null
 
     init {
-        inflate(R.layout.speechbubble)
+        inflate(R.layout.speechbubble, true)
 
         val attributes = context.theme.obtainStyledAttributes(
                 attrs,

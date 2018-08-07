@@ -23,7 +23,7 @@ class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnT
         get() = currentTextIndex == tutorialTexts.size - 1
 
     init {
-        inflate(R.layout.overlay_tutorial)
+        inflate(R.layout.overlay_tutorial, true)
         speechBubbleView.setConfirmationButtonVisibility(View.GONE)
         speechBubbleView.setShowNextListener(object : SpeechBubbleView.ShowNextListener {
             override fun showNextStep() {
