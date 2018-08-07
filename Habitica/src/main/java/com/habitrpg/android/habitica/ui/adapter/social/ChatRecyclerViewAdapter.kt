@@ -30,7 +30,7 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import net.pherth.android.emoji_library.EmojiTextView
 
-class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean) : RealmRecyclerViewAdapter<ChatMessage, ChatRecyclerViewAdapter.ChatRecyclerViewHolder>(data, autoUpdate) {
+class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
     private var uuid: String = ""
     private var sendingUser: User? = null
     private var expandedMessageId: String? = null
@@ -50,12 +50,26 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         this.sendingUser = user
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
-        return ChatRecyclerViewHolder(parent.inflate(R.layout.tavern_chat_item), uuid, isTavern)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == 0) {
+            SystemChatMessageViewHolder(parent.inflate(R.layout.system_chat_message))
+        } else {
+            ChatRecyclerViewHolder(parent.inflate(R.layout.tavern_chat_item), uuid, isTavern)
+        }
     }
 
-    override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
-        data.notNull { holder.bind(it[position]) }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        data.notNull {
+            if (it[position].isSystemMessage) {
+                (holder as? SystemChatMessageViewHolder)?.bind(it[position])
+            } else {
+                (holder as? ChatRecyclerViewHolder)?.bind(it[position])
+            }
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (data?.get(position)?.isSystemMessage == true) 0 else 1
     }
 
     fun getLikeMessageFlowable(): Flowable<ChatMessage> {
@@ -82,6 +96,14 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         return copyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
+    inner class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val textView: TextView by bindView(R.id.text_view)
+
+        fun bind(chatMessage: ChatMessage?) {
+            textView.text = chatMessage?.text?.removePrefix("`")?.removeSuffix("`")
+        }
+
+    }
 
     inner class ChatRecyclerViewHolder(itemView: View, private val userId: String, private val isTavern: Boolean) : RecyclerView.ViewHolder(itemView) {
 
@@ -112,7 +134,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             }
             tvLikes.setOnClickListener { chatMessage.notNull { likeMessageEvents.onNext(it) } }
             userLabel.setOnClickListener { chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
-            replyButton.setOnClickListener { chatMessage?.text.notNull { replyMessageEvents.onNext(it) } }
+            replyButton.setOnClickListener { chatMessage?.user.notNull { replyMessageEvents.onNext("@$it ") } }
             copyButton.setOnClickListener { chatMessage.notNull { copyMessageEvents.onNext(it) } }
             reportButton.setOnClickListener { chatMessage.notNull { flagMessageEvents.onNext(it) } }
             deleteButton.setOnClickListener { chatMessage.notNull { deleteMessageEvents.onNext(it) } }
