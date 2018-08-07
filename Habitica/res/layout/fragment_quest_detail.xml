@@ -31,7 +31,7 @@
                 android:orientation="vertical"
                 android:layout_gravity="center_vertical">
                 <TextView
-                    android:id="@+id/quest_title_view"
+                    android:id="@+id/title_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Headline"
