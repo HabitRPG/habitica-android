@@ -13,13 +13,14 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.FAQArticle
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 
 class FAQDetailFragment : BaseMainFragment() {
-    private val questionTextView: TextView? by bindView(R.id.questionTextView)
-    private val answerTextView: TextView? by bindView(R.id.answerTextView)
+    private val questionTextView: TextView? by bindOptionalView(R.id.questionTextView)
+    private val answerTextView: TextView? by bindOptionalView(R.id.answerTextView)
 
     private var article: FAQArticle? = null
 
@@ -34,22 +35,22 @@ class FAQDetailFragment : BaseMainFragment() {
         resetViews()
 
         if (this.article != null) {
-            this.questionTextView!!.text = this.article!!.question
-            //TODO: FIX
+            this.questionTextView?.text = this.article?.question
             this.answerTextView?.text = MarkdownParser.parseMarkdown(article?.answer)
         }
-        this.answerTextView!!.movementMethod = LinkMovementMethod.getInstance()
+        this.answerTextView?.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    override fun injectFragment(component: AppComponent) {}
+    override fun injectFragment(component: AppComponent) {
+        component.inject(this)
+    }
 
     fun setArticle(article: FAQArticle) {
         this.article = article
         if (this.questionTextView != null) {
-            this.questionTextView!!.text = this.article!!.question
+            this.questionTextView?.text = this.article?.question
         }
         if (this.answerTextView != null) {
-            //TODO: FIX
             this.answerTextView?.text = MarkdownParser.parseMarkdown(article.answer)
         }
     }

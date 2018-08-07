@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -43,7 +44,7 @@ class FAQOverviewFragment : BaseMainFragment() {
         adapter?.getResetWalkthroughEvents()?.subscribe(Consumer { this.userRepository.resetTutorial(user) }, RxErrorHandler.handleEmptyError())
         adapter?.activity = activity
         recyclerView?.layoutManager = LinearLayoutManager(activity)
-        recyclerView?.addItemDecoration(DividerItemDecoration(getActivity()!!, DividerItemDecoration.VERTICAL))
+        activity.notNull { recyclerView?.addItemDecoration(DividerItemDecoration(it, DividerItemDecoration.VERTICAL)) }
         recyclerView?.adapter = adapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadArticles()

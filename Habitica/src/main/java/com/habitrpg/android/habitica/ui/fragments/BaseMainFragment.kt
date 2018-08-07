@@ -49,7 +49,7 @@ abstract class BaseMainFragment : BaseFragment() {
         super.onAttach(context)
 
         if (getActivity()?.javaClass == MainActivity::class.java) {
-            this.activity = getActivity() as MainActivity?
+            this.activity = getActivity() as? MainActivity
         }
     }
 
