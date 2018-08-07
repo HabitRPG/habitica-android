@@ -91,7 +91,9 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
 
         var flowable: Flowable<*> = Flowable.just("")
 
-        updatedTaskList.forEach { task ->
+        updatedTaskList
+                .map { localRepository.getUnmanagedCopy(it) }
+                .forEach { task ->
             flowable = flowable.flatMap { apiClient.updateTask(task.id ?: "", task) }
         }
 
@@ -105,6 +107,7 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         challenge.tasksOrder = getTaskOrders(fullTaskList)
 
         return flowable.flatMap { apiClient.updateChallenge(challenge) }
+                .doOnNext { localRepository.save(challenge) }
     }
 
     override fun deleteChallenge(challengeId: String): Flowable<Void> {

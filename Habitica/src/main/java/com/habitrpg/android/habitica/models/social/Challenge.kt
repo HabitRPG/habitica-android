@@ -64,6 +64,10 @@ open class Challenge : RealmObject() {
         } else super.equals(other)
     }
 
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
+    }
+
     companion object {
 
         const val TASK_ORDER_HABITS = "habits"

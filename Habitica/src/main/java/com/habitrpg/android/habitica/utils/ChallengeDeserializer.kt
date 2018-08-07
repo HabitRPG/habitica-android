@@ -24,7 +24,7 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
 
         challenge.id = jsonObject.get("id").asString
         challenge.name = jsonObject.get("name").asString
-        if (jsonObject.has("sortName")) {
+        if (jsonObject.has("shortName")) {
             challenge.shortName = jsonObject.get("shortName").asString
         }
         challenge.description = jsonObject.get("description").asString

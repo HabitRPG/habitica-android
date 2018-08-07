@@ -87,6 +87,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
                     .map {
                         return@map (it.leaderId ?: "")
                     }
+                    .filter { it.isNotEmpty() }
                     .flatMap { creatorID ->
                         return@flatMap socialRepository.getMember(creatorID)
                     }

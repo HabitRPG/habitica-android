@@ -81,6 +81,11 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
+            <LinearLayout
+                android:id="@+id/challenge_creation_views"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
             <TextView
                 style="@style/Subheader2"
@@ -188,6 +193,7 @@
                     android:textColorHint="#61000000" />
             </android.support.design.widget.TextInputLayout>
 
+            </LinearLayout>
             <TextView
                 style="@style/Subheader2"
                 android:layout_width="match_parent"

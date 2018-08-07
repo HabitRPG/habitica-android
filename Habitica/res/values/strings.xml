@@ -599,7 +599,7 @@
     <string name="tasks">Tasks</string>
     <string name="create_challenge">Create Challenge</string>
     <string name="edit_challenge">Edit</string>
-    <string name="challenge_create_error_tavern_one_gem">You need at least 1 gem to create a challenge in Tavern.</string>
+    <string name="challenge_create_error_tavern_one_gem">You need at least 1 gem to create a public challenge.</string>
     <string name="challenge_create_error_enough_gems">You don\'t have enough gems to create a challenge.</string>
     <string name="identify_your_challenge_with_a_tag">Identify your challenge with a short name</string>
     <string name="challenge_create_error_tag">You need a short name to create this Challenge.</string>

@@ -54,6 +54,7 @@ class ChallengeFormActivity : BaseActivity() {
     private val challengeRemoveGemBtn: Button by bindView(R.id.challenge_remove_gem_btn)
     private val createChallengeTaskList: RecyclerView by bindView(R.id.create_challenge_task_list)
     private val gemIconView: ImageView by bindView(R.id.gem_icon)
+    private val challengeCreationViews: ViewGroup by bindView(R.id.challenge_creation_views)
 
     @Inject
     internal lateinit var challengeRepository: ChallengeRepository
@@ -68,6 +69,7 @@ class ChallengeFormActivity : BaseActivity() {
 
     private lateinit var locationAdapter: GroupArrayAdapter
     private var challengeId: String? = null
+    private var groupID: String? = null
     private var editMode: Boolean = false
 
     private val addedTasks = HashMap<String, Task>()
@@ -88,14 +90,18 @@ class ChallengeFormActivity : BaseActivity() {
             val c = Challenge()
 
             val locationPos = challengeLocationSpinner.selectedItemPosition
-            val locationGroup = locationAdapter.getItem(locationPos)
 
             if (challengeId != null) {
                 c.id = challengeId
             }
 
-            if (locationGroup != null) {
-                c.groupId = locationGroup.id
+            if (groupID != null) {
+                c.groupId = groupID
+            } else {
+                val locationGroup = locationAdapter.getItem(locationPos)
+                if (locationGroup != null) {
+                    c.groupId = locationGroup.id
+                }
             }
             c.name = createChallengeTitle.text.toString()
             c.description = createChallengeDescription.text.toString()
@@ -318,15 +324,16 @@ class ChallengeFormActivity : BaseActivity() {
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         socialRepository.getGroups("guild").subscribe(Consumer { groups ->
-            if (groups.first { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
+            val mutableGroups = groups.toMutableList()
+            if (groups.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
                 val tavern = Group()
                 tavern.id = "00000000-0000-4000-A000-000000000000"
                 tavern.name = getString(R.string.public_challenge)
-                locationAdapter.add(tavern)
+                mutableGroups.add(0, tavern)
             }
 
             locationAdapter.clear()
-            locationAdapter.addAll(groups)
+            locationAdapter.addAll(mutableGroups)
         }, RxErrorHandler.handleEmptyError())
 
         challengeLocationSpinner.adapter = locationAdapter
@@ -380,10 +387,13 @@ class ChallengeFormActivity : BaseActivity() {
     private fun fillControlsByChallenge() {
         challengeId.notNull {
             challengeRepository.getChallenge(it).subscribe(Consumer { challenge ->
+                groupID = challenge.groupId
+                editMode = true
                 createChallengeTitle.setText(challenge.name)
                 createChallengeDescription.setText(challenge.description)
                 createChallengeTag.setText(challenge.shortName)
                 createChallengePrize.setText(challenge.prize.toString())
+                challengeCreationViews.visibility = View.GONE
 
                 for (i in 0 until locationAdapter.count) {
                     val group = locationAdapter.getItem(i)
@@ -397,7 +407,7 @@ class ChallengeFormActivity : BaseActivity() {
             }, RxErrorHandler.handleEmptyError())
             challengeRepository.getChallengeTasks(it).subscribe(Consumer { tasks ->
                 tasks.forEach { task ->
-                    addOrUpdateTaskInList(task)
+                    addOrUpdateTaskInList(task, true)
                 }
             }, RxErrorHandler.handleEmptyError())
         }
@@ -454,7 +464,7 @@ class ChallengeFormActivity : BaseActivity() {
         )
     }
 
-    private fun addOrUpdateTaskInList(task: Task) {
+    private fun addOrUpdateTaskInList(task: Task, isExistingTask: Boolean = false) {
         if (!challengeTasks.replaceTask(task)) {
             val taskAbove: Task? = when (task.type) {
                 Task.TYPE_HABIT -> addHabit
@@ -465,7 +475,7 @@ class ChallengeFormActivity : BaseActivity() {
 
             challengeTasks.addTaskUnder(task, taskAbove)
 
-            if (editMode) {
+            if (editMode && !isExistingTask) {
                 addedTasks[task.id ?: ""] = task
             }
         } else {
