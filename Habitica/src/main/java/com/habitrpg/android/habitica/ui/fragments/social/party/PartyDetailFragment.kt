@@ -50,6 +50,8 @@ class PartyDetailFragment : BaseFragment() {
 
     private val refreshLayout: SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     private val partyInvitationWrapper: ViewGroup? by bindView(R.id.party_invitation_wrapper)
+    private val partyAcceptButton: Button? by bindView(R.id.party_invite_accept_button)
+    private val partyRejectButton: Button? by bindView(R.id.party_invite_reject_button)
     private val titleView: TextView? by bindView(R.id.title_view)
     private val descriptionView: TextView? by bindView(R.id.description_view)
     private val newQuestButton: Button? by bindView(R.id.new_quest_button)
@@ -101,6 +103,8 @@ class PartyDetailFragment : BaseFragment() {
         compositeSubscription.add(socialRepository.getGroup(partyId).subscribe(Consumer { this.updateParty(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer { this.updateUser(it) }, RxErrorHandler.handleEmptyError()))
 
+        partyAcceptButton?.setOnClickListener { onPartyInviteAccepted() }
+        partyRejectButton?.setOnClickListener { onPartyInviteRejected() }
         questAcceptButton?.setOnClickListener { onQuestAccept() }
         questRejectButton?.setOnClickListener { onQuestReject() }
         newQuestButton?.setOnClickListener { inviteNewQuest() }
@@ -152,7 +156,7 @@ class PartyDetailFragment : BaseFragment() {
         this.user = user
 
         var invitationVisibility = View.GONE
-        if (user.invitations?.party?.id != null) {
+        if (user.invitations?.party?.id?.isNotEmpty() == true) {
             invitationVisibility = View.VISIBLE
         }
 
@@ -222,21 +226,21 @@ class PartyDetailFragment : BaseFragment() {
         }
     }
 
-    fun onPartyInviteAccepted() {
+    private fun onPartyInviteAccepted() {
         user?.invitations?.party?.id.notNull {
             socialRepository.joinGroup(it)
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
-    fun onPartyInviteRejected() {
+    private fun onPartyInviteRejected() {
         user?.invitations?.party?.id.notNull {
             socialRepository.rejectGroupInvite(it)
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
-    fun questDetailButtonClicked() {
+    private fun questDetailButtonClicked() {
         val fragment = QuestDetailFragment()
         fragment.partyId = partyId
         if (party != null && party?.quest != null) {

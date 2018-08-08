@@ -233,6 +233,9 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun rejectGroupInvite(groupId: String): Flowable<Void> {
         return apiClient.rejectGroupInvite(groupId)
+                .doOnNext {
+                    localRepository.rejectGroupInvitation(userId, groupId)
+                }
     }
 
     override fun forceStartQuest(party: Group): Flowable<Quest> {

@@ -5,18 +5,15 @@ import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.invitations.Invitations
-import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
-
-import java.util.Date
-
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 open class User : RealmObject(), Avatar {
 
@@ -141,15 +138,13 @@ open class User : RealmObject(), Avatar {
     var streakCount: Int = 0
 
     val petsFoundCount: Int
-        get() = if (this.items == null || this.items!!.getPets() == null) 0 else this.items!!.getPets().size
+        get() = this.items?.getPets()?.size ?: 0
 
     val mountsTamedCount: Int
-        get() = if (this.items == null || this.items!!.getMounts() == null) 0 else this.items!!.getMounts().size
+        get() = this.items?.getMounts()?.size ?: 0
 
     val contributorColor: Int
-        get() = if (this.contributor != null) {
-            this.contributor!!.contributorColor
-        } else android.R.color.black
+        get() = this.contributor?.contributorColor ?: android.R.color.black
 
     override fun getPreferences(): Preferences? {
         return preferences
@@ -192,20 +187,15 @@ open class User : RealmObject(), Avatar {
     }
 
     override fun hasClass(): Boolean {
-        return getPreferences() != null && flags != null && !getPreferences()!!.disableClasses && flags!!.classSelected && getStats()!!.habitClass!!.length != 0
+        return preferences?.disableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
     }
 
     override fun getCurrentMount(): String? {
-        return if (items != null) {
-            items!!.currentMount
-        } else ""
+        return items?.currentMount ?: ""
     }
 
     override fun getCurrentPet(): String? {
-
-        return if (items != null) {
-            items?.currentPet
-        } else ""
+        return items?.currentPet ?: ""
     }
 
     override fun getSleep(): Boolean {

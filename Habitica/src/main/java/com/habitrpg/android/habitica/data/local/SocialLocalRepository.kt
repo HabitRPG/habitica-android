@@ -39,4 +39,5 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun updateMembership(userId: String, id: String, isMember: Boolean)
     fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership>
     fun getGroupMemberships(userId: String): Flowable<RealmResults<GroupMembership>>
+    fun rejectGroupInvitation(userID: String, groupID: String)
 }

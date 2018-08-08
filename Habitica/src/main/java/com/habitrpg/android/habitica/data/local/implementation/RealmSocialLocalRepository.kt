@@ -140,7 +140,13 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 membersToRemove.forEach { it.deleteFromRealm() }
             }
         }
+    }
 
+    override fun rejectGroupInvitation(userID: String, groupID: String) {
+        val user = realm.where(User::class.java).equalTo("id", userID).findFirst()
+        realm.executeTransaction {
+            user?.invitations?.removeInvitation(groupID)
+        }
     }
 
     override fun removeQuest(partyId: String) {
