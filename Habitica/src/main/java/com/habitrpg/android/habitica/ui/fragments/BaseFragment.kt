@@ -90,14 +90,6 @@ abstract class BaseFragment : DialogFragment() {
                             }
                         }, RxErrorHandler.handleEmptyError())
             }
-
-            val displayedClassName = this.displayedClassName
-
-            if (displayedClassName != null) {
-                val additionalData = HashMap<String, Any>()
-                additionalData["page"] = displayedClassName
-                AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
-            }
         }
     }
 

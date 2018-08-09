@@ -24,6 +24,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
@@ -217,7 +218,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
 
         drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout)
-        drawerFragment?.setSelection(NavigationDrawerFragment.SIDEBAR_TASKS, true)
+        selectMenuItem(NavigationDrawerFragment.SIDEBAR_TASKS)
 
         drawerToggle = object : ActionBarDrawerToggle(
                 this, /* host Activity */
@@ -242,6 +243,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         super.onPostCreate(savedInstanceState)
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle?.syncState()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        Log.e("RESTORED:", savedInstanceState.toString())
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -289,8 +295,17 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 selection = this.sharedPreferences.getString("lastActivePosition", NavigationDrawerFragment.SIDEBAR_TASKS)
             } catch (ignored: java.lang.RuntimeException) {
             }
+            if (selection != null) {
+                selectMenuItem(selection)
+            }
+        }
 
-            drawerFragment?.setSelection(selection, true)
+        if (intent.hasExtra("notificationIdentifier")) {
+            val identifier = intent.getStringExtra("notificationIdentifier")
+            val additionalData = HashMap<String, Any>()
+            additionalData["identifier"] = identifier
+            AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+            NotificationOpenHandler.handleOpenedByNotification(identifier, intent, this, user)
         }
     }
 
@@ -372,7 +387,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 if (activeFragment != null && activeFragment?.get() != null) {
                     activeFragment?.get()?.updateUserData(user)
                 } else {
-                    drawerFragment?.setSelection(NavigationDrawerFragment.SIDEBAR_TASKS, true)
+                    selectMenuItem(NavigationDrawerFragment.SIDEBAR_TASKS)
                 }
             }
 
@@ -448,8 +463,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     fun setActiveFragment(fragment: BaseMainFragment?) {
         this.activeFragment = WeakReference<BaseMainFragment>(fragment)
         setTranslatedFragmentTitle(fragment)
-        if (activeFragment?.get() != null) {
-            this.drawerFragment?.setSelection(this.activeFragment?.get()?.fragmentSidebarIdentifier, false)
+        val identifier = activeFragment?.get()?.fragmentSidebarIdentifier
+        if (identifier != null) {
+            selectMenuItem(identifier, false)
         }
     }
 
@@ -918,6 +934,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     val dialog = builder.create()
                     dialog.show()
                 }, RxErrorHandler.handleEmptyError())
+    }
+
+    public fun selectMenuItem(identifier: String, openSelection: Boolean = true) {
+        drawerFragment?.setSelection(identifier, openSelection)
     }
 
     companion object {

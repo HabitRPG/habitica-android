@@ -163,11 +163,17 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                 avatarView.visibility = View.GONE
                 itemView.setPadding(64.dpToPx(context), itemView.paddingTop, itemView.paddingRight, itemView.paddingBottom)
             } else {
-                avatarView.visibility = View.VISIBLE
-                itemView.setPadding(16.dpToPx(context), itemView.paddingTop, itemView.paddingRight, itemView.paddingBottom)
-                msg.userStyles.notNull {
-                    avatarView.setAvatar(it)
+                val displayMetrics = res.displayMetrics
+                val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+                if (dpWidth > 350) {
+                    avatarView.visibility = View.VISIBLE
+                    msg.userStyles.notNull {
+                        avatarView.setAvatar(it)
+                    }
+                } else {
+                    avatarView.visibility = View.GONE
                 }
+                itemView.setPadding(16.dpToPx(context), itemView.paddingTop, itemView.paddingRight, itemView.paddingBottom)
             }
 
             messageText.text = chatMessage?.parsedText

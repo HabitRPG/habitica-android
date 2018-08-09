@@ -1,35 +1,32 @@
 package com.habitrpg.android.habitica.helpers.notifications;
 
+import android.content.Context;
+
 /**
  * Created by keithholliday on 6/28/16.
  */
 public class HabiticaLocalNotificationFactory {
 
     //use getShape method to get object of type shape
-    public HabiticaLocalNotification build(String notificationType) {
-        if (notificationType == null) {
-            return null;
-        }
-
+    public HabiticaLocalNotification build(String notificationType, Context context) {
         if (notificationType.equalsIgnoreCase(PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY)) {
-            return new PartyInviteLocalNotification();
+            return new PartyInviteLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY)) {
-            return new ReceivedPrivateMessageLocalNotification();
+            return new ReceivedPrivateMessageLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.RECEIVED_GEMS_PUSH_NOTIFICATION_KEY)) {
-            return new ReceivedGemsGiftLocalNotification();
+            return new ReceivedGemsGiftLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY)) {
-            return new ReceivedSubscriptionGiftLocalNotification();
+            return new ReceivedSubscriptionGiftLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY)) {
-            return new GuildInviteLocalNotification();
+            return new GuildInviteLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY)) {
-            return new QuestInviteLocalNotification();
+            return new QuestInviteLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY)) {
-            return new QuestBegunLocalNotification();
+            return new QuestBegunLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.WON_CHALLENGE_PUSH_NOTIFICATION_KEY)) {
-            return new WonChallengeLocalNotification();
+            return new WonChallengeLocalNotification(context, notificationType);
+        } else {
+            return new GenericLocalNotification(context, notificationType);
         }
-
-        return null;
     }
-
 }

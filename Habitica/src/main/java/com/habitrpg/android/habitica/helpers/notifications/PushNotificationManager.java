@@ -15,14 +15,14 @@ import java.util.Map;
 
 public class PushNotificationManager {
 
-    static final String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
-    static final String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
-    static final String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
-    static final String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
-    static final String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
-    static final String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
-    static final String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
-    static final String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
+    public static final String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
+    public static final String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
+    public static final String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
+    public static final String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
+    public static final String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
+    public static final String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
+    public static final String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
+    public static final String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
     private static final String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
     private final Context context;
     public ApiClient apiClient;
@@ -100,10 +100,10 @@ public class PushNotificationManager {
         String remoteMessageIdentifier = remoteMessage.getData().get("identifier");
 
         HabiticaLocalNotificationFactory notificationFactory = new HabiticaLocalNotificationFactory();
-        HabiticaLocalNotification notification = notificationFactory.build(remoteMessageIdentifier);
+        HabiticaLocalNotification notification = notificationFactory.build(remoteMessageIdentifier, context);
         if (userIsSubscribedToNotificationType(remoteMessageIdentifier) && notification != null) {
             notification.setExtras(remoteMessage.getData());
-            notification.notifyLocally(this.context, remoteMessage.getData().get("title"), remoteMessage.getData().get("body"));
+            notification.notifyLocally(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"));
         }
     }
 
