@@ -156,7 +156,7 @@
     <string name="new_checklist_item">new checklist item</string>
     <string name="add_checklist_item">Add</string>
 
-    <string name="reminder_title">Remember to check off your Dailies!</string>
+    <string name="reminder_title">Remember to check off your tasks!</string>
     <string name="skill_progress_title">Using Skill</string>
     <string name="coming_soon">Coming Soon</string>
     <string name="chat_flag_confirmation">Are you sure you want to report this message for violation?</string>

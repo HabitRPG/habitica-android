@@ -79,8 +79,7 @@ public class NotificationPublisher extends WakefulBroadcastReceiver {
 
         Notification notification;
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle(context.getString(R.string.app_name));
-        builder.setContentText(context.getString(R.string.reminder_title));
+        builder.setContentTitle(context.getString(R.string.reminder_title));
         builder.setSmallIcon(R.drawable.ic_gryphon_white);
         Intent notificationIntent = new Intent(context, MainActivity.class);
 

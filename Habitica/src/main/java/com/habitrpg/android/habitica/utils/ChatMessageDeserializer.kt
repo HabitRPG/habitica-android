@@ -62,7 +62,7 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
         }
 
         if (obj.has("sent")) {
-            message.sent = obj.get("sent").asString
+            message.sent = obj.get("sent").asBoolean
         }
 
         if (obj.has("userStyles")) {

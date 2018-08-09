@@ -27,10 +27,8 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_chat.*
@@ -114,7 +112,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getReplyMessageEvents().subscribe(Consumer{ chatEditText.setText(it, TextView.BufferType.EDITABLE) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(it.getReplyMessageEvents().subscribe(Consumer{ setReplyTo(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(it.getLikeMessageFlowable().flatMap<ChatMessage> { socialRepository.likeMessage(it) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
@@ -143,6 +141,13 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         onRefresh()
     }
 
+    private fun setReplyTo(username: String?) {
+        val previousText = chatEditText.text.toString()
+        if (previousText.contains("@$username")) {
+            return
+        }
+        chatEditText.setText("@$username $previousText", TextView.BufferType.EDITABLE)
+    }
 
     override fun onRefresh() {
         refreshLayout.isRefreshing = true

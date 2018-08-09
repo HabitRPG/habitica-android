@@ -589,7 +589,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfParticipantsIcon = null;
-    public static Bitmap imageOfParticipantIcon() {
+    public static Bitmap imageOfParticipantsIcon() {
         if (imageOfParticipantsIcon != null)
             return imageOfParticipantsIcon;
 
@@ -600,5 +600,61 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawParticipantsIcon(canvas);
 
         return imageOfParticipantsIcon;
+    }
+
+    private static Bitmap imageOfChatReplyIcon = null;
+    public static Bitmap imageOfChatReplyIcon() {
+        if (imageOfChatReplyIcon != null)
+            return imageOfChatReplyIcon;
+
+        int size = scaleSize(17);
+        imageOfChatReplyIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfChatReplyIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawChatReplyIcon(canvas);
+
+        return imageOfChatReplyIcon;
+    }
+
+    private static Bitmap imageOfChatCopyIcon = null;
+    public static Bitmap imageOfChatCopyIcon() {
+        if (imageOfChatCopyIcon != null)
+            return imageOfChatCopyIcon;
+
+        int size = scaleSize(17);
+        imageOfChatCopyIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfChatCopyIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawChatCopyIcon(canvas);
+
+        return imageOfChatCopyIcon;
+    }
+
+    private static Bitmap imageOfChatReportIcon = null;
+    public static Bitmap imageOfChatReportIcon() {
+        if (imageOfChatReportIcon != null)
+            return imageOfChatReportIcon;
+
+        int size = scaleSize(17);
+        imageOfChatReportIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfChatReportIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawChatReportIcon(canvas);
+
+        return imageOfChatReportIcon;
+    }
+
+    private static Bitmap imageOfChatDeleteIcon = null;
+    public static Bitmap imageOfChatDeleteIcon() {
+        if (imageOfChatDeleteIcon != null)
+            return imageOfChatDeleteIcon;
+
+        int size = scaleSize(17);
+        imageOfChatDeleteIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfChatDeleteIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawChatDeleteIcon(canvas);
+
+        return imageOfChatDeleteIcon;
     }
 }

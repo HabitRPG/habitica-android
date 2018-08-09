@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.drawable.BitmapDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.method.LinkMovementMethod
@@ -11,14 +12,14 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -32,7 +33,6 @@ import net.pherth.android.emoji_library.EmojiTextView
 
 class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
     private var uuid: String = ""
-    private var sendingUser: User? = null
     private var expandedMessageId: String? = null
 
     private val likeMessageEvents = PublishSubject.create<ChatMessage>()
@@ -44,10 +44,6 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
     init {
         this.uuid = user?.id ?: ""
-    }
-
-    fun setSendingUser(user: User?) {
-        this.sendingUser = user
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -107,13 +103,14 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
     inner class ChatRecyclerViewHolder(itemView: View, private val userId: String, private val isTavern: Boolean) : RecyclerView.ViewHolder(itemView) {
 
+        private val messageWrapper: ViewGroup by bindView(R.id.message_wrapper)
         private val avatarView: AvatarView by bindView(R.id.avatar_view)
         private val userLabel: UsernameLabel by bindView(R.id.user_label)
         private val messageText: EmojiTextView by bindView(R.id.message_text)
         private val agoLabel: TextView by bindView(R.id.ago_label)
         private val likeBackground: LinearLayout by bindView(R.id.like_background_layout)
         private val tvLikes: TextView by bindView(R.id.tvLikes)
-        private val buttonsWrapper: LinearLayout by bindView(R.id.buttons_wrapper)
+        private val buttonsWrapper: ViewGroup by bindView(R.id.buttons_wrapper)
         private val replyButton: Button by bindView(R.id.reply_button)
         private val copyButton: Button by bindView(R.id.copy_button)
         private val reportButton: Button by bindView(R.id.report_button)
@@ -134,10 +131,18 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             }
             tvLikes.setOnClickListener { chatMessage.notNull { likeMessageEvents.onNext(it) } }
             userLabel.setOnClickListener { chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
-            replyButton.setOnClickListener { chatMessage?.user.notNull { replyMessageEvents.onNext("@$it ") } }
+            replyButton.setOnClickListener { chatMessage?.user.notNull { replyMessageEvents.onNext(it) } }
+            replyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
+                    null, null, null)
             copyButton.setOnClickListener { chatMessage.notNull { copyMessageEvents.onNext(it) } }
+            copyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
+                    null, null, null)
             reportButton.setOnClickListener { chatMessage.notNull { flagMessageEvents.onNext(it) } }
+            reportButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
+                    null, null, null)
             deleteButton.setOnClickListener { chatMessage.notNull { deleteMessageEvents.onNext(it) } }
+            deleteButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
+                    null, null, null)
         }
 
         fun bind(msg: ChatMessage) {
@@ -145,19 +150,23 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
             setLikeProperties()
 
-            if (msg.sent != null && msg.sent == "true" && sendingUser != null) {
-                userLabel.tier = sendingUser?.contributor?.level ?: 0
+            val name = user?.profile?.name
+            if (messageWasSent() && user != null) {
+                userLabel.tier = user.contributor?.level ?: 0
+                userLabel.username = name
             } else {
                 userLabel.tier = msg.contributor?.level ?: 0
+                userLabel.username = msg.user
             }
 
-            if (msg.sent != null && msg.sent == "true") {
-                userLabel.username = sendingUser?.profile?.name
+            if (messageWasSent()) {
+                avatarView.visibility = View.GONE
+                itemView.setPadding(64.dpToPx(context), itemView.paddingTop, itemView.paddingRight, itemView.paddingBottom)
             } else {
-                if (msg.user != null && msg.user?.isNotEmpty() == true) {
-                    userLabel.username = msg.user
-                } else {
-                    userLabel.username = context.getString(R.string.system)
+                avatarView.visibility = View.VISIBLE
+                itemView.setPadding(16.dpToPx(context), itemView.paddingTop, itemView.paddingRight, itemView.paddingBottom)
+                msg.userStyles.notNull {
+                    avatarView.setAvatar(it)
                 }
             }
 
@@ -175,19 +184,27 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             }
             this.messageText.movementMethod = LinkMovementMethod.getInstance()
 
-            agoLabel.text = msg.getAgoString(res)
-
-            msg.userStyles.notNull {
-                avatarView.setAvatar(it)
+            if (name != null && msg.text?.contains(name) == true) {
+                messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_700)
+            } else {
+                messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
             }
+            messageWrapper.setScaledPadding(context, 8, 8, 8, 8)
+
+            agoLabel.text = msg.getAgoString(res)
 
             if (expandedMessageId == msg.id) {
                 buttonsWrapper.visibility = View.VISIBLE
                 deleteButton.visibility = if (shouldShowDelete()) View.VISIBLE else View.GONE
                 replyButton.visibility = if (chatMessage?.isInboxMessage == true) View.GONE else View.VISIBLE
+                reportButton.visibility = if (chatMessage?.uuid == userId) View.GONE else View.VISIBLE
             } else {
                 buttonsWrapper.visibility = View.GONE
             }
+        }
+
+        private fun messageWasSent(): Boolean {
+            return chatMessage?.sent == true || chatMessage?.uuid == userId
         }
 
         private fun setLikeProperties() {

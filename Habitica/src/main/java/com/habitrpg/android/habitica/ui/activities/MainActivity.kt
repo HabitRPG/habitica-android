@@ -562,7 +562,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     @Subscribe
-    fun openGemPurchaseFragment(cmd: OpenGemPurchaseFragmentCommand?) {
+    fun openGemPurchaseFragment(event: OpenGemPurchaseFragmentCommand?) {
         drawerFragment?.setSelection(NavigationDrawerFragment.SIDEBAR_PURCHASE, true)
     }
 

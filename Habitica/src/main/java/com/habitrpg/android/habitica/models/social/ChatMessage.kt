@@ -42,7 +42,7 @@ open class ChatMessage : RealmObject() {
 
     var user: String? = null
 
-    var sent: String? = null
+    var sent: Boolean = false
 
     var groupId: String? = null
 
@@ -57,27 +57,22 @@ open class ChatMessage : RealmObject() {
         get() = likes?.size ?: 0
 
     fun getAgoString(res: Resources): String {
-        val diff = Date().time - timestamp!!
+        val diff = Date().time - (timestamp ?: 0)
 
         val diffMinutes = diff / (60 * 1000) % 60
         val diffHours = diff / (60 * 60 * 1000) % 24
         val diffDays = diff / (24 * 60 * 60 * 1000)
 
-        if (diffDays != 0L) {
-            return if (diffDays == 1L) {
+        return when {
+            diffDays != 0L -> if (diffDays == 1L) {
                 res.getString(R.string.ago_1day)
             } else res.getString(R.string.ago_days, diffDays)
-        }
-
-        if (diffHours != 0L) {
-            return if (diffHours == 1L) {
+            diffHours != 0L -> if (diffHours == 1L) {
                 res.getString(R.string.ago_1hour)
             } else res.getString(R.string.ago_hours, diffHours)
+            diffMinutes == 1L -> res.getString(R.string.ago_1Minute)
+            else -> res.getString(R.string.ago_minutes, diffMinutes)
         }
-
-        return if (diffMinutes == 1L) {
-            res.getString(R.string.ago_1Minute)
-        } else res.getString(R.string.ago_minutes, diffMinutes)
     }
 
     fun userLikesMessage(userId: String?): Boolean {

@@ -57,7 +57,6 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         recyclerView.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, false)
-        chatAdapter?.setSendingUser(this.user)
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter.notNull {

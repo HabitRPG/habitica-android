@@ -78,7 +78,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         gemAmountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfGem_36())
-        memberCountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfParticipantIcon())
+        memberCountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfParticipantsIcon())
         challengeDescription?.movementMethod = LinkMovementMethod.getInstance()
 
         challengeID.notNull {id ->
