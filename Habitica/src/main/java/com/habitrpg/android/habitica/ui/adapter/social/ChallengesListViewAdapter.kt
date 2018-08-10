@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -108,7 +107,6 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         fun bind(challenge: Challenge, isParticipating: Boolean) {
             this.challenge = challenge
 
-            Log.e(challenge.id + challenge.name)
             challengeName.text = EmojiParser.parseEmojis(challenge.name?.trim { it <= ' ' })
             challengeDescription.text = challenge.summary
 

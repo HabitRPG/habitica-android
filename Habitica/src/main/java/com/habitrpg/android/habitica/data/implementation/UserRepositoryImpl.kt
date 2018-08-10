@@ -116,16 +116,16 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun getSpecialItems(user: User): Flowable<RealmResults<Skill>> =
             localRepository.getSpecialItems(user)
 
-    override fun useSkill(user: User?, key: String, target: String, taskId: String): Flowable<SkillResponse> {
-        return apiClient.useSkill(key, target, taskId).doOnNext { skillResponse ->
+    override fun useSkill(user: User?, key: String, target: String?, taskId: String): Flowable<SkillResponse> {
+        return apiClient.useSkill(key, target ?: "", taskId).doOnNext { skillResponse ->
             if (user != null) {
                 mergeUser(user, skillResponse.user)
             }
         }
     }
 
-    override fun useSkill(user: User?, key: String, target: String): Flowable<SkillResponse> {
-        return apiClient.useSkill(key, target)
+    override fun useSkill(user: User?, key: String, target: String?): Flowable<SkillResponse> {
+        return apiClient.useSkill(key, target ?: "")
                 .map { response ->
                     response.hpDiff = response.user.stats?.hp ?: 0 - (user?.stats?.hp ?: 0.0)
                     response.expDiff = response.user.stats?.exp ?: 0 - (user?.stats?.exp ?: 0.0)

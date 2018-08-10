@@ -79,7 +79,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
         setGridSpanCount(view.width)
         if (recyclerView.layoutManager == null) {
-            recyclerView.layoutManager = GridLayoutManager(activity, 2)
+            layoutManager = GridLayoutManager(activity, 2)
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter.getItemViewType(position) == 0) {
@@ -89,6 +89,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
                     }
                 }
             }
+            recyclerView.layoutManager = layoutManager
         }
         recyclerView.addItemDecoration(MarginDecoration(context))
 

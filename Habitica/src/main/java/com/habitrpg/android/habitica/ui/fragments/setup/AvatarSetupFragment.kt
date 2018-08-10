@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.ui.SpeechBubbleView
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView
@@ -42,16 +43,16 @@ class AvatarSetupFragment : BaseFragment() {
     
     var activity: SetupActivity? = null
     var width: Int = 0
-    private val avatarView: AvatarView? by bindView(R.id.avatarView)
-    private val customizationList: RecyclerView? by bindView(R.id.customization_list)
-    private val subCategoryTabs: TabLayout? by bindView(R.id.subcategory_tabs)
-    private val bodyButton: AvatarCategoryView? by bindView(R.id.body_button)
-    private val skinButton: AvatarCategoryView? by bindView(R.id.skin_button)
-    private val hairButton: AvatarCategoryView? by bindView(R.id.hair_button)
-    private val extrasButton: AvatarCategoryView? by bindView(R.id.extras_button)
-    private val caretView: ImageView? by bindView(R.id.caret_view)
-    private val speechBubbleView: SpeechBubbleView? by bindView(R.id.speech_bubble)
-    private val randomizeButton: Button? by bindView(R.id.randomize_button)
+    private val avatarView: AvatarView? by bindOptionalView(R.id.avatarView)
+    private val customizationList: RecyclerView? by bindOptionalView(R.id.customization_list)
+    private val subCategoryTabs: TabLayout? by bindOptionalView(R.id.subcategory_tabs)
+    private val bodyButton: AvatarCategoryView? by bindOptionalView(R.id.body_button)
+    private val skinButton: AvatarCategoryView? by bindOptionalView(R.id.skin_button)
+    private val hairButton: AvatarCategoryView? by bindOptionalView(R.id.hair_button)
+    private val extrasButton: AvatarCategoryView? by bindOptionalView(R.id.extras_button)
+    private val caretView: ImageView? by bindOptionalView(R.id.caret_view)
+    private val speechBubbleView: SpeechBubbleView? by bindOptionalView(R.id.speech_bubble)
+    private val randomizeButton: Button? by bindOptionalView(R.id.randomize_button)
 
     internal var adapter: CustomizationSetupAdapter? = null
     internal var layoutManager: LinearLayoutManager = LinearLayoutManager(activity)

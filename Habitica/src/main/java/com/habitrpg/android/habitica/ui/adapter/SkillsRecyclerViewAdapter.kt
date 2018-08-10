@@ -73,13 +73,13 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
 
                 priceButton.setCompoundDrawables(null, null, null, null)
             } else {
-                priceButton.text = skill.mana.toString()
+                priceButton.text = skill.mana?.toString()
 
                 priceButton.setCompoundDrawablesWithIntrinsicBounds(magicDrawable, null, null, null)
             }
             DataBindingUtils.loadImage(skillImageView, "shop_" + skill.key)
 
-            if (skill.mana > mana) {
+            if (skill.mana ?: 0 > mana) {
                 priceButton.isEnabled = false
                 priceButton.setBackgroundResource(R.color.task_gray)
                 skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.task_gray))

@@ -36,9 +36,9 @@ interface UserRepository : BaseRepository {
 
     fun getSpecialItems(user: User): Flowable<RealmResults<Skill>>
 
-    fun useSkill(user: User?, key: String, target: String, taskId: String): Flowable<SkillResponse>
+    fun useSkill(user: User?, key: String, target: String?, taskId: String): Flowable<SkillResponse>
 
-    fun useSkill(user: User?, key: String, target: String): Flowable<SkillResponse>
+    fun useSkill(user: User?, key: String, target: String?): Flowable<SkillResponse>
 
     fun changeClass(): Flowable<User>
 

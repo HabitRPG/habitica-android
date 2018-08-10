@@ -165,6 +165,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
     override fun accept(throwable: Throwable) {
         val throwableClass = throwable.javaClass
+        if (SocketTimeoutException::class.java.isAssignableFrom(throwableClass)) {
+            return
+        }
         @Suppress("DEPRECATION")
         if (SocketException::class.java.isAssignableFrom(throwableClass) || SSLException::class.java.isAssignableFrom(throwableClass)) {
             this.showConnectionProblemDialog(R.string.internal_error_api)

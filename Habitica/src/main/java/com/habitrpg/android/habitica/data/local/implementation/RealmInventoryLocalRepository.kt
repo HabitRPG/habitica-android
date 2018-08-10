@@ -107,6 +107,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getEquipment(key: String): Flowable<Equipment> {
         return realm.where(Equipment::class.java)
+                .sort("text")
                 .equalTo("key", key)
                 .findFirstAsync()
                 .asFlowable<RealmObject>()
