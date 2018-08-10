@@ -247,7 +247,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         this.resetLayout()
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         callbackManager.onActivityResult(requestCode, resultCode, intent)
         val scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent)
