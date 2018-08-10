@@ -91,6 +91,7 @@ class StatsFragment: BaseMainFragment() {
 
         compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer {
             user = it
+            unlock_at_level.visibility = if (user?.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
             updateStats()
             updateAttributePoints()
         }, RxErrorHandler.handleEmptyError()))

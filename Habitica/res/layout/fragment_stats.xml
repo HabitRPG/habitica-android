@@ -40,6 +40,14 @@
                 android:layout_height="24dp"
                 android:scaleType="fitCenter"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/unlock_at_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unlock_attribute_points"
+            android:gravity="center"
+            android:padding="@dimen/spacing_large"
+            style="@style/Caption4"/>
         <com.habitrpg.android.habitica.ui.views.stats.StatsView
             android:id="@+id/strengthStatsView"
             android:layout_width="match_parent"

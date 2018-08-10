@@ -788,4 +788,5 @@
     <string name="joined">Joined</string>
     <string name="public_challenge">Public Challenge</string>
     <string name="short_name">Short Name</string>
+    <string name="unlock_attribute_points">Attribute point allocation unlocks at level 10</string>
 </resources>

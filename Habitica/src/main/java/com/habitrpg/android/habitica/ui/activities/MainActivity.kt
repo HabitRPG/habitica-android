@@ -451,7 +451,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
         val statsItem = drawerFragment?.getItemWithIdentifier(NavigationDrawerFragment.SIDEBAR_STATS)
         if (statsItem != null) {
-            if (user?.stats?.lvl ?: 0 >= 0 && user?.stats?.points ?: 0 > 0) {
+            if (user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0) {
                 statsItem.additionalInfo = user?.stats?.points.toString()
             } else {
                 statsItem.additionalInfo = null

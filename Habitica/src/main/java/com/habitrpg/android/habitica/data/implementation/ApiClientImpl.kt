@@ -118,6 +118,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     val request = builder.method(original.method(), original.body())
                             .build()
                     lastAPICallURL = original.url().toString()
+                    Log.d("NETWORK", lastAPICallURL)
                     chain.proceed(request)
                 }
                 .readTimeout(120, TimeUnit.SECONDS)
