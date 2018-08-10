@@ -124,6 +124,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getMounts(type: String, group: String): Flowable<RealmResults<Mount>> {
         return realm.where(Mount::class.java)
+                .sort("color", Sort.ASCENDING)
                 .equalTo("animalGroup", group)
                 .equalTo("animal", type)
                 .findAll()
@@ -162,6 +163,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getPets(type: String, group: String): Flowable<RealmResults<Pet>> {
         return realm.where(Pet::class.java)
+                .sort("color", Sort.ASCENDING)
                 .equalTo("animalGroup", group)
                 .equalTo("animal", type)
                 .findAll()
