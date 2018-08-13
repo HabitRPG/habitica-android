@@ -78,6 +78,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
         if (this.shouldDisplayExpandedChecklist()) {
             val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
             if (this.task?.checklist?.isValid == true) {
+                checklistView.removeAllViews()
                 for (item in this.task?.checklist ?: emptyList<ChecklistItem>()) {
                     val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false) as? LinearLayout
                     val checkbox = itemView?.findViewById<CheckBox>(R.id.checkBox)

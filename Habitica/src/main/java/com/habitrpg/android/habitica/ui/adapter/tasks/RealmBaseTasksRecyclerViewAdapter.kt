@@ -74,9 +74,9 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
 
     override fun getItemId(index: Int): Long = index.toLong()
 
-    override fun getItemCount(): Int = if (isDataValid) data!!.size else 0
+    override fun getItemCount(): Int = if (isDataValid) data?.size ?: 0 else 0
 
-    fun getItem(index: Int): Task? = if (isDataValid) data!![index] else null
+    fun getItem(index: Int): Task? = if (isDataValid) data?.get(index) else null
 
 
 
@@ -84,7 +84,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         if (hasAutoUpdates) {
             if (isDataValid) {
 
-                removeListener(this.data!!)
+                removeListener(this.data)
             }
             if (data != null) {
                 addListener(data)

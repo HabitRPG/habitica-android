@@ -690,13 +690,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             val customView = View.inflate(this, R.layout.dialog_faint, null)
             if (customView != null) {
-                val hpBarView = customView.findViewById<View>(R.id.hpBar) as ValueBar
+                val hpBarView = customView.findViewById<View>(R.id.hpBar) as? ValueBar
 
-                hpBarView.setLightBackground(true)
-                hpBarView.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
+                hpBarView?.setLightBackground(true)
+                hpBarView?.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
 
-                val dialogAvatarView = customView.findViewById<View>(R.id.avatarView) as AvatarView
-                user.notNull { dialogAvatarView.setAvatar(it) }
+                val dialogAvatarView = customView.findViewById<View>(R.id.avatarView) as? AvatarView
+                user.notNull { dialogAvatarView?.setAvatar(it) }
             }
 
             this.faintDialog = AlertDialog.Builder(this)
@@ -793,7 +793,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     override fun onTutorialDeferred(step: TutorialStep) {
         taskRepository.executeTransaction(Realm.Transaction { step.displayedOn = Date() })
-
         this.removeActiveTutorialView()
     }
 
