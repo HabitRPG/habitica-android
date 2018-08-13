@@ -94,6 +94,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun resetTutorial(user: User?) {
         localRepository.getTutorialSteps()
+                .firstElement()
                 .map<Map<String, Any>> { tutorialSteps ->
                     val updateData = HashMap<String, Any>()
                     for (step in tutorialSteps) {
@@ -101,7 +102,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     }
                     updateData
                 }
-                .flatMap { updateData -> updateUser(user, updateData) }
+                .flatMap { updateData -> updateUser(user, updateData).firstElement() }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 

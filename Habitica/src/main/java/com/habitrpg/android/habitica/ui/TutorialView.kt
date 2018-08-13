@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui
 
 import android.content.Context
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
@@ -68,10 +69,12 @@ class TutorialView(context: Context, var step: TutorialStep, var onReaction: OnT
 
     private fun completeButtonClicked() {
         this.onReaction?.onTutorialCompleted(this.step)
+        (parent as? ViewGroup)?.removeView(this)
     }
 
     private fun dismissButtonClicked() {
         this.onReaction?.onTutorialDeferred(this.step)
+        (parent as? ViewGroup)?.removeView(this)
     }
 
     private fun backgroundClicked() {
