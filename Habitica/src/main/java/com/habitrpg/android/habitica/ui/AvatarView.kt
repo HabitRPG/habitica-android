@@ -329,7 +329,11 @@ class AvatarView : View {
                 AvatarView.LayerType.CHAIR, AvatarView.LayerType.BACK, AvatarView.LayerType.SKIN, AvatarView.LayerType.SHIRT, AvatarView.LayerType.ARMOR, AvatarView.LayerType.BODY, AvatarView.LayerType.HEAD_0, AvatarView.LayerType.HAIR_BASE, AvatarView.LayerType.HAIR_BANGS, AvatarView.LayerType.HAIR_MUSTACHE, AvatarView.LayerType.HAIR_BEARD, AvatarView.LayerType.EYEWEAR, AvatarView.LayerType.VISUAL_BUFF, AvatarView.LayerType.HEAD, AvatarView.LayerType.HEAD_ACCESSORY, AvatarView.LayerType.HAIR_FLOWER, AvatarView.LayerType.SHIELD, AvatarView.LayerType.WEAPON, AvatarView.LayerType.ZZZ -> if (showMount || showPet) {
                     // full hero box
                     offset = when {
-                        hasMount -> PointF(25.0f, 0f)
+                        hasMount -> if (layerMap[LayerType.MOUNT_HEAD]?.contains("Kangaroo") == true) {
+                            PointF(25.0f, 18f)
+                        } else {
+                            PointF(25.0f, 0f)
+                        }
                         hasPet -> PointF(25.0f, 24.5f)
                         else -> PointF(25.0f, 28.0f)
                     }
