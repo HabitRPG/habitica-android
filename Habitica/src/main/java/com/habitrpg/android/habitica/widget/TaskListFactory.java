@@ -72,9 +72,10 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tasks -> {
+                    reloadData = false;
                     taskList = tasks;
                     AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
-                }, RxErrorHandler.handleEmptyError(), () -> reloadData = false));
+                }, RxErrorHandler.handleEmptyError()));
 
     }
 

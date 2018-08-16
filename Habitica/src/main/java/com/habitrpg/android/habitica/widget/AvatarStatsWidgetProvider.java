@@ -41,6 +41,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     String userId;
     @Inject
     UserRepository userRepository;
+    private Boolean showManaBar = true;
 
     private void setUp() {
         if (userRepository == null) {
@@ -65,6 +66,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setViewVisibility(R.id.avatar_view, View.GONE);
         }
 
+        showManaBar = rows > 1;
         if (rows > 1) {
             remoteViews.setViewVisibility(R.id.mp_wrapper, View.VISIBLE);
             remoteViews.setViewVisibility(R.id.detail_info_view, View.VISIBLE);
@@ -101,7 +103,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setProgressBar(R.id.hp_bar, stats.getMaxHealth(), stats.getHp().intValue(), false);
             remoteViews.setProgressBar(R.id.exp_bar, stats.getToNextLevel(), stats.getExp().intValue(), false);
             remoteViews.setProgressBar(R.id.mp_bar, stats.getMaxMP(), stats.getMp().intValue(), false);
-            remoteViews.setViewVisibility(R.id.mp_wrapper, (stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
+            remoteViews.setViewVisibility(R.id.mp_wrapper, showManaBar && ( stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
             remoteViews.setTextViewText(R.id.gold_tv, NumberAbbreviator.INSTANCE.abbreviate(context, stats.getGp()));
             remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
