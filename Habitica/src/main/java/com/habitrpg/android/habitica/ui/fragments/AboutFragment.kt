@@ -60,8 +60,8 @@ class AboutFragment : Fragment() {
         sourceCodeLink.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         twitter.setOnClickListener { openBrowserLink(twitterLink) }
         sourceCodeButton.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
-        reportBug.setOnClickListener { BugReporting.invoke(InvocationMode.NEW_BUG, InvocationOption.COMMENT_FIELD_REQUIRED) }
-        sendFeedback.setOnClickListener { BugReporting.invoke(InvocationMode.NEW_FEEDBACK, InvocationOption.COMMENT_FIELD_REQUIRED)}
+        reportBug.setOnClickListener { sendEmail("[Android] Bugreport") }
+        sendFeedback.setOnClickListener { sendEmail("[Android] Feedback") }
         googlePlayStoreButton.setOnClickListener { openGooglePlay() }
     }
 
