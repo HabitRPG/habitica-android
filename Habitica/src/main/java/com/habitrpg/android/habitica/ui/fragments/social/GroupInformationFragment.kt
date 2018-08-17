@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_group_info.*
@@ -134,7 +135,7 @@ class GroupInformationFragment : BaseFragment() {
         groupDescriptionView.visibility = groupItemVisibility
         groupDescriptionWrapper.visibility = groupItemVisibility
 
-        groupDescriptionView.text = group?.description
+        groupDescriptionView.text = MarkdownParser.parseMarkdown(group?.description)
         leadernameWrapper.visibility = if (group?.leaderName != null) View.VISIBLE else View.GONE
         leadernameTextView.text = group?.leaderName
         leaderMessageWrapper.visibility = if (group?.leaderMessage != null) View.VISIBLE else View.GONE
