@@ -183,10 +183,12 @@
                 android:divider="?android:listDivider"
                 android:showDividers="middle"
                 android:orientation="vertical">
+
                 <net.pherth.android.emoji_library.EmojiTextView
                     android:id="@+id/groupDescriptionView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <LinearLayout
                     android:id="@+id/leadernameWrapper"
                     android:layout_width="match_parent"
@@ -197,6 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/leaderMessageWrapper"
                     android:layout_width="match_parent"
