@@ -17,8 +17,6 @@ import org.json.JSONException
 import java.util.*
 
 open class Task : RealmObject, Parcelable {
-
-
     var userId: String = ""
     var priority: Float = 0.0f
     var text: String = ""
@@ -79,6 +77,7 @@ open class Task : RealmObject, Parcelable {
 
     @Ignore
     private var daysOfMonth: MutableList<Int>? = null
+
     @Ignore
     private var weeksOfMonth: MutableList<Int>? = null
 

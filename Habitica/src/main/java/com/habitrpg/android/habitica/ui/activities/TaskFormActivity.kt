@@ -16,7 +16,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.TextUtils
-import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.Menu
@@ -602,11 +601,12 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             }
         }
 
-        // Repeats On
+        setUpRepeatsOn(task)
+    }
 
-        if (task.getDaysOfMonth()?.isNotEmpty() == true) {
-            this.repeatablesOnSpinner.setSelection(0)
-        } else if (task.getWeeksOfMonth()?.isNotEmpty() == true) {
+    private fun setUpRepeatsOn(task: Task) {
+        this.repeatablesOnSpinner.setSelection(0)
+        if (task.getWeeksOfMonth()?.isNotEmpty() == true) {
             this.repeatablesOnSpinner.setSelection(1)
         }
     }
