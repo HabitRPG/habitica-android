@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.functions.Consumer
 import io.realm.Case
@@ -114,7 +115,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         fun bind(guild: Group, isInGroup: Boolean) {
             this.nameTextView.text = guild.name
             this.memberCountTextView.text = guild.memberCount.toString()
-            this.descriptionTextView.text = guild.description
+            this.descriptionTextView.text = MarkdownParser.parseMarkdown(guild.description)
             if (isInGroup) {
                 this.joinLeaveButton.setText(R.string.leave)
             } else {
