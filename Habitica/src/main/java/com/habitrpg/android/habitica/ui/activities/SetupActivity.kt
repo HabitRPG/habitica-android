@@ -59,7 +59,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private var completedSetup = false
 
     private val isLastPage: Boolean
-        get() = this.pager.adapter == null || this.pager.currentItem == this.pager.adapter?.count ?: 0 - 1
+        get() = this.pager.adapter == null || this.pager.currentItem == (this.pager.adapter?.count ?: 0) - 1
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_setup
