@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.ui.SpeechBubbleView
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import java.util.*
 
@@ -27,9 +27,9 @@ class TaskSetupFragment : BaseFragment() {
 
     var activity: SetupActivity? = null
     var width: Int = 0
-    private val recyclerView: RecyclerView? by bindView(R.id.recyclerView)
-    private val avatarView: AvatarView? by bindView(R.id.avatarView)
-    private val speechBubbleView: SpeechBubbleView? by bindView(R.id.speech_bubble)
+    private val recyclerView: RecyclerView? by bindOptionalView(R.id.recyclerView)
+    private val avatarView: AvatarView? by bindOptionalView(R.id.avatarView)
+    private val speechBubbleView: SpeechBubbleView? by bindOptionalView(R.id.speech_bubble)
     internal var adapter: TaskSetupAdapter = TaskSetupAdapter()
     private var taskGroups: List<List<String>> = listOf()
     private var tasks: List<List<Any>> = listOf()
