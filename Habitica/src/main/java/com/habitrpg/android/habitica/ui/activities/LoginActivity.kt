@@ -263,7 +263,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
         if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
             if (resultCode == Activity.RESULT_OK) {
-                googleEmail = intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+                googleEmail = data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
                 handleGoogleLoginResult()
             }
         }
@@ -383,8 +383,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             return
         }
         val accountTypes = arrayOf("com.google")
-        val intent = AccountPicker.newChooseAccountIntent(null, null,
-                accountTypes, false, null, null, null, null)
+        val intent = AccountManager.newChooseAccountIntent(null, null,
+                accountTypes, true, null, null, null, null)
         try {
             startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT)
         } catch (e: ActivityNotFoundException) {
