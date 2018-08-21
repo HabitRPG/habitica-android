@@ -21,6 +21,7 @@ public class AddTaskWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
         // Get all ids
         ComponentName thisWidget = new ComponentName(context,
                 AddTaskWidgetProvider.class);
@@ -43,19 +44,19 @@ public class AddTaskWidgetProvider extends BaseWidgetProvider {
         int backgroundResource = R.drawable.widget_add_habit_background;
         switch (selectedTaskType) {
             case Task.TYPE_HABIT:
-                addText = this.context.getResources().getString(R.string.add_habit);
+                addText = this.getContext().getResources().getString(R.string.add_habit);
                 backgroundResource = R.drawable.widget_add_habit_background;
                 break;
             case Task.TYPE_DAILY:
-                addText = this.context.getResources().getString(R.string.add_daily);
+                addText = this.getContext().getResources().getString(R.string.add_daily);
                 backgroundResource = R.drawable.widget_add_daily_background;
                 break;
             case Task.TYPE_TODO:
-                addText = this.context.getResources().getString(R.string.add_todo);
+                addText = this.getContext().getResources().getString(R.string.add_todo);
                 backgroundResource = R.drawable.widget_add_todo_background;
                 break;
             case Task.TYPE_REWARD:
-                addText = this.context.getResources().getString(R.string.add_reward);
+                addText = this.getContext().getResources().getString(R.string.add_reward);
                 backgroundResource = R.drawable.widget_add_reward_background;
                 break;
         }
@@ -65,7 +66,7 @@ public class AddTaskWidgetProvider extends BaseWidgetProvider {
     }
 
     private String getSelectedTaskType(int widgetId) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         return preferences.getString("add_task_widget_" + widgetId, Task.TYPE_HABIT);
     }
 }
