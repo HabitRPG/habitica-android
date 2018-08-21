@@ -44,6 +44,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
         setUp();
         ComponentName thisWidget = new ComponentName(context,
                 HabitButtonWidgetProvider.class);
@@ -81,7 +82,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
             int[] ids = {appWidgetId};
 
             if (taskId != null) {
-                userRepository.getUser(userId).firstElement().flatMap(user -> taskRepository.taskChecked(user, taskId, TaskDirection.up.toString().equals(direction), false))
+                getUserRepository().getUser(userId).firstElement().flatMap(user -> taskRepository.taskChecked(user, taskId, TaskDirection.up.toString().equals(direction), false))
                         .subscribe(taskDirectionData -> showToastForTaskDirection(context, taskDirectionData, userId), RxErrorHandler.handleEmptyError(), () -> this.onUpdate(context, mgr, ids));
             }
         }

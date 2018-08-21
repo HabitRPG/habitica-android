@@ -19,6 +19,9 @@ public class AmplitudeManager {
 
     public static String EVENT_HITTYPE_EVENT = "event";
     public static String EVENT_HITTYPE_PAGEVIEW = "pageview";
+    public static String EVENT_HITTYPE_CREATE_WIDGET = "create";
+    public static String EVENT_HITTYPE_REMOVE_WIDGET = "remove";
+    public static String EVENT_HITTYPE_UPDATE_WIDGET = "update";
 
     public static void sendEvent(String eventAction, String eventCategory, String hitType) {
         sendEvent(eventAction, eventCategory, hitType, null);

@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
@@ -66,6 +67,11 @@ class AvatarSetupFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+
+        val additionalData = HashMap<String, Any>()
+        additionalData["page"] = "Avatar Setup"
+        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
+
         return container?.inflate(R.layout.fragment_setup_avatar)
     }
 
