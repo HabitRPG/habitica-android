@@ -143,7 +143,7 @@
     <string name="levelup_button">Huzzah!</string>
 
     <string name="faint_subtitle">Don\'t despair!</string>
-    <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck--you\'ll do great.</string>
+    <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck—you\'ll do great.</string>
     <string name="faint_header">You ran out of Health!</string>
     <string name="faint_button">Refill Health &amp; Try Again</string>
 
@@ -359,7 +359,7 @@
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>
     <string name="healer">Healer</string>
-    <string name="warrior_description">Warriors score more and better \"critical hits\", which randomly give bonus Gold, Experience, and drop chance for scoring a task. They also deal heavy damage to boss monsters. Play a Warrior if you find motivation from unpredictable jackpot-style rewards, or want to dish out the hurt in boss Quests!</string>
+    <string name="warrior_description">Warriors score more and better \“critical hits\”, which randomly give bonus Gold, Experience, and drop chance for scoring a task. They also deal heavy damage to boss monsters. Play a Warrior if you find motivation from unpredictable jackpot-style rewards, or want to dish out the hurt in boss Quests!</string>
     <string name="mage_description">Mages learn swiftly, gaining Experience and Levels faster than other classes. They also get a great deal of Mana for using special abilities. Play a Mage if you enjoy the tactical game aspects of Habit, or if you are strongly motivated by leveling up and unlocking advanced features!</string>
     <string name="rogue_description">Rogues love to accumulate wealth, gaining more Gold than anyone else, and are adept at finding random items. Their iconic Stealth ability lets them duck the consequences of missed Dailies. Play a Rogue if you find strong motivation from Rewards and Achievements, striving for loot and badges!</string>
     <string name="healer_description">Healers stand impervious against harm, and extend that protection to others. Missed Dailies and bad Habits don\'t faze them much, and they have ways to recover Health from failure. Play a Healer if you enjoy assisting others in your Party, or if the idea of cheating Death through hard work inspires you!</string>
@@ -628,7 +628,7 @@
     <string name="invitations">Invitations</string>
     <string name="quest_leader_header" formatted="false">Started by %s</string>
     <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="reloading_content">Reloading Content</string>
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
@@ -778,7 +778,7 @@
     <string name="questShop_owner_long">Ian the Quest Guide</string>
     <string name="seasonalShop_owner_long">Seasonal Sorceress</string>
     <string name="rage_attack">Rage attack:</string>
-    <string name="tavern_description_world_boss">Oh dear, pay no heed to the monster below -- this is still a safe haven to chat on your breaks.</string>
+    <string name="tavern_description_world_boss">Oh dear, pay no heed to the monster below — this is still a safe haven to chat on your breaks.</string>
     <string name="report">Report</string>
     <string name="like">Like</string>
     <string name="reply">Reply</string>
@@ -789,4 +789,8 @@
     <string name="public_challenge">Public Challenge</string>
     <string name="short_name">Short Name</string>
     <string name="unlock_attribute_points">Attribute point allocation unlocks at level 10</string>
+    <string name="same_day_reminder_title">Have you added your tasks yet?</string>
+    <string name="same_day_reminder_text">The more you add, the more you\'ll be rewarded. Even small habits add up to big change.</string>
+    <string name="next_day_reminder_title">Remember to check your tasks!</string>
+    <string name="next_day_reminder_text">There\'s lots of unlock and discover at you level up, so keep up with your tasks and have fun!</string>
 </resources>
