@@ -897,7 +897,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
         val imageView = view.findViewById<View>(R.id.imageView) as? SimpleDraweeView
-        val imageKey = event.notification.data.rewardKey[0]
+        var imageKey = event.notification.data.rewardKey[0]
+        if (imageKey.contains("armor")) {
+            imageKey = "slim_imageKey"
+        }
         DataBindingUtils.loadImage(imageView, imageKey)
 
         val youEarnedMessage = this.getString(R.string.checkInRewardEarned, event.notification.data.rewardText)
