@@ -16,13 +16,10 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindColor
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
-import io.reactivex.schedulers.Schedulers
 import net.pherth.android.emoji_library.EmojiTextView
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -120,20 +117,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         }
 
         val emojiView = taskView.findViewById<View>(R.id.text_view) as? EmojiTextView
-        if (task.parsedText != null) {
-            emojiView?.text = task.parsedText
-        } else {
-            emojiView?.text = task.text
-
-            Single.just(task.text)
-                    .map { MarkdownParser.parseMarkdown(it) }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Consumer{ parsedText ->
-                        task.parsedText = parsedText
-                        emojiView?.text = task.parsedText
-                    }, RxErrorHandler.handleEmptyError())
-        }
+        emojiView?.text = task.markdownText { emojiView?.text = it }
 
     }
 
