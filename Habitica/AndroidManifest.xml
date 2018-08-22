@@ -239,7 +239,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/task_list_widget_info" />
+                android:resource="@xml/daily_list_widget_info" />
         </receiver>
         <receiver android:name=".widget.TodoListWidgetProvider"
             android:label="@string/widget_todo_list">
@@ -247,7 +247,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/task_list_widget_info" />
+                android:resource="@xml/todo_list_widget_info" />
         </receiver>
         <receiver android:name=".widget.HabitButtonWidgetProvider"
             android:label="@string/widget_habit_button">

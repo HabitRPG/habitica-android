@@ -5,6 +5,7 @@
     android:minWidth="120dp"
     android:updatePeriodMillis="1800000"
     android:resizeMode="horizontal|vertical"
+    android:previewImage="@drawable/widget_habits"
     android:configure="com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity">
 
 </appwidget-provider>
