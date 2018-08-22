@@ -21,13 +21,13 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp">
-                <TextView
+                <net.pherth.android.emoji_library.EmojiTextView
                     android:id="@+id/titleTextView"
                     style="@style/CardTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
+                <net.pherth.android.emoji_library.EmojiTextView
                     android:id="@+id/notesTextView"
                     style="@style/CardText"
                     android:layout_width="match_parent"
