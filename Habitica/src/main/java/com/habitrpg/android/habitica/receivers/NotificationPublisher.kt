@@ -77,6 +77,7 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
         val notification: Notification
         val builder = Notification.Builder(thisContext)
         builder.setContentTitle(thisContext.getString(R.string.reminder_title))
+        builder.setContentText(getRandomDailyTip())
         if (registrationDate != null) {
             val registrationCal = Calendar.getInstance()
             registrationCal.time = registrationDate
@@ -117,6 +118,18 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
 
         notification.flags = notification.flags or (Notification.FLAG_AUTO_CANCEL or Notification.FLAG_SHOW_LIGHTS)
         return notification
+    }
+
+    private fun getRandomDailyTip(): String {
+        val thisContext = context ?: return ""
+        val index = Random().nextInt(4)
+        return when (index) {
+            0 -> thisContext.getString(R.string.daily_tip_0)
+            1 -> thisContext.getString(R.string.daily_tip_1)
+            2 -> thisContext.getString(R.string.daily_tip_2)
+            3 -> thisContext.getString(R.string.daily_tip_3)
+            else -> ""
+        }
     }
 
     companion object {

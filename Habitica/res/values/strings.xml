@@ -793,4 +793,8 @@
     <string name="same_day_reminder_text">The more you add, the more you\'ll be rewarded. Even small habits add up to big change.</string>
     <string name="next_day_reminder_title">Remember to check your tasks!</string>
     <string name="next_day_reminder_text">There\'s lots of unlock and discover at you level up, so keep up with your tasks and have fun!</string>
+    <string name="daily_tip_0">Use the mobile apps to set reminders for your tasks.</string>
+    <string name="daily_tip_1">Add checklists to your To-Dos to multiply your rewards!</string>
+    <string name="daily_tip_2">Complete all your Dailies to get a Perfect Day Buff that increases your Stats!</string>
+    <string name="daily_tip_3">Occasionally re-evaluate your tasks to make sure they’re up-to-date!</string>
 </resources>
