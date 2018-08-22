@@ -42,7 +42,6 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmTagLocalRepo
 import com.habitrpg.android.habitica.data.local.implementation.RealmTaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRepository;
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -71,8 +70,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient) {
-        return new TaskRepositoryImpl(localRepository, apiClient);
+    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
+        return new TaskRepositoryImpl(localRepository, apiClient, userId);
     }
 
     @Provides
@@ -81,8 +80,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    TagRepository providesTagRepository(TagLocalRepository localRepository, ApiClient apiClient) {
-        return new TagRepositoryImpl(localRepository, apiClient);
+    TagRepository providesTagRepository(TagLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
+        return new TagRepositoryImpl(localRepository, apiClient, userId);
     }
 
     @Provides
@@ -121,8 +120,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient) {
-        return new InventoryRepositoryImpl(localRepository, apiClient);
+    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
+        return new InventoryRepositoryImpl(localRepository, apiClient, userId);
     }
 
 
@@ -132,8 +131,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    FAQRepository providesFAQRepository(FAQLocalRepository localRepository, ApiClient apiClient) {
-        return new FAQRepositoryImpl(localRepository, apiClient);
+    FAQRepository providesFAQRepository(FAQLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
+        return new FAQRepositoryImpl(localRepository, apiClient, userId);
     }
 
     @Provides
@@ -142,8 +141,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    TutorialRepository providesTutorialRepository(TutorialLocalRepository localRepository, ApiClient apiClient) {
-        return new TutorialRepositoryImpl(localRepository, apiClient);
+    TutorialRepository providesTutorialRepository(TutorialLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
+        return new TutorialRepositoryImpl(localRepository, apiClient, userId);
     }
 
     @Provides
@@ -152,7 +151,7 @@ public class RepositoryModule {
     }
 
     @Provides
-    CustomizationRepository providesCustomizationRepository(CustomizationLocalRepository localRepository, ApiClient apiClient) {
-        return new CustomizationRepositoryImpl(localRepository, apiClient);
+    CustomizationRepository providesCustomizationRepository(CustomizationLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
+        return new CustomizationRepositoryImpl(localRepository, apiClient, userId);
     }
 }

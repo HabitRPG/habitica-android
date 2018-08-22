@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
-class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient) : ContentRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient), InventoryRepository {
+class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String) : ContentRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
 
     override fun getQuestContent(key: String): Flowable<QuestContent> {
         return localRepository.getQuestContent(key)

@@ -102,7 +102,7 @@ class UserDeserializer : JsonDeserializer<User> {
             user.pushDevices = ArrayList()
             obj.getAsJsonArray("pushDevices")
                     .map { context.deserialize<PushDevice>(it, PushDevice::class.java) }
-                    .forEach { (user.pushDevices as ArrayList<PushDevice>?)?.add(it) }
+                    .forEach { (user.pushDevices as? ArrayList<PushDevice>)?.add(it) }
         }
 
         if (obj.has("lastCron")) {

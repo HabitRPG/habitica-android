@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.models.WorldState
 import io.reactivex.Flowable
 import java.util.*
 
-abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
+abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository: T, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<T>(localRepository, apiClient, userID), ContentRepository {
 
     private var lastContentSync = 0L
     private var lastWorldStateSync = 0L

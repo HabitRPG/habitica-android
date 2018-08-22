@@ -1,10 +1,11 @@
 package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-class AuthenticationTimestamps {
+open class AuthenticationTimestamps : RealmObject() {
 
     @PrimaryKey
     var userId: String? = null

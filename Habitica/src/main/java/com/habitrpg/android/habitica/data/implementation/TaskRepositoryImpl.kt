@@ -19,7 +19,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient), TaskRepository {
+class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
+    override fun getTasksOfType(taskType: String): Flowable<RealmResults<Task>> = getTasks(taskType, userID)
 
     private var lastTaskAction: Long = 0
 

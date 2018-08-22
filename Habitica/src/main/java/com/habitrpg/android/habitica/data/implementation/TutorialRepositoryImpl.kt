@@ -8,7 +8,7 @@ import io.reactivex.Flowable
 import io.realm.RealmResults
 
 
-class TutorialRepositoryImpl(localRepository: TutorialLocalRepository, apiClient: ApiClient) : BaseRepositoryImpl<TutorialLocalRepository>(localRepository, apiClient), TutorialRepository {
+class TutorialRepositoryImpl(localRepository: TutorialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<TutorialLocalRepository>(localRepository, apiClient, userID), TutorialRepository {
 
     override fun getTutorialStep(key: String): Flowable<TutorialStep> =
             localRepository.getTutorialStep(key)

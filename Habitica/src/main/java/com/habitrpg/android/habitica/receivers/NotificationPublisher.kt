@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.receivers
 
-import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,7 +8,6 @@ import android.content.Intent
 import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.WakefulBroadcastReceiver
-
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -20,12 +18,10 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.functions.BiFunction
-
-import javax.inject.Inject
-
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import java.util.*
+import javax.inject.Inject
 
 
 @Suppress("DEPRECATION")
@@ -33,23 +29,25 @@ import java.util.*
 class NotificationPublisher : WakefulBroadcastReceiver() {
 
     @Inject
-    var taskRepository: TaskRepository? = null
+    lateinit var taskRepository: TaskRepository
     @Inject
     lateinit var userRepository: UserRepository
+
+    private var wasInjected = false
     private var context: Context? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         this.context = context
-        if (taskRepository == null) {
+        if (!wasInjected) {
+            wasInjected = true
             HabiticaBaseApplication.component?.inject(this)
         }
 
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
-            //Maybe.zip(userRepository.getUser().firstElement(), taskRepository.getTasks(Task.TYPE_DAILY).firstElement())
-            taskRepository?.getTasks(Task.TYPE_DAILY)?.firstElement()?.zipWith(userRepository.getUser().firstElement(), BiFunction<RealmResults<Task>, User, Pair<RealmResults<Task>, User>> { tasks, user ->
+            taskRepository.getTasks(Task.TYPE_DAILY).firstElement().zipWith(userRepository.getUser().firstElement(), BiFunction<RealmResults<Task>, User, Pair<RealmResults<Task>, User>> { tasks, user ->
                 return@BiFunction Pair(tasks, user)
-            })?.subscribe(Consumer { pair ->
+            }).subscribe(Consumer { pair ->
                 var showNotifications = false
                 for (task in pair.first) {
                     if (task?.checkIfDue() == true) {

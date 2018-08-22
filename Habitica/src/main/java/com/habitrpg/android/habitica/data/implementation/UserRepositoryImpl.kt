@@ -21,12 +21,12 @@ import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, private val userId: String, private val taskRepository: TaskRepository) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient), UserRepository {
+class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, userID: String, private val taskRepository: TaskRepository) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
 
     private var lastSync: Date? = null
 
-    override fun getUser(): Flowable<User> = getUser(userId)
-    override fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxOverviewList(userId)
+    override fun getUser(): Flowable<User> = getUser(userID)
+    override fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxOverviewList(userID)
 
 
     override fun getUser(userID: String): Flowable<User> = localRepository.getUser(userID)
@@ -78,7 +78,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>> =
-            localRepository.getInboxMessages(userId, replyToUserID)
+            localRepository.getInboxMessages(userID, replyToUserID)
 
     override fun retrieveInboxMessages(): Flowable<List<ChatMessage>> {
         return apiClient.retrieveInboxMessages().doOnNext { messages ->
@@ -257,7 +257,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     }
 
     override fun runCron(tasks: MutableList<Task>) {
-        var observable: Maybe<Any> = localRepository.getUser(userId).firstElement()
+        var observable: Maybe<Any> = localRepository.getUser(userID).firstElement()
                 .filter { it.needsCron }
                 .map {  user -> localRepository.executeTransaction {
                     user.needsCron = false

@@ -9,7 +9,7 @@ import io.reactivex.Single
 import io.realm.RealmResults
 
 
-class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClient) : BaseRepositoryImpl<TagLocalRepository>(localRepository, apiClient), TagRepository {
+class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<TagLocalRepository>(localRepository, apiClient, userID), TagRepository {
 
     override fun getTags(userId: String): Flowable<RealmResults<Tag>> {
         return localRepository.getTags(userId)

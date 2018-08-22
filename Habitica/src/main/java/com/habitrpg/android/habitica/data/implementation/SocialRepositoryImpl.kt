@@ -20,13 +20,13 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 
-class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, private val userId: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient), SocialRepository {
+class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
     override fun getGroupMembership(id: String): Flowable<GroupMembership> {
-        return localRepository.getGroupMembership(userId, id)
+        return localRepository.getGroupMembership(userID, id)
     }
 
     override fun getGroupMemberships(): Flowable<RealmResults<GroupMembership>> {
-        return localRepository.getGroupMemberships(userId)
+        return localRepository.getGroupMemberships(userID)
     }
 
     override fun retrieveGroupChat(groupId: String): Single<List<ChatMessage>> {
@@ -58,10 +58,10 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         if (chatMessage.id == "") {
             return Flowable.empty()
         }
-        val liked = chatMessage.userLikesMessage(userId)
-        localRepository.likeMessage(chatMessage, userId, !liked)
+        val liked = chatMessage.userLikesMessage(userID)
+        localRepository.likeMessage(chatMessage, userID, !liked)
         return apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
-                .doOnError { localRepository.likeMessage(chatMessage, userId, liked) }
+                .doOnError { localRepository.likeMessage(chatMessage, userID, liked) }
     }
 
     override fun deleteMessage(chatMessage: ChatMessage): Flowable<Void> {
@@ -116,7 +116,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         }
         return apiClient.leaveGroup(id)
                 .flatMapMaybe { localRepository.getGroup(id).firstElement() }
-                .doOnNext { localRepository.executeTransaction { localRepository.updateMembership(userId, id, false) } }
+                .doOnNext { localRepository.executeTransaction { localRepository.updateMembership(userID, id, false) } }
     }
 
     override fun joinGroup(id: String?): Flowable<Group> {
@@ -125,7 +125,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         }
         return apiClient.joinGroup(id)
                 .doOnNext { group ->
-                    localRepository.updateMembership(userId, id, true)
+                    localRepository.updateMembership(userID, id, true)
                     localRepository.save(group)
                 }
     }
@@ -148,7 +148,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 .doOnNext { groups ->
                     if ("guilds" == type) {
                         val memberships = groups.map {
-                            GroupMembership(userId, it.id)
+                            GroupMembership(userID, it.id)
                         }
                         localRepository.save(memberships)
                     }
@@ -197,7 +197,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 }
     }
 
-    override fun getUserGroups(): Flowable<RealmResults<Group>> = localRepository.getUserGroups(userId)
+    override fun getUserGroups(): Flowable<RealmResults<Group>> = localRepository.getUserGroups(userID)
 
     override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)
@@ -234,7 +234,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun rejectGroupInvite(groupId: String): Flowable<Void> {
         return apiClient.rejectGroupInvite(groupId)
                 .doOnNext {
-                    localRepository.rejectGroupInvitation(userId, groupId)
+                    localRepository.rejectGroupInvitation(userID, groupId)
                 }
     }
 
