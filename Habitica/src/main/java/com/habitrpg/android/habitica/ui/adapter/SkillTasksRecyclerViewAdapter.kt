@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -14,6 +13,7 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
+import net.pherth.android.emoji_library.EmojiTextView
 import java.util.*
 
 
@@ -51,8 +51,8 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
         var task: Task? = null
 
-        private val titleTextView: TextView by bindView(R.id.titleTextView)
-        private val notesTextView: TextView by bindView(R.id.notesTextView)
+        private val titleTextView: EmojiTextView by bindView(R.id.titleTextView)
+        private val notesTextView: EmojiTextView by bindView(R.id.notesTextView)
         private val rightBorderView: View by bindView(R.id.rightBorderView)
 
         init {
@@ -62,12 +62,12 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
         internal fun bindHolder(task: Task) {
             this.task = task
-            titleTextView.text = task.text
+            titleTextView.text = task.markdownText { titleTextView?.text = it }
             if (task.notes?.isEmpty() == true) {
                 notesTextView.visibility = View.GONE
             } else {
                 notesTextView.visibility = View.VISIBLE
-                notesTextView.text = task.notes
+                notesTextView.text = task.markdownNotes { notesTextView?.text = it }
             }
             rightBorderView.setBackgroundResource(task.lightTaskColor)
         }
