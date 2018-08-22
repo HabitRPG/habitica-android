@@ -1,232 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:scrollbarSize="3dp"
-                                            android:scrollbarThumbVertical="@color/scrollbarThumb"
-                                            android:scrollbars="vertical">
-
-    <LinearLayout
+<android.support.v4.widget.SwipeRefreshLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/refreshLayout">
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="?android:actionBarSize">
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/CardView.Default"
-            android:id="@+id/invitationWrapper">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="@style/CardContent">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/invited_to_party" />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="right">
-
-                    <Button
-                        android:id="@+id/buttonPartyInviteAccept"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/quest.accept"
-                        android:textColor="@color/btn_success"
-                        style="?android:buttonBarButtonStyle" />
-
-                    <Button
-                        android:id="@+id/buttonPartyInviteReject"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/quest.reject"
-                        android:textColor="@color/btn_danger"
-                        style="?android:buttonBarButtonStyle" />
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
+        android:layout_height="match_parent"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/scrollbarThumb"
+        android:scrollbars="vertical">
         <LinearLayout
-            android:id="@+id/noPartyWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="@dimen/spacing_large">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Title1"
-                    android:text="@string/no_party_title"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Body1"
-                    android:text="@string/no_party_description"
-                    android:textColor="@color/gray_300"
-                    android:gravity="center"/>
-                <Button
-                    android:id="@+id/craetePartyButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/HabiticaButton.Gray.600"
-                    android:text="@string/create_party_website"
-                    android:layout_marginTop="@dimen/spacing_large"/>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_500"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="@dimen/spacing_large">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Title2"
-                    android:text="@string/join_party_title"
-                    android:gravity="center"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Body1"
-                    android:text="@string/join_party_description"
-                    android:textColor="@color/gray_300"
-                    android:gravity="center"/>
+            android:orientation="vertical"
+            android:paddingBottom="?android:actionBarSize">
 
-                <TextView
-                    android:id="@+id/userIdView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/brand_400"
-                    android:gravity="center"
-                    android:layout_marginTop="@dimen/spacing_large"
-                    android:layout_marginBottom="@dimen/spacing_large"/>
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CardView.Default"
+                android:id="@+id/invitationWrapper">
+
+                <LinearLayout
                     android:orientation="vertical"
-                    android:id="@+id/qrLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <FrameLayout
-                        android:orientation="vertical"
-                        android:layout_width="fill_parent"
-                        android:layout_height="300dp"
-                        android:id="@+id/qrCodeWrapper">
-
-                        <com.facebook.drawee.view.SimpleDraweeView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/QRImageView"
-                            android:layout_gravity="center" />
-
-                        <RelativeLayout
-                            android:orientation="vertical"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center"
-                            android:background="@color/white"
-                            android:clipChildren="true"
-                            android:padding="1dp"
-                            android:visibility="gone"
-                            >
-                            <com.habitrpg.android.habitica.ui.AvatarView
-                                android:id="@+id/avatarView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
-                                />
-                        </RelativeLayout>
-                    </FrameLayout>
-
-                    <Button
-                        android:id="@+id/QRDownloadButton"
+                    android:layout_height="match_parent"
+                    style="@style/CardContent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/invited_to_party" />
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/download"
-                        style="@style/HabiticaButton.Gray.600"
-                        android:layout_marginTop="20dp"
-                        android:layout_gravity="center_horizontal|bottom"
-                        />
+                        android:orientation="horizontal"
+                        android:layout_gravity="right">
 
+                        <Button
+                            android:id="@+id/buttonPartyInviteAccept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.accept"
+                            android:textColor="@color/btn_success"
+                            style="?android:buttonBarButtonStyle" />
+
+                        <Button
+                            android:id="@+id/buttonPartyInviteReject"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.reject"
+                            android:textColor="@color/btn_danger"
+                            style="?android:buttonBarButtonStyle" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/groupNameView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/SectionTitle"/>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/groupDescriptionWrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/CardView.Default">
             <LinearLayout
+                android:id="@+id/noPartyWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CardContent"
-                android:divider="?android:listDivider"
-                android:showDividers="middle"
                 android:orientation="vertical">
-
-                <net.pherth.android.emoji_library.EmojiTextView
-                    android:id="@+id/groupDescriptionView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
                 <LinearLayout
-                    android:id="@+id/leadernameWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/spacing_large">
                     <TextView
-                        android:id="@+id/leadernameTextView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/leaderMessageWrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <net.pherth.android.emoji_library.EmojiTextView
-                        android:id="@+id/leaderMessageTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/gemCountWrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/gems"/>
+                        style="@style/Title1"
+                        android:text="@string/no_party_title"
+                        android:gravity="center"/>
                     <TextView
-                        android:id="@+id/gemCountTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Body1"
+                        android:text="@string/no_party_description"
+                        android:textColor="@color/gray_300"
+                        android:gravity="center"/>
+                    <Button
+                        android:id="@+id/craetePartyButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/HabiticaButton.Gray.600"
+                        android:text="@string/create_party_website"
+                        android:layout_marginTop="@dimen/spacing_large"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_500"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/spacing_large">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Title2"
+                        android:text="@string/join_party_title"
+                        android:gravity="center"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Body1"
+                        android:text="@string/join_party_description"
+                        android:textColor="@color/gray_300"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/userIdView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/brand_400"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:layout_marginBottom="@dimen/spacing_large"/>
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:orientation="vertical"
+                        android:id="@+id/qrLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <FrameLayout
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="300dp"
+                            android:id="@+id/qrCodeWrapper">
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/QRImageView"
+                                android:layout_gravity="center" />
+
+                            <RelativeLayout
+                                android:orientation="vertical"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:background="@color/white"
+                                android:clipChildren="true"
+                                android:padding="1dp"
+                                android:visibility="gone"
+                                >
+                                <com.habitrpg.android.habitica.ui.AvatarView
+                                    android:id="@+id/avatarView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    />
+                            </RelativeLayout>
+                        </FrameLayout>
+
+                        <Button
+                            android:id="@+id/QRDownloadButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/download"
+                            style="@style/HabiticaButton.Gray.600"
+                            android:layout_marginTop="20dp"
+                            android:layout_gravity="center_horizontal|bottom"
+                            />
+
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+            <TextView
+                android:id="@+id/groupNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SectionTitle"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/groupDescriptionWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CardView.Default">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CardContent"
+                    android:divider="?android:listDivider"
+                    android:showDividers="middle"
+                    android:orientation="vertical">
+
+                    <net.pherth.android.emoji_library.EmojiTextView
+                        android:id="@+id/groupDescriptionView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:id="@+id/leadernameWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/leadernameTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/leaderMessageWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <net.pherth.android.emoji_library.EmojiTextView
+                            android:id="@+id/leaderMessageTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/gemCountWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/gems"/>
+                        <TextView
+                            android:id="@+id/gemCountTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

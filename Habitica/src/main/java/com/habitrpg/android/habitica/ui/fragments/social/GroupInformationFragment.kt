@@ -48,6 +48,9 @@ class GroupInformationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        refreshLayout?.setOnRefreshListener { this.refresh() }
+
         if (user != null) {
             setUser(user)
         } else {
@@ -64,7 +67,7 @@ class GroupInformationFragment : BaseFragment() {
             qrCodeManager.setUpView(qrLayout)
         }
 
-        buttonPartyInviteAccept.setOnClickListener {
+        buttonPartyInviteAccept.setOnClickListener { _ ->
             val userId = user?.invitations?.party?.id
             if (userId != null) {
                 socialRepository.joinGroup(userId)
@@ -76,7 +79,7 @@ class GroupInformationFragment : BaseFragment() {
             }
         }
 
-        buttonPartyInviteReject.setOnClickListener {
+        buttonPartyInviteReject.setOnClickListener { _ ->
             val userId = user?.invitations?.party?.id
             if (userId != null) {
                 socialRepository.rejectGroupInvite(userId)
@@ -84,7 +87,7 @@ class GroupInformationFragment : BaseFragment() {
             }
         }
 
-        userIdView.setOnClickListener {
+        userIdView.setOnClickListener { _ ->
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = ClipData.newPlainText(context?.getString(R.string.user_id), user?.id)
             clipboard?.primaryClip = clip
@@ -97,6 +100,19 @@ class GroupInformationFragment : BaseFragment() {
         craetePartyButton.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://habitica.com/party"))
             startActivity(browserIntent)
+        }
+    }
+
+    private fun refresh() {
+        if (group != null) {
+            socialRepository.retrieveGroup(group?.id ?: "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+        } else {
+            userRepository.retrieveUser(false, forced = true)
+                    .filter { it.hasParty() }
+                    .flatMap { socialRepository.retrieveGroup("party") }
+                    .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
+                    .doOnComplete { refreshLayout.isRefreshing = false }
+                    .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError())
         }
     }
 

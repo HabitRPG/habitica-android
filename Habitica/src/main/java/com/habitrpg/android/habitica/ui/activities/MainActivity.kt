@@ -899,7 +899,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val imageView = view.findViewById<View>(R.id.imageView) as? SimpleDraweeView
         var imageKey = event.notification.data.rewardKey[0]
         if (imageKey.contains("armor")) {
-            imageKey = "slim_imageKey"
+            imageKey = "slim_$imageKey"
         }
         DataBindingUtils.loadImage(imageView, imageKey)
 
