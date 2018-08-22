@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
@@ -189,6 +190,36 @@ open class Task : RealmObject, Parcelable {
             this.parsedNotes = this.notes
         }
 
+    }
+
+    fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
+        if (this.parsedText != null) {
+            return this.parsedText as CharSequence
+        }
+
+        MarkdownParser.parseMarkdownAsync(this.text, Consumer { parsedText ->
+            this.parsedText = parsedText
+            callback(parsedText)
+        })
+
+        return this.text
+    }
+
+    fun markdownNotes(callback: (CharSequence) -> Unit): CharSequence? {
+        if (this.parsedNotes != null) {
+            return this.parsedNotes as CharSequence
+        }
+
+        if (this.notes?.isEmpty() == true) {
+            return null
+        }
+
+        MarkdownParser.parseMarkdownAsync(this.notes, Consumer { parsedText ->
+            this.parsedNotes = parsedText
+            callback(parsedText)
+        })
+
+        return this.notes
     }
 
     override fun equals(other: Any?): Boolean {
