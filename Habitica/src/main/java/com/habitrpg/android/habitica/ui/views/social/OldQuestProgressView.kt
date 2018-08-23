@@ -71,13 +71,13 @@ class OldQuestProgressView : LinearLayout {
     fun setData(quest: QuestContent, progress: QuestProgress?) {
         collectionContainer.removeAllViews()
         if (quest.isBossQuest) {
-            bossNameView.text = quest.boss.name
+            bossNameView.text = quest.boss?.name
             if (progress != null) {
-                bossHealthView.set(progress.hp, quest.boss.hp.toDouble())
+                bossHealthView.set(progress.hp, quest.boss?.hp?.toDouble() ?: 0.0)
             }
-            if (quest.boss.hasRage()) {
+            if (quest.boss?.hasRage() == true) {
                 bossRageView.visibility = View.VISIBLE
-                bossRageView.set(progress?.rage ?: 0.0, quest.boss.rage?.value ?: 0.0)
+                bossRageView.set(progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
             } else {
                 bossRageView.visibility = View.GONE
             }

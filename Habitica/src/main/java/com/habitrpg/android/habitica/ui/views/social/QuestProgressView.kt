@@ -134,15 +134,15 @@ class QuestProgressView : LinearLayout {
         }
         collectionContainer.removeAllViews()
         if (quest.isBossQuest) {
-            bossNameView.text = quest.boss.name
+            bossNameView.text = quest.boss?.name
             bossNameView.visibility = View.VISIBLE
             bossHealthView.visibility = View.VISIBLE
             bossHealthView.set(progress.progress?.hp ?: 0.0, quest.boss?.hp?.toDouble() ?: 0.0)
 
-            if (quest.boss.hasRage()) {
+            if (quest.boss?.hasRage() == true) {
                 rageMeterView.visibility = View.VISIBLE
                 bossRageView.visibility = View.VISIBLE
-                rageMeterView.text = quest.boss.rage?.title
+                rageMeterView.text = quest.boss?.rage?.title
                 bossRageView.set(progress.progress?.rage ?: 0.0, quest.boss?.rage?.value ?: 0.0)
                 if (progress.hasRageStrikes()) {
                     setupRageStrikeViews()

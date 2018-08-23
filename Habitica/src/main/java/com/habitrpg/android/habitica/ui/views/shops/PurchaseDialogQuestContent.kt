@@ -43,14 +43,14 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
         if (questContent.isBossQuest) {
             questTypeTextView.setText(R.string.boss_quest)
             questCollectView.visibility = View.GONE
-            bossHealthTextView.text = questContent.boss.hp.toString()
-            if (questContent.boss.hasRage()) {
+            bossHealthTextView.text = questContent.boss?.hp.toString()
+            if (questContent.boss?.hasRage() == true) {
                 rageMeterView.visibility = View.VISIBLE
             }
-            questDifficultyView.rating = questContent.boss.str
+            questDifficultyView.rating = questContent.boss?.str ?: 1f
         } else {
             questTypeTextView.setText(R.string.collection_quest)
-            val collectionList = questContent.collect.map { it.count.toString() + " " + it.text }
+            val collectionList = questContent.collect?.map { it.count.toString() + " " + it.text }
             questCollectTextView.text = TextUtils.join(", ", collectionList)
 
             bossHealthView.visibility = View.GONE
@@ -62,13 +62,13 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
-        if (questContent.drop != null && questContent.drop.items != null) {
-            questContent.drop.items
-                    .filterNot { it.isOnlyOwner }
-                    .forEach { addRewardsRow(inflater, it, rewardsList) }
+        if (questContent.drop != null && questContent.drop?.items != null) {
+            questContent.drop?.items
+                    ?.filterNot { it.isOnlyOwner }
+                    ?.forEach { addRewardsRow(inflater, it, rewardsList) }
 
             var hasOwnerRewards = false
-            for (item in questContent.drop.items) {
+            for (item in questContent.drop?.items ?: emptyList<QuestDropItem>()) {
                 if (item.isOnlyOwner) {
                     addRewardsRow(inflater, item, ownerRewardsList)
                     hasOwnerRewards = true
@@ -79,23 +79,23 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
                 ownerRewardsList.visibility = View.GONE
             }
 
-            if (questContent.drop.exp > 0) {
+            if (questContent.drop?.exp ?: 0 > 0) {
                 val view = inflater?.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
                 val titleTextView = view?.findViewById<TextView>(R.id.titleTextView)
-                titleTextView?.text = context.getString(R.string.experience_reward, questContent.drop.exp)
+                titleTextView?.text = context.getString(R.string.experience_reward, questContent.drop?.exp)
                 rewardsList.addView(view)
             }
 
-            if (questContent.drop.gp > 0) {
+            if (questContent.drop?.gp ?: 0 > 0) {
                 val view = inflater?.inflate(R.layout.row_quest_reward_imageview, rewardsList, false) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
                 val titleTextView = view?.findViewById<TextView>(R.id.titleTextView)
-                titleTextView?.text = context.getString(R.string.gold_reward, questContent.drop.gp)
+                titleTextView?.text = context.getString(R.string.gold_reward, questContent.drop?.gp)
                 rewardsList.addView(view)
             }
         }

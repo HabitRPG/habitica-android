@@ -182,7 +182,7 @@ class TavernDetailFragment : BaseFragment() {
 
         fun showWorldBossInfoDialog(context: Context, quest: QuestContent) {
             val alert = HabiticaAlertDialog(context)
-            val bossName = quest.boss.name ?: ""
+            val bossName = quest.boss?.name ?: ""
             alert.setTitle(R.string.world_boss_description_title)
             alert.setTitleBackgroundColor(quest.colors?.lightColor ?: 0)
             alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))

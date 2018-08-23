@@ -185,7 +185,11 @@ class PartyDetailFragment : BaseFragment() {
         }
         questTitleView?.text = questContent.text
         DataBindingUtils.loadImage(questScrollImageView, "inventory_quest_scroll_" + questContent.key)
-        DataBindingUtils.loadImage(questImageView, "quest_" + questContent.key)
+        if (questContent.hasGifImage()) {
+            DataBindingUtils.loadImage(questImageView, "quest_" + questContent.key, "gif")
+        } else {
+            DataBindingUtils.loadImage(questImageView, "quest_" + questContent.key)
+        }
         if (isQuestActive) {
             questProgressView?.visibility = View.VISIBLE
             questProgressView?.setData(questContent, quest?.progress)
