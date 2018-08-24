@@ -29,10 +29,15 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
+import io.reactivex.Flowable
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -52,6 +57,8 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var gotNewMessages = false
+
+    private var refreshDisposable: Disposable? = null
 
     fun configure(groupId: String, user: User?, isTavern: Boolean) {
         this.groupId = groupId
@@ -106,15 +113,15 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
-        chatAdapter.notNull {
-            compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer { userId ->
+        chatAdapter.notNull {adapter ->
+            compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
                 context.notNull { FullProfileActivity.open(it, userId) }
             }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getReplyMessageEvents().subscribe(Consumer{ setReplyTo(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getLikeMessageFlowable().flatMap<ChatMessage> { socialRepository.likeMessage(it) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getReplyMessageEvents().subscribe(Consumer{ setReplyTo(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getLikeMessageFlowable().flatMap<ChatMessage> { socialRepository.likeMessage(it) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
 
         chatBarView.sendAction = { sendChatMessage(it) }
@@ -131,14 +138,46 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         if (user?.flags?.isCommunityGuidelinesAccepted == true) {
             communityGuidelinesView.visibility = View.GONE
         } else {
-            communityGuidelinesView.setOnClickListener {
+            communityGuidelinesView.setOnClickListener { _ ->
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse("https://habitica.com/static/community-guidelines")
                 context?.startActivity(i)
                 userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
             }
         }
-        onRefresh()
+        refresh(false)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopAutoRefreshing()
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            startAutoRefreshing()
+        } else {
+            stopAutoRefreshing()
+        }
+    }
+
+    private fun startAutoRefreshing() {
+        if (refreshDisposable != null && refreshDisposable?.isDisposed != true) {
+            refreshDisposable?.dispose()
+        }
+        refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Consumer {
+            refresh(false)
+        }, RxErrorHandler.handleEmptyError())
+    }
+
+    private fun stopAutoRefreshing() {
+        if (refreshDisposable?.isDisposed != true) {
+            refreshDisposable?.dispose()
+            refreshDisposable = null
+        }
     }
 
     private fun setReplyTo(username: String?) {
@@ -150,11 +189,19 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun onRefresh() {
-        refreshLayout.isRefreshing = true
+        refresh(true)
+    }
+
+    private fun refresh(isUserInitiated: Boolean) {
+         if (isUserInitiated) {
+             refreshLayout.isRefreshing = true
+         }
         groupId.notNull {id ->
             socialRepository.retrieveGroupChat(id)
                     .doOnEvent { _, _ -> refreshLayout?.isRefreshing = false }.subscribe(Consumer {
-                        recyclerView.scrollToPosition(0)
+                        if (isUserInitiated) {
+                            recyclerView.scrollToPosition(0)
+                        }
                     }, RxErrorHandler.handleEmptyError())
         }
     }
