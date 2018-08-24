@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +58,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var gotNewMessages = false
-
+    private var isScrolledToTop = true
     private var refreshDisposable: Disposable? = null
 
     fun configure(groupId: String, user: User?, isTavern: Boolean) {
@@ -145,6 +146,14 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                 userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
             }
         }
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                isScrolledToTop = layoutManager?.findFirstVisibleItemPosition() == 0
+            }
+        })
+
         refresh(false)
     }
 
@@ -199,7 +208,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         groupId.notNull {id ->
             socialRepository.retrieveGroupChat(id)
                     .doOnEvent { _, _ -> refreshLayout?.isRefreshing = false }.subscribe(Consumer {
-                        if (isUserInitiated) {
+                        if (isScrolledToTop) {
                             recyclerView.scrollToPosition(0)
                         }
                     }, RxErrorHandler.handleEmptyError())
@@ -285,4 +294,6 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             }, RxErrorHandler.handleEmptyError())
         }
     }
+
+
 }
