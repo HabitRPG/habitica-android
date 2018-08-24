@@ -217,7 +217,6 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     fun setNavigatedToFragment() {
         navigatedOnceToFragment = true
-
         markMessagesAsSeen()
     }
 

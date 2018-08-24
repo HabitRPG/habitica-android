@@ -29,7 +29,12 @@ object DataBindingUtils {
 
     fun loadImage(view: SimpleDraweeView?, imageName: String?, imageFormat: String = "png") {
         if (view != null && imageName != null && view.visibility == View.VISIBLE) {
-            view.setImageURI("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.$imageFormat")
+            val fullname = "$imageName.$imageFormat"
+            if (view.tag == fullname) {
+                return
+            }
+            view.tag = fullname
+            view.setImageURI("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$fullname")
         }
     }
 
