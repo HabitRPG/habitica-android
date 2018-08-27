@@ -47,6 +47,15 @@
                     android:clickable="true"
                     tools:text="Username"
                     android:focusable="true" />
+                <TextView
+                    android:id="@+id/mod_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    style="@style/Pill.Purple"
+                    tools:text="Moderator"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"

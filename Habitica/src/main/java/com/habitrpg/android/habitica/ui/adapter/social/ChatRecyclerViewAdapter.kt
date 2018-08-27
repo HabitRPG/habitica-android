@@ -115,6 +115,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         private val copyButton: Button by bindView(R.id.copy_button)
         private val reportButton: Button by bindView(R.id.report_button)
         private val deleteButton: Button by bindView(R.id.delete_button)
+        private val modView: TextView by bindView(R.id.mod_view)
 
         val context: Context = itemView.context
         val res: Resources = itemView.resources
@@ -122,25 +123,22 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
         init {
             itemView.setOnClickListener {
-                expandedMessageId = if (expandedMessageId == chatMessage?.id) {
-                    null
-                } else {
-                    chatMessage?.id
-                }
-                notifyItemChanged(adapterPosition)
+                expandMessage()
             }
-            tvLikes.setOnClickListener { chatMessage.notNull { likeMessageEvents.onNext(it) } }
-            userLabel.setOnClickListener { chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
-            replyButton.setOnClickListener { chatMessage?.user.notNull { replyMessageEvents.onNext(it) } }
+            tvLikes.setOnClickListener { _ -> chatMessage.notNull { likeMessageEvents.onNext(it) } }
+            messageText.setOnClickListener { _ -> expandMessage() }
+            messageText.movementMethod = LinkMovementMethod.getInstance()
+            userLabel.setOnClickListener { _ -> chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
+            replyButton.setOnClickListener { _ -> chatMessage?.user.notNull { replyMessageEvents.onNext(it) } }
             replyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
                     null, null, null)
-            copyButton.setOnClickListener { chatMessage.notNull { copyMessageEvents.onNext(it) } }
+            copyButton.setOnClickListener { _ -> chatMessage.notNull { copyMessageEvents.onNext(it) } }
             copyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
                     null, null, null)
-            reportButton.setOnClickListener { chatMessage.notNull { flagMessageEvents.onNext(it) } }
+            reportButton.setOnClickListener { _ -> chatMessage.notNull { flagMessageEvents.onNext(it) } }
             reportButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
                     null, null, null)
-            deleteButton.setOnClickListener { chatMessage.notNull { deleteMessageEvents.onNext(it) } }
+            deleteButton.setOnClickListener { _ -> chatMessage.notNull { deleteMessageEvents.onNext(it) } }
             deleteButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
                     null, null, null)
         }
@@ -157,6 +155,21 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             } else {
                 userLabel.tier = msg.contributor?.level ?: 0
                 userLabel.username = msg.user
+            }
+            when {
+                userLabel.tier == 8 -> {
+                    modView.visibility = View.VISIBLE
+                    modView.text = context.getString(R.string.moderator)
+                    modView.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.pill_bg_blue)
+                    modView.setScaledPadding(context, 12, 4, 12, 4)
+                }
+                userLabel.tier == 9 -> {
+                    modView.visibility = View.VISIBLE
+                    modView.text = context.getString(R.string.staff)
+                    modView.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.pill_bg_purple_300)
+                    modView.setScaledPadding(context, 12, 4, 12, 4)
+                }
+                else -> modView.visibility = View.GONE
             }
 
             if (messageWasSent()) {
@@ -188,7 +201,6 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                             messageText.text = chatMessage?.parsedText
                         }, { it.printStackTrace() })
             }
-            this.messageText.movementMethod = LinkMovementMethod.getInstance()
 
             if (name != null && msg.text?.contains(name) == true) {
                 messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_700)
@@ -239,6 +251,15 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
         private fun shouldShowDelete(): Boolean {
             return chatMessage?.isSystemMessage != true && (chatMessage?.uuid == userId || user?.contributor?.admin == true)
+        }
+
+        private fun expandMessage() {
+            expandedMessageId = if (expandedMessageId == chatMessage?.id) {
+                null
+            } else {
+                chatMessage?.id
+            }
+            notifyItemChanged(adapterPosition)
         }
     }
 }
