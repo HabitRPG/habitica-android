@@ -156,7 +156,7 @@
     <string name="new_checklist_item">new checklist item</string>
     <string name="add_checklist_item">Add</string>
 
-    <string name="reminder_title">Remember to check off your tasks!</string>
+    <string name="reminder_title">Remember to check off your tasks</string>
     <string name="skill_progress_title">Using Skill</string>
     <string name="coming_soon">Coming Soon</string>
     <string name="chat_flag_confirmation">Are you sure you want to report this message for violation?</string>
@@ -791,10 +791,16 @@
     <string name="unlock_attribute_points">Attribute point allocation unlocks at level 10</string>
     <string name="same_day_reminder_title">Have you added your tasks yet?</string>
     <string name="same_day_reminder_text">The more you add, the more you\'ll be rewarded. Even small habits add up to big change.</string>
-    <string name="next_day_reminder_title">Remember to check your tasks!</string>
-    <string name="next_day_reminder_text">There\'s lots of unlock and discover at you level up, so keep up with your tasks and have fun!</string>
-    <string name="daily_tip_0">Use the mobile apps to set reminders for your tasks.</string>
+    <string name="next_day_reminder_title">Did you check off your tasks today?</string>
+    <string name="next_day_reminder_text">There\'s lots to unlock and discover as you level up, so keep up with your tasks and have fun!</string>
+    <string name="daily_tip_0">Want to try something new? Join a Challenge to expand your task list and win some Gems!</string>
     <string name="daily_tip_1">Add checklists to your To-Dos to multiply your rewards!</string>
-    <string name="daily_tip_2">Complete all your Dailies to get a Perfect Day Buff that increases your Stats!</string>
-    <string name="daily_tip_3">Occasionally re-evaluate your tasks to make sure they’re up-to-date!</string>
+    <string name="daily_tip_2">You can change how often each Daily repeats. Even infrequent tasks can be scheduled.</string>
+    <string name="daily_tip_3">You can schedule specific reminders for Dailies too.</string>
+    <string name="daily_tip_4">Occasionally re-evaluating your tasks can help keep you on the right path.</string>
+    <string name="daily_tip_5">Take a few deep breaths to help you focus. You can do this!</string>
+    <string name="daily_tip_6">Try setting a timer for ten minutes and seeing how much you can get done!</string>
+    <string name="daily_tip_7">Try pinning items from the Market to your Rewards to help motivate you to earn them!</string>
+    <string name="daily_tip_8">You can change your task\'s difficulty to reward yourself more for hard tasks!</string>
+    <string name="daily_tip_9">If you\'re having a tough time, try breaking your tasks down into smaller parts.</string>
 </resources>

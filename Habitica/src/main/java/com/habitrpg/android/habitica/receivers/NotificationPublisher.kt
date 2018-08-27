@@ -128,6 +128,12 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
             1 -> thisContext.getString(R.string.daily_tip_1)
             2 -> thisContext.getString(R.string.daily_tip_2)
             3 -> thisContext.getString(R.string.daily_tip_3)
+            4 -> thisContext.getString(R.string.daily_tip_4)
+            5 -> thisContext.getString(R.string.daily_tip_5)
+            6 -> thisContext.getString(R.string.daily_tip_6)
+            7 -> thisContext.getString(R.string.daily_tip_7)
+            8 -> thisContext.getString(R.string.daily_tip_8)
+            9 -> thisContext.getString(R.string.daily_tip_9)
             else -> ""
         }
     }
