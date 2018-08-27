@@ -198,7 +198,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun updateTaskPositions(taskOrder: List<String>) {
         if (taskOrder.isNotEmpty()) {
             val tasks = realm.where(Task::class.java).`in`("id", taskOrder.toTypedArray()).findAll()
-            realm.executeTransaction {
+            realm.executeTransaction { _ ->
                 tasks.filter { taskOrder.contains(it.id) }.forEach { it.position = taskOrder.indexOf(it.id) }
             }
         }

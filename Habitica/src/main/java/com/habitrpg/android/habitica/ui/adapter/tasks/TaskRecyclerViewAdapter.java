@@ -16,6 +16,7 @@ public interface TaskRecyclerViewAdapter {
     void notifyItemMoved(int adapterPosition, int adapterPosition1);
     void notifyDataSetChanged();
     int getItemViewType(int position);
+    String getTaskIDAt(int position);
 
     void setIgnoreUpdates(boolean ignoreUpdates);
     boolean getIgnoreUpdates();

@@ -154,4 +154,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
     override fun setIgnoreUpdates(ignoreUpdates: Boolean) {
         this.ignoreUpdates = ignoreUpdates
     }
+
+    override fun getTaskIDAt(position: Int): String {
+        return data?.get(position)?.id ?: ""
+    }
 }

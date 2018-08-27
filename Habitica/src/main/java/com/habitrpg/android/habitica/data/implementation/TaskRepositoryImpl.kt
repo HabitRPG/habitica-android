@@ -214,16 +214,8 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         localRepository.swapTaskPosition(firstPosition, secondPosition)
     }
 
-    override fun updateTaskPosition(taskType: String, oldPosition: Int, newPosition: Int): Maybe<List<String>> {
-        return localRepository.getTaskAtPosition(taskType, oldPosition)
-                .firstElement()
-                .flatMap { task ->
-                    return@flatMap if (task.isValid) {
-                         apiClient.postTaskNewPosition(task.id ?: "", newPosition).firstElement()
-                    } else {
-                        Maybe.just<List<String>>(ArrayList())
-                    }
-                }
+    override fun updateTaskPosition(taskType: String, taskID: String, newPosition: Int): Maybe<List<String>> {
+        return apiClient.postTaskNewPosition(taskID, newPosition).firstElement()
                 .doOnSuccess { localRepository.updateTaskPositions(it) }
     }
 

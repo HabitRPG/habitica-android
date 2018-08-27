@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
@@ -110,6 +111,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
 
         mItemTouchCallback = object : ItemTouchHelper.Callback() {
             private var fromPosition: Int? = null
+            private var movingTaskID: String? = null
 
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
@@ -117,6 +119,9 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
                     viewHolder.itemView.setBackgroundColor(Color.LTGRAY)
                     if (fromPosition == null) {
                         fromPosition = viewHolder.adapterPosition
+                    }
+                    if (movingTaskID == null) {
+                        movingTaskID = (viewHolder as? BaseTaskViewHolder)?.task?.id
                     }
                 }
                 refreshLayout.isEnabled = false
@@ -145,15 +150,17 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
                 refreshLayout?.isEnabled = true
 
                 val fromPosition = fromPosition
-                if (fromPosition != null) {
+                val movingTaskID = movingTaskID
+                if (fromPosition != null && movingTaskID != null) {
                     recyclerAdapter?.ignoreUpdates = true
-                    taskRepository.updateTaskPosition(classType ?: "", fromPosition, viewHolder.adapterPosition)
+                    taskRepository.updateTaskPosition(classType ?: "", movingTaskID, viewHolder.adapterPosition)
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(Consumer { recyclerAdapter?.ignoreUpdates = false
                             recyclerAdapter?.notifyDataSetChanged()}, RxErrorHandler.handleEmptyError())
-                    this.fromPosition = null
                 }
+                this.fromPosition = null
+                this.movingTaskID = null
             }
         }
         if (savedInstanceState != null) {
@@ -177,7 +184,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.adapter = recyclerAdapter as RecyclerView.Adapter<*>?
+        recyclerView.adapter = recyclerAdapter as? RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
 
         layoutManager = recyclerView.layoutManager

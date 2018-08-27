@@ -42,7 +42,7 @@ interface TaskRepository : BaseRepository {
 
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)
 
-    fun updateTaskPosition(taskType: String, oldPosition: Int, newPosition: Int): Maybe<List<String>>
+    fun updateTaskPosition(taskType: String, taskID: String, newPosition: Int): Maybe<List<String>>
 
     fun getUnmanagedTask(taskid: String): Flowable<Task>
 

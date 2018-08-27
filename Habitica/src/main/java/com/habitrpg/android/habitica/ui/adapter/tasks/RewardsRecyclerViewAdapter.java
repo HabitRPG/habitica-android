@@ -126,4 +126,9 @@ public class RewardsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void filter() {
     }
+
+    @Override
+    public String getTaskIDAt(int position) {
+        return customRewards.get(position).getId();
+    }
 }
