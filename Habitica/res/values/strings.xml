@@ -805,4 +805,6 @@
     <string name="daily_tip_9">If you\'re having a tough time, try breaking your tasks down into smaller parts.</string>
     <string name="moderator">Moderator</string>
     <string name="staff">Staff</string>
+    <string name="expand_notes">Read More</string>
+    <string name="collapse_notes">Show Less</string>
 </resources>

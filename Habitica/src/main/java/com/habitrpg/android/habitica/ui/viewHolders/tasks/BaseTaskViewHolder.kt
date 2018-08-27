@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.method.LinkMovementMethod
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,6 +17,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindColor
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
+import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -27,8 +30,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
 
     var task: Task? = null
     protected var context: Context
-    private val titleTextView: EmojiTextView by bindView(itemView, R.id.checkedTextView)
-    private val notesTextView: EmojiTextView by bindView(itemView, R.id.notesTextView)
+    private val titleTextView: EllipsisTextView by bindView(itemView, R.id.checkedTextView)
+    private val notesTextView: EllipsisTextView by bindView(itemView, R.id.notesTextView)
     internal val rightBorderView: View? by bindOptionalView(itemView, R.id.rightBorderView)
     protected val specialTaskTextView: TextView? by bindOptionalView(itemView, R.id.specialTaskText)
     private val iconViewChallenge: ImageView? by bindView(itemView, R.id.iconviewChallenge)
@@ -36,10 +39,12 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
     private val iconViewTag: ImageView? by bindView(itemView, R.id.iconviewTag)
     private val taskIconWrapper: LinearLayout? by bindView(itemView, R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? by bindView(itemView, R.id.approvalRequiredTextField)
+    private val expandNotesButton: Button by bindView(R.id.expand_notes_button)
     protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
 
     private var openTaskDisabled: Boolean = false
     private var taskActionsDisabled: Boolean = false
+    private var notesExpanded = false
 
     protected open val taskIconWrapperIsVisible: Boolean
         get() {
@@ -69,16 +74,47 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
         itemView.isClickable = true
 
         //Re enable when we find a way to only react when a link is tapped.
-        //notesTextView.setMovementMethod(LinkMovementMethod.getInstance());
-        //titleTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        //notesTextView.movementMethod = LinkMovementMethod.getInstance()
+        //titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
+        expandNotesButton.setOnClickListener { expandTask() }
+        notesTextView.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
+            override fun ellipsisStateChanged(ellipses: Boolean) {
+                Single.just(ellipses)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Consumer{ hasEllipses ->
+                            expandNotesButton.visibility = if (hasEllipses || notesExpanded) View.VISIBLE else View.GONE
+                        }, RxErrorHandler.handleEmptyError())
+
+            }
+        })
         context = itemView.context
     }
 
-    open fun bindHolder(newTask: Task, position: Int) {
+    private fun expandTask() {
+        notesExpanded = !notesExpanded
+        if (notesExpanded) {
+            notesTextView.maxLines = 100
+            expandNotesButton.text = context.getString(R.string.collapse_notes)
+        } else {
+            notesTextView.maxLines = 3
+            expandNotesButton.text = context.getString(R.string.expand_notes)
+        }
+    }
 
+    open fun bindHolder(newTask: Task, position: Int) {
         task = newTask
         itemView.setBackgroundResource(R.color.white)
+
+        if (newTask.notes?.isNotEmpty() == true) {
+            notesTextView.visibility = View.VISIBLE
+            //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
+        } else {
+            notesTextView.visibility = View.GONE
+            expandNotesButton.visibility = View.GONE
+        }
+
         if (canContainMarkdown()) {
             if (newTask.parsedText != null) {
                 titleTextView.text = newTask.parsedText
@@ -94,8 +130,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
                             newTask.parsedText = parsedText
                             titleTextView.text = newTask.parsedText
                         }, RxErrorHandler.handleEmptyError())
-                newTask.notes.notNull {
-                    Single.just(it)
+                newTask.notes.notNull {notes ->
+                    Single.just(notes)
                             .map { MarkdownParser.parseMarkdown(it) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -109,11 +145,6 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
         } else {
             titleTextView.text = newTask.text
             notesTextView.text = newTask.notes
-        }
-        if (newTask.notes?.isNotEmpty() == true) {
-            notesTextView.visibility = View.VISIBLE
-        } else {
-            notesTextView.visibility = View.GONE
         }
 
         rightBorderView?.setBackgroundResource(newTask.lightTaskColor)
