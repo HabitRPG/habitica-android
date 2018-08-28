@@ -217,7 +217,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
             }
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
             if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user)) {
-                val observable: Flowable<Void>
+                val observable: Flowable<Any>
                 if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType) {
                     observable = if (shopItem.purchaseType == "gear") {
                         inventoryRepository.purchaseMysterySet(shopItem.categoryIdentifier)
@@ -227,7 +227,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                 } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
                     observable = inventoryRepository.purchaseQuest(shopItem.key)
                 } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
-                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble()).flatMap { buyResponse ->
+                    observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble()).map { buyResponse ->
                         if (shopItem.key == "armoire") {
                             snackbarText[0] = when {
                                 buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
@@ -235,7 +235,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                                 else -> context.getString(R.string.armoireExp)
                             }
                         }
-                        Flowable.empty<Void>()
+                        buyResponse
                     }
                 } else {
                     observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key)

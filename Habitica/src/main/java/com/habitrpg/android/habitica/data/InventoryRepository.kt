@@ -75,13 +75,13 @@ interface InventoryRepository : ContentRepository {
     fun retrieveShopInventory(identifier: String): Flowable<Shop>
     fun retrieveMarketGear(): Flowable<Shop>
 
-    fun purchaseMysterySet(categoryIdentifier: String): Flowable<Void>
+    fun purchaseMysterySet(categoryIdentifier: String): Flowable<Any>
 
-    fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Void>
+    fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Any>
 
-    fun purchaseQuest(key: String): Flowable<Void>
+    fun purchaseQuest(key: String): Flowable<Any>
 
-    fun purchaseItem(purchaseType: String, key: String): Flowable<Void>
+    fun purchaseItem(purchaseType: String, key: String): Flowable<Any>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
 }

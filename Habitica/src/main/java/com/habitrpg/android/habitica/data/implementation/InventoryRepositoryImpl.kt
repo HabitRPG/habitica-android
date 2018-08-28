@@ -223,19 +223,19 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return apiClient.retrieveMarketGear()
     }
 
-    override fun purchaseMysterySet(categoryIdentifier: String): Flowable<Void> {
+    override fun purchaseMysterySet(categoryIdentifier: String): Flowable<Any> {
         return apiClient.purchaseMysterySet(categoryIdentifier)
     }
 
-    override fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Void> {
+    override fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Any> {
         return apiClient.purchaseHourglassItem(purchaseType, key)
     }
 
-    override fun purchaseQuest(key: String): Flowable<Void> {
+    override fun purchaseQuest(key: String): Flowable<Any> {
         return apiClient.purchaseQuest(key)
     }
 
-    override fun purchaseItem(purchaseType: String, key: String): Flowable<Void> {
+    override fun purchaseItem(purchaseType: String, key: String): Flowable<Any> {
         return apiClient.purchaseItem(purchaseType, key)
     }
 

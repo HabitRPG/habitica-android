@@ -57,14 +57,14 @@ interface ApiClient {
 
     fun buyItem(itemKey: String): Flowable<BuyResponse>
 
-    fun purchaseItem(type: String, itemKey: String): Flowable<Void>
+    fun purchaseItem(type: String, itemKey: String): Flowable<Any>
 
-    fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Void>
+    fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any>
 
-    fun purchaseMysterySet(itemKey: String): Flowable<Void>
+    fun purchaseMysterySet(itemKey: String): Flowable<Any>
 
-    fun purchaseQuest(key: String): Flowable<Void>
-    fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Void>
+    fun purchaseQuest(key: String): Flowable<Any>
+    fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any>
 
     fun sellItem(itemType: String, itemKey: String): Flowable<User>
 

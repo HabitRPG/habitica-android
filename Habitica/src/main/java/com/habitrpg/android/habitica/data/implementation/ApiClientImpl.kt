@@ -308,11 +308,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.buyItem(itemKey).compose(configureApiCallObserver())
     }
 
-    override fun purchaseItem(type: String, itemKey: String): Flowable<Void> {
+    override fun purchaseItem(type: String, itemKey: String): Flowable<Any> {
         return apiService.purchaseItem(type, itemKey).compose(configureApiCallObserver())
     }
 
-    override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Void> {
+    override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {
         return apiService.validateSubscription(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
                 popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
@@ -321,15 +321,15 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         }
     }
 
-    override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Void> {
+    override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any> {
         return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver())
     }
 
-    override fun purchaseMysterySet(itemKey: String): Flowable<Void> {
+    override fun purchaseMysterySet(itemKey: String): Flowable<Any> {
         return apiService.purchaseMysterySet(itemKey).compose(configureApiCallObserver())
     }
 
-    override fun purchaseQuest(key: String): Flowable<Void> {
+    override fun purchaseQuest(key: String): Flowable<Any> {
         return apiService.purchaseQuest(key).compose(configureApiCallObserver())
     }
 
