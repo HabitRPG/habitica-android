@@ -83,8 +83,12 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
             allowReordering()
         }
 
-        recyclerAdapter = adapter as TaskRecyclerViewAdapter
+        recyclerAdapter = adapter as? TaskRecyclerViewAdapter
         recyclerView.adapter = adapter
+
+        recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
+            taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError())
 
         if (this.classType != null) {
             taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer { this.recyclerAdapter?.updateUnfilteredData(it)

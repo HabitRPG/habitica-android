@@ -7,6 +7,11 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
+import io.reactivex.Observable
+import io.reactivex.functions.Action
+import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.OrderedRealmCollectionChangeListener
 import io.realm.RealmList
@@ -45,6 +50,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
     var data: OrderedRealmCollection<Task>? = null
         private set
 
+    private var errorButtonEventsSubject = PublishSubject.create<String>()
+
     private val isDataValid: Boolean
         get() = data?.isValid ?: false
 
@@ -77,8 +84,6 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
     override fun getItemCount(): Int = if (isDataValid) data?.size ?: 0 else 0
 
     fun getItem(index: Int): Task? = if (isDataValid) data?.get(index) else null
-
-
 
     override fun updateData(data: OrderedRealmCollection<Task>?) {
         if (hasAutoUpdates) {
@@ -132,6 +137,9 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         val item = getItem(position)
         if (item != null) {
             holder.bindHolder(item, position)
+            holder.errorButtonClicked = Action {
+                errorButtonEventsSubject.onNext("")
+            }
         }
     }
 
@@ -157,5 +165,9 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
 
     override fun getTaskIDAt(position: Int): String {
         return data?.get(position)?.id ?: ""
+    }
+
+    override fun getErrorButtonEvents(): Flowable<String> {
+        return errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     }
 }

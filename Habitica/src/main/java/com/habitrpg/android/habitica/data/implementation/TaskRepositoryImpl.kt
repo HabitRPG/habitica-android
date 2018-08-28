@@ -9,8 +9,10 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.*
 import com.habitrpg.android.habitica.models.user.User
+import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.Single
 import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmList
@@ -162,12 +164,26 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             }
         }
 
+        task.isSaving = true
+        task.isCreating = true
+        task.hasErrored = false
+        task.userId = userID
+        if (task.id == null) {
+            task.id = UUID.randomUUID().toString()
+        }
+        localRepository.saveTask(task)
+
         return apiClient.createTask(task)
                 .map { task1 ->
                     task1.dateCreated = Date()
                     task1
                 }
                 .doOnNext { localRepository.saveTask(it) }
+                .doOnError {
+                    task.hasErrored = true
+                    task.isSaving = false
+                    localRepository.save(task)
+                }
     }
 
     @Suppress("ReturnCount")
@@ -178,6 +194,10 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         }
         lastTaskAction = now
         val id = task.id ?: return Maybe.just(task)
+
+        task.isSaving = true
+        task.hasErrored = false
+        localRepository.saveTask(task)
         return localRepository.getTaskCopy(id).firstElement()
                 .flatMap { task1 -> apiClient.updateTask(id, task1).singleElement() }
                 .map { task1 ->
@@ -185,6 +205,11 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                     task1
                 }
                 .doOnSuccess { localRepository.saveTask(it) }
+                .doOnError {
+                    task.hasErrored = true
+                    task.isSaving = false
+                    localRepository.save(task)
+                }
     }
 
     override fun deleteTask(taskId: String): Flowable<Void> {
@@ -240,5 +265,18 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return apiClient.getTasks("dailys", formatter.format(date))
                 .flatMapMaybe { localRepository.updateIsdue(it) }
+    }
+
+    override fun syncErroredTasks(): Single<List<Task>> {
+        return localRepository.getErroredTasks(userID).firstElement()
+                .flatMapPublisher { Flowable.fromIterable(it) }
+                .map { localRepository.getUnmanagedCopy(it) }
+                .flatMap {
+                    return@flatMap if (it.isCreating) {
+                        createTask(it)
+                    } else {
+                        updateTask(it).toFlowable()
+                    }
+                }.toList()
     }
 }

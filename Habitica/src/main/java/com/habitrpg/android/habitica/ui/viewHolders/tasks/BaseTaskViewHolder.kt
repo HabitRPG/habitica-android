@@ -4,10 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.text.method.LinkMovementMethod
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.TaskTappedEvent
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -20,6 +17,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import net.pherth.android.emoji_library.EmojiTextView
@@ -29,6 +27,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
 
 
     var task: Task? = null
+    var errorButtonClicked: Action? = null
     protected var context: Context
     private val titleTextView: EllipsisTextView by bindView(itemView, R.id.checkedTextView)
     private val notesTextView: EllipsisTextView by bindView(itemView, R.id.notesTextView)
@@ -40,6 +39,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
     private val taskIconWrapper: LinearLayout? by bindView(itemView, R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? by bindView(itemView, R.id.approvalRequiredTextField)
     private val expandNotesButton: Button by bindView(R.id.expand_notes_button)
+    private val syncingView: ProgressBar by bindView(R.id.syncing_view)
+    private val errorIconView: ImageButton by bindView(R.id.error_icon)
     protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
 
     private var openTaskDisabled: Boolean = false
@@ -72,6 +73,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
 
         itemView.setOnClickListener { onClick(it) }
         itemView.isClickable = true
+
+        errorIconView.setOnClickListener { errorButtonClicked?.run()}
 
         //Re enable when we find a way to only react when a link is tapped.
         //notesTextView.movementMethod = LinkMovementMethod.getInstance()
@@ -163,6 +166,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
             approvalRequiredTextView?.visibility = View.GONE
         }
 
+        syncingView.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE
+        errorIconView.visibility = if (task?.hasErrored == true) View.VISIBLE else View.GONE
     }
 
 

@@ -203,4 +203,14 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             }
         }
     }
+
+    override fun getErroredTasks(userID: String): Flowable<RealmResults<Task>> {
+        return realm.where(Task::class.java)
+                .equalTo("userId", userID)
+                .equalTo("hasErrored", true)
+                .sort("position")
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .retry(1)    }
 }

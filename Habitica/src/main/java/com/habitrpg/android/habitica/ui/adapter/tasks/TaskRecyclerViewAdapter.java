@@ -4,6 +4,8 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 
 import org.jetbrains.annotations.Nullable;
 
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmResults;
 
@@ -22,4 +24,6 @@ public interface TaskRecyclerViewAdapter {
     boolean getIgnoreUpdates();
 
     void updateUnfilteredData(@Nullable OrderedRealmCollection<Task> data);
+
+    Flowable<String> getErrorButtonEvents();
 }

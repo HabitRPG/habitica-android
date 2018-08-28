@@ -18,6 +18,9 @@ import org.json.JSONException
 import java.util.*
 
 open class Task : RealmObject, Parcelable {
+    @PrimaryKey
+    @SerializedName("_id")
+    var id: String? = null
     var userId: String = ""
     var priority: Float = 0.0f
     var text: String = ""
@@ -60,9 +63,6 @@ open class Task : RealmObject, Parcelable {
     var parsedText: CharSequence? = null
     @Ignore
     var parsedNotes: CharSequence? = null
-    @PrimaryKey
-    @SerializedName("_id")
-    var id: String? = null
     set(value) {
         field = value
         repeat?.taskId = id
@@ -72,6 +72,11 @@ open class Task : RealmObject, Parcelable {
 
     var nextDue: Date? = null
     var yesterDaily: Boolean? = null
+
+    //Needed for offline creating/updating
+    var isSaving: Boolean = false
+    var hasErrored: Boolean = false
+    var isCreating: Boolean = false
 
     private var daysOfMonthString: String? = null
     private var weeksOfMonthString: String? = null
