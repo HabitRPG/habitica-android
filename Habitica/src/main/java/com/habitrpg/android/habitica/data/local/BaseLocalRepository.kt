@@ -17,4 +17,5 @@ interface BaseLocalRepository {
 
     fun <T : RealmObject> save(objects: List<T>)
     fun <T : RealmObject> save(`object`: T)
+    fun <T : RealmObject> saveSyncronous(`object`: T)
 }

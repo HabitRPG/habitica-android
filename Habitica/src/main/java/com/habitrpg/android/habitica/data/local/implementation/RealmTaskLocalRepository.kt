@@ -68,10 +68,6 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         return taskList
     }
 
-    override fun saveTask(task: Task) {
-        realm.executeTransaction { realm1 -> realm1.insertOrUpdate(task) }
-    }
-
     private fun removeOldTasks(userID: String, onlineTaskList: List<Task>) {
         val localTasks = realm.where(Task::class.java)
                 .equalTo("userId", userID)

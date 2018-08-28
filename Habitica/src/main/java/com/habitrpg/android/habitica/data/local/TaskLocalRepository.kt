@@ -15,8 +15,6 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: TaskList)
 
-    fun saveTask(task: Task)
-
     fun deleteTask(taskID: String)
 
     fun getTask(taskId: String): Flowable<Task>

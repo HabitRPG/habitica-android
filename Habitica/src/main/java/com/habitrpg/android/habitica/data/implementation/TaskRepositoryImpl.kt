@@ -134,9 +134,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
 
     override fun getTaskCopy(taskId: String): Flowable<Task> = localRepository.getTaskCopy(taskId)
 
-    override fun createTask(task: Task): Flowable<Task> {
+    override fun createTask(task: Task, force: Boolean): Flowable<Task> {
         val now = Date().time
-        if (lastTaskAction > now - 500) {
+        if (lastTaskAction > now - 500  && !force) {
             return Flowable.empty()
         }
         lastTaskAction = now
@@ -171,44 +171,43 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
         }
-        localRepository.saveTask(task)
+        localRepository.saveSyncronous(task)
 
         return apiClient.createTask(task)
                 .map { task1 ->
                     task1.dateCreated = Date()
                     task1
                 }
-                .doOnNext { localRepository.saveTask(it) }
+                .doOnNext { localRepository.save(it) }
                 .doOnError {
                     task.hasErrored = true
                     task.isSaving = false
-                    localRepository.save(task)
+                    localRepository.saveSyncronous(task)
                 }
     }
 
     @Suppress("ReturnCount")
-    override fun updateTask(task: Task): Maybe<Task> {
+    override fun updateTask(task: Task, force: Boolean): Maybe<Task> {
         val now = Date().time
-        if (lastTaskAction > now - 500 || !task.isValid) {
+        if ((lastTaskAction > now - 500  && !force)|| !task.isValid ) {
             return Maybe.just(task)
         }
         lastTaskAction = now
         val id = task.id ?: return Maybe.just(task)
-
-        task.isSaving = true
-        task.hasErrored = false
-        localRepository.saveTask(task)
-        return localRepository.getTaskCopy(id).firstElement()
-                .flatMap { task1 -> apiClient.updateTask(id, task1).singleElement() }
+        val unmanagedTask = localRepository.getUnmanagedCopy(task)
+        unmanagedTask.isSaving = true
+        unmanagedTask.hasErrored = false
+        localRepository.saveSyncronous(unmanagedTask)
+        return apiClient.updateTask(id, unmanagedTask).singleElement()
                 .map { task1 ->
                     task1.position = task.position
                     task1
                 }
-                .doOnSuccess { localRepository.saveTask(it) }
+                .doOnSuccess { localRepository.save(it) }
                 .doOnError {
-                    task.hasErrored = true
-                    task.isSaving = false
-                    localRepository.save(task)
+                    unmanagedTask.hasErrored = true
+                    unmanagedTask.isSaving = false
+                    localRepository.saveSyncronous(unmanagedTask)
                 }
     }
 
@@ -218,7 +217,7 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     override fun saveTask(task: Task) {
-        localRepository.saveTask(task)
+        localRepository.save(task)
     }
 
     override fun createTasks(newTasks: List<Task>): Flowable<List<Task>> = apiClient.createTasks(newTasks)
@@ -273,9 +272,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
                 .map { localRepository.getUnmanagedCopy(it) }
                 .flatMap {
                     return@flatMap if (it.isCreating) {
-                        createTask(it)
+                        createTask(it, true)
                     } else {
-                        updateTask(it).toFlowable()
+                        updateTask(it, true).toFlowable()
                     }
                 }.toList()
     }

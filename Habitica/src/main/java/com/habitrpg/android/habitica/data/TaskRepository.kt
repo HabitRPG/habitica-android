@@ -28,8 +28,8 @@ interface TaskRepository : BaseRepository {
 
     fun getTask(taskId: String): Flowable<Task>
     fun getTaskCopy(taskId: String): Flowable<Task>
-    fun createTask(task: Task): Flowable<Task>
-    fun updateTask(task: Task): Maybe<Task>?
+    fun createTask(task: Task, force: Boolean = false): Flowable<Task>
+    fun updateTask(task: Task, force: Boolean = false): Maybe<Task>?
     fun deleteTask(taskId: String): Flowable<Void>
     fun saveTask(task: Task)
 
