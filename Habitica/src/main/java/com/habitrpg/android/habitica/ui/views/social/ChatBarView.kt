@@ -27,7 +27,7 @@ class ChatBarView : FrameLayout {
 
     private var navBarAccountedHeightCalculated = false
 
-    internal var maxChatLength = 200
+    internal var maxChatLength = 3000
 
     var sendAction: ((String) -> Unit)? = null
 
@@ -40,8 +40,8 @@ class ChatBarView : FrameLayout {
     }
 
     private fun setupView(context: Context) {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.tavern_chat_new_entry_item, this)
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
+        inflater?.inflate(R.layout.tavern_chat_new_entry_item, this)
         this.setBackgroundResource(R.color.white)
 
         chatEditText.addTextChangedListener(object: TextWatcher {

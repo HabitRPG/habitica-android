@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -35,6 +36,8 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
 
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var configManager: RemoteConfigManager
 
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var chatRoomUser: String? = null
@@ -59,17 +62,18 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, false)
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
-        chatAdapter.notNull {
-            compositeSubscription.add(it.getUserLabelClickFlowable().subscribe(Consumer<String> {
+        chatAdapter.notNull { adapter ->
+            compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer<String> {
                 context.notNull { context -> FullProfileActivity.open(context, it) }
             }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(it.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
         }
 
 
         chatBarView.sendAction = { sendMessage(it) }
+        chatBarView.maxChatLength = configManager.maxChatLength()
 
         loadMessages()
 
