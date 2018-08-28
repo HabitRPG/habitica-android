@@ -17,10 +17,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.TextUtils
 import android.util.TypedValue
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.habitrpg.android.habitica.R
@@ -103,7 +100,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private val tagsWrapper: LinearLayout by bindView(R.id.task_tags_wrapper)
     private val tagsContainerLinearLayout: LinearLayout by bindView(R.id.task_tags_checklist)
     private val repeatablesFrequencySpinner: Spinner by bindView(R.id.task_repeatables_frequency_spinner)
-
+    private val taskResetFrequencyWrapper: ViewGroup by bindView(R.id.task_reset_frequency_wrapper)
+    private val taskResetFrequencySpinner: Spinner by bindView(R.id.task_reset_frequency_spinner)
 
     @Inject
     internal lateinit var taskFilterHelper: TaskFilterHelper
@@ -213,8 +211,16 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
             positiveCheckBox.isChecked = true
             negativeCheckBox.isChecked = true
+
+            val resetFrequencyAdapter = ArrayAdapter.createFromResource(this,
+                    R.array.task_reset_frequencies, android.R.layout.simple_spinner_item)
+            resetFrequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            taskResetFrequencySpinner.adapter = resetFrequencyAdapter
+            taskResetFrequencySpinner.setSelection(0)
+            taskResetFrequencyWrapper.visibility = View.VISIBLE
         } else {
             mainWrapper.removeView(actionsLayout)
+            taskResetFrequencyWrapper.visibility = View.GONE
         }
 
         if (taskType == Task.TYPE_DAILY) {
@@ -861,6 +867,15 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         if (task.type == Task.TYPE_HABIT) {
             positiveCheckBox.isChecked = task.up ?: false
             negativeCheckBox.isChecked = task.down ?: false
+
+            val resetFrequency = task.frequency
+            if (resetFrequency != null) {
+                when (resetFrequency) {
+                    Task.FREQUENCY_DAILY -> taskResetFrequencySpinner.setSelection(0)
+                    Task.FREQUENCY_WEEKLY -> taskResetFrequencySpinner.setSelection(1)
+                    Task.FREQUENCY_MONTHLY -> taskResetFrequencySpinner.setSelection(2)
+                }
+            }
         }
 
         if (task.type == Task.TYPE_DAILY) {
@@ -976,6 +991,13 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 Task.TYPE_HABIT -> {
                     task.up = positiveCheckBox.isChecked
                     task.down = negativeCheckBox.isChecked
+
+                    task.frequency = when (taskResetFrequencySpinner.selectedItemPosition) {
+                        0 -> Task.FREQUENCY_DAILY
+                        1 -> Task.FREQUENCY_WEEKLY
+                        2 -> Task.FREQUENCY_MONTHLY
+                        else -> ""
+                    }
                 }
 
                 Task.TYPE_DAILY -> {

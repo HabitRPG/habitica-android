@@ -35,6 +35,7 @@ public class TaskSerializer implements JsonSerializer<Task> {
             case "habit":
                 obj.addProperty("up", task.getUp());
                 obj.addProperty("down", task.getDown());
+                obj.addProperty("frequency", task.getFrequency());
                 break;
             case "daily":
                 obj.addProperty("frequency", task.getFrequency());

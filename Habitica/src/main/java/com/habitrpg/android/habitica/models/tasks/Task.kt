@@ -380,6 +380,7 @@ open class Task : RealmObject, Parcelable {
         const val FILTER_COMPLETED = "completed"
         const val FREQUENCY_WEEKLY = "weekly"
         const val FREQUENCY_DAILY = "daily"
+        const val FREQUENCY_MONTHLY = "monthly"
 
         @JvmField
         val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {

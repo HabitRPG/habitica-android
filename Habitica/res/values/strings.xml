@@ -807,4 +807,5 @@
     <string name="staff">Staff</string>
     <string name="expand_notes">Read More</string>
     <string name="collapse_notes">Show Less</string>
+    <string name="reset_streak">Reset Streak</string>
 </resources>
