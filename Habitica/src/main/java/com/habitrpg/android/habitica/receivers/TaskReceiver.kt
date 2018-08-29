@@ -45,6 +45,7 @@ class TaskReceiver : BroadcastReceiver() {
 
     private fun createNotification(context: Context, taskTitle: String) {
         val intent = Intent(context, MainActivity::class.java)
+
         intent.putExtra("notificationIdentifier", "task_reminder")
         val pendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

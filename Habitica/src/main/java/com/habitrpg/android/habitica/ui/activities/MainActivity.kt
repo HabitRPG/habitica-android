@@ -750,6 +750,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     private fun displayTutorialStep(step: TutorialStep, text: String, canBeDeferred: Boolean) {
+        removeActiveTutorialView()
         val view = TutorialView(this, step, this)
         this.activeTutorialView = view
         view.setTutorialText(text)
@@ -765,6 +766,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     private fun displayTutorialStep(step: TutorialStep, texts: List<String>, canBeDeferred: Boolean) {
+        removeActiveTutorialView()
         val view = TutorialView(this, step, this)
         this.activeTutorialView = view
         view.setTutorialTexts(texts)
