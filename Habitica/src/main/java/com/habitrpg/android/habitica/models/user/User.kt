@@ -52,6 +52,9 @@ open class User : RealmObject(), Avatar {
             if (this.invitations?.isManaged != true) {
                 this.invitations?.userId = id
             }
+            for (test in abTests ?: emptyList<ABTest>()) {
+                test.userID = id
+            }
         }
     var balance: Double = 0.toDouble()
     private var stats: Stats? = null
@@ -131,6 +134,8 @@ open class User : RealmObject(), Avatar {
     var tasksOrder: TasksOrder? = null
 
     var challenges: RealmList<ChallengeMembership>? = null
+
+    var abTests: RealmList<ABTest>? = null
 
     var lastCron: Date? = null
     var needsCron: Boolean = false

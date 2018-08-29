@@ -123,6 +123,16 @@ class UserDeserializer : JsonDeserializer<User> {
             }
         }
 
+        if (obj.has("_ABTests")) {
+            user.abTests = RealmList()
+            for (testJSON in obj.getAsJsonObject("_ABTests").entrySet()) {
+                val test = ABTest()
+                test.name = testJSON.key
+                test.group = testJSON.value.asString
+                user.abTests?.add(test)
+            }
+        }
+
         return user
     }
 }

@@ -9,18 +9,21 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.user.ABTest
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.playseeds.android.sdk.Seeds
 import com.playseeds.android.sdk.inappmessaging.InAppMessageListener
+import io.reactivex.functions.Consumer
 import org.solovyev.android.checkout.*
 import java.util.*
 import javax.inject.Inject
@@ -29,6 +32,8 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
 
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
+    @Inject
+    lateinit var userRepository: UserRepository
 
     internal val tabLayout: TabLayout by bindView(R.id.tab_layout)
     internal val viewPager: ViewPager by bindView(R.id.viewPager)
@@ -50,6 +55,8 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         super.onActivityResult(requestCode, resultCode, data)
         activityCheckout?.onActivityResult(requestCode, resultCode, data)
     }
+
+    private var showSubscriptionPageFirst = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +118,20 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
 
             override fun onReady(billingRequests: BillingRequests, s: String, b: Boolean) {}
         })
+
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { user ->
+            for (test in user.abTests ?: emptyList<ABTest>()) {
+                if (test.name == "subscriptionPageOrder") {
+                    if (test.group == "subscriptionFirst") {
+                        showSubscriptionPageFirst = true
+                        viewPager.adapter?.notifyDataSetChanged()
+                        return@Consumer
+                    }
+                }
+            }
+            showSubscriptionPageFirst = false
+            viewPager.adapter?.notifyDataSetChanged()
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     public override fun onDestroy() {
@@ -184,7 +205,8 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): Fragment {
-                val fragment: CheckoutFragment = if (position == 0) {
+                val gemPurchasePosition = if (showSubscriptionPageFirst) 1 else 0
+                val fragment: CheckoutFragment = if (position == gemPurchasePosition) {
                     GemsPurchaseFragment()
                 } else {
                     SubscriptionFragment()
@@ -207,11 +229,11 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                when (position) {
-                    0 -> return getString(R.string.gems)
-                    1 -> return getString(R.string.subscriptions)
+                val gemPurchasePosition = if (showSubscriptionPageFirst) 1 else 0
+                return when (position) {
+                    gemPurchasePosition -> getString(R.string.gems)
+                    else -> getString(R.string.subscriptions)
                 }
-                return ""
             }
         }
 
