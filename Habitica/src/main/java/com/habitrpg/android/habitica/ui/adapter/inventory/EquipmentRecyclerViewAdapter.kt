@@ -1,18 +1,22 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
@@ -42,13 +46,16 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
         private val gearNameTextView: TextView by bindView(itemView, R.id.gear_text)
         private val gearNotesTextView: TextView by bindView(itemView, R.id.gear_notes)
         private val imageView: SimpleDraweeView by bindView(itemView, R.id.gear_image)
+        private val imageViewWrapper: FrameLayout by bindView(itemView, R.id.gear_icon_background_view)
         private val equippedIndicator: View by bindView(itemView, R.id.equippedIndicator)
+        private val twoHandedView: TextView by bindView(R.id.two_handed_view)
 
         var gear: Equipment? = null
         var context: Context = itemView.context
 
         init {
             context = itemView.context
+            twoHandedView.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfTwoHandedIcon()), null, null, null)
             itemView.setOnClickListener {
                 val key = gear?.key
                 if (key != null) {
@@ -71,10 +78,13 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
             if (gear.key == equippedGear) {
                 this.equippedIndicator.visibility = View.VISIBLE
                 this.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_700))
+                imageViewWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_white)
             } else {
                 this.equippedIndicator.visibility = View.GONE
                 this.gearContainer.setBackgroundResource(R.drawable.selection_highlight)
+                imageViewWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_700)
             }
+            twoHandedView.visibility = if (gear.twoHanded) View.VISIBLE else View.GONE
             DataBindingUtils.loadImage(imageView, "shop_"+gear.key)
         }
     }

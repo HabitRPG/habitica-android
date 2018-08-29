@@ -7,12 +7,17 @@
     style="@style/RowWrapper"
     android:id="@+id/gear_container">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="@dimen/gear_image_size"
-        android:layout_height="@dimen/gear_image_size"
-        android:id="@+id/gear_image"
-        android:layout_marginRight="@dimen/row_padding"
-        app:actualImageScaleType="fitCenter"/>
+    <FrameLayout
+        android:id="@+id/gear_icon_background_view"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="@dimen/row_padding">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="@dimen/gear_image_size"
+            android:layout_height="@dimen/gear_image_size"
+            android:id="@+id/gear_image"
+            app:actualImageScaleType="fitCenter"/>
+    </FrameLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -38,6 +43,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/gear_notes"
             style="@style/RowText" />
+        <TextView
+            android:id="@+id/two_handed_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/two_handed"
+            android:textColor="@color/brand_400"
+            android:drawablePadding="@dimen/spacing_small"/>
     </LinearLayout>
 
 </LinearLayout>

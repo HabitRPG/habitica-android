@@ -42,6 +42,7 @@ public class EquipmentListDeserializer implements JsonDeserializer<List<Equipmen
                         item.setStr(parsedItem.getStr());
                         item.setPer(parsedItem.getPer());
                         item.set_int(parsedItem.get_int());
+                        item.setTwoHanded(parsedItem.getTwoHanded());
                     } else {
                         item.setOwned(itemObject.getAsBoolean());
                     }

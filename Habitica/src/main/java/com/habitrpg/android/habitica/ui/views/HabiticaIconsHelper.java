@@ -657,4 +657,18 @@ public class HabiticaIconsHelper {
 
         return imageOfChatDeleteIcon;
     }
+
+    private static Bitmap imageOfTwoHandedIcon = null;
+    public static Bitmap imageOfTwoHandedIcon() {
+        if (imageOfTwoHandedIcon != null)
+            return imageOfTwoHandedIcon;
+
+        int size = scaleSize(15);
+        imageOfTwoHandedIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfTwoHandedIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawTwoHandedIcon(canvas);
+
+        return imageOfTwoHandedIcon;
+    }
 }

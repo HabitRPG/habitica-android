@@ -812,4 +812,5 @@
     <string name="week_reminder_text">Breaks are healthy, but you can still earn points for simple activities to level up and get cool gear!</string>
     <string name="last_login">Latest Check In</string>
     <string name="total_checkins">Total Checkins</string>
+    <string name="two_handed">Two-Handed</string>
 </resources>

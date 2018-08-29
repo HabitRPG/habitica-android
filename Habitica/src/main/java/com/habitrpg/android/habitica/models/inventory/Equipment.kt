@@ -22,4 +22,5 @@ open class Equipment : RealmObject() {
     @SerializedName("int")
     var _int: Int = 0
     var owned: Boolean? = null
+    var twoHanded = false
 }
