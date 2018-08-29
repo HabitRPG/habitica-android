@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.WakefulBroadcastReceiver
@@ -13,7 +14,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -34,6 +34,8 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
     lateinit var taskRepository: TaskRepository
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     private var wasInjected = false
     private var context: Context? = null
@@ -49,6 +51,16 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
         additionalData["identifier"] = "daily_reminder"
         AmplitudeManager.sendEvent("receive notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
+        var wasInactive = false
+        //Show special notification if user hasn't logged in for a week
+        if (sharedPreferences.getLong("lastAppLaunch", Date().time) < (Date().time - 604800000L)) {
+            wasInactive = true
+            val preferenceEditor = sharedPreferences.edit()
+            preferenceEditor.putBoolean("preventDailyReminder", true)
+            preferenceEditor.apply()
+        } else {
+            TaskAlarmManager.scheduleDailyReminder(context)
+        }
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
             taskRepository.getTasks(Task.TYPE_DAILY).firstElement().zipWith(userRepository.getUser().firstElement(), BiFunction<RealmResults<Task>, User, Pair<RealmResults<Task>, User>> { tasks, user ->
@@ -61,12 +73,11 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
                         break
                     }
                 }
-                TaskAlarmManager.scheduleDailyReminder(context)
                 if (showNotifications) {
                     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
 
                     val id = intent.getIntExtra(NOTIFICATION_ID, 0)
-                    notificationManager?.notify(id, buildNotification(pair.second.authentication?.timestamps?.createdAt))
+                    notificationManager?.notify(id, buildNotification(wasInactive, pair.second.authentication?.timestamps?.createdAt))
                 }
             }, RxErrorHandler.handleEmptyError())
 
@@ -74,11 +85,11 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
 
             val id = intent.getIntExtra(NOTIFICATION_ID, 0)
-            notificationManager?.notify(id, buildNotification())
+            notificationManager?.notify(id, buildNotification(wasInactive))
         }
     }
 
-    private fun buildNotification(registrationDate: Date? = null): Notification? {
+    private fun buildNotification(wasInactive: Boolean, registrationDate: Date? = null): Notification? {
         val thisContext = context ?: return null
         val notification: Notification
         val builder = Notification.Builder(thisContext)
@@ -102,6 +113,11 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
                 builder.setContentText(thisContext.getString(R.string.next_day_reminder_text))
             }
         }
+        if (wasInactive) {
+            builder.setContentText(thisContext.getString(R.string.week_reminder_title))
+            builder.setContentText(thisContext.getString(R.string.week_reminder_text))
+        }
+
         builder.setSmallIcon(R.drawable.ic_gryphon_white)
         val notificationIntent = Intent(thisContext, MainActivity::class.java)
         notificationIntent.putExtra("notificationIdentifier", "daily_reminder")

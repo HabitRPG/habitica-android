@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
@@ -277,12 +276,17 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < Date().time - 86400000) {
             try {
-                taskAlarmManager.scheduleAllSavedAlarms()
+                taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
             } catch (e: Exception) {
                 crashlyticsProxy.logException(e)
             }
-
         }
+
+        //Track when the app was last opened, so that we can use this to send out special reminders after a week of inactivity
+        val preferenceEditor = sharedPreferences.edit()
+        preferenceEditor.putLong("lastAppLaunch", Date().time)
+        preferenceEditor.putBoolean("preventDailyReminder", false)
+        preferenceEditor.apply()
 
         //after the activity has been stopped and is thereafter resumed,
         //a state can arise in which the active fragment no longer has a
