@@ -38,6 +38,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 
 
 class ChallengeDetailFragment: BaseMainFragment() {
@@ -53,6 +54,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     private val leaveButton: Button? by bindView(R.id.leave_button)
     private val challengeName: EmojiTextView? by bindView(R.id.challenge_name)
     private val challengeDescription: EmojiTextView? by bindView(R.id.challenge_description)
+    private val challengeLeaderWrapper: ViewGroup? by bindView(R.id.challenge_creator_wrapper)
     private val challengeLeaderAvatarView: AvatarView? by bindView(R.id.creator_avatarview)
     private val challengeLeaderLabel: UsernameLabel? by bindView(R.id.creator_label)
     private val gemAmountView: TextView? by bindView(R.id.gem_amount)
@@ -74,12 +76,18 @@ class ChallengeDetailFragment: BaseMainFragment() {
         return container?.inflate(R.layout.fragment_challenge_detail)
     }
 
+    @Suppress("ReturnCount")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         gemAmountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfGem_36())
         memberCountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfParticipantsIcon())
         challengeDescription?.movementMethod = LinkMovementMethod.getInstance()
+
+        challengeLeaderWrapper?.setOnClickListener {
+            val leaderID = challenge?.leaderId ?: return@setOnClickListener
+            FullProfileActivity.open(it.context, leaderID)
+        }
 
         challengeID.notNull {id ->
             compositeSubscription.add(challengeRepository.getChallenge(id)

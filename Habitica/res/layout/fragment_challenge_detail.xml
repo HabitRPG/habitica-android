@@ -123,6 +123,7 @@
                 style="@style/HabiticaButton.Green"/>
         </FrameLayout>
         <LinearLayout
+            android:id="@+id/challenge_creator_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/spacing_large"
