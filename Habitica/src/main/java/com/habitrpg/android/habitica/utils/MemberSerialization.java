@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.members.MemberPreferences;
 import com.habitrpg.android.habitica.models.social.UserParty;
+import com.habitrpg.android.habitica.models.user.Authentication;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
 import com.habitrpg.android.habitica.models.user.Inbox;
 import com.habitrpg.android.habitica.models.user.Outfit;
@@ -79,6 +80,12 @@ public class MemberSerialization implements JsonDeserializer<Member> {
         }
         if (obj.has("contributor")) {
             member.setContributor(context.deserialize(obj.get("contributor"), ContributorInfo.class));
+        }
+        if (obj.has("auth")) {
+            member.setAuthentication(context.deserialize(obj.get("auth"), Authentication.class));
+        }
+        if (obj.has("loginIncentives")) {
+            member.setLoginIncentives(obj.get("loginIncentives").getAsInt());
         }
 
         member.setId(member.getId());

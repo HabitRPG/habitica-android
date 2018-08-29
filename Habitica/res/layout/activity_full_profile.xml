@@ -63,6 +63,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="@dimen/header_bar_spacing"
                                 app:barForegroundColor="@color/hpColor"
+                                app:lightBackground="true"
                                 app:description="@string/HP_default" />
 
                             <com.habitrpg.android.habitica.ui.views.ValueBar
@@ -72,6 +73,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="@dimen/header_bar_spacing"
                                 app:barForegroundColor="@color/xpColor"
+                                app:lightBackground="true"
                                 app:description="@string/XP_default"  />
 
                             <com.habitrpg.android.habitica.ui.views.ValueBar
@@ -80,6 +82,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 app:barForegroundColor="@color/mpColor"
+                                app:lightBackground="true"
                                 app:description="@string/MP_default" />
 
                         </LinearLayout>
@@ -124,7 +127,57 @@
                     android:layout_margin="5dp"
                     android:minHeight="200dp"
                     fresco:actualImageScaleType="fitCenter" />
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_marginBottom="@dimen/spacing_medium">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/joined"
+                        style="@style/Subheader1"/>
+                    <TextView
+                        android:id="@+id/joined_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="today"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/spacing_medium">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/last_login"
+                        style="@style/Subheader1"/>
+                    <TextView
+                        android:id="@+id/last_login_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="today"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_checkins"
+                        style="@style/Subheader1"/>
+                    <TextView
+                        android:id="@+id/total_checkins_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="100"/>
+                </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

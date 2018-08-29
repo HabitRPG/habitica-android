@@ -3,11 +3,7 @@ package com.habitrpg.android.habitica.models.members
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.android.habitica.models.user.ContributorInfo
-import com.habitrpg.android.habitica.models.user.Inbox
-import com.habitrpg.android.habitica.models.user.Outfit
-import com.habitrpg.android.habitica.models.user.Profile
-import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.android.habitica.models.user.*
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -41,6 +37,9 @@ open class Member : RealmObject(), Avatar {
             if (equipped != null && equipped?.isManaged != true) {
                 equipped?.userId = id + "equipped"
             }
+            if (this.authentication != null && this.authentication?.isManaged != true) {
+                this.authentication?.userId = id
+            }
         }
     private var stats: Stats? = null
     var inbox: Inbox? = null
@@ -72,7 +71,13 @@ open class Member : RealmObject(), Avatar {
                 contributor.userId = this.id
             }
         }
-
+    var authentication: Authentication? = null
+        set(authentication) {
+            field = authentication
+            if (authentication != null && this.id != null) {
+                authentication.userId = this.id
+            }
+        }
     private var costume: Outfit? = null
     private var equipped: Outfit? = null
 
@@ -80,6 +85,7 @@ open class Member : RealmObject(), Avatar {
     private var currentPet: String? = null
 
     var participatesInQuest: Boolean? = null
+    var loginIncentives: Int = 0
 
     val displayName: String
         get() = if (this.profile == null) {

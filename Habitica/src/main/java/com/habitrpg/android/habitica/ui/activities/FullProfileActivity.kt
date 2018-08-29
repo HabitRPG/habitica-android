@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.CardView
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateFormat
 import android.view.*
 import android.widget.*
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -42,6 +43,7 @@ import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import net.pherth.android.emoji_library.EmojiEditText
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -71,6 +73,9 @@ class FullProfileActivity : BaseActivity() {
     private val achievementCard: CardView by bindView(R.id.profile_achievements_card)
     private val achievementProgress: ProgressBar by bindView(R.id.avatar_achievements_progress)
     private val achievementGroupList: RecyclerView by bindView(R.id.recyclerView)
+    private val joinedView: TextView by bindView(R.id.joined_view)
+    private val lastLoginView: TextView by bindView(R.id.last_login_view)
+    private val totalCheckinsView: TextView by bindView(R.id.total_checkins_view)
 
     private var userId = ""
     private var userName: String? = null
@@ -81,6 +86,7 @@ class FullProfileActivity : BaseActivity() {
     private var attributePerSum = 0f
     private var attributeDetailsHidden = true
     private val attributeRows = ArrayList<TableRow>()
+    private val dateFormatter = SimpleDateFormat.getDateInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -178,13 +184,18 @@ class FullProfileActivity : BaseActivity() {
         if (blurbText != null && !blurbText.isEmpty()) {
             blurbTextView.text = MarkdownParser.parseMarkdown(blurbText)
         }
+
+        user.authentication?.timestamps?.createdAt.notNull { joinedView.text = dateFormatter.format(it) }
+        user.authentication?.timestamps?.lastLoggedIn.notNull { lastLoginView.text = dateFormatter.format(it) }
+        totalCheckinsView.text = user.loginIncentives.toString()
+
         userIdText.text = userId
         copyUserIdButton.visibility = View.VISIBLE
         copyUserIdButton.setOnClickListener { view ->
             val clipboard = view.context
-                    .getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                    .getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
             val clip = android.content.ClipData.newPlainText(userId, userId)
-            clipboard.primaryClip = clip
+            clipboard?.primaryClip = clip
         }
 
 

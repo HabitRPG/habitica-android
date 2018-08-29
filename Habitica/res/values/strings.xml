@@ -810,4 +810,6 @@
     <string name="reset_streak">Reset Streak</string>
     <string name="week_reminder_title">How are your tasks going?</string>
     <string name="week_reminder_text">Breaks are healthy, but you can still earn points for simple activities to level up and get cool gear!</string>
+    <string name="last_login">Latest Check In</string>
+    <string name="total_checkins">Total Checkins</string>
 </resources>
