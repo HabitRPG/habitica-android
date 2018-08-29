@@ -127,7 +127,7 @@ class QuestDetailFragment : BaseMainFragment() {
     }
 
     private fun showLeaderButtons(): Boolean {
-        return userId == party?.quest?.leader
+        return userId == party?.quest?.leader || userId == party?.leaderID
     }
 
     private fun showParticipatantButtons(): Boolean {
