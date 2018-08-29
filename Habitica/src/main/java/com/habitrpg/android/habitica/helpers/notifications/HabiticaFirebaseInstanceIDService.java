@@ -20,7 +20,9 @@ public class HabiticaFirebaseInstanceIDService extends FirebaseInstanceIdService
     public void onTokenRefresh() {
         Objects.requireNonNull(HabiticaApplication.Companion.getComponent()).inject(this);
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        pushNotificationManager.setRefreshedToken(refreshedToken);
+        if (refreshedToken != null) {
+            pushNotificationManager.setRefreshedToken(refreshedToken);
+        }
     }
 
 }

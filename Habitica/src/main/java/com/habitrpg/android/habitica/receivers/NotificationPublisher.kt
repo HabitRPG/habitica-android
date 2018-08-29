@@ -12,6 +12,8 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -42,6 +44,10 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
             wasInjected = true
             HabiticaBaseApplication.component?.inject(this)
         }
+
+        val additionalData = HashMap<String, Any>()
+        additionalData["identifier"] = "daily_reminder"
+        AmplitudeManager.sendEvent("receive notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
@@ -98,6 +104,7 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
         }
         builder.setSmallIcon(R.drawable.ic_gryphon_white)
         val notificationIntent = Intent(thisContext, MainActivity::class.java)
+        notificationIntent.putExtra("notificationIdentifier", "daily_reminder")
 
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 

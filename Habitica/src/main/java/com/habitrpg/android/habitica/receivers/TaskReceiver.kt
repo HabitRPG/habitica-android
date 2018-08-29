@@ -12,8 +12,10 @@ import android.support.v4.app.NotificationCompat
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import java.util.HashMap
 import javax.inject.Inject
 
 
@@ -32,12 +34,18 @@ class TaskReceiver : BroadcastReceiver() {
             if (taskId != null) {
                 taskAlarmManager.addAlarmForTaskId(taskId)
             }
+
+            val additionalData = HashMap<String, Any>()
+            additionalData["identifier"] = "task_reminder"
+            AmplitudeManager.sendEvent("receive notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+
             createNotification(context, taskTitle)
         }
     }
 
     private fun createNotification(context: Context, taskTitle: String) {
         val intent = Intent(context, MainActivity::class.java)
+        intent.putExtra("notificationIdentifier", "task_reminder")
         val pendingIntent = PendingIntent.getActivity(context, System.currentTimeMillis().toInt(), intent, 0)
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
