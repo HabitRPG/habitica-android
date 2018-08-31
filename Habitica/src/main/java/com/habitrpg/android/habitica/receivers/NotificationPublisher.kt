@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.WakefulBroadcastReceiver
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -92,9 +93,9 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
     private fun buildNotification(wasInactive: Boolean, registrationDate: Date? = null): Notification? {
         val thisContext = context ?: return null
         val notification: Notification
-        val builder = Notification.Builder(thisContext)
+        val builder = NotificationCompat.Builder(thisContext)
         builder.setContentTitle(thisContext.getString(R.string.reminder_title))
-        builder.setContentText(getRandomDailyTip())
+        var notificationText = getRandomDailyTip()
         if (registrationDate != null) {
             val registrationCal = Calendar.getInstance()
             registrationCal.time = registrationDate
@@ -107,16 +108,18 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
                     )
             if (isSameDay) {
                 builder.setContentTitle(thisContext.getString(R.string.same_day_reminder_title))
-                builder.setContentText(thisContext.getString(R.string.same_day_reminder_text))
+                notificationText = thisContext.getString(R.string.same_day_reminder_text)
             } else if (isPreviousDay) {
                 builder.setContentTitle(thisContext.getString(R.string.next_day_reminder_title))
-                builder.setContentText(thisContext.getString(R.string.next_day_reminder_text))
+                notificationText = thisContext.getString(R.string.next_day_reminder_text)
             }
         }
         if (wasInactive) {
             builder.setContentText(thisContext.getString(R.string.week_reminder_title))
-            builder.setContentText(thisContext.getString(R.string.week_reminder_text))
+            notificationText = thisContext.getString(R.string.week_reminder_text)
         }
+
+        builder.setStyle(NotificationCompat.BigTextStyle().bigText(notificationText))
 
         builder.setSmallIcon(R.drawable.ic_gryphon_white)
         val notificationIntent = Intent(thisContext, MainActivity::class.java)
@@ -129,7 +132,7 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
         builder.setContentIntent(intent)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setColor(ContextCompat.getColor(thisContext, R.color.brand_300))
+            builder.color = ContextCompat.getColor(thisContext, R.color.brand_300)
         }
 
         notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

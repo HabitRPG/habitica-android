@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
@@ -19,6 +20,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import org.solovyev.android.checkout.BillingRequests
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.ProductTypes
+import java.util.HashMap
 import javax.inject.Inject
 
 class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragment {
@@ -27,7 +29,6 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     private val gems21View: GemPurchaseOptionsView? by bindView(R.id.gems_21_view)
     private val gems42View: GemPurchaseOptionsView? by bindView(R.id.gems_42_view)
     private val gems84View: GemPurchaseOptionsView? by bindView(R.id.gems_84_view)
-
     private val supportTextView: TextView? by bindView(R.id.supportTextView)
 
     @Inject
@@ -40,6 +41,11 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
                               savedInstanceState: Bundle?): View? {
 
         super.onCreateView(inflater, container, savedInstanceState)
+
+        val additionalData = HashMap<String, Any>()
+        additionalData["page"] = "Gem Purchase Page"
+        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
+
         return container?.inflate(R.layout.fragment_gem_purchase)
     }
 
@@ -58,7 +64,7 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         val heartDrawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLarge())
         supportTextView?.setCompoundDrawables(null, heartDrawable, null, null)
 
-        gems84View?.seedsImageButton?.setOnClickListener { (this.activity as GemPurchaseActivity).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store") }
+        gems84View?.seedsImageButton?.setOnClickListener { (this.activity as? GemPurchaseActivity)?.showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store") }
     }
 
     override fun setupCheckout() {

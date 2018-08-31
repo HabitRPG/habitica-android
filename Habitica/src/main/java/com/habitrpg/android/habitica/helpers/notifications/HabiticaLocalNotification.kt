@@ -38,7 +38,7 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
             notificationBuilder = notificationBuilder.setContentTitle(title)
         }
         if (message != null) {
-            notificationBuilder = notificationBuilder.setContentText(message)
+            notificationBuilder = notificationBuilder.setStyle(NotificationCompat.BigTextStyle().bigText(message))
         }
 
         this.setNotificationActions()

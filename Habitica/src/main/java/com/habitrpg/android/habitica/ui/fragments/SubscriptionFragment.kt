@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -27,6 +28,7 @@ import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_subscription.*
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.*
+import java.util.HashMap
 import javax.inject.Inject
 
 class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragment {
@@ -80,6 +82,10 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         super.onCreateView(inflater, container, savedInstanceState)
 
         fetchUser(null)
+
+        val additionalData = HashMap<String, Any>()
+        additionalData["page"] = "Subscription Page"
+        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
 
         return inflater.inflate(R.layout.fragment_subscription, container, false)
     }
