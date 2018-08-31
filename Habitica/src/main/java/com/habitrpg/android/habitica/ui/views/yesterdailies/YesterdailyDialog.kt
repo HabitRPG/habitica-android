@@ -38,7 +38,9 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                 context.getString(R.string.start_day)
         ) { _, _ -> }
 
-        this.setOnDismissListener { runCron() }
+        this.setOnDismissListener {
+            lastCronRun = Date()
+            runCron() }
 
         //Can't use by bindView() because the view doesn't seem to be available through that yet
         val listView = view?.findViewById(R.id.yesterdailies_list) as? LinearLayout
@@ -57,6 +59,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                 completedTasks.add(task)
             }
         }
+        lastCronRun = Date()
         userRepository.runCron(completedTasks)
         isDisplaying = false
     }
@@ -129,6 +132,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
     companion object {
 
         internal var isDisplaying = false
+        internal var lastCronRun: Date? = null
 
         fun showDialogIfNeeded(activity: Activity, userId: String?, userRepository: UserRepository?, taskRepository: TaskRepository) {
             if (userRepository != null && userId != null) {
@@ -150,9 +154,15 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                             if (isDisplaying) {
                                 return@Consumer
                             }
+
+                            if (Math.abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
+                                return@Consumer
+                            }
+
                             if (tasks.isNotEmpty()) {
                                 showDialog(activity, userRepository, taskRepository, tasks)
                             } else {
+                                lastCronRun = Date()
                                 userRepository.runCron()
                             }
                         }, RxErrorHandler.handleEmptyError())
