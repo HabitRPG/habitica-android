@@ -243,9 +243,11 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                 observable
                         .doOnNext {
                             val event = ShowSnackbarEvent()
-                            event.title = context.getString(R.string.successful_purchase, shopItem.text)
                             if (snackbarText[0].isNotEmpty()) {
+                                event.title = context.getString(R.string.successful_purchase, shopItem.text)
                                 event.text = snackbarText[0]
+                            } else {
+                                event.text = context.getString(R.string.successful_purchase, shopItem.text)
                             }
                             event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
                             event.rightIcon = priceLabel.compoundDrawables[0]
