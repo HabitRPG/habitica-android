@@ -477,10 +477,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (supportActionBar == null) {
             return
         }
-        if (fragment?.customTitle() != null) {
-            toolbarTitleTextView.text = fragment.customTitle()
-        } else if (user?.profile != null) {
+        if (fragment?.customTitle()?.isNotEmpty() != true) {
             toolbarTitleTextView.text = user?.profile?.name
+        } else if (user?.profile != null) {
+            toolbarTitleTextView.text = fragment.customTitle()
         }
     }
 
