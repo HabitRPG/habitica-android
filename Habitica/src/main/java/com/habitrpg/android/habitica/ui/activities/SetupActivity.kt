@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.commands.EquipCommand
@@ -34,6 +35,7 @@ import com.viewpagerindicator.IconPageIndicator
 import com.viewpagerindicator.IconPagerAdapter
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
+import org.solovyev.android.checkout.Inventory
 import java.util.*
 import javax.inject.Inject
 
@@ -45,6 +47,8 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     lateinit var hostConfig: HostConfig
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var taskRepository: TaskRepository
 
@@ -125,7 +129,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     @Subscribe
     fun onEvent(event: EquipCommand) {
-        this.apiClient.equipItem(event.type, event.key)
+        this.inventoryRepository.equip(user, event.type, event.key)
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 

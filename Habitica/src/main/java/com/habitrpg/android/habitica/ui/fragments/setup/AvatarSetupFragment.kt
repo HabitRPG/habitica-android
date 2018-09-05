@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand
 import com.habitrpg.android.habitica.extensions.inflate
@@ -28,7 +27,6 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView
 import org.greenrobot.eventbus.EventBus
@@ -39,8 +37,6 @@ class AvatarSetupFragment : BaseFragment() {
 
     @Inject
     lateinit var customizationRepository: SetupCustomizationRepository
-    @Inject
-    lateinit var apiClient: ApiClient
     
     var activity: SetupActivity? = null
     var width: Int = 0
