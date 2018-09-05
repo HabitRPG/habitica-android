@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.notifications.createOrUpdateHabiticaChannel
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import java.util.HashMap
 import javax.inject.Inject
@@ -60,8 +61,7 @@ class TaskReceiver : BroadcastReceiver() {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             /* Create or update. */
-            val channel = NotificationChannel("default", "Habitica Notifications", NotificationManager.IMPORTANCE_DEFAULT)
-            notificationManager?.createNotificationChannel(channel)
+            notificationManager?.createOrUpdateHabiticaChannel()
         }
         notificationManager?.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }

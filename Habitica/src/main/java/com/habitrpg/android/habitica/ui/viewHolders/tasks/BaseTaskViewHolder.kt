@@ -2,25 +2,23 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.TaskTappedEvent
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindColor
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import net.pherth.android.emoji_library.EmojiTextView
 import org.greenrobot.eventbus.EventBus
 
 abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -38,9 +36,9 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
     private val iconViewTag: ImageView? by bindView(itemView, R.id.iconviewTag)
     private val taskIconWrapper: LinearLayout? by bindView(itemView, R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView? by bindView(itemView, R.id.approvalRequiredTextField)
-    private val expandNotesButton: Button by bindView(R.id.expand_notes_button)
-    private val syncingView: ProgressBar by bindView(R.id.syncing_view)
-    private val errorIconView: ImageButton by bindView(R.id.error_icon)
+    private val expandNotesButton: Button? by bindOptionalView(R.id.expand_notes_button)
+    private val syncingView: ProgressBar? by bindOptionalView(R.id.syncing_view)
+    private val errorIconView: ImageButton? by bindOptionalView(R.id.error_icon)
     protected val taskGray: Int by bindColor(itemView.context, R.color.task_gray)
 
     private var openTaskDisabled: Boolean = false
@@ -74,20 +72,20 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
         itemView.setOnClickListener { onClick(it) }
         itemView.isClickable = true
 
-        errorIconView.setOnClickListener { errorButtonClicked?.run()}
+        errorIconView?.setOnClickListener { errorButtonClicked?.run()}
 
         //Re enable when we find a way to only react when a link is tapped.
         //notesTextView.movementMethod = LinkMovementMethod.getInstance()
         //titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
-        expandNotesButton.setOnClickListener { expandTask() }
+        expandNotesButton?.setOnClickListener { expandTask() }
         notesTextView.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
                 Single.just(ellipses)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer{ hasEllipses ->
-                            expandNotesButton.visibility = if (hasEllipses || notesExpanded) View.VISIBLE else View.GONE
+                            expandNotesButton?.visibility = if (hasEllipses || notesExpanded) View.VISIBLE else View.GONE
                         }, RxErrorHandler.handleEmptyError())
 
             }
@@ -99,10 +97,10 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
         notesExpanded = !notesExpanded
         if (notesExpanded) {
             notesTextView.maxLines = 100
-            expandNotesButton.text = context.getString(R.string.collapse_notes)
+            expandNotesButton?.text = context.getString(R.string.collapse_notes)
         } else {
             notesTextView.maxLines = 3
-            expandNotesButton.text = context.getString(R.string.expand_notes)
+            expandNotesButton?.text = context.getString(R.string.expand_notes)
         }
     }
 
@@ -115,7 +113,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
             //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
         } else {
             notesTextView.visibility = View.GONE
-            expandNotesButton.visibility = View.GONE
+            expandNotesButton?.visibility = View.GONE
         }
 
         if (canContainMarkdown()) {
@@ -166,8 +164,8 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
             approvalRequiredTextView?.visibility = View.GONE
         }
 
-        syncingView.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE
-        errorIconView.visibility = if (task?.hasErrored == true) View.VISIBLE else View.GONE
+        syncingView?.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE
+        errorIconView?.visibility = if (task?.hasErrored == true) View.VISIBLE else View.GONE
     }
 
 

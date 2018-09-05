@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.notifications.createOrUpdateHabiticaChannel
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -75,19 +76,22 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
                     }
                 }
                 if (showNotifications) {
-                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
-
-                    val id = intent.getIntExtra(NOTIFICATION_ID, 0)
-                    notificationManager?.notify(id, buildNotification(wasInactive, pair.second.authentication?.timestamps?.createdAt))
+                    notify(intent, buildNotification(wasInactive, pair.second.authentication?.timestamps?.createdAt))
                 }
             }, RxErrorHandler.handleEmptyError())
 
         } else {
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
-
-            val id = intent.getIntExtra(NOTIFICATION_ID, 0)
-            notificationManager?.notify(id, buildNotification(wasInactive))
+            notify(intent, buildNotification(wasInactive))
         }
+    }
+
+    private fun notify(intent: Intent, notification: Notification?) {
+        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager?.createOrUpdateHabiticaChannel()
+        }
+        val id = intent.getIntExtra(NOTIFICATION_ID, 0)
+        notificationManager?.notify(id, notification)
     }
 
     private fun buildNotification(wasInactive: Boolean, registrationDate: Date? = null): Notification? {

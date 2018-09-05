@@ -41,7 +41,7 @@ object MarkdownParser {
     }
 
     fun parseMarkdownAsync(input: String?, onSuccess: Consumer<CharSequence>) {
-        Single.just(input)
+        Single.just(input ?: "")
                 .map { this.parseMarkdown(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

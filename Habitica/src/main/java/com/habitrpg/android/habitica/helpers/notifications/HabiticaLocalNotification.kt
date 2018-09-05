@@ -1,11 +1,14 @@
 package com.habitrpg.android.habitica.helpers.notifications
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
+import android.os.Build
 import android.support.annotation.CallSuper
+import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 
 import com.habitrpg.android.habitica.R
@@ -43,6 +46,10 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
 
         this.setNotificationActions()
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager?.createOrUpdateHabiticaChannel()
+        }
         notificationManager?.notify(getNotificationID(), notificationBuilder.build())
     }
 
@@ -67,4 +74,19 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
     }
 
     protected open fun getNotificationID(): Int = 10
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+public fun NotificationManager.createOrUpdateHabiticaChannel() {
+    var hasChannel = false
+    for (channel in notificationChannels) {
+        if (channel.id == "default") {
+            hasChannel = true
+            break
+        }
+    }
+    if (!hasChannel) {
+        val channel = NotificationChannel("default", "Habitica Notifications", NotificationManager.IMPORTANCE_DEFAULT)
+        createNotificationChannel(channel)
+    }
 }
