@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
+import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
@@ -147,7 +148,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
 
         closeButton.setOnClickListener { dismiss() }
         buyButton.setOnClickListener { onBuyButtonClicked() }
-        pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe(Consumer { isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
+        pinButton.setOnClickListener { _-> inventoryRepository.togglePinnedItem(shopItem).subscribe(Consumer { isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
     }
 
     private fun setUser(user: User) {
@@ -157,8 +158,8 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
         currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
 
         if ("gems" == shopItem.purchaseType) {
-            val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
             val maxGems = user.purchased?.plan?.totalNumberOfGems() ?: 0
+            val gemsLeft = user.purchased?.plan?.numberOfGemsLeft()
             if (maxGems > 0) {
                 limitedTextView.text = context.getString(R.string.gems_left_max, gemsLeft, maxGems)
             } else {
@@ -195,7 +196,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
             if (window != null) {
                 val height = scrollView.getChildAt(0).height
                 val displayMetrics = DisplayMetrics()
-                window.windowManager.defaultDisplay.getMetrics(displayMetrics)
+                window?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
                 val screenHeight = displayMetrics.heightPixels
                 val spaceRequired = (displayMetrics.density * 160).toInt()
 
