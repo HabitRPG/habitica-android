@@ -47,7 +47,7 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
                 }
             }
 
-            for (String type : Arrays.asList("shirt", "skin")) {
+            for (String type : Arrays.asList("shirt", "skin", "chair")) {
                 for (Map.Entry<String, JsonElement> entry : object.get(type).getAsJsonObject().entrySet()) {
                     customizations.add(this.parseCustomization(null, type, null, entry.getKey(), entry.getValue().getAsJsonObject()));
                 }

@@ -68,6 +68,11 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarSkinView"
                     app:equipmentTitle="@string/avatar_skin"/>
+                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/avatarChairView"
+                    app:equipmentTitle="@string/avatar_wheelchair"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <TextView

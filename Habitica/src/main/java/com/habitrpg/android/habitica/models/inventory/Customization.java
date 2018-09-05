@@ -165,6 +165,8 @@ public class Customization extends RealmObject {
                 }
             case "background":
                 return "background_" + this.identifier;
+            case "chair":
+                return "chair_" + identifier;
         }
         return "";
     }

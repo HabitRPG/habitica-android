@@ -367,6 +367,8 @@ class AvatarView : View {
     private fun getFileName(imageName: String): String {
         val name = if (FILENAME_MAP.containsKey(imageName)) {
             FILENAME_MAP[imageName]
+        } else if (imageName.startsWith("handleless")) {
+            "chair_$imageName"
         } else {
             imageName
         }

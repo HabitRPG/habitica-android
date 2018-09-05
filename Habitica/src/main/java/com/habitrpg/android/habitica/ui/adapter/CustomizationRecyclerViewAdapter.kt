@@ -49,7 +49,7 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
     fun updateOwnership(ownedCustomizations: List<String>) {
         for ((position, obj) in customizationList.withIndex()) {
             if (obj.javaClass == Customization::class.java) {
-                val customization = obj as Customization
+                val customization = obj as? Customization ?: return
                 if (customization.purchased != ownedCustomizations.contains(customization.id)) {
                     customization.purchased = ownedCustomizations.contains(customization.id)
                     notifyItemChanged(position)

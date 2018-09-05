@@ -28,7 +28,7 @@ class NPCBannerView(context: Context?, attrs: AttributeSet?) : FrameLayout(conte
             field = if (value.isEmpty() || value.startsWith("_")) {
                 value
             } else {
-                "_"+value
+                "_$value"
             }
             if (identifier.isNotEmpty()) {
                 setImage()
