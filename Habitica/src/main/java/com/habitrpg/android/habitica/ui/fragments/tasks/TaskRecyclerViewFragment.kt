@@ -124,7 +124,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
                     if (fromPosition == null) {
                         fromPosition = viewHolder.adapterPosition
                     }
-                    if (movingTaskID == null) {
+                    if (movingTaskID == null && (viewHolder as? BaseTaskViewHolder)?.task?.isValid == true) {
                         movingTaskID = (viewHolder as? BaseTaskViewHolder)?.task?.id
                     }
                 }

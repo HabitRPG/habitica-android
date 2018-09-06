@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
@@ -62,7 +63,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     private val subscription6MonthView: SubscriptionOptionView? by bindView(R.id.subscription6month)
     private val subscription12MonthView: SubscriptionOptionView? by bindView(R.id.subscription12month)
 
-    private val subscriptionButton: Button? by bindView(R.id.subscribeButton)
+    private val subscriptionButton: Button? by bindOptionalView(R.id.subscribeButton)
     private val subscriptionDetailsView: SubscriptionDetailsView? by bindView(R.id.subscriptionDetails)
     private val subscribeBenefitsTitle: TextView? by bindView(R.id.subscribeBenefitsTitle)
     private val supportTextView: TextView? by bindView(R.id.supportTextView)

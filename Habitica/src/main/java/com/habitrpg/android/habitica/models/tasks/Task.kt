@@ -63,10 +63,6 @@ open class Task : RealmObject, Parcelable {
     var parsedText: CharSequence? = null
     @Ignore
     var parsedNotes: CharSequence? = null
-    set(value) {
-        field = value
-        repeat?.taskId = id
-    }
 
     var isDue: Boolean? = null
 

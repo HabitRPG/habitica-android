@@ -28,7 +28,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
     var errorButtonClicked: Action? = null
     protected var context: Context
     private val titleTextView: EllipsisTextView by bindView(itemView, R.id.checkedTextView)
-    private val notesTextView: EllipsisTextView by bindView(itemView, R.id.notesTextView)
+    private val notesTextView: EllipsisTextView? by bindView(itemView, R.id.notesTextView)
     internal val rightBorderView: View? by bindOptionalView(itemView, R.id.rightBorderView)
     protected val specialTaskTextView: TextView? by bindOptionalView(itemView, R.id.specialTaskText)
     private val iconViewChallenge: ImageView? by bindView(itemView, R.id.iconviewChallenge)
@@ -79,7 +79,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
         //titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
         expandNotesButton?.setOnClickListener { expandTask() }
-        notesTextView.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
+        notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
                 Single.just(ellipses)
                         .subscribeOn(Schedulers.io())
@@ -96,10 +96,10 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
     private fun expandTask() {
         notesExpanded = !notesExpanded
         if (notesExpanded) {
-            notesTextView.maxLines = 100
+            notesTextView?.maxLines = 100
             expandNotesButton?.text = context.getString(R.string.collapse_notes)
         } else {
-            notesTextView.maxLines = 3
+            notesTextView?.maxLines = 3
             expandNotesButton?.text = context.getString(R.string.expand_notes)
         }
     }
@@ -109,43 +109,50 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.Vie
         itemView.setBackgroundResource(R.color.white)
 
         if (newTask.notes?.isNotEmpty() == true) {
-            notesTextView.visibility = View.VISIBLE
+            notesTextView?.visibility = View.VISIBLE
             //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
         } else {
-            notesTextView.visibility = View.GONE
+            notesTextView?.visibility = View.GONE
             expandNotesButton?.visibility = View.GONE
         }
 
         if (canContainMarkdown()) {
             if (newTask.parsedText != null) {
                 titleTextView.text = newTask.parsedText
-                notesTextView.text = newTask.parsedNotes
             } else {
                 titleTextView.text = newTask.text
-                notesTextView.text = newTask.notes
-                Single.just(newTask.text)
-                        .map { MarkdownParser.parseMarkdown(it) }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer{ parsedText ->
-                            newTask.parsedText = parsedText
-                            titleTextView.text = newTask.parsedText
-                        }, RxErrorHandler.handleEmptyError())
+                if (newTask.text.isNotEmpty()) {
+                    Single.just(newTask.text)
+                            .map { MarkdownParser.parseMarkdown(it) }
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(Consumer{ parsedText ->
+                                newTask.parsedText = parsedText
+                                titleTextView.text = parsedText
+                            }, RxErrorHandler.handleEmptyError())
+                }
+            if (newTask.parsedNotes != null) {
+                notesTextView?.text = newTask.parsedNotes
+            } else {
+                notesTextView?.text = newTask.notes
                 newTask.notes.notNull {notes ->
+                    if (notes.isEmpty()) {
+                        return@notNull
+                    }
                     Single.just(notes)
                             .map { MarkdownParser.parseMarkdown(it) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(Consumer { parsedNotes ->
                                 newTask.parsedNotes = parsedNotes
-                                notesTextView.text = newTask.parsedNotes
+                                notesTextView?.text = parsedNotes
                             }, RxErrorHandler.handleEmptyError())
                 }
-
+            }
             }
         } else {
             titleTextView.text = newTask.text
-            notesTextView.text = newTask.notes
+            notesTextView?.text = newTask.notes
         }
 
         rightBorderView?.setBackgroundResource(newTask.lightTaskColor)
