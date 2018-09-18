@@ -21,6 +21,10 @@ open class Task : RealmObject, Parcelable {
     @PrimaryKey
     @SerializedName("_id")
     var id: String? = null
+    set(value) {
+        field = value
+        repeat?.taskId = value
+    }
     var userId: String = ""
     var priority: Float = 0.0f
     var text: String = ""

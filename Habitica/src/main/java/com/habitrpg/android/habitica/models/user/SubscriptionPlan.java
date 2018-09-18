@@ -29,6 +29,7 @@ public class SubscriptionPlan extends RealmObject {
     public Integer gemsBought;
     public Integer extraMonths;
     public Integer quantity;
+    @Nullable
     public SubscriptionPlanConsecutive consecutive;
 
     public int mysteryItemCount;
@@ -39,7 +40,7 @@ public class SubscriptionPlan extends RealmObject {
     }
 
     public int totalNumberOfGems() {
-        if (customerId == null) {
+        if (customerId == null || consecutive == null) {
             return 0;
         }
         return 25 + consecutive.getGemCapExtra();

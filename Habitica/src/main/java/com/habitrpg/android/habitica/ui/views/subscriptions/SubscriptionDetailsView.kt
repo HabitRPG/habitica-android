@@ -75,13 +75,13 @@ class SubscriptionDetailsView : LinearLayout {
 
         paymentProcessorTextView.text = plan.paymentMethod
 
-        if (plan.consecutive.count == 1) {
+        if (plan.consecutive?.count == 1) {
             monthsSubscribedTextView.text = resources.getString(R.string.one_month)
         } else {
-            monthsSubscribedTextView.text = resources.getString(R.string.months, plan.consecutive.count)
+            monthsSubscribedTextView.text = resources.getString(R.string.months, plan.consecutive?.count ?: 0)
         }
-        gemCapTextView.text = (plan.consecutive.gemCapExtra + 25).toString()
-        currentHourglassesTextView.text = plan.consecutive.trinkets.toString()
+        gemCapTextView.text = (plan.consecutive?.gemCapExtra ?: 0 + 25).toString()
+        currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
 
         if (plan.paymentMethod != null) {
             if (plan.paymentMethod == "Google") {
