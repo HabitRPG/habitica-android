@@ -205,8 +205,13 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun sendPasswordResetEmail(email: String): Flowable<Void> =
             apiClient.sendPasswordResetEmail(email)
 
-    override fun updateLoginName(newLoginName: String, password: String): Flowable<Void> =
+    override fun updateLoginName(newLoginName: String, password: String?): Flowable<Void> {
+        return if (password != null) {
             apiClient.updateLoginName(newLoginName, password)
+        } else {
+            apiClient.updateUsername(newLoginName)
+        }
+    }
 
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
             apiClient.updateEmail(newEmail, password)

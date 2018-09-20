@@ -125,6 +125,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        FacebookSdk.sdkInitialize(this.applicationContext)
         super.onCreate(savedInstanceState)
             supportActionBar?.hide()
         //Set default values to avoid null-responses when requesting unedited settings
@@ -248,9 +249,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
-        callbackManager.onActivityResult(requestCode, resultCode, intent)
-        val scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent)
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        val scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (scanResult != null) {
             try {
                 Log.d("scanresult", scanResult.contents)

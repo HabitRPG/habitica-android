@@ -692,6 +692,7 @@
     <string name="change_password">Change Password</string>
     <string name="change_email">Change Email Address</string>
     <string name="change_login_name">Change Login Name</string>
+    <string name="change_username">Change Username</string>
     <string name="change">Change</string>
     <string name="character_level">Character Level</string>
     <string name="auto_allocate_points">Auto Allocate Points</string>

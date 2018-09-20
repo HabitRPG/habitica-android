@@ -63,7 +63,7 @@ interface UserRepository : BaseRepository {
 
     fun sendPasswordResetEmail(email: String): Flowable<Void>
 
-    fun updateLoginName(newLoginName: String, password: String): Flowable<Void>
+    fun updateLoginName(newLoginName: String, password: String? = null): Flowable<Void>
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
     fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void>
 

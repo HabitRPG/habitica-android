@@ -232,6 +232,7 @@ interface ApiClient {
     fun sendPasswordResetEmail(email: String): Flowable<Void>
 
     fun updateLoginName(newLoginName: String, password: String): Flowable<Void>
+    fun updateUsername(newLoginName: String): Flowable<Void>
 
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
 

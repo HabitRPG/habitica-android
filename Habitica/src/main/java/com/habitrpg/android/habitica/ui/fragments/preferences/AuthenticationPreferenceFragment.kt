@@ -10,8 +10,10 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.preference.Preference
 import android.text.InputType
+import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -19,13 +21,18 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 
 class AuthenticationPreferenceFragment: BasePreferencesFragment() {
+
+    @Inject
+    lateinit var configManager: RemoteConfigManager
 
     override var user: User? = null
         set(value) {
@@ -37,6 +44,10 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
+
+        if (configManager.enableChangeUsername()) {
+            findPreference("login_name").title = context?.getString(R.string.username)
+        }
     }
 
     private fun updateUserFields() {
@@ -109,11 +120,20 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val loginNameEditText = view?.findViewById<EditText>(R.id.editText)
         loginNameEditText?.setText(user?.authentication?.localAuthentication?.username)
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
+        if (configManager.enableChangeUsername()) {
+            passwordEditText?.visibility = View.GONE
+            val passwordTitleTextView = view?.findViewById<TextView>(R.id.passwordTitleTextView)
+            passwordTitleTextView?.visibility = View.GONE
+        }
         context.notNull { context ->
-            val dialog = AlertDialog.Builder(context)
+            var builder = AlertDialog.Builder(context)
+            builder = if (configManager.enableChangeUsername()) {
+                builder.setTitle(R.string.change_username)
+            } else {
+                builder.setTitle(R.string.change_login_name)
+            }
 
-                    .setTitle(R.string.change_login_name)
-                    .setPositiveButton(R.string.change) { thisDialog, _ ->
+            val dialog = builder.setPositiveButton(R.string.change) { thisDialog, _ ->
                         thisDialog.dismiss()
                         userRepository.updateLoginName(loginNameEditText?.text.toString(), passwordEditText?.text.toString())
                                 .subscribe(Consumer {
