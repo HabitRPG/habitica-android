@@ -10,6 +10,12 @@ open class QuestContent : RealmObject(), Item {
 
     @PrimaryKey
     internal var key: String = ""
+    set(value) {
+        field = value
+        drop?.key = value
+        colors?.key = value
+        boss?.key = value
+    }
     internal var text: String = ""
     var notes: String = ""
     internal var value: Int = 0
@@ -73,8 +79,8 @@ open class QuestContent : RealmObject(), Item {
         this.text = text
     }
 
-    fun setValue(value: Int?) {
-        this.value = value!!
+    fun setValue(value: Int) {
+        this.value = value
     }
 
     fun setKey(key: String) {

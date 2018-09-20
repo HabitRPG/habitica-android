@@ -179,11 +179,13 @@ class QuestDetailFragment : BaseMainFragment() {
                         }
                     }
                 }
-
+                questParticipantList?.addView(participantView)
             } else {
                 statusTextView?.visibility = View.GONE
+                if (participant.participatesInQuest == true) {
+                    questParticipantList?.addView(participantView)
+                }
             }
-            questParticipantList?.addView(participantView)
             if (quest?.active == true || participant.participatesInQuest == true) {
                 participantCount += 1
             }
