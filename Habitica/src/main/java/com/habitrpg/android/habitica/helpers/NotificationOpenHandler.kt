@@ -4,7 +4,10 @@ import android.content.Intent
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
+import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment
+import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment_MembersInjector
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment
 import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment
 import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment
@@ -26,6 +29,7 @@ class NotificationOpenHandler {
                         intent.getStringExtra("groupID"))
                 PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY -> openPrivateMessageScreen(activity,
                         intent.getStringExtra("replyTo"))
+                PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY -> openSettingsScreen(activity)
             }
         }
 
@@ -59,6 +63,12 @@ class NotificationOpenHandler {
             val fragment = GuildFragment()
             fragment.setGuildId(groupID)
             activity.displayFragment(fragment)
+        }
+
+        private fun openSettingsScreen(activity: MainActivity) {
+            val passUserId = Intent(activity, PrefsActivity::class.java)
+            passUserId.putExtra("userId", activity.userID)
+            activity.startActivity(passUserId)
         }
     }
 }
