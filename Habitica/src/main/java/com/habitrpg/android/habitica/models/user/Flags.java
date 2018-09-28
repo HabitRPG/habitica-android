@@ -25,6 +25,7 @@ public class Flags extends RealmObject {
     private boolean armoireOpened;
     private boolean armoireEmpty;
     private boolean communityGuidelinesAccepted;
+    private boolean verifiedUsername;
 
     public List<TutorialStep> getTutorial() {
         return tutorial;
@@ -128,5 +129,13 @@ public class Flags extends RealmObject {
 
     public void setCommunityGuidelinesAccepted(boolean communityGuidelinesAccepted) {
         this.communityGuidelinesAccepted = communityGuidelinesAccepted;
+    }
+
+    public boolean isVerifiedUsername() {
+        return verifiedUsername;
+    }
+
+    public void setVerifiedUsername(boolean verifiedUsername) {
+        this.verifiedUsername = verifiedUsername;
     }
 }

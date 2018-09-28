@@ -10,56 +10,71 @@
 
         <PreferenceScreen android:title="@string/profile"
             android:summary="@string/profile_summary"
-            android:key="profile">
+            android:key="profile"
+            android:layout="@layout/preference_child_summary">
                 <EditTextPreference android:key="display_name"
-                    android:title="@string/display_name" />
+                    android:title="@string/display_name"
+                    android:layout="@layout/preference_child_summary" />
                 <EditTextPreference android:key="photo_url"
-                    android:title="@string/photo_url" />
+                    android:title="@string/photo_url"
+                    android:layout="@layout/preference_child_summary" />
                 <EditTextPreference android:key="about"
-                    android:title="@string/about" />
+                    android:title="@string/about"
+                    android:layout="@layout/preference_child_summary" />
         </PreferenceScreen>
 
         <PreferenceScreen
             android:key="authentication"
             android:title="@string/authentication"
             android:summary="@string/authentication_summary"
-            app:key="authentication">
+            app:key="authentication"
+            android:layout="@layout/preference_child_summary">
                 <Preference
                     android:key="login_name"
                     android:title="@string/login_name"
                     android:selectable="true"
                     android:persistent="false"
-                    android:shouldDisableView="false" />
+                    android:shouldDisableView="false"
+                    android:layout="@layout/preference_child_summary" />
+            <Preference android:title="@string/confirm_username"
+                android:key="confirm_username"
+                android:layout="@layout/preference_child_summary" />
 
                 <Preference
                     android:key="email"
                     android:title="@string/email"
                     android:selectable="true"
                     android:persistent="false"
-                    android:shouldDisableView="false"/>
+                    android:shouldDisableView="false"
+                    android:layout="@layout/preference_child_summary"/>
                 <Preference
                         android:key="subscription_status"
                         android:title="@string/subscription_status"
                         android:selectable="true"
                         android:persistent="false"
-                        android:shouldDisableView="false"/>
+                        android:shouldDisableView="false"
+                    android:layout="@layout/preference_child_summary"/>
             <PreferenceCategory android:title="@string/danger_zone">
                 <Preference android:title="@string/reset_account"
-                    android:key="reset_account" />
+                    android:key="reset_account"
+                    android:layout="@layout/preference_child_summary" />
                 <Preference android:title="@string/delete_account"
-                    android:key="delete_account" />
+                    android:key="delete_account"
+                    android:layout="@layout/preference_child_summary" />
             </PreferenceCategory>
         </PreferenceScreen>
 
         <PreferenceScreen android:title="API"
-            android:key="api">
+            android:key="api"
+            android:layout="@layout/preference_child_summary">
                 <Preference
                     android:key="@string/SP_userID"
                     android:title="@string/SP_userID_title"
                     android:selectable="true"
                     android:persistent="false"
                     android:shouldDisableView="false"
-                    android:summary="@string/SP_userID_summary"/>
+                    android:summary="@string/SP_userID_summary"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <Preference
                     android:key="@string/SP_APIToken"
@@ -67,7 +82,8 @@
                     android:selectable="true"
                     android:persistent="false"
                     android:shouldDisableView="false"
-                    android:summary="@string/SP_APIToken_summary"/>
+                    android:summary="@string/SP_APIToken_summary"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <Preference
                     android:key="SP_user_qr_code"
@@ -75,17 +91,21 @@
                     android:selectable="true"
                     android:persistent="false"
                     android:shouldDisableView="false"
-                    android:summary="@string/SP_user_qr_code"/>
+                    android:summary="@string/SP_user_qr_code"
+                    android:layout="@layout/preference_child_summary"/>
         </PreferenceScreen>
 
         <Preference
             android:key="choose_class"
-            tools:title="Change Class"/>
+            tools:title="Change Class"
+            android:layout="@layout/preference_child_summary"/>
         <Preference android:title="@string/fix_character_values"
-            app:key="fixCharacterValues"/>
+            app:key="fixCharacterValues"
+            android:layout="@layout/preference_child_summary"/>
         <Preference android:title="@string/logout"
             android:key="logout"
-            android:summary="@string/logout_description"/>
+            android:summary="@string/logout_description"
+            android:layout="@layout/preference_child_summary"/>
 
     </PreferenceCategory>
 
@@ -95,20 +115,24 @@
             android:key="@string/pref_first_day_of_the_week_key"
             android:entries="@array/weekdays"
             android:entryValues="@array/weekdayValues"
-            android:summary="@string/pref_first_day_of_the_week_summary"/>
+            android:summary="@string/pref_first_day_of_the_week_summary"
+            android:layout="@layout/preference_child_summary"/>
         <ListPreference android:title="@string/Language_title"
             android:key="language"
             android:entries="@array/Language"
             android:entryValues="@array/LanguageValues"
-            android:summary="@string/Language_summary"/>
+            android:summary="@string/Language_summary"
+            android:layout="@layout/preference_child_summary"/>
         <ListPreference android:title="@string/AudioTheme_title"
             android:key="audioTheme"
             android:entries="@array/AudioThemes"
             android:entryValues="@array/AudioValues"
-            android:summary="@string/AudioTheme_summary"/>
+            android:summary="@string/AudioTheme_summary"
+            android:layout="@layout/preference_child_summary"/>
         <CheckBoxPreference android:title="@string/dailyDueDefaultView"
             android:key="dailyDueDefaultView"
             android:summary="@string/dailyDueDefaultViewDescription"
+            android:layout="@layout/preference_child_summary"
             />
     </PreferenceCategory>
 
@@ -118,12 +142,14 @@
         <CheckBoxPreference
             android:key="use_reminder"
             android:defaultValue="false"
-            android:title="@string/pref_reminder_checkbox"/>
+            android:title="@string/pref_reminder_checkbox"
+            android:layout="@layout/preference_child_summary"/>
 
         <com.habitrpg.android.habitica.prefs.TimePreference
             android:key="reminder_time"
             android:defaultValue="19:30"
-            android:title="@string/pref_reminder_picker" />
+            android:title="@string/pref_reminder_picker"
+            android:layout="@layout/preference_child_summary" />
 
     </PreferenceCategory>
 
@@ -133,7 +159,7 @@
         <com.habitrpg.android.habitica.prefs.TimePreference
                 android:key="cds_time"
                 android:defaultValue="00:00"
-                android:title="@string/pref_cds_picker" />
+            android:layout="@layout/preference_child_summary" />
 
     </PreferenceCategory>
 
@@ -143,54 +169,64 @@
         <CheckBoxPreference
             android:key="usePushNotifications"
             android:defaultValue="true"
-            android:title="@string/pref_push_notifications_checkbox"/>
+            android:title="@string/pref_push_notifications_checkbox"
+            android:layout="@layout/preference_child_summary"/>
 
         <PreferenceScreen
             android:key="pushNotifications"
             android:title="@string/push_notifications"
-            android:summary="@string/push_notifications_sum">
+            android:summary="@string/push_notifications_sum"
+            android:layout="@layout/preference_child_summary">
 
             <PreferenceCategory android:title="Push Notifications">
 
                 <CheckBoxPreference
                     android:key="preference_push_you_won_challenge"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_you_won_challenge"/>
+                    android:title="@string/preference_push_you_won_challenge"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <CheckBoxPreference
                     android:key="preference_push_received_a_private_message"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_received_a_private_message"/>
+                    android:title="@string/preference_push_received_a_private_message"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <CheckBoxPreference
                     android:key="preference_push_gifted_gems"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_gifted_gems"/>
+                    android:title="@string/preference_push_gifted_gems"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <CheckBoxPreference
                     android:key="preference_push_gifted_subscription"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_gifted_subscription"/>
+                    android:title="@string/preference_push_gifted_subscription"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <CheckBoxPreference
                     android:key="preference_push_invited_to_party"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_invited_to_party"/>
+                    android:title="@string/preference_push_invited_to_party"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <CheckBoxPreference
                     android:key="preference_push_invited_to_guild"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_invited_to_guild"/>
+                    android:title="@string/preference_push_invited_to_guild"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <CheckBoxPreference
                     android:key="preference_push_your_quest_has_begun"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_your_quest_has_begun"/>
+                    android:title="@string/preference_push_your_quest_has_begun"
+                    android:layout="@layout/preference_child_summary"/>
 
                 <CheckBoxPreference
                     android:key="preference_push_invited_to_quest"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_invited_to_quest"/>
+                    android:title="@string/preference_push_invited_to_quest"
+                    android:layout="@layout/preference_child_summary"/>
 
 
             </PreferenceCategory>
@@ -202,7 +238,8 @@
     <PreferenceCategory
         android:title="@string/maintenance">
         <Preference android:title="@string/reload_content"
-            android:key="reload_content"/>
+            android:key="reload_content"
+            android:layout="@layout/preference_child_summary"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

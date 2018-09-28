@@ -398,34 +398,14 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user?.id, userRepository, taskRepository)
 
-            displayNewInboxMessagesBadge()
+            drawerFragment?.setMessagesCount(this.user?.inbox?.newMessages ?: 0)
+            if (remoteConfigManager.enableChangeUsername()) {
+                drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
+            }
+
         }
     }
 
-    private fun displayNewInboxMessagesBadge() {
-        /*int numberOfUnreadPms = this.user.getInbox().getNewMessages();
-        IDrawerItem newInboxItem;
-
-        if (numberOfUnreadPms <= 0) {
-            newInboxItem = new PrimaryDrawerItem()
-                    .withName(this.getString(R.string.sidebar_inbox))
-                    .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_INBOX());
-        } else {
-            String numberOfUnreadPmsLabel = String.valueOf(numberOfUnreadPms);
-            BadgeStyle badgeStyle = new BadgeStyle()
-                    .withTextColor(Color.WHITE)
-                    .withColorRes(R.color.md_red_700);
-
-            newInboxItem = new PrimaryDrawerItem()
-                    .withName(this.getString(R.string.sidebar_inbox))
-                    .withIdentifier(MainDrawerBuilder.INSTANCE.getSIDEBAR_INBOX())
-                    .withBadge(numberOfUnreadPmsLabel)
-                    .withBadgeStyle(badgeStyle);
-        }
-        if (this.drawerFragment != null) {
-            this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.INSTANCE.getSIDEBAR_INBOX()));
-        }*/
-    }
 
     private fun updateSidebar() {
         drawerFragment?.setUsername(user?.profile?.name)

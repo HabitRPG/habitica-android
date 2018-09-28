@@ -40,21 +40,61 @@
                 tools:text="Habitica"
                 style="@style/Body1"
                 android:textColor="@color/white"/>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp">
+                <ImageButton
+                    android:id="@+id/messagesButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:src="@drawable/menu_messages"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/messagesBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:paddingTop="0dp"
+                    android:layout_alignTop="@id/messagesButton"
+                    android:layout_alignLeft="@id/messagesButton"
+                    tools:text="1"
+                    android:textColor="#FFF"
+                    android:textSize="12sp"
+                    android:background="@drawable/badge_circle"
+                    android:layout_marginTop="-12dp"
+                    android:layout_marginLeft="13dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+            </RelativeLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp">
+                <ImageButton
+                    android:id="@+id/settingsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:src="@drawable/menu_settings"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/settingsBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:paddingTop="0dp"
+                    android:layout_alignTop="@id/settingsButton"
+                    android:layout_alignLeft="@id/settingsButton"
+                    tools:text="1"
+                    android:textColor="#FFF"
+                    android:textSize="12sp"
+                    android:background="@drawable/badge_circle"
+                    android:layout_marginTop="-12dp"
+                    android:layout_marginLeft="13dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+            </RelativeLayout>
 
-            <ImageButton
-                android:id="@+id/messagesButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@drawable/menu_messages"
-                android:layout_marginLeft="16dp"/>
-            <ImageButton
-                android:id="@+id/settingsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@drawable/menu_settings"
-                android:layout_marginLeft="20dp"/>
         </LinearLayout>
     <com.habitrpg.android.habitica.ui.views.social.QuestMenuView
         android:id="@+id/questMenuView"

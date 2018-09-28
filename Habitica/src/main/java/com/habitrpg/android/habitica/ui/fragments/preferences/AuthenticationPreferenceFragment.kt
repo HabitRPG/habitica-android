@@ -47,6 +47,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
         if (configManager.enableChangeUsername()) {
             findPreference("login_name").title = context?.getString(R.string.username)
+            findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
         }
     }
 
@@ -66,6 +67,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
             "login_name" -> showLoginNameDialog()
+            "confirm_username" -> showConfirmUsernameDialog()
             "email" -> showEmailDialog()
             "change_password" -> showChangePasswordDialog()
             "subscription_status" -> {
@@ -194,6 +196,22 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                     .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
                     .create()
             dialog.setOnShowListener { _ -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
+            dialog.show()
+        }
+    }
+
+    private fun showConfirmUsernameDialog() {
+        context.notNull { context ->
+            val dialog = AlertDialog.Builder(context)
+                    .setTitle(R.string.confirm_username_title)
+                    .setMessage(R.string.confirm_username_description)
+                    .setPositiveButton(R.string.confirm) { thisDialog, _ ->
+                        thisDialog.dismiss()
+                        userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
+                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    }
+                    .setNegativeButton(R.string.cancel) { thisDialog, _ -> thisDialog.dismiss() }
+                    .create()
             dialog.show()
         }
     }

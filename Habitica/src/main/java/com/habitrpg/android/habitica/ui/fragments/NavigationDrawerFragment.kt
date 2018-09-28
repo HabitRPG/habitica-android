@@ -112,6 +112,9 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.backgroundTintColor = questContent.colors?.darkColor ?: 0
 
 
+        messagesBadge.visibility = View.GONE
+        settingsBadge.visibility = View.GONE
+
         /* Reenable this once the boss art can be displayed correctly.
 
         val preferences = context?.getSharedPreferences("collapsible_sections", 0)
@@ -364,6 +367,24 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition)
+    }
+
+    fun setMessagesCount(unreadMessages: Int) {
+        if (unreadMessages == 0) {
+            messagesBadge.visibility = View.GONE
+        } else {
+            messagesBadge.visibility = View.VISIBLE
+            messagesBadge.text = unreadMessages.toString()
+        }
+    }
+
+    fun setSettingsCount(count: Int) {
+        if (count == 0) {
+            settingsBadge.visibility = View.GONE
+        } else {
+            settingsBadge.visibility = View.VISIBLE
+            settingsBadge.text = count.toString()
+        }
     }
 
     companion object {

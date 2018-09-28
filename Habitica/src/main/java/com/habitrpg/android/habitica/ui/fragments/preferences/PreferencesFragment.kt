@@ -15,10 +15,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.LanguageHelper
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.helpers.SoundManager
-import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.user.User
@@ -38,6 +35,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     lateinit var soundManager: SoundManager
     @Inject
     lateinit  var pushNotificationManager: PushNotificationManager
+    @Inject
+    lateinit var configManager: RemoteConfigManager
 
     private var timePreference: TimePreference? = null
     private var pushNotificationsPreference: PreferenceScreen? = null
@@ -54,12 +53,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     }
 
     override fun setupPreferences() {
-        timePreference = findPreference("reminder_time") as TimePreference
+        timePreference = findPreference("reminder_time") as? TimePreference
         val useReminder = preferenceManager.sharedPreferences.getBoolean("use_reminder", false)
         timePreference?.isEnabled = useReminder
 
 
-        pushNotificationsPreference = findPreference("pushNotifications") as PreferenceScreen
+        pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
         val userPushNotifications = preferenceManager.sharedPreferences.getBoolean("usePushNotifications", true)
         pushNotificationsPreference?.isEnabled = userPushNotifications
 
@@ -246,5 +245,16 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val cdsTimePreference = findPreference("cds_time") as? TimePreference
         cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
         findPreference("dailyDueDefaultView").setDefaultValue(user?.preferences?.dailyDueDefaultView)
+
+        if (configManager.enableChangeUsername()) {
+            val preference = findPreference("authentication")
+            if (user?.flags?.isVerifiedUsername == true) {
+                preference.layoutResource = R.layout.preference_child_summary
+                preference.summary = context?.getString(R.string.authentication_summary)
+            } else {
+                preference.layoutResource = R.layout.preference_child_summary_error
+                preference.summary = context?.getString(R.string.username_not_confirmed)
+            }
+        }
     }
 }
