@@ -45,11 +45,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
-
-        val userID = preferenceManager.sharedPreferences.getString(context?.getString(R.string.SP_userID), null)
-        if (userID != null) {
-            compositeSubscription.add(userRepository.getUser(userID).subscribe(Consumer { this@PreferencesFragment.setUser(it) }, RxErrorHandler.handleEmptyError()))
-        }
     }
 
     override fun setupPreferences() {

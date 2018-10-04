@@ -10,6 +10,7 @@ import io.realm.annotations.PrimaryKey;
 public class LocalAuthentication extends RealmObject {
 
     @PrimaryKey
+    public String userID;
     String username;
     String email;
 

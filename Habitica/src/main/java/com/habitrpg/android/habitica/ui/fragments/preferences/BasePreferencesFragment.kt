@@ -26,7 +26,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        userRepository.getUser(userId).firstElement().subscribe(Consumer<User> {
+        userRepository.getUser(userId).subscribe(Consumer<User> {
             this.user = it
         }, RxErrorHandler.handleEmptyError())
     }

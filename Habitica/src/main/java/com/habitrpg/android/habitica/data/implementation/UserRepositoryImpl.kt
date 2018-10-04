@@ -205,12 +205,19 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun sendPasswordResetEmail(email: String): Flowable<Void> =
             apiClient.sendPasswordResetEmail(email)
 
-    override fun updateLoginName(newLoginName: String, password: String?): Flowable<Void> {
-        return if (password != null) {
+    override fun updateLoginName(newLoginName: String, password: String?): Maybe<User> {
+        return (if (password != null && password.isNotEmpty()) {
             apiClient.updateLoginName(newLoginName, password)
         } else {
             apiClient.updateUsername(newLoginName)
-        }
+        }).flatMapMaybe { localRepository.getUser(userID).firstElement() }
+                .doOnNext { user ->
+                    localRepository.executeTransaction {
+                        user.authentication?.localAuthentication?.username = newLoginName
+                        user.flags?.isVerifiedUsername = true
+                    }
+                }
+                .firstElement()
     }
 
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =

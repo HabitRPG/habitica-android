@@ -13,6 +13,7 @@ open class Authentication : RealmObject() {
     set(value) {
         field = value
         timestamps?.userId = value
+        localAuthentication?.userID = value
     }
 
     @SerializedName("local")

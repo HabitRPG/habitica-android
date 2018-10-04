@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.realm.RealmResults
 
 interface UserRepository : BaseRepository {
@@ -63,7 +64,7 @@ interface UserRepository : BaseRepository {
 
     fun sendPasswordResetEmail(email: String): Flowable<Void>
 
-    fun updateLoginName(newLoginName: String, password: String? = null): Flowable<Void>
+    fun updateLoginName(newLoginName: String, password: String? = null): Maybe<User>
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
     fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void>
 
