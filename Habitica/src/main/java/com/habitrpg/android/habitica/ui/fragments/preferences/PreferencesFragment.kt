@@ -45,6 +45,11 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
+
+        val userID = preferenceManager.sharedPreferences.getString(context?.getString(R.string.SP_userID), null)
+        if (userID != null) {
+            compositeSubscription.add(userRepository.getUser(userID).subscribe(Consumer { this@PreferencesFragment.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        }
     }
 
     override fun setupPreferences() {
@@ -241,15 +246,13 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
         findPreference("dailyDueDefaultView").setDefaultValue(user?.preferences?.dailyDueDefaultView)
 
-        if (configManager.enableChangeUsername()) {
-            val preference = findPreference("authentication")
-            if (user?.flags?.isVerifiedUsername == true) {
-                preference.layoutResource = R.layout.preference_child_summary
-                preference.summary = context?.getString(R.string.authentication_summary)
-            } else {
-                preference.layoutResource = R.layout.preference_child_summary_error
-                preference.summary = context?.getString(R.string.username_not_confirmed)
-            }
+        val preference = findPreference("authentication")
+        if (user?.flags?.isVerifiedUsername == true) {
+            preference.layoutResource = R.layout.preference_child_summary
+            preference.summary = context?.getString(R.string.authentication_summary)
+        } else {
+            preference.layoutResource = R.layout.preference_child_summary_error
+            preference.summary = context?.getString(R.string.username_not_confirmed)
         }
     }
 }

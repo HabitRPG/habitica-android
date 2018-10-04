@@ -45,15 +45,14 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
 
-        if (configManager.enableChangeUsername()) {
-            findPreference("login_name").title = context?.getString(R.string.username)
-            findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
-        }
+        findPreference("login_name").title = context?.getString(R.string.username)
+        findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
     }
 
     private fun updateUserFields() {
         configurePreference(findPreference("login_name"), user?.authentication?.localAuthentication?.username)
         configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email)
+        findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
     }
 
     private fun configurePreference(preference: Preference?, value: String?) {
@@ -121,23 +120,12 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val view = inflater?.inflate(R.layout.dialog_edittext_confirm_pw, null)
         val loginNameEditText = view?.findViewById<EditText>(R.id.editText)
         loginNameEditText?.setText(user?.authentication?.localAuthentication?.username)
-        val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
-        if (configManager.enableChangeUsername()) {
-            passwordEditText?.visibility = View.GONE
-            val passwordTitleTextView = view?.findViewById<TextView>(R.id.passwordTitleTextView)
-            passwordTitleTextView?.visibility = View.GONE
-        }
         context.notNull { context ->
-            var builder = AlertDialog.Builder(context)
-            builder = if (configManager.enableChangeUsername()) {
-                builder.setTitle(R.string.change_username)
-            } else {
-                builder.setTitle(R.string.change_login_name)
-            }
+            var builder = AlertDialog.Builder(context).setTitle(R.string.change_username)
 
             val dialog = builder.setPositiveButton(R.string.change) { thisDialog, _ ->
                         thisDialog.dismiss()
-                        userRepository.updateLoginName(loginNameEditText?.text.toString(), passwordEditText?.text.toString())
+                        userRepository.updateLoginName(loginNameEditText?.text.toString())
                                 .subscribe(Consumer {
                                     configurePreference(findPreference("login_name"), loginNameEditText?.text.toString())
                                 }, RxErrorHandler.handleEmptyError())

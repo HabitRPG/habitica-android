@@ -399,10 +399,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             YesterdailyDialog.showDialogIfNeeded(this, user?.id, userRepository, taskRepository)
 
             drawerFragment?.setMessagesCount(this.user?.inbox?.newMessages ?: 0)
-            if (remoteConfigManager.enableChangeUsername()) {
-                drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
-            }
-
+            drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
         }
     }
 

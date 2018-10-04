@@ -24,7 +24,6 @@ public class RemoteConfigManager {
     private Boolean enableNewShops = false;
     private String shopSpriteSuffix = "";
     private Integer maxChatLength = 3000;
-    private Boolean enableChangeUsername = false;
     private String REMOTE_STRING_KEY = "remote-string";
 
     public RemoteConfigManager(Context context) {
@@ -46,8 +45,6 @@ public class RemoteConfigManager {
     }
 
     public Integer maxChatLength() { return maxChatLength; }
-
-    public Boolean enableChangeUsername() { return true; }
 
     private void loadFromPreferences () {
         String storedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -72,9 +69,6 @@ public class RemoteConfigManager {
             }
             if (obj.has("maxChatLength")) {
                 maxChatLength = obj.getInt("maxChatLength");
-            }
-            if (obj.has("enableChangeUsername")) {
-                enableChangeUsername = obj.getBoolean("enableChangeUsername");
             }
         } catch (JSONException e) {
             e.printStackTrace();
