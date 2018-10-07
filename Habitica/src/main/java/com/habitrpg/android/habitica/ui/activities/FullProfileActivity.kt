@@ -34,6 +34,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -70,6 +71,8 @@ class FullProfileActivity : BaseActivity() {
     private val fullprofile_scrollview: ScrollView by bindView(R.id.fullprofile_scrollview)
     private val petsFoundCount: TextView by bindView(R.id.profile_pets_found_count)
     private val mountsTamedCount: TextView by bindView(R.id.profile_mounts_tamed_count)
+    private val currentPetDrawee: SimpleDraweeView by bindView(R.id.current_pet_drawee)
+    private val currentMountDrawee: SimpleDraweeView by bindView(R.id.current_mount_drawee)
     private val achievementCard: CardView by bindView(R.id.profile_achievements_card)
     private val achievementProgress: ProgressBar by bindView(R.id.avatar_achievements_progress)
     private val achievementGroupList: RecyclerView by bindView(R.id.recyclerView)
@@ -162,6 +165,7 @@ class FullProfileActivity : BaseActivity() {
     private fun updateView(user: Member) {
         val profile = user.profile ?: return
 
+        updatePetsMountsView(user)
         userName = profile.name
 
         title = profile.name
@@ -210,11 +214,17 @@ class FullProfileActivity : BaseActivity() {
             costumeCard.visibility = View.GONE
         }
 
-        //petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
-        //mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
         socialRepository.getMemberAchievements(this.userId).subscribe(Consumer<AchievementResult> { this.fillAchievements(it) }, RxErrorHandler.handleEmptyError())
+    }
+
+    private fun updatePetsMountsView(user: Member) {
+        petsFoundCount.text = user.petsFoundCount.toString()
+        mountsTamedCount.text = user.mountsTamedCount.toString()
+
+        DataBindingUtils.loadImage(this.currentPetDrawee, "Pet-" + user.currentPet)
+        DataBindingUtils.loadImage(this.currentMountDrawee, "Mount_Icon_" + user.currentMount)
     }
 
     // endregion

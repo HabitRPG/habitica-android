@@ -365,7 +365,9 @@
                     android:layout_height="wrap_content"
                     android:stretchColumns="0,1">
 
-                    <TableRow android:layout_height="wrap_content">
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -377,9 +379,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             tools:text="#" />
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/current_pet_drawee"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            fresco:actualImageScaleType="centerCrop"/>>
                     </TableRow>
 
-                    <TableRow android:layout_height="wrap_content">
+                    <TableRow android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -391,6 +399,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             tools:text="#" />
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/current_mount_drawee"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            fresco:actualImageScaleType="centerCrop"/>
                     </TableRow>
                 </TableLayout>
             </LinearLayout>

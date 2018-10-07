@@ -78,6 +78,13 @@ open class Member : RealmObject(), Avatar {
                 authentication.userId = this.id
             }
         }
+    var items: Items? = null
+        set(items) {
+            field = items
+            if (items != null && this.id != null && !items.isManaged) {
+                items.userId = this.id
+            }
+        }
     private var costume: Outfit? = null
     private var equipped: Outfit? = null
 
@@ -91,6 +98,12 @@ open class Member : RealmObject(), Avatar {
         get() = if (this.profile == null) {
             ""
         } else this.profile?.name ?: ""
+
+    val petsFoundCount: Int
+        get() = this.items?.pets?.size ?: 0
+
+    val mountsTamedCount: Int
+        get() = this.items?.mounts?.size ?: 0
 
     override fun getPreferences(): MemberPreferences? {
         return preferences

@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.user.Authentication;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
 import com.habitrpg.android.habitica.models.user.Inbox;
+import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Profile;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -86,6 +87,9 @@ public class MemberSerialization implements JsonDeserializer<Member> {
         }
         if (obj.has("loginIncentives")) {
             member.setLoginIncentives(obj.get("loginIncentives").getAsInt());
+        }
+        if (obj.has("items")) {
+            member.setItems(context.deserialize(obj.get("items"), Items.class));
         }
 
         member.setId(member.getId());
