@@ -15,6 +15,7 @@ open class Preferences : RealmObject(), AvatarPreferences {
     private var hair: Hair? = null
     var suppressModals: SuppressedModals? = null
     private var costume: Boolean = false
+    @SerializedName("disableClasses")
     var isDisableClasses: Boolean = false
     @SerializedName("sleep")
     var isSleep: Boolean = false
