@@ -815,13 +815,14 @@
     <string name="total_checkins">Total Checkins</string>
     <string name="two_handed">Two-Handed</string>
     <string name="usernamePromptTitle">It’s time to set your username!</string>
-    <string name="usernamePromptBody">Your display name hasn’t changed but your old login name will now be your public username used for invitations, chat @mentions, and messaging.</string>
-    <string name="usernamePromptWiki">If you’d like to learn more about this change, visit our wiki.</string>
+    <string name="usernamePromptBody">Login names are now unique usernames that will be visible beside your display name and used for invitations, chat @mentions, and messaging.</string>
+    <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="">visit our wiki.</a></string>
     <string name="confirmUsername">Confirm Username</string>
-    <string name="usernamePromptDisclaimer">Usernames should conform to our Terms of Service and Community Guidelines. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
     <string name="confirm_username_title">Are you sure you want to confirm your current username?</string>
     <string name="confirm_username_description">Confirming your username will make it public for invitations, @mentions and messaging. You can change your username from settings at any time.</string>
     <string name="cancel">Cancel</string>
     <string name="confirm_username">Confirm Username</string>
     <string name="username_not_confirmed">Username not confirmed</string>
+    <string name="username_confirmed">Username Confirmed</string>
 </resources>

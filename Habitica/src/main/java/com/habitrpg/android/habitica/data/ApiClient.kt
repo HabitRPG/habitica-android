@@ -243,4 +243,5 @@ interface ApiClient {
     fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
 
     fun retrieveMarketGear(): Flowable<Shop>
+    fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 }

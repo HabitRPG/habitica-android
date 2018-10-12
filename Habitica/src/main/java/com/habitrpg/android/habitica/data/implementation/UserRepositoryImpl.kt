@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
+import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
@@ -32,9 +33,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun getUser(userID: String): Flowable<User> = localRepository.getUser(userID)
 
     override fun updateUser(user: User?, updateData: Map<String, Any>): Flowable<User> {
-        return if (user == null) {
-            Flowable.just(User())
-        } else apiClient.updateUser(updateData).map { newUser -> mergeUser(user, newUser) }
+        return apiClient.updateUser(updateData).map { newUser -> mergeUser(user, newUser) }
     }
 
     override fun updateUser(user: User?, key: String, value: Any): Flowable<User> {
@@ -219,6 +218,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
                 .firstElement()
     }
+
+    override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> = apiClient.verifyUsername(username)
 
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
             apiClient.updateEmail(newEmail, password)

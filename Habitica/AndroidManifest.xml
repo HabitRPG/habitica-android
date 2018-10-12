@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="1996"
+    android:versionCode="1997"
     android:versionName="1.5.1"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
@@ -169,6 +169,9 @@
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activities.GemPurchaseActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".ui.activities.VerifyUsernameActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <receiver  android:process=":remote" android:name=".receivers.NotificationPublisher" />
 
         <receiver

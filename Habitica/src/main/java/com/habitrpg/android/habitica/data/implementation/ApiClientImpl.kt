@@ -659,6 +659,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.updateLoginName(updateObject).compose(configureApiCallObserver())
     }
 
+    override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> {
+        val updateObject = HashMap<String, String>()
+        updateObject["username"] = username
+        return this.apiService.verifyUsername(updateObject).compose(configureApiCallObserver())
+    }
+
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
         updateObject["newEmail"] = newEmail

@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
+import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.social.Challenge;
@@ -32,6 +33,8 @@ import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -351,6 +354,9 @@ public interface ApiService {
 
     @PUT("user/auth/update-username")
     Flowable<HabitResponse<Void>> updateLoginName(@Body Map<String, String> data);
+
+    @POST("user/auth/verify-username")
+    Flowable<HabitResponse<VerifyUsernameResponse>> verifyUsername(@Body Map<String, String> data);
 
     @PUT("user/auth/update-email")
     Flowable<HabitResponse<Void>> updateEmail(@Body Map<String, String> data);

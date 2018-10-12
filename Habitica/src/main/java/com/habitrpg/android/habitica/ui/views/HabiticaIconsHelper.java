@@ -671,4 +671,27 @@ public class HabiticaIconsHelper {
 
         return imageOfTwoHandedIcon;
     }
+
+    public static Bitmap imageOfCheckmark(int checkmarkColor, float percentage) {
+        Bitmap imageOfCheckmark = Bitmap.createBitmap(scaleSize(16), scaleSize(12), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfCheckmark);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawCheckmark(canvas, checkmarkColor, percentage);
+
+        return imageOfCheckmark;
+    }
+
+    private static Bitmap imageOfAlertIcon = null;
+    public static Bitmap imageOfAlertIcon() {
+        if (imageOfAlertIcon != null)
+            return imageOfAlertIcon;
+
+        int size = scaleSize(16);
+        imageOfAlertIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfAlertIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawAlertIcon(canvas);
+
+        return imageOfAlertIcon;
+    }
 }

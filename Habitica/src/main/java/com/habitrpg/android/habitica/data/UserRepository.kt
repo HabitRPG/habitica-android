@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
+import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
@@ -67,6 +68,7 @@ interface UserRepository : BaseRepository {
     fun updateLoginName(newLoginName: String, password: String? = null): Maybe<User>
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
     fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void>
+    fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 
     fun allocatePoint(user: User?, @Stats.StatsTypes stat: String): Flowable<Stats>
 

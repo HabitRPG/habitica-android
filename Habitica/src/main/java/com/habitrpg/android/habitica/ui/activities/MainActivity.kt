@@ -400,6 +400,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             drawerFragment?.setMessagesCount(this.user?.inbox?.newMessages ?: 0)
             drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
+
+            if (remoteConfigManager.enableUsernameRelease()) {
+                if (user?.flags?.isVerifiedUsername != true) {
+                    val intent = Intent(this, VerifyUsernameActivity::class.java)
+                    startActivity(intent)
+                }
+            }
         }
     }
 
