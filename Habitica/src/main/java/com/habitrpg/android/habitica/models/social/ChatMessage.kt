@@ -56,6 +56,10 @@ open class ChatMessage : RealmObject() {
     val likeCount: Int
         get() = likes?.size ?: 0
 
+    var username: String? = null
+    val formattedUsername: String?
+        get() = if (username != null) "@$username" else null
+
     fun getAgoString(res: Resources): String {
         val diff = Date().time - (timestamp ?: 0)
 

@@ -4,6 +4,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
@@ -16,6 +17,7 @@ import com.habitrpg.android.habitica.ui.helpers.ViewHelper
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ValueBar
+import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -43,43 +45,56 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
     inner class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         
         private val avatarView: AvatarView by bindView(R.id.avatarView)
-        private val userName: TextView by bindView(R.id.username)
-        private val lvl: TextView by bindView(R.id.user_lvl)
-        private val classLabel: TextView by bindView(R.id.class_label)
-        private val classBackground: View by bindView(R.id.class_background_layout)
+        private val displayNameTextView: UsernameLabel by bindView(R.id.display_name_textview)
+        private val sublineTextView: TextView by bindView(R.id.subline_textview)
+        private val buffIconView: ImageView by bindView(R.id.buff_icon_view)
+        private val classIconView: ImageView by bindView(R.id.class_icon_view)
         private val hpBar: ValueBar by bindView(R.id.hpBar)
         
         init {
             hpBar.setLightBackground(true)
             hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
+
+            buffIconView.setImageBitmap(HabiticaIconsHelper.imageOfBuffIcon())
         }
 
         fun bind(user: Member) {
             avatarView.setAvatar(user)
 
             user.stats.notNull { AvatarWithBarsViewModel.setHpBarData(hpBar, it) }
+            displayNameTextView.username = user.profile?.name
+            displayNameTextView.tier = user.contributor?.level ?: 0
 
-            lvl.text = itemView.context.getString(R.string.user_level, user.stats?.lvl)
+            if (user.username != null) {
+                sublineTextView.text = itemView.context.getString(R.string.username_level, user.username, user.stats?.lvl)
+            } else {
+                sublineTextView.text = itemView.context.getString(R.string.user_level, user.stats?.lvl)
+            }
 
-            classLabel.text = user.stats?.getTranslatedClassName(itemView.context)
+            if (user.stats?.isBuffed == true) {
+                buffIconView.visibility = View.VISIBLE
+            } else {
+                buffIconView.visibility = View.GONE
+            }
 
-            val colorResourceID: Int = when (user.stats?.habitClass) {
+            classIconView.visibility = View.VISIBLE
+            when (user.stats?.habitClass) {
                 Stats.HEALER -> {
-                    R.color.class_healer
+                    classIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
                 }
                 Stats.WARRIOR -> {
-                    R.color.class_warrior
+                    classIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
                 }
                 Stats.ROGUE -> {
-                    R.color.class_rogue
+                    classIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
                 }
                 Stats.MAGE -> {
-                    R.color.class_wizard
+                    classIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
                 }
-                else -> R.color.task_gray
+                else -> {
+                    classIconView.visibility = View.INVISIBLE
+                }
             }
-            ViewHelper.SetBackgroundTint(classBackground, ContextCompat.getColor(itemView.context, colorResourceID))
-            userName.text = user.profile?.name
 
             itemView.isClickable = true
             itemView.setOnClickListener { userClickedEvents.onNext(user.id ?: "") }

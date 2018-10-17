@@ -62,12 +62,12 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
         internal fun bindHolder(task: Task) {
             this.task = task
-            titleTextView.text = task.markdownText { titleTextView?.text = it }
+            titleTextView.text = task.markdownText { titleTextView.text = it }
             if (task.notes?.isEmpty() == true) {
                 notesTextView.visibility = View.GONE
             } else {
                 notesTextView.visibility = View.VISIBLE
-                notesTextView.text = task.markdownNotes { notesTextView?.text = it }
+                notesTextView.text = task.markdownNotes { notesTextView.text = it }
             }
             rightBorderView.setBackgroundResource(task.lightTaskColor)
         }

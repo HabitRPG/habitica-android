@@ -28,18 +28,35 @@
                     android:layout_height="70dp"
                     android:layout_gravity="center"/>
             </com.habitrpg.android.habitica.ui.views.RoundedCornerLayout>
-            
-            <TextView
-                android:id="@+id/toolbarTitle"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:singleLine="true"
-                tools:text="Habitica"
-                style="@style/Body1"
-                android:textColor="@color/white"/>
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/toolbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    tools:text="Habitica"
+                    style="@style/Body1"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/usernameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    tools:text="\@username"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:textColor="@color/white_80_alpha"/>
+            </LinearLayout>
+
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"

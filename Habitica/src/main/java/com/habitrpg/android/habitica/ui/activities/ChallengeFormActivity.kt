@@ -375,7 +375,7 @@ class ChallengeFormActivity : BaseActivity() {
         }, RxErrorHandler.handleEmptyError())
 
         createChallengeTaskList.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
-            override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 // Stop only scrolling.
                 return rv?.scrollState == RecyclerView.SCROLL_STATE_DRAGGING
             }

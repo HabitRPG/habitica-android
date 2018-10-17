@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.math.RoundingMode
 import java.text.NumberFormat
 
-class ValueBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     private val iconView: ImageView by bindView(R.id.ic_header)
     private val secondaryIconView: ImageView by bindView(R.id.secondaryIconView)

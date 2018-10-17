@@ -694,4 +694,18 @@ public class HabiticaIconsHelper {
 
         return imageOfAlertIcon;
     }
+
+    private static Bitmap imageOfBuffIcon = null;
+    public static Bitmap imageOfBuffIcon() {
+        if (imageOfBuffIcon != null)
+            return imageOfBuffIcon;
+
+        int size = scaleSize(15);
+        imageOfBuffIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(imageOfBuffIcon);
+        canvas.scale(displayDensity, displayDensity);
+        HabiticaIcons.drawBuffIcon(canvas);
+
+        return imageOfBuffIcon;
+    }
 }

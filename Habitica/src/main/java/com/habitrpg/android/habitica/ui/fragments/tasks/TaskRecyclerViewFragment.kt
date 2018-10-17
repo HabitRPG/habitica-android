@@ -98,8 +98,8 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
     }
 
     private fun allowReordering() {
-        val itemTouchHelper = ItemTouchHelper(mItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        val itemTouchHelper = mItemTouchCallback?.let { ItemTouchHelper(it) }
+        itemTouchHelper?.attachToRecyclerView(recyclerView)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -149,7 +149,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
 
             override fun isLongPressDragEnabled(): Boolean = true
 
-            override fun clearView(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder) {
+            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
                 super.clearView(recyclerView, viewHolder)
                 refreshLayout?.isEnabled = true
 
@@ -209,7 +209,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, Swip
         refreshLayout.setOnRefreshListener(this)
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     refreshLayout?.isEnabled = (activity as MainActivity).isAppBarExpanded

@@ -140,12 +140,13 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         return R.layout.activity_task_form
     }
 
+    @Suppress("ReturnCount")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         popup = EmojiPopup(emojiToggle0.rootView, this, ContextCompat.getColor(this, R.color.brand))
 
-        val bundle = intent.extras
+        val bundle = intent.extras ?: return
 
         taskType = bundle.getString(TASK_TYPE_KEY)
         task = bundle.getParcelable(PARCELABLE_TASK) as? Task
@@ -183,7 +184,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                         finish()
                         dismissKeyboard()
 
-                        taskId.notNull { taskRepository.deleteTask(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
+                        taskId.notNull { taskID -> taskRepository.deleteTask(taskID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
                     }.setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }.show()
         }
 
@@ -317,7 +318,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             if (isEmojiEditText(currentFocus)) {
                 val event = KeyEvent(
                         0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL)
-                currentFocus.dispatchKeyEvent(event)
+                currentFocus?.dispatchKeyEvent(event)
             }
         }
 
@@ -329,16 +330,15 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
         enableRepeatables()
 
-        tagRepository.getTags(userId)
+        compositeSubscription.add(tagRepository.getTags(userId)
                 .firstElement()
                 .subscribe(Consumer { loadedTags ->
                     tags = loadedTags
                     createTagsCheckBoxes()
-                }, RxErrorHandler.handleEmptyError()
-                )
+                }, RxErrorHandler.handleEmptyError()))
 
         if (taskId != null) {
-            taskRepository.getTask(taskId ?: "")
+            compositeSubscription.add(taskRepository.getTask(taskId ?: "")
                     .firstElement()
                     .subscribe(Consumer { task ->
                         this.task = task
@@ -353,7 +353,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                         }
 
                         setTitle(task)
-                    }, RxErrorHandler.handleEmptyError())
+                    }, RxErrorHandler.handleEmptyError()))
 
             btnDelete.isEnabled = true
         } else if (task != null) {
@@ -505,7 +505,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                 Integer.toString(Calendar.getInstance().firstDayOfWeek))
-        firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek))
+        firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek ?: "0"))
         val weekdaysTemp = weekdays.asList()
         Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0)
         weekdays = weekdaysTemp.toTypedArray()
@@ -705,7 +705,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun selectNewReminderTime() {
-        remindersManager.createReminderTimeDialog({ it.notNull { this.addNewReminder(it) } }, taskType, this, null)
+        remindersManager.createReminderTimeDialog({ item -> item.notNull { this.addNewReminder(it) } }, taskType, this, null)
     }
 
     private fun createTagsCheckBoxes() {
@@ -767,7 +767,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
             val dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().firstDayOfWeek))
-            firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek))
+            firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek ?: ""))
             val weekdaysTemp = weekdays.asList()
             Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0)
             weekdays = weekdaysTemp.toTypedArray()
@@ -1191,7 +1191,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
             val dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().firstDayOfWeek))
-            val firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek))
+            val firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek ?: "0"))
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
                 @Suppress("DEPRECATION")
                 datePickerDialog.datePicker.calendarView.firstDayOfWeek = firstDayOfTheWeekHelper.firstDayOfTheWeek

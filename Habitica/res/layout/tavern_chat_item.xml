@@ -55,7 +55,8 @@
                     android:textSize="12sp"
                     android:textColor="@color/white"
                     style="@style/Pill.Purple"
-                    tools:text="Moderator"/>
+                    tools:text="Moderator"
+                    android:layout_marginLeft="@dimen/spacing_small"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
@@ -83,7 +84,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/ago_label"
+                android:id="@+id/subline_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"

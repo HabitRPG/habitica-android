@@ -94,8 +94,8 @@ class TavernDetailFragment : BaseFragment() {
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .filter { it.hasActiveQuest }
                 .doOnNext { descriptionView.setText(R.string.tavern_description_world_boss) }
-                .filter { it.quest?.rageStrikes?.any { it.key == "tavern" } ?: false }
-                .filter { it.quest?.rageStrikes?.filter { it.key == "tavern" }?.get(0)?.wasHit == true }
+                .filter { group -> group.quest?.rageStrikes?.any { it.key == "tavern" } ?: false }
+                .filter { group -> group.quest?.rageStrikes?.filter { it.key == "tavern" }?.get(0)?.wasHit == true }
                 .subscribe(Consumer {
                     val key = it.quest?.key
                     if (key != null) {
@@ -103,7 +103,7 @@ class TavernDetailFragment : BaseFragment() {
                     }
                 }, RxErrorHandler.handleEmptyError()))
 
-        socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
         user.notNull { questProgressView.configure(it) }
     }
@@ -116,8 +116,8 @@ class TavernDetailFragment : BaseFragment() {
     }
 
     private fun bindButtons() {
-        innButton.setOnClickListener {
-            user?.notNull { userRepository.sleep(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
+        innButton.setOnClickListener { _ ->
+            user?.notNull { user -> userRepository.sleep(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
         }
         guidelinesButton.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)

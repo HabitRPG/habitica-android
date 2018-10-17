@@ -187,7 +187,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 }, RxErrorHandler.handleEmptyError()))
 
         subscriptions?.add(userRepository.getUser().subscribe(Consumer {
-            setUsername(it.profile?.name)
+            setDisplayName(it.profile?.name)
             avatarView.setAvatar(it)
             questMenuView.configure(it)
         }, RxErrorHandler.handleEmptyError()))
@@ -354,13 +354,22 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.updateItem(item)
     }
 
-    fun setUsername(name: String?) {
+    fun setDisplayName(name: String?) {
         if (toolbarTitle != null) {
             if (name != null && name.isNotEmpty()) {
                 toolbarTitle.text = name
             } else {
                 toolbarTitle.text = "Habitica"
             }
+        }
+    }
+
+    fun setUsername(name: String?) {
+        if (usernameTextView != null) {
+            usernameTextView.text = name
+            usernameTextView.visibility = View.VISIBLE
+        } else {
+            usernameTextView.visibility = View.GONE
         }
     }
 

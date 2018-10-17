@@ -67,7 +67,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
             (holder as DrawerItemViewHolder?)?.tintColor = tintColor
             holder.backgroundTintColor = backgroundTintColor
             holder.bind(drawerItem, drawerItem.identifier == selectedItem)
-            holder.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem.identifier) }
+            holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem.identifier) }
         } else {
             (holder as SectionHeaderViewHolder?)?.backgroundTintColor = backgroundTintColor
             holder.bind(drawerItem)
@@ -88,7 +88,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         }
     }
 
-    class DrawerItemViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    class DrawerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var tintColor: Int = 0
         var backgroundTintColor: Int = 0
@@ -145,12 +145,12 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         }
     }
 
-    class SectionHeaderViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    class SectionHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var backgroundTintColor: Int = 0
 
         fun bind(drawerItem: HabiticaDrawerItem) {
-            (itemView as TextView).text = drawerItem.text
+            (itemView as? TextView)?.text = drawerItem.text
             itemView.setBackgroundColor(backgroundTintColor)
         }
     }

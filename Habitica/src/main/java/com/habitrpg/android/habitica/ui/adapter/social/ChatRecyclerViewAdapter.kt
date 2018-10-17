@@ -31,7 +31,7 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import net.pherth.android.emoji_library.EmojiTextView
 
-class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
+class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean, private val releasedUsernames: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
     private var uuid: String = ""
     private var expandedMessageId: String? = null
 
@@ -107,7 +107,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         private val avatarView: AvatarView by bindView(R.id.avatar_view)
         private val userLabel: UsernameLabel by bindView(R.id.user_label)
         private val messageText: EmojiTextView by bindView(R.id.message_text)
-        private val agoLabel: TextView by bindView(R.id.ago_label)
+        private val sublineTextView: TextView by bindView(R.id.subline_textview)
         private val likeBackground: LinearLayout by bindView(R.id.like_background_layout)
         private val tvLikes: TextView by bindView(R.id.tvLikes)
         private val buttonsWrapper: ViewGroup by bindView(R.id.buttons_wrapper)
@@ -129,7 +129,13 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             messageText.setOnClickListener { _ -> expandMessage() }
             messageText.movementMethod = LinkMovementMethod.getInstance()
             userLabel.setOnClickListener { _ -> chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
-            replyButton.setOnClickListener { _ -> chatMessage?.user.notNull { replyMessageEvents.onNext(it) } }
+            replyButton.setOnClickListener { _ ->
+                if (releasedUsernames) {
+                    chatMessage?.username.notNull { replyMessageEvents.onNext(it) }
+                } else {
+                    chatMessage?.user.notNull { replyMessageEvents.onNext(it) }
+                }
+            }
             replyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
                     null, null, null)
             copyButton.setOnClickListener { _ -> chatMessage.notNull { copyMessageEvents.onNext(it) } }
@@ -202,14 +208,19 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                         }, { it.printStackTrace() })
             }
 
-            if (name != null && msg.text?.contains(name) == true) {
+            val username = user?.username
+            if ((name != null && msg.text?.contains(name) == true) || (username != null && msg.text?.contains(username) == true)) {
                 messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_700)
             } else {
                 messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
             }
             messageWrapper.setScaledPadding(context, 8, 8, 8, 8)
 
-            agoLabel.text = msg.getAgoString(res)
+            if (msg.username != null && releasedUsernames) {
+                sublineTextView.text = "${msg.formattedUsername} ∙ ${msg.getAgoString(res)}"
+            } else {
+                sublineTextView.text = msg.getAgoString(res)
+            }
 
             if (expandedMessageId == msg.id) {
                 buttonsWrapper.visibility = View.VISIBLE

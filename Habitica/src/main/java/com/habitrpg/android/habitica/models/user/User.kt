@@ -150,6 +150,10 @@ open class User : RealmObject(), Avatar {
 
     val contributorColor: Int
         get() = this.contributor?.contributorColor ?: android.R.color.black
+    val username: String?
+    get() = authentication?.localAuthentication?.username
+    val formattedUsername: String?
+        get() = if (username != null) "@$username" else null
 
     override fun getPreferences(): Preferences? {
         return preferences

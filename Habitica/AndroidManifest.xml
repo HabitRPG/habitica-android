@@ -7,10 +7,6 @@
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
-    <uses-sdk
-        android:minSdkVersion="15"
-        android:targetSdkVersion="28" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />

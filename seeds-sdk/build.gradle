@@ -1,12 +1,8 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 buildscript {
     repositories {
         jcenter()
-    }
-    dependencies {
-        classpath 'com.novoda:bintray-release:0.8.0'
     }
 }
 
@@ -70,16 +66,6 @@ dependencies {
     androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
     androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:3.3.2"
+    testImplementation "org.robolectric:robolectric:3.8"
     testImplementation "org.robolectric:shadows-multidex:3.8"
 }
-
-publish {
-    userOrg = 'seedsinc'
-    groupId = 'com.playseeds'
-    artifactId = 'android-sdk'
-    version = '0.4.2'
-    description = 'Android SDK for Seeds mobile analytics'
-    website = 'https://github.com/therealseeds/seeds-sdk-android'
-}
-

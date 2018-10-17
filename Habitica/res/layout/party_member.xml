@@ -1,94 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                    xmlns:tools="http://schemas.android.com/tools"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    style="@style/CardView.Default"
-                                    android:clickable="true"
-                                    android:foreground="?android:attr/selectableItemBackground">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:padding="@dimen/spacing_large"
+    android:foreground="?android:attr/selectableItemBackground">
+    <com.habitrpg.android.habitica.ui.AvatarView
+        android:id="@+id/avatarView"
+        android:layout_width="103dp"
+        android:layout_height="90dp"
+        android:layout_marginRight="12dp"
+        app:showBackground="false"
+        app:showMount="false"
+        app:showPet="false" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        style="@style/CardContent"
-        android:orientation="horizontal">
-
-        <com.habitrpg.android.habitica.ui.AvatarView
-            android:id="@+id/avatarView"
-            android:layout_width="103dp"
-            android:layout_height="90dp"
-            android:layout_marginRight="12dp"
-            app:showBackground="false"
-            app:showMount="false"
-            app:showPet="false" />
-
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:orientation="vertical">
-
+            android:layout_marginBottom="@dimen/spacing_medium">
+            <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+                android:id="@+id/display_name_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
+            <ImageView
+                android:id="@+id/buff_icon_view"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:contentDescription="@string/buffs"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:id="@+id/class_icon_view"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_gravity="center_vertical"/>
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/leader_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/username"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/user_lvl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    tools:text="lvl" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right">
-
-                    <LinearLayout
-                        android:id="@+id/class_background_layout"
-                        android:layout_width="wrap_content"
-
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/layout_rounded_bg">
-
-                        <TextView
-                            android:id="@+id/class_label"
-                            style="@style/ChatMessageUserTextViewStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:ellipsize="middle"
-                            android:lines="1"
-                            android:singleLine="true"
-                            tools:text="class"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <com.habitrpg.android.habitica.ui.views.ValueBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/hpBar"
-                app:barForegroundColor="@color/hpColor"
-                app:description="@string/HP_default"
-                app:lightBackground="true"/>
+                android:text="@string/leader"
+                style="@style/Pill"
+                android:textSize="12sp"/>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/subline_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            tools:text="lvl"
+            android:layout_marginBottom="@dimen/spacing_large"/>
+
+        <com.habitrpg.android.habitica.ui.views.ValueBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hpBar"
+            app:barForegroundColor="@color/hpColor"
+            app:description="@string/HP_default"
+            app:lightBackground="true"/>
     </LinearLayout>
-</android.support.v7.widget.CardView>
+
+</LinearLayout>

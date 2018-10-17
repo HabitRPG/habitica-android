@@ -59,7 +59,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         val layoutManager = LinearLayoutManager(this.getActivity())
         recyclerView.layoutManager = layoutManager
 
-        chatAdapter = ChatRecyclerViewAdapter(null, true, user, false)
+        chatAdapter = ChatRecyclerViewAdapter(null, true, user, false, configManager.enableUsernameRelease())
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter.notNull { adapter ->
@@ -70,7 +70,6 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
             compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
         }
-
 
         chatBarView.sendAction = { sendMessage(it) }
         chatBarView.maxChatLength = configManager.maxChatLength()
@@ -90,9 +89,9 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
 
     private fun loadMessages() {
         if (user?.isManaged == true) {
-            userRepository.getInboxMessages(replyToUserUUID)
+            compositeSubscription.add(userRepository.getInboxMessages(replyToUserUUID)
                     .firstElement()
-                    .subscribe(Consumer { this.chatAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { this.chatAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -113,12 +112,12 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
 
     private fun refreshUserInbox() {
         this.swipeRefreshLayout?.isRefreshing = true
-        this.userRepository.retrieveUser(true)
+        compositeSubscription.add(this.userRepository.retrieveUser(true)
                 .subscribe(Consumer<User> {
                     user = it
                 }, RxErrorHandler.handleEmptyError(), Action {
                     swipeRefreshLayout?.isRefreshing = false
-                })
+                }))
     }
 
     override fun onRefresh() {
@@ -126,8 +125,8 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
     }
 
     private fun sendMessage(chatText: String) {
-        replyToUserUUID?.notNull {
-            socialRepository.postPrivateMessage(it, chatText)
+        replyToUserUUID?.notNull {userID ->
+            socialRepository.postPrivateMessage(userID, chatText)
                     .subscribe(Consumer { this.refreshUserInbox() }, RxErrorHandler.handleEmptyError())
             KeyboardUtil.dismissKeyboard(getActivity())
         }

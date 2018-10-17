@@ -84,7 +84,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             if (savedInstanceState.containsKey("userId")) {
                 this.userId = savedInstanceState.getString("userId")
                 if (this.userId != null) {
-                    userRepository.getUser().subscribe(Consumer { habitRPGUser -> this.user = habitRPGUser }, RxErrorHandler.handleEmptyError())
+                    compositeSubscription.add(userRepository.getUser().subscribe(Consumer { habitRPGUser -> this.user = habitRPGUser }, RxErrorHandler.handleEmptyError()))
                 }
             }
 
@@ -113,7 +113,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             recyclerView.layoutManager = layoutManager
         }
 
-        chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
+        chatAdapter = ChatRecyclerViewAdapter(null, true, user, true, configManager.enableUsernameRelease())
         chatAdapter.notNull {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
                 context.notNull { FullProfileActivity.open(it, userId) }
@@ -148,7 +148,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 isScrolledToTop = layoutManager?.findFirstVisibleItemPosition() == 0
             }

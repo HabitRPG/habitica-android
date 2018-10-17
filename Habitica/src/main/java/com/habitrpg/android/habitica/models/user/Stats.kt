@@ -66,6 +66,13 @@ open class Stats : RealmObject() {
                 field = value
             }
         }
+    val isBuffed: Boolean
+        get() {
+            return buffs?.str ?: 0f > 0 ||
+                    buffs?.con ?: 0f > 0 ||
+                    buffs?._int ?: 0f > 0 ||
+                    buffs?.per ?: 0f > 0
+        }
 
     @StringDef(Stats.STRENGTH, Stats.INTELLIGENCE, Stats.CONSTITUTION, Stats.PERCEPTION)
     @Retention(RetentionPolicy.SOURCE)

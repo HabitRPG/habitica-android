@@ -104,6 +104,10 @@ open class Member : RealmObject(), Avatar {
 
     val mountsTamedCount: Int
         get() = this.items?.mounts?.size ?: 0
+    val username: String?
+    get() = authentication?.localAuthentication?.username
+    val formattedUsername: String?
+        get() = if (username != null) "@$username" else null
 
     override fun getPreferences(): MemberPreferences? {
         return preferences

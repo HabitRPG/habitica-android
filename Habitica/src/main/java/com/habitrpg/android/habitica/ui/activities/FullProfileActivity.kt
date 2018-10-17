@@ -10,7 +10,6 @@ import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.CardView
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.format.DateFormat
 import android.view.*
 import android.widget.*
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -59,8 +58,8 @@ class FullProfileActivity : BaseActivity() {
     private val profileImage: SimpleDraweeView by bindView(R.id.profile_image)
     private val blurbTextView: TextView by bindView(R.id.profile_blurb)
     private val avatarView: AvatarView by bindView(R.id.avatarView)
-    private val copyUserIdButton: Button by bindView(R.id.copy_userid)
-    private val userIdText: TextView by bindView(R.id.userid)
+    private val copyUsernameButton: Button by bindView(R.id.copy_username)
+    private val usernameText: TextView by bindView(R.id.username)
     private val attributesCardView: CardView by bindView(R.id.profile_attributes_card)
     private val attributesTableLayout: TableLayout by bindView(R.id.attributes_table)
     private val attributesCollapseIcon: AppCompatImageView by bindView(R.id.attributes_collapse_icon)
@@ -100,7 +99,7 @@ class FullProfileActivity : BaseActivity() {
 
         setTitle(R.string.profile_loading_data)
 
-        socialRepository.getMember(this.userId).subscribe(Consumer { this.updateView(it) }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(socialRepository.getMember(this.userId).subscribe(Consumer { this.updateView(it) }, RxErrorHandler.handleEmptyError()))
 
         avatarWithBars?.valueBarLabelsToBlack()
 
@@ -193,30 +192,29 @@ class FullProfileActivity : BaseActivity() {
         user.authentication?.timestamps?.lastLoggedIn.notNull { lastLoginView.text = dateFormatter.format(it) }
         totalCheckinsView.text = user.loginIncentives.toString()
 
-        userIdText.text = userId
-        copyUserIdButton.visibility = View.VISIBLE
-        copyUserIdButton.setOnClickListener { view ->
+        usernameText.text = userId
+        copyUsernameButton.visibility = View.VISIBLE
+        copyUsernameButton.setOnClickListener { view ->
             val clipboard = view.context
                     .getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
             val clip = android.content.ClipData.newPlainText(userId, userId)
             clipboard?.primaryClip = clip
         }
 
-
         avatarView.setAvatar(user)
         avatarWithBars?.updateData(user)
 
-        loadItemDataByOutfit(user.equipped).subscribe(Consumer { gear -> this.gotGear(gear, user) }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(loadItemDataByOutfit(user.equipped).subscribe(Consumer { gear -> this.gotGear(gear, user) }, RxErrorHandler.handleEmptyError()))
 
         if (user.preferences?.costume == true) {
-            loadItemDataByOutfit(user.costume).subscribe(Consumer<RealmResults<Equipment>> { this.gotCostume(it) }, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(loadItemDataByOutfit(user.costume).subscribe(Consumer<RealmResults<Equipment>> { this.gotCostume(it) }, RxErrorHandler.handleEmptyError()))
         } else {
             costumeCard.visibility = View.GONE
         }
 
 
         // Load the members achievements now
-        socialRepository.getMemberAchievements(this.userId).subscribe(Consumer<AchievementResult> { this.fillAchievements(it) }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(socialRepository.getMemberAchievements(this.userId).subscribe(Consumer<AchievementResult> { this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun updatePetsMountsView(user: Member) {
@@ -295,28 +293,28 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun addEquipmentRow(table: TableLayout, gearKey: String?, text: String, stats: String) {
-        val gearRow = layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as TableRow
+        val gearRow = layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as? TableRow
 
-        val draweeView = gearRow.findViewById<SimpleDraweeView>(R.id.gear_drawee)
+        val draweeView = gearRow?.findViewById<SimpleDraweeView>(R.id.gear_drawee)
 
-        draweeView.controller = Fresco.newDraweeControllerBuilder()
+        draweeView?.controller = Fresco.newDraweeControllerBuilder()
                 .setUri(AvatarView.IMAGE_URI_ROOT + "shop_" + gearKey + ".png")
                 .setControllerListener(object : BaseControllerListener<ImageInfo>() {
                     override fun onFailure(id: String?, throwable: Throwable?) {
-                        draweeView.visibility = View.GONE
+                        draweeView?.visibility = View.GONE
                     }
                 })
                 .build()
 
-        val keyTextView = gearRow.findViewById<TextView>(R.id.tableRowTextView1)
-        keyTextView.text = text
+        val keyTextView = gearRow?.findViewById<TextView>(R.id.tableRowTextView1)
+        keyTextView?.text = text
 
-        val valueTextView = gearRow.findViewById<TextView>(R.id.tableRowTextView2)
+        val valueTextView = gearRow?.findViewById<TextView>(R.id.tableRowTextView2)
 
         if (!stats.isEmpty()) {
-            valueTextView.text = stats
+            valueTextView?.text = stats
         } else {
-            valueTextView.visibility = View.GONE
+            valueTextView?.visibility = View.GONE
         }
 
         table.addView(gearRow)

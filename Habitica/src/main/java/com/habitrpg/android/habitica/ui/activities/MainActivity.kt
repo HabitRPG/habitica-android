@@ -412,7 +412,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
 
     private fun updateSidebar() {
-        drawerFragment?.setUsername(user?.profile?.name)
+        drawerFragment?.setDisplayName(user?.profile?.name)
+        if (remoteConfigManager.enableUsernameRelease()) {
+            drawerFragment?.setUsername(user?.formattedUsername)
+        }
 
         if (user?.preferences == null || user?.flags == null) {
             return

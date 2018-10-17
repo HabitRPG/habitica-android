@@ -42,9 +42,9 @@ class MaintenanceActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val data = intent.extras
+        val data = intent.extras ?: return
 
-        this.titleTextView.text = data?.getString("title")
+        this.titleTextView.text = data.getString("title")
 
         @Suppress("DEPRECATION")
         imageView.setImageURI(Uri.parse(data.getString("imageUrl")))

@@ -825,4 +825,6 @@
     <string name="confirm_username">Confirm Username</string>
     <string name="username_not_confirmed">Username not confirmed</string>
     <string name="username_confirmed">Username Confirmed</string>
+    <string name="username_level">%s ・Lvl %d</string>
+    <string name="enter_recipient_username">Enter a Recipient\'s username</string>
 </resources>

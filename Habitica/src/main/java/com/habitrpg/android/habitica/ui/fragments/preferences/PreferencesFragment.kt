@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceScreen
-import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -198,10 +197,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             }
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
-                userRepository.updateUser(user, "preferences.sound", newAudioTheme)
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-                soundManager.soundTheme = newAudioTheme
-                soundManager.preloadAllFiles()
+                if (newAudioTheme != null) {
+                    compositeSubscription.add(userRepository.updateUser(user, "preferences.sound", newAudioTheme)
+                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+                    soundManager.soundTheme = newAudioTheme
+                    soundManager.preloadAllFiles()
+                }
             }
             "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())

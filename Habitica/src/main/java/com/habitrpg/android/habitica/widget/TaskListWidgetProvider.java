@@ -89,7 +89,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_task_list);
             rv.setRemoteAdapter(appWidgetId, R.id.list_view, intent);
-            rv.setEmptyView(R.id.list, R.id.emptyView);
+            rv.setEmptyView(R.id.list_view, R.id.emptyView);
             rv.setTextViewText(R.id.widget_title, context.getString(getTitleResId()));
 
             // if the user click on the title: open App
