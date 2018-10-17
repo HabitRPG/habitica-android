@@ -192,12 +192,12 @@ class FullProfileActivity : BaseActivity() {
         user.authentication?.timestamps?.lastLoggedIn.notNull { lastLoginView.text = dateFormatter.format(it) }
         totalCheckinsView.text = user.loginIncentives.toString()
 
-        usernameText.text = userId
+        usernameText.text = user.username
         copyUsernameButton.visibility = View.VISIBLE
         copyUsernameButton.setOnClickListener { view ->
             val clipboard = view.context
                     .getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
-            val clip = android.content.ClipData.newPlainText(userId, userId)
+            val clip = android.content.ClipData.newPlainText(user.username, user.username)
             clipboard?.primaryClip = clip
         }
 

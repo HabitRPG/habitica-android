@@ -381,6 +381,7 @@
     <string name="send">Send</string>
     <string name="invite">Invite Friends</string>
     <string name="invite_id_description">If you have friends already using Habitica, invite them by User ID here.</string>
+    <string name="invite_username_description">If you have friends already using Habitica, invite them by username here.</string>
     <string name="invite_email_description">If a friend joins Habitica via your email, they\'ll automatically be invited to your party!</string>
     <string name="add_invites">Add Invites</string>
     <string name="user_id">User ID</string>
@@ -760,7 +761,8 @@
     <string name="active_world_boss">Active World Boss</string>
     <string name="no_party_description">Take on quests with friends or on your own. Battle monsters, create Challenges, and help yourself stay accountable through Parties.</string>
     <string name="no_party_title">Play Habitica in a Party</string>
-    <string name="join_party_description">Give them your User ID or have them scan your QR code while inviting</string>
+    <string name="join_party_description">Give a Party member the username found below and they can send you an invite</string>
+    <string name="join_party_description_id">Give them your User ID or have them scan your QR code while inviting</string>
     <string name="join_party_title">Want to join a party?</string>
     <string name="create_party_website">Open website to create party</string>
     <string name="id_copied">ID copied to clipboard</string>
@@ -827,4 +829,5 @@
     <string name="username_confirmed">Username Confirmed</string>
     <string name="username_level">%s ・Lvl %d</string>
     <string name="enter_recipient_username">Enter a Recipient\'s username</string>
+    <string name="username_copied">Username copied to clipboard</string>
 </resources>

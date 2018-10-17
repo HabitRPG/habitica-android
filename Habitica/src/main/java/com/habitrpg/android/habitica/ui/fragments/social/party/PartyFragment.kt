@@ -71,9 +71,9 @@ class PartyFragment : BaseMainFragment() {
 
         // Get the full group data
         if (userHasParty()) {
-            socialRepository.retrieveGroup("party")
+            compositeSubscription.add(socialRepository.retrieveGroup("party")
                     .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
 
         setViewPagerAdapter()

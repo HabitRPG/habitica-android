@@ -102,6 +102,7 @@
                         android:text="@string/join_party_title"
                         android:gravity="center"/>
                     <TextView
+                        android:id="@+id/join_party_description_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/Body1"
@@ -109,62 +110,16 @@
                         android:textColor="@color/gray_300"
                         android:gravity="center"/>
 
-                    <TextView
-                        android:id="@+id/userIdView"
+                    <Button
+                        android:id="@+id/username_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/brand_400"
+                        style="@style/HabiticaButton.Gray.600"
                         android:gravity="center"
                         android:layout_marginTop="@dimen/spacing_large"
                         android:layout_marginBottom="@dimen/spacing_large"/>
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:orientation="vertical"
-                        android:id="@+id/qrLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <FrameLayout
-                            android:orientation="vertical"
-                            android:layout_width="fill_parent"
-                            android:layout_height="300dp"
-                            android:id="@+id/qrCodeWrapper">
 
-                            <com.facebook.drawee.view.SimpleDraweeView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:id="@+id/QRImageView"
-                                android:layout_gravity="center" />
-
-                            <RelativeLayout
-                                android:orientation="vertical"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center"
-                                android:background="@color/white"
-                                android:clipChildren="true"
-                                android:padding="1dp"
-                                android:visibility="gone"
-                                >
-                                <com.habitrpg.android.habitica.ui.AvatarView
-                                    android:id="@+id/avatarView"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"
-                                    />
-                            </RelativeLayout>
-                        </FrameLayout>
-
-                        <Button
-                            android:id="@+id/QRDownloadButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/download"
-                            style="@style/HabiticaButton.Gray.600"
-                            android:layout_marginTop="20dp"
-                            android:layout_gravity="center_horizontal|bottom"
-                            />
-
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

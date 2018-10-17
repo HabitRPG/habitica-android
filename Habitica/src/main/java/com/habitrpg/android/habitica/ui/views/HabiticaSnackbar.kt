@@ -77,8 +77,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
 
     private fun setSpecialView(specialView: View?): HabiticaSnackbar {
         if (specialView != null) {
-            val snackbarView = view.findViewById<View>(R.id.content_container) as LinearLayout
-            snackbarView.addView(specialView)
+            val snackbarView = view.findViewById<View>(R.id.content_container) as? LinearLayout
+            snackbarView?.addView(specialView)
         }
         return this
     }

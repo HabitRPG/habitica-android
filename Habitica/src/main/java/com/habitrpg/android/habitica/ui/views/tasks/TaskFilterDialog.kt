@@ -103,9 +103,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
 
     override fun show() {
         super.show()
-        if (this.window != null) {
-            this.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-        }
+        this.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
     fun setTags(tags: List<Tag>) {
@@ -174,9 +172,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
         tagsList.removeAllViews()
         createTagEditViews()
         tagsEditButton.setText(R.string.done)
-        if (this.window != null) {
-            this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
-        }
+        this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     }
 
     private fun stopEditing() {
@@ -184,9 +180,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
         tagsList.removeAllViews()
         createTagViews()
         tagsEditButton.setText(R.string.edit_tag_btn_edit)
-        if (this.window != null) {
-            this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        }
+        this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> editedTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
         repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> createdTags.remove(tag.getId()) }, RxErrorHandler.handleEmptyError())
         repository.deleteTags(deletedTags).subscribe(Consumer { deletedTags.clear() }, RxErrorHandler.handleEmptyError())
@@ -202,10 +196,10 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
     }
 
     private fun createTagEditView(inflater: LayoutInflater, index: Int, tag: Tag) {
-        val wrapper = inflater.inflate(R.layout.edit_tag_item, tagsList, false) as LinearLayout
-        val tagEditText = wrapper.findViewById<View>(R.id.edit_text) as EditText
-        tagEditText.setText(tag.name)
-        tagEditText.addTextChangedListener(object : TextWatcher {
+        val wrapper = inflater.inflate(R.layout.edit_tag_item, tagsList, false) as? LinearLayout
+        val tagEditText = wrapper?.findViewById<View>(R.id.edit_text) as? EditText
+        tagEditText?.setText(tag.name)
+        tagEditText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
             }
@@ -228,7 +222,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
 
             }
         })
-        val deleteButton = wrapper.findViewById<View>(R.id.delete_button) as Button
+        val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as Button
         deleteButton.setOnClickListener {
             deletedTags.add(tag.getId())
             if (createdTags.containsKey(tag.getId())) {
@@ -250,12 +244,12 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
             this.activeTags = tagIds
         }
         for (index in 0 until tagsList.childCount - 1) {
-            (tagsList.getChildAt(index) as AppCompatCheckBox).isChecked = false
+            (tagsList.getChildAt(index) as? AppCompatCheckBox)?.isChecked = false
         }
         for (tagId in this.activeTags) {
             val index = indexForId(tagId)
             if (index >= 0) {
-                (tagsList.getChildAt(index) as CheckBox).isChecked = true
+                (tagsList.getChildAt(index) as? CheckBox)?.isChecked = true
             }
         }
         filtersChanged()

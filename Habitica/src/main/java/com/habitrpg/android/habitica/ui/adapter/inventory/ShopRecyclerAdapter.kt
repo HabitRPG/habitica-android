@@ -116,19 +116,21 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     val sectionHolder = holder as? SectionViewHolder ?: return
                     sectionHolder.bind(category?.text ?: "")
                     if (gearCategories.contains(category)) {
-                        val adapter = HabiticaClassArrayAdapter(context, R.layout.class_spinner_dropdown_item, gearCategories.map { it.identifier })
-                        sectionHolder.spinnerAdapter = adapter
-                        sectionHolder.selectedItem = gearCategories.indexOf(category)
-                        sectionHolder.spinnerSelectionChanged = {
-                            if (selectedGearCategory != gearCategories[holder.selectedItem].identifier) {
-                                selectedGearCategory = gearCategories[holder.selectedItem].identifier
+                        context.notNull {context ->
+                            val adapter = HabiticaClassArrayAdapter(context, R.layout.class_spinner_dropdown_item, gearCategories.map { it.identifier })
+                            sectionHolder.spinnerAdapter = adapter
+                            sectionHolder.selectedItem = gearCategories.indexOf(category)
+                            sectionHolder.spinnerSelectionChanged = {
+                                if (selectedGearCategory != gearCategories[holder.selectedItem].identifier) {
+                                    selectedGearCategory = gearCategories[holder.selectedItem].identifier
+                                }
                             }
-                        }
-                        if (user?.stats?.habitClass != category?.identifier) {
-                            sectionHolder.notesView?.text = context?.getString(R.string.class_gear_disclaimer)
-                            sectionHolder.notesView?.visibility = View.VISIBLE
-                        } else {
-                            sectionHolder.notesView?.visibility = View.GONE
+                            if (user?.stats?.habitClass != category?.identifier) {
+                                sectionHolder.notesView?.text = context.getString(R.string.class_gear_disclaimer)
+                                sectionHolder.notesView?.visibility = View.VISIBLE
+                            } else {
+                                sectionHolder.notesView?.visibility = View.GONE
+                            }
                         }
                     } else {
                         sectionHolder.spinnerAdapter = null
@@ -136,7 +138,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     }
                 }
                 ShopItem::class.java -> {
-                    val item = obj as ShopItem
+                    val item = obj as? ShopItem ?: return
                     val itemHolder = holder as? ShopItemViewHolder ?: return
                     itemHolder.bind(item, item.canAfford(user))
                     if (ownedItems.containsKey(item.key+"-"+item.pinType)) {

@@ -11,20 +11,24 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import java.util.*
+import javax.inject.Inject
 
 class PartyInviteFragment : BaseFragment() {
+
+    @Inject
+    lateinit var configManager: RemoteConfigManager
 
     var isEmailInvite: Boolean = false
 
     private val inviteDescription: TextView? by bindView(R.id.inviteDescription)
     private val invitationWrapper: LinearLayout? by bindView(R.id.invitationWrapper)
     private val addInviteButton: Button? by bindView(R.id.addInviteButton)
-    private val inviteQRButton: Button? by bindView(R.id.InviteByQR)
 
     val values: Array<String>
         get() {
@@ -50,6 +54,8 @@ class PartyInviteFragment : BaseFragment() {
 
         if (isEmailInvite) {
             inviteDescription?.text = getString(R.string.invite_email_description)
+        } else if (configManager.enableUsernameRelease()) {
+            inviteDescription?.text = getString(R.string.invite_username_description)
         } else {
             inviteDescription?.text = getString(R.string.invite_id_description)
         }
@@ -57,7 +63,6 @@ class PartyInviteFragment : BaseFragment() {
         addInviteField()
 
         addInviteButton?.setOnClickListener { addInviteField() }
-        inviteQRButton?.setOnClickListener { startQRInvite() }
     }
 
     override fun injectFragment(component: AppComponent) {
@@ -70,14 +75,11 @@ class PartyInviteFragment : BaseFragment() {
         if (isEmailInvite) {
             editText.setHint(R.string.email)
             editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        } else if (configManager.enableUsernameRelease()) {
+            editText.setHint(R.string.username)
         } else {
             editText.setHint(R.string.user_id)
         }
         invitationWrapper?.addView(editText)
-    }
-
-    private fun startQRInvite() {
-        val scanIntegrator = IntentIntegrator(activity)
-        scanIntegrator.initiateScan()
     }
 }

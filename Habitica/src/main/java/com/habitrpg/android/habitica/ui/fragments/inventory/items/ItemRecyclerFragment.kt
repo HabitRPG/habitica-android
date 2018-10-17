@@ -176,11 +176,11 @@ class ItemRecyclerFragment : BaseFragment() {
             "special" -> SpecialItem::class.java
             else -> Egg::class.java
         }
-        inventoryRepository.getOwnedItems(itemClass, user).firstElement().subscribe(Consumer { items ->
+        compositeSubscription.add(inventoryRepository.getOwnedItems(itemClass, user).firstElement().subscribe(Consumer { items ->
             if (items.size > 0) {
                 adapter?.updateData(items as OrderedRealmCollection<Item>)
             }
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
 
         compositeSubscription.add(inventoryRepository.getOwnedPets().subscribe(Consumer { adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
     }

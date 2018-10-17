@@ -69,7 +69,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     init {
         View.inflate(context, R.layout.value_bar, this)
 
-        val attributes = context?.theme?.obtainStyledAttributes(
+        val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.ValueBar,
                 0, 0)

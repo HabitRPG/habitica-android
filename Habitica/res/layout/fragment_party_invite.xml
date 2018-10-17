@@ -29,15 +29,5 @@
         android:layout_gravity="right"
         android:text="@string/add_invites"
         android:layout_margin="@dimen/row_padding" />
-
-    <Button
-        android:id="@+id/InviteByQR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan a QR Code"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_margin="20dp"
-        android:layout_gravity="center_horizontal|bottom"
-        />
 </LinearLayout>
 </ScrollView>

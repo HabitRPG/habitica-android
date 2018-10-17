@@ -26,9 +26,9 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        userRepository.getUser(userId).subscribe(Consumer<User> {
+        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer<User> {
             this.user = it
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroy() {

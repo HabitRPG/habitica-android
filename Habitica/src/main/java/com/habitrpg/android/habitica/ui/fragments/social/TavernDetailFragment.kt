@@ -155,21 +155,21 @@ class TavernDetailFragment : BaseFragment() {
 
     private fun addPlayerTiers() {
         for (tier in PlayerTier.getTiers()) {
-            val container = FrameLayout(context)
             context.notNull {
+                val container = FrameLayout(it)
                 container.backgroundCompat = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_gray_700)
+                val label = UsernameLabel(context, null)
+                label.tier = tier.id
+                label.username = tier.title
+                val params = FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                        Gravity.CENTER)
+                container.addView(label, params)
+                playerTiersView.addView(container)
+                val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
+                container.setPadding(0, padding, 0, padding)
             }
-            val label = UsernameLabel(context, null)
-            label.tier = tier.id
-            label.username = tier.title
-            val params = FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    Gravity.CENTER)
-            container.addView(label, params)
-            playerTiersView.addView(container)
-            val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
-            container.setPadding(0, padding, 0, padding)
         }
         playerTiersView.invalidate()
     }

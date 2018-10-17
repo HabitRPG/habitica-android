@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.QrCodeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
@@ -62,11 +61,6 @@ class GroupInformationFragment : BaseFragment() {
 
         updateGroup(group)
 
-        if (this.group == null) {
-            val qrCodeManager = QrCodeManager(userRepository, this.context)
-            qrCodeManager.setUpView(qrLayout)
-        }
-
         buttonPartyInviteAccept.setOnClickListener { _ ->
             val userId = user?.invitations?.party?.id
             if (userId != null) {
@@ -87,13 +81,13 @@ class GroupInformationFragment : BaseFragment() {
             }
         }
 
-        userIdView.setOnClickListener { _ ->
+        username_textview.setOnClickListener { _ ->
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-            val clip = ClipData.newPlainText(context?.getString(R.string.user_id), user?.id)
+            val clip = ClipData.newPlainText(context?.getString(R.string.username), user?.username)
             clipboard?.primaryClip = clip
             val activity = activity as? MainActivity
             if (activity != null) {
-                HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.id_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.username_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
             }
         }
 
@@ -105,14 +99,14 @@ class GroupInformationFragment : BaseFragment() {
 
     private fun refresh() {
         if (group != null) {
-            socialRepository.retrieveGroup(group?.id ?: "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(socialRepository.retrieveGroup(group?.id ?: "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
         } else {
-            userRepository.retrieveUser(false, forced = true)
+            compositeSubscription.add(userRepository.retrieveUser(false, forced = true)
                     .filter { it.hasParty() }
                     .flatMap { socialRepository.retrieveGroup("party") }
                     .flatMap<List<Member>> { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
                     .doOnComplete { refreshLayout.isRefreshing = false }
-                    .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -122,7 +116,7 @@ class GroupInformationFragment : BaseFragment() {
         } else {
             setInvitation(null)
         }
-        userIdView.text = user?.id
+        username_textview.text = user?.formattedUsername
     }
 
     private fun setInvitation(invitation: PartyInvite?) {

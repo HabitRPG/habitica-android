@@ -21,7 +21,6 @@ import net.pherth.android.emoji_library.EmojiTextView
 
 class ChatBarView : FrameLayout {
 
-    private val chatBarContainer: LinearLayout by bindView(R.id.chatBarContainer)
     private val sendButton: ImageButton by bindView(R.id.sendButton)
     private val chatEditText: EmojiEditText by bindView(R.id.chatEditText)
     private val textIndicator: TextView by bindView(R.id.text_indicator)
