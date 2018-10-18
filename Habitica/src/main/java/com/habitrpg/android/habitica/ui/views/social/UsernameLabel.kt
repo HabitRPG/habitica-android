@@ -43,6 +43,7 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
         addView(textView, params)
         val padding = context?.resources?.getDimension(R.dimen.spacing_small)?.toInt() ?: 0
         textView.setPadding(0, 0, padding, 0)
+        textView.
         addView(tierIconView, params)
     }
 }
