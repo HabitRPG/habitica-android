@@ -220,14 +220,14 @@ class StatsFragment: BaseMainFragment() {
         constitutionStatsView.levelValue = levelStat
         perceptionStatsView.levelValue = levelStat
 
-        totalStrength += currentUser.stats?.buffs?.str?.toInt() ?: 0
-        totalIntelligence += currentUser.stats?.buffs?._int?.toInt() ?: 0
-        totalConstitution += currentUser.stats?.buffs?.con?.toInt() ?: 0
-        totalPerception += currentUser.stats?.buffs?.per?.toInt() ?: 0
-        strengthStatsView.buffValue = currentUser.stats?.buffs?.str?.toInt() ?: 0
-        intelligenceStatsView.buffValue = currentUser.stats?.buffs?._int?.toInt() ?: 0
-        constitutionStatsView.buffValue = currentUser.stats?.buffs?.con?.toInt() ?: 0
-        perceptionStatsView.buffValue = currentUser.stats?.buffs?.per?.toInt() ?: 0
+        totalStrength += currentUser.stats?.buffs?.getStr()?.toInt() ?: 0
+        totalIntelligence += currentUser.stats?.buffs?.get_int()?.toInt() ?: 0
+        totalConstitution += currentUser.stats?.buffs?.getCon()?.toInt() ?: 0
+        totalPerception += currentUser.stats?.buffs?.getPer()?.toInt() ?: 0
+        strengthStatsView.buffValue = currentUser.stats?.buffs?.getStr()?.toInt() ?: 0
+        intelligenceStatsView.buffValue = currentUser.stats?.buffs?.get_int()?.toInt() ?: 0
+        constitutionStatsView.buffValue = currentUser.stats?.buffs?.getCon()?.toInt() ?: 0
+        perceptionStatsView.buffValue = currentUser.stats?.buffs?.getPer()?.toInt() ?: 0
 
         totalStrength += currentUser.stats?.str ?: 0
         totalIntelligence += currentUser.stats?._int ?: 0
