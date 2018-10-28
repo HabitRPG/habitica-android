@@ -37,7 +37,7 @@ Thank you very much [to all contributors](https://github.com/HabitRPG/habitrpg-a
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Create new Pull Request
-   * Don't forget to include your Habitica User ID, so that we can count your contributrion towards your contributor tier
+   * Don't forget to include your Habitica User ID, so that we can count your contribution towards your contributor tier
 
 ### Code Style Guidelines
 We follow the code style guidelines outlined in [Android Code Style Guidelines for Contributors](https://source.android.com/source/code-style.html).
