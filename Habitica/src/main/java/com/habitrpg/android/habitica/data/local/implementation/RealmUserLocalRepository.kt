@@ -106,24 +106,4 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .asFlowable()
                 .filter { it.isLoaded }
     }
-
-    override fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
-        return realm.where(ChatMessage::class.java)
-                .equalTo("isInboxMessage", true)
-                .equalTo("uuid", replyToUserID)
-                .sort("timestamp", Sort.DESCENDING)
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
-    }
-
-    override fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>> {
-        return realm.where(ChatMessage::class.java)
-                .equalTo("isInboxMessage", true)
-                .distinct("uuid")
-                .sort("timestamp", Sort.DESCENDING)
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
-    }
 }

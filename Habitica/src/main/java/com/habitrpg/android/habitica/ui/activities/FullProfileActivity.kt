@@ -119,18 +119,18 @@ class FullProfileActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
-        if (id == R.id.private_message) {
-            showSendMessageToUserDialog()
-            return true
+        return when (id) {
+            R.id.private_message -> {
+                showSendMessageToUserDialog()
+                true
+            }
+            android.R.id.home -> {
+                // app icon in action bar clicked; goto parent activity.
+                this.finish()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        if (id == android.R.id.home) {
-            // app icon in action bar clicked; goto parent activity.
-            this.finish()
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 
     private fun showSendMessageToUserDialog() {

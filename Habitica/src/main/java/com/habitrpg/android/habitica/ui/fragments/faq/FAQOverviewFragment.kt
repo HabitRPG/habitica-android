@@ -41,7 +41,7 @@ class FAQOverviewFragment : BaseMainFragment() {
         resetViews()
 
         adapter = FAQOverviewRecyclerAdapter()
-        adapter?.getResetWalkthroughEvents()?.subscribe(Consumer { this.userRepository.resetTutorial(user) }, RxErrorHandler.handleEmptyError())
+        adapter?.getResetWalkthroughEvents()?.subscribe(Consumer { this.userRepository.resetTutorial(user) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
         adapter?.activity = activity
         recyclerView?.layoutManager = LinearLayoutManager(activity)
         activity.notNull { recyclerView?.addItemDecoration(DividerItemDecoration(it, DividerItemDecoration.VERTICAL)) }
@@ -63,7 +63,7 @@ class FAQOverviewFragment : BaseMainFragment() {
         if (user == null || adapter == null) {
             return
         }
-        faqRepository.getArticles().subscribe(Consumer { adapter?.setArticles(it) }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(faqRepository.getArticles().subscribe(Consumer { adapter?.setArticles(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun customTitle(): String {

@@ -52,7 +52,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        taskRepository.getTasks(taskType ?: "", userId).firstElement().subscribe(Consumer { tasks -> adapter.updateData(tasks) }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(taskRepository.getTasks(taskType ?: "", userId).firstElement().subscribe(Consumer { tasks -> adapter.updateData(tasks) }, RxErrorHandler.handleEmptyError()))
         recyclerView?.adapter = adapter
 
         layoutManager = recyclerView?.layoutManager as? LinearLayoutManager

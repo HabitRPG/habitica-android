@@ -143,7 +143,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun changeAutoAllocationMode(@Stats.AutoAllocationTypes allocationMode: String) {
-        userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
         distributeEvenlyButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         distributeClassButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         distributeTaskButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
@@ -156,7 +156,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun allocatePoint(@Stats.StatsTypes stat: String) {
-        userRepository.allocatePoint(user, stat).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.allocatePoint(user, stat).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun updateAttributePoints() {
@@ -251,7 +251,7 @@ class StatsFragment: BaseMainFragment() {
             outfitList.add(thisOutfit.weapon)
         }
 
-        inventoryRepository.getItems(outfitList).firstElement()
+        compositeSubscription.add(inventoryRepository.getItems(outfitList).firstElement()
                 .retry(1)
                 .subscribe(Consumer {
             val userStatComputer = UserStatComputer()
@@ -281,7 +281,7 @@ class StatsFragment: BaseMainFragment() {
             constitutionStatsView.equipmentValue = constitution
             perceptionStatsView.equipmentValue = perception
 
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun customTitle(): String {

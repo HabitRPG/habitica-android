@@ -27,7 +27,6 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     private var lastSync: Date? = null
 
     override fun getUser(): Flowable<User> = getUser(userID)
-    override fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxOverviewList(userID)
 
 
     override fun getUser(userID: String): Flowable<User> = localRepository.getUser(userID)
@@ -73,18 +72,6 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     }
         } else {
             return getUser().take(1)
-        }
-    }
-
-    override fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>> =
-            localRepository.getInboxMessages(userID, replyToUserID)
-
-    override fun retrieveInboxMessages(): Flowable<List<ChatMessage>> {
-        return apiClient.retrieveInboxMessages().doOnNext { messages ->
-            messages.forEach {
-                it.isInboxMessage = true
-            }
-            localRepository.save(messages)
         }
     }
 

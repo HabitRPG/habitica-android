@@ -16,7 +16,6 @@ import io.realm.RealmResults
 
 interface UserRepository : BaseRepository {
     fun getUser(): Flowable<User>
-    fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>>
 
     fun getUser(userID: String): Flowable<User>
     fun updateUser(user: User?, updateData: Map<String, Any>): Flowable<User>
@@ -24,9 +23,6 @@ interface UserRepository : BaseRepository {
 
     fun retrieveUser(withTasks: Boolean): Flowable<User>
     fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false): Flowable<User>
-
-    fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
-    fun retrieveInboxMessages(): Flowable<List<ChatMessage>>
 
     fun revive(user: User): Flowable<User>
 

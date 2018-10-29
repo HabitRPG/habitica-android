@@ -98,12 +98,12 @@ class ItemRecyclerFragment : BaseFragment() {
             }
             recyclerView?.adapter = adapter
 
-            adapter?.notNull {
-                compositeSubscription.add(it.getSellItemFlowable()
+            adapter?.notNull { adapter ->
+                compositeSubscription.add(adapter.getSellItemFlowable()
                         .flatMap { item -> inventoryRepository.sellItem(user, item) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
-                compositeSubscription.add(it.getQuestInvitationFlowable()
+                compositeSubscription.add(adapter.getQuestInvitationFlowable()
                         .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
                         .subscribe(Consumer { EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_PARTY)) }, RxErrorHandler.handleEmptyError()))
             }
@@ -178,7 +178,7 @@ class ItemRecyclerFragment : BaseFragment() {
         }
         compositeSubscription.add(inventoryRepository.getOwnedItems(itemClass, user).firstElement().subscribe(Consumer { items ->
             if (items.size > 0) {
-                adapter?.updateData(items as OrderedRealmCollection<Item>)
+                adapter?.updateData(items as? OrderedRealmCollection<Item>)
             }
         }, RxErrorHandler.handleEmptyError()))
 

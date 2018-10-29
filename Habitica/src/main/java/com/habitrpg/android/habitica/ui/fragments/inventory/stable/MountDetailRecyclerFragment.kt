@@ -53,7 +53,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(MarginDecoration(activity))
 
-        adapter = recyclerView.adapter as MountDetailRecyclerAdapter?
+        adapter = recyclerView.adapter as? MountDetailRecyclerAdapter
         if (adapter == null) {
             adapter = MountDetailRecyclerAdapter(null, true)
             adapter?.itemType = this.animalType
@@ -80,8 +80,8 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
 
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
-        if (context != null && context!!.resources != null) {
-            val itemWidth: Float = context!!.resources.getDimension(R.dimen.pet_width)
+        context?.resources.notNull { resources
+            val itemWidth: Float = resources.getDimension(R.dimen.pet_width)
 
             spanCount = (width / itemWidth).toInt()
         }
@@ -94,7 +94,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
 
     private fun loadItems() {
         if (animalType != null && animalGroup != null) {
-            inventoryRepository.getMounts(animalType!!, animalGroup!!).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(inventoryRepository.getMounts(animalType!!, animalGroup!!).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -105,6 +105,6 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
     }
 
     companion object {
-        private val ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY"
+        private const val ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY"
     }
 }

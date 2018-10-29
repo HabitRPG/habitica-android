@@ -46,8 +46,12 @@ interface SocialRepository : BaseRepository {
     fun retrieveGroups(type: String): Flowable<List<Group>>
     fun getGroups(type: String): Flowable<RealmResults<Group>>
 
-    fun postPrivateMessage(messageObject: HashMap<String, String>): Flowable<PostChatMessageResult>
-    fun postPrivateMessage(recipientId: String, message: String): Flowable<PostChatMessageResult>
+
+    fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
+    fun retrieveInboxMessages(): Flowable<List<ChatMessage>>
+    fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>>
+    fun postPrivateMessage(messageObject: HashMap<String, String>): Flowable<List<ChatMessage>>
+    fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>>
 
 
     fun getGroupMembers(id: String): Flowable<RealmResults<Member>>

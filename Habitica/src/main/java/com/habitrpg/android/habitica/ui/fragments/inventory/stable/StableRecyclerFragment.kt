@@ -86,10 +86,10 @@ class StableRecyclerFragment : BaseFragment() {
         }
 
 
-        adapter = recyclerView?.adapter as StableRecyclerAdapter?
+        adapter = recyclerView?.adapter as? StableRecyclerAdapter
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
-            adapter?.activity = this.activity as MainActivity?
+            adapter?.activity = this.activity as? MainActivity
             adapter?.itemType = this.itemType
             recyclerView?.adapter = adapter
             recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -125,7 +125,7 @@ class StableRecyclerFragment : BaseFragment() {
             inventoryRepository.getMounts().firstElement().toFlowable().flatMap { Flowable.fromIterable(it) }
         }
 
-        observable.toList().flatMap { unsortedAnimals ->
+        compositeSubscription.add(observable.toList().flatMap { unsortedAnimals ->
             val items = ArrayList<Any>()
             if (unsortedAnimals.size == 0) {
                 return@flatMap Single.just<List<Any>>(items)
@@ -166,7 +166,7 @@ class StableRecyclerFragment : BaseFragment() {
                 }
             }
             Single.just<List<Any>>(items)
-        }.subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError())
+        }.subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
     }
 
     companion object {

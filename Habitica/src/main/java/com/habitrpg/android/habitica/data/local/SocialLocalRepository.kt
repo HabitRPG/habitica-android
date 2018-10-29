@@ -40,4 +40,8 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership>
     fun getGroupMemberships(userId: String): Flowable<RealmResults<GroupMembership>>
     fun rejectGroupInvitation(userID: String, groupID: String)
+
+    fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
+
+    fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>>
 }

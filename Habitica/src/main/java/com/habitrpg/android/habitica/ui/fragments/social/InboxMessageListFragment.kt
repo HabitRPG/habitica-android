@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
@@ -89,7 +88,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
 
     private fun loadMessages() {
         if (user?.isManaged == true) {
-            compositeSubscription.add(userRepository.getInboxMessages(replyToUserUUID)
+            compositeSubscription.add(socialRepository.getInboxMessages(replyToUserUUID)
                     .firstElement()
                     .subscribe(Consumer { this.chatAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
@@ -112,10 +111,8 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
 
     private fun refreshUserInbox() {
         this.swipeRefreshLayout?.isRefreshing = true
-        compositeSubscription.add(this.userRepository.retrieveUser(true)
-                .subscribe(Consumer<User> {
-                    user = it
-                }, RxErrorHandler.handleEmptyError(), Action {
+        compositeSubscription.add(this.socialRepository.retrieveInboxMessages()
+                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError(), Action {
                     swipeRefreshLayout?.isRefreshing = false
                 }))
     }
@@ -126,8 +123,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
 
     private fun sendMessage(chatText: String) {
         replyToUserUUID?.notNull {userID ->
-            socialRepository.postPrivateMessage(userID, chatText)
-                    .subscribe(Consumer { this.refreshUserInbox() }, RxErrorHandler.handleEmptyError())
+            socialRepository.postPrivateMessage(userID, chatText).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
             KeyboardUtil.dismissKeyboard(getActivity())
         }
     }
@@ -153,7 +149,7 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
         builder.setMessage(R.string.chat_flag_confirmation)
                 .setPositiveButton(R.string.flag_confirm) { _, _ ->
                     socialRepository.flagMessage(chatMessage)
-                            .subscribe(Consumer {
+                            .subscribe(Consumer { _ ->
                                 activity.floatingMenuWrapper.notNull {
                                     showSnackbar(it, "Flagged message by " + chatMessage.user, HabiticaSnackbar.SnackbarDisplayType.NORMAL)
                                 }

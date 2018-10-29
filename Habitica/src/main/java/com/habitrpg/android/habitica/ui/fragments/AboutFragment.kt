@@ -10,9 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
-import com.instabug.bug.BugReporting
-import com.instabug.bug.invocation.InvocationMode
-import com.instabug.bug.invocation.InvocationOption
 import kotlinx.android.synthetic.main.fragment_about.*
 
 class AboutFragment : Fragment() {
@@ -21,7 +18,7 @@ class AboutFragment : Fragment() {
     private val androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/"
     private val twitterLink = "https://twitter.com/habitica"
 
-    fun openGooglePlay() {
+    private fun openGooglePlay() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("market://details?id=com.habitrpg.android.habitica")
         startActivity(intent)

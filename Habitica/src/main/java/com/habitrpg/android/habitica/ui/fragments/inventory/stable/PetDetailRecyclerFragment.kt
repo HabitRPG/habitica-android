@@ -59,7 +59,6 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val finalView = view
 
         resetViews()
 
@@ -77,7 +76,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
                 .flatMap<Items> { key -> inventoryRepository.equip(user, "pet", key) }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
-        finalView.post { setGridSpanCount(finalView.width) }
+        view.post { setGridSpanCount(view.width) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -101,8 +100,8 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
     private fun loadItems() {
         if (animalType.isNotEmpty() && animalGroup.isNotEmpty()) {
-            inventoryRepository.getPets(animalType, animalGroup).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError())
-            inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(Consumer<RealmResults<Mount>> { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(Consumer<RealmResults<Mount>> { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 

@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
+import android.os.Trace
 import android.preference.PreferenceManager
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
@@ -114,6 +115,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var userRepository: UserRepository
     @Inject
+    internal lateinit var socialRepository: SocialRepository
+    @Inject
     internal lateinit var tagRepository: TagRepository
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
@@ -169,6 +172,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
+        Trace.beginSection("MainActivity.launch")
         super.onCreate(savedInstanceState)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -311,6 +315,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent, this, user)
         }
+        Trace.endSection()
     }
 
     override fun onPause() {
@@ -723,7 +728,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         pushNotificationManager.setUser(user1)
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
-                    .flatMap { userRepository.retrieveInboxMessages() }
+                    .flatMap { socialRepository.retrieveInboxMessages() }
                     .flatMap { inventoryRepository.retrieveContent(false) }
                     .flatMap { inventoryRepository.retrieveWorldState() }
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())

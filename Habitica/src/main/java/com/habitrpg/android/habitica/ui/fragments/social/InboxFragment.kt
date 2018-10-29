@@ -1,13 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.view.*
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
@@ -18,14 +15,12 @@ import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_inbox.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -61,7 +56,7 @@ class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, 
     }
 
     private fun loadMessages() {
-        compositeSubscription.add(userRepository.getInboxOverviewList().subscribe(Consumer<RealmResults<ChatMessage>> {
+        compositeSubscription.add(socialRepository.getInboxOverviewList().subscribe(Consumer<RealmResults<ChatMessage>> {
             setInboxMessages(it)
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -116,7 +111,7 @@ class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, 
 
     override fun onRefresh() {
         inbox_refresh_layout.isRefreshing = true
-        compositeSubscription.add(this.userRepository.retrieveInboxMessages()
+        compositeSubscription.add(this.socialRepository.retrieveInboxMessages()
                 .subscribe(Consumer<List<ChatMessage>> {
                     inbox_refresh_layout.isRefreshing = false
                 }, RxErrorHandler.handleEmptyError()))

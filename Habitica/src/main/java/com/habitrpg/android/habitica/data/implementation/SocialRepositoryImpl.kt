@@ -90,11 +90,11 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun retrieveGroup(id: String): Flowable<Group> {
         return Flowable.zip(apiClient.getGroup(id).doOnNext { localRepository.save(it) }, retrieveGroupChat(id)
-                .map {
-                    it.forEach {
+                .map { message ->
+                    message.forEach {
                         it.groupId = id
                     }
-                    it
+                    message
                 }
                 .doOnSuccess { localRepository.save(it) }.toFlowable(),
                 BiFunction<Group, List<ChatMessage>, Group> { group, _ ->
@@ -116,7 +116,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         }
         return apiClient.leaveGroup(id)
                 .flatMapMaybe { localRepository.getGroup(id).firstElement() }
-                .doOnNext { localRepository.executeTransaction { localRepository.updateMembership(userID, id, false) } }
+                .doOnNext { _ -> localRepository.executeTransaction { localRepository.updateMembership(userID, id, false) } }
     }
 
     override fun joinGroup(id: String?): Flowable<Group> {
@@ -160,11 +160,24 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun getPublicGuilds(): Flowable<RealmResults<Group>> = localRepository.getPublicGuilds()
 
-    override fun postPrivateMessage(messageObject: HashMap<String, String>): Flowable<PostChatMessageResult> {
-        return apiClient.postPrivateMessage(messageObject)
+    override fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxOverviewList(userID)
+
+    override fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxMessages(userID, replyToUserID)
+
+    override fun retrieveInboxMessages(): Flowable<List<ChatMessage>> {
+        return apiClient.retrieveInboxMessages().doOnNext { messages ->
+            messages.forEach {
+                it.isInboxMessage = true
+            }
+            localRepository.save(messages)
+        }
     }
 
-    override fun postPrivateMessage(recipientId: String, message: String): Flowable<PostChatMessageResult> {
+    override fun postPrivateMessage(messageObject: HashMap<String, String>): Flowable<List<ChatMessage>> {
+        return apiClient.postPrivateMessage(messageObject).flatMap { retrieveInboxMessages() }
+    }
+
+    override fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>> {
         val messageObject = HashMap<String, String>()
         messageObject["message"] = message
         messageObject["toUserId"] = recipientId
@@ -190,7 +203,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun markPrivateMessagesRead(user: User?): Flowable<Void> {
         return apiClient.markPrivateMessagesRead()
-                .doOnNext {
+                .doOnNext { _ ->
                     if (user?.isManaged == true) {
                         localRepository.executeTransaction { user.inbox?.newMessages = 0 }
                     }
@@ -201,7 +214,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)
-                .doOnNext {
+                .doOnNext { _ ->
                     user.notNull {
                         localRepository.updateRSVPNeeded(it, false)
                     }
@@ -210,7 +223,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun rejectQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.rejectQuest(partyId)
-                .doOnNext {
+                .doOnNext { _ ->
                     user.notNull {
                         localRepository.updateRSVPNeeded(it, false)
                     }

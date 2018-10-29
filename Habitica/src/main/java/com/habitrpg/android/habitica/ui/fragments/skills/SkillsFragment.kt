@@ -81,8 +81,8 @@ class SkillsFragment : BaseMainFragment() {
 
         adapter?.mana = this.user?.stats?.mp ?: 0.toDouble()
 
-        user?.let {
-            Observable.concat(userRepository.getSkills(it).firstElement().toObservable().flatMap { Observable.fromIterable(it) }, userRepository.getSpecialItems(it).firstElement().toObservable().flatMap { Observable.fromIterable(it) })
+        user?.let { user ->
+            Observable.concat(userRepository.getSkills(user).firstElement().toObservable().flatMap { Observable.fromIterable(it) }, userRepository.getSpecialItems(user).firstElement().toObservable().flatMap { Observable.fromIterable(it) })
                     .toList()
                     .subscribe(Consumer { skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
         }
@@ -122,7 +122,7 @@ class SkillsFragment : BaseMainFragment() {
                         HabiticaSnackbar.SnackbarDisplayType.BLUE)
             }
         }
-        userRepository.retrieveUser(false).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.retrieveUser(false).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
 
@@ -155,7 +155,7 @@ class SkillsFragment : BaseMainFragment() {
         } else {
             userRepository.useSkill(user, skill.key, skill.target)
         }
-        observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) }) { removeProgressDialog() }
+        compositeSubscription.add(observable.subscribe({ skillResponse -> this.displaySkillResult(skill, skillResponse) }) { removeProgressDialog() })
     }
 
     private fun displayProgressDialog() {

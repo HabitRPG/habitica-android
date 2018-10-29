@@ -119,12 +119,12 @@ abstract class BaseMainFragment : BaseFragment() {
     }
 
     fun disableToolbarScrolling() {
-        val params = collapsingToolbar?.layoutParams as AppBarLayout.LayoutParams?
+        val params = collapsingToolbar?.layoutParams as? AppBarLayout.LayoutParams
         params?.scrollFlags = 0
     }
 
     fun enableToolbarScrolling() {
-        val params = collapsingToolbar?.layoutParams as AppBarLayout.LayoutParams?
+        val params = collapsingToolbar?.layoutParams as? AppBarLayout.LayoutParams
         params?.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
     }
 }

@@ -30,13 +30,10 @@ class NewsFragment : BaseMainFragment() {
         webSettings.domStorageEnabled = true
         newsWebview.webChromeClient = object : WebChromeClient() {
             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
-                Log.d("Habitica", consoleMessage.message() + " -- From line "
-                        + consoleMessage.lineNumber() + " of "
-                        + consoleMessage.sourceId())
                 return super.onConsoleMessage(consoleMessage)
             }
         }
-        newsWebview.loadUrl(address + "/static/new-stuff")
+        newsWebview.loadUrl("$address/static/new-stuff")
     }
 
     override fun onDestroyView() {

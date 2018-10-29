@@ -208,15 +208,15 @@ class QuestDetailFragment : BaseMainFragment() {
     }
 
     private fun onQuestAccept() {
-        partyId.notNull {
-            socialRepository.acceptQuest(user, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        partyId.notNull { partyID ->
+        socialRepository.acceptQuest(user, partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
 
     private fun onQuestReject() {
-        partyId.notNull {
-            socialRepository.rejectQuest(user, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        partyId.notNull { partyID ->
+            socialRepository.rejectQuest(user, partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -224,8 +224,8 @@ class QuestDetailFragment : BaseMainFragment() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(beginQuestMessage)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    party.notNull {
-                        socialRepository.forceStartQuest(it)
+                    party.notNull { party ->
+                        socialRepository.forceStartQuest(party)
                                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                     }
                 }
@@ -237,9 +237,9 @@ class QuestDetailFragment : BaseMainFragment() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_cancel_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    partyId.notNull {
+                    partyId.notNull { partyID ->
                         @Suppress("DEPRECATION")
-                        socialRepository.cancelQuest(it)
+                        socialRepository.cancelQuest(partyID)
                                 .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }
                 }.setNegativeButton(R.string.no) { _, _ -> }
@@ -250,9 +250,9 @@ class QuestDetailFragment : BaseMainFragment() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_abort_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    partyId.notNull {
+                    partyId.notNull { partyID ->
                         @Suppress("DEPRECATION")
-                        socialRepository.abortQuest(it)
+                        socialRepository.abortQuest(partyID)
                                 .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
                     }
                 }.setNegativeButton(R.string.no) { _, _ -> }

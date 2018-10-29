@@ -20,8 +20,4 @@ interface UserLocalRepository : BaseLocalRepository {
     fun getSkills(user: User): Flowable<RealmResults<Skill>>
 
     fun getSpecialItems(user: User): Flowable<RealmResults<Skill>>
-
-    fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
-
-    fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>>
 }

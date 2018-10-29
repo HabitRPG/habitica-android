@@ -62,7 +62,7 @@ class ShopFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.setBackgroundResource(R.color.white)
 
-        adapter = recyclerView.adapter as ShopRecyclerAdapter?
+        adapter = recyclerView.adapter as? ShopRecyclerAdapter
         if (adapter == null) {
             adapter = ShopRecyclerAdapter()
             adapter?.context = context
@@ -110,8 +110,8 @@ class ShopFragment : BaseFragment() {
 
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .filter { it.hasActiveQuest }
-                .filter { it.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false }
-                .filter { it.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
+                .filter { group -> group.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false }
+                .filter { group -> group.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
                 .subscribe(Consumer {
                     adapter?.shopSpriteSuffix = "_"+it.quest?.key
                 }, RxErrorHandler.handleEmptyError()))
@@ -127,7 +127,7 @@ class ShopFragment : BaseFragment() {
             Shop.SEASONAL_SHOP -> "seasonal"
             else -> ""
         }
-        this.inventoryRepository.retrieveShopInventory(shopUrl)
+        compositeSubscription.add(this.inventoryRepository.retrieveShopInventory(shopUrl)
                 .map { shop1 ->
                     if (shop1.identifier == Shop.MARKET) {
                         val user = user
@@ -145,26 +145,26 @@ class ShopFragment : BaseFragment() {
                 .subscribe(Consumer {
                     this.shop = it
                     this.adapter?.setShop(it)
-                }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
 
 
 
-        user.notNull {
-            compositeSubscription.add(this.inventoryRepository.getOwnedItems(it)
+        user.notNull { user ->
+            compositeSubscription.add(this.inventoryRepository.getOwnedItems(user)
                     .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         }
         compositeSubscription.add(this.inventoryRepository.getInAppRewards()
-                .map<List<String>> { it.map { it.key } }
+                .map<List<String>> { rewards -> rewards.map { it.key } }
                 .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun loadMarketGear() {
-        inventoryRepository.retrieveMarketGear()
-                .zipWith(inventoryRepository.getOwnedEquipment().map { it.map { it.key } }, BiFunction<Shop, List<String?>, Shop> { shop, equipment ->
+        compositeSubscription.add(inventoryRepository.retrieveMarketGear()
+                .zipWith(inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } }, BiFunction<Shop, List<String?>, Shop> { shop, equipment ->
                     for (category in shop.categories) {
-                        val items = category.items.filter {
+                        val items = category.items.asSequence().filter {
                             !equipment.contains(it.key)
-                        }.sortedBy { it.locked }
+                        }.sortedBy { it.locked }.toList()
                         category.items.clear()
                         category.items.addAll(items)
                     }
@@ -173,7 +173,7 @@ class ShopFragment : BaseFragment() {
                 .subscribe(Consumer<Shop> {
                     this.gearCategories = it.categories
                     adapter?.gearCategories = it.categories
-                }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun injectFragment(component: AppComponent) {

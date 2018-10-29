@@ -43,8 +43,8 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //Networking
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     //REST API handling
     implementation('com.squareup.retrofit2:retrofit:2.4.0') {
         exclude module: 'okhttp'
@@ -52,12 +52,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     //Crash Logging
-    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
+    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
     //Dependency Injection
-    implementation 'com.google.dagger:dagger:2.16'
-    kapt 'com.google.dagger:dagger-compiler:2.16'
+    implementation 'com.google.dagger:dagger:2.17'
+    kapt 'com.google.dagger:dagger-compiler:2.17'
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
     //App Compatibility and Material Design
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -86,22 +86,22 @@ dependencies {
     }
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     //RxJava
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
     //Analytics
     implementation 'com.amplitude:android-sdk:2.18.1'
     implementation 'com.instabug.library:instabug:8.0.3'
     // Fresco Image Management Library
-    implementation('com.facebook.fresco:fresco:1.9.0') {
+    implementation('com.facebook.fresco:fresco:1.11.0') {
         exclude module: 'bolts-android'
     }
-    implementation('com.facebook.fresco:animated-gif:1.9.0') {
+    implementation('com.facebook.fresco:animated-gif:1.11.0') {
         exclude module: 'bolts-android'
     }
     //Tests
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.assertj:assertj-core:2.6.0'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     testImplementation 'org.robolectric:robolectric:3.8'
     testImplementation 'org.robolectric:shadows-multidex:3.8'
     testImplementation 'org.robolectric:shadows-support-v4:3.3.2'
@@ -111,8 +111,8 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
     testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
     //Leak Detection
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     //Push Notifications
     implementation 'com.google.firebase:firebase-core:11.4.2'
     implementation 'com.google.firebase:firebase-messaging:11.4.2'

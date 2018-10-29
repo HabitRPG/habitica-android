@@ -5,13 +5,11 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -73,7 +71,7 @@ abstract class BaseFragment : DialogFragment() {
     private fun showTutorialIfNeeded() {
         if (userVisibleHint && view != null) {
             if (this.tutorialStepIdentifier != null) {
-                tutorialRepository.getTutorialStep(this.tutorialStepIdentifier ?: "").firstElement()
+                compositeSubscription.add(tutorialRepository.getTutorialStep(this.tutorialStepIdentifier ?: "").firstElement()
                         .delay(1, TimeUnit.SECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer { step ->
@@ -88,7 +86,7 @@ abstract class BaseFragment : DialogFragment() {
                                 event.canBeDeferred = tutorialCanBeDeferred
                                 EventBus.getDefault().post(event)
                             }
-                        }, RxErrorHandler.handleEmptyError())
+                        }, RxErrorHandler.handleEmptyError()))
             }
         }
     }

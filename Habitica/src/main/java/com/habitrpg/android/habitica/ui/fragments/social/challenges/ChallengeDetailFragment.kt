@@ -2,17 +2,31 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
+import android.text.method.LinkMovementMethod
+import android.view.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
+import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.AvatarView
+import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -24,21 +38,6 @@ import net.pherth.android.emoji_library.EmojiParser
 import net.pherth.android.emoji_library.EmojiTextView
 import java.util.*
 import javax.inject.Inject
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.support.v4.view.MenuItemCompat
-import android.support.v7.app.AlertDialog
-import android.text.method.LinkMovementMethod
-import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.backgroundCompat
-import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
-import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 
 
 class ChallengeDetailFragment: BaseMainFragment() {
@@ -141,7 +140,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        joinButton?.setOnClickListener { challenge.notNull { challengeRepository.joinChallenge(it).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
+        joinButton?.setOnClickListener { _ -> challenge.notNull { challenge -> challengeRepository.joinChallenge(challenge).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
         leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()
@@ -342,15 +341,15 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     private fun showChallengeLeaveDialog() {
-        context.notNull {
-            AlertDialog.Builder(it)
+        context.notNull { context ->
+            AlertDialog.Builder(context)
                     .setTitle(this.getString(R.string.challenge_leave_title))
                     .setMessage(this.getString(R.string.challenge_leave_text, challenge?.name ?: ""))
                     .setPositiveButton(R.string.yes) { dialog, _ ->
                         dialog.dismiss()
-                        challenge.notNull {
+                        challenge.notNull { challenge ->
                             showRemoveTasksDialog(Consumer { keepTasks ->
-                                challengeRepository.leaveChallenge(it, keepTasks).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                                challengeRepository.leaveChallenge(challenge, keepTasks).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
                             })
                         }
                     }

@@ -15,12 +15,6 @@ import kotlinx.android.synthetic.main.fragment_avatar_overview.*
 
 class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedListener {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        apiClient.content.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -105,8 +99,8 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         val newSize: String = if (position == 0) "slim" else "broad"
 
         if (this.user != null && this.user?.preferences?.size != newSize) {
-            userRepository.updateUser(user, "preferences.size", newSize)
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(userRepository.updateUser(user, "preferences.size", newSize)
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
     }
 
