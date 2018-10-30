@@ -6,8 +6,8 @@ buildscript {
     ext.sdk_version = 28
 
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
@@ -24,8 +24,8 @@ apply plugin: 'io.gitlab.arturbosch.detekt'
 
 allprojects {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 }
 
