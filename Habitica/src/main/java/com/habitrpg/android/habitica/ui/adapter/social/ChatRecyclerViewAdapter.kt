@@ -130,7 +130,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             messageText.movementMethod = LinkMovementMethod.getInstance()
             userLabel.setOnClickListener { _ -> chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
             replyButton.setOnClickListener { _ ->
-                if (releasedUsernames) {
+                if (releasedUsernames && chatMessage?.username != null) {
                     chatMessage?.username.notNull { replyMessageEvents.onNext(it) }
                 } else {
                     chatMessage?.user.notNull { replyMessageEvents.onNext(it) }
