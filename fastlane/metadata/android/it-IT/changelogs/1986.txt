@@ -1,0 +1,1 @@
+This update brings some bugfixes and compatibility changes.
