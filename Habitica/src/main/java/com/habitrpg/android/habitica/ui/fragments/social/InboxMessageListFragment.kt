@@ -25,10 +25,12 @@ import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_inbox_message_list.*
 import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -123,7 +125,12 @@ class InboxMessageListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefres
 
     private fun sendMessage(chatText: String) {
         replyToUserUUID?.notNull {userID ->
-            socialRepository.postPrivateMessage(userID, chatText).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            socialRepository.postPrivateMessage(userID, chatText)
+                    .delay(200, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(Consumer {
+                recyclerView.scrollToPosition(0)
+            }, RxErrorHandler.handleEmptyError())
             KeyboardUtil.dismissKeyboard(getActivity())
         }
     }
