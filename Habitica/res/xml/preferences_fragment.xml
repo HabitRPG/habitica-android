@@ -6,7 +6,8 @@
 
     <PreferenceCategory
         android:title="@string/pref_account_header"
-        android:key="account_prefs">
+        android:key="account_prefs"
+        android:layout="@layout/preference_category">
 
         <PreferenceScreen android:title="@string/profile"
             android:summary="@string/profile_summary"
@@ -110,7 +111,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/app_settings">
+        android:title="@string/app_settings"
+        android:layout="@layout/preference_category">
         <ListPreference android:title="@string/pref_first_day_of_the_week_title"
             android:key="@string/pref_first_day_of_the_week_key"
             android:entries="@array/weekdays"
@@ -137,7 +139,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_reminder_header">
+        android:title="@string/pref_reminder_header"
+        android:layout="@layout/preference_category">
 
         <CheckBoxPreference
             android:key="use_reminder"
@@ -154,7 +157,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-            android:title="@string/pref_cds_header">
+            android:title="@string/pref_cds_header"
+        android:layout="@layout/preference_category">
 
         <com.habitrpg.android.habitica.prefs.TimePreference
                 android:key="cds_time"
@@ -164,7 +168,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/push_notifications">
+        android:title="@string/push_notifications"
+        android:layout="@layout/preference_category">
 
         <CheckBoxPreference
             android:key="usePushNotifications"
@@ -236,7 +241,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/maintenance">
+        android:title="@string/maintenance"
+        android:layout="@layout/preference_category">
         <Preference android:title="@string/reload_content"
             android:key="reload_content"
             android:layout="@layout/preference_child_summary"/>

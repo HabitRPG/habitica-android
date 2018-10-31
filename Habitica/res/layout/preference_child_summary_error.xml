@@ -7,13 +7,15 @@
     android:baselineAligned="false"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="?android:attr/scrollbarSize"
-    android:paddingLeft="16dip">
+    android:paddingRight="16dip"
+    android:paddingLeft="16dip"
+    android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dip"
+        android:layout_marginLeft="15dip"
         android:layout_marginRight="6dip"
         android:layout_marginTop="6dip"
         android:layout_weight="1" >
@@ -37,7 +39,12 @@
             android:layout_below="@android:id/title"
             android:maxLines="4"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/red_10"
-            />
+            android:textColor="@color/red_10" />
     </RelativeLayout>
+    <LinearLayout android:id="@+id/widget_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="16dp" />
 </LinearLayout>

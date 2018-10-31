@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!-- Layout for a visually child-like Preference in a PreferenceActivity. -->
+<!--suppress AndroidDomInspection -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,13 +8,15 @@
     android:baselineAligned="false"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="?android:attr/scrollbarSize"
-    android:paddingLeft="16dip">
+    android:paddingRight="16dip"
+    android:paddingLeft="16dip"
+    android:orientation="horizontal">
 
 <RelativeLayout
     android:layout_width="0dip"
     android:layout_height="wrap_content"
     android:layout_marginBottom="6dip"
+    android:layout_marginLeft="15dip"
     android:layout_marginRight="6dip"
     android:layout_marginTop="6dip"
     android:layout_weight="1" >
@@ -39,4 +42,10 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?android:attr/textColorSecondary" />
 </RelativeLayout>
+    <LinearLayout android:id="@+android:id/widget_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="16dp" />
 </LinearLayout>
