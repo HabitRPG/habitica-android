@@ -62,3 +62,4 @@ captures
 /Habitica/prod
 /Habitica/release
 /fastlane/secret-key.json
+/fastlane/report.xml

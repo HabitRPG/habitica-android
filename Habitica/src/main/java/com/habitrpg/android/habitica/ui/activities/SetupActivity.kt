@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.content.res.AppCompatResources
 import android.support.v7.preference.PreferenceManager
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
@@ -33,9 +35,9 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.FadingViewPager
 import com.viewpagerindicator.IconPageIndicator
 import com.viewpagerindicator.IconPagerAdapter
+import io.reactivex.BackpressureStrategy
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
-import org.solovyev.android.checkout.Inventory
 import java.util.*
 import javax.inject.Inject
 
@@ -57,6 +59,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private val previousButton: Button by bindView(R.id.previousButton)
     private val indicator: IconPageIndicator by bindView(R.id.view_pager_indicator)
 
+    internal var welcomeFragment: WelcomeFragment? = null
     internal var avatarSetupFragment: AvatarSetupFragment? = null
     internal var taskSetupFragment: TaskSetupFragment? = null
     internal var user: User? = null
@@ -81,8 +84,8 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         val currentDeviceLanguage = Locale.getDefault().language
         for (language in resources.getStringArray(R.array.LanguageValues)) {
             if (language == currentDeviceLanguage) {
-                apiClient.registrationLanguage(currentDeviceLanguage)
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                compositeSubscription.add(apiClient.registrationLanguage(currentDeviceLanguage)
+                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
             }
         }
 
@@ -123,14 +126,14 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     @Subscribe
     fun onEvent(event: UpdateUserCommand) {
-        this.userRepository.updateUser(user, event.updateData)
-                .subscribe(Consumer<User> { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(this.userRepository.updateUser(user, event.updateData)
+                .subscribe(Consumer<User> { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
     fun onEvent(event: EquipCommand) {
-        this.inventoryRepository.equip(user, event.type, event.key)
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(this.inventoryRepository.equip(user, event.type, event.key)
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun nextClicked() {
@@ -147,6 +150,11 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             newTasks.notNull {
                 this.taskRepository.createTasks(it).subscribe(Consumer { onUserReceived(user) }, RxErrorHandler.handleEmptyError())
             }
+        } else if (pager.currentItem == 0) {
+            confirmNames(welcomeFragment?.displayName ?: "", welcomeFragment?.username ?: "")
+
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
         this.pager.currentItem = this.pager.currentItem + 1
     }
@@ -165,6 +173,19 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             leftDrawable = AppCompatResources.getDrawable(this, R.drawable.back_arrow_disabled)
         }
         previousButton.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null)
+    }
+
+    private fun setNextButtonEnabled(enabled: Boolean) {
+        nextButton.isEnabled = enabled
+        val rightDrawable = AppCompatResources.getDrawable(this, R.drawable.forward_arrow_enabled)
+        if (enabled) {
+            nextButton.setTextColor(ContextCompat.getColor(this, R.color.white))
+            rightDrawable?.alpha = 255
+        } else {
+            nextButton.setTextColor(ContextCompat.getColor(this, R.color.white_50_alpha))
+            rightDrawable?.alpha = 127
+        }
+        nextButton.setCompoundDrawablesWithIntrinsicBounds(null, null, rightDrawable, null)
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -220,6 +241,12 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         finish()
     }
 
+    private fun confirmNames(displayName: String, username: String) {
+        compositeSubscription.add(userRepository.updateUser(null, "profile.name", displayName)
+                .flatMap { userRepository.updateLoginName(username).toFlowable() }
+                .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
+    }
+
     private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
 
         override fun getItem(position: Int): Fragment {
@@ -238,7 +265,14 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                     taskSetupFragment = fragment
                     fragment
                 }
-                else -> { WelcomeFragment() }
+                else -> {
+                    val fragment = WelcomeFragment()
+                    welcomeFragment = fragment
+                    welcomeFragment?.nameValidEvents?.toFlowable(BackpressureStrategy.DROP)?.subscribe {
+                        setNextButtonEnabled(it)
+                    }
+                    fragment
+                }
             }
         }
 
