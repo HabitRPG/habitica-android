@@ -561,7 +561,7 @@
     <string name="login_btn_fb">Login with Facebook</string>
     <string name="login_btn_google">Login with Google</string>
     <string name="action_back">Back</string>
-    <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nTo start, you’ll need to create an avatar.</string>
+    <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nFirst, what should we call you? Feel free to change what I picked. When you’re all set, let’s create your avatar!</string>
     <string name="randomize">Randomize</string>
     <string name="avatar_extras">Extras</string>
     <string name="avatar_skin_color">Skin Color</string>
@@ -830,4 +830,7 @@
     <string name="username_level">%s ・Lvl %d</string>
     <string name="enter_recipient_username">Enter a Recipient\'s username</string>
     <string name="username_copied">Username copied to clipboard</string>
+    <string name="verification_pet">One of these Veteran Pets will be waiting for you after you’ve finished confirming!</string>
+    <string name="welcomeNameTitle">What should we call you?</string>
+    <string name="display_name_length_error">Display names must be between 1 and 30 characters</string>
 </resources>

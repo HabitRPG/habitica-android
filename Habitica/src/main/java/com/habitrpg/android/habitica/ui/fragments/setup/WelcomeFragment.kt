@@ -1,29 +1,59 @@
 package com.habitrpg.android.habitica.ui.fragments.setup
 
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.EditText
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.SpeechBubbleView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import java.util.HashMap
+import io.reactivex.BackpressureStrategy
+import io.reactivex.functions.Consumer
+import io.reactivex.subjects.PublishSubject
+import java.util.*
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class WelcomeFragment : BaseFragment() {
 
+    val nameValidEvents = PublishSubject.create<Boolean>()
+
+    @Inject
+    lateinit var userRepository: UserRepository
+
     private val speechBubbleView: SpeechBubbleView? by bindView(R.id.speech_bubble)
-    private val heartIconView: ImageView? by bindView(R.id.heart_icon)
-    private val magicIconView: ImageView? by bindView(R.id.magic_icon)
-    private val expIconView: ImageView? by bindView(R.id.exp_icon)
-    private val goldIconView: ImageView? by bindView(R.id.gold_icon)
-    private val gemIconView: ImageView? by bindView(R.id.gem_icon)
+    private val displayNameEditText: EditText by bindView(R.id.display_name_edit_text)
+    private val usernameEditText: EditText by bindView(R.id.username_edit_text)
+    private val issuesTextView: TextView by bindView(R.id.issues_text_view)
+
+    private val displayNameVerificationEvents = PublishSubject.create<String>()
+    private val usernameVerificationEvents = PublishSubject.create<String>()
+
+    private val checkmarkIcon: Drawable by lazy {
+        BitmapDrawable(resources, HabiticaIconsHelper.imageOfCheckmark(ContextCompat.getColor(context!!, R.color.green_50), 1f))
+    }
+    private val alertIcon: Drawable by lazy {
+        BitmapDrawable(resources, HabiticaIconsHelper.imageOfAlertIcon())
+    }
+    val username: String
+    get() = usernameEditText.text.toString()
+    val displayName: String
+    get() = displayNameEditText.text.toString()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -42,11 +72,64 @@ class WelcomeFragment : BaseFragment() {
 
         speechBubbleView?.animateText(context?.getString(R.string.welcome_text) ?: "")
 
-        heartIconView?.setImageBitmap(HabiticaIconsHelper.imageOfHeartLightBg())
-        expIconView?.setImageBitmap(HabiticaIconsHelper.imageOfExperience())
-        magicIconView?.setImageBitmap(HabiticaIconsHelper.imageOfMagic())
-        goldIconView?.setImageBitmap(HabiticaIconsHelper.imageOfGold())
-        gemIconView?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
+        super.onCreate(savedInstanceState)
+
+        displayNameEditText.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                displayNameVerificationEvents.onNext(p0.toString())
+            }
+        })
+        usernameEditText.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                usernameVerificationEvents.onNext(p0.toString())
+            }
+        })
+
+        compositeSubscription.add(displayNameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
+                .map { it.length in 1..30 }
+                .subscribe {
+                    if (it) {
+                        displayNameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
+                        issuesTextView.visibility = View.GONE
+                    } else {
+                        displayNameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, alertIcon, null)
+                        issuesTextView.visibility = View.VISIBLE
+                        issuesTextView.text = context?.getString(R.string.display_name_length_error)
+                    }
+                })
+        compositeSubscription.add(usernameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
+                .throttleLast(1, TimeUnit.SECONDS)
+                .flatMap { userRepository.verifyUsername(usernameEditText.text.toString()) }
+                .subscribe {
+                    if (it.isUsable) {
+                        usernameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
+                        issuesTextView.visibility = View.GONE
+                    } else {
+                        usernameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, alertIcon, null)
+                        issuesTextView.visibility = View.VISIBLE
+                        issuesTextView.text = it.issues.joinToString("\n")
+                    }
+                    nameValidEvents.onNext(it.isUsable)
+                })
+
+        compositeSubscription.add(userRepository.getUser().firstElement().subscribe {
+            displayNameEditText.setText(it.profile?.name)
+            displayNameVerificationEvents.onNext(it.profile?.name ?: "")
+            usernameEditText.setText(it.username)
+            usernameVerificationEvents.onNext(it.username ?: "")
+        })
     }
 
     override fun injectFragment(component: AppComponent) {

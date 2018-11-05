@@ -22,7 +22,7 @@
     android:layout_weight="1" >
 
     <TextView
-        android:id="@+android:id/title"
+        android:id="@android:id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -33,7 +33,7 @@
         tools:text="Title"/>
 
     <TextView
-        android:id="@+android:id/summary"
+        android:id="@android:id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@android:id/title"
@@ -42,7 +42,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?android:attr/textColorSecondary" />
 </RelativeLayout>
-    <LinearLayout android:id="@+android:id/widget_frame"
+    <LinearLayout android:id="@android:id/widget_frame"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"

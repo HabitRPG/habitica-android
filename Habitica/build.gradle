@@ -15,7 +15,7 @@ buildscript {
     }
     dependencies {
         classpath 'io.fabric.tools:gradle:1.25.4'
-        classpath('com.noveogroup.android:check:1.2.3') {
+        classpath('com.noveogroup.android:check:1.2.5') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
         }
@@ -128,10 +128,10 @@ dependencies {
     implementation 'com.nex3z:flow-layout:1.2.2'
 }
 
-
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
+
 
     defaultConfig {
         minSdkVersion 15
@@ -139,6 +139,9 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STORE", "\"google\""
         multiDexEnabled true
+
+        versionCode 2004
+        versionName "1.6"
     }
 
     lintOptions {

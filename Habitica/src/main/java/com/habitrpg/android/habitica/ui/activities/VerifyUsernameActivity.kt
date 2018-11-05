@@ -76,10 +76,10 @@ class VerifyUsernameActivity: BaseActivity() {
             }
 
         })
-        verificationEvents.toFlowable(BackpressureStrategy.DROP)
+        compositeSubscription.add(verificationEvents.toFlowable(BackpressureStrategy.DROP)
                 .throttleLast(1, TimeUnit.SECONDS)
                 .flatMap { userRepository.verifyUsername(usernameEditText.text.toString()) }
-                .subscribe(Consumer {
+                .subscribe {
                     if (it.isUsable) {
                         usernameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
                         issuesTextView.visibility = View.GONE
@@ -94,11 +94,11 @@ class VerifyUsernameActivity: BaseActivity() {
 
     private fun confirmNames() {
         confirmUsernameButton.isEnabled = false
-        userRepository.updateUser(null, "profile.name", displayNameEditText.text.toString())
+        compositeSubscription.add(userRepository.updateUser(null, "profile.name", displayNameEditText.text.toString())
                 .flatMap { userRepository.updateLoginName(usernameEditText.text.toString()).toFlowable() }
                 .doOnComplete { showConfirmationAndFinish() }
                 .doOnEach { confirmUsernameButton.isEnabled = true }
-                .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError())
+                .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun showConfirmationAndFinish() {

@@ -130,6 +130,23 @@
                 android:textColor="@color/white"
                 android:text="@string/confirm_username"
                 android:layout_marginTop="@dimen/spacing_large"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verification_pet"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:layout_marginLeft="@dimen/spacing_large"
+                android:layout_marginRight="@dimen/spacing_large"
+                android:textSize="12sp"
+                android:textColor="@color/gray_200"/>
+            <ImageView
+                android:layout_width="121dp"
+                android:layout_height="31dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/veteranpets2018_promo"/>
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"

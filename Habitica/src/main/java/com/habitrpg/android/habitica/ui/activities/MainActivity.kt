@@ -172,7 +172,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
-        Trace.beginSection("MainActivity.launch")
         super.onCreate(savedInstanceState)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -315,7 +314,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent, this, user)
         }
-        Trace.endSection()
     }
 
     override fun onPause() {
