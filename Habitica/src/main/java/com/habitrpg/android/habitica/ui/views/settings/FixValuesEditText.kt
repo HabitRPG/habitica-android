@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.views.settings
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
-import android.support.annotation.ColorRes
-import android.support.v4.content.ContextCompat
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout

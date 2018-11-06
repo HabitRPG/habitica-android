@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.DialogInterface
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView

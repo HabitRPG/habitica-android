@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
 import android.content.res.Resources
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -61,7 +61,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boole
     }
 
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var item: Item? = null
 
         private val titleTextView: TextView by bindView(R.id.titleTextView)

@@ -4,8 +4,8 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.preference.PreferenceDialogFragmentCompat
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceDialogFragmentCompat
+import androidx.preference.PreferenceFragmentCompat
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView

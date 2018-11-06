@@ -6,10 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +41,7 @@ import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+class ChatListFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -51,7 +51,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     lateinit var configManager: RemoteConfigManager
 
     private var isTavern: Boolean = false
-    internal var layoutManager: LinearLayoutManager? = null
+    internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
     internal var groupId: String? = null
     private var user: User? = null
     private var userId: String? = null
@@ -106,10 +106,10 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
         refreshLayout.setOnRefreshListener(this)
 
-        layoutManager = recyclerView.layoutManager as? LinearLayoutManager
+        layoutManager = recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
 
         if (layoutManager == null) {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
             recyclerView.layoutManager = layoutManager
         }
 
@@ -147,8 +147,8 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             }
         }
 
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 isScrolledToTop = layoutManager?.findFirstVisibleItemPosition() == 0
             }

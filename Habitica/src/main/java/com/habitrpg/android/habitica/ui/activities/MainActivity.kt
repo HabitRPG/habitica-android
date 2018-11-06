@@ -15,15 +15,15 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Trace
 import android.preference.PreferenceManager
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.TabLayout
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.FileProvider
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.Toolbar
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.tabs.TabLayout
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -215,7 +215,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     this@MainActivity.setUserData()
                 }, RxErrorHandler.handleEmptyError()))
 
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+        val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
 
         drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
 

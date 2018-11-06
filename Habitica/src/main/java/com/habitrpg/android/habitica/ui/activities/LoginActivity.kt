@@ -9,10 +9,10 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.preference.PreferenceManager
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.preference.PreferenceManager
 import android.text.InputType
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -349,7 +349,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun showValidationError(resourceMessageString: Int) {
         mProgressBar.visibility = View.GONE
-        android.support.v7.app.AlertDialog.Builder(this)
+        androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle(R.string.login_validation_error_title)
                 .setMessage(resourceMessageString)
                 .setNeutralButton(android.R.string.ok) { _, _ -> }

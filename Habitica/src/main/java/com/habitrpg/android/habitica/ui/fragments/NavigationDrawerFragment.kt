@@ -4,11 +4,11 @@ package com.habitrpg.android.habitica.ui.fragments
 import android.app.ActionBar
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.DialogFragment
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +62,7 @@ class NavigationDrawerFragment : DialogFragment() {
     @Inject
     lateinit var userRepository: UserRepository
 
-    private var drawerLayout: DrawerLayout? = null
+    private var drawerLayout: androidx.drawerlayout.widget.DrawerLayout? = null
     private var fragmentContainerView: View? = null
 
     private var mCurrentSelectedPosition = 0
@@ -171,7 +171,7 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         initializeMenuItems()
 
         subscriptions?.add(adapter.getItemSelectionEvents().subscribe(Consumer {
@@ -324,7 +324,7 @@ class NavigationDrawerFragment : DialogFragment() {
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    fun setUp(fragmentId: Int, drawerLayout: DrawerLayout) {
+    fun setUp(fragmentId: Int, drawerLayout: androidx.drawerlayout.widget.DrawerLayout) {
         fragmentContainerView = activity?.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
 

@@ -59,7 +59,7 @@ dependencies {
     implementation 'org.glassfish:javax.json:1.0.4'
     implementation 'com.google.android.gms:play-services:12.0.1'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'org.solovyev.android:checkout:1.2.1@aar'
     androidTestImplementation 'org.mockito:mockito-core:2.8.9'

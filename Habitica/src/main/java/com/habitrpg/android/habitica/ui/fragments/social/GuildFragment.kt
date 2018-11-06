@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -32,7 +32,7 @@ class GuildFragment : BaseMainFragment() {
     internal lateinit var socialRepository: SocialRepository
 
     var isMember: Boolean = false
-    private val viewPager: ViewPager? by bindView(R.id.viewPager)
+    private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
     private var guild: Group? = null
     private var guildInformationFragment: GroupInformationFragment? = null
     private var chatListFragment: ChatListFragment? = null
@@ -126,9 +126,9 @@ class GuildFragment : BaseMainFragment() {
 
         viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): Fragment? {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment? {
 
-                val fragment: Fragment?
+                val fragment: androidx.fragment.app.Fragment?
 
                 when (position) {
                     0 -> {
@@ -159,7 +159,7 @@ class GuildFragment : BaseMainFragment() {
             }
         }
 
-        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1 && this@GuildFragment.guild != null) {
                     chatListFragment?.setNavigatedToFragment()

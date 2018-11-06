@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +43,7 @@ class ShopFragment : BaseFragment() {
     @Inject
     lateinit var configManager: RemoteConfigManager
 
-    private var layoutManager: GridLayoutManager? = null
+    private var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
     private var gearCategories: MutableList<ShopCategory>? = null
 
@@ -71,8 +71,8 @@ class ShopFragment : BaseFragment() {
         }
 
         if (recyclerView.layoutManager == null) {
-            layoutManager = GridLayoutManager(context, 2)
-            layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
+            layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter?.getItemViewType(position) ?: 0 < 3) {
                         layoutManager?.spanCount ?: 1

@@ -6,7 +6,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.util.Pair
+import androidx.core.util.Pair
 import android.text.SpannableStringBuilder
 import android.widget.RemoteViews
 import android.widget.Toast

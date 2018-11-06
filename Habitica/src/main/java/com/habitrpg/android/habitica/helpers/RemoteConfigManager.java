@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.helpers;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

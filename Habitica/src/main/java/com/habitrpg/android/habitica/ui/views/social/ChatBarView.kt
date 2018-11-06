@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
 import android.os.Build
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.AppCompatEditText
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet

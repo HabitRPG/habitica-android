@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social.challenges
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.util.*
 
-class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
+class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : androidx.recyclerview.widget.RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
 
 
     private val entries: List<Group>
@@ -71,7 +71,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : Recycler
         }
     }
 
-    class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ChallengeViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         internal val checkbox: CheckBox by bindView(itemView, R.id.challenge_filter_group_checkbox)
 
         var group: Group? = null

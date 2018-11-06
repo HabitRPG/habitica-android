@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
-class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
     private val label: TextView by bindView(itemView, R.id.label)
     private val purchaseSetButton: Button? by bindView(itemView, R.id.purchaseSetButton)

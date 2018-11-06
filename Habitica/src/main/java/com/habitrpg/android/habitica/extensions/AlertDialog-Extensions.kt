@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.extensions
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import android.view.View
 import com.habitrpg.android.habitica.R
 

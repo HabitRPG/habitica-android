@@ -3,11 +3,11 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.Toolbar
+import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -36,7 +36,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     lateinit var userRepository: UserRepository
 
     internal val tabLayout: TabLayout by bindView(R.id.tab_layout)
-    internal val viewPager: ViewPager by bindView(R.id.viewPager)
+    internal val viewPager: androidx.viewpager.widget.ViewPager by bindView(R.id.viewPager)
 
     internal var fragments: MutableList<CheckoutFragment> = ArrayList()
     var activityCheckout: ActivityCheckout? = null
@@ -204,7 +204,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
 
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 val gemPurchasePosition = if (showSubscriptionPageFirst) 1 else 0
                 val fragment: CheckoutFragment = if (position == gemPurchasePosition) {
                     GemsPurchaseFragment()
@@ -221,7 +221,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
                 if (billingRequests != null) {
                     fragment.setBillingRequests(billingRequests)
                 }
-                return fragment as Fragment
+                return fragment as androidx.fragment.app.Fragment
             }
 
             override fun getCount(): Int {

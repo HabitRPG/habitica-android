@@ -4,9 +4,9 @@ import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.preference.PreferenceManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -28,7 +28,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    internal val recyclerView: RecyclerView by bindView(R.id.recyclerView)
+    internal val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.recyclerView)
     private var widgetId: Int = 0
     private var adapter: SkillTasksRecyclerViewAdapter? = null
 
@@ -55,10 +55,10 @@ class HabitButtonWidgetActivity : BaseActivity() {
             finish()
         }
 
-        var layoutManager: LinearLayoutManager? = recyclerView.layoutManager as? LinearLayoutManager
+        var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
 
         if (layoutManager == null) {
-            layoutManager = LinearLayoutManager(this)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
             recyclerView.layoutManager = layoutManager
         }

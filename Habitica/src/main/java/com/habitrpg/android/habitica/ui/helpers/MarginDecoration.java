@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.helpers;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.habitrpg.android.habitica.R;

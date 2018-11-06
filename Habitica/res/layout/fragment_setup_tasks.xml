@@ -33,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignTop="@id/avatar_background"
             android:layout_marginTop="6dp"/>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="230dp"
             android:layout_alignParentBottom="true"

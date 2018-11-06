@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +16,7 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
-class FAQOverviewRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FAQOverviewRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var activity: MainActivity? = null
     private var articles: List<FAQArticle> = emptyList()
@@ -28,7 +28,7 @@ class FAQOverviewRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_JUSTIN) {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.button_list_item, parent, false)
             ResetWalkthroughViewHolder(view)
@@ -39,7 +39,7 @@ class FAQOverviewRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == VIEW_TYPE_FAQ) {
             (holder as FAQArticleViewHolder).bind(articles[position - 1])
         }
@@ -61,7 +61,7 @@ class FAQOverviewRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         return resetWalkthroughEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    internal inner class FAQArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class FAQArticleViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val textView: TextView by bindView(itemView, R.id.textView)
 
@@ -85,7 +85,7 @@ class FAQOverviewRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private inner class ResetWalkthroughViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private inner class ResetWalkthroughViewHolder internal constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         init {
             val button = itemView as Button

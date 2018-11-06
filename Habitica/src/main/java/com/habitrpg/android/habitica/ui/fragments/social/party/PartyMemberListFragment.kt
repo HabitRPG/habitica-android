@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,8 +29,8 @@ class PartyMemberListFragment : BaseFragment() {
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    private val recyclerView: RecyclerView? by bindView(R.id.recyclerView)
-    private val refreshLayout: SwipeRefreshLayout? by bindView(R.id.refreshLayout)
+    private val recyclerView: androidx.recyclerview.widget.RecyclerView? by bindView(R.id.recyclerView)
+    private val refreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     private var adapter: PartyMemberRecyclerViewAdapter? = null
     private var partyId: String? = null
 
@@ -46,7 +46,7 @@ class PartyMemberListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView?.layoutManager = LinearLayoutManager(context)
+        recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         adapter = PartyMemberRecyclerViewAdapter(null, true)
         context.notNull {
             adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(it, userId) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }

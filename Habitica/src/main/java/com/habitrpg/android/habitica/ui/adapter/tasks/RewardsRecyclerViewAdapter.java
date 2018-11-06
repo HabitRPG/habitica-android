@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.functions.Action;
 import io.reactivex.subjects.PublishSubject;
 import io.realm.OrderedRealmCollection;
 

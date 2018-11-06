@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.members
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 
 class PlayerTier(val title: String, val id: Int) {

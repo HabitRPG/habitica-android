@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +49,7 @@ class ItemRecyclerFragment : BaseFragment() {
     var hatchingItem: Item? = null
     var feedingPet: Pet? = null
     var user: User? = null
-    internal var layoutManager: LinearLayoutManager? = null
+    internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -75,10 +75,10 @@ class ItemRecyclerFragment : BaseFragment() {
 
         val context = activity
 
-        layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
+        layoutManager = recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
 
         if (layoutManager == null) {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
 
             recyclerView?.layoutManager = layoutManager
         }
@@ -109,7 +109,7 @@ class ItemRecyclerFragment : BaseFragment() {
             }
         }
         activity.notNull {
-            recyclerView?.addItemDecoration(DividerItemDecoration(it, DividerItemDecoration.VERTICAL))
+            recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         }
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 

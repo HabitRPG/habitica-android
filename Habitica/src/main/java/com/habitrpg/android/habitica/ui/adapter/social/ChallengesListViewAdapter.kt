@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -84,7 +84,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         return openChallengeFragmentEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : RecyclerView.ViewHolder(itemView) {
+    class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val challengeName: EmojiTextView by bindView(R.id.challenge_name)
         private val challengeDescription: TextView by bindView(R.id.challenge_shorttext)

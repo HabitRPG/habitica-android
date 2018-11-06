@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +24,7 @@ import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
 
-class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -33,7 +33,7 @@ class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, SwipeRe
 
     private val guildsListView: LinearLayout? by bindView(R.id.my_guilds_listview)
     private val publicGuildsButton: Button? by bindView(R.id.publicGuildsButton)
-    private val swipeRefreshLayout: SwipeRefreshLayout? by bindView(R.id.chat_refresh_layout)
+    private val swipeRefreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? by bindView(R.id.chat_refresh_layout)
 
     private var guilds: List<Group>? = null
     private var guildIDs: ArrayList<String>? = null

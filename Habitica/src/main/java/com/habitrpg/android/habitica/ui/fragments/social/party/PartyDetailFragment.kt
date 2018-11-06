@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.party
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +47,7 @@ class PartyDetailFragment : BaseFragment() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    private val refreshLayout: SwipeRefreshLayout? by bindView(R.id.refreshLayout)
+    private val refreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     private val partyInvitationWrapper: ViewGroup? by bindView(R.id.party_invitation_wrapper)
     private val partyAcceptButton: Button? by bindView(R.id.party_invite_accept_button)
     private val partyRejectButton: Button? by bindView(R.id.party_invite_reject_button)

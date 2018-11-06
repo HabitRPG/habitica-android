@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
 import android.os.Build
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity

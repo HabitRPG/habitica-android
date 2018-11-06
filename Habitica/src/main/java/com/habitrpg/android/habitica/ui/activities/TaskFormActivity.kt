@@ -8,13 +8,13 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.TextInputLayout
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.preference.PreferenceManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import com.google.android.material.textfield.TextInputLayout
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.*
@@ -73,12 +73,12 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private val frequencyTitleTextView: TextView by bindView(R.id.frequency_title)
     private val dailyFrequencySpinner: Spinner by bindView(R.id.task_frequency_spinner)
     private val frequencyContainer: LinearLayout by bindView(R.id.task_frequency_container)
-    private val recyclerView: RecyclerView by bindView(R.id.checklist_recycler_view)
+    private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.checklist_recycler_view)
     private val newCheckListEditText: EmojiEditText by bindView(R.id.new_checklist)
     private val addChecklistItemButton: Button by bindView(R.id.add_checklist_button)
     private val remindersWrapper: LinearLayout by bindView(R.id.task_reminders_wrapper)
     private val newRemindersEditText: EditText by bindView(R.id.new_reminder_edittext)
-    private val remindersRecyclerView: RecyclerView by bindView(R.id.reminders_recycler_view)
+    private val remindersRecyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.reminders_recycler_view)
     private val emojiToggle0: ImageButton by bindView(R.id.emoji_toggle_btn0)
     private val emojiToggle1: ImageButton by bindView(R.id.emoji_toggle_btn1)
     private var emojiToggle2: ImageButton? = null
@@ -642,8 +642,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun createCheckListRecyclerView() {
         checklistAdapter = CheckListAdapter()
 
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
+        val llm = androidx.recyclerview.widget.LinearLayoutManager(this)
+        llm.orientation = androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 
         recyclerView.layoutManager = llm
         recyclerView.adapter = checklistAdapter
@@ -676,8 +676,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun createRemindersRecyclerView() {
         taskType.notNull { remindersAdapter = RemindersAdapter(it) }
 
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
+        val llm = androidx.recyclerview.widget.LinearLayoutManager(this)
+        llm.orientation = androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 
         remindersRecyclerView.layoutManager = llm
         remindersRecyclerView.adapter = remindersAdapter

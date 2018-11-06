@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
-import android.support.v7.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.events.ReminderDeleteEvent
 import com.habitrpg.android.habitica.models.tasks.RemindersItem

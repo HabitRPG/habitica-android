@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.view.View
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent

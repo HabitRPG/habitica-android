@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +33,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     private var activeCustomization: String? = null
 
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
-    internal var layoutManager: GridLayoutManager = GridLayoutManager(activity, 2)
+    internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -79,8 +79,8 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
         setGridSpanCount(view.width)
         if (recyclerView.layoutManager == null) {
-            layoutManager = GridLayoutManager(activity, 2)
-            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
+            layoutManager.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter.getItemViewType(position) == 0) {
                         layoutManager.spanCount

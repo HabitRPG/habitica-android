@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +47,7 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
         return taskSelectionEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class TaskViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         var task: Task? = null
 

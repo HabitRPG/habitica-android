@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.prefs;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.preference.DialogPreference;
+import androidx.preference.DialogPreference;
 import android.util.AttributeSet;
 
 public class TimePreference extends DialogPreference {

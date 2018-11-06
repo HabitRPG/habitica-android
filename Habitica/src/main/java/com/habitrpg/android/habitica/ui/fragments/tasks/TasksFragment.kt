@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.view.*
 import com.github.clans.fab.FloatingActionButton
 import com.github.clans.fab.FloatingActionMenu
@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 class TasksFragment : BaseMainFragment() {
 
-    var viewPager: ViewPager? = null
+    var viewPager: androidx.viewpager.widget.ViewPager? = null
     @Inject
     lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
@@ -176,7 +176,7 @@ class TasksFragment : BaseMainFragment() {
 
         viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
                     0 -> TaskRecyclerViewFragment.newInstance(context, user, Task.TYPE_HABIT)
                     1 -> TaskRecyclerViewFragment.newInstance(context, user, Task.TYPE_DAILY)
@@ -200,7 +200,7 @@ class TasksFragment : BaseMainFragment() {
             }
         }
 
-        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
             }

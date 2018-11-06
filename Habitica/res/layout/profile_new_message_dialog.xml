@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:baselineAligned="false">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="72dp"
@@ -36,7 +36,7 @@
                 android:textColor="@android:color/black"
                 android:inputType="textCapSentences|textMultiLine" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
 </LinearLayout>

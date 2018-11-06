@@ -3,12 +3,12 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.viewpager.widget.ViewPager
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -25,12 +25,12 @@ import com.viewpagerindicator.IconPagerAdapter
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
+class IntroActivity : BaseActivity(), View.OnClickListener, androidx.viewpager.widget.ViewPager.OnPageChangeListener {
 
     @Inject
     lateinit var contentRepository: InventoryRepository
 
-    private val pager: ViewPager by bindView(R.id.viewPager)
+    private val pager: androidx.viewpager.widget.ViewPager by bindView(R.id.viewPager)
     private val indicator: IconPageIndicator by bindView(R.id.view_pager_indicator)
     private val skipButton: Button by bindView(R.id.skipButton)
     private val finishButton: Button by bindView(R.id.finishButton)
@@ -99,9 +99,9 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
 
     }
 
-    private inner class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
+    private inner class PagerAdapter(fm: androidx.fragment.app.FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
 
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             val fragment = IntroFragment()
 
             when (position) {

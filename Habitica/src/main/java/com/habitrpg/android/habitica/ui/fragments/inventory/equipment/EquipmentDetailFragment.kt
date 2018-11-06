@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment
 
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,8 +48,8 @@ class EquipmentDetailFragment : BaseMainFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView.adapter = this.adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL))
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        recyclerView.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(getActivity(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
         type?.let { type -> inventoryRepository.getOwnedEquipment(type).firstElement().subscribe(Consumer<RealmResults<Equipment>> { this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError()) }

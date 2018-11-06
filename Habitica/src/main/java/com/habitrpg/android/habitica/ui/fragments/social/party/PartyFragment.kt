@@ -4,9 +4,9 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.view.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -35,11 +35,11 @@ class PartyFragment : BaseMainFragment() {
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
 
-    private val viewPager: ViewPager? by bindView(R.id.viewPager)
+    private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
     private var group: Group? = null
     private var partyMemberListFragment: PartyMemberListFragment? = null
     private var chatListFragment: ChatListFragment? = null
-    private var viewPagerAdapter: FragmentPagerAdapter? = null
+    private var viewPagerAdapter: androidx.fragment.app.FragmentPagerAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -233,9 +233,9 @@ class PartyFragment : BaseMainFragment() {
 
         viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): Fragment? {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment? {
 
-                val fragment: Fragment?
+                val fragment: androidx.fragment.app.Fragment?
 
                 when (position) {
                     0 -> {
@@ -290,7 +290,7 @@ class PartyFragment : BaseMainFragment() {
         }
         this.viewPager?.adapter = viewPagerAdapter
 
-        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1 && group != null) {
                     chatListFragment?.setNavigatedToFragment()

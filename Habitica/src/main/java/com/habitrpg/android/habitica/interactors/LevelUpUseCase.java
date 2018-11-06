@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.interactors;
 
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 

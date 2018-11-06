@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter
 
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -16,7 +16,7 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
 
-class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var tintColor: Int = tintColor
         set(value) {
@@ -61,7 +61,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val drawerItem = getItem(position)
         if (getItemViewType(position) == 0) {
             (holder as DrawerItemViewHolder?)?.tintColor = tintColor
@@ -80,7 +80,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
     override fun getItemViewType(position: Int): Int = if (getItem(position).isHeader) 1 else 0
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (viewType == 0) {
             DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
         } else {
@@ -88,7 +88,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         }
     }
 
-    class DrawerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class DrawerItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         var tintColor: Int = 0
         var backgroundTintColor: Int = 0
@@ -145,7 +145,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
         }
     }
 
-    class SectionHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SectionHeaderViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         var backgroundTintColor: Int = 0
 

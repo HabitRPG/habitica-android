@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.MenuItemCompat
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.view.MenuItemCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -30,14 +30,14 @@ import io.realm.RealmResults
 import javax.inject.Inject
 import javax.inject.Named
 
-class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener {
+class ChallengeListFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    private val swipeRefreshLayout: SwipeRefreshLayout? by bindView(R.id.refreshLayout)
+    private val swipeRefreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     private val recyclerView: RecyclerViewEmptySupport? by bindView(R.id.recyclerView)
     private val emptyView: View? by bindView(R.id.emptyView)
 
@@ -75,7 +75,7 @@ class ChallengeListFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshLi
 
         swipeRefreshLayout?.setOnRefreshListener(this)
 
-        recyclerView?.layoutManager = LinearLayoutManager(this.activity)
+        recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
         recyclerView?.adapter = challengeAdapter
         if (!viewUserChallengesOnly) {
             this.recyclerView?.setBackgroundResource(R.color.white)

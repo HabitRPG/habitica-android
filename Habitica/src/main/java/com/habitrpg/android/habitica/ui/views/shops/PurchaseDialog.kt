@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.views.shops
 
 import android.app.AlertDialog
 import android.content.Context
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View

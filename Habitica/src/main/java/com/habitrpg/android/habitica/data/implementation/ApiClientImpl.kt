@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import com.amplitude.api.Amplitude
 import com.google.gson.JsonSyntaxException

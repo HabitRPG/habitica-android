@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.interactors;
 
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.executors.PostExecutionThread;

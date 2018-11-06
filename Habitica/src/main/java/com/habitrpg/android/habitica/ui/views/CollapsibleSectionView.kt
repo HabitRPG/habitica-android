@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.views
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
