@@ -16,12 +16,8 @@ buildscript {
         classpath 'com.google.gms:google-services:4.0.1'
         classpath "io.realm:realm-gradle-plugin:5.7.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC4-3"
     }
-
-    // Exclude the version that the android plugin depends on.
-    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }
 
 apply plugin: 'io.gitlab.arturbosch.detekt'

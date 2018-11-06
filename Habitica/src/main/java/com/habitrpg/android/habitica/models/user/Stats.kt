@@ -1,15 +1,9 @@
 package com.habitrpg.android.habitica.models.user
 
 import android.content.Context
-import android.support.annotation.StringDef
-
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.HabitRpgClass
-
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -39,7 +33,6 @@ open class Stats : RealmObject() {
     var points: Int? = null
     var lvl: Int? = null
     @SerializedName("class")
-    @HabiticaClassTypes
     var habitClass: String? = null
     var gp: Double? = null
     var exp: Double? = null
@@ -73,18 +66,6 @@ open class Stats : RealmObject() {
                     buffs?._int ?: 0f > 0 ||
                     buffs?.per ?: 0f > 0
         }
-
-    @StringDef(Stats.STRENGTH, Stats.INTELLIGENCE, Stats.CONSTITUTION, Stats.PERCEPTION)
-    @Retention(RetentionPolicy.SOURCE)
-    annotation class StatsTypes
-
-    @StringDef(Stats.WARRIOR, Stats.MAGE, Stats.HEALER, Stats.ROGUE)
-    @Retention(RetentionPolicy.SOURCE)
-    annotation class HabiticaClassTypes
-
-    @StringDef(Stats.AUTO_ALLOCATE_FLAT, Stats.AUTO_ALLOCATE_CLASSBASED, Stats.AUTO_ALLOCATE_TASKBASED)
-    @Retention(RetentionPolicy.SOURCE)
-    annotation class AutoAllocationTypes
 
     fun getTranslatedClassName(context: Context): String {
         return when (habitClass) {

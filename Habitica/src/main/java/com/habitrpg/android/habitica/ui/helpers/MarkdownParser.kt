@@ -27,7 +27,7 @@ object MarkdownParser {
     private val processor = AndDown()
 
     private val regex = Pattern.compile("@(?:\\w+)")
-    private val colorSpan = UsernameSpan()
+    private val colorSpan = ForegroundColorSpan(Color.parseColor("#6133b4"))
 
     /**
      * Parses formatted markdown and returns it as styled CharSequence

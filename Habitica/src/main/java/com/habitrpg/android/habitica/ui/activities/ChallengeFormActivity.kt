@@ -13,7 +13,6 @@ import android.support.v7.widget.AppCompatCheckedTextView
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.*
 import android.widget.*
 import com.habitrpg.android.habitica.R
@@ -137,7 +136,7 @@ class ChallengeFormActivity : BaseActivity() {
                 createChallenge()
             }
 
-            observable.subscribe({
+            compositeSubscription.add(observable.subscribe({
                 dialog.dismiss()
                 savingInProgress = false
                 finish()
@@ -145,7 +144,7 @@ class ChallengeFormActivity : BaseActivity() {
                 dialog.dismiss()
                 savingInProgress = false
                 RxErrorHandler.reportError(throwable)
-            })
+            }))
         } else if (item.itemId == android.R.id.home) {
             finish()
             return true
@@ -229,7 +228,7 @@ class ChallengeFormActivity : BaseActivity() {
             fillControlsByChallenge()
         }
 
-        userRepository.getUser(userId).subscribe(Consumer { this.user = it }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer { this.user = it }, RxErrorHandler.handleEmptyError()))
         gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())
 
         challengeAddGemBtn.setOnClickListener { onAddGem() }
@@ -323,7 +322,7 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        socialRepository.getGroups("guild").subscribe(Consumer { groups ->
+        compositeSubscription.add(socialRepository.getGroups("guild").subscribe(Consumer { groups ->
             val mutableGroups = groups.toMutableList()
             if (groups.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
                 val tavern = Group()
@@ -334,7 +333,7 @@ class ChallengeFormActivity : BaseActivity() {
 
             locationAdapter.clear()
             locationAdapter.addAll(mutableGroups)
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
 
         challengeLocationSpinner.adapter = locationAdapter
         challengeLocationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -365,19 +364,19 @@ class ChallengeFormActivity : BaseActivity() {
         addReward.notNull { taskList.add(it) }
 
         challengeTasks.setTasks(taskList)
-        challengeTasks.addItemObservable().subscribe(Consumer { t ->
+        compositeSubscription.add(challengeTasks.addItemObservable().subscribe(Consumer { t ->
             when (t) {
                 addHabit -> openNewTaskActivity(Task.TYPE_HABIT, null)
                 addDaily -> openNewTaskActivity(Task.TYPE_DAILY, null)
                 addTodo -> openNewTaskActivity(Task.TYPE_TODO, null)
                 addReward -> openNewTaskActivity(Task.TYPE_REWARD, null)
             }
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
 
         createChallengeTaskList.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 // Stop only scrolling.
-                return rv?.scrollState == RecyclerView.SCROLL_STATE_DRAGGING
+                return rv.scrollState == RecyclerView.SCROLL_STATE_DRAGGING
             }
         })
         createChallengeTaskList.adapter = challengeTasks
@@ -493,15 +492,15 @@ class ChallengeFormActivity : BaseActivity() {
     private inner class GroupArrayAdapter internal constructor(context: Context) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val checkedTextView = super.getView(position, convertView, parent) as AppCompatTextView
-            checkedTextView.text = getItem(position).name
-            return checkedTextView
+            val checkedTextView = super.getView(position, convertView, parent) as? AppCompatTextView
+            checkedTextView?.text = getItem(position)?.name
+            return checkedTextView ?: View(context)
         }
 
         override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val checkedTextView = super.getDropDownView(position, convertView, parent) as AppCompatCheckedTextView
-            checkedTextView.text = getItem(position).name
-            return checkedTextView
+            val checkedTextView = super.getDropDownView(position, convertView, parent) as? AppCompatCheckedTextView
+            checkedTextView?.text = getItem(position)?.name
+            return checkedTextView ?: View(context)
         }
     }
 

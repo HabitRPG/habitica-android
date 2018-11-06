@@ -66,7 +66,7 @@ interface UserRepository : BaseRepository {
     fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void>
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 
-    fun allocatePoint(user: User?, @Stats.StatsTypes stat: String): Flowable<Stats>
+    fun allocatePoint(user: User?, stat: String): Flowable<Stats>
 
     fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
 }

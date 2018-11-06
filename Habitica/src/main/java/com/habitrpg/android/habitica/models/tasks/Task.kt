@@ -31,7 +31,6 @@ open class Task : RealmObject, Parcelable {
     var notes: String? = null
     @TaskTypes
     var type: String = ""
-    @Stats.StatsTypes
     var attribute: String? = Stats.STRENGTH
     var value: Double = 0.0
     var tags: RealmList<Tag>? = RealmList()
