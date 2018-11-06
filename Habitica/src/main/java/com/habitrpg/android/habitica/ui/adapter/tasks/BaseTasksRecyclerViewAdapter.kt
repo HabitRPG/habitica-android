@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +22,7 @@ import java.util.*
 import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskType: String, private val taskFilterHelper: TaskFilterHelper?, private val layoutResource: Int,
-                                                                     newContext: Context, private val userID: String?) : RecyclerView.Adapter<VH>() {
+                                                                     newContext: Context, private val userID: String?) : androidx.recyclerview.widget.RecyclerView.Adapter<VH>() {
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
     @Inject

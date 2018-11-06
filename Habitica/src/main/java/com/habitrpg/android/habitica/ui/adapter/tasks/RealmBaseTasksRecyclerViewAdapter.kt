@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ import io.realm.OrderedRealmCollectionChangeListener
 import io.realm.RealmList
 import io.realm.RealmResults
 
-abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : RecyclerView.Adapter<VH>(), TaskRecyclerViewAdapter {
+abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : androidx.recyclerview.widget.RecyclerView.Adapter<VH>(), TaskRecyclerViewAdapter {
     private var updateOnModification: Boolean = false
     private var ignoreUpdates: Boolean = false
     private val listener: OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> by lazy {
@@ -64,14 +64,14 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         filter()
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         if (hasAutoUpdates && isDataValid) {
             addListener(data)
         }
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+    override fun onDetachedFromRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         if (hasAutoUpdates && isDataValid) {
 

@@ -213,7 +213,7 @@
         </service>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="@string/content_provider"
             android:grantUriPermissions="true"
             android:exported="false">

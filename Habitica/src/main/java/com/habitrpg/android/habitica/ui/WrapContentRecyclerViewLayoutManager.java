@@ -1,7 +1,9 @@
 package com.habitrpg.android.habitica.ui;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
@@ -10,7 +12,7 @@ import com.habitrpg.android.habitica.BuildConfig;
 /**
  * http://stackoverflow.com/a/29945693/1315039
  */
-public class WrapContentRecyclerViewLayoutManager extends android.support.v7.widget.LinearLayoutManager {
+public class WrapContentRecyclerViewLayoutManager extends LinearLayoutManager {
 
     private static final int CHILD_WIDTH = 0;
     private static final int CHILD_HEIGHT = 1;

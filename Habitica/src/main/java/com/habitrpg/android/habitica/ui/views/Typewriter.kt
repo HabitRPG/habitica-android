@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
 import android.os.Handler
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -12,7 +12,7 @@ import android.util.AttributeSet
 import com.habitrpg.android.habitica.R
 
 // http://stackoverflow.com/a/6700718/1315039
-class Typewriter : android.support.v7.widget.AppCompatTextView {
+class Typewriter : androidx.appcompat.widget.AppCompatTextView {
 
     private var stringBuilder: SpannableStringBuilder? = null
     private var visibleSpan: Any? = null

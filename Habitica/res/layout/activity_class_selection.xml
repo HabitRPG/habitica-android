@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/healerWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,8 +39,8 @@
                         style="@style/CardText"/>
                 </LinearLayout>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:id="@+id/mageWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,8 +71,8 @@
                         style="@style/CardText"/>
                 </LinearLayout>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:id="@+id/rogueWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,8 +103,8 @@
                         style="@style/CardText"/>
                 </LinearLayout>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:id="@+id/warriorWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,8 +136,8 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:id="@+id/optOutWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -159,6 +159,6 @@
                         android:text="@string/opt_out_description"
                         style="@style/CardText"/>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>

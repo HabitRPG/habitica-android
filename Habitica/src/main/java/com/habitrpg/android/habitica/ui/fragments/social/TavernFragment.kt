@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +65,7 @@ class TavernFragment : BaseMainFragment() {
         }
 
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
-            override fun getItem(position: Int): Fragment {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 return when (position) {
                     0 -> {
                         tavernDetailFragment

@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
-    <android.support.v4.widget.DrawerLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:gravity="center">
 
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,13 +26,13 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="false">
 
-                <android.support.design.widget.CollapsingToolbarLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
 
                     </LinearLayout>
 
-                    <android.support.v7.widget.Toolbar
+                    <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -159,9 +159,9 @@
 
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/Theme.AppCompat.Light" />
-                </android.support.design.widget.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                <android.support.design.widget.TabLayout
+                <com.google.android.material.tabs.TabLayout
                     android:id="@+id/detail_tabs"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
@@ -178,7 +178,7 @@
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@android:color/white"
                     app:tabMode="fixed" />
-            </android.support.design.widget.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
             <FrameLayout
                 android:id="@+id/floating_menu_wrapper"
@@ -191,6 +191,6 @@
                 android:layout_marginRight="8dp"
                 app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior" />
 
-        </android.support.design.widget.CoordinatorLayout>
-    </android.support.v4.widget.DrawerLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </FrameLayout>

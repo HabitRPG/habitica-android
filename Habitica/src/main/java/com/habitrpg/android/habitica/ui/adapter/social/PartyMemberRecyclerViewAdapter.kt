@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -42,7 +42,7 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
         return userClickedEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    inner class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MemberViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         
         private val avatarView: AvatarView by bindView(R.id.avatarView)
         private val displayNameTextView: UsernameLabel by bindView(R.id.display_name_textview)

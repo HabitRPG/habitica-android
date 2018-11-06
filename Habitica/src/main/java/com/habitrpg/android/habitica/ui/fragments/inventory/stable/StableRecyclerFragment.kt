@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +41,7 @@ class StableRecyclerFragment : BaseFragment() {
     var itemType: String? = null
     var itemTypeText: String? = null
     var user: User? = null
-    internal var layoutManager: GridLayoutManager? = null
+    internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -70,8 +70,8 @@ class StableRecyclerFragment : BaseFragment() {
         recyclerView?.setEmptyView(emptyView)
         emptyView?.text = getString(R.string.empty_items, itemTypeText)
 
-        layoutManager = GridLayoutManager(activity, 2)
-        layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+        layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
+        layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter?.getItemViewType(position) == 0) {
                     layoutManager?.spanCount ?: 1

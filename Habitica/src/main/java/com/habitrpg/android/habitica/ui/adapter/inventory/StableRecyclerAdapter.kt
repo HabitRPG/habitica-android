@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecy
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 
-class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var itemType: String? = null
     var activity: MainActivity? = null
@@ -27,7 +27,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             when (viewType) {
                 0 -> {
                     val view = LayoutInflater.from(parent.context).inflate(R.layout.customization_section_header, parent, false)
@@ -39,7 +39,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
             }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val obj = this.itemList[position]
         if (obj.javaClass == String::class.java) {
             (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
@@ -59,7 +59,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = itemList.size
 
-    internal inner class StableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class StableViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var animal: Animal? = null
 
         private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)

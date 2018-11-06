@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.adapter
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +25,7 @@ import io.reactivex.subjects.PublishSubject
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var userSize: String? = null
     var hairColor: String? = null
@@ -58,7 +58,7 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (viewType == 0) {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.customization_section_header, parent, false)
@@ -76,7 +76,7 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val obj = customizationList[position]
         if (obj.javaClass == CustomizationSet::class.java) {
             (holder as SectionViewHolder).bind(obj as CustomizationSet)
@@ -134,9 +134,9 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         return unlockSetEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    internal inner class CustomizationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class CustomizationViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        private val cardView: CardView by bindView(itemView, R.id.card_view)
+        private val cardView: androidx.cardview.widget.CardView by bindView(itemView, R.id.card_view)
         private val linearLayout: RelativeLayout by bindView(itemView, R.id.linearLayout)
         private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)
         private val purchaseOverlay: View by bindView(itemView, R.id.purchaseOverlay)
@@ -208,7 +208,7 @@ class CustomizationRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    internal inner class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val label: TextView by bindView(itemView, R.id.label)
         private val purchaseSetButton: Button by bindView(itemView, R.id.purchaseSetButton)

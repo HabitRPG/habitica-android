@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import net.pherth.android.emoji_library.EmojiEditText
 import java.util.*
 
-class CheckListAdapter : RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>(), ItemTouchHelperAdapter {
+class CheckListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>(), ItemTouchHelperAdapter {
 
     private val items = ArrayList<ChecklistItem>()
 
@@ -62,7 +62,7 @@ class CheckListAdapter : RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>()
         notifyItemMoved(fromPosition, toPosition)
     }
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder, View.OnClickListener {
+    inner class ItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder, View.OnClickListener {
 
         internal val textWatcher: ChecklistTextWatcher = ChecklistTextWatcher()
         internal val checkListTextView: EmojiEditText by bindView(itemView, R.id.item_edittext)

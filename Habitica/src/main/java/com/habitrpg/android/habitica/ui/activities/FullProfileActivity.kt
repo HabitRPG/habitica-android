@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.AppCompatImageView
-import android.support.v7.widget.CardView
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import android.widget.*
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -60,21 +60,21 @@ class FullProfileActivity : BaseActivity() {
     private val avatarView: AvatarView by bindView(R.id.avatarView)
     private val copyUsernameButton: Button by bindView(R.id.copy_username)
     private val usernameText: TextView by bindView(R.id.username)
-    private val attributesCardView: CardView by bindView(R.id.profile_attributes_card)
+    private val attributesCardView: androidx.cardview.widget.CardView by bindView(R.id.profile_attributes_card)
     private val attributesTableLayout: TableLayout by bindView(R.id.attributes_table)
     private val attributesCollapseIcon: AppCompatImageView by bindView(R.id.attributes_collapse_icon)
     private val equipmentTableLayout: TableLayout by bindView(R.id.equipment_table)
     private val costumeTableLayout: TableLayout by bindView(R.id.costume_table)
-    private val costumeCard: CardView by bindView(R.id.profile_costume_card)
+    private val costumeCard: androidx.cardview.widget.CardView by bindView(R.id.profile_costume_card)
     private val avatar_with_bars: View by bindView(R.id.avatar_with_bars)
     private val fullprofile_scrollview: ScrollView by bindView(R.id.fullprofile_scrollview)
     private val petsFoundCount: TextView by bindView(R.id.profile_pets_found_count)
     private val mountsTamedCount: TextView by bindView(R.id.profile_mounts_tamed_count)
     private val currentPetDrawee: SimpleDraweeView by bindView(R.id.current_pet_drawee)
     private val currentMountDrawee: SimpleDraweeView by bindView(R.id.current_mount_drawee)
-    private val achievementCard: CardView by bindView(R.id.profile_achievements_card)
+    private val achievementCard: androidx.cardview.widget.CardView by bindView(R.id.profile_achievements_card)
     private val achievementProgress: ProgressBar by bindView(R.id.avatar_achievements_progress)
-    private val achievementGroupList: RecyclerView by bindView(R.id.recyclerView)
+    private val achievementGroupList: androidx.recyclerview.widget.RecyclerView by bindView(R.id.recyclerView)
     private val joinedView: TextView by bindView(R.id.joined_view)
     private val lastLoginView: TextView by bindView(R.id.last_login_view)
     private val totalCheckinsView: TextView by bindView(R.id.total_checkins_view)
@@ -242,8 +242,8 @@ class FullProfileActivity : BaseActivity() {
         val adapter = AchievementAdapter()
         adapter.setItemList(items)
 
-        val layoutManager = GridLayoutManager(this, 3)
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+        val layoutManager = androidx.recyclerview.widget.GridLayoutManager(this, 3)
+        layoutManager.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter.getItemViewType(position) == 0) {
                     layoutManager.spanCount

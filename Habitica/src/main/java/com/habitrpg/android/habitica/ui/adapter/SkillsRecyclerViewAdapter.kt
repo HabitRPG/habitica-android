@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.adapter
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import org.greenrobot.eventbus.EventBus
 
-class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
+class SkillsRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
 
     var mana: Double = 0.toDouble()
      set(value) {
@@ -46,7 +46,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         return skillList.size
     }
 
-    inner class SkillViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class SkillViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val magicDrawable: Drawable
         private val skillImageView: SimpleDraweeView by bindView(R.id.skill_image)

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.res.Resources
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -39,7 +39,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
         data.notNull { holder.bind(it[position]) }
     }
 
-    inner class MountViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class MountViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var animal: Mount? = null
 
         private val imageView: SimpleDraweeView by bindView(R.id.imageView)

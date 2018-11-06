@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 
-class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+class ShopItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     private val imageView: SimpleDraweeView by bindView(itemView, R.id.imageView)
     private val buyButton: View by bindView(itemView, R.id.buyButton)

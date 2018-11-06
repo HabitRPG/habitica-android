@@ -5,13 +5,13 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.content.res.AppCompatResources
-import android.support.v7.preference.PreferenceManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.core.content.ContextCompat
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.preference.PreferenceManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -41,7 +41,7 @@ import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import javax.inject.Inject
 
-class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
+class SetupActivity : BaseActivity(), androidx.viewpager.widget.ViewPager.OnPageChangeListener {
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -247,9 +247,9 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
     }
 
-    private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
+    private inner class ViewPageAdapter(fm: androidx.fragment.app.FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
 
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             return when (position) {
                 1 -> {
                     val fragment = AvatarSetupFragment()

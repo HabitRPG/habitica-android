@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +40,7 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
         }
     }
 
-    inner class GearViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class GearViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val gearContainer: View by bindView(itemView, R.id.gear_container)
         private val gearNameTextView: TextView by bindView(itemView, R.id.gear_text)

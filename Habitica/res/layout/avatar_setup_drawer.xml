@@ -13,7 +13,7 @@
             android:background="@drawable/avatar_customization_subcategory_bg"
             android:layout_alignParentTop="true">
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
                 android:id="@+id/subcategory_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
                 app:tabPaddingStart="24dp"
                 />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/customization_list"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"

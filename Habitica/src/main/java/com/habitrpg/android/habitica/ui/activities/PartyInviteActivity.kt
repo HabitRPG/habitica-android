@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -37,7 +37,7 @@ class PartyInviteActivity : BaseActivity() {
     lateinit var userRepository: UserRepository
 
     internal val tabLayout: TabLayout by bindView(R.id.tab_layout)
-    internal val viewPager: ViewPager by bindView(R.id.viewPager)
+    internal val viewPager: androidx.viewpager.widget.ViewPager by bindView(R.id.viewPager)
 
     internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
     private var userIdToInvite: String? = null
@@ -98,7 +98,7 @@ class PartyInviteActivity : BaseActivity() {
 
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
 
                 val fragment = PartyInviteFragment()
                 fragment.isEmailInvite = position == 0

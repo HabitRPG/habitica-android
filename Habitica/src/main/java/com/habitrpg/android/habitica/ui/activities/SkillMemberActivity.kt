@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -16,7 +16,7 @@ import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class SkillMemberActivity : BaseActivity() {
-    private val recyclerView: RecyclerView by bindView(R.id.recyclerView)
+    private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.recyclerView)
 
     private var viewAdapter: PartyMemberRecyclerViewAdapter? = null
 
@@ -39,7 +39,7 @@ class SkillMemberActivity : BaseActivity() {
     }
 
     private fun loadMemberList() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         viewAdapter = PartyMemberRecyclerViewAdapter(null, true)
         viewAdapter?.getUserClickedEvents()?.subscribe(Consumer { userId ->
             val resultIntent = Intent()

@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
 
-class FadingViewPager : ViewPager {
+class FadingViewPager : androidx.viewpager.widget.ViewPager {
     var disableFading: Boolean = false
 
     constructor(context: Context) : super(context) {

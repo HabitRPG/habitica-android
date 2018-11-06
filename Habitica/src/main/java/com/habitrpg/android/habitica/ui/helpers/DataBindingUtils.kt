@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.helpers
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.net.Uri
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation

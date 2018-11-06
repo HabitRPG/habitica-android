@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.SearchView
 import android.view.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -29,7 +29,7 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
 
     var memberGuildIDs: List<String>? = null
 
-    private val recyclerView: RecyclerView? by bindView(R.id.recyclerView)
+    private val recyclerView: androidx.recyclerview.widget.RecyclerView? by bindView(R.id.recyclerView)
 
     private var viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
 
@@ -47,8 +47,8 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
 
         resetViews()
 
-        recyclerView?.layoutManager = LinearLayoutManager(this.activity)
-        recyclerView?.addItemDecoration(DividerItemDecoration(getActivity()!!, DividerItemDecoration.VERTICAL))
+        recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
+        recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(getActivity()!!, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         viewAdapter.setMemberGuildIDs(this.memberGuildIDs?.toMutableList() ?: mutableListOf<String>())
         viewAdapter.apiClient = this.apiClient
         viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)

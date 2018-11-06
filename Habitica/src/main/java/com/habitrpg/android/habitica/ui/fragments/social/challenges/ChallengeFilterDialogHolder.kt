@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -17,7 +17,7 @@ import java.util.*
 
 internal class ChallengeFilterDialogHolder private constructor(view: View, private val context: Activity) {
 
-    private val groupRecyclerView: RecyclerView? by bindView(view, R.id.challenge_filter_recycler_view)
+    private val groupRecyclerView: androidx.recyclerview.widget.RecyclerView? by bindView(view, R.id.challenge_filter_recycler_view)
     private val allButton: Button? by bindView(view, R.id.challenge_filter_button_all)
     private val noneButton: Button? by bindView(view, R.id.challenge_filter_button_none)
     private val checkboxOwned: CheckBox? by bindView(view, R.id.challenge_filter_owned)
@@ -51,7 +51,7 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
     }
 
     private fun fillChallengeGroups() {
-        this.groupRecyclerView?.layoutManager = LinearLayoutManager(context)
+        this.groupRecyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         adapter = ChallengesFilterRecyclerViewAdapter(getGroups(challengesViewed))
         if (currentFilter != null && currentFilter?.showByGroups != null) {
             adapter?.selectAll(currentFilter?.showByGroups ?: emptyList())

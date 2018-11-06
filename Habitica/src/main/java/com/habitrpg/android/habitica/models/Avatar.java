@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Stats;

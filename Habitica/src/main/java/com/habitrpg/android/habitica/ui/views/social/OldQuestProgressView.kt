@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.views.social
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.RectF
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View

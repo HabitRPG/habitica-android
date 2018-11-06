@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.ImageViewCompat
-import android.support.v7.widget.AppCompatImageButton
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
+import androidx.appcompat.widget.AppCompatImageButton
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater

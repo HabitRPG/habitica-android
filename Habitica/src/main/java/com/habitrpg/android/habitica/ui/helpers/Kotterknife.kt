@@ -3,11 +3,11 @@ package com.habitrpg.android.habitica.ui.helpers
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.support.annotation.ColorRes
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView.ViewHolder
+import androidx.annotation.ColorRes
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import android.view.View
 import java.util.*
 import kotlin.properties.ReadOnlyProperty
@@ -22,8 +22,8 @@ fun <V : View> Activity.bindView(@IdRes id: Int)
 fun <V : View> Dialog.bindView(@IdRes id: Int)
         : ReadOnlyProperty<Dialog, V> = required(id, viewFinder)
 
-fun <V : View> Fragment.bindView(@IdRes id: Int)
-        : ReadOnlyProperty<Fragment, V> = required(id, viewFinder)
+fun <V : View> androidx.fragment.app.Fragment.bindView(@IdRes id: Int)
+        : ReadOnlyProperty<androidx.fragment.app.Fragment, V> = required(id, viewFinder)
 
 fun <V : View> ViewHolder.bindView(@IdRes id: Int)
         : ReadOnlyProperty<ViewHolder, V> = required(id, viewFinder)
@@ -37,8 +37,8 @@ fun <V : View> Activity.bindOptionalView(@IdRes id: Int)
 fun <V : View> Dialog.bindOptionalView(@IdRes id: Int)
         : ReadOnlyProperty<Dialog, V?> = optional(id, viewFinder)
 
-fun <V : View> Fragment.bindOptionalView(@IdRes id: Int)
-        : ReadOnlyProperty<Fragment, V?> = optional(id, viewFinder)
+fun <V : View> androidx.fragment.app.Fragment.bindOptionalView(@IdRes id: Int)
+        : ReadOnlyProperty<androidx.fragment.app.Fragment, V?> = optional(id, viewFinder)
 
 fun <V : View> ViewHolder.bindOptionalView(@IdRes id: Int)
         : ReadOnlyProperty<ViewHolder, V?> = optional(id, viewFinder)
@@ -59,7 +59,7 @@ fun bindColor(context: Context, @ColorRes res: Int) : Lazy<Int> {
     return lazy(LazyThreadSafetyMode.NONE) { ContextCompat.getColor(context, res) }
 }
 
-fun Fragment.resetViews() {
+fun androidx.fragment.app.Fragment.resetViews() {
     LazyRegistry.reset(this)
 }
 
@@ -70,7 +70,7 @@ private val Activity.viewFinder: Activity.(Int) -> View?
     get() = { findViewById(it) }
 private val Dialog.viewFinder: Dialog.(Int) -> View?
     get() = { findViewById(it) }
-private val Fragment.viewFinder: Fragment.(Int) -> View?
+private val androidx.fragment.app.Fragment.viewFinder: androidx.fragment.app.Fragment.(Int) -> View?
     get() = { view?.findViewById(it) }
 private val ViewHolder.viewFinder: ViewHolder.(Int) -> View?
     get() = { itemView.findViewById(it) }

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Point
 import android.os.Build
-import android.support.annotation.IntRange
+import androidx.annotation.IntRange
 import android.util.DisplayMetrics
 import android.view.Display
 import android.view.KeyCharacterMap

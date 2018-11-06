@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.views
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -11,7 +11,7 @@ import android.view.View
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 
-class CurrencyView : android.support.v7.widget.AppCompatTextView {
+class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     var lightBackground: Boolean = false
         set(value) {
             field = value

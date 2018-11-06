@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -104,7 +104,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         }
     }
 
-    class GuildViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class GuildViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val nameTextView: TextView by bindView(R.id.nameTextView)
         private val memberCountTextView: TextView by bindView(R.id.memberCountTextView)

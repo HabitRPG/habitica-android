@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

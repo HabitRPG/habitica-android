@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.faq
 
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +25,7 @@ class FAQOverviewFragment : BaseMainFragment() {
     @Inject
     lateinit var faqRepository: FAQRepository
 
-    private val recyclerView: RecyclerView? by bindView(R.id.recyclerView)
+    private val recyclerView: androidx.recyclerview.widget.RecyclerView? by bindView(R.id.recyclerView)
 
     internal var adapter: FAQOverviewRecyclerAdapter? = null
 
@@ -43,8 +43,8 @@ class FAQOverviewFragment : BaseMainFragment() {
         adapter = FAQOverviewRecyclerAdapter()
         adapter?.getResetWalkthroughEvents()?.subscribe(Consumer { this.userRepository.resetTutorial(user) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
         adapter?.activity = activity
-        recyclerView?.layoutManager = LinearLayoutManager(activity)
-        activity.notNull { recyclerView?.addItemDecoration(DividerItemDecoration(it, DividerItemDecoration.VERTICAL)) }
+        recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        activity.notNull { recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)) }
         recyclerView?.adapter = adapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadArticles()

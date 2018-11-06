@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AlertDialog
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.appcompat.app.AlertDialog
 import android.view.*
 import android.widget.EditText
 import android.widget.TextView
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_inbox.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository

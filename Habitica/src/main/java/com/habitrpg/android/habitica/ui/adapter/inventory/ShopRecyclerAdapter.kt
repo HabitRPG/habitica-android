@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
@@ -24,7 +24,7 @@ import com.habitrpg.android.habitica.ui.views.NPCBannerView
 import org.greenrobot.eventbus.EventBus
 
 
-class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
@@ -84,7 +84,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
             when (viewType) {
                 0 -> {
                     val view = parent.inflate(R.layout.shop_header)
@@ -106,7 +106,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
             }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val obj = getItem(position)
         if (obj != null) {
             when (obj.javaClass) {
@@ -222,7 +222,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.notifyDataSetChanged()
     }
 
-    internal class ShopHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    internal class ShopHeaderViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val descriptionView: TextView by bindView(itemView, R.id.descriptionView)
         private val npcBannerView: NPCBannerView by bindView(itemView, R.id.npcBannerView)
@@ -243,7 +243,7 @@ class ShopRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
-    class EmptyStateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class EmptyStateViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
         private val subscribeButton: Button? by bindView(itemView, R.id.subscribeButton)
         private val textView: TextView? by bindView(itemView, R.id.textView)
         init {

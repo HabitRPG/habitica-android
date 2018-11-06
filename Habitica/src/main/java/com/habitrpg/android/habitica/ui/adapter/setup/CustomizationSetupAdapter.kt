@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.adapter.setup
 
 import android.content.Context
 import android.graphics.PorterDuff
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
+internal class CustomizationSetupAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
 
     var userSize: String? = null
     var user: User? = null
@@ -75,7 +75,7 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
         return false
     }
 
-    internal inner class CustomizationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class CustomizationViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val imageView: ImageView by bindView(R.id.imageView)
         private val textView: TextView by bindView(R.id.textView)

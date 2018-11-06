@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +22,8 @@ class ChallengesOverviewFragment : BaseMainFragment() {
     @Inject
     internal lateinit var challengeRepository: ChallengeRepository
 
-    private val viewPager: ViewPager? by bindView(R.id.viewPager)
-    var statePagerAdapter: FragmentStatePagerAdapter? = null
+    private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
+    var statePagerAdapter: androidx.fragment.app.FragmentStatePagerAdapter? = null
     private var userChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
     private var availableChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
 
@@ -61,7 +61,7 @@ class ChallengesOverviewFragment : BaseMainFragment() {
 
         statePagerAdapter = object : FragmentStatePagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): Fragment? {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment? {
                 val fragment = Fragment()
 
                 return when (position) {

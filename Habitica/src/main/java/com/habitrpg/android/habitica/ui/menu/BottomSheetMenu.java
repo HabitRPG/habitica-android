@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.menu;
 
 import android.content.Context;
-import android.support.design.widget.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;

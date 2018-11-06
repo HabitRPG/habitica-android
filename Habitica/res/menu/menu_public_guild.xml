@@ -10,5 +10,5 @@
             android:orderInCategory="103"
             android:visible="true"
             app:showAsAction="always"
-            app:actionViewClass="android.support.v7.widget.SearchView"/>
+            app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 </menu>

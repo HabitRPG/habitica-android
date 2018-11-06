@@ -6,13 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.design.widget.TextInputLayout
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.AppCompatCheckedTextView
-import android.support.v7.widget.AppCompatTextView
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.textfield.TextInputLayout
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatCheckedTextView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import android.widget.*
 import com.habitrpg.android.habitica.R
@@ -51,7 +51,7 @@ class ChallengeFormActivity : BaseActivity() {
     private val challengeLocationSpinner: Spinner by bindView(R.id.challenge_location_spinner)
     private val challengeAddGemBtn: Button by bindView(R.id.challenge_add_gem_btn)
     private val challengeRemoveGemBtn: Button by bindView(R.id.challenge_remove_gem_btn)
-    private val createChallengeTaskList: RecyclerView by bindView(R.id.create_challenge_task_list)
+    private val createChallengeTaskList: androidx.recyclerview.widget.RecyclerView by bindView(R.id.create_challenge_task_list)
     private val gemIconView: ImageView by bindView(R.id.gem_icon)
     private val challengeCreationViews: ViewGroup by bindView(R.id.challenge_creation_views)
 
@@ -373,14 +373,14 @@ class ChallengeFormActivity : BaseActivity() {
             }
         }, RxErrorHandler.handleEmptyError()))
 
-        createChallengeTaskList.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+        createChallengeTaskList.addOnItemTouchListener(object : androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
+            override fun onInterceptTouchEvent(rv: androidx.recyclerview.widget.RecyclerView, e: MotionEvent): Boolean {
                 // Stop only scrolling.
-                return rv.scrollState == RecyclerView.SCROLL_STATE_DRAGGING
+                return rv.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
             }
         })
         createChallengeTaskList.adapter = challengeTasks
-        createChallengeTaskList.layoutManager = LinearLayoutManager(this)
+        createChallengeTaskList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
     }
 
     private fun fillControlsByChallenge() {

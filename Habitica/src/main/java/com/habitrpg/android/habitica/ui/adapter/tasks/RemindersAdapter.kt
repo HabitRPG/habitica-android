@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +18,7 @@ import java.util.*
 /**
  * Created by keithholliday on 5/31/16.
  */
-class RemindersAdapter(private val taskType: String) : RecyclerView.Adapter<RemindersAdapter.ItemViewHolder>(), ItemTouchHelperAdapter, RemindersManager.ReminderTimeSelectedCallback {
+class RemindersAdapter(private val taskType: String) : androidx.recyclerview.widget.RecyclerView.Adapter<RemindersAdapter.ItemViewHolder>(), ItemTouchHelperAdapter, RemindersManager.ReminderTimeSelectedCallback {
 
     private val reminders = ArrayList<RemindersItem>()
     private val remindersManager: RemindersManager = RemindersManager(taskType)
@@ -79,7 +79,7 @@ class RemindersAdapter(private val taskType: String) : RecyclerView.Adapter<Remi
         }
     }
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder, View.OnClickListener {
+    inner class ItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder, View.OnClickListener {
 
         internal val reminderItemTextView: EditText by bindView(itemView, R.id.item_edittext)
         private val deleteButton: Button by bindView(itemView, R.id.delete_item_button)

@@ -42,7 +42,7 @@
         android:text="+"
         android:textColor="@color/gray_100"
         android:textSize="16sp"/>
-    <android.support.v7.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/valueEditText"
         android:layout_width="40dp"
         android:layout_height="wrap_content"

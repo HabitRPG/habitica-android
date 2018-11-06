@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models.user;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import java.util.Date;
 

@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.graphics.Rect
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.TouchDelegate
 import android.view.View
@@ -116,8 +116,8 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
     private fun onChecklistIndicatorClicked() {
         expandedChecklistRow = if (this.shouldDisplayExpandedChecklist()) null else adapterPosition
         if (this.shouldDisplayExpandedChecklist()) {
-            val recyclerView = this.checklistView.parent.parent as? RecyclerView
-            val layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
+            val recyclerView = this.checklistView.parent.parent as? androidx.recyclerview.widget.RecyclerView
+            val layoutManager = recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
             layoutManager?.scrollToPositionWithOffset(this.adapterPosition, 15)
         }
         updateChecklistDisplay()

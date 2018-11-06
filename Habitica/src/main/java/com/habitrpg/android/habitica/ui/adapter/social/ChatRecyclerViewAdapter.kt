@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.adapter.social
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +31,7 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import net.pherth.android.emoji_library.EmojiTextView
 
-class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean, private val releasedUsernames: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
+class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean, private val releasedUsernames: Boolean) : RealmRecyclerViewAdapter<ChatMessage, androidx.recyclerview.widget.RecyclerView.ViewHolder>(data, autoUpdate) {
     private var uuid: String = ""
     private var expandedMessageId: String? = null
 
@@ -46,7 +46,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         this.uuid = user?.id ?: ""
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (viewType == 0) {
             SystemChatMessageViewHolder(parent.inflate(R.layout.system_chat_message))
         } else {
@@ -54,7 +54,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         data.notNull {
             if (it[position].isSystemMessage) {
                 (holder as? SystemChatMessageViewHolder)?.bind(it[position])
@@ -92,7 +92,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         return copyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    inner class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SystemChatMessageViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         private val textView: TextView by bindView(R.id.text_view)
 
         fun bind(chatMessage: ChatMessage?) {
@@ -101,7 +101,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
     }
 
-    inner class ChatRecyclerViewHolder(itemView: View, private val userId: String, private val isTavern: Boolean) : RecyclerView.ViewHolder(itemView) {
+    inner class ChatRecyclerViewHolder(itemView: View, private val userId: String, private val isTavern: Boolean) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val messageWrapper: ViewGroup by bindView(R.id.message_wrapper)
         private val avatarView: AvatarView by bindView(R.id.avatar_view)

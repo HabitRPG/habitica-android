@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 
-class AchievementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AchievementAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var itemType: String? = null
     var activity: MainActivity? = null
@@ -30,7 +30,7 @@ class AchievementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (viewType == 0) {
             SectionViewHolder(parent.inflate(R.layout.profile_achievement_category))
         } else {
@@ -38,7 +38,7 @@ class AchievementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val obj = this.itemList[position]
         if (obj.javaClass == String::class.java) {
             (holder as SectionViewHolder).bind(obj as String)
@@ -59,7 +59,7 @@ class AchievementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return itemList.size
     }
 
-    internal class AchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal class AchievementViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var achievement: Achievement? = null
 
         private val draweeView: SimpleDraweeView by bindView(R.id.achievement_drawee)

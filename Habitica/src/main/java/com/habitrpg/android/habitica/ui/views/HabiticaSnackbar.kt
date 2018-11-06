@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.graphics.drawable.Drawable
-import android.support.annotation.ColorInt
-import android.support.design.widget.BaseTransientBottomBar
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewCompat
+import androidx.annotation.ColorInt
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
