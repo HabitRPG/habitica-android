@@ -208,8 +208,8 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     override fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
-                .distinct("uuid")
                 .sort("timestamp", Sort.DESCENDING)
+                .distinct("uuid")
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }

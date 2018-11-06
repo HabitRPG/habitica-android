@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
@@ -149,7 +150,12 @@ class PartyFragment : BaseMainFragment() {
                         .setPositiveButton(context?.getString(R.string.yes)) { _, _ ->
                             if (this.group != null) {
                                 this.socialRepository.leaveGroup(this.group?.id ?: "")
-                                        .subscribe(Consumer { activity?.supportFragmentManager?.beginTransaction()?.remove(this@PartyFragment)?.commit() }, RxErrorHandler.handleEmptyError())
+                                        .flatMap { userRepository.retrieveUser(false, true) }
+                                        .subscribe(Consumer {
+                                            parentFragment.notNull { fragment ->
+                                                activity?.supportFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
+                                            }
+                                        }, RxErrorHandler.handleEmptyError())
                             }
                         }
                         .setNegativeButton(context?.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }

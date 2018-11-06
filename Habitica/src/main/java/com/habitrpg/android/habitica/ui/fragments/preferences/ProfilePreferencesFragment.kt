@@ -6,6 +6,7 @@ import android.support.v7.preference.EditTextPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceCategory
 import com.habitrpg.android.habitica.HabiticaBaseApplication
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
@@ -56,12 +57,12 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
         configurePreference(profileCategory?.findPreference(key), sharedPreferences?.getString(key, ""))
         if (sharedPreferences != null) {
             val observable: Flowable<User>? = when (key) {
-                "display_name" -> userRepository.updateUser(user, "profile.name", sharedPreferences.getString(key, ""))
-                "photo_url" -> userRepository.updateUser(user, "profile.photo", sharedPreferences.getString(key, ""))
-                "about" -> userRepository.updateUser(user, "profile.blurb", sharedPreferences.getString(key, ""))
+                "display_name" -> userRepository.updateUser(user, "profile.name", sharedPreferences.getString(key, "") ?: "")
+                "photo_url" -> userRepository.updateUser(user, "profile.photo", sharedPreferences.getString(key, "") ?: "")
+                "about" -> userRepository.updateUser(user, "profile.blurb", sharedPreferences.getString(key, "") ?: "")
                 else -> null
             }
-            observable?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            observable?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
         }
     }
 

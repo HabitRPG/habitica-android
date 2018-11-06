@@ -827,7 +827,7 @@
     <string name="confirm_username">Confirm Username</string>
     <string name="username_not_confirmed">Username not confirmed</string>
     <string name="username_confirmed">Username Confirmed</string>
-    <string name="username_level">%s ・Lvl %d</string>
+    <string name="username_level">\@%s ・Lvl %d</string>
     <string name="enter_recipient_username">Enter a Recipient\'s username</string>
     <string name="username_copied">Username copied to clipboard</string>
     <string name="verification_pet">One of these Veteran Pets will be waiting for you after you’ve finished confirming!</string>

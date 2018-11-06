@@ -142,7 +142,7 @@ class StatsFragment: BaseMainFragment() {
         }
     }
 
-    private fun changeAutoAllocationMode(@Stats.AutoAllocationTypes allocationMode: String) {
+    private fun changeAutoAllocationMode(allocationMode: String) {
         compositeSubscription.add(userRepository.updateUser(user, "preferences.allocationMode", allocationMode).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
         distributeEvenlyButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         distributeClassButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
@@ -155,7 +155,7 @@ class StatsFragment: BaseMainFragment() {
         builder.show()
     }
 
-    private fun allocatePoint(@Stats.StatsTypes stat: String) {
+    private fun allocatePoint(stat: String) {
         compositeSubscription.add(userRepository.allocatePoint(user, stat).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 

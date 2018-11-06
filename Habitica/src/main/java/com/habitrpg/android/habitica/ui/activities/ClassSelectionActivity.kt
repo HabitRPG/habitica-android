@@ -7,6 +7,7 @@ import android.view.View
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.AvatarView
@@ -47,19 +48,21 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         val intent = intent
         val bundle = intent.extras
         isInitialSelection = bundle?.getBoolean("isInitialSelection") ?: false
-        currentClass = bundle.getString("currentClass")
 
         val preferences = Preferences()
         preferences.setHair(Hair())
         preferences.costume = false
-        preferences.setSize(bundle.getString("size") ?: "slim")
-        preferences.setSkin(bundle.getString("skin") ?: "")
-        preferences.setShirt(bundle.getString("shirt") ?: "")
-        preferences.hair?.bangs = bundle.getInt("hairBangs")
-        preferences.hair?.base = bundle.getInt("hairBase")
-        preferences.hair?.color = bundle.getString("hairColor")
-        preferences.hair?.mustache = bundle.getInt("hairMustache")
-        preferences.hair?.beard = bundle.getInt("hairBeard")
+        bundle.notNull { thisBundle ->
+            currentClass = thisBundle.getString("currentClass")
+            preferences.setSize(thisBundle.getString("size") ?: "slim")
+            preferences.setSkin(thisBundle.getString("skin") ?: "")
+            preferences.setShirt(thisBundle.getString("shirt") ?: "")
+            preferences.hair?.bangs = thisBundle.getInt("hairBangs")
+            preferences.hair?.base = thisBundle.getInt("hairBase")
+            preferences.hair?.color = thisBundle.getString("hairColor")
+            preferences.hair?.mustache = thisBundle.getInt("hairMustache")
+            preferences.hair?.beard = thisBundle.getInt("hairBeard")
+        }
 
 
         val healerOutfit = Outfit()
@@ -94,8 +97,8 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         warriorAvatarView.setAvatar(warrior)
 
         if (!isInitialSelection) {
-            userRepository.changeClass()
-                    .subscribe(Consumer { classWasUnset = true }, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(userRepository.changeClass()
+                    .subscribe(Consumer { classWasUnset = true }, RxErrorHandler.handleEmptyError()))
         }
 
         healerWrapper.setOnClickListener { healerSelected() }
@@ -180,13 +183,13 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     private fun optOutOfClasses() {
         shouldFinish = true
         this.displayProgressDialog()
-        userRepository.disableClasses().subscribe(this, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.disableClasses().subscribe(this, RxErrorHandler.handleEmptyError()))
     }
 
     private fun selectClass(selectedClass: String) {
         shouldFinish = true
         this.displayProgressDialog()
-        userRepository.changeClass(selectedClass).subscribe(this, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.changeClass(selectedClass).subscribe(this, RxErrorHandler.handleEmptyError()))
     }
 
     private fun displayProgressDialog() {

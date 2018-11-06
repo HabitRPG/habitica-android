@@ -21,18 +21,42 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
+  desc "Submit a new Alpha Build to Google Play"
+  lane :alpha do
+    increment_version_code(
+        gradle_file_path: "Habitica/build.gradle"
+    )
     gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
+    upload_to_play_store(
+        track: "alpha",
+        skip_upload_images: true,
+        skip_upload_screenshots: true
+      )
+  end
+
+  desc "Submit a new Beta Build to Google Play"
+  lane :beta do
+    increment_version_code(
+        gradle_file_path: "Habitica/build.gradle"
+    )
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store(
+        track: "beta",
+        skip_upload_images: true,
+        skip_upload_screenshots: true
+      )
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
+    increment_version_code(
+        gradle_file_path: "Habitica/build.gradle"
+    )
     gradle(task: "clean assembleRelease")
-    upload_to_play_store
+    upload_to_play_store(
+        track: "production",
+        skip_upload_images: true,
+        skip_upload_screenshots: true
+      )
   end
 end

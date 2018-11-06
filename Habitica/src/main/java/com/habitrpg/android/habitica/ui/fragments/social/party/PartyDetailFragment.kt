@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
@@ -65,7 +64,6 @@ class PartyDetailFragment : BaseFragment() {
     private val questAcceptButton: Button? by bindView(R.id.quest_accept_button)
     private val questRejectButton: Button? by bindView(R.id.quest_reject_button)
     private val questProgressView: OldQuestProgressView? by bindView(R.id.quest_progress_view)
-    private val questParticipantList: LinearLayout? by bindView(R.id.quest_participant_list)
     private val leaveButton: Button? by bindView(R.id.leave_button)
 
 
@@ -113,10 +111,10 @@ class PartyDetailFragment : BaseFragment() {
     }
 
     private fun refreshParty() {
-        socialRepository.retrieveGroup("party")
+        compositeSubscription.add(socialRepository.retrieveGroup("party")
                 .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
                 .doOnComplete { refreshLayout?.isRefreshing = false }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun updateParty(party: Group?) {
@@ -211,8 +209,11 @@ class PartyDetailFragment : BaseFragment() {
         val builder = AlertDialog.Builder(activity)
                 .setMessage(R.string.leave_party_confirmation)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    socialRepository.leaveGroup(partyId)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    this.socialRepository.leaveGroup(partyId)
+                            .flatMap { userRepository.retrieveUser(false, true) }
+                            .subscribe(Consumer {
+                                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+                            }, RxErrorHandler.handleEmptyError())
                 }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()
     }

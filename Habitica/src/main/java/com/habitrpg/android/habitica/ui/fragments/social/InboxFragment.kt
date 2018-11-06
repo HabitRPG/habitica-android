@@ -129,7 +129,8 @@ class InboxFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener, 
             for (message in messages) {
                 val entry = inflater?.inflate(R.layout.item_inbox_overview, inbox_messages, false)
                 val avatarView = entry?.findViewById(R.id.avatar_view) as? AvatarView
-                message.userStyles?.let { avatarView?.setAvatar(it) }
+                //message.userStyles?.let { avatarView?.setAvatar(it) }
+                avatarView?.visibility = View.GONE
                 val displayNameTextView = entry?.findViewById(R.id.display_name_textview) as? UsernameLabel
                 displayNameTextView?.username = message.user
                 displayNameTextView?.tier = message.contributor?.level ?: 0
