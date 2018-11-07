@@ -2,162 +2,165 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:tools="http://schemas.android.com/tools">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="98dp"
-            android:scaleType="center"
-            android:src="@drawable/hello_sign"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginBottom="@dimen/spacing_large"/>
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_large"
-            android:background="@color/white"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/brand_200"
-                android:text="@string/usernamePromptTitle"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/spacing_large"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray_100"
-                android:text="@string/usernamePromptBody"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:layout_marginBottom="@dimen/spacing_medium"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray_100"
-                android:text="@string/usernamePromptWiki"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:layout_marginBottom="@dimen/spacing_large"/>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="2"
-                android:background="@drawable/rounded_border">
-                <TableRow>
-                    <TextView
-                        android:layout_height="42dp"
-                        android:text="@string/display_name"
-                        android:paddingLeft="@dimen/spacing_medium"
-                        android:paddingRight="@dimen/spacing_medium"
-                        android:layout_marginLeft="1dp"
-                        android:background="@color/gray_700"
-                        android:gravity="center_vertical"
-                        />
-                    <View android:background="@color/gray_600"
-                        android:layout_height="42dp"
-                        android:layout_width="1dp" />
-                    <EditText android:id="@+id/display_name_edit_text"
-                        android:background="@color/transparent"
-                        android:layout_height="42dp"
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginRight="@dimen/spacing_large"
-                        android:lines="1"/>
-                </TableRow>
-                <TableRow>
-                    <View android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_600" android:layout_span="3" />
-                </TableRow>
-                <TableRow>
-                    <TextView android:text="@string/username"
-                        android:background="@color/gray_700"
-                        android:layout_height="41dp"
-                        android:paddingLeft="@dimen/spacing_medium"
-                        android:paddingRight="@dimen/spacing_medium"
-                        android:layout_marginLeft="1dp"
-                        android:gravity="center_vertical"/>
-                    <View android:background="@color/gray_600"
-                        android:layout_width="1dp"
-                        android:layout_height="42dp"/>
-                    <LinearLayout
-                        android:layout_marginLeft="@dimen/spacing_large"
-                        android:layout_marginRight="@dimen/spacing_large">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/gray_400"/>
-                        <EditText android:id="@+id/username_edit_text"
-                            android:background="@color/transparent"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="42dp"
-                            android:layout_marginLeft="@dimen/spacing_small"
-                            android:lines="1"/>
-                    </LinearLayout>
-                </TableRow>
-            </TableLayout>
-
-            <TextView
-                android:id="@+id/issues_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_medium"
-                android:textColor="@color/red_50"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:visibility="gone"
-                tools:visibility="visible"
-                tools:text="Issues go here"/>
-
-            <Button
-                android:id="@+id/confirm_username_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/purchase_button_background"
-                android:textColor="@color/white"
-                android:text="@string/confirm_username"
-                android:layout_marginTop="@dimen/spacing_large"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/verification_pet"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:layout_marginBottom="@dimen/spacing_medium"
-                android:layout_marginLeft="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_large"
-                android:textSize="12sp"
-                android:textColor="@color/gray_200"/>
             <ImageView
-                android:layout_width="121dp"
-                android:layout_height="31dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/veteranpets2018_promo"/>
+                android:layout_width="match_parent"
+                android:layout_height="98dp"
+                android:scaleType="center"
+                android:src="@drawable/hello_sign"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_large"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_large"
+                android:background="@color/white"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/brand_200"
+                    android:text="@string/usernamePromptTitle"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/spacing_large"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_100"
+                    android:text="@string/usernamePromptBody"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="@dimen/spacing_medium"/>
+                <TextView
+                    android:id="@+id/wiki_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_100"
+                    android:text="@string/usernamePromptWiki"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="@dimen/spacing_large"/>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="2"
+                    android:background="@drawable/rounded_border">
+                    <TableRow>
+                        <TextView
+                            android:layout_height="42dp"
+                            android:text="@string/display_name"
+                            android:paddingLeft="@dimen/spacing_medium"
+                            android:paddingRight="@dimen/spacing_medium"
+                            android:layout_marginLeft="1dp"
+                            android:background="@color/gray_700"
+                            android:gravity="center_vertical"
+                            />
+                        <View android:background="@color/gray_600"
+                            android:layout_height="42dp"
+                            android:layout_width="1dp" />
+                        <EditText android:id="@+id/display_name_edit_text"
+                            android:background="@color/transparent"
+                            android:layout_height="42dp"
+                            android:layout_marginLeft="@dimen/spacing_large"
+                            android:layout_marginRight="@dimen/spacing_large"
+                            android:lines="1"/>
+                    </TableRow>
+                    <TableRow>
+                        <View android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_600" android:layout_span="3" />
+                    </TableRow>
+                    <TableRow>
+                        <TextView android:text="@string/username"
+                            android:background="@color/gray_700"
+                            android:layout_height="41dp"
+                            android:paddingLeft="@dimen/spacing_medium"
+                            android:paddingRight="@dimen/spacing_medium"
+                            android:layout_marginLeft="1dp"
+                            android:gravity="center_vertical"/>
+                        <View android:background="@color/gray_600"
+                            android:layout_width="1dp"
+                            android:layout_height="42dp"/>
+                        <LinearLayout
+                            android:layout_marginLeft="@dimen/spacing_large"
+                            android:layout_marginRight="@dimen/spacing_large">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/gray_400"/>
+                            <EditText android:id="@+id/username_edit_text"
+                                android:background="@color/transparent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="42dp"
+                                android:layout_marginLeft="@dimen/spacing_small"
+                                android:lines="1"/>
+                        </LinearLayout>
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:id="@+id/issues_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:textColor="@color/red_50"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Issues go here"/>
+
+                <Button
+                    android:id="@+id/confirm_username_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/purchase_button_background"
+                    android:textColor="@color/white"
+                    android:text="@string/confirm_username"
+                    android:layout_marginTop="@dimen/spacing_large"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/verification_pet"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:layout_marginLeft="@dimen/spacing_large"
+                    android:layout_marginRight="@dimen/spacing_large"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_200"/>
+                <ImageView
+                    android:layout_width="121dp"
+                    android:layout_height="31dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/veteranpets2018_promo"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/footer_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_large"
+                android:text="@string/usernamePromptDisclaimer"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/gray_300"/>
         </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_large"
-            android:text="@string/usernamePromptDisclaimer"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/gray_300"/>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
     <FrameLayout
         android:id="@+id/snackbar_view"
         android:layout_width="match_parent"

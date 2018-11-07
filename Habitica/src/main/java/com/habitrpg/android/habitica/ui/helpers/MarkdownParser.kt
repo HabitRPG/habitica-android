@@ -26,7 +26,7 @@ object MarkdownParser {
 
     private val processor = AndDown()
 
-    private val regex = Pattern.compile("@(?:\\w+)")
+    private val regex = Pattern.compile("(?!\\b)@[\\w-]+")
     private val colorSpan = ForegroundColorSpan(Color.parseColor("#6133b4"))
 
     /**
