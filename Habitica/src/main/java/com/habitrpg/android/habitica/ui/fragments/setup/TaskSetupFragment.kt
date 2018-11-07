@@ -119,12 +119,14 @@ class TaskSetupFragment : BaseFragment() {
                 tasks.add(taskObject)
             }
         }
+        tasks.add(makeTaskObject(Task.TYPE_TODO, getString(R.string.setup_task_join_habitica), null, null, getString(R.string.setup_task_join_habitica_notes)))
         return tasks
     }
 
-    private fun makeTaskObject(type: String?, text: String?, up: Boolean?, down: Boolean?): Task {
+    private fun makeTaskObject(type: String?, text: String?, up: Boolean?, down: Boolean?, notes: String? = null): Task {
         val task = Task()
         task.text = text ?: ""
+        task.notes = notes
         task.priority = 1.0f
         task.type = type ?: ""
 

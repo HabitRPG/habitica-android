@@ -833,4 +833,6 @@
     <string name="verification_pet">One of these Veteran Pets will be waiting for you after you’ve finished confirming!</string>
     <string name="welcomeNameTitle">What should we call you?</string>
     <string name="display_name_length_error">Display names must be between 1 and 30 characters</string>
+    <string name="setup_task_join_habitica">Join Habitica (Check me off!)</string>
+    <string name="setup_task_join_habitica_notes">You can either complete this To-Do, edit it, or remove it.</string>
 </resources>
