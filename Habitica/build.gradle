@@ -91,7 +91,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
     //Analytics
     implementation 'com.amplitude:android-sdk:2.18.1'
-    implementation 'com.instabug.library:instabug:8.0.3'
+    implementation 'com.instabug.library:instabug:8.0.11'
     // Fresco Image Management Library
     implementation('com.facebook.fresco:fresco:1.11.0') {
         exclude module: 'bolts-android'
@@ -145,7 +145,7 @@ android {
         buildConfigField "String", "STORE", "\"google\""
         multiDexEnabled true
 
-        versionCode 2016
+        versionCode 2021
         versionName "1.6"
     }
 

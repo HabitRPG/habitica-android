@@ -23,23 +23,25 @@ platform :android do
 
   desc "Submit a new Alpha Build to Google Play"
   lane :alpha do
-    increment_version_code(
+    android_set_version_code(
         gradle_file_path: "Habitica/build.gradle"
     )
-    gradle(task: "clean assembleRelease")
+    signed_build
     upload_to_play_store(
         track: "alpha",
         skip_upload_images: true,
         skip_upload_screenshots: true
       )
+    post_to_slack(type: "alpha", url: "https://hooks.slack.com/services/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", channel: "#android")
+    post_to_slack(type: "Android", url: "https://hooks.slack.com/services/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", channel: "#new-test-builds")
   end
 
   desc "Submit a new Beta Build to Google Play"
   lane :beta do
-    increment_version_code(
+    android_set_version_code(
         gradle_file_path: "Habitica/build.gradle"
     )
-    gradle(task: "clean assembleRelease")
+    signed_build
     upload_to_play_store(
         track: "beta",
         skip_upload_images: true,
@@ -49,14 +51,41 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    increment_version_code(
+    android_set_version_code(
         gradle_file_path: "Habitica/build.gradle"
     )
-    gradle(task: "clean assembleRelease")
+    signed_build
     upload_to_play_store(
         track: "production",
         skip_upload_images: true,
         skip_upload_screenshots: true
       )
+    post_to_slack(type: "beta", url: "https://hooks.slack.com/services/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", channel: "#android")
+  end
+
+  private_lane :signed_build do
+    gradle(task: "clean")
+    gradle(
+      task: "assembleProd",
+      build_type: "Release"
+    )
+    post_to_slack(type: "production", url: "https://hooks.slack.com/services/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", channel: "#android")
+  end
+
+  private_lane :post_to_slack do |options|
+    type = options[:type]
+    version     = android_get_version_name(gradle_file: "Habitica/build.gradle")
+    build       = android_get_version_code(gradle_file: "Habitica/build.gradle")
+    url = options[:url]
+    channel = options[:channel]
+
+    slack(
+      message: ":robot_face: New #{type} build *#{version}* (#{build}) has been submitted :rocket:",
+      channel: channel,
+      slack_url: url,
+      default_payloads: [],
+      username: "Google Play Store"
+    )
+
   end
 end

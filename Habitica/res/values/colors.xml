@@ -161,4 +161,6 @@
     <color name="ic_launcher_background">#331960</color>
     <color name="scrollbarThumb">@color/gray_500</color>
     <color name="black">#000</color>
+    <color name="setup_background">#efeff4</color>
+    <color name="setup_label_background">#fafaff</color>
 </resources>
