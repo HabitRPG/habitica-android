@@ -35,5 +35,6 @@ open class Outfit : RealmObject() {
         this.head = newOutfit.head
         this.headAccessory = newOutfit.headAccessory
         this.shield = newOutfit.shield
+        this.weapon = newOutfit.weapon
     }
 }
