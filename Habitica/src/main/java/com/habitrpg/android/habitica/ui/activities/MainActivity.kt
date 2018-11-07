@@ -29,6 +29,7 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -286,10 +287,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
 
         //Track when the app was last opened, so that we can use this to send out special reminders after a week of inactivity
-        val preferenceEditor = sharedPreferences.edit()
-        preferenceEditor.putLong("lastAppLaunch", Date().time)
-        preferenceEditor.putBoolean("preventDailyReminder", false)
-        preferenceEditor.apply()
+        sharedPreferences.edit {
+            putLong("lastAppLaunch", Date().time)
+            putBoolean("preventDailyReminder", false)
+        }
 
         //after the activity has been stopped and is thereafter resumed,
         //a state can arise in which the active fragment no longer has a

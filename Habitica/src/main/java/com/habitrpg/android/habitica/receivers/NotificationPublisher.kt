@@ -9,6 +9,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.legacy.content.WakefulBroadcastReceiver
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -57,9 +58,7 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
         //Show special notification if user hasn't logged in for a week
         if (sharedPreferences.getLong("lastAppLaunch", Date().time) < (Date().time - 604800000L)) {
             wasInactive = true
-            val preferenceEditor = sharedPreferences.edit()
-            preferenceEditor.putBoolean("preventDailyReminder", true)
-            preferenceEditor.apply()
+            sharedPreferences.edit { putBoolean("preventDailyReminder", true) }
         } else {
             TaskAlarmManager.scheduleDailyReminder(context)
         }

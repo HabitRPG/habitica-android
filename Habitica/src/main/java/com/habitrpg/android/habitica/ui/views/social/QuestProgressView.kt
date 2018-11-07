@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.backgroundCompat
@@ -317,17 +318,14 @@ class QuestProgressView : LinearLayout {
     private fun showQuestImage() {
         questImageWrapper.visibility = View.VISIBLE
         DataBindingUtils.loadImage(questImageView, "quest_"+quest?.key)
-        val editPreferences = preferences?.edit()
-        editPreferences?.putBoolean("boss_art_collapsed", false)
-        editPreferences?.apply()
+        preferences?.edit { putBoolean("boss_art_collapsed", false) }
         updateCaretImage()
     }
 
     private fun hideQuestImage() {
         questImageWrapper.visibility = View.GONE
-        val editPreferences = preferences?.edit()
-        editPreferences?.putBoolean("boss_art_collapsed", true)
-        editPreferences?.apply()
+        preferences?.edit { putBoolean("boss_art_collapsed", true) }
+
         updateCaretImage()
     }
 

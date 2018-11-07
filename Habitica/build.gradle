@@ -145,7 +145,7 @@ android {
         buildConfigField "String", "STORE", "\"google\""
         multiDexEnabled true
 
-        versionCode 2021
+        versionCode 2022
         versionName "1.6"
     }
 

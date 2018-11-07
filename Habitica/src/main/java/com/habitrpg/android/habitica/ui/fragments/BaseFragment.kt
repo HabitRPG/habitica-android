@@ -101,7 +101,7 @@ abstract class BaseFragment : DialogFragment() {
 
         super.onDestroyView()
         context.notNull {
-            val refWatcher = HabiticaBaseApplication.getInstance(it).refWatcher
+            val refWatcher = HabiticaBaseApplication.getInstance(it)?.refWatcher
             refWatcher?.watch(this)
         }
     }

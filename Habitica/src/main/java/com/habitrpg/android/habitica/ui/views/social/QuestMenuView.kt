@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.backgroundCompat
@@ -59,9 +60,9 @@ class QuestMenuView : LinearLayout {
         closeButton.setOnClickListener {
             hideBossArt()
             val preferences = context.getSharedPreferences("collapsible_sections", 0)
-            val editPreferences = preferences?.edit()
-            editPreferences?.putBoolean("boss_art_collapsed", true)
-            editPreferences?.apply()
+            preferences?.edit {
+                putBoolean("boss_art_collapsed", true)
+            }
         }
     }
 

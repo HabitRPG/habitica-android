@@ -298,8 +298,6 @@ class NavigationDrawerFragment : DialogFragment() {
             }
         }
 
-        //sharedPreferences.edit().putInt(STATE_SELECTED_POSITION, position).apply()
-
         val activity = activity as? MainActivity
         if (activity != null) {
             if (fragment != null) {

@@ -23,6 +23,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.core.content.edit
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -276,8 +277,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             //This is necessary because the regular login callback is not called for some reason
             val accessToken = AccessToken.getCurrentAccessToken()
             if (accessToken != null && accessToken.token != null) {
-                apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                        .subscribe(this@LoginActivity, Consumer { hideProgress() })
+                compositeSubscription.add(apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
+                        .subscribe(this@LoginActivity, Consumer { hideProgress() }))
             }
         }
     }
@@ -293,13 +294,10 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             user = obj.getString(TAG_USERID)
             key = obj.getString(TAG_APIKEY)
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-            val editor = prefs.edit()
-            val ans = editor.putString(getString(R.string.SP_address), adr)
-                    .putString(getString(R.string.SP_APIToken), key)
-                    .putString(getString(R.string.SP_userID), user)
-                    .commit()
-            if (!ans) {
-                throw Exception("PB_string_commit")
+            prefs.edit {
+                putString(getString(R.string.SP_address), adr)
+                putString(getString(R.string.SP_APIToken), key)
+                putString(getString(R.string.SP_userID), user)
             }
             startMainActivity()
         } catch (e: JSONException) {
@@ -332,12 +330,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     @Throws(Exception::class)
     private fun saveTokens(api: String, user: String) {
         this.apiClient.updateAuthenticationCredentials(user, api)
-        val editor = sharedPrefs.edit()
-        val ans = editor.putString(getString(R.string.SP_APIToken), api)
-                .putString(getString(R.string.SP_userID), user)
-                .commit()
-        if (!ans) {
-            throw Exception("PB_string_commit")
+        sharedPrefs.edit {
+            putString(getString(R.string.SP_APIToken), api)
+            putString(getString(R.string.SP_userID), user)
         }
     }
 
@@ -364,7 +359,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             e.printStackTrace()
         }
 
-        userRepository.retrieveUser(true)
+        compositeSubscription.add(userRepository.retrieveUser(true)
                 .subscribe(Consumer {
                     if (userAuthResponse.newUser) {
                         this.startSetupActivity()
@@ -372,7 +367,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                         AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
                         this.startMainActivity()
                     }
-                }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun handleFacebookLogin() {

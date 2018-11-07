@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
+import android.provider.Settings.Global.putLong
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.events.ReminderDeleteEvent
@@ -74,9 +76,9 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         if (!preventDailyReminder) {
             scheduleDailyReminder(context)
         }
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
-        editor.putLong("lastReminderSchedule", Date().time)
-        editor.apply()
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putLong("lastReminderSchedule", Date().time)
+        }
     }
 
     fun scheduleAlarmsForTask(task: Task) {
@@ -128,9 +130,9 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
         intent.action = remindersItem.id
         val intentId = remindersItem.id?.hashCode() ?: 0 and 0xfffffff
         val sender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val am = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         sender.cancel()
-        am.cancel(sender)
+        am?.cancel(sender)
     }
 
     companion object {

@@ -24,7 +24,7 @@ platform :android do
   desc "Submit a new Alpha Build to Google Play"
   lane :alpha do
     android_set_version_code(
-        gradle_file_path: "Habitica/build.gradle"
+        gradle_file: "Habitica/build.gradle"
     )
     signed_build
     upload_to_play_store(
@@ -39,7 +39,7 @@ platform :android do
   desc "Submit a new Beta Build to Google Play"
   lane :beta do
     android_set_version_code(
-        gradle_file_path: "Habitica/build.gradle"
+        gradle_file: "Habitica/build.gradle"
     )
     signed_build
     upload_to_play_store(
@@ -47,12 +47,13 @@ platform :android do
         skip_upload_images: true,
         skip_upload_screenshots: true
       )
+    post_to_slack(type: "beta", url: "https://hooks.slack.com/services/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", channel: "#android")
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     android_set_version_code(
-        gradle_file_path: "Habitica/build.gradle"
+        gradle_file: "Habitica/build.gradle"
     )
     signed_build
     upload_to_play_store(
@@ -60,7 +61,7 @@ platform :android do
         skip_upload_images: true,
         skip_upload_screenshots: true
       )
-    post_to_slack(type: "beta", url: "https://hooks.slack.com/services/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", channel: "#android")
+    post_to_slack(type: "production", url: "https://hooks.slack.com/services/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", channel: "#android")
   end
 
   private_lane :signed_build do
@@ -69,7 +70,6 @@ platform :android do
       task: "assembleProd",
       build_type: "Release"
     )
-    post_to_slack(type: "production", url: "https://hooks.slack.com/services/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", channel: "#android")
   end
 
   private_lane :post_to_slack do |options|

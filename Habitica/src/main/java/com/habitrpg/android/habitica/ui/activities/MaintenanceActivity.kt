@@ -7,6 +7,7 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.net.toUri
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.MaintenanceApiService
@@ -47,7 +48,7 @@ class MaintenanceActivity : BaseActivity() {
         this.titleTextView.text = data.getString("title")
 
         @Suppress("DEPRECATION")
-        imageView.setImageURI(Uri.parse(data.getString("imageUrl")))
+        imageView.setImageURI(data.getString("imageUrl")?.toUri())
         this.descriptionTextView.text = MarkdownParser.parseMarkdown(data.getString("description"))
         this.descriptionTextView.movementMethod = LinkMovementMethod.getInstance()
 
@@ -68,23 +69,23 @@ class MaintenanceActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         if (!isDeprecationNotice) {
-            this.maintenanceService.maintenanceStatus
+            compositeSubscription.add(this.maintenanceService.maintenanceStatus
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(Consumer { maintenanceResponse ->
                         if (!maintenanceResponse.activeMaintenance) {
                             finish()
                         }
-                    }, RxErrorHandler.handleEmptyError())
+                    }, RxErrorHandler.handleEmptyError()))
         }
     }
 
     private fun openInPlayStore() {
         val appPackageName = packageName
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+            startActivity(Intent(Intent.ACTION_VIEW, "market://details?id=$appPackageName".toUri()))
         } catch (anfe: android.content.ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+            startActivity(Intent(Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$appPackageName".toUri()))
         }
 
     }
