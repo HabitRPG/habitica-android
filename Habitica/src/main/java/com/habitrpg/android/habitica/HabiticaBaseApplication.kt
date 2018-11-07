@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,13 +9,12 @@ import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import android.preference.PreferenceManager
-import androidx.multidex.MultiDexApplication
-import androidx.appcompat.app.AppCompatDelegate
 import android.util.Log
-
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
+import androidx.multidex.MultiDexApplication
 import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
-import com.facebook.FacebookSdk
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.habitrpg.android.habitica.api.HostConfig
@@ -33,22 +31,18 @@ import com.instabug.bug.BugReporting
 import com.instabug.bug.PromptOption
 import com.instabug.library.Instabug
 import com.instabug.library.invocation.InstabugInvocationEvent
-import com.instabug.library.model.NetworkLog
 import com.instabug.library.ui.onboarding.WelcomeMessage
 import com.instabug.library.visualusersteps.State
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.reactivex.functions.Consumer
-
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.solovyev.android.checkout.Billing
 import org.solovyev.android.checkout.Cache
 import org.solovyev.android.checkout.Checkout
 import org.solovyev.android.checkout.PurchaseVerifier
-
 import javax.inject.Inject
-
-import io.realm.Realm
-import io.realm.RealmConfiguration
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
 abstract class HabiticaBaseApplication : MultiDexApplication() {
@@ -151,7 +145,9 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         @Suppress("DEPRECATION")
         if (lastInstalledVersion < info.versionCode) {
             @Suppress("DEPRECATION")
-            sharedPrefs.edit().putInt("last_installed_version", info.versionCode).apply()
+            sharedPrefs.edit {
+                putInt("last_installed_version", info.versionCode)
+            }
             inventoryRepository.retrieveContent().subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
@@ -209,23 +205,23 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         var component: AppComponent? = null
             private set
 
-        fun getInstance(context: Context): HabiticaBaseApplication {
-            return context.applicationContext as HabiticaBaseApplication
+        fun getInstance(context: Context): HabiticaBaseApplication? {
+            return context.applicationContext as? HabiticaBaseApplication
         }
 
         fun logout(context: Context) {
             val realm = Realm.getDefaultInstance()
-            getInstance(context).deleteDatabase(realm.path)
+            getInstance(context)?.deleteDatabase(realm.path)
             realm.close()
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val useReminder = preferences.getBoolean("use_reminder", false)
             val reminderTime = preferences.getString("reminder_time", "19:00")
-            val editor = preferences.edit()
-            editor.clear()
-            editor.putBoolean("use_reminder", useReminder)
-            editor.putString("reminder_time", reminderTime)
-            editor.apply()
-            getInstance(context).lazyApiHelper.updateAuthenticationCredentials(null, null)
+            preferences.edit {
+                clear()
+                putBoolean("use_reminder", useReminder)
+                putString("reminder_time", reminderTime)
+            }
+            getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
             startActivity(LoginActivity::class.java, context)
         }
 

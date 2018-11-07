@@ -10,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.net.toUri
 import com.facebook.common.executors.CallerThreadExecutor
 import com.facebook.common.references.CloseableReference
 import com.facebook.datasource.DataSource
@@ -44,7 +45,7 @@ object DataBindingUtils {
 
     fun loadImage(imageName: String, imageFormat: String = "png", imageResult: (Bitmap) -> Unit) {
         val imageRequest = ImageRequestBuilder
-                .newBuilderWithSource(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.$imageFormat"))
+                .newBuilderWithSource("https://habitica-assets.s3.amazonaws.com/mobileApp/images/$imageName.$imageFormat".toUri())
                 .build()
 
         val imagePipeline = Fresco.getImagePipeline()

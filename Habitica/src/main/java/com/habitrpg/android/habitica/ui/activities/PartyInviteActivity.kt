@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -134,13 +135,13 @@ class PartyInviteActivity : BaseActivity() {
 
         if (scanningResult != null && scanningResult.contents != null) {
             val qrCodeUrl = scanningResult.contents
-            val uri = Uri.parse(qrCodeUrl)
-            if (uri == null || uri.pathSegments.size < 3) {
+            val uri = qrCodeUrl.toUri()
+            if (uri.pathSegments.size < 3) {
                 return
             }
             userIdToInvite = uri.pathSegments[2]
 
-            userRepository.getUser(userId).subscribe(Consumer<User> { this.handleUserReceived(it) }, RxErrorHandler.handleEmptyError())
+            compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer<User> { this.handleUserReceived(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -160,8 +161,8 @@ class PartyInviteActivity : BaseActivity() {
         }
         inviteData["uuids"] = invites
 
-        this.socialRepository.inviteToGroup(user.party?.id ?: "", inviteData)
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(this.socialRepository.inviteToGroup(user.party?.id ?: "", inviteData)
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     companion object {

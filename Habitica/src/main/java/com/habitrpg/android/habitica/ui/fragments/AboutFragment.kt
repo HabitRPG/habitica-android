@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import kotlinx.android.synthetic.main.fragment_about.*
 
@@ -20,7 +21,7 @@ class AboutFragment : Fragment() {
 
     private fun openGooglePlay() {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse("market://details?id=com.habitrpg.android.habitica")
+        intent.data = "market://details?id=com.habitrpg.android.habitica".toUri()
         startActivity(intent)
     }
 
@@ -63,7 +64,7 @@ class AboutFragment : Fragment() {
     }
 
     private fun openBrowserLink(url: String) {
-        val uriUrl = Uri.parse(url)
+        val uriUrl = url.toUri()
         val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
         startActivity(launchBrowser)
     }

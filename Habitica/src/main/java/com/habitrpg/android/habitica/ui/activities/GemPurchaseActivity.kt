@@ -3,12 +3,10 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -148,7 +146,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     }
 
     private fun setupCheckout() {
-        HabiticaBaseApplication.getInstance(this).billing.notNull {
+        HabiticaBaseApplication.getInstance(this)?.billing.notNull {
             activityCheckout = Checkout.forActivity(this, it)
             activityCheckout?.start()
         }
@@ -158,7 +156,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     override fun inAppMessageClicked(messageId: String) {
         for (fragment in fragments) {
             if (fragment.javaClass.isAssignableFrom(GemsPurchaseFragment::class.java)) {
-                (fragment as GemsPurchaseFragment).purchaseGems(PurchaseTypes.Purchase84Gems)
+                (fragment as? GemsPurchaseFragment)?.purchaseGems(PurchaseTypes.Purchase84Gems)
             }
         }
     }

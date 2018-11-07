@@ -15,6 +15,7 @@ import androidx.preference.PreferenceManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
@@ -138,9 +139,9 @@ class SetupActivity : BaseActivity(), androidx.viewpager.widget.ViewPager.OnPage
 
     private fun nextClicked() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor = sharedPreferences.edit()
-        editor.putString("FirstDayOfTheWeek", Integer.toString(Calendar.getInstance().firstDayOfWeek))
-        editor.apply()
+        sharedPreferences.edit {
+            putString("FirstDayOfTheWeek", Integer.toString(Calendar.getInstance().firstDayOfWeek))
+        }
         if (isLastPage) {
             if (this.taskSetupFragment == null) {
                 return

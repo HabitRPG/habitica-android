@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -92,7 +93,7 @@ class GroupInformationFragment : BaseFragment() {
         }
 
         craetePartyButton.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://habitica.com/party"))
+            val browserIntent = Intent(Intent.ACTION_VIEW, "https://habitica.com/party".toUri())
             startActivity(browserIntent)
         }
     }

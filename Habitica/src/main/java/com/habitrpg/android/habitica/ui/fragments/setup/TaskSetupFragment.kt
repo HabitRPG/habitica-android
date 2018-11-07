@@ -28,7 +28,7 @@ class TaskSetupFragment : BaseFragment() {
 
     var activity: SetupActivity? = null
     var width: Int = 0
-    private val recyclerView: androidx.recyclerview.widget.RecyclerView? by bindOptionalView(R.id.recyclerView)
+    private val recyclerView: RecyclerView? by bindOptionalView(R.id.recyclerView)
     private val avatarView: AvatarView? by bindOptionalView(R.id.avatarView)
     private val speechBubbleView: SpeechBubbleView? by bindOptionalView(R.id.speech_bubble)
     internal var adapter: TaskSetupAdapter = TaskSetupAdapter()
@@ -55,7 +55,7 @@ class TaskSetupFragment : BaseFragment() {
 
         this.adapter = TaskSetupAdapter()
         this.adapter.setTaskList(this.taskGroups)
-        this.recyclerView?.layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
+        this.recyclerView?.layoutManager = GridLayoutManager(activity, 2)
         this.recyclerView?.adapter = this.adapter
 
         if (this.user != null) {

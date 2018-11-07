@@ -4,6 +4,7 @@ import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -69,7 +70,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
                 .notNull { compositeSubscription.add(it) }
         recyclerView.adapter = adapter
 
-        taskRepository.getTasks(Task.TYPE_HABIT, userId).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(taskRepository.getTasks(Task.TYPE_HABIT, userId).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun taskSelected(taskId: String?) {
@@ -90,8 +91,8 @@ class HabitButtonWidgetActivity : BaseActivity() {
     }
 
     private fun storeSelectedTaskId(selectedTaskId: String?) {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this).edit()
-        preferences.putString("habit_button_widget_$widgetId", selectedTaskId)
-        preferences.apply()
+        PreferenceManager.getDefaultSharedPreferences(this).edit {
+            putString("habit_button_widget_$widgetId", selectedTaskId)
+        }
     }
 }

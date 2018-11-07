@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -121,7 +122,7 @@ class TavernDetailFragment : BaseFragment() {
         }
         guidelinesButton.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse("https://habitica.com/static/community-guidelines")
+            i.data = "https://habitica.com/static/community-guidelines".toUri()
             context?.startActivity(i)
         }
         faqButton.setOnClickListener {
