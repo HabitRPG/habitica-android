@@ -7,7 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 
 
-class FadingViewPager : androidx.viewpager.widget.ViewPager {
+class FadingViewPager : ViewPager {
     var disableFading: Boolean = false
 
     constructor(context: Context) : super(context) {

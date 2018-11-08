@@ -78,7 +78,6 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         loadMessages()
 
         communityGuidelinesView.visibility = View.GONE
-
     }
 
     override fun onAttach(context: Context?) {

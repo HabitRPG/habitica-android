@@ -406,7 +406,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
 
             if (remoteConfigManager.enableUsernameRelease()) {
-                if (user?.flags?.isVerifiedUsername != true) {
+                if (user?.flags?.isVerifiedUsername != true && isActivityVisible) {
                     val intent = Intent(this, VerifyUsernameActivity::class.java)
                     startActivity(intent)
                 }
