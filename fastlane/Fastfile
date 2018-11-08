@@ -26,6 +26,7 @@ platform :android do
     android_set_version_code(
         gradle_file: "Habitica/build.gradle"
     )
+    copy_changelogs
     signed_build
     upload_to_play_store(
         track: "alpha",
@@ -41,6 +42,7 @@ platform :android do
     android_set_version_code(
         gradle_file: "Habitica/build.gradle"
     )
+    copy_changelogs
     signed_build
     upload_to_play_store(
         track: "beta",
@@ -86,6 +88,14 @@ platform :android do
       default_payloads: [],
       username: "Google Play Store"
     )
+  end
 
+  private_lane :copy_changelogs do
+    version = android_get_version_code(gradle_file: "Habitica/build.gradle")
+    languages = sh("ls -1 ./metadata/android").split("\n")
+    languages.each do |language|
+      puts(language)
+      sh("cp ./changelog.txt ./metadata/android/#{language}/changelogs/#{version}.txt")
+    end
   end
 end

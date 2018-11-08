@@ -1,0 +1,1 @@
+This update fixes various bugs and adds support for an upcoming feature.
