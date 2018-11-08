@@ -53,7 +53,7 @@ public class SocialAPITests extends BaseAPITests {
         postMessage(groupID, "1");
 
         TestSubscriber<Group> testSubscriber = new TestSubscriber<>();
-        apiClient.getGroup(groupID)
+        apiClient.getGroupData(groupID)
                 .subscribe(testSubscriber);
         testSubscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
         testSubscriber.assertNoErrors();
