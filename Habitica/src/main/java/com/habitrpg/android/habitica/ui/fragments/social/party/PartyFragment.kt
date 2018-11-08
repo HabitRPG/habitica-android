@@ -10,29 +10,27 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
-import io.reactivex.functions.Consumer
 import java.util.*
 
 class PartyFragment : BaseMainFragment() {
 
     private val viewPager: ViewPager? by bindView(R.id.viewPager)
     private var partyMemberListFragment: PartyMemberListFragment? = null
-    private var chatListFragment: ChatListFragment? = null
+    private var chatFragment: ChatFragment? = null
     private var viewPagerAdapter: androidx.fragment.app.FragmentPagerAdapter? = null
 
     private lateinit var viewModel: PartyViewModel
@@ -99,7 +97,7 @@ class PartyFragment : BaseMainFragment() {
 
         partyMemberListFragment?.setPartyId(group.id)
 
-        chatListFragment?.groupId = group.id
+        chatFragment?.groupId = group.id
 
         this.activity?.invalidateOptionsMenu()
     }
@@ -219,13 +217,10 @@ class PartyFragment : BaseMainFragment() {
                         }
                     }
                     1 -> {
-                        if (chatListFragment == null) {
-                            chatListFragment = ChatListFragment()
-                            if (user?.hasParty() == true) {
-                                chatListFragment?.configure(user?.party?.id ?: "", user, false)
-                            }
+                        if (chatFragment == null) {
+                            chatFragment = ChatFragment(viewModel)
                         }
-                        fragment = chatListFragment
+                        fragment = chatFragment
                     }
                     2 -> {
                         if (partyMemberListFragment == null) {
@@ -264,13 +259,13 @@ class PartyFragment : BaseMainFragment() {
         viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1) {
-                    chatListFragment?.setNavigatedToFragment()
+                    chatFragment?.setNavigatedToFragment()
                 }
             }
 
             override fun onPageSelected(position: Int) {
                 if (position == 1) {
-                       chatListFragment?.setNavigatedToFragment()
+                       chatFragment?.setNavigatedToFragment()
                 }
             }
 

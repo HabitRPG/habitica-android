@@ -11,6 +11,8 @@ import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -41,6 +43,7 @@ open class GroupViewModel: BaseViewModel() {
     }
 
     protected val groupIDSubject = BehaviorSubject.create<Optional<String>>()
+    var gotNewMessages: Boolean = false
 
     override fun inject(component: AppComponent) {
         component.inject(this)
@@ -111,5 +114,44 @@ open class GroupViewModel: BaseViewModel() {
 
     fun rejectGroupInvite(groupID: String) {
         disposable.add(socialRepository.rejectGroupInvite(groupID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+    }
+
+    fun markMessagesSeen() {
+        groupIDSubject.value?.value.notNull {
+            if (groupViewType != GroupViewType.TAVERN && it.isNotEmpty() && gotNewMessages) {
+                socialRepository.markMessagesSeen(it)
+            }
+        }
+    }
+
+    fun likeMessage(message: ChatMessage) {
+        disposable.add(socialRepository.likeMessage(message).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+    }
+
+    fun flagMessage(chatMessage: ChatMessage, function: () -> Unit) {
+        disposable.add(socialRepository.flagMessage(chatMessage)
+                .subscribe(Consumer {
+                    function()
+                }, RxErrorHandler.handleEmptyError()))
+    }
+
+    fun deleteMessage(chatMessage: ChatMessage) {
+        disposable.add(socialRepository.deleteMessage(chatMessage).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+    }
+
+    fun postGroupChat(chatText: String, onComplete: () -> Unit?) {
+        groupIDSubject.value?.value.notNull {
+            disposable.add(socialRepository.postGroupChat(it, chatText).subscribe(Consumer {
+                onComplete()
+            }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    fun retrieveGroupChat(onComplete: () -> Unit) {
+        groupIDSubject.value?.value.notNull {
+            disposable.add(socialRepository.retrieveGroupChat(it).subscribe(Consumer {
+                onComplete()
+            }, RxErrorHandler.handleEmptyError()))
+        }
     }
 }

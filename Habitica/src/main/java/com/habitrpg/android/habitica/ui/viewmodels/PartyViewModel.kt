@@ -2,16 +2,17 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.fragment_chat.*
 
 class PartyViewModel: GroupViewModel() {
 
-    private val quest: MutableLiveData<Quest?> = MutableLiveData()
-
+    private val quest = Transformations.map(getGroupData()) { it?.quest }
 
     internal val isQuestActive: Boolean
         get() = quest.value?.active == true
