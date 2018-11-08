@@ -389,7 +389,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val preferences = user?.preferences
 
             preferences?.language.notNull { apiClient.setLanguageCode(it) }
-            preferences?.language.notNull { soundManager.soundTheme = it }
+            preferences?.sound.notNull { soundManager.soundTheme = it }
             runOnUiThread {
                 updateSidebar()
                 if (activeFragment != null && activeFragment?.get() != null) {
