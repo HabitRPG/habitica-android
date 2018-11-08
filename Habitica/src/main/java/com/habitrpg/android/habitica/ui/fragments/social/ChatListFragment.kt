@@ -42,7 +42,7 @@ import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ChatListFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -52,7 +52,7 @@ class ChatListFragment : BaseFragment(), androidx.swiperefreshlayout.widget.Swip
     lateinit var configManager: RemoteConfigManager
 
     private var isTavern: Boolean = false
-    internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
+    internal var layoutManager: LinearLayoutManager? = null
     internal var groupId: String? = null
     private var user: User? = null
     private var userId: String? = null

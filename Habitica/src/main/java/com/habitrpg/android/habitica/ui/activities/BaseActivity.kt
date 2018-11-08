@@ -31,6 +31,8 @@ abstract class BaseActivity : AppCompatActivity() {
     private val habiticaApplication: HabiticaApplication
         get() = application as HabiticaApplication
 
+    var isActivityVisible = false
+
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         InstabugTrackingDelegate.notifyActivityGotTouchEvent(ev, this)
         return super.dispatchTouchEvent(ev)
@@ -51,6 +53,16 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isActivityVisible = true
+    }
+
+    override fun onPause() {
+        isActivityVisible = false
+        super.onPause()
     }
 
     override fun onStop() {

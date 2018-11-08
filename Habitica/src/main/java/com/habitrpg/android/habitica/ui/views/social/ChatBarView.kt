@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.view.updateLayoutParams
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -26,6 +27,7 @@ class ChatBarView : FrameLayout {
     private val textIndicator: TextView by bindView(R.id.text_indicator)
     private val indicatorSpacing: View by bindView(R.id.indicator_spacing)
     private val emojiButton: ImageButton by bindView(R.id.emojiButton)
+    private val spacing: Space by bindView(R.id.spacing)
     private val popup: EmojiPopup by lazy {
         EmojiPopup(emojiButton.rootView, context, ContextCompat.getColor(context, R.color.brand))
     }
@@ -131,10 +133,9 @@ class ChatBarView : FrameLayout {
                 navBarAccountedHeightCalculated = true
 
                 val navbarHeight = NavbarUtils.getNavbarHeight(context)
-                val layoutParams = this.layoutParams as? LinearLayout.LayoutParams
-                layoutParams?.setMargins(0, 0, 0, navbarHeight)
-                setLayoutParams(layoutParams)
-                (parent as? View)?.invalidate()
+                spacing.updateLayoutParams<LinearLayout.LayoutParams> {
+                    height = navbarHeight
+                }
             }
         }
     }

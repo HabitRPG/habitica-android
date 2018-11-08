@@ -88,5 +88,9 @@
             android:text="@string/read_community_guidelines"
             style="@style/Caption3"
             android:textColor="@color/brand_300" />
+        <Space
+            android:id="@+id/spacing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </merge>

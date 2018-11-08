@@ -42,7 +42,7 @@ import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import javax.inject.Inject
 
-class SetupActivity : BaseActivity(), androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -248,9 +248,9 @@ class SetupActivity : BaseActivity(), androidx.viewpager.widget.ViewPager.OnPage
                 .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()))
     }
 
-    private inner class ViewPageAdapter(fm: androidx.fragment.app.FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
+    private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm), IconPagerAdapter {
 
-        override fun getItem(position: Int): androidx.fragment.app.Fragment {
+        override fun getItem(position: Int): Fragment {
             return when (position) {
                 1 -> {
                     val fragment = AvatarSetupFragment()
