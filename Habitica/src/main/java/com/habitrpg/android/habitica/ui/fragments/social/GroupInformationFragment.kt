@@ -4,6 +4,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Shader
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +17,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.backgroundCompat
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
@@ -21,8 +26,11 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_group_info.*
 import javax.inject.Inject
@@ -95,6 +103,21 @@ class GroupInformationFragment : BaseFragment() {
         craetePartyButton.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, "https://habitica.com/party".toUri())
             startActivity(browserIntent)
+        }
+
+        context.notNull { context ->
+            DataBindingUtils.loadImage("timeTravelersShop_background_fall") {
+                val aspectRatio = it.width / it.height.toFloat()
+                val height = context.resources.getDimension(R.dimen.shop_height).toInt()
+                val width = Math.round(height * aspectRatio)
+                val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it, width, height, false))
+                drawable.tileModeX = Shader.TileMode.REPEAT
+                Observable.just(drawable)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Consumer {
+                            no_party_background.backgroundCompat = it
+                        }, RxErrorHandler.handleEmptyError())
+            }
         }
     }
 

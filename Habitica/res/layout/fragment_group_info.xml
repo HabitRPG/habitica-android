@@ -2,7 +2,8 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/refreshLayout">
+    android:id="@+id/refreshLayout"
+    android:background="@color/white">
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,6 +61,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="158dp"
+                    android:layout_marginBottom="@dimen/spacing_medium">
+                    <ImageView
+                        android:id="@+id/no_party_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="124dp"
+                        android:layout_alignParentTop="true"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="124dp"
+                        android:background="@drawable/no_party_background_gradient"/>
+                    <ImageView
+                        android:layout_width="332dp"
+                        android:layout_height="146dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/no_party_banner"/>
+                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,21 +89,28 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Title1"
+                        style="@style/Headline"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray_200"
                         android:text="@string/no_party_title"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:layout_marginBottom="@dimen/spacing_medium"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/Body1"
                         android:text="@string/no_party_description"
                         android:textColor="@color/gray_300"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:layout_marginLeft="@dimen/spacing_large"
+                        android:layout_marginRight="@dimen/spacing_large"/>
                     <Button
                         android:id="@+id/craetePartyButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/HabiticaButton.Gray.600"
+                        android:background="@drawable/layout_rounded_bg_gray_700"
+                        android:textSize="16sp"
                         android:text="@string/create_party_website"
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
@@ -98,9 +126,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Title2"
+                        style="@style/Headline"
+                        android:textSize="16sp"
                         android:text="@string/join_party_title"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:layout_marginBottom="@dimen/spacing_medium"/>
                     <TextView
                         android:id="@+id/join_party_description_textview"
                         android:layout_width="match_parent"
@@ -108,7 +138,9 @@
                         style="@style/Body1"
                         android:text="@string/join_party_description"
                         android:textColor="@color/gray_300"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:layout_marginLeft="@dimen/spacing_large"
+                        android:layout_marginRight="@dimen/spacing_large"/>
 
                     <Button
                         android:id="@+id/username_textview"
@@ -116,7 +148,9 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/brand_400"
                         style="@style/HabiticaButton.Gray.600"
+                        android:background="@drawable/layout_rounded_bg_gray_700"
                         android:gravity="center"
+                        android:textSize="16sp"
                         android:layout_marginTop="@dimen/spacing_large"
                         android:layout_marginBottom="@dimen/spacing_large"/>
 
