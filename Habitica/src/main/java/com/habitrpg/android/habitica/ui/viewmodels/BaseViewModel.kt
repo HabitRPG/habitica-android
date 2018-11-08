@@ -48,4 +48,8 @@ abstract class BaseViewModel: ViewModel() {
     private fun loadUserFromLocal() {
         disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread()).subscribe(Consumer { user.value = it }, RxErrorHandler.handleEmptyError()))
     }
+
+    fun updateUser(user: User?, path: String, value: Any) {
+        disposable.add(userRepository.updateUser(user, path, value).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+    }
 }

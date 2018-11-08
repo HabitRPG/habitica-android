@@ -69,6 +69,7 @@ import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
@@ -299,4 +300,6 @@ public interface AppComponent {
     void inject(@NotNull VerifyUsernameActivity verifyUsernameActivity);
 
     void inject(@NotNull GroupViewModel viewModel);
+
+    void inject(@NotNull ChatFragment chatFragment);
 }
