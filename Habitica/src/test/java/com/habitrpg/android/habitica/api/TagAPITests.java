@@ -44,7 +44,7 @@ public class TagAPITests extends BaseAPITests {
         t.setName(newname);
 
         //Attempt to update the test user's first tag
-        String testId = getUser().getTags().get(0).getId();
+        String testId = getUserData().getTags().get(0).getId();
         apiClient.updateTag(testId,t)
                 .subscribe(testSubscriber);
         testSubscriber.awaitTerminalEvent();
@@ -58,7 +58,7 @@ public class TagAPITests extends BaseAPITests {
     public void shouldDeleteTag() {
         TestSubscriber<Void> testSub = new TestSubscriber<>();
 
-        String testId = getUser().getTags().get(0).getId();
+        String testId = getUserData().getTags().get(0).getId();
         apiClient.deleteTag(testId)
                 .subscribe(testSub);
         testSub.awaitTerminalEvent();

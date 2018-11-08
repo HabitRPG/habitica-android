@@ -1,23 +1,21 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
@@ -30,18 +28,16 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
 
 
-class PartyDetailFragment : BaseFragment() {
+@SuppressLint("ValidFragment")
+class PartyDetailFragment constructor(private val viewModel: PartyViewModel) : BaseFragment() {
 
-    @Inject
-    lateinit var socialRepository: SocialRepository
-    @Inject
-    lateinit var userRepository: UserRepository
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
@@ -66,15 +62,6 @@ class PartyDetailFragment : BaseFragment() {
     private val questProgressView: OldQuestProgressView? by bindView(R.id.quest_progress_view)
     private val leaveButton: Button? by bindView(R.id.leave_button)
 
-
-    var partyId: String? = null
-    private var party: Group? = null
-    private var quest: Quest? = null
-    private var user: User? = null
-
-    private val isQuestActive: Boolean
-        get() = quest?.active == true
-
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
     }
@@ -85,8 +72,6 @@ class PartyDetailFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        socialRepository.close()
-        userRepository.close()
         inventoryRepository.close()
         super.onDestroyView()
     }
@@ -98,9 +83,6 @@ class PartyDetailFragment : BaseFragment() {
 
         refreshLayout?.setOnRefreshListener { this.refreshParty() }
 
-        compositeSubscription.add(socialRepository.getGroup(partyId).subscribe(Consumer { this.updateParty(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer { this.updateUser(it) }, RxErrorHandler.handleEmptyError()))
-
         partyAcceptButton?.setOnClickListener { onPartyInviteAccepted() }
         partyRejectButton?.setOnClickListener { onPartyInviteRejected() }
         questAcceptButton?.setOnClickListener { onQuestAccept() }
@@ -110,32 +92,36 @@ class PartyDetailFragment : BaseFragment() {
         leaveButton?.setOnClickListener { leaveParty() }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.getGroupData().observe(viewLifecycleOwner, Observer { updateParty(it) })
+        viewModel.getUserData().observe(viewLifecycleOwner, Observer { updateUser(it) })
+    }
+
     private fun refreshParty() {
-        compositeSubscription.add(socialRepository.retrieveGroup("party")
-                .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
-                .doOnComplete { refreshLayout?.isRefreshing = false }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        viewModel.retrieveGroup {
+            refreshLayout?.isRefreshing = false
+        }
     }
 
     private fun updateParty(party: Group?) {
         if (party == null) {
             return
         }
-        this.party = party
-        this.quest = party.quest
         if (titleView == null) {
             return
         }
         titleView?.text = party.name
         descriptionView?.text = MarkdownParser.parseMarkdown(party.description)
 
-        if (quest?.key?.isEmpty() == false) {
+        if (party.quest?.key?.isEmpty() == false) {
             newQuestButton?.visibility = View.GONE
             questDetailButton?.visibility = View.VISIBLE
             questImageWrapper?.visibility = View.VISIBLE
             val mainHandler = Handler(context?.mainLooper)
             mainHandler.postDelayed({
-                inventoryRepository.getQuestContent(quest?.key ?: "")
+                inventoryRepository.getQuestContent(party.quest?.key ?: "")
                         .firstElement()
                         .subscribe(Consumer<QuestContent> { this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
             }, 500)
@@ -151,7 +137,6 @@ class PartyDetailFragment : BaseFragment() {
         if (user?.party?.quest == null) {
             return
         }
-        this.user = user
 
         var invitationVisibility = View.GONE
         if (user.invitations?.party?.id?.isNotEmpty() == true) {
@@ -174,7 +159,7 @@ class PartyDetailFragment : BaseFragment() {
     }
 
     private fun showParticipantButtons(): Boolean {
-        return !(user == null || user?.party == null || user?.party?.quest == null) && !isQuestActive && user?.party?.quest?.RSVPNeeded == true
+        return viewModel.showParticipantButtons()
     }
 
     private fun updateQuestContent(questContent: QuestContent) {
@@ -188,11 +173,11 @@ class PartyDetailFragment : BaseFragment() {
         } else {
             DataBindingUtils.loadImage(questImageView, "quest_" + questContent.key)
         }
-        if (isQuestActive) {
+        if (viewModel.isQuestActive) {
             questProgressView?.visibility = View.VISIBLE
-            questProgressView?.setData(questContent, quest?.progress)
+            questProgressView?.setData(questContent, viewModel.getQuestData().value?.progress)
 
-            questParticipationView?.text = getString(R.string.number_participants, quest?.members?.size)
+            questParticipationView?.text = getString(R.string.number_participants, viewModel.getQuestData().value?.members?.size)
         } else {
             questProgressView?.visibility = View.GONE
         }
@@ -209,48 +194,37 @@ class PartyDetailFragment : BaseFragment() {
         val builder = AlertDialog.Builder(activity)
                 .setMessage(R.string.leave_party_confirmation)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    this.socialRepository.leaveGroup(partyId)
-                            .flatMap { userRepository.retrieveUser(false, true) }
-                            .subscribe(Consumer {
-                                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-                            }, RxErrorHandler.handleEmptyError())
+                    viewModel.leaveGroup { activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit() }
                 }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()
     }
 
     private fun onQuestAccept() {
-        partyId.notNull {
-            socialRepository.acceptQuest(user, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-        }
+        viewModel.acceptQuest()
     }
 
 
     private fun onQuestReject() {
-        partyId.notNull {
-            socialRepository.rejectQuest(user, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-        }
+        viewModel.rejectQuest()
     }
 
     private fun onPartyInviteAccepted() {
-        user?.invitations?.party?.id.notNull {
-            socialRepository.joinGroup(it)
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        viewModel.getUserData().value?.invitations?.party?.id.notNull {
+            viewModel.joinGroup(it)
         }
     }
 
     private fun onPartyInviteRejected() {
-        user?.invitations?.party?.id.notNull {
-            socialRepository.rejectGroupInvite(it)
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        viewModel.getUserData().value?.invitations?.party?.id.notNull {
+            viewModel.rejectGroupInvite(it)
         }
     }
 
     private fun questDetailButtonClicked() {
         val fragment = QuestDetailFragment()
-        fragment.partyId = partyId
-        if (party != null && party?.quest != null) {
-            fragment.questKey = party?.quest?.key
-        }
+        val party = viewModel.getGroupData().value
+        fragment.partyId = party?.id
+        fragment.questKey = party?.quest?.key
         if (activity != null) {
             val activity = activity as? MainActivity
             activity?.displayFragment(fragment)

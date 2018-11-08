@@ -1,0 +1,51 @@
+package com.habitrpg.android.habitica.ui.viewmodels
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.habitrpg.android.habitica.HabiticaBaseApplication
+import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.Optional
+import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
+import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.User
+import io.reactivex.BackpressureStrategy
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
+import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
+
+abstract class BaseViewModel: ViewModel() {
+
+    @Inject
+    lateinit var userRepository: UserRepository
+
+    private val user: MutableLiveData<User?> by lazy {
+        loadUserFromLocal()
+        MutableLiveData<User?>()
+    }
+
+    init {
+        HabiticaBaseApplication.component.notNull { inject(it) }
+    }
+
+    abstract fun inject(component: AppComponent)
+
+    override fun onCleared() {
+        userRepository.close()
+        disposable.clear()
+        super.onCleared()
+    }
+
+    internal val disposable = CompositeDisposable()
+
+    fun getUserData(): LiveData<User?> = user
+
+    private fun loadUserFromLocal() {
+        disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread()).subscribe(Consumer { user.value = it }, RxErrorHandler.handleEmptyError()))
+    }
+}

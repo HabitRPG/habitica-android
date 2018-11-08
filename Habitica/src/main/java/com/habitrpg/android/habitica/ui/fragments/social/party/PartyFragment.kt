@@ -4,14 +4,15 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
-import android.view.*
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
@@ -22,24 +23,19 @@ import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
+import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import io.reactivex.functions.Consumer
 import java.util.*
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class PartyFragment : BaseMainFragment() {
 
-    @Inject
-    internal lateinit var socialRepository: SocialRepository
-    @Inject
-    internal lateinit var inventoryRepository: InventoryRepository
-
-    private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
-    private var group: Group? = null
+    private val viewPager: ViewPager? by bindView(R.id.viewPager)
     private var partyMemberListFragment: PartyMemberListFragment? = null
     private var chatListFragment: ChatListFragment? = null
     private var viewPagerAdapter: androidx.fragment.app.FragmentPagerAdapter? = null
+
+    private lateinit var viewModel: PartyViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,32 +46,27 @@ class PartyFragment : BaseMainFragment() {
         return inflater.inflate(R.layout.fragment_viewpager, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         resetViews()
 
-        viewPager?.currentItem = 0
+        viewModel = ViewModelProviders.of(this)
+                .get(PartyViewModel::class.java)
+        viewModel.groupViewType = GroupViewType.PARTY
 
-        compositeSubscription.add(userRepository.getUser()
-                .filter { user?.party?.id?.isNotEmpty() == true }
-                .map { user?.party?.id }
-                .flatMap { socialRepository.getGroup(it) }
-                .firstElement()
-                //delay, so that realm can save party first
-                .delay(500, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer { group ->
-                    this@PartyFragment.group = group
-                    updateGroupUI()
-                }, RxErrorHandler.handleEmptyError()))
+        viewModel.getGroupData().observe(viewLifecycleOwner,
+                Observer {
+                    updateGroupUI(it)
+                })
+
+        viewModel.loadPartyID()
 
         // Get the full group data
         if (userHasParty()) {
-            compositeSubscription.add(socialRepository.retrieveGroup("party")
-                    .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+            viewModel.retrieveGroup {}
         }
+
+        viewPager?.currentItem = 0
 
         setViewPagerAdapter()
         this.tutorialStepIdentifier = "party"
@@ -93,8 +84,6 @@ class PartyFragment : BaseMainFragment() {
     }
 
     override fun onDestroy() {
-        socialRepository.close()
-        inventoryRepository.close()
         super.onDestroy()
     }
 
@@ -102,7 +91,7 @@ class PartyFragment : BaseMainFragment() {
         component.inject(this)
     }
 
-    private fun updateGroupUI() {
+    private fun updateGroupUI(group: Group?) {
         viewPagerAdapter?.notifyDataSetChanged()
 
         if (group == null) {
@@ -112,16 +101,17 @@ class PartyFragment : BaseMainFragment() {
             tabLayout?.visibility = View.VISIBLE
         }
 
-        partyMemberListFragment?.setPartyId(group?.id ?: "")
+        partyMemberListFragment?.setPartyId(group.id)
 
-        chatListFragment?.groupId = group?.id ?: ""
+        chatListFragment?.groupId = group.id
 
         this.activity?.invalidateOptionsMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        if (this.group != null && this.user != null) {
-            if (this.group?.leaderID == this.user?.id) {
+        val group = viewModel.getGroupData().value
+        if (group != null && this.user != null) {
+            if (group.leaderID == this.user?.id) {
                 inflater?.inflate(R.menu.menu_party_admin, menu)
             } else {
                 inflater?.inflate(R.menu.menu_party, menu)
@@ -148,14 +138,10 @@ class PartyFragment : BaseMainFragment() {
                         .setTitle(context?.getString(R.string.leave_party))
                         .setMessage(context?.getString(R.string.leave_party_confirmation))
                         .setPositiveButton(context?.getString(R.string.yes)) { _, _ ->
-                            if (this.group != null) {
-                                this.socialRepository.leaveGroup(this.group?.id ?: "")
-                                        .flatMap { userRepository.retrieveUser(false, true) }
-                                        .subscribe(Consumer {
-                                            parentFragment.notNull { fragment ->
-                                                activity?.supportFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
-                                            }
-                                        }, RxErrorHandler.handleEmptyError())
+                            viewModel.leaveGroup {
+                                parentFragment.notNull { fragment ->
+                                    activity?.supportFragmentManager?.beginTransaction()?.remove(fragment)?.commit()
+                                }
                             }
                         }
                         .setNegativeButton(context?.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
@@ -169,10 +155,11 @@ class PartyFragment : BaseMainFragment() {
 
     private fun displayEditForm() {
         val bundle = Bundle()
+        val group = viewModel.getGroupData().value
         bundle.putString("groupID", group?.id)
-        bundle.putString("name", this.group?.name)
-        bundle.putString("description", this.group?.description)
-        bundle.putString("leader", this.group?.leaderID)
+        bundle.putString("name", group?.name)
+        bundle.putString("description", group?.description)
+        bundle.putString("leader", group?.leaderID)
 
         val intent = Intent(activity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
@@ -185,15 +172,7 @@ class PartyFragment : BaseMainFragment() {
         when (requestCode) {
             GroupFormActivity.GROUP_FORM_ACTIVITY -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val bundle = data?.extras
-                    if (this.group == null) {
-                        return
-                    }
-                    this.socialRepository.updateGroup(this.group, bundle?.getString("name"),
-                            bundle?.getString("description"),
-                            bundle?.getString("leader"),
-                            bundle?.getString("privacy"))
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    viewModel.updateGroup(data?.extras)
                 }
             }
             PartyInviteActivity.RESULT_SEND_INVITES -> {
@@ -216,10 +195,7 @@ class PartyFragment : BaseMainFragment() {
                         Collections.addAll(invites, *userIDs)
                         inviteData["uuids"] = invites
                     }
-                    if (this.group != null) {
-                        this.socialRepository.inviteToGroup(this.group?.id ?: "", inviteData)
-                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-                    }
+                    viewModel.inviteToGroup(inviteData)
                 }
             }
         }
@@ -239,12 +215,11 @@ class PartyFragment : BaseMainFragment() {
 
                 when (position) {
                     0 -> {
-                        if (user?.hasParty() == true) {
-                            val detailFragment = PartyDetailFragment()
-                            detailFragment.partyId = user?.party?.id
-                            fragment = detailFragment
+                        fragment = if (user?.hasParty() == true) {
+                            val detailFragment = PartyDetailFragment(viewModel)
+                            detailFragment
                         } else {
-                            fragment = GroupInformationFragment.newInstance(null, user)
+                            GroupInformationFragment.newInstance(null, user)
                         }
                     }
                     1 -> {
@@ -272,7 +247,7 @@ class PartyFragment : BaseMainFragment() {
             }
 
             override fun getCount(): Int {
-                return if (group == null) {
+                return if (viewModel.getGroupData().value == null) {
                     1
                 } else {
                     3
@@ -292,13 +267,13 @@ class PartyFragment : BaseMainFragment() {
 
         viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                if (position == 1 && group != null) {
+                if (position == 1) {
                     chatListFragment?.setNavigatedToFragment()
                 }
             }
 
             override fun onPageSelected(position: Int) {
-                if (position == 1 && group != null) {
+                if (position == 1) {
                        chatListFragment?.setNavigatedToFragment()
                 }
             }

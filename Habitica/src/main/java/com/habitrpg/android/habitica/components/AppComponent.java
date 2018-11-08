@@ -88,6 +88,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog;
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
@@ -296,4 +297,6 @@ public interface AppComponent {
     void inject(@NotNull ChallengeDetailFragment challengeDetailFragment);
 
     void inject(@NotNull VerifyUsernameActivity verifyUsernameActivity);
+
+    void inject(@NotNull GroupViewModel viewModel);
 }
