@@ -158,9 +158,19 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             if (messageWasSent()) {
                 userLabel.tier = user?.contributor?.level ?: 0
                 userLabel.username = name
+                if (user?.username != null && releasedUsernames) {
+                    sublineTextView.text = "@${user?.username} ∙ ${msg.getAgoString(res)}"
+                } else {
+                    sublineTextView.text = msg.getAgoString(res)
+                }
             } else {
                 userLabel.tier = msg.contributor?.level ?: 0
                 userLabel.username = msg.user
+                if (msg.username != null && releasedUsernames) {
+                    sublineTextView.text = "${msg.formattedUsername} ∙ ${msg.getAgoString(res)}"
+                } else {
+                    sublineTextView.text = msg.getAgoString(res)
+                }
             }
             when {
                 userLabel.tier == 8 -> {
@@ -215,12 +225,6 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                 messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
             }
             messageWrapper.setScaledPadding(context, 8, 8, 8, 8)
-
-            if (msg.username != null && releasedUsernames) {
-                sublineTextView.text = "${msg.formattedUsername} ∙ ${msg.getAgoString(res)}"
-            } else {
-                sublineTextView.text = msg.getAgoString(res)
-            }
 
             if (expandedMessageId == msg.id) {
                 buttonsWrapper.visibility = View.VISIBLE
