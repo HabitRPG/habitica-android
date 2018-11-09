@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
     android:scrollbars="vertical">
@@ -11,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <Space
+            android:id="@+id/anchor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <ImageView
             android:layout_width="72dp"
             android:layout_height="72dp"
@@ -115,7 +118,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="30sp"
-            android:textSize="@dimen/abc_text_size_small_material" />
+            android:textSize="@dimen/abc_text_size_small_material"
+            tools:text="Version 1.0 (1)"/>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

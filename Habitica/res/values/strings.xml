@@ -835,4 +835,6 @@
     <string name="display_name_length_error">Display names must be between 1 and 30 characters</string>
     <string name="setup_task_join_habitica">Join Habitica (Check me off!)</string>
     <string name="setup_task_join_habitica_notes">You can either complete this To-Do, edit it, or remove it.</string>
+    <string name="setup_task_reward">Reward yourself</string>
+    <string name="setup_task_reward_notes">Watch TV, play a game, eat a treat, it’s up to you!</string>
 </resources>

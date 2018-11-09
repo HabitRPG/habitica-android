@@ -49,7 +49,7 @@ abstract class BaseViewModel: ViewModel() {
         disposable.add(userRepository.getUser().observeOn(AndroidSchedulers.mainThread()).subscribe(Consumer { user.value = it }, RxErrorHandler.handleEmptyError()))
     }
 
-    fun updateUser(user: User?, path: String, value: Any) {
-        disposable.add(userRepository.updateUser(user, path, value).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+    fun updateUser(path: String, value: Any) {
+        disposable.add(userRepository.updateUser(getUserData().value, path, value).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 }

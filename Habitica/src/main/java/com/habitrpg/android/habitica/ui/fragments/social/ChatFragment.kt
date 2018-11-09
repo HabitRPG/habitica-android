@@ -6,10 +6,13 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
@@ -38,46 +41,38 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @SuppressLint("ValidFragment")
-class ChatFragment(private var viewModel: PartyViewModel) : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+class ChatFragment constructor(private val viewModel: PartyViewModel) : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var configManager: RemoteConfigManager
 
-    private var isTavern: Boolean = false
     internal var layoutManager: LinearLayoutManager? = null
-    internal var groupId: String? = null
-    private var user: User? = null
-    private var userId: String? = null
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var isScrolledToTop = true
     private var refreshDisposable: Disposable? = null
 
-    fun configure(groupId: String, user: User?, isTavern: Boolean) {
-        this.groupId = groupId
-        this.user = user
-        if (this.user != null) {
-            this.userId = this.user?.id
-        }
-        this.isTavern = isTavern
-    }
-
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_chat, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshLayout.setOnRefreshListener(this)
 
-        layoutManager = recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+        layoutManager = recyclerView.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             recyclerView.layoutManager = layoutManager
         }
 
-        chatAdapter = ChatRecyclerViewAdapter(null, true, user, true, configManager.enableUsernameRelease())
+        chatAdapter = ChatRecyclerViewAdapter(null, true, null, true, configManager.enableUsernameRelease())
         chatAdapter.notNull {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
                 context.notNull { FullProfileActivity.open(it, userId) }
@@ -97,16 +92,21 @@ class ChatFragment(private var viewModel: PartyViewModel) : BaseFragment(), Swip
 
         compositeSubscription.add(viewModel.getChatMessages().firstElement().subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError()))
 
-        if (user?.flags?.isCommunityGuidelinesAccepted == true) {
-            communityGuidelinesView.visibility = View.GONE
-        } else {
-            communityGuidelinesView.setOnClickListener { _ ->
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = "https://habitica.com/static/community-guidelines".toUri()
-                context?.startActivity(i)
-                viewModel.updateUser(user, "flags.communityGuidelinesAccepted", true)
+
+
+        viewModel.getUserData().observe(viewLifecycleOwner, Observer {
+            chatAdapter?.user = it
+            if (it?.flags?.isCommunityGuidelinesAccepted == true) {
+                communityGuidelinesView.visibility = View.GONE
+            } else {
+                communityGuidelinesView.setOnClickListener { _ ->
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = "https://habitica.com/static/community-guidelines".toUri()
+                    context?.startActivity(i)
+                    viewModel.updateUser("flags.communityGuidelinesAccepted", true)
+                }
             }
-        }
+        })
 
         recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
@@ -223,13 +223,6 @@ class ChatFragment(private var viewModel: PartyViewModel) : BaseFragment(), Swip
                     .setPositiveButton(android.R.string.yes) { _, _ -> viewModel.deleteMessage(chatMessage) }
                     .setNegativeButton(android.R.string.no, null).show()
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("userId", this.userId)
-        outState.putString("groupId", this.groupId)
-        outState.putBoolean("isTavern", this.isTavern)
-        super.onSaveInstanceState(outState)
     }
 
     private fun setChatMessages(chatMessages: RealmResults<ChatMessage>) {

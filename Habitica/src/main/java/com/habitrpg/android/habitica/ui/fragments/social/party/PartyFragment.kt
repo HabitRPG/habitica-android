@@ -97,8 +97,6 @@ class PartyFragment : BaseMainFragment() {
 
         partyMemberListFragment?.setPartyId(group.id)
 
-        chatFragment?.groupId = group.id
-
         this.activity?.invalidateOptionsMenu()
     }
 
@@ -204,12 +202,9 @@ class PartyFragment : BaseMainFragment() {
         viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment? {
-
-                val fragment: androidx.fragment.app.Fragment?
-
-                when (position) {
+                return when (position) {
                     0 -> {
-                        fragment = if (user?.hasParty() == true) {
+                        if (user?.hasParty() == true) {
                             val detailFragment = PartyDetailFragment(viewModel)
                             detailFragment
                         } else {
@@ -220,7 +215,7 @@ class PartyFragment : BaseMainFragment() {
                         if (chatFragment == null) {
                             chatFragment = ChatFragment(viewModel)
                         }
-                        fragment = chatFragment
+                        chatFragment
                     }
                     2 -> {
                         if (partyMemberListFragment == null) {
@@ -229,12 +224,11 @@ class PartyFragment : BaseMainFragment() {
                                 partyMemberListFragment?.setPartyId(user?.party?.id ?: "")
                             }
                         }
-                        fragment = partyMemberListFragment
+                        partyMemberListFragment
                     }
-                    else -> fragment = Fragment()
+                    else -> Fragment()
                 }
 
-                return fragment
             }
 
             override fun getCount(): Int {
