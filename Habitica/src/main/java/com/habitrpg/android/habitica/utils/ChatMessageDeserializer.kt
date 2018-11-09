@@ -61,7 +61,7 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
             message.user = obj.get("user").asString
         }
 
-        if (obj.has("username")) {
+        if (obj.has("username") && obj.get("username").isJsonPrimitive) {
             message.username = obj.get("username").asString
         }
 
