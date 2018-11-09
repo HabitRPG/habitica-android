@@ -119,6 +119,7 @@ class TaskSetupFragment : BaseFragment() {
                 tasks.add(taskObject)
             }
         }
+        tasks.add(makeTaskObject(Task.TYPE_REWARD, getString(R.string.setup_task_reward), null, null, getString(R.string.setup_task_reward_notes)))
         tasks.add(makeTaskObject(Task.TYPE_TODO, getString(R.string.setup_task_join_habitica), null, null, getString(R.string.setup_task_join_habitica_notes)))
         return tasks
     }

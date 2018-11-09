@@ -86,6 +86,13 @@ platform :android do
       channel: channel,
       slack_url: url,
       default_payloads: [],
+      attachment_properties: {
+        fields: [{
+          title: "Changelog",
+          value: sh("cat ./changelog.txt"),
+          short: false
+        }]
+      },
       username: "Google Play Store"
     )
   end

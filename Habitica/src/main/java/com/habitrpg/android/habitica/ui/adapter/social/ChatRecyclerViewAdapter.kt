@@ -31,7 +31,7 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import net.pherth.android.emoji_library.EmojiTextView
 
-class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, private val user: User?, private val isTavern: Boolean, private val releasedUsernames: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
+class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, internal var user: User?, private val isTavern: Boolean, private val releasedUsernames: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
     private var uuid: String = ""
     private var expandedMessageId: String? = null
 
@@ -155,8 +155,8 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             setLikeProperties()
 
             val name = user?.profile?.name
-            if (messageWasSent() && user != null) {
-                userLabel.tier = user.contributor?.level ?: 0
+            if (messageWasSent()) {
+                userLabel.tier = user?.contributor?.level ?: 0
                 userLabel.username = name
             } else {
                 userLabel.tier = msg.contributor?.level ?: 0

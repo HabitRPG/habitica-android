@@ -152,6 +152,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 this.taskRepository.createTasks(it).subscribe(Consumer { onUserReceived(user) }, RxErrorHandler.handleEmptyError())
             }
         } else if (pager.currentItem == 0) {
+
             confirmNames(welcomeFragment?.displayName ?: "", welcomeFragment?.username ?: "")
 
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
