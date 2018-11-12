@@ -67,7 +67,7 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        this.activity?.menuInflater?.inflate(R.menu.inbox, menu)
+        //this.activity?.menuInflater?.inflate(R.menu.inbox, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

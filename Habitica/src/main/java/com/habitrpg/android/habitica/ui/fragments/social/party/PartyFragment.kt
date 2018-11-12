@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity
@@ -25,8 +26,12 @@ import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import java.util.*
+import javax.inject.Inject
 
 class PartyFragment : BaseMainFragment() {
+
+    @Inject
+    lateinit var configRepository: RemoteConfigManager
 
     private val viewPager: ViewPager? by bindView(R.id.viewPager)
     private var partyMemberListFragment: PartyMemberListFragment? = null
@@ -185,7 +190,11 @@ class PartyFragment : BaseMainFragment() {
                         val userIDs = data?.getStringArrayExtra(PartyInviteActivity.USER_IDS_KEY)
                         val invites = ArrayList<String>()
                         Collections.addAll(invites, *userIDs)
-                        inviteData["uuids"] = invites
+                        if (configRepository.enableUsernameRelease()) {
+                            inviteData["usernames"] = invites
+                        } else {
+                            inviteData["uuids"] = invites
+                        }
                     }
                     viewModel.inviteToGroup(inviteData)
                 }

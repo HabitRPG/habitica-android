@@ -56,10 +56,31 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
         val profileCategory = findPreference("profile") as? PreferenceCategory
         configurePreference(profileCategory?.findPreference(key), sharedPreferences?.getString(key, ""))
         if (sharedPreferences != null) {
+            val newValue = sharedPreferences.getString(key, "") ?: ""
             val observable: Flowable<User>? = when (key) {
-                "display_name" -> userRepository.updateUser(user, "profile.name", sharedPreferences.getString(key, "") ?: "")
-                "photo_url" -> userRepository.updateUser(user, "profile.photo", sharedPreferences.getString(key, "") ?: "")
-                "about" -> userRepository.updateUser(user, "profile.blurb", sharedPreferences.getString(key, "") ?: "")
+                "display_name" -> {
+                    if (newValue != user?.profile?.name) {
+                        userRepository.updateUser(user, "profile.name", newValue)
+                    } else {
+                        null
+                    }
+                }
+                "photo_url" -> {
+                    val newName = sharedPreferences.getString(key, "") ?: ""
+                    if (newName != user?.profile?.imageUrl) {
+                        userRepository.updateUser(user, "profile.photo", newValue)
+                    } else {
+                        null
+                    }
+                }
+                "about" -> {
+                    val newName = sharedPreferences.getString(key, "") ?: ""
+                    if (newName != user?.profile?.blurb) {
+                        userRepository.updateUser(user, "profile.blurb", newValue)
+                    } else {
+                        null
+                    }
+                }
                 else -> null
             }
             observable?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }

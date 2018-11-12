@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.functions.Consumer
 import java.util.*
@@ -73,6 +74,7 @@ class PartyInviteActivity : BaseActivity() {
 
         if (id == R.id.action_send_invites) {
             setResult(Activity.RESULT_OK, createResultIntent())
+            KeyboardUtil.dismissKeyboard(this)
             finish()
             return true
         }
@@ -83,7 +85,7 @@ class PartyInviteActivity : BaseActivity() {
     private fun createResultIntent(): Intent {
         val intent = Intent()
         val fragment = fragments[viewPager.currentItem]
-        if (viewPager.currentItem == 0) {
+        if (viewPager.currentItem == 1) {
             intent.putExtra(PartyInviteActivity.IS_EMAIL_KEY, true)
             intent.putExtra(PartyInviteActivity.EMAILS_KEY, fragment.values)
         } else {
@@ -101,7 +103,7 @@ class PartyInviteActivity : BaseActivity() {
             override fun getItem(position: Int): Fragment {
 
                 val fragment = PartyInviteFragment()
-                fragment.isEmailInvite = position == 0
+                fragment.isEmailInvite = position == 1
                 if (fragments.size > position) {
                     fragments[position] = fragment
                 } else {
@@ -117,8 +119,8 @@ class PartyInviteActivity : BaseActivity() {
 
             override fun getPageTitle(position: Int): CharSequence? {
                 return when (position) {
-                    0 -> getString(R.string.by_email)
-                    1 -> getString(R.string.invite_existing_users)
+                    0 -> getString(R.string.invite_existing_users)
+                    1 -> getString(R.string.by_email)
                     else -> ""
                 }
             }
