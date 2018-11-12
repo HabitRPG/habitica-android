@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.ContextCompat
@@ -49,6 +50,14 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
         private val imageViewWrapper: FrameLayout by bindView(itemView, R.id.gear_icon_background_view)
         private val equippedIndicator: View by bindView(itemView, R.id.equippedIndicator)
         private val twoHandedView: TextView by bindView(R.id.two_handed_view)
+        private val strLabel: TextView by bindView(R.id.str_label)
+        private val strValue: TextView by bindView(R.id.str_value)
+        private val conLabel: TextView by bindView(R.id.con_label)
+        private val conValue: TextView by bindView(R.id.con_value)
+        private val intLabel: TextView by bindView(R.id.int_label)
+        private val intValue: TextView by bindView(R.id.int_value)
+        private val perLabel: TextView by bindView(R.id.per_label)
+        private val perValue: TextView by bindView(R.id.per_value)
 
         var gear: Equipment? = null
         var context: Context = itemView.context
@@ -86,6 +95,23 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
             }
             twoHandedView.visibility = if (gear.twoHanded) View.VISIBLE else View.GONE
             DataBindingUtils.loadImage(imageView, "shop_"+gear.key)
+
+            set(strLabel, strValue, gear.str)
+            set(conLabel, conValue, gear.con)
+            set(intLabel, intValue, gear._int)
+            set(perLabel, perValue, gear.per)
+        }
+
+        private fun set(label: TextView, valueTextView: TextView, value: Int) {
+            if (value > 0) {
+                label.visibility = View.VISIBLE
+                valueTextView.visibility = View.VISIBLE
+                @SuppressLint("SetTextI18n")
+                valueTextView.text = "+$value"
+            } else {
+                label.visibility = View.GONE
+                valueTextView.visibility = View.GONE
+            }
         }
     }
 }
