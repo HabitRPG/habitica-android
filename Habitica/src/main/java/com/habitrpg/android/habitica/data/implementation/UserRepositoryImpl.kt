@@ -296,6 +296,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (newUser.stats != null) {
             copiedUser.stats?.merge(newUser.stats)
         }
+        if (newUser.profile != null) {
+            copiedUser.profile = newUser.profile
+        }
 
         localRepository.saveUser(copiedUser)
         return oldUser

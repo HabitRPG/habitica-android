@@ -52,12 +52,10 @@ class PartyInviteFragment : BaseFragment() {
 
         resetViews()
 
-        if (isEmailInvite) {
-            inviteDescription?.text = getString(R.string.invite_email_description)
-        } else if (configManager.enableUsernameRelease()) {
-            inviteDescription?.text = getString(R.string.invite_username_description)
-        } else {
-            inviteDescription?.text = getString(R.string.invite_id_description)
+        when {
+            isEmailInvite -> inviteDescription?.text = getString(R.string.invite_email_description)
+            configManager.enableUsernameRelease() -> inviteDescription?.text = getString(R.string.invite_username_description)
+            else -> inviteDescription?.text = getString(R.string.invite_id_description)
         }
 
         addInviteField()
@@ -72,13 +70,13 @@ class PartyInviteFragment : BaseFragment() {
     private fun addInviteField() {
         val editText = EditText(context)
 
-        if (isEmailInvite) {
-            editText.setHint(R.string.email)
-            editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        } else if (configManager.enableUsernameRelease()) {
-            editText.setHint(R.string.username)
-        } else {
-            editText.setHint(R.string.user_id)
+        when {
+            isEmailInvite -> {
+                editText.setHint(R.string.email)
+                editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            }
+            configManager.enableUsernameRelease() -> editText.setHint(R.string.username)
+            else -> editText.setHint(R.string.user_id)
         }
         invitationWrapper?.addView(editText)
     }
