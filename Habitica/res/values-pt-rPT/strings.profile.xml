@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile_pets_and_mounts">Animais de Estimação e Montadas</string>
+    <string name="profile_pets_and_mounts">Animais de Estimação e Montarias</string>
     <string name="profile_pets_found">Animais de Estimação Encontrados</string>
     <string name="profile_mounts_tamed">Montadas Domesticada</string>
+    <string name="profile_loading_data">A carregar os dados de membro...</string>
     <string name="profile_send_message_to">Enviar mensagem para %s</string>
     <string name="profile_message_sent_to">Mensagem enviada para %s</string>
     <string name="profile_level">Nível:</string>
@@ -11,4 +12,7 @@
     <string name="profile_boosts">Aumentos</string>
     <string name="profile_private_message">Mensagem Privada</string>
     <string name="profile_achievements">Conquistas</string>
-    </resources>
+    <string name="profile_achievement_ok">ACEITAR</string>
+    <string name="profile_qrcode_close">Fechar</string>
+
+</resources>

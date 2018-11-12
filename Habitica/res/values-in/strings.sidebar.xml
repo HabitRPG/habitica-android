@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="sidebar.tasks">Tugas</string>
-  <string name="sidebar.skills">Keahlian</string>
+  <string name="sidebar.skills">Kemampuan</string>
   <string name="sidebar.section.social">Sosial</string>
-  <string name="sidebar.inbox">Kotak Pesan</string>
-  <string name="sidebar.tavern">Kedai</string>
-  <string name="sidebar.party">Teman</string>
-  <string name="sidebar.guilds">Kelompok</string>
+  <string name="sidebar.inbox">Pesan</string>
+  <string name="sidebar.tavern">Kedai Minuman</string>
+  <string name="sidebar.party">Party</string>
+  <string name="sidebar.purchaseGems">Permata &amp; Berlangganan</string>
+  <string name="sidebar.guilds">Guild</string>
   <string name="sidebar.challenges">Tantangan</string>
   <string name="sidebar.section.inventory">Inventori</string>
   <string name="sidebar.avatar">Avatar</string>
@@ -16,4 +17,5 @@
   <string name="sidebar.settings">Pengaturan</string>
   <string name="sidebar.about">Tentang Kami</string>
   <string name="sidebar_shops">Toko</string>
+  <string name="sidebar_stats">Status</string>
 </resources>

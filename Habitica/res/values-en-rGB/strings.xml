@@ -115,12 +115,8 @@
   <string name="friday">Friday</string>
   <string name="saturday">Saturday</string>
   <string name="sunday">Sunday</string>
-  <string name="levelup_header">You gained a level!</string>
-  <string name="levelup_detail">By accomplishing your real-life goals, you\'ve grown to Level %1$d!</string>
-  <string name="levelup_health">You have been fully healed!</string>
   <string name="levelup_button">Huzzah!</string>
   <string name="faint_subtitle">Don\'t despair!</string>
-  <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck--you\'ll do great.</string>
   <string name="faint_header">You ran out of Health!</string>
   <string name="faint_button">Refill Health &amp; Try Again</string>
   <string name="filter">Filter</string>
@@ -130,7 +126,6 @@
   <string name="used_skill_without_mana">You used %1$s.</string>
   <string name="new_checklist_item">new checklist item</string>
   <string name="add_checklist_item">Add</string>
-  <string name="reminder_title">Remember to check off your Dailies!</string>
   <string name="skill_progress_title">Using Skill</string>
   <string name="coming_soon">Coming Soon</string>
   <string name="chat_flag_confirmation">Are you sure you want to report this message for violation?</string>
@@ -270,14 +265,7 @@
   <string name="equipped">Equipped</string>
   <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
   <string name="quest.invitation">Quest Invitation</string>
-  <string name="quest_begin_message">Are you sure? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
   <string name="quest.invitation.text">You have been invited to participate in a quest!</string>
-  <string name="ago_1day">1 day ago</string>
-  <string name="ago_days">%d days ago</string>
-  <string name="ago_1Minute">1 minute ago</string>
-  <string name="ago_minutes">%d minutes ago</string>
-  <string name="ago_hours">%d hours ago</string>
-  <string name="ago_1hour">1 hour ago</string>
   <string name="today">Today</string>
   <string name="sidebar_items">Items</string>
   <string name="eggs">Eggs</string>
@@ -302,20 +290,10 @@
   <string name="feed">Feed</string>
   <string name="hatch_with">Hatch pet with %s</string>
   <string name="hatched_pet_title">You hatched a %1$s %2$s!</string>
-  <string name="evolved_pet_title">You have tamed %1$s %2$s, let\'s go for a ride!</string>
   <string name="close">Close</string>
   <string name="share">Share</string>
   <string name="notification_pet_fed">You fed your %1$s %2$s!</string>
-  <string name="sectionpets">Base Pets</string>
-  <string name="sectionpremiumPets">Magic Potion Pets</string>
-  <string name="sectionquestPets">Quest Pets</string>
-  <string name="sectionspecialPets">Rare Pets</string>
-  <string name="sectionmounts">Base Mounts</string>
-  <string name="sectionpremiumMounts">Magic Potion Mounts</string>
-  <string name="sectionquestMounts">Quest Mounts</string>
-  <string name="sectionspecialMounts">Rare Mounts</string>
   <string name="world_quest">World Quest</string>
-  <string name="inn_description">Rest in the Inn to prevent your undone Dailies from hurting you overnight! (Note: does not prevent you from receiving Boss damage.)</string>
   <string name="empty_items">You don\'t have any %s</string>
   <string name="user_level">Lvl %d</string>
   <string name="user_level_with_class">Lvl %1$d %2$s</string>
@@ -323,7 +301,6 @@
   <string name="rogue">Rogue</string>
   <string name="mage">Mage</string>
   <string name="healer">Healer</string>
-  <string name="warrior_description">Warriors score more and better \"critical hits\", which randomly give bonus Gold, Experience, and drop chance for scoring a task. They also deal heavy damage to boss monsters. Play a Warrior if you find motivation from unpredictable jackpot-style rewards, or want to dish out the hurt in boss Quests!</string>
   <string name="mage_description">Mages learn swiftly, gaining Experience and Levels faster than other classes. They also get a great deal of Mana for using special abilities. Play a Mage if you enjoy the tactical game aspects of Habit, or if you are strongly motivated by leveling up and unlocking advanced features!</string>
   <string name="rogue_description">Rogues love to accumulate wealth, gaining more Gold than anyone else, and are adept at finding random items. Their iconic Stealth ability lets them duck the consequences of missed Dailies. Play a Rogue if you find strong motivation from Rewards and Achievements, striving for loot and badges!</string>
   <string name="healer_description">Healers stand impervious against harm, and extend that protection to others. Missed Dailies and bad Habits don\'t faze them much, and they have ways to recover Health from failure. Play a Healer if you enjoy assisting others in your Party, or if the idea of cheating Death through hard work inspires you!</string>
@@ -337,7 +314,6 @@
   <string name="dialog_go_back">Go Back</string>
   <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
   <string name="change_class">Change your class</string>
-  <string name="change_class_description">Change your class and refund your attribute points for 3 gems. You can assign attribute points through the website.</string>
   <string name="enable_class">Enable Class System</string>
   <string name="changing_class_progress">Changing Class</string>
   <string name="by_email">By Email</string>
@@ -363,7 +339,6 @@
   <string name="market">Market</string>
   <string name="timeTravelers">Time Travellers</string>
   <string name="seasonalShop">Seasonal Shop</string>
-  <string name="empty_inbox">You don\'t have any Inbox messages. You can send a user a new message from their public chat messages!</string>
   <string name="party_invite">Unlock by inviting friends</string>
   <string name="no_gold">Not enough Gold</string>
   <string name="no_potion">You don\'t need to buy a health potion</string>
@@ -492,7 +467,6 @@
   <string name="warning">Warning</string>
   <string name="open_settings">Open Settings</string>
   <string name="dont_keep_activities_warning">It seems like you have the Developer option \“Don\'t keep Activities\” active. Currently this option causes issues with the Habitica app, so we suggest disabling it.</string>
-  <string name="inbox">Inbox</string>
   <string name="FAQ">Frequently Asked Questions</string>
   <string name="special">Special</string>
   <string name="gem_for_gold_description">Because you subscribe to Habitica, you can purchase a number of Gems each month using Gold.</string>
@@ -518,7 +492,6 @@
   <string name="login_btn_fb">Log in with Facebook</string>
   <string name="login_btn_google">Log in with Google</string>
   <string name="action_back">Back</string>
-  <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nTo start, you’ll need to create an avatar.</string>
   <string name="randomize">Randomise</string>
   <string name="avatar_extras">Extras</string>
   <string name="avatar_skin_color">Skin Colour</string>
@@ -530,7 +503,6 @@
   <string name="weak">Weak</string>
   <string name="strong">Strong</string>
   <string name="gray">Grey</string>
-  <string name="dated">Dated</string>
   <string name="completed">Completed</string>
   <string name="setuP_group_other">Other</string>
   <string name="clear">Clear</string>
@@ -552,14 +524,8 @@
   <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the Habitica website if you want to purchase a subscription.</string>
   <string name="save">Save</string>
   <string name="location">Location</string>
-  <string name="gem_reward">Gem reward</string>
   <string name="tasks">Tasks</string>
-  <string name="create_challenge">Create challenge</string>
-  <string name="edit_challenge">Edit Challenge</string>
-  <string name="challenge_create_error_tavern_one_gem">You need at least 1 gem to create a challenge in Tavern.</string>
   <string name="challenge_create_error_enough_gems">You don&amp;rsquo;t have enough gems to create a challenge.</string>
-  <string name="identify_your_challenge_with_a_tag">Identify your challenge with a tag ..</string>
-  <string name="challenge_create_error_tag">You need a tag to create this Challenge.</string>
   <string name="challenge_create_error_no_tasks">You need to add at least one task to create this Challenge.</string>
   <string name="challenge_create_error_title">You need a title to create this Challenge.</string>
   <string name="description_optional">Description (optional)</string>
@@ -585,7 +551,6 @@
   <string name="invitations">Invitations</string>
   <string name="quest_leader_header" formatted="false">Started by %s</string>
   <string name="quest_abort_message">Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.</string>
-  <string name="loading">Loading...</string>
   <string name="reloading_content">Reloading Content</string>
   <string name="thousand_abbrev">k</string>
   <string name="million_abbrev">m</string>

@@ -3,7 +3,7 @@
   <string name="sidebar.tasks">タスク</string>
   <string name="sidebar.skills">スキル</string>
   <string name="sidebar.section.social">コミュニティー</string>
-  <string name="sidebar.inbox">受信箱</string>
+  <string name="sidebar.inbox">メッセージ</string>
   <string name="sidebar.tavern">キャンプ場</string>
   <string name="sidebar.party">パーティー</string>
   <string name="sidebar.purchaseGems">ジェムの購入</string>
@@ -17,4 +17,5 @@
   <string name="sidebar.settings">設定</string>
   <string name="sidebar.about">Habitica について</string>
   <string name="sidebar_shops">ショップ</string>
+  <string name="sidebar_stats">ステータス</string>
 </resources>

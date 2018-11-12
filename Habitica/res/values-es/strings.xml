@@ -115,12 +115,8 @@
   <string name="friday">Viernes</string>
   <string name="saturday">Sábado</string>
   <string name="sunday">Domingo</string>
-  <string name="levelup_header">¡Has subido de nivel!</string>
-  <string name="levelup_detail">Cumpliendo tus metas en la vida real, has pasado al nivel %1$d.</string>
-  <string name="levelup_health">¡Has recuperado toda tu salud!</string>
   <string name="levelup_button">¡Hurra!</string>
   <string name="faint_subtitle">¡No desesperes!</string>
-  <string name="faint_penalty_body">Has perdido un nivel, todo tu oro y una pieza de tu equipamiento, ¡pero puedes recuperarlo todo con tu esfuerzo! Buena suerte, lo harás genial.</string>
   <string name="faint_header">¡Te has quedado sin salud!</string>
   <string name="faint_button">Recuperar toda la salud y volver a intentarlo</string>
   <string name="filter">Filtro</string>
@@ -130,7 +126,6 @@
   <string name="used_skill_without_mana">Has usado %1$s.</string>
   <string name="new_checklist_item">nuevo elemento de lista</string>
   <string name="add_checklist_item">Añadir</string>
-  <string name="reminder_title">¡Acuérdate de completar tus tareas diarias!</string>
   <string name="skill_progress_title">Usando habilidad</string>
   <string name="coming_soon">Próximamente</string>
   <string name="chat_flag_confirmation">¿Seguro que quieres informar de que este mensaje incumple las normas?</string>
@@ -270,14 +265,14 @@
   <string name="equipped">Equipado</string>
   <string name="quest_cancel_message">¿Seguro que quieres cancelar esta misión? Se perderán todas las invitaciones que se hayan aceptado y el propietario de la misión recuperará el pergamino.</string>
   <string name="quest.invitation">Invitación a misión</string>
-  <string name="quest_begin_message">¿Estás seguro? Solamente %1$d de %2$d miembros de tu grupo se han unido a la misión! Las misiones comienzan automaticamente cuando todos los jugadores se han unido o han rechazado la invitación.</string>
+  <string name="quest_begin_message">¿Estás seguro? ¡Sólo %1$d de tus %2$d miembros de equipo se han unido a la misión! Las misiones comienzan automáticamente cuando todos los jugadores se han unido o rechazado la invitación.</string>
   <string name="quest.invitation.text">Te han invitado a participar en una misión.</string>
-  <string name="ago_1day">Hace 1 día</string>
-  <string name="ago_days">Hace %d días</string>
-  <string name="ago_1Minute">Hace 1 minuto</string>
-  <string name="ago_minutes">Hace %d minutos</string>
-  <string name="ago_hours">Hace %d horas</string>
-  <string name="ago_1hour">Hace 1 hora</string>
+  <string name="ago_1day">Hace 1d</string>
+  <string name="ago_days">Hace %dd</string>
+  <string name="ago_1Minute">Hace 1m</string>
+  <string name="ago_minutes">Hace %dm</string>
+  <string name="ago_hours">Hace %dh</string>
+  <string name="ago_1hour">Hace 1h</string>
   <string name="today">Hoy</string>
   <string name="sidebar_items">Artículos</string>
   <string name="eggs">Huevos</string>
@@ -302,20 +297,26 @@
   <string name="feed">Alimentar</string>
   <string name="hatch_with">Criar mascota con %s</string>
   <string name="hatched_pet_title">¡Ha nacido un/a %2$s %1$s!</string>
-  <string name="evolved_pet_title">Has dominado a %2$s %1$s, ¡vamos a dar una vuelta!</string>
+  <string name="evolved_pet_title">Has domado %1$s %2$s, ¡vamos a dar un paseo!</string>
   <string name="close">Cerrar</string>
   <string name="share">Compartir</string>
   <string name="notification_pet_fed">¡Tu %2$s %1$s ha comido!</string>
-  <string name="sectionpets">Mascotas básicas</string>
-  <string name="sectionpremiumPets">Mascotas de pociones mágicas</string>
-  <string name="sectionquestPets">Mascotas de misiones</string>
-  <string name="sectionspecialPets">Mascotas insólitas</string>
-  <string name="sectionmounts">Monturas básicas</string>
-  <string name="sectionpremiumMounts">Monturas de pociones mágicas</string>
-  <string name="sectionquestMounts">Monturas de misiones</string>
-  <string name="sectionspecialMounts">Monturas insólitas</string>
+  <string name="notification_purchase">Has comprado %s</string>
+  <string name="notification_purchase_reward">Has obtenido una recompensa.</string>
+  <string name="sectionpets">Estandar</string>
+  <string name="sectionpremiumPets">Poción Mágica</string>
+  <string name="sectionquestPets">Misión</string>
+  <string name="sectionspecialPets">Raro</string>
+  <string name="sectionmounts">Estandar</string>
+  <string name="sectionpremiumMounts">Poción Mágica</string>
+  <string name="sectionquestMounts">Misión</string>
+  <string name="sectionspecialMounts">Raro</string>
   <string name="world_quest">Misión mundial</string>
-  <string name="inn_description">Descansa en la posada para que tus tareas diarias sin completar no te hagan daño por la noche. (Nota: No evita que el jefe te dañe).</string>
+  <string name="inn_description">¿Necesitar un descanso? Visita la Posada de Daniel para pausar algunos de los mecánicos de juego más difíciles de Habitica:\n\n
+• Las Tareas Diarias perdidas no te harán daño\n
+• Las Tareas Pendientes no reiniciarán las rachas ni se degradarán en color\n
+• Los jefes no harán daño por tus Tareas Diarias perdidas\n
+• El daño que inflija el jefe o los objetos de una misión de recolección permanecerán pendientes hasta que salgas.</string>
   <string name="empty_items">No tienes %s</string>
   <string name="user_level">Nivel %d</string>
   <string name="user_level_with_class">Nivel %1$d %2$s</string>
@@ -323,7 +324,6 @@
   <string name="rogue">Pícaro</string>
   <string name="mage">Mago</string>
   <string name="healer">Sanador</string>
-  <string name="warrior_description">Los guerreros obtienen «rachas críticas» mejores y más frecuentes, que aportan oro y experiencia adicionales de forma aleatoria, y tienen más probabilidades de conseguir artículos al completar tareas. Además, hacen mucho daño a los monstruos. Juega como guerrero si lo que más te motiva es obtener recompensas aleatorias e impredecibles, o si disfrutas poniendo en su sitio a los monstruos de las misiones.</string>
   <string name="mage_description">Los magos aprenden rápido y tardan menos que otras clases en ganar experiencia y subir de nivel. Además, disponen de una gran cantidad de maná para usar sus habilidades especiales. Juega como mago si disfrutas con los aspectos estratégicos de Habitica, o si lo que más te motiva es subir de nivel y desbloquear funciones avanzadas.</string>
   <string name="rogue_description">A los pícaros les encanta acumular riquezas: ganan más oro que ninguna otra clase y son expertos en encontrar artículos por azar. Su habilidad más característica, la del sigilo, les permite eludir las consecuencias de no completar las tareas diarias. Juega como pícaro si lo que más te motiva es conseguir recompensas, logros, botines e insignias.</string>
   <string name="healer_description">Los sanadores se mantienen impertérritos ante los daños y ofrecen esa protección a los demás. Las tareas diarias sin cumplir y los hábitos negativos no les quitan el sueño, y tienen maneras de recuperar la salud cuando algo va mal. Juega como sanador si te gusta ayudar a los otros miembros del grupo o si te atrae la idea de esquivar a la Muerte con tu esfuerzo.</string>
@@ -337,7 +337,7 @@
   <string name="dialog_go_back">Volver</string>
   <string name="opt_out_confirmation">¿Seguro que no quieres elegir?</string>
   <string name="change_class">Cambiar de clase</string>
-  <string name="change_class_description">Cambia de clase y recupera tus puntos de atributos por 3 gemas. Puedes asignar los puntos de atributos en el sitio web.</string>
+  <string name="change_class_description">Cambia tu clase y reembolsa tus puntos de estadística por 3 gemas.</string>
   <string name="enable_class">Activar sistema de clases</string>
   <string name="changing_class_progress">Cambio de clase</string>
   <string name="by_email">Por correo electrónico</string>
@@ -363,8 +363,10 @@
   <string name="market">Mercado</string>
   <string name="timeTravelers">Viajeros del tiempo</string>
   <string name="seasonalShop">Tienda estacional</string>
-  <string name="empty_inbox">No tienes ningún mensaje en la bandeja de entrada. Puedes enviar un mensaje a un usuario desde los mensajes de chat públicos que hayan enviado.</string>
+  <string name="empty_inbox">No tienes ningún mensaje. ¡Puedes enviar un mensaje nuevo a un usuario desde los mensajes de chat públicos que hayan enviado!</string>
   <string name="party_invite">Desbloquéala invitando a tus amigos</string>
+  <string name="login_incentive">Desbloquear iniciando sesión en Habitica regularmente</string>
+  <string name="create_account">Desbloquear creando una cuenta</string>
   <string name="no_gold">No tienes suficiente oro</string>
   <string name="no_potion">No necesitas comprar una poción de salud</string>
   <string name="successful_purchase">Has comprado %1$s</string>
@@ -492,7 +494,7 @@
   <string name="warning">Aviso</string>
   <string name="open_settings">Abrir Ajustes</string>
   <string name="dont_keep_activities_warning">Parece que tienes la opción de Desarrollador \ \"No mantener actividades \\" activa. Actualmente, esta opción causa problemas con la aplicación habitica, por lo que sugerimos desactivarla.</string>
-  <string name="inbox">Bandeja de entrada</string>
+  <string name="inbox">Mensajes</string>
   <string name="FAQ">Preguntas Frecuentes</string>
   <string name="special">Especial</string>
   <string name="gem_for_gold_description">Por estar suscrito a Habitica, puedes comprar cierta cantidad de Gemas cada mes utilizando Oro.</string>
@@ -518,7 +520,6 @@
   <string name="login_btn_fb">Iniciar sesión con Facebook</string>
   <string name="login_btn_google">Iniciar sesión con Google</string>
   <string name="action_back">Atrás</string>
-  <string name="welcome_text">Oh, debes ser nuevo aquí. Soy Justin, seré tu guía en Habitica. Para empezar, necesitarás crear un avatar.</string>
   <string name="randomize">Aleatorizar</string>
   <string name="avatar_extras">Extras</string>
   <string name="avatar_skin_color">Color de piel</string>
@@ -530,7 +531,7 @@
   <string name="weak">Débil</string>
   <string name="strong">Fuerte</string>
   <string name="gray">Gris</string>
-  <string name="dated">Fechado</string>
+  <string name="dated">Programado</string>
   <string name="completed">Completado</string>
   <string name="setuP_group_other">Otro</string>
   <string name="clear">Borrar</string>
@@ -552,14 +553,8 @@
   <string name="no_billing_subscriptions">Tu dispositivo no tiene ninguno de los métodos de pago compatibles. Por favor utilice el sitio web de habitica si quieres comprar una suscripción.</string>
   <string name="save">Guardar</string>
   <string name="location">Sitio</string>
-  <string name="gem_reward">Premio de Gema</string>
   <string name="tasks">Tareas</string>
-  <string name="create_challenge">Crear Reto</string>
-  <string name="edit_challenge">Editar Reto</string>
-  <string name="challenge_create_error_tavern_one_gem">Necesitas al menos 1 Gema para crear un Reto en la Taberna.</string>
   <string name="challenge_create_error_enough_gems">No tienes Gemas suficientes para crear un Reto.</string>
-  <string name="identify_your_challenge_with_a_tag">Identifica tu reto con una etiqueta.</string>
-  <string name="challenge_create_error_tag">Necesitas una etiqueta para crear este Reto.</string>
   <string name="challenge_create_error_no_tasks">Necesitas añadir al menos una tarea para crear este Reto.</string>
   <string name="challenge_create_error_title">Necesitas un título para crear este Reto.</string>
   <string name="description_optional">Descripción (opcional)</string>
@@ -585,7 +580,6 @@
   <string name="invitations">Invitaciones</string>
   <string name="quest_leader_header" formatted="false">Comenzado por %s</string>
   <string name="quest_abort_message">¿Estás seguro de que quieres abortar esta misión? Se abortará para todos en su partido y todo el progreso se perderá. El rollo de búsqueda se devolverá al propietario de la búsqueda.</string>
-  <string name="loading">Cargando...</string>
   <string name="reloading_content">Recargando Contenido</string>
   <string name="thousand_abbrev">k</string>
   <string name="million_abbrev">m</string>
@@ -603,6 +597,10 @@
   <string name="experience_reward" formatted="false">%d Puntos de Experiencia</string>
   <string name="gold_reward" formatted="false">%d Oro</string>
   <string name="quest_owner_rewards">Premios de Propietario de la Búsqueda</string>
+  <string name="str_abbrv">Fue</string>
+  <string name="per_abbrv">Per</string>
+  <string name="int_abbrv">Int</string>
+  <string name="con_abbrv">Con</string>
   <string name="reset_account">Restablecer Cuenta</string>
   <string name="reset_account_description">¡ADVERTENCIA! Esta opción restablece muchas partes de tu cuenta. Esto es extremadamente desalentado, pero algunas personas lo encuentran útil al principio después de jugar con el sitio por un corto período de tiempo. Perderás todos sus niveles, oro y puntos de experiencia. Todas tus tareas (con la excepción de las de Retos) se eliminarán permanentemente y perderá todos sus datos históricos. Perderás todo tu equipo pero podrás comprarlo todo de nuevo, incluyendo todo el equipo de edición limitada o artículos Misteriosos abonado que ya posee (tendrá que estar en la clase correcta para volver a comprar equipo específico de la clase). Mantendrás tu clase actual y tus mascotas y monturas. Es posible que prefieras usar el Orbe de Renacimiento en su lugar, que es una opción mucho más segura y que preservará sus tareas y equipos.</string>
   <string name="delete_account">Borrar Cuenta</string>
@@ -613,4 +611,125 @@
   <string name="nevermind">No importa</string>
   <string name="resetting_account">Reestableciendo cuenta</string>
   <string name="deleting_account">Borrando cuenta</string>
+  <string name="insufficientGold">¡Debes completar más tareas antes de poder pagar este artículo!</string>
+  <string name="insufficientGems">¡Necesitarás más gemas para comprar este objeto!</string>
+  <string name="purchase_gems">Comprar gemas</string>
+  <string name="insufficientHourglasses">¡Necesitarás más Relojes de Arena Místicos para comprar este objeto!</string>
+  <string name="get_hourglasses">Conseguir Relojes de Arena</string>
+  <string name="subscribe_for_hourglasses">Suscribir para conseguir Relojes de Arena</string>
+  <string name="timetravelers_closed_description">Consigue un Reloj de arena Místico por cada tres meses seguidos de suscripción. Podrás usarlo para desbloquear objetos exclusivos, mascotas o monturas del pasado... ¡y del futuro!</string>
+  <string name="want_to_subscribe">Quiero Suscribirme</string>
+  <string name="seasonal_closed_description">Las Grandes Galas ocurren cerca de los solsticios y equinoccios, ¡así que vuelve de vez en cuando para encontrar una interesante variedad de artículos especiales de temporada!</string>
+  <string name="come_back_soon">¡Vuelve pronto!</string>
+  <string name="level">Nivel</string>
+  <string name="streak_label">Racha de 21 Días</string>
+  <string name="stats">Estadísticas</string>
+  <string name="fix_character_description">Si has encontrado un error o has cometido un error que cambió a tu personaje injustamente, puedes corregir manualmente esos valores aquí.</string>
+  <string name="fix_character_values">Arreglar Valores del Personaje</string>
+  <string name="saving">Guardando</string>
+  <string name="forgot_password_title">Enviar un correo electrónico con un enlace para restablecer la contraseña</string>
+  <string name="forgot_password_description">Introduce la dirección de correo electrónico que usaste para registrarte en Habitica.</string>
+  <string name="forgot_password_confirmation">Si tenemos tu correo electrónico en el archivo, las instrucciones para establecer una nueva contraseña se han enviado al correo electrónico.</string>
+  <string name="ok">Vale</string>
+  <string name="profile">Perfil</string>
+  <string name="profile_summary">Editar tu perfil público.</string>
+  <string name="display_name">Mostrar Nombre</string>
+  <string name="photo_url">URL de foto</string>
+  <string name="login_name">Nombre de Inicio de sesión</string>
+  <string name="about">Información</string>
+  <string name="app_settings">Ajustes de la Aplicación</string>
+  <string name="authentication">Autentificación</string>
+  <string name="authentication_summary">Cambia tus opciones de autentificación</string>
+  <string name="change_password">Cambia la contraseña</string>
+  <string name="change_email">Cambia dirección de correo</string>
+  <string name="change_login_name">Cambiar Nombre de Inicio de sesión</string>
+  <string name="change">Cambiar</string>
+  <string name="character_level">Nivel de Personaje</string>
+  <string name="auto_allocate_points">Asignar Puntos Automáticamente</string>
+  <string name="stat_guide">Guía de Inicio</string>
+  <string name="character_build">Selección de Personaje</string>
+  <string name="character_build_description">Cada nivel te otorga un punto para asignar a un atributo a tu elección. Puedes hacerlo manualmente o dejar que el juego decida por ti usando la opción de Distribución Automática.</string>
+  <string name="strength">Fuerza</string>
+  <string name="strength_description">Incrementa la posibilidad de asestar golpes críticos al sumar puntos en una tarea. También aumenta el daño que reciben los Jefes.</string>
+  <string name="intelligence">Inteligencia</string>
+  <string name="intelligence_description">Aumenta la exp ganada por completar tareas. También aumenta tu capacidad de maná y lo rápido que se regenera el maná al cabo del tiempo.</string>
+  <string name="constitution">Constitución</string>
+  <string name="constitution_description">Disminuye la cantidad de daño recibido de tus tareas. No disminuye el daño recibido de los jefes.</string>
+  <string name="perception">Percepción</string>
+  <string name="perception_description">Aumenta la probabilidad de encontrar recompensas al completar Tareas, el límite máximo diario, las Bonificaciones de Racha y la cantidad de oro otorgada por las Tareas.</string>
+  <string name="buffs">Apoyos</string>
+  <string name="allocated">Asignado</string>
+  <string name="distribute_evenly">Distribuir uniformemente</string>
+  <string name="distribute_class">Distribuir según la clase</string>
+  <string name="distribute_task">Distribuir según la actividad de las tareas</string>
+  <string name="no_points_to_allocate">No hay puntos que asignar</string>
+  <string name="points_to_allocate" formatted="false">%d puntos por asignar</string>
+  <string name="distribute_evenly_help">Asigna el mismo número de puntos a cada atributo.</string>
+  <string name="distribute_class_help">Asigna más puntos a los atributos importantes para tu clase</string>
+  <string name="distribute_task_help">Asigna puntos según las categorías de Fuerza, Inteligencia, Constitución y Percepción asociadas con las tareas que cumples.</string>
+  <string name="allocating_points">Asignación de Puntos</string>
+  <string name="class_equipment">Equipamiento</string>
+  <string name="equipment_empty">¡Ya tienes todo el equipamiento! Se sacarán más durante las Grand Galas, cerca de los solsticios y equinoccios.</string>
+  <string name="classless">Sin Clase</string>
+  <string name="class_equipment_shop_dialog">Este objeto solo está disponible para una clase específica.\nPuedes cambiar tu clase desde Ajustes.</string>
+  <string name="class_gear_disclaimer">Solo puedes comprar equipo para tu clase actual</string>
+  <string name="available_stats" formatted="false">%d puntos</string>
+  <string name="toogle_emojis">Activar/desactivar Emojis</string>
+  <string name="tavern_description">¡Bienvenido a la posada! Trae una silla para conversar, o toma un descanso de sus tareas.</string>
+  <string name="check_into_inn">Entrar en la Posada</string>
+  <string name="community_guidelines">Normas de la comunidad</string>
+  <string name="view_community_guidelines">Ver las Normas de la comunidad</string>
+  <string name="guidelines_description">Habitica intenta crear un ambiente acogedor para usuarios de todas las edades y entornos, especialmente en espacios públicos como la Taberna. Si tienes alguna pregunta, consulta nuestras pautas, por favor.</string>
+  <string name="helpful_links">Enlaces útiles</string>
+  <string name="view_faq">Ver Preguntas Frecuentes</string>
+  <string name="report_bug">Notificar un error</string>
+  <string name="player_tiers">Rangos de Jugador</string>
+  <string name="staff_moderators">Miembros del personal y Moderadores</string>
+  <string name="tiers_descriptions">Los nombres de usuario coloreados que ves en el chat representan el escalafón de colaborador de una persona. ¡Cuanto más alto sea el escalafón, más ha contribuido la persona a habitica a través de arte, codificación, la comunidad o incluso más!</string>
+  <string name="navigation_drawer_open">Abrir panel de navegación</string>
+  <string name="navigation_drawer_close">Cerrar panel de navegación</string>
+  <string name="world_boss">Jefe mundial</string>
+  <string name="world_boss_art">Imagen del jefe</string>
+  <string name="boss_art">Imagen del jefe</string>
+  <string name="world_boss_description">Descripción del jefe mundial</string>
+  <string name="rage_strike_count" formatted="false">Ataque de ira: %d/%d</string>
+  <string name="pending_strike_description">¡Este ataque aún no ha ocurrido!\nEl Jefe Mundial arremeterá y atacará a uno de nuestros amigables tenderos una vez que su barra de ira se llene. ¡Mantente al día con tus Tareas Diarias para evitar que suceda!</string>
+  <string name="pending_strike_title">Ataque pendiente</string>
+  <string name="strike_description_title">¿Qué es un Ataque de Ira?</string>
+  <string name="strike_description_subtitle">Hay 3 posibles Ataques de Ira</string>
+  <string name="strike_description_description">Este indicador se llena cuando los Habiticanos fallan en sus Tareas Diarias. Si se llena, el Descorazonador desencadenará su ataque Congoja Devastadora sobre uno de los tenderos de Habitica, ¡así que asegúrate de hacer tus tareas!</string>
+  <string name="pending_strike_subtitle">¡Todavía no ha ocurrido ningún ataque!</string>
+  <string name="strike_active_title" formatted="false">¡El %s ha sido atacado!</string>
+  <string name="strike_active_subtitle" formatted="false">¡A %s se le ha roto el corazón!</string>
+  <string name="strike_active_description" formatted="false">Nuestro querido %s fue destrozado cuando el %s desmenuzó el %s. ¡¡Rápido, enfréntate a tus tareas para derrotar al monstruo y ayudar con la reconstrucción!!</string>
+  <string name="questShop">Tienda de Misiones</string>
+  <string name="market_owner_long">Alex el Mercader</string>
+  <string name="tavern_owner_long">Daniel el posadero</string>
+  <string name="stable_owner_long">Matt el maestro de las bestias</string>
+  <string name="hide_boss_art">Ocultar la Imagen del Jefe</string>
+  <string name="active_world_boss">Jefe Mundial Activo</string>
+  <string name="no_party_description">Realiza misiones con amigos o por tu cuenta. Combate monstruos, crea retos y ayúdate a ser responsable a través de los Equipos.</string>
+  <string name="no_party_title">Juega a Habitica en un Equipo</string>
+  <string name="join_party_title">¿Quieres unirte a un equipo?</string>
+  <string name="create_party_website">Abrir página web para crear un equipo</string>
+  <string name="id_copied">ID copiada en el portapapeles</string>
+  <string name="insufficientSubscriberGems">Has comprado todas las gemas que puedes este mes. Habrá más disponibles durante los primeros tres días de cada mes. ¡Gracias por suscribirte!</string>
+  <string name="insufficientSubscriberGemsTitle">Alcanzada la capacidad mensual de gemas</string>
+  <string name="chat_message">Mensaje de chat</string>
+  <string name="world_boss_description_title">¿Qué es un Jefe Mundial?</string>
+  <string name="world_boss_description_description">¡Un Jefe Mundial es un evento especial donde toda la comunidad trabaja en conjunto para derrotar a un poderoso monstruo con sus tareas!\nCompleta tareas para hacer daño al Jefe\nEl Jefe no te hará daño por tareas sin hacer, pero su medidor de Ira aumentará. ¡Si la barra se llena, el Jefe atacará a uno de los tenderos!\nPuedes continuar enfrentándote a Jefes de misión normales, el daño se aplicará a ambos\nComprueba la Taberna para ver el progreso del Jefe y los ataques de Ira</string>
+  <string name="world_boss_description_intro">¡Un Jefe Mundial es un evento especial donde toda la comunidad trabaja en conjunto para derrotar a un poderoso monstruo con sus tareas!</string>
+  <string name="world_boss_description_1">Completa tareas para hacer daño al Jefe</string>
+  <string name="world_boss_description_2">El Jefe no te hará daño por tareas sin hacer, pero su medidor de Ira aumentará. ¡Si la barra se llena, el Jefe atacará a uno de los tenderos!</string>
+  <string name="world_boss_description_3">Puedes continuar enfrentándote a Jefes de misión normales, el daño se aplicará a ambos</string>
+  <string name="world_boss_description_4">Comprueba la Taberna para ver el progreso del Jefe y los ataques de Ira</string>
+  <string name="world_boss_action_prompt" formatted="false">¡Derrota al Jefe para ganar recompensas especiales y salvar a Habitica del terror de %s!</string>
+  <string name="world_boss_description_subtitle">¡ %s ataca!</string>
+  <string name="questShop_owner_long">Ian el guía de misiones</string>
+  <string name="seasonalShop_owner_long">Hechicera de Temporada</string>
+  <string name="rage_attack">Ataque de ira:</string>
+  <string name="report">Reportar</string>
+  <string name="like">Me gusta</string>
+  <string name="reply">Contestar</string>
+  <string name="cancel">Cancelar</string>
 </resources>

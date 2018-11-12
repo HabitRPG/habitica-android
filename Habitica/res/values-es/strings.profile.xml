@@ -3,6 +3,7 @@
     <string name="profile_pets_and_mounts">Mascotas y monturas</string>
     <string name="profile_pets_found">Mascotas encontradas</string>
     <string name="profile_mounts_tamed">Monturas domadas</string>
+    <string name="profile_loading_data">Cargando información de miembros...</string>
     <string name="profile_send_message_to">Enviar mensaje a %s</string>
     <string name="profile_message_sent_to">Mensaje enviado a %s</string>
     <string name="profile_level">Nivel:</string>

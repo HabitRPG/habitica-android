@@ -1,4 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="store_title">遊戲化你的任務</string>
   <string name="store_short_description">生活即遊戲，保持動力，讓生活井井有條！</string>
+  <string name="store_description">將你的生活像遊戲一樣規劃！在完成目標的同時，Habitica可以讓你很輕松地獲得樂趣。
+輸入你的習慣，日常目標，和你的待辦事項，然後創建一個角色。完成任務去升級你的角色和解鎖物品，例如護甲，寵物，技能，甚至是探索任務。 和朋友一起相互監督去對抗怪物，使用你的金幣購買裝備，你也可以自定義獎勵（看一集你喜歡的電視劇）。Habitica是一個完美的途徑去激勵自己完成任何事情。
+如果你有任何問題，請發送意見到 mobile@habitica.com! 如果你喜歡我們的App，我們會非常感謝你能給我們一個贊助。
+</string>
 </resources>

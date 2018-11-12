@@ -3,7 +3,7 @@
   <string name="sidebar.tasks">Tarefas</string>
   <string name="sidebar.skills">Habilidades</string>
   <string name="sidebar.section.social">Social</string>
-  <string name="sidebar.inbox">Caixa de Entrada</string>
+  <string name="sidebar.inbox">Mensagens</string>
   <string name="sidebar.tavern">Taberna</string>
   <string name="sidebar.party">Equipa</string>
   <string name="sidebar.purchaseGems">Comprar Gemas</string>
@@ -17,4 +17,5 @@
   <string name="sidebar.settings">Definições</string>
   <string name="sidebar.about">Sobre</string>
   <string name="sidebar_shops">Lojas</string>
+  <string name="sidebar_stats">Estatísticas</string>
 </resources>

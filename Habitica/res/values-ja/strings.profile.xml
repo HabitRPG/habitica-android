@@ -3,6 +3,7 @@
     <string name="profile_pets_and_mounts">ペットと乗騎</string>
     <string name="profile_pets_found">種のペットを発見</string>
     <string name="profile_mounts_tamed">種の乗騎を飼育</string>
+    <string name="profile_loading_data">メンバーのデータを読み込み中…</string>
     <string name="profile_send_message_to">%s にメッセージを送る</string>
     <string name="profile_message_sent_to">%s に送ったメッセージ</string>
     <string name="profile_level">レベル : </string>

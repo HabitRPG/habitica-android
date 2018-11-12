@@ -112,7 +112,7 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
                 .build()
         Instabug.setWelcomeMessageState(WelcomeMessage.State.DISABLED)
         Instabug.setUserAttribute("", lazyApiHelper.hostConfig.user)
-        BugReporting.setShakingThreshold(450)
+        BugReporting.setShakingThreshold(900)
         BugReporting.setPromptOptionsEnabled(PromptOption.BUG, PromptOption.FEEDBACK)
     }
 

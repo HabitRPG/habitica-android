@@ -3,7 +3,7 @@
   <string name="sidebar.tasks">任務</string>
   <string name="sidebar.skills">技能</string>
   <string name="sidebar.section.social">社交</string>
-  <string name="sidebar.inbox">收信匣</string>
+  <string name="sidebar.inbox">訊息</string>
   <string name="sidebar.tavern">酒館</string>
   <string name="sidebar.party">隊伍</string>
   <string name="sidebar.purchaseGems">購買寶石</string>
@@ -17,4 +17,5 @@
   <string name="sidebar.settings">設定</string>
   <string name="sidebar.about">關於</string>
   <string name="sidebar_shops">商店</string>
+  <string name="sidebar_stats">馬廄</string>
 </resources>

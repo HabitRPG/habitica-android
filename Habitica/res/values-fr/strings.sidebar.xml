@@ -3,7 +3,7 @@
   <string name="sidebar.tasks">Tâches</string>
   <string name="sidebar.skills">Compétences</string>
   <string name="sidebar.section.social">Social</string>
-  <string name="sidebar.inbox">Boîte de réception</string>
+  <string name="sidebar.inbox">Messages</string>
   <string name="sidebar.tavern">Auberge</string>
   <string name="sidebar.party">Équipe</string>
   <string name="sidebar.purchaseGems">Gemmes et abonnement</string>
@@ -12,7 +12,7 @@
   <string name="sidebar.section.inventory">Inventaire</string>
   <string name="sidebar.avatar">Avatar</string>
   <string name="sidebar.equipment">Équipement</string>
-  <string name="sidebar.stable">Étable</string>
+  <string name="sidebar.stable">Écurie</string>
   <string name="sidebar.news">Nouveautés</string>
   <string name="sidebar.settings">Paramètres</string>
   <string name="sidebar.about">À propos</string>

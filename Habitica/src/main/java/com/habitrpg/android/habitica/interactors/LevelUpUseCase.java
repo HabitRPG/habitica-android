@@ -53,8 +53,6 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
 
             View customView = requestValues.activity.getLayoutInflater().inflate(R.layout.dialog_levelup, null);
             if (customView != null) {
-                TextView detailView = customView.findViewById(R.id.levelupDetail);
-                detailView.setText(requestValues.activity.getString(R.string.levelup_detail, requestValues.newLevel));
                 AvatarView dialogAvatarView = customView.findViewById(R.id.avatarView);
                 dialogAvatarView.setAvatar(requestValues.user);
             }
@@ -66,7 +64,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
             avatarView.onAvatarImageReady(avatarImage -> event.shareImage = avatarImage);
 
             AlertDialog alert = new AlertDialog.Builder(requestValues.activity)
-                    .setTitle(R.string.levelup_header)
+                    .setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
                     .setView(customView)
                     .setPositiveButton(R.string.levelup_button, (dialog, which) -> checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null, requestValues.activity))
                             .subscribe(aVoid -> {}, RxErrorHandler.handleEmptyError()))
