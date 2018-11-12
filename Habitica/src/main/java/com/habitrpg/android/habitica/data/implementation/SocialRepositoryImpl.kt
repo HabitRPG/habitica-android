@@ -65,8 +65,11 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     }
 
     override fun deleteMessage(chatMessage: ChatMessage): Flowable<Void> {
-        return apiClient.deleteMessage(chatMessage.groupId ?: "", chatMessage.id)
-                .doOnNext { localRepository.deleteMessage(chatMessage.id) }
+        return if (chatMessage.isInboxMessage) {
+            apiClient.deleteInboxMessage(chatMessage.id)
+        } else {
+            apiClient.deleteMessage(chatMessage.groupId ?: "", chatMessage.id)
+        }.doOnNext { localRepository.deleteMessage(chatMessage.id) }
     }
 
     override fun postGroupChat(groupId: String, messageObject: HashMap<String, String>): Flowable<PostChatMessageResult> {
@@ -169,7 +172,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             messages.forEach {
                 it.isInboxMessage = true
             }
-            localRepository.save(messages)
+            localRepository.saveInboxMessages(userID, messages)
         }
     }
 

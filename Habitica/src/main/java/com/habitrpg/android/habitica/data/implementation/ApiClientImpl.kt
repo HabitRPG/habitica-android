@@ -61,6 +61,7 @@ import javax.net.ssl.SSLException
 class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 //private HostConfig mConfig;
 (private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val popupNotificationsManager: PopupNotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
+
     private val retrofitAdapter: Retrofit
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
@@ -472,6 +473,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
     override fun deleteMessage(groupId: String, messageId: String): Flowable<Void> {
         return apiService.deleteMessage(groupId, messageId).compose(configureApiCallObserver())
+    }
+    override fun deleteInboxMessage(id: String): Flowable<Void> {
+        return apiService.deleteInboxMessage(id).compose(configureApiCallObserver())
     }
 
     override fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?): Flowable<List<Member>> {

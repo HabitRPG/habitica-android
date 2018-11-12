@@ -45,6 +45,21 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
+    override fun saveInboxMessages(userID: String, messages: List<ChatMessage>) {
+        realm.executeTransaction { realm.insertOrUpdate(messages) }
+        val existingMessages = realm.where(ChatMessage::class.java).equalTo("isInboxMessage", true).findAll()
+        val messagesToRemove = ArrayList<ChatMessage>()
+        for (existingMessage in existingMessages) {
+            val isStillMember = messages.any { existingMessage.id == it.id }
+            if (!isStillMember) {
+                messagesToRemove.add(existingMessage)
+            }
+        }
+        realm.executeTransaction {
+            messagesToRemove.forEach { it.deleteFromRealm() }
+        }
+    }
+
     override fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>) {
         realm.executeTransaction { realm.insertOrUpdate(memberships) }
         if (userID != null) {

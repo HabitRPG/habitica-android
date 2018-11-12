@@ -138,6 +138,7 @@ interface ApiClient {
     fun postGroupChat(groupId: String, message: Map<String, String>): Flowable<PostChatMessageResult>
 
     fun deleteMessage(groupId: String, messageId: String): Flowable<Void>
+    fun deleteInboxMessage(id: String): Flowable<Void>
 
     fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?): Flowable<List<Member>>
 

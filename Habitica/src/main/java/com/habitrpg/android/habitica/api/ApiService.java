@@ -218,6 +218,9 @@ public interface ApiService {
     @DELETE("groups/{gid}/chat/{messageId}")
     Flowable<HabitResponse<Void>> deleteMessage(@Path("gid") String groupId, @Path("messageId") String messageId);
 
+    @DELETE("inbox/messages/{messageId}")
+    Flowable<HabitResponse<Void>> deleteInboxMessage(@Path("messageId") String messageId);
+
     @GET("groups/{gid}/members")
     Flowable<HabitResponse<List<Member>>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields);
 
