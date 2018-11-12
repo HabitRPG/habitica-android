@@ -8,23 +8,18 @@
     android:paddingStart="24dip"
     android:paddingRight="24dip">
     <com.habitrpg.android.habitica.ui.AvatarView
-        android:layout_width="@dimen/avatar_small_width"
-        android:layout_height="@dimen/avatar_small_height"
+        android:layout_width="@dimen/avatar_width"
+        android:layout_height="@dimen/avatar_height"
         android:id="@+id/avatarView"
         android:layout_gravity="center_horizontal"
-        app:showBackground="false"
-        app:showMount="false"
-        app:showPet="false" />
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginBottom="@dimen/spacing_large"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/levelupDetail"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/levelup_health"
-        android:id="@+id/textView11" />
+        android:text="@string/levelup_detail"
+        android:gravity="center_horizontal"
+        android:textColor="@color/gray_200"/>
 </LinearLayout>

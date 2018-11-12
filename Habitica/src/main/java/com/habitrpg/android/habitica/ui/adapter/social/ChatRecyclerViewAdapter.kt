@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
@@ -164,7 +165,8 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                 userLabel.tier = user?.contributor?.level ?: 0
                 userLabel.username = name
                 if (user?.username != null && releasedUsernames) {
-                    sublineTextView.text = "@${user?.username} ∙ ${msg.getAgoString(res)}"
+                    @SuppressLint("SetTextI18n")
+                    sublineTextView.text = "${user?.formattedUsername} ∙ ${msg.getAgoString(res)}"
                 } else {
                     sublineTextView.text = msg.getAgoString(res)
                 }
@@ -172,6 +174,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                 userLabel.tier = msg.contributor?.level ?: 0
                 userLabel.username = msg.user
                 if (msg.username != null && releasedUsernames) {
+                    @SuppressLint("SetTextI18n")
                     sublineTextView.text = "${msg.formattedUsername} ∙ ${msg.getAgoString(res)}"
                 } else {
                     sublineTextView.text = msg.getAgoString(res)
@@ -223,7 +226,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                         }, { it.printStackTrace() })
             }
 
-            val username = user?.username
+            val username = user?.formattedUsername
             if ((name != null && msg.text?.contains(name) == true) || (username != null && msg.text?.contains(username) == true)) {
                 messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_700)
             } else {
@@ -247,6 +250,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
         private fun setLikeProperties() {
             likeBackground.visibility = if (isTavern) View.VISIBLE else View.INVISIBLE
+            @SuppressLint("SetTextI18n")
             tvLikes.text = "+" + chatMessage?.likeCount
 
             val backgroundColorRes: Int

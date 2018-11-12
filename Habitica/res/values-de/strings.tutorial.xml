@@ -19,4 +19,5 @@
   <string name="tutorial_party">Hier können du und deine Freunde einander motivieren und mit euren Aufgaben Monster bekämpfen!</string>
   <string name="tutorial_tavern">Willkommen im Gasthaus, einem öffentlichen Chat für alle Altersklassen! Hier kannst du dich über Produktivität unterhalten und Fragen stellen. Viel Spaß!</string>
   <string name="tutorial_classes">Wähle aus, ob du Krieger, Magier, Heiler oder Schurke werden möchtest. Jede Klasse hat einzigartige Ausrüstungsgegenstände und Fähigkeiten. Tippe auf (?), um mehr zu erfahren!</string>
+  <string name="tutorial_stats">Tippe auf den grauen Button, um mehrere Punkte auf einmal zuzuweisen, oder tippe auf die Pfeile, um die Punkte einzeln zu verteilen.</string>
 </resources>

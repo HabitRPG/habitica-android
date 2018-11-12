@@ -92,6 +92,10 @@
   <string name="reminders">通知</string>
   <string name="actions">行動</string>
   <string name="attributes">属性</string>
+  <string name="physical">力</string>
+  <string name="mental">知能</string>
+  <string name="social">体質</string>
+  <string name="other">知覚</string>
   <string name="frequency">頻度</string>
   <string name="frequency_weekly">決まった曜日</string>
   <string name="frequency_daily">何日かごと</string>
@@ -111,12 +115,8 @@
   <string name="friday">金</string>
   <string name="saturday">土</string>
   <string name="sunday">日</string>
-  <string name="levelup_header">レベルが上がった!</string>
-  <string name="levelup_detail">実生活での目標を達成し、レベル %1$d に成長した!</string>
-  <string name="levelup_health">完全に傷がいえた!</string>
   <string name="levelup_button">イエーイ!</string>
   <string name="faint_subtitle">がっかりしないで!</string>
-  <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失った。だけど、がんばればすべてを取り返せるぞ！ 　あなたなら、きっとできる。幸あらんことを。</string>
   <string name="faint_header">体力がなくなった!</string>
   <string name="faint_button">体力を全回復してやり直す</string>
   <string name="filter">フィルター</string>
@@ -126,7 +126,6 @@
   <string name="used_skill_without_mana">%1$s を唱えた。</string>
   <string name="new_checklist_item">新しいチェックリスト項目</string>
   <string name="add_checklist_item">追加</string>
-  <string name="reminder_title">日課をチェックした?</string>
   <string name="skill_progress_title">使用中のスキル</string>
   <string name="coming_soon">近日中</string>
   <string name="chat_flag_confirmation">このメッセージを違反として報告します。いいですか?</string>
@@ -187,6 +186,7 @@
   <string name="dismiss_tutorial">もう一度通知</string>
   <string name="intro_1_subtitle">へよこそう</string>
   <string name="intro_1_title">Habitica</string>
+  <string name="intro_1_description">やるべきことを片付けながら楽しむ時が来ました。 現在%s人以上の方々がタスクをこなしながら人生を楽しんでいます。</string>
   <string name="intro_2_subtitle">ゲームの進行</string>
   <string name="intro_2_title">人生の進行</string>
   <string name="intro_2_description">実生活でタスクをこなし、ゲーム内の機能をアンロックしよう。よろいやペットなどのさまざまなアイテムを、あなた自身の目標に近づいたごほうびとして獲得しよう。</string>
@@ -266,7 +266,8 @@
   <string name="equipped">装備済み</string>
   <string name="quest_cancel_message">このクエストを中止します。よろしいですか?　招待を受けたすべての参加者を失うことになります。クエストの所有者の元にクエストの巻物が戻ってきます。</string>
   <string name="quest.invitation">クエストへの招待</string>
-    <string name="quest.invitation.text">クエストへの招待状が届いた!</string>
+  <string name="quest_begin_message">本当によろしいですか？あなたの%2$dパーティメンバーのうち、 %1$d人しかクエストに参加していません！クエストはすべてのプレーヤーが参加すると自動的に始まります。</string>
+  <string name="quest.invitation.text">クエストへの招待状が届いた!</string>
   <string name="ago_1day">1日前</string>
   <string name="ago_days">%d日前</string>
   <string name="ago_1Minute">1分前</string>
@@ -297,20 +298,25 @@
   <string name="feed">えさをやる</string>
   <string name="hatch_with">%s でペットをかえす</string>
   <string name="hatched_pet_title">%1$s%2$sが生まれた!</string>
-  <string name="evolved_pet_title">%1$s%2$s はあなたに懐きました。 一緒に出かけましょう!</string>
   <string name="close">閉じる</string>
   <string name="share">共有する</string>
   <string name="notification_pet_fed">%1$s%2$sにえさをやった!</string>
-  <string name="sectionpets">基本のペット</string>
-  <string name="sectionpremiumPets">魔法の薬のペット</string>
-  <string name="sectionquestPets">クエスト ペット</string>
-  <string name="sectionspecialPets">貴重なペット</string>
-  <string name="sectionmounts">基本の乗騎</string>
-  <string name="sectionpremiumMounts">魔法の薬の乗騎</string>
-  <string name="sectionquestMounts">クエストの乗騎</string>
-  <string name="sectionspecialMounts">レアな乗騎</string>
+  <string name="notification_purchase">%sを購入しました</string>
+  <string name="notification_purchase_reward">報酬をを購入しました</string>
+  <string name="sectionpets">ふつうの</string>
+  <string name="sectionpremiumPets">魔法の薬</string>
+  <string name="sectionquestPets">クエスト</string>
+  <string name="sectionspecialPets">レアな</string>
+  <string name="sectionmounts">ふつうの</string>
+  <string name="sectionpremiumMounts">魔法の薬</string>
+  <string name="sectionquestMounts">クエスト</string>
+  <string name="sectionspecialMounts">レアな</string>
   <string name="world_quest">世界のクエスト</string>
-  <string name="inn_description">ロッジで休んでいる間は、日課をやらずに夜が明けてもダメージを受けない! ( 注 : ボスから受けるダメージは避けられない)</string>
+  <string name="inn_description">休憩が必要？ダニエルの宿屋にチェックインし、Habiticaのややこしいゲームシステムを一時停止しましょう:
+・日課をこなさなくてもダメージを受けなくなります
+・タスクの連続実行は変更されなくなり、色も変わらなくなります
+・日課をこなさなくてもボスからのダメージを受けなくなります
+・チェックアウトするまで、ボスダメージや収集クエストアイテムは保留されたままになります</string>
   <string name="empty_items">%s を持ってないよ</string>
   <string name="user_level">レベル %d</string>
   <string name="user_level_with_class">レベル %1$d %2$s</string>
@@ -318,7 +324,6 @@
   <string name="rogue">盗賊</string>
   <string name="mage">魔道士</string>
   <string name="healer">治療師</string>
-  <string name="warrior_description">戦士はタスクを完了したときに、「会心の一撃」が出やすく、その効果も高い。「会心の一撃」が出ると、ゴールド、経験値、アイテムドロップの確率にボーナスがつく。また、戦士はボスに大きなダメージを与えられるぞ。予測できない一攫千金の報酬でやる気が出る、もしくはボス クエストで活躍したいなら、戦士でプレーしよう!</string>
   <string name="mage_description">魔道士は、すぐに身に着ける学習能力をもっているよ。経験値の取得とレベルアップが他のクラスより速い。また、魔道士は、スキルを使うためのマナを集めるのがうまい。Habitica の戦術的な面を楽しみたい、レベルアップや拡張機能のアンロックにすごくやる気が出るなら、魔道士でプレーしよう!</string>
   <string name="rogue_description">盗賊は富を集めることを愛するのです。ほかのどのクラスよりもゴールドを稼ぎ、アイテムを見つける確率が高い。盗賊の特徴、忍びの術をもってすれば、日課をやらなかったとしても、性格的に傷つかない。戦利品や勲章――Habitica では、ごほうびと実績に強く心動かされるなら、盗賊でプレーしよう!</string>
   <string name="healer_description">治療師は痛みに耐え、他人を守るのです。やらなかった日課や悪い習慣にも治療師は動揺せず、失敗から体力を回復させる能力がある。パーティーの他のメンバーを助けることに喜びを感じる、困難な仕事による死をも恐れぬ理想があるのなら、治療師でプレーしよう!</string>
@@ -332,7 +337,7 @@
   <string name="dialog_go_back">戻る</string>
   <string name="opt_out_confirmation">選ばないでいい?</string>
   <string name="change_class">クラスを変更する</string>
-  <string name="change_class_description">クラスを変更し、能力値を回収する。要 3 ジェム。能力値の割りあては Web 画面で行う。 </string>
+  <string name="change_class_description">3ジェム支払い、クラスを変更し、ステータスポイントを再び割りあてできるようにする。</string>
   <string name="enable_class">クラス システムを有効にする</string>
   <string name="changing_class_progress">クラスの変更</string>
   <string name="by_email">メールで</string>
@@ -358,10 +363,13 @@
   <string name="market">市場</string>
   <string name="timeTravelers">タイムトラベラー</string>
   <string name="seasonalShop">期間限定ショップ</string>
-  <string name="empty_inbox">受信箱にメッセージがありません。Habitica ユーザーあてにメッセージを送ることができます。公開チャットに投稿しているユーザーにメッセージを送ってみてはどうですか?</string>
+  <string name="empty_inbox">メッセージがありません。公開チャットから他のユーザーにメッセージを送ることができます！</string>
   <string name="party_invite">友達を招待するとアンロック</string>
+  <string name="login_incentive">Habiticaに連続でログインするとアンロック</string>
+  <string name="create_account">アカウントを作成するとアンロック</string>
   <string name="no_gold">ゴールドが足りません</string>
   <string name="no_potion">体力回復の薬を買う必要がありません</string>
+  <string name="successful_purchase">%1$sを購入しました</string>
   <string name="purchase_confirmation_title">購入の確認</string>
   <string name="confirm_purchase_text">%2$s %3$s で %1$s  を買う</string>
   <string name="gem">ジェム</string>
@@ -486,7 +494,7 @@
   <string name="warning">注意</string>
   <string name="open_settings">設定を開く</string>
   <string name="dont_keep_activities_warning">あなたは開発者向けのオプション \“Don\'t keep Activities\” を有効にしているようです。現在、このオプションはHabiticaのアプリに問題を起こしますので、無効にすることをお勧めします。</string>
-  <string name="inbox">受信箱</string>
+  <string name="inbox">メッセージ</string>
   <string name="FAQ">よくある質問</string>
   <string name="special">スペシャル</string>
   <string name="gem_for_gold_description">Habiticaへの寄付のお礼として、あなたは毎月一定数のジェムをゲーム内のゴールドで購入することができます。</string>
@@ -512,9 +520,8 @@
   <string name="login_btn_fb">Facebookでログイン</string>
   <string name="login_btn_google">Googleでログイン</string>
   <string name="action_back">戻る</string>
-  <string name="welcome_text">やあ、新人さんだね。僕はジャスティン。Habiticaの案内役だよ。
-始める前に、まずは自分のアバターを作ろう。</string>
   <string name="randomize">ランダムにする</string>
+  <string name="avatar_extras">その他</string>
   <string name="avatar_skin_color">肌の色</string>
   <string name="avatar_hair_color">髪色</string>
   <string name="avatar_hair_bangs">前髪</string>
@@ -524,7 +531,7 @@
   <string name="weak">弱い</string>
   <string name="strong">強い</string>
   <string name="gray">無効</string>
-  <string name="dated">古い</string>
+  <string name="dated">予定</string>
   <string name="completed">完了</string>
   <string name="setuP_group_other">ほか</string>
   <string name="clear">クリア</string>
@@ -546,14 +553,10 @@
   <string name="no_billing_subscriptions">あなたのデバイスは、サポートされている支払方法に対応していません。寄付を購入したい場合は、Habiticaのウェブサイトをご利用ください。</string>
   <string name="save">保存</string>
   <string name="location">場所</string>
-  <string name="gem_reward">ジェムの報酬</string>
   <string name="tasks">タスク</string>
   <string name="create_challenge">チャレンジを作成する</string>
-  <string name="edit_challenge">チャレンジを編集する</string>
-  <string name="challenge_create_error_tavern_one_gem">キャンプ場でチャレンジを作成するには、ジェムが1つ以上必要です。</string>
+  <string name="edit_challenge">編集</string>
   <string name="challenge_create_error_enough_gems">チャレンジを作成するのに十分なジェムを持っていません。</string>
-  <string name="identify_your_challenge_with_a_tag">チャレンジをタグから探しています……</string>
-  <string name="challenge_create_error_tag">このチャレンジを作成するには、タグが必要です。</string>
   <string name="challenge_create_error_no_tasks">このチャレンジを作成するには、タスクを1つ以上追加する必要があります。</string>
   <string name="challenge_create_error_title">このチャレンジを作成するには、タイトルが必要です。</string>
   <string name="description_optional">説明 (任意)</string>
@@ -579,6 +582,149 @@
   <string name="invitations">招待</string>
   <string name="quest_leader_header" formatted="false">%sが始めたタスク</string>
   <string name="quest_abort_message">このミッションを中断します。よろしいですか?　パーティの全員が中断になり、すべての進行状況は失われます。クエストの巻物はクエスト所有者の手に戻ります。</string>
-  <string name="loading">Loading...</string>
+  <string name="loading">ロード中…</string>
   <string name="reloading_content">再度読み込みます</string>
+  <string name="thousand_abbrev">k</string>
+  <string name="million_abbrev">m</string>
+  <string name="billion_abbrev">b</string>
+  <string name="your_balance">残高:</string>
+  <string name="available_until" formatted="false">%sまで利用可能</string>
+  <string name="gems_left_max" formatted="false">今月のジェム: 残り%1$d/%2$d</string>
+  <string name="gems_left_nomax" formatted="false">今月のジェム: 残り%d</string>
+  <string name="health">体力</string>
+  <string name="collect">集める</string>
+  <string name="rage_meter">怒りメーター</string>
+  <string name="boss_quest">ボスクエスト</string>
+  <string name="collection_quest">収集クエスト</string>
+  <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+  <string name="experience_reward" formatted="false">%d の経験値</string>
+  <string name="gold_reward" formatted="false">%dゴールド</string>
+  <string name="quest_owner_rewards">クエストオーナー報酬</string>
+  <string name="str_abbrv">力</string>
+  <string name="per_abbrv">知覚</string>
+  <string name="int_abbrv">知能</string>
+  <string name="con_abbrv">体質</string>
+  <string name="reset_account">アカウントをリセット</string>
+  <string name="reset_account_description">注意！この操作によってあなたのアカウントの多くの部分がリセットされます。この操作は非推奨ですが、短期間でやり直すことを有用と考えています。
+
+この操作によってあなたのレベル、ゴールド、経験値はすべて初期化されます。すべてのタスク(チャレンジのものを除く)は永久に削除され、履歴も失われます。すべての装備も失われますが、限定品や寄付者得点アイテムも含めすべての装備は買い直すことができます(ただし再購入するためにはその装備に適した職である必要があります)。職業とペット、乗騎はそのままです。タスクも装備も保存される安全な選択肢である転生のオーブのほうが好ましいかもしれません。</string>
+  <string name="delete_account">アカウントを削除</string>
+  <string name="delete_account_description">本当によろしいですか？アカウントが永久に削除され、二度と復元できなくなります！Habiticaを再び使うためには、再度登録が必要になります。購入、使用したジェムは返金されません。本当によろしければ、下のテキストボックスにパスワードを入力して下さい。</string>
+  <string name="reset_account_confirmation">アカウントをリセット</string>
+  <string name="delete_account_confirmation">アカウントを削除</string>
+  <string name="danger_zone">危険地帯</string>
+  <string name="nevermind">おかまいなく</string>
+  <string name="resetting_account">アカウントをリセット</string>
+  <string name="deleting_account">アカウントを削除</string>
+  <string name="insufficientGold">このアイテムを購入するにはもっとタスクをこなす必要があります！</string>
+  <string name="insufficientGems">このアイテムを購入するにはもっとジェムが必要です！</string>
+  <string name="purchase_gems">ジェムを購入する</string>
+  <string name="insufficientHourglasses">このアイテムを購入するにはもっと神秘の砂時計が必要です！</string>
+  <string name="get_hourglasses">神秘の砂時計を手に入れる</string>
+  <string name="subscribe_for_hourglasses">寄付して神秘の砂時計を手に入れる</string>
+  <string name="timetravelers_closed_description">三ヶ月の連続ログインごとに一つ神秘の砂時計が手に入るので、これを使って、過去や未来の限定版アイテム、ペット、乗騎を開放しましょう！</string>
+  <string name="want_to_subscribe">寄付がしたい</string>
+  <string name="seasonal_closed_description">大祭は夏至と冬至、春分や秋分の頃に開催されるので、その頃にまた季節の特別アイテムたちを確認してみましょう！</string>
+  <string name="come_back_soon">間もなく再開！</string>
+  <string name="level">レベル</string>
+  <string name="streak_label">21日連続実行</string>
+  <string name="stats">ステータス</string>
+  <string name="fix_character_description">もしバグや間違いによってあなたのキャラクターが変更されてしまったら、ここから手動で値を修正することができます。</string>
+  <string name="fix_character_values">キャラクターの能力値を修正する</string>
+  <string name="saving">保存</string>
+  <string name="forgot_password_title">パスワードリセット用のURLをメールする</string>
+  <string name="forgot_password_description">Habiticaアカウント登録時に使用したメールアドレスを入力して下さい。</string>
+  <string name="forgot_password_confirmation">もしメールアドレスが登録されていれば、新しいパスワードの設定方法がメールで送信されます。</string>
+  <string name="ok">OK</string>
+  <string name="profile">プロフィール</string>
+  <string name="profile_summary">公開プロフィールを編集しましょう。</string>
+  <string name="display_name">名前を表示</string>
+  <string name="photo_url">写真のURL</string>
+  <string name="login_name">ログイン名</string>
+  <string name="about">Habitica について</string>
+  <string name="app_settings">アプリの設定</string>
+  <string name="authentication">認証</string>
+  <string name="authentication_summary">認証オプションを変更する</string>
+  <string name="change_password">パスワードを変更する</string>
+  <string name="change_email">メールアドレスを変更する</string>
+  <string name="change_login_name">ログイン名を変更する</string>
+  <string name="change_username">ユーザー名を変更する</string>
+  <string name="change">変更する</string>
+  <string name="character_level">キャラクターのレベル</string>
+  <string name="auto_allocate_points">ポイントの自動割り当て</string>
+  <string name="stat_guide">案内を開始する</string>
+  <string name="character_build">キャラクター作成</string>
+  <string name="character_build_description">各レベルごとに、自由に割り当てることができるポイントが得られます。手動で割り当てることもできますが、自動割り当てによってゲームに割り当てを任せることも可能です。</string>
+  <string name="strength">力</string>
+  <string name="strength_description">タスク完了時のクリティカルヒットの威力と頻度を増やします。また、ボスへ与えるダメージも増やします。</string>
+  <string name="intelligence">知能</string>
+  <string name="intelligence_description">タスクの完了によって得られる経験値を増やします。また、マナの上限を増やし、マナの時間回復を早めます。</string>
+  <string name="constitution">体質</string>
+  <string name="constitution_description">タスクの失敗によって受けるダメージを減らします。ボスからのダメージは減少しません。</string>
+  <string name="perception">知覚</string>
+  <string name="perception_description">タスクの完了時のドロップ確率や、日課のドロップ確率、連続実行ボーナス、タスク報酬ゴールド量などを上昇させます。</string>
+  <string name="buffs">バフ</string>
+  <string name="allocated">割当済み</string>
+  <string name="distribute_evenly">均等に分配する</string>
+  <string name="distribute_class">クラスに基づいて分配する</string>
+  <string name="distribute_task">タスクの状況に基づいて分配する</string>
+  <string name="no_points_to_allocate">割り当てるポイントがありません</string>
+  <string name="points_to_allocate" formatted="false">%dポイント割り当て可能</string>
+  <string name="distribute_evenly_help">各能力に同じ値のポイントを割り当てます。</string>
+  <string name="distribute_class_help">クラスにとって重要なポイントを多く割り当てます。</string>
+  <string name="distribute_task_help">あなたが完了したタスクに基づいて、力、知能、体質、知覚にポイントを割り当てます。</string>
+  <string name="allocating_points">ポイントの割り当て</string>
+  <string name="class_equipment">装備</string>
+  <string name="equipment_empty">あなたはすでにすべての装備を持っています！夏至、冬至、春分や秋分の頃に開催される大祭で新たな装備がリリースされます。</string>
+  <string name="classless">クラスに属さない</string>
+  <string name="class_equipment_shop_dialog">このアイテムは特定のクラスにのみ利用可能です、\n
+クラスはセッティングから変更できます。</string>
+  <string name="class_gear_disclaimer">現在のクラス用の装備しか購入できません。</string>
+  <string name="available_stats" formatted="false">%dポイント</string>
+  <string name="toogle_emojis">絵文字を使う</string>
+  <string name="tavern_description">ロッジにようこそ！腰掛けてチャットをし、タスクを休憩しましょう。</string>
+  <string name="check_into_inn">宿にチェックインする</string>
+  <string name="community_guidelines">コミュニティガイドライン</string>
+  <string name="view_community_guidelines">コミュニティガイドラインを見る</string>
+  <string name="guidelines_description">Habiticaは、そして特にキャンプ場などの公共スペースは、年齢やバックグラウンドにかかわらず歓迎する雰囲気を作ろうと努力しています。質問がある場合は、ガイドラインに助言を求めてみて下さい。</string>
+  <string name="helpful_links">有用なリンク</string>
+  <string name="view_faq">FAQを見る</string>
+  <string name="report_bug">バグを報告する</string>
+  <string name="player_tiers">プレイヤー段位</string>
+  <string name="staff_moderators">スタッフとモデレーター</string>
+  <string name="tiers_descriptions">チャットに表示される色付きのユーザー名は、その人の貢献者段位を示します。段位が高ければ高いほど、その人は作画、コーディング、コミュニティなどでHabiticaにより貢献していることになります。</string>
+  <string name="navigation_drawer_open">ナビゲーションバーを開く</string>
+  <string name="navigation_drawer_close">ナビゲーションバーを閉じる</string>
+  <string name="world_boss">ワールドボス</string>
+  <string name="world_boss_art">ボス画像</string>
+  <string name="boss_art">ボス画像</string>
+  <string name="world_boss_description">ワールドボスの説明</string>
+  <string name="rage_strike_count" formatted="false">怒り攻撃 %d/%d</string>
+  <string name="pending_strike_description">まだ攻撃はされていません！
+ワールドボスは、怒りゲージがたまるとわたしたちの味方である商人に攻撃してきます。日課をこなし、攻撃されるのを避けましょう！</string>
+  <string name="pending_strike_title">未解決攻撃</string>
+  <string name="strike_description_title">怒り攻撃とは？</string>
+  <string name="strike_description_subtitle">怒り攻撃には3種類あります</string>
+  <string name="strike_description_description">ゲージはHabiticaの住人が日課を残すと溜まっていきます。満タンになると、DysHeartenerがHabiticaの商人にココロクジキアタックをしてきますので、タスクはしっかりこなしましょう！</string>
+  <string name="pending_strike_subtitle">まだ攻撃はされていません！</string>
+  <string name="strike_active_title" formatted="false">%s が襲撃を受けました！</string>
+  <string name="strike_active_subtitle" formatted="false">%sは悲しみに打ちひしがれています！</string>
+  <string name="strike_active_description" formatted="false">%sの攻撃で%sが破壊されたので、愛すべき%sは打ちのめされてしまいました。急いで！　タスクを片付けてこの怪物を倒し、再建の手助けをするのです！</string>
+  <string name="questShop">クエスト ショップ</string>
+  <string name="market_owner_long">商人のAlex</string>
+  <string name="tavern_owner_long">キャンプ場の支配人・Daniel</string>
+  <string name="stable_owner_long">猛獣使いのダニエル</string>
+  <string name="hide_boss_art">ボス画像を隠す</string>
+  <string name="active_world_boss">活動中のワールドボス</string>
+  <string name="no_party_title">パーティーに参加してHabiticaをプレイする</string>
+  <string name="join_party_title">パーティーに参加したいですか？</string>
+  <string name="create_party_website">パーティーを作成するにはウェブサイトを開いてください</string>
+  <string name="id_copied">IDをクリップボードにコピーしました</string>
+  <string name="insufficientSubscriberGemsTitle">毎月のジェムの購入上限に達しました</string>
+  <string name="world_boss_description_title">ワールドボスとは何ですか？</string>
+  <string name="world_boss_description_subtitle">%sの攻撃！</string>
+  <string name="questShop_owner_long">クエストガイドのイアン</string>
+  <string name="seasonalShop_owner_long">季節の魔女</string>
+  <string name="rage_attack">怒りの攻撃：</string>
+  <string name="display_name_length_error">表示名は1~30文字にしてください</string>
 </resources>

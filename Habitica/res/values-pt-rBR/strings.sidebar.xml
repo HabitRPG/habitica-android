@@ -3,13 +3,13 @@
   <string name="sidebar.tasks">Tarefas</string>
   <string name="sidebar.skills">Habilidades</string>
   <string name="sidebar.section.social">Social</string>
-  <string name="sidebar.inbox">Caixa de Entrada</string>
+  <string name="sidebar.inbox">Mensagens</string>
   <string name="sidebar.tavern">Taverna</string>
   <string name="sidebar.party">Grupo</string>
   <string name="sidebar.purchaseGems">Comprar Gemas</string>
   <string name="sidebar.guilds">Guilda</string>
   <string name="sidebar.challenges">Desafios</string>
-  <string name="sidebar.section.inventory">Inventório</string>
+  <string name="sidebar.section.inventory">Inventário</string>
   <string name="sidebar.avatar">Avatar</string>
   <string name="sidebar.equipment">Equipamento</string>
   <string name="sidebar.stable">Estábulo</string>

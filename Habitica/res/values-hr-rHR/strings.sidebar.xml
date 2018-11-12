@@ -3,16 +3,19 @@
   <string name="sidebar.tasks">Zadaci</string>
   <string name="sidebar.skills">Vještine</string>
   <string name="sidebar.section.social">Društvo</string>
+  <string name="sidebar.inbox">Poruke</string>
   <string name="sidebar.tavern">Krčma</string>
-  <string name="sidebar.party">Partija</string>
-  <string name="sidebar.purchaseGems">Kupi dragulje</string>
-  <string name="sidebar.guilds">Udruge</string>
+  <string name="sidebar.party">Družina</string>
+  <string name="sidebar.purchaseGems">Dragulji &amp; Pretplata</string>
+  <string name="sidebar.guilds">Cehovi</string>
   <string name="sidebar.challenges">Izazovi</string>
   <string name="sidebar.section.inventory">Inventar</string>
   <string name="sidebar.avatar">Avatar</string>
   <string name="sidebar.equipment">Oprema</string>
-  <string name="sidebar.stable">Staja</string>
+  <string name="sidebar.stable">Štala</string>
   <string name="sidebar.news">Vijesti</string>
   <string name="sidebar.settings">Postavke</string>
   <string name="sidebar.about">O nama</string>
+  <string name="sidebar_shops">Dućani</string>
+  <string name="sidebar_stats">Statistika</string>
 </resources>

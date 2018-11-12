@@ -26,7 +26,7 @@ object MarkdownParser {
 
     private val processor = AndDown()
 
-    private val regex = Pattern.compile("(?!\\b)@[\\w-]+")
+    private val regex = Pattern.compile("\\B@[-\\w]+")
 
     /**
      * Parses formatted markdown and returns it as styled CharSequence

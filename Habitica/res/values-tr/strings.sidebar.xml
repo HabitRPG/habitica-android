@@ -3,7 +3,7 @@
   <string name="sidebar.tasks">İşler</string>
   <string name="sidebar.skills">Yetenekler</string>
   <string name="sidebar.section.social">Sosyal</string>
-  <string name="sidebar.inbox">Mesaj Kutusu</string>
+  <string name="sidebar.inbox">Mesajlar</string>
   <string name="sidebar.tavern">Taverna</string>
   <string name="sidebar.party">Takım</string>
   <string name="sidebar.purchaseGems">Elmas Satın Al</string>
@@ -17,4 +17,5 @@
   <string name="sidebar.settings">Ayarlar</string>
   <string name="sidebar.about">Hakkında</string>
   <string name="sidebar_shops">Dükkanlar</string>
+  <string name="sidebar_stats">İstatistikler</string>
 </resources>

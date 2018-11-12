@@ -3,12 +3,13 @@
     <string name="profile_pets_and_mounts">Evcil &amp; Binek Hayvanlar</string>
     <string name="profile_pets_found">Bulunan Evcil Hayvanlar</string>
     <string name="profile_mounts_tamed">Evcilleştirilen Binek Hayvanları</string>
+    <string name="profile_loading_data">Üye verileri yükleniyor...</string>
     <string name="profile_send_message_to">%s kişisine mesaj gönder</string>
     <string name="profile_message_sent_to">%s kişisine mesaj gönderildi</string>
     <string name="profile_level">Seviye:</string>
     <string name="profile_class_bonus">Sınıf-Bonusu:</string>
     <string name="profile_allocated">Dağıtılmış:</string>
-    <string name="profile_boosts">Güçlendirmeler:</string>
+    <string name="profile_boosts">Artışlar:</string>
     <string name="profile_private_message">Özel Mesaj</string>
     <string name="profile_achievements">Başarılar</string>
     <string name="profile_achievement_ok">TAMAM</string>

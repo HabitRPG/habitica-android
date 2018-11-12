@@ -4,6 +4,14 @@
   <string name="tutorial_habits_1">首先是习惯。它们可以是你想养成的积极习惯，也可以是你想停止的消极习惯。</string>
   <string name="tutorial_habits_2">每当你完成一次积极的习惯，点击习惯前的加号，就可以获得经验和金币啦！</string>
   <string name="tutorial_habits_3">如果你一不留神完成了一次消极习惯，点击减号，这会减少你的角色的生命值来帮助你保持责任感。</string>
+  <string name="tutorial_habits_4">试试看！你可以通过底部导航来探索其他类型的任务。</string>
+  <string name="tutorial_dailies_1">将需要定期完成、与时间息息相关的任务写入每日任务。</string>
+  <string name="tutorial_dailies_2">小心——如果你错过一个任务，你的虚拟化身就会彻夜受到伤害。坚持不懈地做完任务会带来巨大回报！</string>
+  <string name="tutorial_todos_1">使用待办事项记录你要做的一次性任务。</string>
+  <string name="tutorial_todos_2">如果你的待办事项有时间限制，那就设置一个到期日。看起来你可以完成一个了——继续吧！</string>
+  <string name="tutorial_rewards_1">用你获得的金币给你的人物购买装备！</string>
+  <string name="tutorial_rewards_2">你也可以根据你的动力源创造现实中的自定义奖励。</string>
+  <string name="tutorial_tasks_complete">暂时就是这么多了。如果你需要再次提醒，去看看FAQ部分。</string>
   <string name="tutorial_equipment">在你购买装备后，在这里显示。你的战斗装备会影响你的属性，你的服装(如果装备)会在你的角色上显示。</string>
   <string name="tutorial_items">通过升级和完成任务获得物品。点击一个物品来使用。</string>
   <string name="tutorial_pets">完成现实任务后，随机掉落宠物蛋和药水。将药水洒在宠物蛋上孵化宠物。</string>
@@ -11,4 +19,5 @@
   <string name="tutorial_party">在这里，你和你的朋友可以互相督促完成目标并通过完成任务组团打小怪兽。</string>
   <string name="tutorial_tavern">欢迎来到酒馆，这里是一个公开的不分年龄的聊天室！这里，可以聊聊心得，问问问题。祝您玩的愉快！</string>
   <string name="tutorial_classes">选择成为战士、法师、医者或者盗贼！每个职业有独特的装备和技能。点击(?)查看更多！</string>
+  <string name="tutorial_stats">按灰色按钮来一次分配你的属性，或者按箭头一次加一点。</string>
 </resources>

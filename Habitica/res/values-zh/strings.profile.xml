@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile_pets_and_mounts">宠物 &amp; 坐骑</string>
+    <string name="profile_pets_and_mounts">宠物和坐骑</string>
     <string name="profile_pets_found">发现的宠物</string>
     <string name="profile_mounts_tamed">驯养的坐骑</string>
+    <string name="profile_loading_data">正在加载成员数据...</string>
     <string name="profile_send_message_to">给%s发送信息</string>
     <string name="profile_message_sent_to">发送给%s的信息</string>
     <string name="profile_level">级别：</string>

@@ -115,12 +115,8 @@
   <string name="friday">금요일</string>
   <string name="saturday">토요일</string>
   <string name="sunday">일요일</string>
-  <string name="levelup_header">레벨이 올랐습니다!</string>
-  <string name="levelup_detail">일상생활의 목표들을 달성함으로써 레벨 %1$d가 되었어요!</string>
-  <string name="levelup_health">체력이 완전히 회복되었습니다!</string>
   <string name="levelup_button">만세!</string>
   <string name="faint_subtitle">좌절하지 말아요!</string>
-  <string name="faint_penalty_body">당신은 레벨, 골드, 장비 한개를 잃었지만, 열심히 일하면 곧 되찾을 수 있을꺼에요! 행운을 빌어요--분명 잘 해낼꺼에요.</string>
   <string name="faint_header">체력이 모두 떨어졌어요!</string>
   <string name="faint_button">체력을 채우고 다시 도전하세요.</string>
   <string name="filter">필터</string>
@@ -130,7 +126,6 @@
   <string name="used_skill_without_mana">%1$s을(를) 사용했습니다.</string>
   <string name="new_checklist_item">새로운 체크리스트 항목</string>
   <string name="add_checklist_item">더하기</string>
-  <string name="reminder_title">일일과제 체크하는 것을 잊지마세요!</string>
   <string name="skill_progress_title">스킬 사용</string>
   <string name="coming_soon">곧 찾아옵니다</string>
   <string name="chat_flag_confirmation">정말 이 메세지를 신고하시겠습니까?</string>
@@ -191,10 +186,12 @@
   <string name="dismiss_tutorial">나중에 알려주세요</string>
   <string name="intro_1_subtitle">환영합니다</string>
   <string name="intro_1_title">Habitica</string>
+  <string name="intro_1_description">즐겁게 자기 할 일을 해보세요. 자기 계발중인%s명이 넘는 사람들과 함께 하나씩 일상 생활의 과제들을 해나가세요.</string>
   <string name="intro_2_subtitle">게임의 진전</string>
   <string name="intro_2_title">삶의 진전</string>
   <string name="intro_2_description">실제 삶에서의 일을 처리하는 것으로 게임의 특색들을 잠금해제 하세요. 목표를 달성해 갑옷, 펫, 그리고 더 많은 것들을 얻으세요.</string>
   <string name="intro_3_subtitle">몬스터와 싸우기</string>
+  <string name="intro_3_title">친목을 다지세요</string>
   <string name="intro_3_description">친구들의 도움으로 당신의 목표를 유지시키세요. 일상 생활과 전투에서 서로를 도와가며 함께 성장하세요!</string>
   <string name="intro_finish_button">시작합시다!</string>
   <string name="previous_button">이전</string>
@@ -202,6 +199,8 @@
   <string name="skip_button">스킵</string>
   <string name="setup_welcome_description">Habitica에 오신걸 환영합니다. 게임에서의 진행도는 당신 일상에서의 진행도를 의미하죠! 과제를 달성할수록 새로운 장비, 펫, 퀘스트 등을 열 수 있어요.</string>
   <string name="setup_welcome_title">환영합니다</string>
+  <string name="avatar_setup_description">자기 아바타가 어떻게 생기길 원하세요? 생김새는 나중에도 바꿀 수 있으니 걱정하지 마세요.</string>
+  <string name="task_setup_description">잘했어요! 그럼 이제 이 여정을 통해 삶의 어떤 부분을 개선하고 싶은지 알아볼까요?</string>
   <string name="setup_group_work">일</string>
   <string name="setup_group_exercise">운동</string>
   <string name="setup_group_health">건강</string>
@@ -273,13 +272,8 @@
   <string name="equipped">착용됨</string>
   <string name="quest_cancel_message">정말 이 퀘스트를 취소하시겠습니까? 모든 초대장과 승인들을 잃을 것입니다. 퀘스트 스크롤은 주인에게 돌아갑니다.</string>
   <string name="quest.invitation">퀘스트 초대장</string>
-    <string name="quest.invitation.text">퀘스트에 초대받았습니다!</string>
-  <string name="ago_1day">하루 전</string>
-  <string name="ago_days">%d 일 전</string>
-  <string name="ago_1Minute">1분 전</string>
-  <string name="ago_minutes">%d 분 전</string>
-  <string name="ago_hours">%d 시간 전</string>
-  <string name="ago_1hour">1시간 전</string>
+  <string name="quest_begin_message">정말 시작하실건가요? 파티원 %2$d명 중 %1$d명만 퀘스트에 참여했어요. 퀘스트는 모든 플레이어가 초대 수락 또는 거절 의사를 밝히면 자동으로 시작됩니다.</string>
+  <string name="quest.invitation.text">퀘스트에 초대받았습니다!</string>
   <string name="today">오늘</string>
   <string name="sidebar_items">아이템</string>
   <string name="eggs">알</string>
@@ -307,16 +301,22 @@
   <string name="close">닫기</string>
   <string name="share">나누기</string>
   <string name="notification_pet_fed">%1$s %2$s 에게 먹이를 줬습니다!</string>
+  <string name="notification_purchase">%s 를 구매했습니다</string>
+  <string name="notification_purchase_reward">보상을 구매했습니다</string>
   <string name="sectionpets">기본 펫</string>
-  <string name="sectionpremiumPets">마법 물약의 펫</string>
+  <string name="sectionpremiumPets">마법물약 펫</string>
   <string name="sectionquestPets">퀘스트 펫</string>
   <string name="sectionspecialPets">희귀 펫</string>
   <string name="sectionmounts">기본 탑승펫</string>
-  <string name="sectionpremiumMounts">마법 물약의 탑승펫</string>
+  <string name="sectionpremiumMounts">마법 물약 탑승펫</string>
   <string name="sectionquestMounts">퀘스트 탑승펫</string>
   <string name="sectionspecialMounts">희귀 탑승펫</string>
   <string name="world_quest">세계 퀘스트</string>
-  <string name="inn_description">여관에서 쉬면 완료하지 못한 일일과제가 당신을 다치게 하는 것을 막을 수 있습니다. (주의: 보스로부터 받는 데미지는 피하지 못합니다.)</string>
+  <string name="inn_description">쉬고 싶으세요? Daniel의 여관에 묵으면 Habitica를 일부 멈추어둘 수 있습니다:\n\n
+• 미완료 일일과제 때문에 데미지를 입지 않습니다\n
+• 과제의 연속 기록을 잃거나 색이 변하지 않습니다\n
+• 보스가 미완료 일일과제에 따라 공격하지 않습니다\n
+• 당신이 보스에게 주는 데미지나 수집 퀘스트에서 수집한 아이템은 체크아웃하면 적용됩니다</string>
   <string name="empty_items">%s 가 하나도 없습니다</string>
   <string name="user_level">Lvl %d</string>
   <string name="user_level_with_class">Lvl %1$d %2$s</string>
@@ -324,7 +324,6 @@
   <string name="rogue">도적</string>
   <string name="mage">마법사</string>
   <string name="healer">힐러</string>
-  <string name="warrior_description">전사들은 보너스 골드, 경험치를 주고 아이템 드롭 확률을 증가시키는 \"치명타\"를 더 강하게, 자주 발생시킬 수 있습니다. 또, 보스몬스터에 강한 피해를 입힐 수 있습니다. 예측 불가능한 대박을 터트리거나 보스 공격에서 활약하는 것을 원한다면 전사를 추천합니다!</string>
   <string name="mage_description">마법사는 경험치와 레벨이 다른 클래스에 비해 빠르게 성장합니다. 또, 특수 능력을 사용하기 위한 마나도 훨씬 많습니다. 계획적인 과제달성 게임을 하시고 싶거나 빠른 레벨업으로 다양한 기능들을 체험하시고 싶으시다면 마법사를 추천합니다!</string>
   <string name="rogue_description">도적은 다른 클래스에 비해 골드를 더 많이 받고 랜덤한 아이템들을 잘 찾아냅니다. 그들의 민첩 능력은 일일과제를 놓쳐서 발생하는 위험을 잘 피할 수 있도록 합니다. 보상과 업적, 아이템과 뱃지 모으기를 좋아하신다면 도적을 추천합니다!</string>
   <string name="healer_description">힐러는 공격에 휘둘리지 않고 동료들을 보호해 줍니다. 놓친 일일과제와 나쁜 습관들은 그들에게 큰 피해를 입히지 못하고, 설령 실패를 하더라도 치료가 가능합니다. 파티원들을 도와주길 좋아하고 노력으로 죽음을 이겨내는 것이 매력적이라면 힐러를 추천합니다!</string>
@@ -338,7 +337,7 @@
   <string name="dialog_go_back">뒤로 가기</string>
   <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>
   <string name="change_class">직업 바꾸기</string>
-  <string name="change_class_description">보석 3개를 사용하여 직업을 바꾸고 능력치를 초기화 하세요. 웹사이트에서 능력치를 배분할 수 있습니다. </string>
+  <string name="change_class_description">보석 3개를 이용해 직업을 바꾸고 능력치 포인트를 돌려받으세요.</string>
   <string name="enable_class">직업시스템 활성화</string>
   <string name="changing_class_progress">직업 바꾸기</string>
   <string name="by_email">이메일로</string>
@@ -366,8 +365,11 @@
   <string name="seasonalShop">계절 상점</string>
   <string name="empty_inbox">받은 편지함 메시지가 없습니다. 공개 채팅 메시지를 통해 사용자에게 새 메시지를 보낼 수 있습니다!</string>
   <string name="party_invite">친구를 초대하여 잠금 해제하기</string>
+  <string name="login_incentive">Habitica에 꾸준히 로그인하여 잠금해제</string>
+  <string name="create_account">계정을 만들어 잠금 해제</string>
   <string name="no_gold">골드가 충분하지 않음</string>
   <string name="no_potion">체력 물약을 살 필요가 없음</string>
+  <string name="successful_purchase">%1$s을(를) 구매함</string>
   <string name="purchase_confirmation_title">구매 확인</string>
   <string name="confirm_purchase_text">%1$s을(를) %2$s %3$s(으)로 구매함</string>
   <string name="gem">보석</string>
@@ -492,7 +494,7 @@
   <string name="warning">주의</string>
   <string name="open_settings">설정 열기</string>
   <string name="dont_keep_activities_warning">개발자 옵션 \\"활동을 보관하지 마세요\\"가 활성화 된 것 같습니다. 현재이 옵션을 사용하면 habitica 앱에 문제가 발생하므로 사용하지 않는 것이 좋습니다.</string>
-  <string name="inbox">받은 편지함</string>
+  <string name="inbox">메세지</string>
   <string name="FAQ">자주 묻는 질문</string>
   <string name="special">스페셜</string>
   <string name="gem_for_gold_description">당신은 Habitica를 정기 후원하시므로, 매달 골드를 이용해 특정량의 보석을 구입할 수 있습니다.</string>
@@ -527,7 +529,16 @@
   <string name="weak">약함</string>
   <string name="strong">강함</string>
   <string name="gray">회색</string>
+  <string name="completed">완료됨</string>
+  <string name="setuP_group_other">기타</string>
   <string name="empty_title_habits">습관이 하나도 없어요.</string>
+  <string name="empty_description_habits">\'습관\'은 엄격한 일정이 없는 과제입니다. 하루에 여러번 체크할 수도 있고, 아예 체크하지 않아도 됩니다.</string>
+  <string name="empty_title_dailies">일일과제가 하나도 없습니다.</string>
+  <string name="empty_description_dailies">일일과제는 주기적으로 하려고 하는 과제를 말합니다. 자신의 일정에 맞게 설정하세요.</string>
+  <string name="empty_title_todos">할 일이 아직 없습니다.</string>
+  <string name="empty_title_rewards">보상이 없습니다.</string>
+  <string name="read_community_guidelines">글을 올리기 전에 커뮤니티 가이드라인을 읽어주세요</string>
+  <string name="reload_content">새로 고침</string>
   <string name="start_quest">새로운 퀘스트 시작하기</string>
   <string name="leave_party">파티 떠나기</string>
 </resources>

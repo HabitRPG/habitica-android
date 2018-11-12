@@ -3,11 +3,16 @@
     <string name="profile_pets_and_mounts">寵物＆座騎</string>
     <string name="profile_pets_found">已找到寵物</string>
     <string name="profile_mounts_tamed">已馴養的坐騎</string>
+    <string name="profile_loading_data">讀取數據資料中。</string>
     <string name="profile_send_message_to">發送訊息到 %s</string>
     <string name="profile_message_sent_to">訊息發送至 %s</string>
     <string name="profile_level">等級：</string>
     <string name="profile_class_bonus">加成獎勵：</string>
     <string name="profile_allocated">已分配</string>
+    <string name="profile_boosts">增益：</string>
     <string name="profile_private_message">私人訊息</string>
     <string name="profile_achievements">成就</string>
-    </resources>
+    <string name="profile_achievement_ok">了解 </string>
+    <string name="profile_qrcode_close">關閉</string>
+
+</resources>

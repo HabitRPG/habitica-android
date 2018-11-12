@@ -5,6 +5,6 @@
   <string name="tutorial_pets">Ao completar as suas tarefas do mundo real, tem agora uma hipótese de aleatória para encontrar ovos e poções. Combina-os para gerar animais</string>
   <string name="tutorial_skills">Atributos são habilidades especiais que têm efeitos poderosos! Toque num atributo para o usar. Este irá custar Mana (a barra azul), que ganha ao verificar e completar todos os dias as suas tarefas da vida real. Consulte as FAQs no menu para mais informação!</string>
   <string name="tutorial_party">Isto é onde você e os seus amigos podem responsabilizar-se mutuamente para os vossos objetivos e lutar contra monstros com as vossas tarefas!</string>
-  <string name="tutorial_tavern">Bem-vindo ao Tabern, uma sala de conversação publica para todas as idades! Aqui pode conversar sobre a produtividade e colocar questões. Divirta-se!</string>
-  <string name="tutorial_classes">Escolha para se tornar num Guerreiro, Feiticeiro, Curandeiro ou Bandido! Cada classe tem equipamento e atributos únicos. Toque em (?) para saber mais!</string>
+  <string name="tutorial_tavern">Bem-vindo ao Tabern, uma sala de conversação pública para todas as idades! Aqui pode conversar sobre a produtividade e colocar questões. Divirta-se!</string>
+  <string name="tutorial_classes">Escolha para se tornar num Guerreiro, Mago, Curandeiro ou Bandido! Cada classe tem equipamento e habilidades únicos. Toque em (?) para saber mais!</string>
 </resources>

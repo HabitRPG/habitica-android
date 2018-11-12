@@ -115,12 +115,9 @@
   <string name="friday">Пятница</string>
   <string name="saturday">Суббота</string>
   <string name="sunday">Воскресенье</string>
-  <string name="levelup_header">Вы получили уровень!</string>
-  <string name="levelup_detail">Через достижение своих целей в реальной жизни Вы достигли %1$d-го уровня!</string>
-  <string name="levelup_health">Вы полностью вылечены!</string>
   <string name="levelup_button">Ура!</string>
   <string name="faint_subtitle">Не отчаивайтесь!</string>
-  <string name="faint_penalty_body">Вы потеряли уровень, золото и предмет экипировки, но сможете это наверстать, если постараетесь! Удачи! Все получится!</string>
+  <string name="faint_penalty_body">Вы потеряли Уровень, Золото и предмет Экипировки, но вы  сможете все вернуть, если продолжите выполнять задачи! Удачи! Вы справитесь!</string>
   <string name="faint_header">У вас закончилось здоровье!</string>
   <string name="faint_button">Восстановить здоровье &amp; Попробовать ещё раз</string>
   <string name="filter">Фильтр</string>
@@ -130,7 +127,7 @@
   <string name="used_skill_without_mana">Вы использовали %1$s.</string>
   <string name="new_checklist_item">новый пункт списка</string>
   <string name="add_checklist_item">Добавить</string>
-  <string name="reminder_title">Не забудьте отметить ежедневные задания!</string>
+  <string name="reminder_title">Не забудьте отмечать свои задачи!</string>
   <string name="skill_progress_title">Использовать навык</string>
   <string name="coming_soon">Скоро</string>
   <string name="chat_flag_confirmation">Вы уверены, что хотите пожаловаться на это сообщение?</string>
@@ -270,11 +267,12 @@
   <string name="equipped">Надето</string>
   <string name="quest_cancel_message">Вы уверены, что хотите отменить квест? Все принятые приглашения будут отменены. Квестовый свиток останется у владельца.</string>
   <string name="quest.invitation">Приглашение в квест</string>
-    <string name="quest.invitation.text">Вас пригласили в квест!</string>
+  <string name="quest_begin_message">Вы уверены? Только %1$d из %2$d членов команды присоединились к этому квесту! Квест начнется автоматически, когда все игроки присоедятся или отклонят приглашение.</string>
+  <string name="quest.invitation.text">Вас пригласили в квест!</string>
   <string name="ago_1day">1 день назад</string>
   <string name="ago_days">%d дней назад</string>
-  <string name="ago_1Minute">1 минуту назад</string>
-  <string name="ago_minutes">%d минут назад</string>
+  <string name="ago_1Minute">1 месяц назад</string>
+  <string name="ago_minutes">%d месяцев назад</string>
   <string name="ago_hours">%d часов назад</string>
   <string name="ago_1hour">1 час назад</string>
   <string name="today">Сегодня</string>
@@ -301,22 +299,26 @@
   <string name="feed">Покормить</string>
   <string name="hatch_with">Вылупить питомца с помощью %s</string>
   <string name="hatched_pet_title">У вас вылупился %1$s %2$s!</string>
-  <string name="evolved_pet_title">%1$s %2$s ждет в стойлах, пора покататься!</string>
+  <string name="evolved_pet_title">Вы приручили %1$s%2$s, пора покататься! </string>
   <string name="close">Закрыть</string>
   <string name="share">Поделиться</string>
   <string name="notification_pet_fed">Вы покормили вашего %1$s %2$s!</string>
   <string name="notification_purchase">Вы купили %s</string>
   <string name="notification_purchase_reward">Вы купили награду</string>
-  <string name="sectionpets">Основные питомцы</string>
-  <string name="sectionpremiumPets">Питомцы из волшебного эликсира</string>
-  <string name="sectionquestPets">Квестовые питомцы</string>
+  <string name="sectionpets">Обычные</string>
+  <string name="sectionpremiumPets">Магический эликсир</string>
+  <string name="sectionquestPets">Квест</string>
   <string name="sectionspecialPets">Редкие питомцы</string>
   <string name="sectionmounts">Основные скакуны</string>
-  <string name="sectionpremiumMounts">Скакуны из волшебного эликсира</string>
-  <string name="sectionquestMounts">Квестовые скакуны</string>
-  <string name="sectionspecialMounts">Редкие скакуны</string>
+  <string name="sectionpremiumMounts">Магический эликсир</string>
+  <string name="sectionquestMounts">Квест</string>
+  <string name="sectionspecialMounts">Редкие питомцы</string>
   <string name="world_quest">Мировой квест</string>
-  <string name="inn_description">Отдых в гостинице защитит вас от урона за невыполненные ежедневные задания по ночам! (Примечание: не предотвращает получение урона от мирового босса.)</string>
+  <string name="inn_description">Нужен отдых? Запишитесь в гостиницу Даниэля, чтобы остановить несколько сложных игровых механик страны Habitica:\n\n
+• Пропущенные ежедневные дела не нанесут урона\n
+• Задачи не будут терять серий или понижения в цвете\n
+• Боссы не нанесут ущерб вашим пропущенным ежедневкам\n
+• Ваши собранные предметы или урон боссу останутся в ожидании до выписки</string>
   <string name="empty_items">У вас нет %s</string>
   <string name="user_level">Ур. %d</string>
   <string name="user_level_with_class">Ур. %1$d - %2$s</string>
@@ -324,7 +326,7 @@
   <string name="rogue">Разбойник</string>
   <string name="mage">Маг</string>
   <string name="healer">Целитель</string>
-  <string name="warrior_description">Воины чаще и лучше наносят «критические удары», которые случайным образом увеличивают награду за выполнение заданий: золото, опыт и шанс выпадения предметов. Кроме того, воины наносят значительный урон монстрам-боссам. Играйте за воина, если для вас существенным стимулом станет возможность сорвать джекпот, неожиданно получив больше наград, или осыпать сильнейшими ударами босса в квестах!</string>
+  <string name="warrior_description">Воины чаще и лучше наносят \“критические удары\”, которые случайным образом увеличивают награду за выполнение заданий: золото, опыт и шанс выпадения предметов. Кроме того, воины наносят значительный урон монстрам-боссам. Играйте за воина, если для вас существенным стимулом станет возможность сорвать джекпот, неожиданно получив больше наград, или осыпать сильнейшими ударами босса в квестах!</string>
   <string name="mage_description">Маги быстро учатся, получая опыт и уровни быстрее, чем другие классы. Они также выгодно используют ману на особые навыки. Играйте за мага, если вам по душе тактическая сторона Habitica или если хорошей мотивацией для вас служит получение новых уровней и открытие дополнительных возможностей.</string>
   <string name="rogue_description">Разбойники накапливают богатства, получая больше золота, чем кто бы там ни было. Они также эксперты по поиску различных предметов. Их культовая способность «Хитрость» позволяет им уклониться от последствий невыполненных ежедневных заданий. Играйте за разбойника, если хорошей мотивацией для вас являются награды и достижения и вы жаждете трофеев и значков!</string>
   <string name="healer_description">Целители неуязвимы перед уроном и распространяют защиту на других. Пропущенные ежедневные задания и вредные привычки несильно их беспокоят, а после неудачи они могут восстановить здоровье. Играйте за целителя, если вам нравится помогать другим членам команды или если вас вдохновляет мысль о возможности усердным трудом обмануть смерть.</string>
@@ -338,7 +340,7 @@
   <string name="dialog_go_back">Вернуться назад</string>
   <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>
   <string name="change_class">Изменить ваш класс</string>
-  <string name="change_class_description">Поменяйте класс, и получите назад ваши очки характеристик за 3 самоцвета. Распределить очки характеристик можно на сайте.</string>
+  <string name="change_class_description">Измени свой класс и перераспредели очки характеристик за 3 самоцвета</string>
   <string name="enable_class">Включить систему классов</string>
   <string name="changing_class_progress">Изменение класса</string>
   <string name="by_email">По электронной почте</string>
@@ -346,6 +348,7 @@
   <string name="send">Отправить</string>
   <string name="invite">Пригласить друзей</string>
   <string name="invite_id_description">Если у вас уже есть друзья, которые пользуются Habitica, пригласите их с помощью ID пользователя.</string>
+  <string name="invite_username_description">Если у вас уже есть друзья, которые пользуются Habitica, пригласите их используя имя пользователя.</string>
   <string name="invite_email_description">Если друг присоединится к Habitica, перейдя по ссылке в вашем письме, он автоматически будет приглашён в вашу команду!</string>
   <string name="add_invites">Добавить приглашенных</string>
   <string name="user_id">ID пользователя</string>
@@ -364,8 +367,10 @@
   <string name="market">Магазин</string>
   <string name="timeTravelers">Путешественники во времени</string>
   <string name="seasonalShop">Сезонная лавка</string>
-  <string name="empty_inbox">У вас нет входящих сообщений. Вы можете отправить пользователю новое сообщение через общий чат!</string>
+  <string name="empty_inbox">У вас нет входящих сообщений. Вы можете отправить пользователю новое сообщение через публичный чат!</string>
   <string name="party_invite">Разблокировать, пригласив друзей</string>
+  <string name="login_incentive">Разблокируй, регулярно заходя в Habitica</string>
+  <string name="create_account">Разблокируй, создав аккаунт</string>
   <string name="no_gold">Недостаточно золота</string>
   <string name="no_potion">Вам не нужно покупать зелье здоровья</string>
   <string name="successful_purchase">Купленный %1$s</string>
@@ -493,7 +498,7 @@
   <string name="warning">Предупреждение</string>
   <string name="open_settings">Открыть настройки</string>
   <string name="dont_keep_activities_warning">Похоже, что у вас активен параметр разработчика \\"Не сохранять операции\\". Обычно из-за него возникают проблемы с приложением Habitica, поэтому мы советуем его отключить.</string>
-  <string name="inbox">Входящие</string>
+  <string name="inbox">Сообщения</string>
   <string name="FAQ">Часто задаваемые вопросы</string>
   <string name="special">Специальное</string>
   <string name="gem_for_gold_description">Ваша подписка Habitica позволяет приобретать несколько самоцветов каждый месяц в обмен на золото.</string>
@@ -519,7 +524,7 @@
   <string name="login_btn_fb">Зарегистрироваться с Facebook</string>
   <string name="login_btn_google">Зарегистрироваться с Google</string>
   <string name="action_back">Назад</string>
-  <string name="welcome_text">О,  должно быть ,вы новичок. Я Джастин, я буду твоим проводником в Habitica. \ N \ nЧтобы начать, вам нужно создать аватар.</string>
+  <string name="welcome_text">О,  должно быть, вы тут впервые. Я Джастин, и буду твоим наставником в Habitica. \n\nДля начала, как тебя зовут, герой? Не беспокойся, имя, которое я выбрал, потом можно будет изменить. Ну что, а теперь давай создадим твой аватар!</string>
   <string name="randomize">Случайным образом</string>
   <string name="avatar_extras">Дополнительно</string>
   <string name="avatar_skin_color">Цвет кожи</string>
@@ -528,10 +533,10 @@
   <string name="avatar_hair_ponytail">Конский хвост</string>
   <string name="avatar_glasses">Очки</string>
   <string name="avatar_wheelchair">Кресло-каталка</string>
-  <string name="weak">Стройное</string>
-  <string name="strong">Тучное</string>
+  <string name="weak">Слабые</string>
+  <string name="strong">Сильные</string>
   <string name="gray">Серый</string>
-  <string name="dated">Датированные</string>
+  <string name="dated">Назначенное</string>
   <string name="completed">Завершить</string>
   <string name="setuP_group_other">Другое</string>
   <string name="clear">Очистить</string>
@@ -556,11 +561,11 @@
   <string name="gem_reward">Награда самоцветами</string>
   <string name="tasks">Задачи</string>
   <string name="create_challenge">Создать испытание</string>
-  <string name="edit_challenge">Редактировать Испытание</string>
-  <string name="challenge_create_error_tavern_one_gem">Вы должны иметь хотя бы 1 самоцвет в своём инвентаре, чтобы создать испытание Таверны.</string>
+  <string name="edit_challenge">Редактировать</string>
+  <string name="challenge_create_error_tavern_one_gem">Вам нужен хотябы 1 алмаз, чтобы создать общее испытание.</string>
   <string name="challenge_create_error_enough_gems">У вас недостаточно самоцветов для того, чтобы создать испытание.</string>
-  <string name="identify_your_challenge_with_a_tag">Обозначьте ваше испытание тегом..</string>
-  <string name="challenge_create_error_tag">Вам нужен тег, чтобы создать это Испытание.</string>
+  <string name="identify_your_challenge_with_a_tag">Укажите короткое имя, чтобы назвать испытание</string>
+  <string name="challenge_create_error_tag">Вам нужно придумать короткое именование, чтобы создать это Испытание.</string>
   <string name="challenge_create_error_no_tasks">Вы должны добавить хотя бы одну задачу, чтобы создать это Испытание.</string>
   <string name="challenge_create_error_title">Вам нужен заголовок, чтобы создать это Испытание.</string>
   <string name="description_optional">Описание (необязательное поле)</string>
@@ -586,7 +591,7 @@
   <string name="invitations">Приглашения</string>
   <string name="quest_leader_header" formatted="false">Начато %s</string>
   <string name="quest_abort_message">Вы уверены, что хотите отменить эту миссию? Это прервет её прохождение для каждого в вашей команде и весь прогресс будет потерян. Квестовый свиток останется у владельца.</string>
-  <string name="loading">Подключение...</string>
+  <string name="loading">Загрузка...</string>
   <string name="reloading_content">Обновление содержимого</string>
   <string name="thousand_abbrev">тыс</string>
   <string name="million_abbrev">млн</string>
@@ -604,6 +609,10 @@
   <string name="experience_reward" formatted="false">%d опыта</string>
   <string name="gold_reward" formatted="false">%d золота</string>
   <string name="quest_owner_rewards">Награды для владельца квеста</string>
+  <string name="str_abbrv">СИЛ</string>
+  <string name="per_abbrv">ВОС</string>
+  <string name="int_abbrv">ИНТ</string>
+  <string name="con_abbrv">ТЕЛ</string>
   <string name="reset_account">Сбросить аккаунт</string>
   <string name="reset_account_description">ВНИМАНИЕ! Это сбросит много разных деталей вашего аккаунта. Это очень не рекомендуется делать, но некоторые люди находя полезным сделать это в начале после кратковременных экспериментов с сайтом.\n\nВы потеряете все свои уровни, золото и очки опыта. Все ваши задачи (кроме полученных из испытаний) будут удалены навсегда, и вы потеряете всю историю задач. Вы потеряете всё своё снаряжение, но у вас будет возможность купить его обратно, включая всё снаряжение из ограниченных выпусков, а также таинственные предметы для подписчиков, которые у вас уже есть (вам понадобится персонаж соответствующего класса, чтобы купить обратно снаряжение, предназначенное для этого класса). У вас сохранится текущий класс, а также все питомцы и скакуны. Возможно, вы предпочтёте вместо этого использовать Шар возрождения, что является значительно более безопасным вариантом, и что сохранит ваши задачи и снаряжение.</string>
   <string name="delete_account">Удалить аккаунт</string>
@@ -619,6 +628,7 @@
   <string name="purchase_gems">Приобрести самоцветы</string>
   <string name="insufficientHourglasses">Вам нужно больше мистических песочных очков чтобы купить этот предмет!</string>
   <string name="get_hourglasses">Получить песочные часы</string>
+  <string name="subscribe_for_hourglasses">Оформите подписку для получения Мистических песочных часов</string>
   <string name="timetravelers_closed_description">Зарабатывайте одни мистические песочные часы за каждые три последующие месяца подписки, чтобы потом использовать их для открытия труднодоступного снаряжения, питомцев и скакунов из прошлого... и даже будущего!</string>
   <string name="want_to_subscribe">Я хочу подписаться</string>
   <string name="seasonal_closed_description">Великие праздники случаются ближе к солнцестоянию и равноденствия, поэтому в это время возможно найти забавный ассортимент специальных сезонных предметов!</string>
@@ -645,9 +655,11 @@
   <string name="change_password">Сменить пароль</string>
   <string name="change_email">Изменить электронную почту</string>
   <string name="change_login_name">Изменить логин</string>
+  <string name="change_username">Измените имя пользователя</string>
   <string name="change">Изменить</string>
   <string name="character_level">Уровень персонажа</string>
   <string name="auto_allocate_points">Автоматически распределять очки</string>
+  <string name="stat_guide">Описание характеристик</string>
   <string name="character_build">Развитие персонажа</string>
   <string name="character_build_description">За каждый уровень вы получаете одно очко, которое можете распределить на характеристику по вашему выбору. Вы можете сделать это вручную или позволить игре решить за вас, используя опцию автоматическое распределение.</string>
   <string name="strength">Сила</string>
@@ -668,4 +680,121 @@
   <string name="distribute_evenly_help">Назначает одинаковое количество очков для каждой характеристики.</string>
   <string name="distribute_class_help">Назначает больше очков на важные вашему классу характеристики.</string>
   <string name="distribute_task_help">Назначаемые очки основываются на параметрах силы, интеллекта, телосложения и восприятии, связанных с выполняемыми вами задачами.</string>
+  <string name="allocating_points">Распределение очков</string>
+  <string name="class_equipment">Снаряжение</string>
+  <string name="equipment_empty">У вас уже есть все снаряжение! Больше будет выпущено во время Гран-Гала, рядом с солнцестояниями и равноденствиями.</string>
+  <string name="classless">Бесклассовый</string>
+  <string name="class_equipment_shop_dialog">Этот предмет доступен только определенному классу\n Вы можете изменить свой класс в Настройках.</string>
+  <string name="class_gear_disclaimer">Вы можете покупать экипировку только для текущего класса</string>
+  <string name="available_stats" formatted="false">%d опыта</string>
+  <string name="toogle_emojis">Включить Emoji</string>
+  <string name="tavern_description">Добро пожаловать в Гостиницу! Пододвигайе кресло к чату или возьмите перерыв и отдохните от ваших заданий.</string>
+  <string name="check_into_inn">Разместиться в гостинице</string>
+  <string name="community_guidelines">Правила сообщества</string>
+  <string name="view_community_guidelines">Посмотреть правила сообщества</string>
+  <string name="guidelines_description">Habitica пытается создать благоприятную среду для пользователей всех возрастов и происхождения, особенно в общественных местах, таких как таверна. Если у вас есть какие-либо вопросы, ознакомьтесь с нашими рекомендациями.</string>
+  <string name="helpful_links">Полезные ссылки</string>
+  <string name="view_faq">Посмотреть ЧаВО</string>
+  <string name="report_bug">Сообщить об ошибке</string>
+  <string name="player_tiers">Ранги игроков</string>
+  <string name="staff_moderators">Сотрудники и модераторы</string>
+  <string name="tiers_descriptions">Цветные имена пользователей, которые вы видите в чате, означают ранг участника. Чем выше уровень, тем больше человек способствовал развитию через искусство, код, сообщество и более!</string>
+  <string name="navigation_drawer_open">Открыть навигационный ящик</string>
+  <string name="navigation_drawer_close">Закрыть навигационный ящик</string>
+  <string name="world_boss">Мировой босс</string>
+  <string name="world_boss_art">Изображение Босса</string>
+  <string name="boss_art">Изображение босса</string>
+  <string name="world_boss_description">Описание мирового босса</string>
+  <string name="rage_strike_count" formatted="false">Ярость: %d/%d</string>
+  <string name="pending_strike_description">Этот удар еще не случился!\nМировой босс придёт в бешенство и атакует одного из наших дружелюбных лавочников, как только его шкала Ярости заполнится. Попробуй предотвратить это, своевременно выполняя свои ежедневные задания!</string>
+  <string name="pending_strike_title">Ожидаемый урон</string>
+  <string name="strike_description_title">Что такое Удар Ярости?</string>
+  <string name="strike_description_subtitle">Может быть 3 Удара Ярости</string>
+  <string name="strike_description_description">Эта полоска заполняется, когда Хабитикане пропускают свои ежедневные задания. Если она заполнится до конца, Гразочаровыватель направит свою атаку Сокрушительная Печаль на одного из лавочников Хабитики, так что постарайся выполнить свои задачи!</string>
+  <string name="pending_strike_subtitle">Этот Удар ещё не случился!</string>
+  <string name="strike_active_title" formatted="false">Атаковали %s!</string>
+  <string name="strike_active_subtitle" formatted="false">%s повержен горем!</string>
+  <string name="strike_active_description" formatted="false">Наш любимый %s был печально потрясен, когда %s порушил %s. Скорее, завершайте ваши задания, чтобы победить этого монстра и помочь в восстановлении!</string>
+  <string name="questShop">Лавка квестов</string>
+  <string name="market_owner_long">Торговец Александр</string>
+  <string name="tavern_owner_long">Даниэль, хозяин гостиницы</string>
+  <string name="stable_owner_long">Мэтт, повелитель зверей</string>
+  <string name="hide_boss_art">Скрыть изображение босса</string>
+  <string name="active_world_boss">Действующий мировой босс</string>
+  <string name="no_party_description">Участвуйте в квестах с друзьями или в одиночку. Сражайтесь с монстрами, создавайте испытания и помогайте себе становиться ответственным вместе с командой.</string>
+  <string name="no_party_title">Играй в стране Habitica в команде</string>
+  <string name="join_party_description">Выбрать имя пользователя в команде, можно найти ниже, и отправить вам приглашение</string>
+  <string name="join_party_description_id">Дайте им свой ID пользователя или дайте свой QR-код для скана по приглашению</string>
+  <string name="join_party_title">Хотите присоединиться к команде?</string>
+  <string name="create_party_website">Открыть сайт для создания команды</string>
+  <string name="id_copied">ID скопирован в буфер обмена</string>
+  <string name="insufficientSubscriberGems">Вы купили все самоцветы, доступные в этом месяце. Новая партия будет доступна в течение первых трех дней следующего месяца. Спасибо за подписку!</string>
+  <string name="insufficientSubscriberGemsTitle">Достигнут ежемесячный лимит самоцветов</string>
+  <string name="chat_message">Чат-сообщение</string>
+  <string name="world_boss_description_title">Кто такой Мировой босс?</string>
+  <string name="world_boss_description_description">Мировой босс — особое событие, во время которого сообщество Habitica объединяет усилия, чтобы своими заданиями победить сильнейшего монстра!\nЗавершенные задачи наносят урон боссу\nБосс не тронет вас за пропущенные задания, но его счетчик ярости будет расти. Если бар заполнится, босс атакует одного из владельцев лавки!\nМожно одновременно сражаться с обычным квестовым боссом, вы нанесёте урон обоим.\nТаверне можно увидеть уровни здоровья и ярости мирового босса.</string>
+  <string name="world_boss_description_intro">Мировой босс — особое событие, во время которого сообщество Habitica объединяет усилия, чтобы своими заданиями победить сильнейшего монстра!</string>
+  <string name="world_boss_description_1">Завершите ваши задачи чтобы нанести урон Боссу</string>
+  <string name="world_boss_description_2">Мировой босс не тронет вас за пропущенные задания, но уровень его ярости будет расти. Когда шкала ярости заполнится, босс атакует одного из владельцев лавки!</string>
+  <string name="world_boss_description_3">Вы можете продолжать сражаться с обычным боссом в квесте, вы нанесёте урон обоим.</string>
+  <string name="world_boss_description_4">Проверяйте Таверну, чтобы увидеть уровни здоровья и ярости мирового босса.</string>
+  <string name="world_boss_action_prompt" formatted="false">Победите босса, чтобы заслужить особые награды и спасти страну страна Habitica от %s\'ских угроз!</string>
+  <string name="world_boss_description_subtitle">%s атаки!</string>
+  <string name="questShop_owner_long">Квест-мастер Ян</string>
+  <string name="seasonalShop_owner_long">Сезонная Чародейка</string>
+  <string name="rage_attack">Атака при ярости:</string>
+  <string name="tavern_description_world_boss">О, дорогуша, не обращай внимания на монстра внизу - это по-прежнему райский уголок, чтобы поболтать на перерывах.</string>
+  <string name="report">Пожаловаться</string>
+  <string name="like">Нравится</string>
+  <string name="reply">Ответить</string>
+  <string name="challenge_prize">Награда за испытание</string>
+  <string name="challenge_categories">Категории Испытаний</string>
+  <string name="created_challenge">Создать испытание</string>
+  <string name="joined">Присоединился</string>
+  <string name="public_challenge">Открытое испытание</string>
+  <string name="short_name">Короткое имя</string>
+  <string name="unlock_attribute_points">Распределение очков станет доступно на 10 уровне</string>
+  <string name="same_day_reminder_title">Вы не забыли добавить задачи?</string>
+  <string name="same_day_reminder_text">Чем больше вы добавляете, тем больше будет награда. Даже малые привычки хранят в себе большой выигрыш.</string>
+  <string name="next_day_reminder_title">Вы проверяли на сегодня свои задачи?</string>
+  <string name="next_day_reminder_text">Очень многое можно разблокировать и открыть с поднятием уровней, так что справляйтесь с задачами и удачи!</string>
+  <string name="daily_tip_0">Хотите попробовать что-то новое? Присоединитесь к Испытаниям, чтобы расширить свой список задач и выиграть алмазов!</string>
+  <string name="daily_tip_1">Создавайте подзадачи для своих Задач, чтобы умножить свои награды за выполнение!</string>
+  <string name="daily_tip_2">Вы можете настроить частоту повторений Ежедневных задач. Даже не актуальным задачам можно назначить время.</string>
+  <string name="daily_tip_3">Вы также можете планировать Ежедневные задачи на определенные дни.</string>
+  <string name="daily_tip_4">Иногда пересмотр ваших старых задач может помочь вернуться на продуктивную дорожку.</string>
+  <string name="daily_tip_5">Сделайте несколько глубоких вдохов, чтобы сконцентрироваться. Вы со всем справитесь!</string>
+  <string name="daily_tip_6">Попробуйте установить таймер на 10 минут и увидите как много задач вы сделаете!</string>
+  <string name="daily_tip_7">Попробуйте закрепить предметы из \"Рынка\" к вашей колонке \"Награды\", чтобы мотивировать себя на получение их!</string>
+  <string name="daily_tip_8">Вы можете изменить сложность заданий, чтобы себя ощутимее вознаграждать за выполнение сложных задач!</string>
+  <string name="daily_tip_9">Если у вас сложный период в жизни, попробуйте раздробить ваши задачи на более мелкие части.</string>
+  <string name="moderator">Модератор</string>
+  <string name="staff">Сотрудники</string>
+  <string name="expand_notes">Читать подробнее</string>
+  <string name="collapse_notes">Свернуть</string>
+  <string name="reset_streak">Сбросить счетчик</string>
+  <string name="week_reminder_title">Как поживают ваши задачи?</string>
+  <string name="week_reminder_text">Отдых полезен, но вы все еще можете зарабатывать очки опыта за выполнение заданий, чтобы поднять уровень и получить крутой комплект брони!</string>
+  <string name="last_login">Последнее посещение</string>
+  <string name="total_checkins">Всего посещений</string>
+  <string name="two_handed">Двуручное</string>
+  <string name="usernamePromptTitle">Время выбрать себе Имя пользователя!</string>
+  <string name="usernamePromptBody">Имена для логина теперь являются уникальными Никами, которые будут отображаться рядом с вашим отображаемым именем и использоваться для приглашений, чата @упоминаний и обмена сообщениями.</string>
+  <string name="usernamePromptWiki">Если хотите узнать более подробнее про изменения, то <a href="https://habitica.wikia.com/wiki/Player_Names">посетите вики.</a></string>
+  <string name="confirmUsername">Подтвердить Имя пользователя</string>
+  <string name="usernamePromptDisclaimer">Имя пользователя должно соответствовать нашим <a href="https://habitica.com/static/terms">Условиям обслуживания</a> и <a href="https://habitica.com/static/community-guidelines">Принципам сообщества</a>. Если вы ранее не выбирали имя для логина, то ваше Имя был автоматически сгенерировано.</string>
+  <string name="confirm_username_title">Вы уверены, что хотите выбрать такое Имя пользователя?</string>
+  <string name="confirm_username_description">Подтверждая свое Имя пользователя, дает возможность принимать приглашения, @упоминания и сообщения. Вы можете сменить свое Имя пользователя в любое время в настройках.</string>
+  <string name="cancel">Отменить</string>
+  <string name="confirm_username">Подтвердить Имя пользователя</string>
+  <string name="username_not_confirmed">Имя пользователя не сохранено</string>
+  <string name="username_confirmed">Ник подтвержден</string>
+  <string name="username_level">\@%s・Уровень %d</string>
+  <string name="enter_recipient_username">Ввести пользовательский ник</string>
+  <string name="username_copied">Ник скопирован в буфер обмена</string>
+  <string name="verification_pet">Один из питомцев-ветеранов будет ожидать вас, после подтверждения своего выбора!</string>
+  <string name="welcomeNameTitle">Как к вам обращаться?</string>
+  <string name="display_name_length_error">Отображаемое имя должно быть от 1 до 30 символов.</string>
+  <string name="setup_task_join_habitica">Присоединиться к Habitica (Подписаться!)</string>
+  <string name="setup_task_join_habitica_notes">Вы можете завершить Задачу, редактировать или удалить её.</string>
 </resources>

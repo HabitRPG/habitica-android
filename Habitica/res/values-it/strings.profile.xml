@@ -2,7 +2,8 @@
 <resources>
     <string name="profile_pets_and_mounts">Animali e cavalcature</string>
     <string name="profile_pets_found">Animali trovati</string>
-    <string name="profile_mounts_tamed">Cavalcature domate</string>
+    <string name="profile_mounts_tamed">Cavalcature addomesticate</string>
+    <string name="profile_loading_data">Caricamento dati utente...</string>
     <string name="profile_send_message_to">Invia messaggio a %s</string>
     <string name="profile_message_sent_to">Messaggio inviato a %s</string>
     <string name="profile_level">Livello:</string>

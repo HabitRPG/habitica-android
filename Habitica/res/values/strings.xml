@@ -137,9 +137,8 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
 
-    <string name="levelup_header">You gained a level!</string>
-    <string name="levelup_detail">By accomplishing your real-life goals, you\'ve grown to Level %1$d!</string>
-    <string name="levelup_health">You have been fully healed!</string>
+    <string name="levelup_header">You Reached Level %1$d!</string>
+    <string name="levelup_detail">By accomplishing your real life goals, you leveled up and are now fully healed!</string>
     <string name="levelup_button">Huzzah!</string>
 
     <string name="faint_subtitle">Don\'t despair!</string>
@@ -837,4 +836,8 @@
     <string name="setup_task_join_habitica_notes">You can either complete this To-Do, edit it, or remove it.</string>
     <string name="setup_task_reward">Reward yourself</string>
     <string name="setup_task_reward_notes">Watch TV, play a game, eat a treat, it’s up to you!</string>
+    <string name="equipment_str">STR:</string>
+    <string name="equipment_con">CON:</string>
+    <string name="equipment_int">INT:</string>
+    <string name="equipment_per">PER:</string>
 </resources>

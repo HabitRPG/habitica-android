@@ -4,6 +4,13 @@
   <string name="tutorial_habits_1">まずは習慣。身につけたい良い習慣もあれば、やめられない悪い習慣もあるよね。</string>
   <string name="tutorial_habits_2">良い習慣をこなした時は、＋をタップして経験値とゴールドをゲット！</string>
   <string name="tutorial_habits_3">うっかり悪い習慣を行ってしまった時は、－をタップ。アバターの体力が減ってしまうので、責任を持って悪い習慣を断ち切ろう。</string>
+  <string name="tutorial_habits_4">挑戦してみよう！下のほうのナビゲーションから、異なるタスクタイプも選ぶことができます。</string>
+  <string name="tutorial_dailies_1">通常のスケジュールにしたがって行うべき期限付きのタスクは、日課に設定しましょう。</string>
+  <string name="tutorial_dailies_2">気をつけて…もし一つでもやり逃すと、あなたのアバターは夜のうちにダメージを受けてしまいます。継続的にチェックを入れることで、素晴らしい報酬を手に入れましょう！</string>
+  <string name="tutorial_todos_1">単発のタスクをこなすために、To-Doを使いましょう。</string>
+  <string name="tutorial_todos_2">もしTo-Doに期限があるのなら、設定しましょう。あなたにはクリアできるはず…がんばって！</string>
+  <string name="tutorial_rewards_1">得られたゴールドであなたのアバター用に装備を購入しましょう！</string>
+  <string name="tutorial_rewards_2">あなた自身のモチベーションを上げるために、現実世界での報酬を登録することもできます。</string>
   <string name="tutorial_tasks_complete">これで説明は終わり。もし忘れちゃったときは，FAQをチェックしてみてね。</string>
   <string name="tutorial_equipment">装備を買ったら、ここに表示されるよ。武装はアバターのステータスに影響し、(有効にすれば)衣装としてアバターの見た目を変えるよ。</string>
   <string name="tutorial_items">タスクを達成したりレベルを上げることで、アイテムを入手できるぞ。アイテムを使うにはタップしよう。</string>
@@ -12,4 +19,5 @@
   <string name="tutorial_party">友達といっしょにモンスターと戦おう!　あなたと友達それぞれの目標を達成するための責任感が試されるぞ。</string>
   <string name="tutorial_tavern">キャンプ場へようこそ!　ここは年齢なんか気にしないオープンなチャットルームです。ここでタスクの進め方について話したり、質問したりできます。楽しんでね!</string>
   <string name="tutorial_classes">戦士、魔道士、治療師、それとも盗賊…どれになるか決めよう!　クラスにはそれぞれ専用の装備とスキルがある。詳しくは (?) をタップしてね!</string>
+  <string name="tutorial_stats">一度にステータスを割り当てるには灰色のボタンを、1つずつ割り振るには矢印をタップして下さい。</string>
 </resources>

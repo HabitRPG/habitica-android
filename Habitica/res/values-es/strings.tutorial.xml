@@ -19,4 +19,5 @@
   <string name="tutorial_party">Aquí es donde tú y tus amigos podéis estar pendientes unos de otros para cumplir vuestros objetivos y combatir monstruos con vuestras tareas.</string>
   <string name="tutorial_tavern">Te damos la bienvenida a la Taberna, una sala de chat para todos los públicos y todas las edades. Aquí, puedes hablar de productividad y preguntar lo que quieras. ¡Que te diviertas!</string>
   <string name="tutorial_classes">¡Decide si quieres ser guerrero, mago, sanador o pícaro! Cada clase tiene sus propias habilidades y equipamiento. Si necesitas más información, pulsa en (?).</string>
+  <string name="tutorial_stats">Toca el botón gris para asignar los puntos de tus estadísticas a la vez, o toca las flechas para agregarlos punto por punto.</string>
 </resources>

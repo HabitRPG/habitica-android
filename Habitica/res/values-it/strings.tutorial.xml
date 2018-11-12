@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_overview">Eccoci qui! Ho creato alcune attività per te basate sui tuoi interessi. Prova ad aggiungerne qualcuna anche tu. Puoi modificare un\'attività toccando il titolo.</string>
+  <string name="tutorial_overview">Eccoci qui! Ho creato alcune attività per te basate sui tuoi interessi. Prova ad aggiungerne qualcuna anche tu. Puoi modificare un\'attività toccando il suo titolo.</string>
   <string name="tutorial_habits_1">Per prima cosa ci sono le Abitudini. Possono essere Abitudini positive che vuoi migliorare o Abitudini negative che vuoi abbandonare.</string>
   <string name="tutorial_habits_2">Ogni volta che porti a termine un\'abitudine positiva, tocca il + per ottenere esperienza ed oro!</string>
-  <string name="tutorial_habits_3">Se ti fai tentare da un\'abitudine negativa, toccando - il tuo avatar perderà punti salute, per aiutarti a non farlo di nuovo.</string>
-  <string name="tutorial_habits_4">Ora prova te! Puoi trovare gli altri tipi di attività usando la barra di navigazione in basso.</string>
+  <string name="tutorial_habits_3">Se ti fai tentare da un\'abitudine negativa, toccando - (il simbolo del meno) il tuo avatar perderà punti salute, per ricordarti di fare attenzione.</string>
+  <string name="tutorial_habits_4">Ora provaci tu! Puoi trovare gli altri tipi di attività usando la barra di navigazione in basso.</string>
   <string name="tutorial_dailies_1">Crea Daily per attività che devono essere svolte periodicamente.</string>
   <string name="tutorial_dailies_2">Sta attento - se te ne salti una il tuo avatar subirà dei danni durante la notte. Completarle con regolarità ti farà ottenere grandi premi!</string>
   <string name="tutorial_todos_1">Usa le To-do per tenere traccia delle cose che devi fare solo una volta.</string>
@@ -19,4 +19,5 @@
   <string name="tutorial_party">Qui è dove tu e i tuoi amici potete motivarvi a vicenda e combattere i mostri con le vostre attività!</string>
   <string name="tutorial_tavern">Benvenuto nella Taverna, una chat pubblica per tutte le età! Qui puoi chiacchierare e fare delle domande. Divertiti!</string>
   <string name="tutorial_classes">Scegli di diventare un Guerriero, un Mago, un Guaritore o un Assassino! Ogni classe ha equipaggiamento ed abilità uniche. Tocca (?) per saperne di più!</string>
+  <string name="tutorial_stats">Premi sul bottone grigio per assegnare un sacco di punti stat in una volta, oppure usa le frecce per aggiungere un punto alla volta.</string>
 </resources>
