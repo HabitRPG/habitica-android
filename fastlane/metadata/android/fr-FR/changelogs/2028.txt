@@ -1,0 +1,6 @@
+This update fixes various bugs and adds support for an upcoming feature.
+
+This update also reworks a lot of the internals for the party view, to make it more reliable. Please report any new oddities on that screen.
+
+NEW:
+- Add Cat support (Can you find it?)
