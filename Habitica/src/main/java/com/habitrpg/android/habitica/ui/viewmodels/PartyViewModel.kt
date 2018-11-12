@@ -12,10 +12,8 @@ import kotlinx.android.synthetic.main.fragment_chat.*
 
 class PartyViewModel: GroupViewModel() {
 
-    private val quest = Transformations.map(getGroupData()) { it?.quest }
-
     internal val isQuestActive: Boolean
-        get() = quest.value?.active == true
+        get() = getGroupData().value?.quest?.active == true
 
     init {
         groupViewType = GroupViewType.PARTY
@@ -36,8 +34,6 @@ class PartyViewModel: GroupViewModel() {
             disposable.add(socialRepository.rejectQuest(null, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
     }
-
-    fun getQuestData(): LiveData<Quest?> = quest
 
     fun showParticipantButtons(): Boolean {
         val user = getUserData().value

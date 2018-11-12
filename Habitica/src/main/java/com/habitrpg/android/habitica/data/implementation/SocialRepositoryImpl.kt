@@ -115,8 +115,8 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             return Flowable.empty()
         }
         return apiClient.leaveGroup(id)
+                .doOnNext { _ -> localRepository.updateMembership(userID, id, false) }
                 .flatMapMaybe { localRepository.getGroup(id).firstElement() }
-                .doOnNext { _ -> localRepository.executeTransaction { localRepository.updateMembership(userID, id, false) } }
     }
 
     override fun joinGroup(id: String?): Flowable<Group> {
@@ -150,7 +150,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                         val memberships = groups.map {
                             GroupMembership(userID, it.id)
                         }
-                        localRepository.save(memberships)
+                        localRepository.saveGroupMemberships(userID, memberships)
                     }
                     localRepository.save(groups)
                 }

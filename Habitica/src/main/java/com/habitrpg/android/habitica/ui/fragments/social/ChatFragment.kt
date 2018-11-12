@@ -92,8 +92,6 @@ class ChatFragment constructor(private val viewModel: PartyViewModel) : BaseFrag
 
         compositeSubscription.add(viewModel.getChatMessages().firstElement().subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError()))
 
-
-
         viewModel.getUserData().observe(viewLifecycleOwner, Observer {
             chatAdapter?.user = it
             if (it?.flags?.isCommunityGuidelinesAccepted == true) {

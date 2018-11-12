@@ -175,9 +175,9 @@ class PartyDetailFragment constructor(private val viewModel: PartyViewModel) : B
         }
         if (viewModel.isQuestActive) {
             questProgressView?.visibility = View.VISIBLE
-            questProgressView?.setData(questContent, viewModel.getQuestData().value?.progress)
+            questProgressView?.setData(questContent, viewModel.getGroupData().value?.quest?.progress)
 
-            questParticipationView?.text = getString(R.string.number_participants, viewModel.getQuestData().value?.members?.size)
+            questParticipationView?.text = getString(R.string.number_participants, viewModel.getGroupData().value?.quest?.members?.size)
         } else {
             questProgressView?.visibility = View.GONE
         }

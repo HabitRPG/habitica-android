@@ -44,4 +44,5 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
 
     fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>>
+    fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>)
 }

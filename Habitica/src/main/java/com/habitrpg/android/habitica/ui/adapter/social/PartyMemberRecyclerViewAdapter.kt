@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -13,7 +11,6 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ValueBar
@@ -25,6 +22,8 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
 class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Member, PartyMemberRecyclerViewAdapter.MemberViewHolder>(data, autoUpdate) {
+
+    var leaderID: String? = null
 
     private val userClickedEvents = PublishSubject.create<String>()
 
@@ -49,11 +48,18 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
         private val sublineTextView: TextView by bindView(R.id.subline_textview)
         private val buffIconView: ImageView by bindView(R.id.buff_icon_view)
         private val classIconView: ImageView by bindView(R.id.class_icon_view)
-        private val hpBar: ValueBar by bindView(R.id.hpBar)
+        private val hpBar: ValueBar by bindView(R.id.hp_bar)
+        private val expBar: ValueBar by bindView(R.id.exp_bar)
+        private val mpBar: ValueBar by bindView(R.id.mp_bar)
+        private val leaderTextView: TextView by bindView(R.id.leader_textview)
         
         init {
             hpBar.setLightBackground(true)
             hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
+            expBar.setLightBackground(true)
+            expBar.setIcon(HabiticaIconsHelper.imageOfExperience())
+            mpBar.setLightBackground(true)
+            mpBar.setIcon(HabiticaIconsHelper.imageOfMagic())
 
             buffIconView.setImageBitmap(HabiticaIconsHelper.imageOfBuffIcon())
         }
@@ -61,7 +67,11 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
         fun bind(user: Member) {
             avatarView.setAvatar(user)
 
-            user.stats.notNull { AvatarWithBarsViewModel.setHpBarData(hpBar, it) }
+            user.stats.notNull {
+                AvatarWithBarsViewModel.setHpBarData(hpBar, it)
+                expBar.set(it.exp ?: 0.0, it.toNextLevel?.toDouble() ?: 0.0)
+                mpBar.set(it.mp ?: 0.0, it.maxMP?.toDouble() ?: 0.0)
+            }
             displayNameTextView.username = user.profile?.name
             displayNameTextView.tier = user.contributor?.level ?: 0
 
@@ -98,6 +108,8 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
 
             itemView.isClickable = true
             itemView.setOnClickListener { userClickedEvents.onNext(user.id ?: "") }
+
+            leaderTextView.visibility = if (user.id == leaderID) View.VISIBLE else View.GONE
         }
     }
 }

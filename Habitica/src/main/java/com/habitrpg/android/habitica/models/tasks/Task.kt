@@ -69,8 +69,7 @@ open class Task : RealmObject, Parcelable {
 
     var isDue: Boolean? = null
 
-    var nextDue: Date? = null
-    var yesterDaily: Boolean? = null
+    var nextDue: RealmList<Date>? = null
 
     //Needed for offline creating/updating
     var isSaving: Boolean = false
@@ -171,14 +170,15 @@ open class Task : RealmObject, Parcelable {
             today.add(Calendar.DAY_OF_MONTH, -1)
         }
 
-        if (nextDue != null && !isDisplayedActive) {
+        val nextDate = nextDue?.firstOrNull()
+        if (nextDate != null && !isDisplayedActive) {
             val nextDueCalendar = GregorianCalendar()
-            nextDueCalendar.time = nextDue
+            nextDueCalendar.time = nextDate
             newTime.set(nextDueCalendar.get(Calendar.YEAR), nextDueCalendar.get(Calendar.MONTH), nextDueCalendar.get(Calendar.DAY_OF_MONTH))
             return newTime.time
         }
 
-        return newTime.time
+        return if (isDisplayedActive) newTime.time else null
     }
 
     fun parseMarkdown() {
@@ -198,7 +198,7 @@ open class Task : RealmObject, Parcelable {
 
     fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
         if (this.parsedText != null) {
-            return this.parsedText as CharSequence
+            return this.parsedText ?: ""
         }
 
         MarkdownParser.parseMarkdownAsync(this.text, Consumer { parsedText ->

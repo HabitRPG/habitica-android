@@ -18,6 +18,8 @@ open class Group : RealmObject() {
 
     var description: String? = null
 
+    var summary: String? = null
+
     var leaderID: String? = null
 
     var leaderName: String? = null
@@ -44,13 +46,8 @@ open class Group : RealmObject() {
         if (this === other) {
             return true
         }
-        if (other == null || javaClass != other.javaClass) {
-            return false
-        }
-
-        val group = other as Group
-
-        return id == group.id
+        val group = other as? Group
+        return id == group?.id
 
     }
 

@@ -173,40 +173,27 @@
                     android:layout_height="wrap_content"
                     style="@style/CardContent"
                     android:divider="?android:listDivider"
+                    android:dividerPadding="@dimen/spacing_medium"
                     android:showDividers="middle"
                     android:orientation="vertical">
 
                     <net.pherth.android.emoji_library.EmojiTextView
+                        android:id="@+id/groupSummaryView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_medium" />
+
+                    <net.pherth.android.emoji_library.EmojiTextView
                         android:id="@+id/groupDescriptionView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <LinearLayout
-                        android:id="@+id/leadernameWrapper"
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/leadernameTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/leaderMessageWrapper"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <net.pherth.android.emoji_library.EmojiTextView
-                            android:id="@+id/leaderMessageTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
+                        android:padding="@dimen/spacing_medium"/>
                     <LinearLayout
                         android:id="@+id/gemCountWrapper"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="@dimen/spacing_medium">
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

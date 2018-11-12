@@ -146,4 +146,8 @@ class VerifyUsernameActivity: BaseActivity() {
             finish()
         }
     }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
 }
