@@ -45,6 +45,23 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
+    override fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>) {
+        realm.executeTransaction { realm.insertOrUpdate(memberships) }
+        if (userID != null) {
+            val existingMemberships = realm.where(GroupMembership::class.java).equalTo("userID", userID).findAll()
+            val membersToRemove = ArrayList<GroupMembership>()
+            for (existingMembership in existingMemberships) {
+                val isStillMember = memberships.any { existingMembership.combinedID == it.combinedID }
+                if (!isStillMember) {
+                    membersToRemove.add(existingMembership)
+                }
+            }
+            realm.executeTransaction {
+                membersToRemove.forEach { it.deleteFromRealm() }
+            }
+        }
+    }
+
     override fun getPublicGuilds(): Flowable<RealmResults<Group>> = realm.where(Group::class.java)
                 .equalTo("type", "guild")
                 .equalTo("privacy", "public")

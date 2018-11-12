@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -18,13 +20,15 @@ import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAd
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 /**
  * Created by Negue on 15.09.2015.
  */
-class PartyMemberListFragment : BaseFragment() {
+@SuppressLint("ValidFragment")
+class PartyMemberListFragment constructor(private val viewModel: PartyViewModel) : BaseFragment() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -59,9 +63,18 @@ class PartyMemberListFragment : BaseFragment() {
         getUsers()
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.getGroupData().observe(viewLifecycleOwner, Observer {
+            adapter?.leaderID = it?.leaderID
+            adapter?.notifyDataSetChanged()
+        })
+    }
+
     private fun refreshMembers() {
         setRefreshing(true)
-        socialRepository.retrieveGroupMembers(partyId ?: "", true).doOnComplete { setRefreshing(false) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(socialRepository.retrieveGroupMembers(partyId ?: "", true).doOnComplete { setRefreshing(false) }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setRefreshing(isRefreshing: Boolean) {
@@ -76,8 +89,8 @@ class PartyMemberListFragment : BaseFragment() {
         if (partyId == null) {
             return
         }
-        socialRepository.getGroupMembers(partyId ?: "").firstElement().subscribe(Consumer { users ->
+        compositeSubscription.add(socialRepository.getGroupMembers(partyId ?: "").firstElement().subscribe(Consumer { users ->
             adapter?.updateData(users)
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
     }
 }

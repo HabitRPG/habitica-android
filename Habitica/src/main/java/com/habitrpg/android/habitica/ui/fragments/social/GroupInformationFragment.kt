@@ -9,6 +9,7 @@ import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,6 +120,9 @@ class GroupInformationFragment : BaseFragment() {
                         }, RxErrorHandler.handleEmptyError())
             }
         }
+
+        groupDescriptionView.movementMethod = LinkMovementMethod.getInstance()
+        groupSummaryView.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun refresh() {
@@ -170,12 +174,9 @@ class GroupInformationFragment : BaseFragment() {
         groupDescriptionWrapper.visibility = groupItemVisibility
 
         groupDescriptionView.text = MarkdownParser.parseMarkdown(group?.description)
-        leadernameWrapper.visibility = if (group?.leaderName != null) View.VISIBLE else View.GONE
-        leadernameTextView.text = group?.leaderName
-        leaderMessageWrapper.visibility = if (group?.leaderMessage != null) View.VISIBLE else View.GONE
-        leaderMessageTextView.text = group?.leaderMessage
-        leadernameWrapper.visibility = if (group?.balance != null && group.balance > 0) View.VISIBLE else View.GONE
-        leadernameTextView.text = (group?.balance ?: 0 * 4.0).toString()
+        groupSummaryView.text = MarkdownParser.parseMarkdown(group?.summary)
+        gemCountWrapper.visibility = if (group?.balance != null && group.balance > 0) View.VISIBLE else View.GONE
+        gemCountTextView.text = (group?.balance ?: 0 * 4.0).toInt().toString()
     }
 
     companion object {

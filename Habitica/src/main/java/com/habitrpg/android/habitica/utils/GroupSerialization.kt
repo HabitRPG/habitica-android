@@ -29,6 +29,9 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
         if (obj.has("description") && !obj.get("description").isJsonNull) {
             group.description = obj.get("description").asString
         }
+        if (obj.has("summary") && !obj.get("summary").isJsonNull) {
+            group.summary = obj.get("summary").asString
+        }
         if (obj.has("leaderMessage") && !obj.get("leaderMessage").isJsonNull) {
             group.leaderMessage = obj.get("leaderMessage").asString
         }
@@ -110,6 +113,7 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
         val obj = JsonObject()
         obj.addProperty("name", src.name)
         obj.addProperty("description", src.description)
+        obj.addProperty("summary", src.summary)
         obj.addProperty("logo", src.logo)
         obj.addProperty("type", src.type)
         obj.addProperty("type", src.type)

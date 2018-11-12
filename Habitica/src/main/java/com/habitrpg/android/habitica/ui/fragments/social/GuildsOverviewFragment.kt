@@ -76,10 +76,10 @@ class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, android
     }
 
     private fun fetchGuilds() {
-        this.socialRepository.retrieveGroups("guilds")
+        compositeSubscription.add(this.socialRepository.retrieveGroups("guilds")
                 .subscribe(Consumer {
                     swipeRefreshLayout?.isRefreshing = false
-                }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setGuilds(guilds: RealmResults<Group>) {

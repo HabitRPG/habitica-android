@@ -219,7 +219,7 @@ class PartyFragment : BaseMainFragment() {
                     }
                     2 -> {
                         if (partyMemberListFragment == null) {
-                            partyMemberListFragment = PartyMemberListFragment()
+                            partyMemberListFragment = PartyMemberListFragment(viewModel)
                             if (user?.hasParty() == true) {
                                 partyMemberListFragment?.setPartyId(user?.party?.id ?: "")
                             }

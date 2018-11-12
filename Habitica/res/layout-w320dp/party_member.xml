@@ -70,9 +70,23 @@
             <com.habitrpg.android.habitica.ui.views.ValueBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/hpBar"
+                android:id="@+id/hp_bar"
                 app:barForegroundColor="@color/hpColor"
                 app:description="@string/HP_default"
+                app:lightBackground="true"/>
+            <com.habitrpg.android.habitica.ui.views.ValueBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/exp_bar"
+                app:barForegroundColor="@color/xpColor"
+                app:description="@string/XP_default"
+                app:lightBackground="true"/>
+            <com.habitrpg.android.habitica.ui.views.ValueBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mp_bar"
+                app:barForegroundColor="@color/mpColor"
+                app:description="@string/MP_default"
                 app:lightBackground="true"/>
         </LinearLayout>
 

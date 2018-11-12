@@ -49,9 +49,9 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
 
         recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
         recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(getActivity()!!, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
+        viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
         viewAdapter.setMemberGuildIDs(this.memberGuildIDs?.toMutableList() ?: mutableListOf<String>())
         viewAdapter.apiClient = this.apiClient
-        viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
         recyclerView?.adapter = viewAdapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.fetchGuilds()
@@ -63,12 +63,12 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
     }
 
     private fun fetchGuilds() {
-        this.socialRepository.getPublicGuilds()
+        compositeSubscription.add(this.socialRepository.getPublicGuilds()
                 .firstElement()
                 .subscribe(Consumer { groups ->
                     this@PublicGuildsFragment.viewAdapter.updateData(groups)
-                }, RxErrorHandler.handleEmptyError())
-        this.socialRepository.retrieveGroups("publicGuilds").subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(this.socialRepository.retrieveGroups("publicGuilds").subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

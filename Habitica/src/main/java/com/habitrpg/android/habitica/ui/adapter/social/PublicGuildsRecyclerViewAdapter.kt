@@ -115,7 +115,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         fun bind(guild: Group, isInGroup: Boolean) {
             this.nameTextView.text = guild.name
             this.memberCountTextView.text = guild.memberCount.toString()
-            this.descriptionTextView.text = MarkdownParser.parseMarkdown(guild.description)
+            this.descriptionTextView.text = MarkdownParser.parseMarkdown(guild.summary)
             if (isInGroup) {
                 this.joinLeaveButton.setText(R.string.leave)
             } else {

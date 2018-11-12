@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -88,12 +89,13 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, andr
 
         recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
             taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
 
         if (this.classType != null) {
-            taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer { this.recyclerAdapter?.updateUnfilteredData(it)
+            compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer {
+                this.recyclerAdapter?.updateUnfilteredData(it)
                 this.recyclerAdapter?.filter()
-            }, RxErrorHandler.handleEmptyError())
+            }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -157,11 +159,11 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, andr
                 val movingTaskID = movingTaskID
                 if (fromPosition != null && movingTaskID != null) {
                     recyclerAdapter?.ignoreUpdates = true
-                    taskRepository.updateTaskPosition(classType ?: "", movingTaskID, viewHolder.adapterPosition)
+                    compositeSubscription.add(taskRepository.updateTaskPosition(classType ?: "", movingTaskID, viewHolder.adapterPosition)
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(Consumer { recyclerAdapter?.ignoreUpdates = false
-                            recyclerAdapter?.notifyDataSetChanged()}, RxErrorHandler.handleEmptyError())
+                            recyclerAdapter?.notifyDataSetChanged()}, RxErrorHandler.handleEmptyError()))
                 }
                 this.fromPosition = null
                 this.movingTaskID = null
@@ -260,10 +262,10 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, andr
 
     override fun onRefresh() {
         refreshLayout.isRefreshing = true
-        userRepository.retrieveUser(true, true)
+        compositeSubscription.add(userRepository.retrieveUser(true, true)
                 .doOnTerminate {
                     refreshLayout?.isRefreshing = false
-                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     fun setActiveFilter(activeFilter: String) {
