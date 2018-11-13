@@ -104,7 +104,7 @@ class ChatBarView : FrameLayout {
         if (chatEditText.lineCount >= 3) {
             textIndicator.visibility = View.VISIBLE
             indicatorSpacing.visibility = View.VISIBLE
-            textIndicator.text = "${text.length}/${maxChatLength}"
+            textIndicator.text = "${text.length}/$maxChatLength"
             val color = when {
                 text.length > maxChatLength -> R.color.red_50
                 text.length > (maxChatLength * 0.95) -> R.color.yellow_5

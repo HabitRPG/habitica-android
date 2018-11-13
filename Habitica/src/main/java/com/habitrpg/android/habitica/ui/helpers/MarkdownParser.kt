@@ -51,7 +51,7 @@ object MarkdownParser {
             output.setSpan(colorSpan, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
 
-        return if (output.length >= 2) output.subSequence(0, output.length - 2) else output
+        return output.trimEnd('\n')
     }
 
     fun parseMarkdownAsync(input: String?, onSuccess: Consumer<CharSequence>) {
