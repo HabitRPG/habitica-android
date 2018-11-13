@@ -75,6 +75,7 @@ open class Task : RealmObject, Parcelable {
     var isSaving: Boolean = false
     var hasErrored: Boolean = false
     var isCreating: Boolean = false
+    var yesterDaily: Boolean = true
 
     private var daysOfMonthString: String? = null
     private var weeksOfMonthString: String? = null

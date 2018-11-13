@@ -1,42 +1,48 @@
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.content.Context
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Point
 import android.os.Build
 import androidx.annotation.IntRange
 import android.util.DisplayMetrics
-import android.view.Display
-import android.view.KeyCharacterMap
-import android.view.KeyEvent
-import android.view.ViewConfiguration
-import android.view.WindowManager
+import android.view.*
+import androidx.annotation.IntegerRes
 
 import com.habitrpg.android.habitica.R
 
 object NavbarUtils {
 
-    private const val RESOURCE_NOT_FOUND = 0
-
     @IntRange(from = 0)
     fun getNavbarHeight(context: Context): Int {
-        val res = context.resources
-        val navBarIdentifier = res.getIdentifier("navigation_bar_height", "dimen", "android")
-        return if (navBarIdentifier != RESOURCE_NOT_FOUND)
-            res.getDimensionPixelSize(navBarIdentifier)
-        else
-            0
+        val appUsableSize = getAppUsableScreenSize(context)
+        val realScreenSize = getRealScreenSize(context)
+
+        return when {
+            appUsableSize.x < realScreenSize.x -> realScreenSize.x - appUsableSize.x
+            appUsableSize.y < realScreenSize.y -> realScreenSize.y - appUsableSize.y
+            else -> 0
+        }
     }
 
-    internal fun shouldDrawBehindNavbar(context: Context): Boolean {
-        return isPortrait(context) && hasSoftKeys(context)
+    private fun getAppUsableScreenSize(context: Context): Point {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
+        val display = windowManager?.defaultDisplay
+        val size = Point()
+        display?.getSize(size)
+        return size
     }
 
-    private fun isPortrait(context: Context): Boolean {
-        val res = context.resources
-        return res.getBoolean(R.bool.is_portrait_mode)
+    private fun getRealScreenSize(context: Context): Point {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
+        val display = windowManager?.defaultDisplay
+        val size = Point()
+        if (Build.VERSION.SDK_INT >= 17) {
+            display?.getRealSize(size)
+        }
+        return size
     }
-
     /**
      * http://stackoverflow.com/a/14871974
      */
@@ -59,7 +65,7 @@ object NavbarUtils {
             val displayWidth = displayMetrics.widthPixels
 
             hasSoftwareKeys = realWidth - displayWidth > 0 || realHeight - displayHeight > 0
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        } else {
             val hasMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey()
             val hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK)
             hasSoftwareKeys = !hasMenuKey && !hasBackKey

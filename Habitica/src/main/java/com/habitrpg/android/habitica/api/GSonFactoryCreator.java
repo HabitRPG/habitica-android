@@ -55,6 +55,7 @@ import com.habitrpg.android.habitica.utils.QuestDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.QuestListDeserializer;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
+import com.habitrpg.android.habitica.utils.TaskDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskSerializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
@@ -129,6 +130,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())
+                //.registerTypeAdapter(Task.class, new TaskDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);
