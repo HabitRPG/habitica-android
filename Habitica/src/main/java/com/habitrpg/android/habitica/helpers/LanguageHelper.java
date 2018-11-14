@@ -19,7 +19,7 @@ public class LanguageHelper {
                 break;
             case "hr":
                 locale = new Locale("hr", "HR");
-                languageCode = "hu";
+                languageCode = "hr";
                 break;
             case "in":
                 locale = new Locale("in");
