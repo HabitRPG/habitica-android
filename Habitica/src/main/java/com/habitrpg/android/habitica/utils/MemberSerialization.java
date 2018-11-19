@@ -88,10 +88,17 @@ public class MemberSerialization implements JsonDeserializer<Member> {
         if (obj.has("loginIncentives")) {
             member.setLoginIncentives(obj.get("loginIncentives").getAsInt());
         }
+
+        /*
+        TODO: Fix ownership storage
+        Right now ownership is a boolean field on the item/pet/mount/equipment itself.
+        Storing this data for the user can overwrite the ownership for the logged in user. The fix
+        is to properly store ownership of these things in a different object, similar to how the
+        iOS app handles it.
         if (obj.has("items")) {
             member.setItems(context.deserialize(obj.get("items"), Items.class));
         }
-
+        */
         member.setId(member.getId());
 
         realm.close();

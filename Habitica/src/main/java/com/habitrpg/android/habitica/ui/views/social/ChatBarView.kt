@@ -133,7 +133,7 @@ class ChatBarView : FrameLayout {
                 navBarAccountedHeightCalculated = true
 
                 val navbarHeight = NavbarUtils.getNavbarHeight(context)
-                spacing.updateLayoutParams<LinearLayout.LayoutParams> {
+                spacing.updateLayoutParams<RelativeLayout.LayoutParams> {
                     height = navbarHeight
                 }
             }

@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/chatBarContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,9 +11,13 @@
         android:paddingRight="@dimen/spacing_medium">
 
         <LinearLayout
+            android:id="@+id/chatInputContainer"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true">
 
             <ImageButton
                 android:id="@+id/emojiButton"
@@ -87,10 +91,13 @@
             android:layout_height="wrap_content"
             android:text="@string/read_community_guidelines"
             style="@style/Caption3"
-            android:textColor="@color/brand_300" />
+            android:textColor="@color/brand_300"
+            android:layout_above="@id/spacing"
+            android:layout_below="@id/chatInputContainer"/>
         <Space
             android:id="@+id/spacing"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 </merge>

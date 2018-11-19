@@ -47,7 +47,7 @@ public class RemoteConfigManager {
 
     public Integer maxChatLength() { return maxChatLength; }
 
-    public Boolean enableUsernameRelease() { return true; }
+    public Boolean enableUsernameRelease() { return enableUsernameRelease; }
 
     private void loadFromPreferences () {
         String storedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
