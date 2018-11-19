@@ -26,6 +26,7 @@ public class Flags extends RealmObject {
     private boolean armoireEmpty;
     private boolean communityGuidelinesAccepted;
     private boolean verifiedUsername;
+    private boolean warnedLowHealth;
 
     public List<TutorialStep> getTutorial() {
         return tutorial;
@@ -137,5 +138,13 @@ public class Flags extends RealmObject {
 
     public void setVerifiedUsername(boolean verifiedUsername) {
         this.verifiedUsername = verifiedUsername;
+    }
+
+    public boolean isWarnedLowHealth() {
+        return warnedLowHealth;
+    }
+
+    public void setWarnedLowHealth(boolean warnedLowHealth) {
+        this.warnedLowHealth = warnedLowHealth;
     }
 }

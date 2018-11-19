@@ -128,7 +128,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
                     .delay(200, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(Consumer {
-                recyclerView.scrollToPosition(0)
+                recyclerView?.scrollToPosition(0)
             }, RxErrorHandler.handleEmptyError())
             KeyboardUtil.dismissKeyboard(getActivity())
         }
