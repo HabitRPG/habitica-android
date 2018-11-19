@@ -120,7 +120,7 @@
                     android:layout_gravity="bottom|right"
                     android:layout_marginBottom="-5dp"
                     />
-                <com.roughike.bottombar.BottomBar
+                <com.habitrpg.android.habitica.ui.views.bottombar.BottomBar
                     android:id="@+id/bottom_navigation"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"

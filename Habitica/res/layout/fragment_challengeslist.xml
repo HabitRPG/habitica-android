@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     android:background="#fff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -57,5 +54,4 @@
                 android:textColor="#66000000" />
 
         </LinearLayout>
-    </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -34,6 +34,15 @@ object NavbarUtils {
         return size
     }
 
+    fun shouldDrawBehindNavbar(context: Context): Boolean {
+        return isPortrait(context) && hasSoftKeys(context)
+    }
+
+    private fun isPortrait(context: Context): Boolean {
+        val res = context.resources
+        return res.getBoolean(R.bool.is_portrait_mode)
+    }
+
     private fun getRealScreenSize(context: Context): Point {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
         val display = windowManager?.defaultDisplay

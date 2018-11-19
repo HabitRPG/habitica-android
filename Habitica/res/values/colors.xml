@@ -163,4 +163,8 @@
     <color name="black">#000</color>
     <color name="setup_background">#efeff4</color>
     <color name="setup_label_background">#fafaff</color>
+
+    <color name="bb_inActiveBottomBarItemColor">#747474</color>
+    <color name="bb_darkBackgroundColor">#212121</color>
+    <color name="bb_tabletRightBorderDark">#505050</color>
 </resources>
