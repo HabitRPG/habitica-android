@@ -174,7 +174,7 @@
 -dontwarn rx.**
 -dontwarn com.android.volley.toolbox.**
 -dontwarn com.facebook.infer.**
--dontwarn com.roughike.bottombar.**
+-dontwarn com.habitrpg.android.habitica.ui.views.bottombar.**
 -dontwarn com.viewpagerindicator.**
 #-ignorewarnings
 

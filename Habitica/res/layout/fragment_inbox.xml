@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="?attr/actionBarSize">
-                <LinearLayout
+                <com.habitrpg.android.habitica.ui.views.PaddedLinearLayout
                     android:id="@+id/inbox_messages"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:divider="?android:listDivider"
                     android:showDividers="middle">
-                </LinearLayout>
+                </com.habitrpg.android.habitica.ui.views.PaddedLinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

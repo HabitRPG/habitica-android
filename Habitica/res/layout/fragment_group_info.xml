@@ -10,7 +10,7 @@
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/scrollbarThumb"
         android:scrollbars="vertical">
-        <LinearLayout
+        <com.habitrpg.android.habitica.ui.views.PaddedLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -207,6 +207,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-        </LinearLayout>
+        </com.habitrpg.android.habitica.ui.views.PaddedLinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

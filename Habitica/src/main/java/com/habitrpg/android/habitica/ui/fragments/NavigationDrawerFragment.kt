@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.fragments
 
 import android.app.ActionBar
 import android.content.Intent
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.core.content.ContextCompat
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -47,6 +50,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.drawer_main.*
 import javax.inject.Inject
+import android.view.Window.ID_ANDROID_CONTENT
+import androidx.core.view.ViewCompat
+
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -166,10 +172,19 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.drawer_main, container, false) as ViewGroup
+                              savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.drawer_main, container, false) as? ViewGroup
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var statusBarHeight = 0
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            statusBarHeight = resources.getDimensionPixelSize(resourceId)
+        }
+        val params = menuHeaderView.layoutParams as? ViewGroup.MarginLayoutParams
+        params?.topMargin = statusBarHeight
+
         recyclerView.adapter = adapter
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         initializeMenuItems()
