@@ -20,11 +20,6 @@
         <item>@string/repeatables_frequency_monthly</item>
     </string-array>
 
-    <string-array name="daily_frequencies">
-        <item>@string/frequency_weekly</item>
-        <item>@string/frequency_daily</item>
-    </string-array>
-
     <string-array name="repeatables_frequencies">
         <item>@string/repeatables_frequency_daily</item>
         <item>@string/repeatables_frequency_weekly</item>

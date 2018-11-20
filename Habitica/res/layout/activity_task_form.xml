@@ -239,48 +239,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/task_weekdays_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/frequency_title"
-                android:text="@string/frequency"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Spinner
-                android:id="@+id/task_frequency_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="72dp" />
-
-            <LinearLayout
-                android:id="@+id/task_frequency_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/task_startdate_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <include layout="@layout/tasks_startdate" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/task_duedate_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

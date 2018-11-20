@@ -139,6 +139,7 @@ class TaskSetupFragment : BaseFragment() {
         if (type == Task.TYPE_DAILY) {
             task.frequency = "weekly"
             task.startDate = Date()
+            task.everyX = 1
             val days = Days()
             days.m = true
             days.t = true
