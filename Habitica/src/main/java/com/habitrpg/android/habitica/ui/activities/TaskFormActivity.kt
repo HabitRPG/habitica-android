@@ -52,7 +52,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
+class TaskFormActivity : BaseActivity() {
     private val taskValue: EditText by bindView(R.id.task_value_edittext)
     private val taskValueLayout: TextInputLayout by bindView(R.id.task_value_layout)
     private val checklistWrapper: LinearLayout by bindView(R.id.task_checklist_wrapper)
@@ -64,15 +64,10 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private val taskDifficultySpinner: Spinner by bindView(R.id.task_difficulty_spinner)
     private val taskAttributeSpinner: Spinner by bindView(R.id.task_attribute_spinner)
     private val btnDelete: Button by bindView(R.id.btn_delete_task)
-    private val startDateLayout: LinearLayout by bindView(R.id.task_startdate_layout)
     private val taskWrapper: LinearLayout by bindView(R.id.task_task_wrapper)
     private val positiveCheckBox: CheckBox by bindView(R.id.task_positive_checkbox)
     private val negativeCheckBox: CheckBox by bindView(R.id.task_negative_checkbox)
     private val actionsLayout: LinearLayout by bindView(R.id.task_actions_wrapper)
-    private val weekdayWrapper: LinearLayout by bindView(R.id.task_weekdays_wrapper)
-    private val frequencyTitleTextView: TextView by bindView(R.id.frequency_title)
-    private val dailyFrequencySpinner: Spinner by bindView(R.id.task_frequency_spinner)
-    private val frequencyContainer: LinearLayout by bindView(R.id.task_frequency_container)
     private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.checklist_recycler_view)
     private val newCheckListEditText: EmojiEditText by bindView(R.id.new_checklist)
     private val addChecklistItemButton: Button by bindView(R.id.add_checklist_button)
@@ -85,8 +80,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private val dueDateLayout: LinearLayout by bindView(R.id.task_duedate_layout)
     private val dueDatePickerLayout: LinearLayout by bindView(R.id.task_duedate_picker_layout)
     private val dueDateCheckBox: CheckBox by bindView(R.id.duedate_checkbox)
-    private val startDateTitleTextView: TextView by bindView(R.id.startdate_text_title)
-    private val startDatePickerText: EditText by bindView(R.id.startdate_text_edittext)
     private val repeatablesStartDatePickerText: EditText by bindView(R.id.repeatables_startdate_text_edittext)
     private var startDateListener: DateEditTextListener? = null
     private val repeatablesLayout: LinearLayout by bindView(R.id.repeatables)
@@ -118,9 +111,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     private var task: Task? = null
     private var taskBasedAllocation: Boolean = false
-    private val weekdayCheckboxes = ArrayList<CheckBox>()
     private val repeatablesWeekDayCheckboxes = ArrayList<CheckBox>()
-    private var frequencyPicker: NumberPicker? = null
     private var tags: List<Tag>? = null
     private var checklistAdapter: CheckListAdapter? = null
     private var remindersAdapter: RemindersAdapter? = null
@@ -172,7 +163,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         remindersManager = RemindersManager(taskType)
 
         dueDateListener = DateEditTextListener(dueDatePickerText)
-        startDateListener = DateEditTextListener(startDatePickerText)
 
         btnDelete.isEnabled = false
         ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.red_10))
@@ -205,8 +195,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         }
 
         if (taskType == Task.TYPE_HABIT) {
-            taskWrapper.removeView(startDateLayout)
-
             mainWrapper.removeView(checklistWrapper)
             mainWrapper.removeView(remindersWrapper)
 
@@ -222,17 +210,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         } else {
             mainWrapper.removeView(actionsLayout)
             taskResetFrequencyWrapper.visibility = View.GONE
-        }
-
-        if (taskType == Task.TYPE_DAILY) {
-            val frequencyAdapter = ArrayAdapter.createFromResource(this,
-                    R.array.daily_frequencies, android.R.layout.simple_spinner_item)
-            frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            this.dailyFrequencySpinner.adapter = frequencyAdapter
-            this.dailyFrequencySpinner.onItemSelectedListener = this
-        } else {
-            mainWrapper.removeView(weekdayWrapper)
-            mainWrapper.removeView(startDateLayout)
         }
 
         if (taskType == Task.TYPE_TODO) {
@@ -408,34 +385,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             return
         }
 
-        startDateLayout.visibility = View.INVISIBLE
-
-        // Hide old stuff
-        val startDateLayoutParams = startDateLayout.layoutParams
-        startDateLayoutParams.height = 0
-        startDateLayout.layoutParams = startDateLayoutParams
-
-        val startDatePickerTextParams = startDatePickerText.layoutParams
-        startDatePickerTextParams.height = 0
-        startDatePickerText.layoutParams = startDatePickerTextParams
-
-        val startDateTitleTextViewParams = startDateTitleTextView.layoutParams
-        startDateTitleTextViewParams.height = 0
-        startDateTitleTextView.layoutParams = startDateTitleTextViewParams
-
-        weekdayWrapper.visibility = View.INVISIBLE
-        val weekdayWrapperParams = weekdayWrapper.layoutParams
-        weekdayWrapperParams.height = 0
-        weekdayWrapper.layoutParams = weekdayWrapperParams
-
-        val frequencyTitleTextViewParams = frequencyTitleTextView.layoutParams
-        frequencyTitleTextViewParams.height = 0
-        frequencyTitleTextView.layoutParams = frequencyTitleTextViewParams
-
-        val dailyFrequencySpinnerParams = dailyFrequencySpinner.layoutParams
-        dailyFrequencySpinnerParams.height = 0
-        dailyFrequencySpinner.layoutParams = dailyFrequencySpinnerParams
-
         // Start Date
         startDateListener = DateEditTextListener(repeatablesStartDatePickerText)
 
@@ -444,6 +393,7 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 R.array.repeatables_frequencies, android.R.layout.simple_spinner_item)
         frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         this.repeatablesFrequencySpinner.adapter = frequencyAdapter
+        repeatablesFrequencySpinner.setSelection(1)
         this.repeatablesFrequencySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 generateSummary()
@@ -642,8 +592,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun createCheckListRecyclerView() {
         checklistAdapter = CheckListAdapter()
 
-        val llm = androidx.recyclerview.widget.LinearLayoutManager(this)
-        llm.orientation = androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+        val llm = LinearLayoutManager(this)
+        llm.orientation = RecyclerView.VERTICAL
 
         recyclerView.layoutManager = llm
         recyclerView.adapter = checklistAdapter
@@ -676,8 +626,8 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun createRemindersRecyclerView() {
         taskType.notNull { remindersAdapter = RemindersAdapter(it) }
 
-        val llm = androidx.recyclerview.widget.LinearLayoutManager(this)
-        llm.orientation = androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+        val llm = LinearLayoutManager(this)
+        llm.orientation = RecyclerView.VERTICAL
 
         remindersRecyclerView.layoutManager = llm
         remindersRecyclerView.adapter = remindersAdapter
@@ -760,55 +710,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun setDailyFrequencyViews() {
-        this.frequencyContainer.removeAllViews()
-        if (this.dailyFrequencySpinner.selectedItemPosition == 0) {
-            var weekdays = resources.getStringArray(R.array.weekdays)
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-            val dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
-                    Integer.toString(Calendar.getInstance().firstDayOfWeek))
-            firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek ?: ""))
-            val weekdaysTemp = weekdays.asList()
-            Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0)
-            weekdays = weekdaysTemp.toTypedArray()
-
-            for (i in 0..6) {
-                val weekdayRow = layoutInflater.inflate(R.layout.row_checklist, this.frequencyContainer, false)
-                val checkbox = weekdayRow.findViewById<View>(R.id.checkbox) as? CheckBox
-                checkbox?.text = weekdays[i]
-                checkbox?.isChecked = true
-                checkbox.notNull {
-                    this.weekdayCheckboxes.add(it)
-                }
-                this.frequencyContainer.addView(weekdayRow)
-            }
-        } else {
-            val dayRow = layoutInflater.inflate(R.layout.row_number_picker, this.frequencyContainer, false)
-            this.frequencyPicker = dayRow.findViewById<View>(R.id.numberPicker) as? NumberPicker
-            this.frequencyPicker?.minValue = 1
-            this.frequencyPicker?.maxValue = 366
-            val tv = dayRow.findViewById<View>(R.id.label) as? TextView
-            tv?.text = resources.getString(R.string.frequency_daily)
-            this.frequencyContainer.addView(dayRow)
-        }
-
-        if (this.task?.isValid == true) {
-            if (this.dailyFrequencySpinner.selectedItemPosition == 0) {
-                val offset = firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0
-                this.weekdayCheckboxes[offset].isChecked = this.task?.repeat?.m ?: false
-                this.weekdayCheckboxes[(offset + 1) % 7].isChecked = this.task?.repeat?.t ?: false
-                this.weekdayCheckboxes[(offset + 2) % 7].isChecked = this.task?.repeat?.w ?: false
-                this.weekdayCheckboxes[(offset + 3) % 7].isChecked = this.task?.repeat?.th ?: false
-                this.weekdayCheckboxes[(offset + 4) % 7].isChecked = this.task?.repeat?.f ?: false
-                this.weekdayCheckboxes[(offset + 5) % 7].isChecked = this.task?.repeat?.s ?: false
-                this.weekdayCheckboxes[(offset + 6) % 7].isChecked = this.task?.repeat?.su ?: false
-            } else {
-                this.frequencyPicker?.value = this.task?.everyX ?: 0
-            }
-        }
-
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_save, menu)
@@ -882,25 +783,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
             if (task.startDate != null) {
                 startDateListener?.setCalendar(task.startDate)
-            }
-
-            if (task.frequency == "weekly") {
-                this.dailyFrequencySpinner.setSelection(0)
-                if (weekdayCheckboxes.size == 7) {
-                    val offset = firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0
-                    this.weekdayCheckboxes[offset].isChecked = this.task?.repeat?.m ?: false
-                    this.weekdayCheckboxes[(offset + 1) % 7].isChecked = this.task?.repeat?.t ?: false
-                    this.weekdayCheckboxes[(offset + 2) % 7].isChecked = this.task?.repeat?.w ?: false
-                    this.weekdayCheckboxes[(offset + 3) % 7].isChecked = this.task?.repeat?.th ?: false
-                    this.weekdayCheckboxes[(offset + 4) % 7].isChecked = this.task?.repeat?.f ?: false
-                    this.weekdayCheckboxes[(offset + 5) % 7].isChecked = this.task?.repeat?.s ?: false
-                    this.weekdayCheckboxes[(offset + 6) % 7].isChecked = this.task?.repeat?.su ?: false
-                }
-            } else {
-                this.dailyFrequencySpinner.setSelection(1)
-                if (this.frequencyPicker != null) {
-                    this.frequencyPicker?.value = task.everyX ?: 0
-                }
             }
 
             populateRepeatables(task)
@@ -1003,75 +885,51 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                 Task.TYPE_DAILY -> {
                     task.startDate = Date(startDateListener?.getCalendar()?.timeInMillis ?: Date().time)
 
-                    if (this.dailyFrequencySpinner.selectedItemPosition == 0) {
-                        task.frequency = "weekly"
+                    val frequency = this.repeatablesFrequencySpinner.selectedItemPosition
+                    var frequencyString = ""
+                    when (frequency) {
+                        0 -> frequencyString = "daily"
+                        1 -> frequencyString = "weekly"
+                        2 -> frequencyString = "monthly"
+                        3 -> frequencyString = "yearly"
+                    }
+                    task.frequency = frequencyString
 
-                        var repeat = task.repeat
-                        if (repeat == null) {
-                            repeat = Days()
-                            task.repeat = repeat
-                        }
+                    task.everyX = this.repeatablesEveryXSpinner.value
 
-                        val offset = firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0
-                        repeat.m = this.weekdayCheckboxes[offset].isChecked
-                        repeat.t = this.weekdayCheckboxes[(offset + 1) % 7].isChecked
-                        repeat.w = this.weekdayCheckboxes[(offset + 2) % 7].isChecked
-                        repeat.th = this.weekdayCheckboxes[(offset + 3) % 7].isChecked
-                        repeat.f = this.weekdayCheckboxes[(offset + 4) % 7].isChecked
-                        repeat.s = this.weekdayCheckboxes[(offset + 5) % 7].isChecked
-                        repeat.su = this.weekdayCheckboxes[(offset + 6) % 7].isChecked
-                    } else {
-                        task.frequency = "daily"
-                        task.everyX = this.frequencyPicker?.value
+                    var repeat = task.repeat
+                    if (repeat == null) {
+                        repeat = Days()
+                        task.repeat = repeat
                     }
 
-                    if (remoteConfigManager.repeatablesAreEnabled()) {
-                        val frequency = this.repeatablesFrequencySpinner.selectedItemPosition
-                        var frequencyString = ""
-                        when (frequency) {
-                            0 -> frequencyString = "daily"
-                            1 -> frequencyString = "weekly"
-                            2 -> frequencyString = "monthly"
-                            3 -> frequencyString = "yearly"
-                        }
-                        task.frequency = frequencyString
+                    if ("weekly" == frequencyString) {
+                        val offset = firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0
+                        repeat.m = this.repeatablesWeekDayCheckboxes[offset].isChecked
+                        repeat.t = this.repeatablesWeekDayCheckboxes[(offset + 1) % 7].isChecked
+                        repeat.w = this.repeatablesWeekDayCheckboxes[(offset + 2) % 7].isChecked
+                        repeat.th = this.repeatablesWeekDayCheckboxes[(offset + 3) % 7].isChecked
+                        repeat.f = this.repeatablesWeekDayCheckboxes[(offset + 4) % 7].isChecked
+                        repeat.s = this.repeatablesWeekDayCheckboxes[(offset + 5) % 7].isChecked
+                        repeat.su = this.repeatablesWeekDayCheckboxes[(offset + 6) % 7].isChecked
+                    }
 
-                        task.everyX = this.repeatablesEveryXSpinner.value
+                    if ("monthly" == frequencyString) {
+                        val calendar = startDateListener?.getCalendar()
+                        val monthlyFreq = repeatablesOnSpinner.selectedItem.toString()
 
-                        var repeat = task.repeat
-                        if (repeat == null) {
-                            repeat = Days()
-                            task.repeat = repeat
-                        }
-
-                        if ("weekly" == frequencyString) {
-                            val offset = firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0
-                            repeat.m = this.repeatablesWeekDayCheckboxes[offset].isChecked
-                            repeat.t = this.repeatablesWeekDayCheckboxes[(offset + 1) % 7].isChecked
-                            repeat.w = this.repeatablesWeekDayCheckboxes[(offset + 2) % 7].isChecked
-                            repeat.th = this.repeatablesWeekDayCheckboxes[(offset + 3) % 7].isChecked
-                            repeat.f = this.repeatablesWeekDayCheckboxes[(offset + 4) % 7].isChecked
-                            repeat.s = this.repeatablesWeekDayCheckboxes[(offset + 5) % 7].isChecked
-                            repeat.su = this.repeatablesWeekDayCheckboxes[(offset + 6) % 7].isChecked
-                        }
-
-                        if ("monthly" == frequencyString) {
-                            val calendar = startDateListener?.getCalendar()
-                            val monthlyFreq = repeatablesOnSpinner.selectedItem.toString()
-
-                            if (monthlyFreq == "Day of Month") {
-                                val date = calendar?.get(Calendar.DATE)
-                                val daysOfMonth = ArrayList<Int>()
-                                date.notNull { daysOfMonth.add(it) }
-                                task.setDaysOfMonth(daysOfMonth)
-                                task.setWeeksOfMonth(ArrayList())
-                            } else {
-                                val week = calendar?.get(Calendar.WEEK_OF_MONTH)
-                                val weeksOfMonth = ArrayList<Int>()
-                                week.notNull { weeksOfMonth.add(it) }
-                                task.setWeeksOfMonth(weeksOfMonth)
-                                task.setDaysOfMonth(ArrayList())
-                            }
+                        if (monthlyFreq == "Day of Month") {
+                            val date = calendar?.get(Calendar.DATE)
+                            val daysOfMonth = ArrayList<Int>()
+                            date.notNull { daysOfMonth.add(it) }
+                            task.setDaysOfMonth(daysOfMonth)
+                            task.setWeeksOfMonth(ArrayList())
+                        } else {
+                            val week = calendar?.get(Calendar.WEEK_OF_MONTH)
+                            val weeksOfMonth = ArrayList<Int>()
+                            week.notNull { weeksOfMonth.add(it) }
+                            task.setWeeksOfMonth(weeksOfMonth)
+                            task.setDaysOfMonth(ArrayList())
                         }
                     }
                 }
@@ -1101,15 +959,6 @@ class TaskFormActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             }
         })
         return true
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                pos: Int, id: Long) {
-        this.setDailyFrequencyViews()
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>) {
-        this.setDailyFrequencyViews()
     }
 
     private fun prepareSave() {

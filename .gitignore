@@ -63,3 +63,4 @@ captures
 /Habitica/release
 /fastlane/secret-key.json
 /fastlane/report.xml
+fastlane/metadata/android/*/changelogs/
