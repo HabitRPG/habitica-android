@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.BoughtGemsEvent
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
+import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -111,7 +112,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
         if (valueMax != 0) {
             cachedMaxHealth = valueMax
         }
-        hpBar.set(Math.ceil(value.toDouble()), cachedMaxHealth.toDouble())
+        hpBar.set(HealthFormatter.format(value.toDouble()), cachedMaxHealth.toDouble())
     }
 
     private fun setXpBarData(value: Float, valueMax: Int) {
@@ -148,7 +149,8 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
                 maxHP = 50
             }
 
-            valueBar.set(Math.ceil(stats.hp ?: 0.0), maxHP.toDouble())
+            val hp = stats.hp?.let { HealthFormatter.format(it) } ?: 0.0
+            valueBar.set(hp, maxHP.toDouble())
         }
     }
 }
