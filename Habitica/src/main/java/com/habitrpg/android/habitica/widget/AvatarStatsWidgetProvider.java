@@ -14,6 +14,7 @@ import android.widget.RemoteViews;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.HealthFormatter;
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator;
 import com.habitrpg.android.habitica.helpers.RxErrorHandler;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -88,7 +89,9 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         Stats stats = user.getStats();
         ComponentName thisWidget = new ComponentName(getContext(), AvatarStatsWidgetProvider.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-        String healthValueString = "" + stats.getHp().intValue() + "/" + stats.getMaxHealth();
+        Double currentHealth = HealthFormatter.format(stats.getHp());
+        String currentHealthString = HealthFormatter.formatToString(stats.getHp());
+        String healthValueString = currentHealthString + "/" + stats.getMaxHealth();
         String expValueString = "" + stats.getExp().intValue() + "/" + stats.getToNextLevel();
         String mpValueString = "" + stats.getMp().intValue() + "/" + stats.getMaxMP();
 
@@ -103,7 +106,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setImageViewBitmap(R.id.ic_exp_header, HabiticaIconsHelper.imageOfExperience());
             remoteViews.setImageViewBitmap(R.id.ic_mp_header, HabiticaIconsHelper.imageOfMagic());
 
-            remoteViews.setProgressBar(R.id.hp_bar, stats.getMaxHealth(), stats.getHp().intValue(), false);
+            remoteViews.setProgressBar(R.id.hp_bar, stats.getMaxHealth(), currentHealth.intValue(), false);
             remoteViews.setProgressBar(R.id.exp_bar, stats.getToNextLevel(), stats.getExp().intValue(), false);
             remoteViews.setProgressBar(R.id.mp_bar, stats.getMaxMP(), stats.getMp().intValue(), false);
             remoteViews.setViewVisibility(R.id.mp_wrapper, showManaBar && ( stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
