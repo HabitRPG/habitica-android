@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 
 open class PaddedRecylerView : RecyclerView {
+    var extraPadding: Float = 0f
     private var navBarAccountedHeightCalculated = false
 
     constructor(context: Context) : super(context)
@@ -32,7 +33,7 @@ open class PaddedRecylerView : RecyclerView {
                 navBarAccountedHeightCalculated = true
 
                 val navbarHeight = NavbarUtils.getNavbarHeight(context)
-                setPadding(0, 0, 0, navbarHeight)
+                setPadding(0, 0, 0, (navbarHeight + extraPadding).toInt())
                 (parent as? View)?.invalidate()
             }
         }

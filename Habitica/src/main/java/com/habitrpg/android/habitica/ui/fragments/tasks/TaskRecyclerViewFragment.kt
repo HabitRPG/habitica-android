@@ -192,6 +192,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, andr
         super.onViewCreated(view, savedInstanceState)
         recyclerView.adapter = recyclerAdapter as? androidx.recyclerview.widget.RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
+        recyclerView.extraPadding = context?.resources?.getDimension(R.dimen.bb_height) ?: 0f
 
         layoutManager = recyclerView.layoutManager
 
