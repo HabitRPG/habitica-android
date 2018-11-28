@@ -145,8 +145,8 @@ android {
         buildConfigField "String", "STORE", "\"google\""
         multiDexEnabled true
 
-        versionCode 2038
-        versionName "1.6"
+        versionCode 2040
+        versionName "1.6.1"
     }
 
     lintOptions {

@@ -64,3 +64,4 @@ captures
 /fastlane/secret-key.json
 /fastlane/report.xml
 fastlane/metadata/android/*/changelogs/
+/Habitica/amazon
