@@ -122,7 +122,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     Log.d("NETWORK", lastAPICallURL)
                     chain.proceed(request)
                 }
-                .readTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(2400, TimeUnit.SECONDS)
                 .build()
 
         val server = Server(this.hostConfig.address)
