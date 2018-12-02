@@ -12,6 +12,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.R.id.text
+import androidx.appcompat.R.id.title
+import com.facebook.FacebookSdk.getApplicationContext
 
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
@@ -29,14 +33,14 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
     fun setTitle(title: CharSequence?): HabiticaSnackbar {
         val textView = view.findViewById<View>(R.id.snackbar_title) as TextView
         textView.text = title
-        textView.visibility = if (title != null) View.VISIBLE else View.GONE
+        textView.visibility = if (title != null && text != null) View.VISIBLE else View.GONE
         return this
     }
 
     fun setText(text: CharSequence?): HabiticaSnackbar {
         val textView = view.findViewById<View>(R.id.snackbar_text) as TextView
         textView.text = text
-        textView.visibility = if (text != null) View.VISIBLE else View.GONE
+        textView.visibility = if (text != null && title != null) View.VISIBLE else View.GONE
         return this
     }
 
@@ -87,14 +91,14 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
 
         override fun animateContentIn(delay: Int, duration: Int) {
             content.scaleY = 0f
-            ViewCompat.animate(content).scaleY(1f).setDuration(duration.toLong()).startDelay = delay.toLong()
-            ViewCompat.animate(content).alpha(1f).setDuration(duration.toLong()).startDelay = delay.toLong()
+            ViewCompat.animate(content).scaleY(1f).setDuration(duration.toLong() - 50).startDelay = delay.toLong()
+            ViewCompat.animate(content).alpha(1f).setDuration(duration.toLong() - 50).startDelay = delay.toLong()
         }
 
         override fun animateContentOut(delay: Int, duration: Int) {
             content.scaleY = 1f
-            ViewCompat.animate(content).scaleY(0f).setDuration(duration.toLong()).startDelay = delay.toLong()
-            ViewCompat.animate(content).alpha(0f).setDuration(duration.toLong()).startDelay = delay.toLong()
+            ViewCompat.animate(content).scaleY(0f).setDuration(duration.toLong() - 50).startDelay = delay.toLong()
+            ViewCompat.animate(content).alpha(0f).setDuration(duration.toLong() - 50).startDelay = delay.toLong()
         }
     }
 
@@ -155,7 +159,10 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 HabiticaSnackbar.SnackbarDisplayType.SUCCESS -> snackbar.setBackgroundResource(R.drawable.snackbar_background_green)
             }
 
-            snackbar.show()
+            if (snackbar != null) {
+                snackbar.show()
+            } else
+                Toast.makeText(getApplicationContext(), "Snackbar is Null", Toast.LENGTH_LONG).show()
         }
     }
 }
