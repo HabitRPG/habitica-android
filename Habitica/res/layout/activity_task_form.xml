@@ -43,6 +43,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:hint="@string/text"
+                        android:maxLength="100"
                         android:textColor="@android:color/black"
                         android:inputType="textCapSentences|textMultiLine"
                         android:maxLines="3"/>
@@ -72,6 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:hint="@string/notes"
+                        android:maxLength="100"
                         android:textColor="@android:color/black"
                         android:inputType="textCapSentences|textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -94,6 +96,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -163,6 +166,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/actions"
@@ -170,6 +174,7 @@
 
 
             <CheckBox
+                android:layout_marginTop="10dp"
                 android:id="@+id/task_positive_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -178,6 +183,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox
+                android:layout_marginTop="10dp"
                 android:id="@+id/task_negative_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -406,7 +412,8 @@
             <Button
                 android:id="@+id/btn.delete.task"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
+                android:textSize="20sp"
                 android:drawableRight="@drawable/ic_action_delete_white_24"
                 android:drawableEnd="@drawable/ic_action_delete_white_24"
                 android:text="@string/action_delete"
