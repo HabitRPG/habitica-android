@@ -60,7 +60,7 @@
   <string name="please_connect">위젯을 사용하기 전 앱을 연결해 주세요</string>
   <string name="about.title">소개</string>
   <string name="about.libraries">도서관</string>
-  <string name="about.versionhistory">버젼 내력</string>
+  <string name="about.versionhistory">버전 내력</string>
   <string name="about.habitica_open_source">Habitica는 Github를 통해 오픈소스로 공개되어 있습니다</string>
   <string name="about.rate_our_app">앱 평가</string>
   <string name="about.give_us_feedback">피드백을 보내주세요!</string>
