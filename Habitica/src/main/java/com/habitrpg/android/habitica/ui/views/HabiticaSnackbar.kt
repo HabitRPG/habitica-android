@@ -122,7 +122,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             }
             val viewCallback = ContentViewCallback(content)
             val customSnackbar = HabiticaSnackbar(parent, content, viewCallback)
-            customSnackbar.duration = duration
+            customSnackbar.duration = duration-100;
             return customSnackbar
         }
 
@@ -145,7 +145,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         }
 
         fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int, rightText: String?, displayType: SnackbarDisplayType) {
-            val snackbar = HabiticaSnackbar.make(container, Snackbar.LENGTH_LONG)
+            val snackbar = HabiticaSnackbar.make(container, Snackbar.LENGTH_SHORT)
                     .setTitle(title)
                     .setText(content)
                     .setSpecialView(specialView)
