@@ -122,7 +122,7 @@
     <string name="filter">필터</string>
 
     <string name="profile">프로필</string>
-    <string name="profile_summary">공개 프로필 편집</string>
+    <string name="profile_summary">공개 프로필 편집 </string>
     <string name="display_name">표시 이름</string>
     <string name="photo_url">사진 URL</string>
 
