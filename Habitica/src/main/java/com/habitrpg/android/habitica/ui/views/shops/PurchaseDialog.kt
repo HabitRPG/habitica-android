@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
-import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -33,7 +33,6 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
-import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
@@ -266,7 +265,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                             if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {
                                 val error = throwable as retrofit2.HttpException
                                 if (error.code() == 401 && shopItem.currency == "gems") {
-                                    EventBus.getDefault().post(OpenGemPurchaseFragmentCommand())
+                                    MainNavigationController.navigate(R.id.gemPurchaseActivity)
                                 }
                             }
                         }

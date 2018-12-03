@@ -184,12 +184,12 @@
     </style>
 
     <style name="GemPurchaseListItem">
-        <item name="android:textColor">@color/brand_100</item>
+        <item name="android:textColor">@color/brand_300</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">12sp</item>
         <item name="android:drawableLeft">@drawable/ic_check_purple_24dp</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:drawablePadding">4dp</item>
+        <item name="android:drawablePadding">8dp</item>
     </style>
 
     <style name="SubscriptionListTitle" parent="GemPurchaseListItem">
@@ -216,7 +216,7 @@
     </style>
 
     <style name="Pill">
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:background">@drawable/pill_bg_gray</item>
         <item name="android:paddingRight">@dimen/pill_horizontal_padding</item>
         <item name="android:paddingLeft">@dimen/pill_horizontal_padding</item>
@@ -249,8 +249,8 @@
         <item name="android:background">@color/habit_inactive_gray</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
         <item name="android:layout_marginBottom">8dp</item>
     </style>
 
@@ -264,6 +264,10 @@
 
     <style name="subscriptionBoxText.Subtitle">
         <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_regular
+        </item>
+        <item name="android:textColor">@color/gray_50</item>
     </style>
 
     <style name="subscriptionBoxText.Title.Red">

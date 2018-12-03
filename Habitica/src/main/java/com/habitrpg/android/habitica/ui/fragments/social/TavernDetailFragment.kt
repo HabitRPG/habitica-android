@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
-import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
@@ -19,9 +18,9 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
 import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -30,13 +29,11 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_tavern_detail.*
 import kotlinx.android.synthetic.main.shop_header.*
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -126,11 +123,10 @@ class TavernDetailFragment : BaseFragment() {
             context?.startActivity(i)
         }
         faqButton.setOnClickListener {
-            EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_HELP))
-
+            MainNavigationController.navigate(R.id.FAQOverviewFragment)
         }
         reportButton.setOnClickListener {
-            EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_ABOUT))
+            MainNavigationController.navigate(R.id.aboutFragment)
         }
 
         worldBossSection.infoIconView.setOnClickListener {

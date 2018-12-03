@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import io.reactivex.functions.Consumer
@@ -116,11 +117,7 @@ class EquipmentOverviewFragment : BaseMainFragment() {
     }
 
     private fun displayEquipmentDetailList(type: String, equipped: String?, isCostume: Boolean?) {
-        val fragment = EquipmentDetailFragment()
-        fragment.type = type
-        fragment.isCostume = isCostume
-        fragment.equippedGear = equipped
-        activity?.displayFragment(fragment)
+        MainNavigationController.navigate(EquipmentOverviewFragmentDirections.openEquipmentDetail(type, isCostume ?: false, equipped ?: ""))
     }
 
     override fun customTitle(): String {

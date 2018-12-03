@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
@@ -162,6 +163,7 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
     }
 
     private fun openInboxMessages(userID: String, username: String) {
+        MainNavigationController.navigate(R.id.prefsActivity)
         val inboxMessageListFragment = InboxMessageListFragment()
         inboxMessageListFragment.setReceivingUser(username, userID)
         this.activity?.displayFragment(inboxMessageListFragment)

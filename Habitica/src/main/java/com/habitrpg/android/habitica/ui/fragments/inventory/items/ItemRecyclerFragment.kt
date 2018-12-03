@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
 import android.os.Bundle
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,22 +10,19 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.functions.Consumer
 import io.realm.OrderedRealmCollection
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment() {
@@ -105,7 +100,7 @@ class ItemRecyclerFragment : BaseFragment() {
 
                 compositeSubscription.add(adapter.getQuestInvitationFlowable()
                         .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
-                        .subscribe(Consumer { EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_PARTY)) }, RxErrorHandler.handleEmptyError()))
+                        .subscribe(Consumer { MainNavigationController.navigate(R.id.partyFragment) }, RxErrorHandler.handleEmptyError()))
             }
         }
         activity.notNull {
@@ -186,7 +181,7 @@ class ItemRecyclerFragment : BaseFragment() {
     }
 
     private fun openMarket() {
-        EventBus.getDefault().post(OpenMenuItemCommand(NavigationDrawerFragment.SIDEBAR_SHOPS))
+        MainNavigationController.navigate(R.id.shopsFragment)
     }
 
     companion object {

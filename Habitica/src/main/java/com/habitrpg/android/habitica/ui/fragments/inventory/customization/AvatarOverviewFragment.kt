@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -73,10 +74,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
     }
 
     private fun displayCustomizationFragment(type: String, category: String?) {
-        val fragment = AvatarCustomizationFragment()
-        fragment.type = type
-        fragment.category = category
-        activity?.displayFragment(fragment)
+        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openAvatarDetail(type, category ?: ""))
     }
 
     override fun updateUserData(user: User?) {

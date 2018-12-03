@@ -68,6 +68,11 @@ class GuildFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (arguments != null) {
+            val args = GuildFragmentArgs.fromBundle(arguments)
+            guildId = args.groupID
+            isMember = args.isMember
+        }
 
         viewPager?.currentItem = 0
 

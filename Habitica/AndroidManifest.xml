@@ -30,6 +30,7 @@
             android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait">
+            <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -3,26 +3,22 @@ package com.habitrpg.android.habitica.ui.adapter
 import android.content.Context
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
-import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
@@ -181,9 +177,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 val dialog = AlertDialog.Builder(itemView.context)
                         .setPositiveButton(R.string.purchase_button) { _, _ ->
                             if (customization?.price ?: 0 > gemBalance) {
-                                val event = OpenMenuItemCommand()
-                                event.identifier = NavigationDrawerFragment.SIDEBAR_PURCHASE
-                                EventBus.getDefault().post(event)
+                                MainNavigationController.navigate(R.id.gemPurchaseActivity)
                                 return@setPositiveButton
                             }
 
@@ -239,9 +233,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
             val dialog = AlertDialog.Builder(context)
                     .setPositiveButton(R.string.purchase_button) { _, _ ->
                         if (set?.price ?: 0 > gemBalance) {
-                            val event = OpenMenuItemCommand()
-                            event.identifier = NavigationDrawerFragment.SIDEBAR_PURCHASE
-                            EventBus.getDefault().post(event)
+                            MainNavigationController.navigate(R.id.gemPurchaseActivity)
                             return@setPositiveButton
                         }
                         set?.customizations = ArrayList()

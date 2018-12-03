@@ -12,9 +12,12 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment
+import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragmentDirections
+import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.functions.Consumer
@@ -36,12 +39,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         val guildViewHolder = GuildViewHolder(parent.inflate(R.layout.item_public_guild))
         guildViewHolder.itemView.setOnClickListener { v ->
             val guild = v.tag as? Group ?: return@setOnClickListener
-            val guildFragment = GuildFragment()
-            guildFragment.setGuildId(guild.id)
-            guildFragment.isMember = isInGroup(guild)
-            val event = DisplayFragmentEvent()
-            event.fragment = guildFragment
-            EventBus.getDefault().post(event)
+            MainNavigationController.navigate(PublicGuildsFragmentDirections.openGuildDetail(guild.id, isInGroup(guild)))
         }
         guildViewHolder.joinLeaveButton.setOnClickListener { v ->
             val guild = v.tag as? Group ?: return@setOnClickListener

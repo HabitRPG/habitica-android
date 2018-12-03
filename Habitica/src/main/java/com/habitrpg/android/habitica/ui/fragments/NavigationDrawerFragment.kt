@@ -3,18 +3,14 @@ package com.habitrpg.android.habitica.ui.fragments
 
 import android.app.ActionBar
 import android.content.Intent
-import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
-import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -50,8 +46,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.drawer_main.*
 import javax.inject.Inject
-import android.view.Window.ID_ANDROID_CONTENT
-import androidx.core.view.ViewCompat
 
 
 /**
@@ -79,7 +73,7 @@ class NavigationDrawerFragment : DialogFragment() {
     private var subscriptions: CompositeDisposable? = null
 
     val isDrawerOpen: Boolean
-        get() = drawerLayout?.isDrawerOpen(fragmentContainerView!!) ?: false
+        get() = drawerLayout?.isDrawerOpen(Gravity.LEFT) ?: false
 
     private val actionBar: ActionBar?
         get() = activity?.actionBar
@@ -194,7 +188,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }, RxErrorHandler.handleEmptyError()))
 
         subscriptions?.add(socialRepository.getGroup(Group.TAVERN_ID)
-                .doOnNext({  quest = it.quest })
+                .doOnNext {  quest = it.quest }
                 .filter { it.hasActiveQuest }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
                 .subscribe(Consumer {
@@ -207,8 +201,8 @@ class NavigationDrawerFragment : DialogFragment() {
             questMenuView.configure(it)
         }, RxErrorHandler.handleEmptyError()))
 
-        messagesButton.setOnClickListener { setSelection(SIDEBAR_INBOX) }
-        settingsButton.setOnClickListener { setSelection(SIDEBAR_SETTINGS) }
+        messagesButton.setOnClickListener { setSelection(R.id.inboxFragment) }
+        settingsButton.setOnClickListener { setSelection(R.id.prefsActivity) }
     }
 
     override fun onDestroy() {
@@ -222,111 +216,41 @@ class NavigationDrawerFragment : DialogFragment() {
     private fun initializeMenuItems() {
         val items = ArrayList<HabiticaDrawerItem>()
         context.notNull {context ->
-            items.add(HabiticaDrawerItem(SIDEBAR_TASKS, context.getString(R.string.sidebar_tasks)))
-            items.add(HabiticaDrawerItem(SIDEBAR_SKILLS, context.getString(R.string.sidebar_skills)))
-            items.add(HabiticaDrawerItem(SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
-            items.add(HabiticaDrawerItem(SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
-            items.add(HabiticaDrawerItem(SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern)))
-            items.add(HabiticaDrawerItem(SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
-            items.add(HabiticaDrawerItem(SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
-            items.add(HabiticaDrawerItem(SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
-            items.add(HabiticaDrawerItem(SIDEBAR_INVENTORY, context.getString(R.string.sidebar_section_inventory), true))
-            items.add(HabiticaDrawerItem(SIDEBAR_SHOPS, context.getString(R.string.sidebar_shops)))
-            items.add(HabiticaDrawerItem(SIDEBAR_AVATAR, context.getString(R.string.sidebar_avatar)))
-            items.add(HabiticaDrawerItem(SIDEBAR_EQUIPMENT, context.getString(R.string.sidebar_equipment)))
-            items.add(HabiticaDrawerItem(SIDEBAR_ITEMS, context.getString(R.string.sidebar_items)))
-            items.add(HabiticaDrawerItem(SIDEBAR_STABLE, context.getString(R.string.sidebar_stable)))
-            items.add(HabiticaDrawerItem(SIDEBAR_PURCHASE, context.getString(R.string.sidebar_purchaseGems)))
-            items.add(HabiticaDrawerItem(SIDEBAR_ABOUT_HEADER, context.getString(R.string.sidebar_about), true))
-            items.add(HabiticaDrawerItem(SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
-            items.add(HabiticaDrawerItem(SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
-            items.add(HabiticaDrawerItem(SIDEBAR_ABOUT, context.getString(R.string.sidebar_about)))
+            items.add(HabiticaDrawerItem(R.id.tasksFragment, SIDEBAR_TASKS, context.getString(R.string.sidebar_tasks)))
+            items.add(HabiticaDrawerItem(R.id.skillsFragment, SIDEBAR_SKILLS, context.getString(R.string.sidebar_skills)))
+            items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
+            items.add(HabiticaDrawerItem(0, SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
+            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern)))
+            items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
+            items.add(HabiticaDrawerItem(R.id.guildsOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
+            items.add(HabiticaDrawerItem(R.id.challengesOverviewFragment, SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
+            items.add(HabiticaDrawerItem(0, SIDEBAR_INVENTORY, context.getString(R.string.sidebar_section_inventory), true))
+            items.add(HabiticaDrawerItem(R.id.shopsFragment, SIDEBAR_SHOPS, context.getString(R.string.sidebar_shops)))
+            items.add(HabiticaDrawerItem(R.id.avatarOverviewFragment, SIDEBAR_AVATAR, context.getString(R.string.sidebar_avatar)))
+            items.add(HabiticaDrawerItem(R.id.equipmentOverviewFragment, SIDEBAR_EQUIPMENT, context.getString(R.string.sidebar_equipment)))
+            items.add(HabiticaDrawerItem(R.id.itemsFragment, SIDEBAR_ITEMS, context.getString(R.string.sidebar_items)))
+            items.add(HabiticaDrawerItem(R.id.stableFragment, SIDEBAR_STABLE, context.getString(R.string.sidebar_stable)))
+            items.add(HabiticaDrawerItem(R.id.gemPurchaseActivity, SIDEBAR_PURCHASE, context.getString(R.string.sidebar_purchaseGems)))
+            items.add(HabiticaDrawerItem(0, SIDEBAR_ABOUT_HEADER, context.getString(R.string.sidebar_about), true))
+            items.add(HabiticaDrawerItem(R.id.newsFragment, SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
+            items.add(HabiticaDrawerItem(R.id.FAQOverviewFragment, SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
+            items.add(HabiticaDrawerItem(R.id.aboutFragment, SIDEBAR_ABOUT, context.getString(R.string.sidebar_about)))
         }
         adapter.updateItems(items)
     }
 
-    fun setSelection(identifier: String?, openSelection: Boolean = true) {
-        adapter.selectedItem = identifier
+    fun setSelection(transitionId: Int?, openSelection: Boolean = true) {
+        adapter.selectedItem = transitionId
         closeDrawer()
 
         if (!openSelection) {
             return
         }
 
-        var fragment: BaseMainFragment? = null
-        var newActivityClass: Class<*>? = null
-
-        when (identifier) {
-            SIDEBAR_TASKS -> {
-                fragment = TasksFragment()
-            }
-            SIDEBAR_SKILLS -> {
-                fragment = SkillsFragment()
-            }
-            SIDEBAR_STATS -> {
-                fragment = StatsFragment()
-            }
-            SIDEBAR_INBOX -> {
-                fragment = InboxFragment()
-            }
-            SIDEBAR_PARTY -> {
-                fragment = PartyFragment()
-            }
-            SIDEBAR_GUILDS -> {
-                fragment = GuildsOverviewFragment()
-            }
-            SIDEBAR_TAVERN -> {
-                fragment = TavernFragment()
-            }
-            SIDEBAR_CHALLENGES -> {
-                fragment = ChallengesOverviewFragment()
-            }
-            SIDEBAR_SHOPS -> {
-                fragment = ShopsFragment()
-            }
-            SIDEBAR_AVATAR -> {
-                fragment = AvatarOverviewFragment()
-            }
-            SIDEBAR_EQUIPMENT -> {
-                fragment = EquipmentOverviewFragment()
-            }
-            SIDEBAR_ITEMS -> {
-                fragment = ItemsFragment()
-            }
-            SIDEBAR_STABLE -> {
-                fragment = StableFragment()
-            }
-            SIDEBAR_PURCHASE -> {
-                newActivityClass = GemPurchaseActivity::class.java
-            }
-            SIDEBAR_NEWS -> {
-                fragment = NewsFragment()
-            }
-            SIDEBAR_SETTINGS -> {
-                newActivityClass = PrefsActivity::class.java
-            }
-            SIDEBAR_HELP -> {
-                fragment = FAQOverviewFragment()
-            }
-            SIDEBAR_ABOUT -> {
-                newActivityClass = AboutActivity::class.java
-            }
-        }
-
         val activity = activity as? MainActivity
         if (activity != null) {
-            if (fragment != null) {
-                fragment.fragmentSidebarIdentifier = identifier
-                activity.displayFragment(fragment)
-            }
-            if (newActivityClass != null) {
-                val passUserId = Intent(activity, newActivityClass)
-                passUserId.putExtra("userId", activity.userID)
-                if (identifier == SIDEBAR_PURCHASE) {
-                    activity.startActivityForResult(passUserId, MainActivity.GEM_PURCHASE_REQUEST)
-                } else {
-                    activity.startActivity(passUserId)
-                }
+            if (transitionId != null) {
+                activity.navigate(transitionId)
             }
         }
     }

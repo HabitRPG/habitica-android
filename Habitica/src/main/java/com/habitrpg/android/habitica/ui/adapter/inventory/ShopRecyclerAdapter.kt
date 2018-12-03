@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
@@ -9,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
@@ -21,7 +20,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 import com.habitrpg.android.habitica.ui.views.NPCBannerView
-import org.greenrobot.eventbus.EventBus
 
 
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
@@ -247,7 +245,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
         private val subscribeButton: Button? by bindView(itemView, R.id.subscribeButton)
         private val textView: TextView? by bindView(itemView, R.id.textView)
         init {
-            subscribeButton?.setOnClickListener { EventBus.getDefault().post(OpenGemPurchaseFragmentCommand()) }
+            subscribeButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
         }
 
         var text: String? = null

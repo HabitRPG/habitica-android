@@ -8,11 +8,13 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment
+import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 
@@ -94,15 +96,13 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
             if (animal != null) {
                 if (animal.numberOwned > 0) {
                     if (itemType == "pets") {
+                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.animalGroup))
                         val fragment = PetDetailRecyclerFragment()
                         fragment.animalType = animal.animal
                         fragment.animalGroup = animal.animalGroup
                         activity?.displayFragment(fragment)
                     } else {
-                        val fragment = MountDetailRecyclerFragment()
-                        fragment.animalType = animal.animal
-                        fragment.animalGroup = animal.animalGroup
-                        activity?.displayFragment(fragment)
+                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.animalGroup))
                     }
                 }
             }

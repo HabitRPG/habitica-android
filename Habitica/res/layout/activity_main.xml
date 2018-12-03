@@ -18,13 +18,14 @@
             android:layout_height="match_parent"
             tools:context=".ui.activities.MainActivity"
             android:fitsSystemWindows="false">
-
-            <FrameLayout
-                android:id="@+id/fragment_container"
+            <fragment
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/navigation" />
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
@@ -132,7 +133,7 @@
                     app:bb_badgesHideWhenActive="true"
                     app:bb_badgeBackgroundColor="@color/brand_400"
                     android:layout_gravity="bottom"
-                    android:layout_margin="0dp"
+                    android:layout_marginBottom="-5dp"
                     />
 
             </LinearLayout>

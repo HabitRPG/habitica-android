@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/tasksFragment">
+
+    <fragment
+        android:id="@+id/equipmentOverviewFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment"
+        android:label="@string/sidebar.equipment" >
+        <action
+            android:id="@+id/openEquipmentDetail"
+            app:destination="@id/equipmentDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/equipmentDetailFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment"
+        android:label="@string/sidebar.equipment" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument android:name="isCostume"
+            app:argType="boolean"/>
+        <argument
+            android:name="equippedGear"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment">
+        <deepLink app:uri="habitica.com/tasks" />
+    </fragment>
+    <fragment
+        android:id="@+id/partyFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment"
+        android:label="@string/sidebar.party">
+        <deepLink app:uri="habitica.com/party" />
+    </fragment>
+    <fragment
+        android:id="@+id/skillsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment"
+        android:label="@string/sidebar.skills" />
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.StatsFragment"
+        android:label="@string/stats" />
+    <fragment
+        android:id="@+id/tavernFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.TavernFragment"
+        android:label="@string/sidebar.tavern" />
+    <fragment
+        android:id="@+id/guildsOverviewFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment"
+        android:label="@string/sidebar.guilds" >
+        <action
+            android:id="@+id/openGuildDetail"
+            app:destination="@id/guildFragment" >
+            <argument
+                android:name="isMember"
+                android:defaultValue="true" />
+        </action>
+        <action
+            android:id="@+id/openPublicGuilds"
+            app:destination="@id/publicGuildsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/challengesOverviewFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment"
+        android:label="@string/sidebar.challenges" />
+    <fragment
+        android:id="@+id/shopsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment"
+        android:label="@string/sidebar_shops" />
+    <fragment
+        android:id="@+id/avatarOverviewFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment"
+        android:label="@string/sidebar.avatar" >
+        <action
+            android:id="@+id/openAvatarDetail"
+            app:destination="@id/avatarCustomizationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment"
+        android:label="@string/sidebar_items" />
+    <fragment
+        android:id="@+id/stableFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment"
+        android:label="@string/sidebar.stable" >
+        <action
+            android:id="@+id/openPetDetail"
+            app:destination="@id/petDetailRecyclerFragment" />
+        <action
+            android:id="@+id/openMountDetail"
+            app:destination="@id/mountDetailRecyclerFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/gemPurchaseActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
+        android:label="GemPurchaseActivity" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.NewsFragment"
+        android:label="@string/sidebar.news" />
+    <fragment
+        android:id="@+id/FAQOverviewFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment"
+        android:label="@string/sidebar_help" >
+        <action
+            android:id="@+id/openFAQDetail"
+            app:destination="@id/FAQDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.AboutFragment"
+        android:label="@string/sidebar.about" />
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.InboxFragment"
+        android:label="@string/sidebar.inbox" >
+        <action
+            android:id="@+id/action_inboxFragment_to_inboxMessageListFragment"
+            app:destination="@id/inboxMessageListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guildFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.GuildFragment"
+        android:label="@string/guild" >
+        <argument
+            android:name="groupID"
+            app:argType="string" />
+        <argument
+            android:name="isMember"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/publicGuildsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment"
+        android:label="@string/public_guilds" >
+        <action
+            android:id="@+id/openGuildDetail"
+            app:destination="@id/guildFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/FAQDetailFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment"
+        android:label="@string/sidebar_help" >
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/avatarCustomizationFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment"
+        android:label="@string/sidebar.avatar" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+    <activity
+        android:id="@+id/prefsActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.PrefsActivity"
+        android:label="activity_prefs"
+        tools:layout="@layout/activity_prefs" />
+    <fragment
+        android:id="@+id/inboxMessageListFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment"
+        android:label="InboxMessageListFragment" >
+        <argument
+            android:name="userID"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/petDetailRecyclerFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment"
+        android:label="PetDetailRecyclerFragment" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="group"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/mountDetailRecyclerFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment"
+        android:label="MountDetailRecyclerFragment" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="group"
+            app:argType="string" />
+    </fragment>
+</navigation>

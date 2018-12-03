@@ -30,6 +30,8 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.edit
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -221,7 +223,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
 
         drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout)
-        selectMenuItem(NavigationDrawerFragment.SIDEBAR_TASKS)
 
         drawerToggle = object : ActionBarDrawerToggle(
                 this, /* host Activity */
@@ -240,6 +241,17 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         keyboardUtil = KeyboardUtil(this, this.findViewById(android.R.id.content))
         this.keyboardUtil?.enable()
+
+        val navigationController = findNavController(R.id.nav_host_fragment)
+        navigationController.addOnNavigatedListener { _, destination ->
+            if (destination.label.isNullOrEmpty()) {
+                toolbarTitleTextView.text = user?.profile?.name
+            } else if (user?.profile != null) {
+                toolbarTitleTextView.text = destination.label
+            }
+            drawerFragment?.setSelection(destination.id, false)
+        }
+        MainNavigationController.setup(navigationController)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -313,7 +325,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             val additionalData = HashMap<String, Any>()
             additionalData["identifier"] = identifier
             AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
-            NotificationOpenHandler.handleOpenedByNotification(identifier, intent, this, user)
+            NotificationOpenHandler.handleOpenedByNotification(identifier, intent, user)
         }
     }
 
@@ -352,6 +364,21 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sendBroadcast(intent)
     }
 
+    public fun makeActiveFragment(fragment: BaseMainFragment) {
+        this.activeFragment = WeakReference(fragment)
+        fragment.user = user
+        fragment.activity = this
+        fragment.tabLayout = detailTabs
+        fragment.toolbarAccessoryContainer = toolbarAccessoryContainer
+        fragment.collapsingToolbar = collapsingToolbar
+        fragment.bottomNavigation = bottomNavigation
+        fragment.floatingMenuWrapper = floatingMenuWrapper
+    }
+
+    fun navigate(transitionId: Int) {
+        findNavController(R.id.nav_host_fragment).navigate(transitionId)
+    }
+
     @SuppressLint("ObsoleteSdkInt")
     fun displayFragment(fragment: BaseMainFragment) {
         if (fragment.javaClass == this.activeFragment?.get()?.javaClass) {
@@ -360,18 +387,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && this.isDestroyed) {
             return
         }
-        this.activeFragment = WeakReference(fragment)
-        fragment.arguments = intent.extras
-        fragment.user = user
-        fragment.activity = this
-        fragment.tabLayout = detailTabs
-        fragment.toolbarAccessoryContainer = toolbarAccessoryContainer
-        fragment.collapsingToolbar = collapsingToolbar
-        fragment.bottomNavigation = bottomNavigation
-        fragment.floatingMenuWrapper = floatingMenuWrapper
+        makeActiveFragment(fragment)
 
 
-        if (supportFragmentManager.fragments == null) {
+        /*if (supportFragmentManager.fragments == null) {
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss()
         } else {
             val transaction = supportFragmentManager.beginTransaction()
@@ -381,7 +400,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 transaction.addToBackStack(null)
             }
             transaction.commitAllowingStateLoss()
-        }
+        }*/
     }
 
     private fun setUserData() {
@@ -392,11 +411,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             preferences?.sound.notNull { soundManager.soundTheme = it }
             runOnUiThread {
                 updateSidebar()
-                if (activeFragment != null && activeFragment?.get() != null) {
-                    activeFragment?.get()?.updateUserData(user)
-                } else {
-                    selectMenuItem(NavigationDrawerFragment.SIDEBAR_TASKS)
-                }
+                activeFragment?.get()?.updateUserData(user)
             }
 
             displayDeathDialogIfNeeded()
@@ -455,26 +470,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
     }
 
-    fun setActiveFragment(fragment: BaseMainFragment?) {
-        this.activeFragment = WeakReference<BaseMainFragment>(fragment)
-        setTranslatedFragmentTitle(fragment)
-        val identifier = activeFragment?.get()?.fragmentSidebarIdentifier
-        if (identifier != null) {
-            selectMenuItem(identifier, false)
-        }
-    }
-
-    private fun setTranslatedFragmentTitle(fragment: BaseMainFragment?) {
-        if (supportActionBar == null) {
-            return
-        }
-        if (fragment?.customTitle()?.isNotEmpty() != true) {
-            toolbarTitleTextView.text = user?.profile?.name
-        } else if (user?.profile != null) {
-            toolbarTitleTextView.text = fragment.customTitle()
-        }
-    }
-
     override fun onBackPressed() {
         if (this.activeTutorialView != null) {
             this.removeActiveTutorialView()
@@ -507,11 +502,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         inventoryRepository.close()
         keyboardUtil?.disable()
         super.onDestroy()
-    }
-
-    @Subscribe
-    fun onEvent(event: OpenMenuItemCommand) {
-        drawerFragment?.setSelection(event.identifier, true)
     }
 
     @Subscribe
@@ -573,22 +563,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     @Subscribe
-    fun openGemPurchaseFragment(event: OpenGemPurchaseFragmentCommand?) {
-        drawerFragment?.setSelection(NavigationDrawerFragment.SIDEBAR_PURCHASE, true)
-    }
-
-    @Subscribe
     fun onEvent(tutorialEvent: DisplayTutorialEvent) {
         if (tutorialEvent.tutorialText != null) {
             this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText, tutorialEvent.canBeDeferred)
         } else {
             this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialTexts, tutorialEvent.canBeDeferred)
         }
-    }
-
-    @Subscribe
-    fun onEvent(event: DisplayFragmentEvent) {
-        this.displayFragment(event.fragment)
     }
 
     @Subscribe
@@ -936,7 +916,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     public fun selectMenuItem(identifier: String, openSelection: Boolean = true) {
-        drawerFragment?.setSelection(identifier, openSelection)
+        //drawerFragment?.setSelection(identifier, openSelection)
     }
 
     companion object {

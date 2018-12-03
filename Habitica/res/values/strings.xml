@@ -827,7 +827,7 @@
     <string name="username_not_confirmed">Username not confirmed</string>
     <string name="username_confirmed">Username Confirmed</string>
     <string name="username_level">\@%s ・Lvl %d</string>
-    <string name="enter_recipient_username">Enter a Recipient\'s username</string>
+    <string name="enter_recipient_username">Enter a Recipient\'s @ username</string>
     <string name="username_copied">Username copied to clipboard</string>
     <string name="verification_pet">One of these Veteran Pets will be waiting for you after you’ve finished confirming!</string>
     <string name="welcomeNameTitle">What should we call you?</string>
@@ -840,4 +840,9 @@
     <string name="equipment_con">CON:</string>
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
+    <string name="visit_website">visit website</string>
+    <string name="subscribe_gift_description">Want to give the benefits of a subscription to someone else?</string>
+    <string name="gift_subscription">Gift a Subscription</string>
+    <string name="gift_one_get_one_description">Gift a sub and get a sub free event going on now!</string>
+    <string name="gift_title">Who would you like to gift to?</string>
 </resources>

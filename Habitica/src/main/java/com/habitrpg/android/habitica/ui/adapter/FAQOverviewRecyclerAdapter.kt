@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +7,10 @@ import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.FAQArticle
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment
+import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -77,11 +77,9 @@ class FAQOverviewRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
         }
 
         override fun onClick(v: View) {
-            val fragment = FAQDetailFragment()
             article.notNull {
-                fragment.setArticle(it)
+                MainNavigationController.navigate(FAQOverviewFragmentDirections.openFAQDetail(it.position))
             }
-            activity?.displayFragment(fragment)
         }
     }
 

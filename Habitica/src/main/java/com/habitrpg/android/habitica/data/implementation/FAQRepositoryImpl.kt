@@ -10,6 +10,9 @@ import io.realm.RealmResults
 
 
 class FAQRepositoryImpl(localRepository: FAQLocalRepository, apiClient: ApiClient, userID: String) : ContentRepositoryImpl<FAQLocalRepository>(localRepository, apiClient, userID), FAQRepository {
+    override fun getArticle(position: Int): Flowable<FAQArticle> {
+        return localRepository.getArticle(position)
+    }
 
     override fun getArticles(): Flowable<RealmResults<FAQArticle>> {
         return localRepository.articles

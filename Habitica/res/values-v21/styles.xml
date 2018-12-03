@@ -2,7 +2,7 @@
 <resources>
 
     <style name="GemPurchaseListItem">
-        <item name="android:textColor">@color/brand_100</item>
+        <item name="android:textColor">@color/brand_300</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">12sp</item>
         <item name="android:drawableLeft">@drawable/ic_check_purple</item>

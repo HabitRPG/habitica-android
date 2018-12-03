@@ -7,5 +7,5 @@ import io.realm.RealmResults
 
 interface FAQRepository : BaseRepository {
     fun getArticles(): Flowable<RealmResults<FAQArticle>>
-
+    fun getArticle(position: Int): Flowable<FAQArticle>
 }

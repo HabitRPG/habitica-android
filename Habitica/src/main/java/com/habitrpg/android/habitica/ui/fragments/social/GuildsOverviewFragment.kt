@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -100,20 +101,13 @@ class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, android
     }
 
     override fun onClick(v: View) {
-        val fragment: BaseMainFragment
         if (v === this.publicGuildsButton) {
-            val publicGuildsFragment = PublicGuildsFragment()
-            publicGuildsFragment.memberGuildIDs = this.guildIDs
-            fragment = publicGuildsFragment
+            MainNavigationController.navigate(GuildsOverviewFragmentDirections.openPublicGuilds())
         } else {
             val guildIndex = (v.parent as? ViewGroup)?.indexOfChild(v)
             val guildId = this.guilds?.get(guildIndex ?: 0)?.id ?: return
-            val guildFragment = GuildFragment()
-            guildFragment.setGuildId(guildId)
-            guildFragment.isMember = true
-            fragment = guildFragment
+            MainNavigationController.navigate(GuildsOverviewFragmentDirections.openGuildDetail(guildId))
         }
-        activity?.displayFragment(fragment)
     }
 
 

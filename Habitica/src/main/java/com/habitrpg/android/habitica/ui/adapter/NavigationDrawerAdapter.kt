@@ -32,25 +32,29 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): android
 
 
     internal val items: MutableList<HabiticaDrawerItem> = ArrayList()
-    var selectedItem: String? = null
+    var selectedItem: Int? = null
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    private val itemSelectedEvents = PublishSubject.create<String>()
+    private val itemSelectedEvents = PublishSubject.create<Int>()
 
 
-    fun getItemSelectionEvents(): Flowable<String> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
+    fun getItemSelectionEvents(): Flowable<Int> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
 
+    fun getItemWithTransitionId(transitionId: Int): HabiticaDrawerItem? =
+            items.find { it.transitionId == transitionId }
     fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
             items.find { it.identifier == identifier }
 
+    private fun getItemPosition(transitionId: Int): Int =
+            items.indexOfFirst { it.transitionId == transitionId }
     private fun getItemPosition(identifier: String): Int =
             items.indexOfFirst { it.identifier == identifier }
 
     fun updateItem(item: HabiticaDrawerItem) {
-        val position = getItemPosition(item.identifier)
+        val position = getItemPosition(item.transitionId)
         items[position] = item
         notifyDataSetChanged()
     }
@@ -64,13 +68,14 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): android
     override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         val drawerItem = getItem(position)
         if (getItemViewType(position) == 0) {
-            (holder as DrawerItemViewHolder?)?.tintColor = tintColor
-            holder.backgroundTintColor = backgroundTintColor
-            holder.bind(drawerItem, drawerItem.identifier == selectedItem)
-            holder.itemView.setOnClickListener { itemSelectedEvents.onNext(drawerItem.identifier) }
+            val itemHolder = holder as? DrawerItemViewHolder
+            itemHolder?.tintColor = tintColor
+            itemHolder?.backgroundTintColor = backgroundTintColor
+            itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
+            itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem.transitionId) }
         } else {
-            (holder as SectionHeaderViewHolder?)?.backgroundTintColor = backgroundTintColor
-            holder.bind(drawerItem)
+            (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
+            (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
         }
     }
 

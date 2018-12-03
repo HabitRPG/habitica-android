@@ -10,23 +10,19 @@ import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import android.text.InputType
-import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import io.reactivex.functions.Consumer
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class AuthenticationPreferenceFragment: BasePreferencesFragment() {
@@ -75,7 +71,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                     showSubscriptionStatusDialog()
                     return super.onPreferenceTreeClick(preference)
                 }
-                EventBus.getDefault().post(OpenGemPurchaseFragmentCommand())
+                MainNavigationController.navigate(R.id.gemPurchaseActivity)
             }
             "reset_account" -> showAccountResetConfirmation()
             "delete_account" -> showAccountDeleteConfirmation()

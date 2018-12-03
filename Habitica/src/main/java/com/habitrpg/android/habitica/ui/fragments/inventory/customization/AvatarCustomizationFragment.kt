@@ -76,6 +76,13 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments.notNull {
+            val args = AvatarCustomizationFragmentArgs.fromBundle(it)
+            type = args.type
+            if (args.category.isNotEmpty()) {
+                category = args.category
+            }
+        }
 
         setGridSpanCount(view.width)
         if (recyclerView.layoutManager == null) {

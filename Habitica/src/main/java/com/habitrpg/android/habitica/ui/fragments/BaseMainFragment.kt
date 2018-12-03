@@ -50,6 +50,7 @@ abstract class BaseMainFragment : BaseFragment() {
 
         if (getActivity()?.javaClass == MainActivity::class.java) {
             this.activity = getActivity() as? MainActivity
+            activity?.makeActiveFragment(this)
         }
     }
 
@@ -75,8 +76,6 @@ abstract class BaseMainFragment : BaseFragment() {
         floatingMenuWrapper?.removeAllViews()
 
         setHasOptionsMenu(true)
-
-        activity?.setActiveFragment(this)
 
         updateTabLayoutVisibility()
 
