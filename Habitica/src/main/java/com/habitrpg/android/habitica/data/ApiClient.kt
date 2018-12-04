@@ -65,6 +65,7 @@ interface ApiClient {
 
     fun purchaseQuest(key: String): Flowable<Any>
     fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any>
+    fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
 
     fun sellItem(itemType: String, itemKey: String): Flowable<User>
 

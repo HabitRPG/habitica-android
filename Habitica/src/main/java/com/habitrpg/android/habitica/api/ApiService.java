@@ -269,6 +269,8 @@ public interface ApiService {
 
     @POST("/iap/android/subscribe")
     Flowable<HabitResponse<Void>> validateSubscription(@Body SubscriptionValidationRequest request);
+    @POST("/iap/android/norenew-subscribe")
+    Flowable<HabitResponse<Void>> validateNoRenewSubscription(@Body PurchaseValidationRequest request);
 
     @POST("user/custom-day-start")
     Flowable<HabitResponse<User>> changeCustomDayStart(@Body Map<String, Object> updateObject);

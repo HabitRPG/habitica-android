@@ -5,5 +5,6 @@ package com.habitrpg.android.habitica.models;
  */
 public class PurchaseValidationRequest {
     public Transaction transaction;
+    public IAPGift gift;
 }
 

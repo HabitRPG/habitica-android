@@ -322,6 +322,15 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         }
     }
 
+    override fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any> {
+        return apiService.validateNoRenewSubscription(request).map { habitResponse ->
+            if (habitResponse.notifications != null) {
+                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
+            }
+            habitResponse.getData()
+        }
+    }
+
     override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Any> {
         return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver())
     }

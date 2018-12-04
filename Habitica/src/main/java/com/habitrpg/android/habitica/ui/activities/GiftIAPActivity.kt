@@ -1,12 +1,15 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
+import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -54,10 +57,10 @@ class GiftIAPActivity: BaseActivity() {
     private val subscriptionButton: Button? by bindOptionalView(R.id.subscribeButton)
 
     private var giftedUsername: String? = null
+    private var giftedUserID: String? = null
 
     private var selectedSubscriptionSku: Sku? = null
     private var skus: List<Sku> = emptyList()
-    private var listener: GemPurchaseActivity? = null
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_gift_iap
@@ -71,7 +74,10 @@ class GiftIAPActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.gift_subscription)
-        setupToolbar(toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         giftedUsername = intent.getStringExtra("username")
 
@@ -91,6 +97,7 @@ class GiftIAPActivity: BaseActivity() {
             displayNameTextView.username = it.profile?.name
             displayNameTextView.tier = it.contributor?.level ?: 0
             usernameTextView.text = "@${it.username}"
+            giftedUserID = it.id
         }, RxErrorHandler.handleEmptyError()))
 
 
@@ -125,6 +132,11 @@ class GiftIAPActivity: BaseActivity() {
         })
 
         setupCheckout()
+    }
+
+    override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
+        val view = super.onCreateView(name, context, attrs)
+        return view
     }
 
     private fun updateButtonLabel(sku: Sku, price: String, subscriptions: Inventory.Product) {
@@ -194,6 +206,7 @@ class GiftIAPActivity: BaseActivity() {
 
     private fun purchaseSubscription(sku: Sku) {
         activityCheckout.notNull {
+            HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
             billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.purchaseFlow)
         }
     }
