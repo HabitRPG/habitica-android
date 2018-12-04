@@ -30,7 +30,11 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 R.styleable.SubscriptionOptionView,
                 0, 0)
 
-        descriptionTextView.text = context.getString(R.string.subscription_duration, a.getText(R.styleable.SubscriptionOptionView_recurringText))
+        if (a.getBoolean(R.styleable.SubscriptionOptionView_isNonRecurring, false)) {
+            descriptionTextView.text = context.getString(R.string.subscription_duration_norenew, a.getText(R.styleable.SubscriptionOptionView_recurringText))
+        } else {
+            descriptionTextView.text = context.getString(R.string.subscription_duration, a.getText(R.styleable.SubscriptionOptionView_recurringText))
+        }
 
         gemCapTextView.text = a.getText(R.styleable.SubscriptionOptionView_gemCapText)
         val hourGlassCount = a.getInteger(R.styleable.SubscriptionOptionView_hourGlassCount, 0)

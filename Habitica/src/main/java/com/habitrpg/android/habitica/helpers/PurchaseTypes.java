@@ -18,4 +18,11 @@ public class PurchaseTypes {
     public static String Subscription12Month = "com.habitrpg.android.habitica.subscription.12month";
 
     public static List<String> allSubscriptionTypes = Arrays.asList(Subscription1Month, Subscription3Month, Subscription6Month, Subscription12Month);
+
+    public static String Subscription1MonthNoRenew = "com.habitrpg.android.habitica.norenew_subscription.1month";
+    public static String Subscription3MonthNoRenew = "com.habitrpg.android.habitica.norenew_subscription.3month";
+    public static String Subscription6MonthNoRenew = "com.habitrpg.android.habitica.norenew_subscription.6month";
+    public static String Subscription12MonthNoRenew = "com.habitrpg.android.habitica.norenew_subscription.12month";
+
+    public static List<String> allSubscriptionNoRenewTypes = Arrays.asList(Subscription1MonthNoRenew, Subscription3MonthNoRenew, Subscription6MonthNoRenew, Subscription12MonthNoRenew);
 }

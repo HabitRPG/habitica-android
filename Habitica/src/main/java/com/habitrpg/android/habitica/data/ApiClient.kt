@@ -175,6 +175,7 @@ interface ApiClient {
 
     //Members URL
     fun getMember(memberId: String): Flowable<Member>
+    fun getMemberWithUsername(username: String): Flowable<Member>
 
     fun getMemberAchievements(memberId: String): Flowable<AchievementResult>
 

@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity;
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.activities.GiftIAPActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
@@ -302,4 +303,6 @@ public interface AppComponent {
     void inject(@NotNull GroupViewModel viewModel);
 
     void inject(@NotNull ChatFragment chatFragment);
+
+    void inject(@NotNull GiftIAPActivity giftIAPActivity);
 }

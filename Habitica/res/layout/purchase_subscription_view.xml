@@ -5,7 +5,7 @@
     android:background="@color/gem_view_background"
     android:gravity="center"
     android:minHeight="80dp"
-    android:layout_marginBottom="12dp">
+    android:layout_marginBottom="8dp">
 
     <FrameLayout
         android:layout_width="50dp"
@@ -37,8 +37,8 @@
             android:id="@+id/priceLabel"
             android:textColor="@color/brand_100"
             android:textSize="24sp"
-            tools:text="$ 21"
-            />
+            android:fontFamily="@string/font_family_medium"
+            tools:text="$ 21" />
 
         <TextView
             android:layout_width="match_parent"

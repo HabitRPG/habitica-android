@@ -276,6 +276,8 @@ public interface ApiService {
     //Members URL
     @GET("members/{mid}")
     Flowable<HabitResponse<Member>> getMember(@Path("mid") String memberId);
+    @GET("members/username/{username}")
+    Flowable<HabitResponse<Member>> getMemberWithUsername(@Path("username") String username);
 
     @GET("members/{mid}/achievements")
     Flowable<HabitResponse<AchievementResult>> getMemberAchievements(@Path("mid") String memberId);

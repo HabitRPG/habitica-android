@@ -3,12 +3,15 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:padding="@dimen/spacing_large">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/enter_recipient_username"/>
+            android:text="@string/enter_recipient_username"
+        android:textSize="12sp"
+        android:textColor="@color/gray_200"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

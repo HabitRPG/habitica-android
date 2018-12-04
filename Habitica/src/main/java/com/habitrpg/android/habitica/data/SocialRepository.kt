@@ -60,6 +60,7 @@ interface SocialRepository : BaseRepository {
     fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<String>>
 
     fun getMember(userId: String?): Flowable<Member>
+    fun getMemberWithUsername(username: String?): Flowable<Member>
 
     fun markPrivateMessagesRead(user: User?): Flowable<Void>
 

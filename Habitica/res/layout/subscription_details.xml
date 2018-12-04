@@ -1,151 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/subscriptionDetails"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/subscriptionDetails"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/white">
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/subscriptionBox">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/subscriptionBox">
         <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/subscription"
-                    style="@style/subscriptionBoxText.Title" />
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/subscriptionDurationTextView"
-                    tools:text="Recurring every 3 months"
-                    style="@style/subscriptionBoxText.Subtitle" />
-        </LinearLayout>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/active"
-                style="@style/Pill.Selected.Green"
-                android:id="@+id/subscriptionStatusActive" />
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/inactive"
-                style="@style/Pill.Selected.Red"
-                android:id="@+id/subscriptionStatusInactive"
-                android:visibility="gone"/>
-    </LinearLayout>
-    <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/subscriptionBox">
-        <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/payment_method"
+                android:text="@string/subscription"
                 style="@style/subscriptionBoxText.Title" />
-        <TextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/paymentProcessorTextView"
-                tools:text="Google" />
+                android:id="@+id/subscriptionDurationTextView"
+                tools:text="Recurring every 3 months"
+                style="@style/subscriptionBoxText.Subtitle" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/active"
+            style="@style/Pill.Selected.Green"
+            android:id="@+id/subscriptionStatusActive"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inactive"
+            style="@style/Pill.Selected.Red"
+            android:id="@+id/subscriptionStatusInactive"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/subscriptionBox">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_method"
+            style="@style/subscriptionBoxText.Title" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/paymentProcessorTextView"
+            tools:text="Google" />
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/subscriptionBox"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/subscriptionBox"
-            android:orientation="vertical">
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/current_bonuses"
-                style="@style/subscriptionBoxText.Title"
-                android:layout_marginBottom="4dp"/>
+            android:text="@string/current_bonuses"
+            style="@style/subscriptionBoxText.Title"
+            android:layout_marginBottom="4dp"/>
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp">
+                android:text="@string/months_subscribed"
+                style="@style/subscriptionBoxText.Subtitle"/>
             <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="@string/months_subscribed"
-                    style="@style/subscriptionBoxText.Subtitle"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Pill"
-                    android:id="@+id/monthsSubscribedTextView"
-                    tools:text="32 Months" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Pill"
+                android:id="@+id/monthsSubscribedTextView"
+                tools:text="32 Months" />
         </LinearLayout>
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp">
+                android:text="@string/monthly_gem_cap"
+                style="@style/subscriptionBoxText.Subtitle" />
             <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="@string/monthly_gem_cap"
-                    style="@style/subscriptionBoxText.Subtitle" />
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Pill"
-                    android:id="@+id/gemCapTextView"
-                    tools:text="50 Gems" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Pill"
+                android:id="@+id/gemCapTextView"
+                tools:text="50 Gems" />
         </LinearLayout>
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="@string/current_hourclasses"
-                    style="@style/subscriptionBoxText.Subtitle" />
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/current_hourclasses"
+                style="@style/subscriptionBoxText.Subtitle" />
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Pill"
-                    android:id="@+id/currentHourglassesTextView"
-                    tools:text="4" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Pill"
+                android:id="@+id/currentHourglassesTextView"
+                tools:text="4" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/subscriptionBox"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/subscriptionBox"
-            android:orientation="vertical">
+            android:text="@string/cancel_subscription"
+            style="@style/subscriptionBoxText.Title" />
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/cancel_subscription"
-                style="@style/subscriptionBoxText.Title.Red" />
-        <TextView
-                android:id="@+id/cancelSubscriptionDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/subscriptionBoxText.Subtitle"
-                android:text="@string/cancel_subscription_notgoogle.description"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
+            android:id="@+id/cancelSubscriptionDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/subscriptionBoxText.Subtitle"
+            android:text="@string/cancel_subscription_notgoogle.description"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
         <Button
-                android:id="@+id/visitWebsiteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:text="@string/visit_habitica_website"
-                android:layout_gravity="center"
-                style="@style/Button.Purple.Small"/>
+            android:id="@+id/visitWebsiteButton"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:text="@string/visit_website"
+            android:layout_gravity="center"
+            style="@style/Button.Purple.Small"/>
     </LinearLayout>
 
 </LinearLayout>

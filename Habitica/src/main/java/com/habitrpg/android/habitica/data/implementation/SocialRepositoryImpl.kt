@@ -204,6 +204,12 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         } else apiClient.getMember(userId)
     }
 
+    override fun getMemberWithUsername(username: String?): Flowable<Member> {
+        return if (username == null) {
+            Flowable.empty()
+        } else apiClient.getMemberWithUsername(username)
+    }
+
     override fun markPrivateMessagesRead(user: User?): Flowable<Void> {
         return apiClient.markPrivateMessagesRead()
                 .doOnNext { _ ->

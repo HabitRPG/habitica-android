@@ -25,6 +25,7 @@ public class RemoteConfigManager {
     private String shopSpriteSuffix = "";
     private Integer maxChatLength = 3000;
     private Boolean enableUsernameRelease = false;
+    private Boolean enableGiftOneGetOne = false;
     private String REMOTE_STRING_KEY = "remote-string";
 
     public RemoteConfigManager(Context context) {
@@ -48,6 +49,8 @@ public class RemoteConfigManager {
     public Integer maxChatLength() { return maxChatLength; }
 
     public Boolean enableUsernameRelease() { return enableUsernameRelease; }
+
+    public boolean enableGiftOneGetOne() { return enableGiftOneGetOne; }
 
     private void loadFromPreferences () {
         String storedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -76,10 +79,14 @@ public class RemoteConfigManager {
             if (obj.has("enableUsernameRelease")) {
                 enableUsernameRelease = obj.getBoolean("enableUsernameRelease");
             }
+            if (obj.has("enableGiftOneGetOne")) {
+                enableGiftOneGetOne = obj.getBoolean("enableGiftOneGetOne");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
 
     private class DownloadFileFromURL extends AsyncTask<String, String, String> {
         private String filename = "config.json";

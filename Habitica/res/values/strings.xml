@@ -477,15 +477,16 @@
     <string name="subscribe.listitem4">Daily drop-caps doubled</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="subscription_duration">Recurring every %s</string>
+    <string name="subscription_duration_norenew">For %s</string>
     <string name="subscribe">Subscribe</string>
     <string name="subscribe.listitem1.description">Alexander the Merchant will now sell you gems for 20 gold each!\n\nHis monthly shipments are initially capped at 25 Gems per month, but can increase based on your subscription length.\n\nThe cap increases by 5 Gems for every three months of consecutive subscription, up to a maximum of 50 Gems per month!</string>
     <string name="subscribe.listitem2.description">Each month you will receive a unique cosmetic item for your avatar!\n\nPlus, for every three months of consecutive subscription, the Mysterious Time Travelers will grant you access to historic (and futuristic!) cosmetic items.</string>
     <string name="subscribe.listitem3.description">Makes completed To-Dos and task history available for longer.</string>
     <string name="subscribe.listitem4.description">Double drop caps will let you receive more items from your completed tasks every day, helping you complete your stable faster!</string>
-    <string name="subscribe1month.gemcap">Gem cap starts at 25</string>
-    <string name="subscribe3month.gemcap">Gem cap raised to 30</string>
-    <string name="subscribe6month.gemcap">Gem cap raised to 35</string>
-    <string name="subscribe12month.gemcap">Gem cap raised to 45</string>
+    <string name="subscribe1month.gemcap">25 Gem cap</string>
+    <string name="subscribe3month.gemcap">30 Gem cap</string>
+    <string name="subscribe6month.gemcap">35 Gem cap</string>
+    <string name="subscribe12month.gemcap">45 Gem cap</string>
     <string name="subscription_hourglasses">+%d Mystic Hourglass</string>
     <string name="payment_method">Payment method</string>
     <string name="subscription">Subscription</string>
@@ -845,4 +846,8 @@
     <string name="gift_subscription">Gift a Subscription</string>
     <string name="gift_one_get_one_description">Gift a sub and get a sub free event going on now!</string>
     <string name="gift_title">Who would you like to gift to?</string>
+    <string name="gift_one_get_one">Gift one, Get one!</string>
+    <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive  a matching subscription automatically after sending your gift.</string>
+    <string name="gift_subscription_subtitle">Choose the subscription you’d like to gift below! This purchase won’t automatically renew.</string>
+    <string name="send_gift">Send Gift</string>
 </resources>
