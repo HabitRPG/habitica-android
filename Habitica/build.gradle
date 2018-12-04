@@ -188,6 +188,11 @@ android {
             dimension "buildType"
         }
 
+        beta {
+            dimension "buildType"
+            resValue "string", "app_name", "Habitica Beta"
+        }
+
         prod {
             dimension "buildType"
         }

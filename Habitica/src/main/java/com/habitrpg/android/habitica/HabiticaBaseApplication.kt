@@ -106,14 +106,16 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
     }
 
     private fun setupInstabug() {
-        Instabug.Builder(this, getString(R.string.instabug_key))
-                .setInvocationEvents(InstabugInvocationEvent.SHAKE)
-                .setReproStepsState(State.ENABLED_WITH_NO_SCREENSHOTS)
-                .build()
-        Instabug.setWelcomeMessageState(WelcomeMessage.State.DISABLED)
-        Instabug.setUserAttribute("", lazyApiHelper.hostConfig.user)
-        BugReporting.setShakingThreshold(900)
-        BugReporting.setPromptOptionsEnabled(PromptOption.BUG, PromptOption.FEEDBACK)
+        if (BuildConfig.FLAVOR == "beta") {
+            Instabug.Builder(this, getString(R.string.instabug_key))
+                    .setInvocationEvents(InstabugInvocationEvent.SHAKE)
+                    .setReproStepsState(State.ENABLED_WITH_NO_SCREENSHOTS)
+                    .build()
+            Instabug.setWelcomeMessageState(WelcomeMessage.State.DISABLED)
+            Instabug.setUserAttribute("", lazyApiHelper.hostConfig.user)
+            BugReporting.setShakingThreshold(900)
+            BugReporting.setPromptOptionsEnabled(PromptOption.BUG, PromptOption.FEEDBACK)
+        }
     }
 
     protected open fun setupRealm() {
