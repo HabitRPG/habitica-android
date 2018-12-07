@@ -57,6 +57,7 @@
         <item>@string/avatar_size_broad</item>
     </string-array>
 
+    <!--add '한국어(ko)' language settings-->
     <string-array name="Language">
         <item>English</item>
         <item>한국어(ko)</item>
