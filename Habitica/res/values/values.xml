@@ -59,6 +59,7 @@
 
     <string-array name="Language">
         <item>English</item>
+        <item>한국어</item>
         <item>Български</item>
         <item>Deutsch</item>
         <item>British English</item>
@@ -81,6 +82,7 @@
 
     <string-array name="LanguageValues">
         <item>en</item>
+        <item>ko</item>
         <item>bg</item>
         <item>de</item>
         <item>en_GB</item>
