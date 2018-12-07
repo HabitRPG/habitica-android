@@ -6,11 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
-import android.provider.Settings.Global.putLong
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.events.ReminderDeleteEvent
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
@@ -18,21 +16,10 @@ import com.habitrpg.android.habitica.receivers.TaskReceiver
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
 class TaskAlarmManager(private var context: Context, private var taskRepository: TaskRepository, private var userId: String) {
     private val am: AlarmManager? = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-
-    init {
-        EventBus.getDefault().register(this)
-    }
-
-    @Subscribe
-    fun onEvent(event: ReminderDeleteEvent) {
-        val remindersItem = event.reminder
-        this.removeAlarmForRemindersItem(remindersItem)
-    }
 
     private fun setAlarmsForTask(task: Task) {
         task.reminders?.let {
@@ -45,7 +32,6 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
                 this.setAlarmForRemindersItem(task, currentReminder)
             }
         }
-
     }
 
     private fun removeAlarmsForTask(task: Task) {

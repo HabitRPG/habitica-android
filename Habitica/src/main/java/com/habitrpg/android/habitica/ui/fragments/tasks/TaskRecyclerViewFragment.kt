@@ -3,9 +3,6 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ItemTouchHelper
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -17,7 +14,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
@@ -32,13 +28,12 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
-open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userID: String
@@ -249,13 +244,6 @@ open class TaskRecyclerViewFragment : BaseFragment(), View.OnClickListener, andr
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(CLASS_TYPE_KEY, this.classType)
-    }
-
-    override fun onClick(v: View) {
-        val event = AddNewTaskCommand()
-        event.taskType = this.classType
-
-        EventBus.getDefault().post(event)
     }
 
     override val displayedClassName: String?

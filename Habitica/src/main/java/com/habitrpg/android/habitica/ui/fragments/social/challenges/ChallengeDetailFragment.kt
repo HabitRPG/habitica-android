@@ -79,6 +79,11 @@ class ChallengeDetailFragment: BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments.notNull {
+            val args = ChallengeDetailFragmentArgs.fromBundle(it)
+            challengeID = args.challengeID
+        }
+
         gemAmountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfGem_36())
         memberCountIconView?.setImageBitmap(HabiticaIconsHelper.imageOfParticipantsIcon())
         challengeDescription?.movementMethod = LinkMovementMethod.getInstance()

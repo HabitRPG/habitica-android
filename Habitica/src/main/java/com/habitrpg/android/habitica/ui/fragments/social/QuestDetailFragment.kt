@@ -71,6 +71,12 @@ class QuestDetailFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments.notNull {
+            val args = QuestDetailFragmentArgs.fromBundle(it)
+            partyId = args.partyID
+            questKey = args.questKey
+        }
+
         resetViews()
 
         questAcceptButton?.setOnClickListener { onQuestAccept() }

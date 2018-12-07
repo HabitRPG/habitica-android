@@ -1,8 +1,1 @@
-This update fixes various bugs and adds support for an upcoming feature.
-
-This update also reworks a lot of the internals for the party view, to make it more reliable. Please report any new oddities on that screen.
-
-Daily reminders have also been reworked and should now work better and not notify every day.
-
-NEW:
-- Add Cat support (Can you find it?) 
+This update brings a new navigation architecture, which is the groundwork for additional features like in-app linking and deep links. If there are any views that do not open correctly anymore or any new issues that seem releated to navigation, please let us know.

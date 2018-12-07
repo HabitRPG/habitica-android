@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.modules.AppModule
@@ -89,9 +90,7 @@ class ChallengeListFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     }
 
     private fun openDetailFragment(challengeID: String) {
-        val detailFragment = ChallengeDetailFragment()
-        detailFragment.challengeID = challengeID
-        this.activity?.displayFragment(detailFragment)
+        MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeID))
     }
 
     override fun injectFragment(component: AppComponent) {

@@ -4,12 +4,10 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -56,6 +54,11 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         swipeRefreshLayout?.setOnRefreshListener(this)
+
+        arguments.notNull {
+            val args = InboxMessageListFragmentArgs.fromBundle(it)
+            setReceivingUser(args.username, args.userID)
+        }
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         recyclerView.layoutManager = layoutManager

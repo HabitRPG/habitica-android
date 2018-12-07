@@ -3,9 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import android.view.*
 import com.github.clans.fab.FloatingActionButton
 import com.github.clans.fab.FloatingActionMenu
@@ -14,7 +12,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.events.TaskTappedEvent
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
@@ -322,11 +319,6 @@ class TasksFragment : BaseMainFragment() {
         if (isAdded) {
             startActivityForResult(intent, TASK_UPDATED_RESULT)
         }
-    }
-
-    @Subscribe
-    fun onEvent(event: AddNewTaskCommand) {
-        openNewTaskActivity(event.taskType.toLowerCase(Locale.US))
     }
 
     //endregion Events

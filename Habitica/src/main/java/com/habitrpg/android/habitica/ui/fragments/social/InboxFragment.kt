@@ -163,10 +163,7 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
     }
 
     private fun openInboxMessages(userID: String, username: String) {
-        MainNavigationController.navigate(R.id.prefsActivity)
-        val inboxMessageListFragment = InboxMessageListFragment()
-        inboxMessageListFragment.setReceivingUser(username, userID)
-        this.activity?.displayFragment(inboxMessageListFragment)
+        MainNavigationController.navigate(InboxFragmentDirections.openInboxDetail(userID, username))
     }
 
     override fun customTitle(): String {

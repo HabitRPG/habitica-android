@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.social.Group
@@ -221,13 +222,8 @@ class PartyDetailFragment constructor(private val viewModel: PartyViewModel) : B
     }
 
     private fun questDetailButtonClicked() {
-        val fragment = QuestDetailFragment()
-        val party = viewModel.getGroupData().value
-        fragment.partyId = party?.id
-        fragment.questKey = party?.quest?.key
-        if (activity != null) {
-            val activity = activity as? MainActivity
-            activity?.displayFragment(fragment)
+        viewModel.getGroupData().value.notNull { party ->
+            MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail(party.id, party.quest?.key ?: ""))
         }
     }
 }

@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragmentArgs
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -49,6 +50,13 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments.notNull {
+            val args = MountDetailRecyclerFragmentArgs.fromBundle(it)
+            animalGroup = args.group
+            animalType = args.type
+        }
+
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(MarginDecoration(activity))

@@ -379,30 +379,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         findNavController(R.id.nav_host_fragment).navigate(transitionId)
     }
 
-    @SuppressLint("ObsoleteSdkInt")
-    fun displayFragment(fragment: BaseMainFragment) {
-        if (fragment.javaClass == this.activeFragment?.get()?.javaClass) {
-            return
-        }
-        if (SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && this.isDestroyed) {
-            return
-        }
-        makeActiveFragment(fragment)
-
-
-        /*if (supportFragmentManager.fragments == null) {
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss()
-        } else {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-            transaction.replace(R.id.fragment_container, fragment)
-            if (fragment.addToBackStack()) {
-                transaction.addToBackStack(null)
-            }
-            transaction.commitAllowingStateLoss()
-        }*/
-    }
-
     private fun setUserData() {
         if (user != null) {
             val preferences = user?.preferences

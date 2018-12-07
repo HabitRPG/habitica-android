@@ -97,10 +97,6 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
                 if (animal.numberOwned > 0) {
                     if (itemType == "pets") {
                         MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.animalGroup))
-                        val fragment = PetDetailRecyclerFragment()
-                        fragment.animalType = animal.animal
-                        fragment.animalGroup = animal.animalGroup
-                        activity?.displayFragment(fragment)
                     } else {
                         MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.animalGroup))
                     }
