@@ -243,7 +243,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         this.keyboardUtil?.enable()
 
         val navigationController = findNavController(R.id.nav_host_fragment)
-        navigationController.addOnNavigatedListener { _, destination ->
+        navigationController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.label.isNullOrEmpty()) {
                 toolbarTitleTextView.text = user?.profile?.name
             } else if (user?.profile != null) {

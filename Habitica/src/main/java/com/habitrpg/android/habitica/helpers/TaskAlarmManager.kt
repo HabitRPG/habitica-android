@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class TaskAlarmManager(private var context: Context, private var taskRepository: TaskRepository, private var userId: String) {

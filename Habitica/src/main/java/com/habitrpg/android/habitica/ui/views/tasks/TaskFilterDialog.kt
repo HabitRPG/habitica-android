@@ -222,8 +222,8 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
 
             }
         })
-        val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as Button
-        deleteButton.setOnClickListener {
+        val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as? Button
+        deleteButton?.setOnClickListener {
             deletedTags.add(tag.getId())
             if (createdTags.containsKey(tag.getId())) {
                 createdTags.remove(tag.getId())
@@ -276,7 +276,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
             Task.TYPE_DAILY -> {
                 taskTypeTitle.setText(R.string.dailies)
                 allTaskFilter.setText(R.string.all)
-                secondTaskFilter.setText(R.string.active)
+                secondTaskFilter.setText(R.string.due)
                 thirdTaskFilter.setText(R.string.gray)
             }
             Task.TYPE_TODO -> {

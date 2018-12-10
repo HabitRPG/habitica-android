@@ -491,6 +491,7 @@
     <string name="payment_method">Payment method</string>
     <string name="subscription">Subscription</string>
     <string name="active">Active</string>
+    <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
     <string name="cancel_subscription_google.description">No longer want to subscribe? You can find the option to unsubscribe in the “My Apps” section of the Google Play Store.</string>
     <string name="cancel_subscription_notgoogle.description">No longer want to subscribe? Due to your payment method, you can only unsubscribe through the website. Click the button below, to open the site in your browser!</string>

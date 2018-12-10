@@ -210,7 +210,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE) {
-                    refreshLayout?.isEnabled = (activity as MainActivity).isAppBarExpanded
+                    refreshLayout?.isEnabled = (activity as? MainActivity)?.isAppBarExpanded ?: false
                 }
             }
         })

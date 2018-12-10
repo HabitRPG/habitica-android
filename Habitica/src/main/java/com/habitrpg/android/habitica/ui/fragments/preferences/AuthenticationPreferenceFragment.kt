@@ -113,13 +113,12 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
     private fun showLoginNameDialog() {
         val inflater = context?.layoutInflater
-        val view = inflater?.inflate(R.layout.dialog_edittext_confirm_pw, null)
+        val view = inflater?.inflate(R.layout.dialog_edittext, null)
         val loginNameEditText = view?.findViewById<EditText>(R.id.editText)
         loginNameEditText?.setText(user?.authentication?.localAuthentication?.username)
         context.notNull { context ->
-            var builder = AlertDialog.Builder(context).setTitle(R.string.change_username)
-
-            val dialog = builder.setPositiveButton(R.string.change) { thisDialog, _ ->
+            val builder = AlertDialog.Builder(context).setTitle(R.string.change_username)
+            val dialog = builder.setPositiveButton(R.string.save) { thisDialog, _ ->
                         thisDialog.dismiss()
                         userRepository.updateLoginName(loginNameEditText?.text.toString())
                                 .subscribe(Consumer {
