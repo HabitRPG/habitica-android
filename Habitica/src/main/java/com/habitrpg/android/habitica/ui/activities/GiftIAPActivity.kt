@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -149,14 +150,18 @@ class GiftIAPActivity: BaseActivity() {
     }
 
     private fun setupCheckout() {
+        HabiticaBaseApplication.getInstance(this)?.billing.notNull {
+            activityCheckout = Checkout.forActivity(this, it)
+            activityCheckout?.start()
+        }
         val checkout = activityCheckout
         if (checkout != null) {
             val inventory = checkout.makeInventory()
 
             inventory.load(Inventory.Request.create()
-                    .loadAllPurchases().loadSkus(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionNoRenewTypes)
+                    .loadAllPurchases().loadSkus(ProductTypes.IN_APP, PurchaseTypes.allSubscriptionNoRenewTypes)
             ) { products ->
-                val subscriptions = products.get(ProductTypes.SUBSCRIPTION)
+                val subscriptions = products.get(ProductTypes.IN_APP)
 
                 skus = subscriptions.skus
 
