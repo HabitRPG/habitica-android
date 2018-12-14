@@ -851,4 +851,5 @@
     <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive  a matching subscription automatically after sending your gift.</string>
     <string name="gift_subscription_subtitle">Choose the subscription you’d like to gift below! This purchase won’t automatically renew.</string>
     <string name="send_gift">Send Gift</string>
+    <string name="server">Server</string>
 </resources>

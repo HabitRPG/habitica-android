@@ -148,7 +148,7 @@ android {
         buildConfigField "String", "STORE", "\"google\""
         multiDexEnabled true
 
-        versionCode 2045
+        versionCode 2046
         versionName "1.7"
     }
 
@@ -175,7 +175,7 @@ android {
         }
         release {
             signingConfig signingConfigs.release
-            debuggable false
+            debuggable true
             multiDexEnabled true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

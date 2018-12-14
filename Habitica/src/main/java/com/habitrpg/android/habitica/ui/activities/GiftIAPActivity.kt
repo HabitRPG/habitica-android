@@ -82,11 +82,6 @@ class GiftIAPActivity: BaseActivity() {
 
         giftedUsername = intent.getStringExtra("username")
 
-        this.subscription1MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1Month) })
-        this.subscription3MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription3Month) })
-        this.subscription6MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6Month) })
-        this.subscription12MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12Month) })
-
         subscriptionButton?.setOnClickListener {
             selectedSubscriptionSku?.notNull { sku -> purchaseSubscription(sku) }
         }
@@ -101,6 +96,7 @@ class GiftIAPActivity: BaseActivity() {
             giftedUserID = it.id
         }, RxErrorHandler.handleEmptyError()))
 
+        setupCheckout()
 
         activityCheckout?.destroyPurchaseFlow()
 
@@ -112,14 +108,14 @@ class GiftIAPActivity: BaseActivity() {
                         }
 
                         override fun onError(i: Int, e: Exception) {
-                            crashlyticsProxy.fabricLogE("Purchase", "Consume", e)
+                            crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
                         }
                     })
                 }
             }
 
             override fun onError(i: Int, e: Exception) {
-                crashlyticsProxy.fabricLogE("Purchase", "Error", e)
+                crashlyticsProxy.fabricLogE("PurchaseFlowException", "Error", e)
             }
         })
 
@@ -132,11 +128,16 @@ class GiftIAPActivity: BaseActivity() {
             override fun onReady(billingRequests: BillingRequests, s: String, b: Boolean) {}
         })
 
-        setupCheckout()
     }
 
     override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
         val view = super.onCreateView(name, context, attrs)
+
+        this.subscription1MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1Month) })
+        this.subscription3MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription3Month) })
+        this.subscription6MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6Month) })
+        this.subscription12MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12Month) })
+
         return view
     }
 

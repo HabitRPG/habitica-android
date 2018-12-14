@@ -57,6 +57,7 @@
         </LinearLayout>
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/messagesButtonWrapper"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp">
@@ -84,9 +85,10 @@
                 tools:visibility="visible"/>
         </RelativeLayout>
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="35dp"
+            android:id="@+id/settingsButtonWrapper"
+            android:layout_width="43dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp">
+            android:paddingLeft="8dp">
             <ImageButton
                 android:id="@+id/settingsButton"
                 android:layout_width="wrap_content"

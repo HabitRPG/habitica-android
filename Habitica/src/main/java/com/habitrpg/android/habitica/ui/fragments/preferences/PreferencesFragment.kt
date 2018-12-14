@@ -8,10 +8,12 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.*
@@ -36,10 +38,13 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     lateinit  var pushNotificationManager: PushNotificationManager
     @Inject
     lateinit var configManager: RemoteConfigManager
+    @Inject
+    lateinit var apiClient: ApiClient
 
     private var timePreference: TimePreference? = null
     private var pushNotificationsPreference: PreferenceScreen? = null
     private var classSelectionPreference: Preference? = null
+    private var serverUrlPreference: ListPreference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.component?.inject(this)
@@ -64,6 +69,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         classSelectionPreference = findPreference("choose_class")
         classSelectionPreference?.isVisible = false
+
+        serverUrlPreference = findPreference("server_url") as? ListPreference
+        serverUrlPreference?.isVisible = false
+        serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
     }
 
     override fun onResume() {
@@ -206,6 +215,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             }
             "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            "server_url" -> {
+                apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
+                findPreference(key).summary = sharedPreferences.getString(key, "")
+            }
         }
     }
 
@@ -254,6 +267,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         } else {
             preference.layoutResource = R.layout.preference_child_summary_error
             preference.summary = context?.getString(R.string.username_not_confirmed)
+        }
+
+        if (user?.contributor?.admin == true) {
+            serverUrlPreference?.isVisible = true
         }
     }
 }

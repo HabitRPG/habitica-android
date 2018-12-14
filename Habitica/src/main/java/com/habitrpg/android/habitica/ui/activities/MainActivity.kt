@@ -212,7 +212,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             avatarWithBars.setPadding(px.toInt(), statusBarHeight, px.toInt(), 0)
         }
 
-        compositeSubscription.add(userRepository.getUser(hostConfig.user)
+        compositeSubscription.add(userRepository.getUser(hostConfig.user ?: "")
                 .subscribe(Consumer { newUser ->
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
@@ -397,7 +397,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
 
             if (remoteConfigManager.enableUsernameRelease()) {
-                if (user?.flags?.isVerifiedUsername != true && isActivityVisible) {
+                if (user?.flags?.isVerifiedUsername == false && isActivityVisible) {
                     val intent = Intent(this, VerifyUsernameActivity::class.java)
                     startActivity(intent)
                 }

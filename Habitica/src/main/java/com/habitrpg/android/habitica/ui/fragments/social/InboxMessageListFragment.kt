@@ -44,9 +44,9 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         hideToolbar()
         disableToolbarScrolling()
-        super.onCreateView(inflater, container, savedInstanceState)
 
         return inflater.inflate(R.layout.fragment_inbox_message_list, container, false)
     }

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentPagerAdapter
@@ -91,14 +92,18 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
                         }
 
                         override fun onError(i: Int, e: Exception) {
-                            crashlyticsProxy.fabricLogE("Purchase", "Consume", e)
+                            crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
                         }
                     })
                 }
             }
 
             override fun onError(i: Int, e: Exception) {
-                crashlyticsProxy.fabricLogE("Purchase", "Error", e)
+                crashlyticsProxy.fabricLogE("PurchaseFlowException", "Error", e)
+                val billingError = e as? BillingException
+                if (billingError != null) {
+                    Log.e("BILLING ERROR", billingError.toString())
+                }
             }
         })
 

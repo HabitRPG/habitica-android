@@ -322,14 +322,14 @@ class TaskFormActivity : BaseActivity() {
                         if (task != null) {
                             populate(task)
 
-                            setTitle(task)
+                            setTaskTitle(task)
                             if (taskType == Task.TYPE_TODO || taskType == Task.TYPE_DAILY) {
                                 populateChecklistRecyclerView()
                                 populateRemindersRecyclerView()
                             }
                         }
 
-                        setTitle(task)
+                        setTaskTitle(task)
                     }, RxErrorHandler.handleEmptyError()))
 
             btnDelete.isEnabled = true
@@ -338,14 +338,14 @@ class TaskFormActivity : BaseActivity() {
             if (thisTask != null) {
                 populate(thisTask)
 
-                setTitle(thisTask)
+                setTaskTitle(thisTask)
                 if (taskType == Task.TYPE_TODO || taskType == Task.TYPE_DAILY) {
                     populateChecklistRecyclerView()
                     populateRemindersRecyclerView()
                 }
             }
         } else {
-            //setTitle(null as? Task)
+            setTaskTitle(null)
             taskText.requestFocus()
         }
 
@@ -688,7 +688,7 @@ class TaskFormActivity : BaseActivity() {
         }
     }
 
-    private fun setTitle(task: Task?) {
+    private fun setTaskTitle(task: Task?) {
         val actionBar = supportActionBar
 
         if (actionBar != null) {

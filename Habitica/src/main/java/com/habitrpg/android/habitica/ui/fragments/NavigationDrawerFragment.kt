@@ -201,8 +201,8 @@ class NavigationDrawerFragment : DialogFragment() {
             questMenuView.configure(it)
         }, RxErrorHandler.handleEmptyError()))
 
-        messagesButton.setOnClickListener { setSelection(R.id.inboxFragment) }
-        settingsButton.setOnClickListener { setSelection(R.id.prefsActivity) }
+        messagesButtonWrapper.setOnClickListener { setSelection(R.id.inboxFragment) }
+        settingsButtonWrapper.setOnClickListener { setSelection(R.id.prefsActivity) }
     }
 
     override fun onDestroy() {

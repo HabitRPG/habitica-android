@@ -60,16 +60,6 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                             }
                         }
                     }
-                    .flatMap { user ->
-                        val calendar = GregorianCalendar()
-                        val timeZone = calendar.timeZone
-                        val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
-                        if (offset.toInt() != user.preferences?.timezoneOffset ?: 0) {
-                            return@flatMap updateUser(user, "preferences.timezoneOffset", offset.toString())
-                        } else {
-                            return@flatMap Flowable.just(user)
-                        }
-                    }
         } else {
             return getUser().take(1)
         }

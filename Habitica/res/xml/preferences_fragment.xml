@@ -246,6 +246,11 @@
         <Preference android:title="@string/reload_content"
             android:key="reload_content"
             android:layout="@layout/preference_child_summary"/>
+        <ListPreference android:title="@string/server"
+            android:key="server_url"
+            android:entries="@array/server_urls"
+            android:entryValues="@array/server_urls"
+            android:layout="@layout/preference_child_summary" />
 
     </PreferenceCategory>
 </PreferenceScreen>

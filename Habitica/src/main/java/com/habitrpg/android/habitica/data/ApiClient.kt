@@ -247,4 +247,5 @@ interface ApiClient {
 
     fun retrieveMarketGear(): Flowable<Shop>
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
+    fun updateServerUrl(newAddress: String?)
 }

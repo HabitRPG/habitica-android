@@ -62,10 +62,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 //private HostConfig mConfig;
 (private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val popupNotificationsManager: PopupNotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
 
-    private val retrofitAdapter: Retrofit
+    private lateinit var retrofitAdapter: Retrofit
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
-    private val apiService: ApiService
+    private lateinit var apiService: ApiService
 
     private val apiCallTransformer = FlowableTransformer<HabitResponse<Any>, Any> { observable ->
         observable
@@ -91,13 +91,20 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         crashlyticsProxy.setUserIdentifier(this.hostConfig.user)
         crashlyticsProxy.setUserName(this.hostConfig.user)
         Amplitude.getInstance().userId = this.hostConfig.user
+        buildRetrofit()
+    }
 
+    fun buildRetrofit() {
         val logging = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
             logging.level = HttpLoggingInterceptor.Level.BODY
         }
 
         val userAgent = System.getProperty("http.agent")
+
+        val calendar = GregorianCalendar()
+        val timeZone = calendar.timeZone
+        val timezoneOffset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
 
         val client = OkHttpClient.Builder()
                 .addInterceptor(logging)
@@ -110,6 +117,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                                 .header("x-api-user", this.hostConfig.user)
                     }
                     builder = builder.header("x-client", "habitica-android")
+                            .header("x-user-timzoneOffset", timezoneOffset.toString())
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent)
                     }
@@ -135,6 +143,13 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 .build()
 
         this.apiService = retrofitAdapter.create(ApiService::class.java)
+    }
+
+    override fun updateServerUrl(newAddress: String?) {
+        if (newAddress != null) {
+            hostConfig.address = newAddress
+            buildRetrofit()
+        }
     }
 
     override fun registerUser(username: String, email: String, password: String, confirmPassword: String): Flowable<UserAuthResponse> {

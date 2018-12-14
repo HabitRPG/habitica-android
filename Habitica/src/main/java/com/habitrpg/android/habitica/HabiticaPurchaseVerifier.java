@@ -61,12 +61,13 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
             } else {
                 if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
                     PurchaseValidationRequest validationRequest = new PurchaseValidationRequest();
-                    validationRequest.transaction = new Transaction();
-                    validationRequest.transaction.receipt = purchase.data;
-                    validationRequest.transaction.signature = purchase.signature;
+                    validationRequest.setSku(purchase.sku);
+                    validationRequest.setTransaction(new Transaction());
+                    validationRequest.getTransaction().receipt = purchase.data;
+                    validationRequest.getTransaction().signature = purchase.signature;
                     if (pendingGifts.containsKey(purchase.sku)) {
-                        validationRequest.gift = new IAPGift();
-                        validationRequest.gift.uuid = pendingGifts.get(purchase.sku);
+                        validationRequest.setGift(new IAPGift());
+                        validationRequest.getGift().uuid = pendingGifts.get(purchase.sku);
                         pendingGifts.remove(purchase.sku);
                     }
 
@@ -103,18 +104,21 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                     });
                 } else if (PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
                     PurchaseValidationRequest validationRequest = new PurchaseValidationRequest();
-                    validationRequest.transaction = new Transaction();
-                    validationRequest.transaction.receipt = purchase.data;
-                    validationRequest.transaction.signature = purchase.signature;
+                    validationRequest.setSku(purchase.sku);
+                    validationRequest.setTransaction(new Transaction());
+                    validationRequest.getTransaction().receipt = purchase.data;
+                    validationRequest.getTransaction().signature = purchase.signature;
                     if (pendingGifts.containsKey(purchase.sku)) {
-                        validationRequest.gift = new IAPGift();
-                        validationRequest.gift.uuid = pendingGifts.get(purchase.sku);
+                        validationRequest.setGift(new IAPGift());
+                        validationRequest.getGift().uuid = pendingGifts.get(purchase.sku);
                         pendingGifts.remove(purchase.sku);
                     }
 
                     apiClient.validateNoRenewSubscription(validationRequest).subscribe(purchaseValidationResult -> {
                         purchasedOrderList.add(purchase.orderId);
-
+                        if (pendingGifts.containsKey(purchase.sku)) {
+                            pendingGifts.remove(purchase.sku);
+                        }
                         requestListener.onSuccess(verifiedPurchases);
                     }, throwable -> {
                         if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
@@ -133,10 +137,10 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                     });
                 } else if (PurchaseTypes.allSubscriptionTypes.contains(purchase.sku)) {
                     SubscriptionValidationRequest validationRequest = new SubscriptionValidationRequest();
-                    validationRequest.transaction = new Transaction();
-                    validationRequest.transaction.receipt = purchase.data;
-                    validationRequest.transaction.signature = purchase.signature;
-                    validationRequest.sku = purchase.sku;
+                    validationRequest.setSku(purchase.sku);
+                    validationRequest.setTransaction(new Transaction());
+                    validationRequest.getTransaction().receipt = purchase.data;
+                    validationRequest.getTransaction().signature = purchase.signature;
                     apiClient.validateSubscription(validationRequest).subscribe(purchaseValidationResult -> {
                         purchasedOrderList.add(purchase.orderId);
 

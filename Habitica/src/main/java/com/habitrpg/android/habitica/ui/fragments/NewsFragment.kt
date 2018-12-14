@@ -18,8 +18,9 @@ class NewsFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        val view = container?.inflate(R.layout.fragment_news)
         hideToolbar()
-        return container?.inflate(R.layout.fragment_news)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

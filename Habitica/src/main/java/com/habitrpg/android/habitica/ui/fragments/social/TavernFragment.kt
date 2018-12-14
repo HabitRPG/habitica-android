@@ -27,9 +27,9 @@ class TavernFragment : BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
+        super.onCreateView(inflater, container, savedInstanceState)
         hideToolbar()
         disableToolbarScrolling()
-        super.onCreateView(inflater, container, savedInstanceState)
         val v = inflater.inflate(R.layout.fragment_viewpager, container, false)
         this.tutorialStepIdentifier = "tavern"
         this.tutorialText = getString(R.string.tutorial_tavern)

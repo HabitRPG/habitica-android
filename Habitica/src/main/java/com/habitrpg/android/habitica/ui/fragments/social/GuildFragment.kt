@@ -45,9 +45,9 @@ class GuildFragment : BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
+        super.onCreateView(inflater, container, savedInstanceState)
         hideToolbar()
         disableToolbarScrolling()
-        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_viewpager, container, false)
     }
 
