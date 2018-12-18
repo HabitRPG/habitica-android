@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.models.responses.ErrorResponse;
 import com.playseeds.android.sdk.Seeds;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONObject;
 import org.solovyev.android.checkout.BasePurchaseVerifier;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.RequestListener;
@@ -24,6 +25,7 @@ import org.solovyev.android.checkout.ResponseCodes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,17 +36,19 @@ import retrofit2.HttpException;
  * Created by Negue on 26.11.2015.
  */
 public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
-    public static Map<String, String> pendingGifts = new HashMap<>();
 
     private static final String PURCHASED_PRODUCTS_KEY = "PURCHASED_PRODUCTS";
+    private static final String PENDING_GIFTS_KEY = "PENDING_GIFTS";
     private final ApiClient apiClient;
     private Set<String> purchasedOrderList = new HashSet<>();
+    public static Map<String, String> pendingGifts = new HashMap<>();
     private SharedPreferences preferences;
 
     public HabiticaPurchaseVerifier(Context context, ApiClient apiClient) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         preferences.getStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList);
+        pendingGifts = loadPendingGifts();
 
         this.apiClient = apiClient;
     }
@@ -173,5 +177,33 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
         SharedPreferences.Editor edit = preferences.edit();
         edit.putStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList);
         edit.apply();
+
+        savePendingGifts();
+    }
+
+    private void savePendingGifts(){
+        JSONObject jsonObject = new JSONObject(pendingGifts);
+        String jsonString = jsonObject.toString();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(PENDING_GIFTS_KEY).apply();
+        editor.putString(PENDING_GIFTS_KEY, jsonString);
+        editor.commit();
+    }
+
+    private Map<String, String> loadPendingGifts() {
+        Map<String, String> outputMap = new HashMap<>();
+        try{
+                String jsonString = preferences.getString(PENDING_GIFTS_KEY, (new JSONObject()).toString());
+                JSONObject jsonObject = new JSONObject(jsonString);
+                Iterator<String> keysItr = jsonObject.keys();
+                while(keysItr.hasNext()) {
+                    String key = keysItr.next();
+                    String value = (String) jsonObject.get(key);
+                    outputMap.put(key, value);
+                }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return outputMap;
     }
 }

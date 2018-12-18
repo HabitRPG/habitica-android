@@ -16,8 +16,8 @@ import com.habitrpg.android.habitica.R
 class HostConfig {
     var address: String
     var port: String
-    var api: String? = null
-    var user: String? = null
+    var api: String
+    var user: String
 
     constructor(sharedPreferences: SharedPreferences, context: Context) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -25,10 +25,15 @@ class HostConfig {
         if (BuildConfig.DEBUG) {
             this.address = BuildConfig.BASE_URL
         } else {
-            this.address = sharedPreferences.getString("server_url", null) ?: context.getString(R.string.base_url)
+            val address = sharedPreferences.getString("server_url", null)
+            if (address != null && address.isNotEmpty()) {
+                this.address = address
+            } else {
+                this.address = context.getString(R.string.base_url)
+            }
         }
-        this.api = prefs.getString("APIToken", null)
-        this.user = prefs.getString(context.getString(R.string.SP_userID), "")
+        this.api = prefs.getString("APIToken", null) ?: ""
+        this.user = prefs.getString(context.getString(R.string.SP_userID), null) ?: ""
     }
 
     constructor(address: String, port: String, api: String, user: String) {
@@ -39,7 +44,7 @@ class HostConfig {
     }
 
     fun hasAuthentication(): Boolean {
-        return user?.isNotEmpty() == true && api?.length ?: 0 > 0
+        return user.isNotEmpty() && api.isNotEmpty()
     }
 
 }

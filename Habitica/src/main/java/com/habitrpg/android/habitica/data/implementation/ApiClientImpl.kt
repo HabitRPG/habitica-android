@@ -111,7 +111,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 .addNetworkInterceptor { chain ->
                     val original = chain.request()
                     var builder: Request.Builder = original.newBuilder()
-                    if (this.hostConfig.user != null) {
+                    if (this.hostConfig.hasAuthentication()) {
                         builder = builder
                                 .header("x-api-key", this.hostConfig.api)
                                 .header("x-api-user", this.hostConfig.user)
@@ -279,8 +279,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
-        this.hostConfig.user = userID
-        this.hostConfig.api = apiToken
+        this.hostConfig.user = userID ?: ""
+        this.hostConfig.api = apiToken ?: ""
         crashlyticsProxy.setUserIdentifier(this.hostConfig.user)
         crashlyticsProxy.setUserName(this.hostConfig.user)
         Amplitude.getInstance().userId = this.hostConfig.user

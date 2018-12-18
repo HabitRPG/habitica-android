@@ -137,7 +137,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         }
     }
 
-    fun setReceivingUser(chatRoomUser: String, replyToUserUUID: String) {
+    private fun setReceivingUser(chatRoomUser: String, replyToUserUUID: String) {
         this.chatRoomUser = chatRoomUser
         this.replyToUserUUID = replyToUserUUID
     }
@@ -178,5 +178,9 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
                     .setPositiveButton(android.R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
                     .setNegativeButton(android.R.string.no, null).show()
         }
+    }
+
+    override fun customTitle(): String {
+        return chatRoomUser ?: ""
     }
 }

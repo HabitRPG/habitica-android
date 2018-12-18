@@ -60,8 +60,6 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupCheckout()
-
         Seeds.sharedInstance()
                 .simpleInit(this, this, "https://dash.playseeds.com", getString(R.string.seeds_app_key)).isLoggingEnabled = true
         Seeds.sharedInstance().requestInAppMessage(getString(R.string.seeds_interstitial_gems))
@@ -78,11 +76,30 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
 
         setViewPagerAdapter()
 
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { user ->
+            for (test in user.abTests ?: emptyList<ABTest>()) {
+                if (test.name == "subscriptionPageOrder") {
+                    if (test.group == "subscriptionFirst") {
+                        showSubscriptionPageFirst = true
+                        viewPager.adapter?.notifyDataSetChanged()
+                        return@Consumer
+                    }
+                }
+            }
+            showSubscriptionPageFirst = false
+            viewPager.adapter?.notifyDataSetChanged()
+        }, RxErrorHandler.handleEmptyError()))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupCheckout()
+
         activityCheckout?.destroyPurchaseFlow()
 
         activityCheckout?.createPurchaseFlow(object : RequestListener<Purchase> {
             override fun onSuccess(purchase: Purchase) {
-                if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
+                if (PurchaseTypes.allGemTypes.contains(purchase.sku) || PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
                     billingRequests?.consume(purchase.token, object : RequestListener<Any> {
                         override fun onSuccess(o: Any) {
                             //EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
@@ -121,25 +138,11 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
 
             override fun onReady(billingRequests: BillingRequests, s: String, b: Boolean) {}
         })
-
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { user ->
-            for (test in user.abTests ?: emptyList<ABTest>()) {
-                if (test.name == "subscriptionPageOrder") {
-                    if (test.group == "subscriptionFirst") {
-                        showSubscriptionPageFirst = true
-                        viewPager.adapter?.notifyDataSetChanged()
-                        return@Consumer
-                    }
-                }
-            }
-            showSubscriptionPageFirst = false
-            viewPager.adapter?.notifyDataSetChanged()
-        }, RxErrorHandler.handleEmptyError()))
     }
 
-    public override fun onDestroy() {
+    public override fun onPause() {
         activityCheckout?.stop()
-        super.onDestroy()
+        super.onPause()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

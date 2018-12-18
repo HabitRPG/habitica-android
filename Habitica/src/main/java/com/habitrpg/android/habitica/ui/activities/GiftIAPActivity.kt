@@ -27,6 +27,9 @@ import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionVi
 import io.reactivex.functions.Consumer
 import org.solovyev.android.checkout.*
 import javax.inject.Inject
+import android.content.Intent
+
+
 
 
 class GiftIAPActivity: BaseActivity() {
@@ -95,6 +98,10 @@ class GiftIAPActivity: BaseActivity() {
             usernameTextView.text = "@${it.username}"
             giftedUserID = it.id
         }, RxErrorHandler.handleEmptyError()))
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         setupCheckout()
 
@@ -105,6 +112,7 @@ class GiftIAPActivity: BaseActivity() {
                 if (PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
                     billingRequests?.consume(purchase.token, object : RequestListener<Any> {
                         override fun onSuccess(o: Any) {
+                            finish()
                         }
 
                         override fun onError(i: Int, e: Exception) {
@@ -128,18 +136,23 @@ class GiftIAPActivity: BaseActivity() {
             override fun onReady(billingRequests: BillingRequests, s: String, b: Boolean) {}
         })
 
+        this.subscription1MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1MonthNoRenew) })
+        this.subscription3MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription3MonthNoRenew) })
+        this.subscription6MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6MonthNoRenew) })
+        this.subscription12MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12MonthNoRenew) })
     }
 
-    override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
-        val view = super.onCreateView(name, context, attrs)
-
-        this.subscription1MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1Month) })
-        this.subscription3MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription3Month) })
-        this.subscription6MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription6Month) })
-        this.subscription12MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12Month) })
-
-        return view
+    override fun onPause() {
+        activityCheckout?.stop()
+        super.onPause()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        activityCheckout?.onActivityResult(requestCode, resultCode, data)
+
+    }
+
 
     private fun updateButtonLabel(sku: Sku, price: String, subscriptions: Inventory.Product) {
         val matchingView = buttonForSku(sku)
