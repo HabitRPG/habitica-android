@@ -72,7 +72,7 @@ class ChatFragment constructor(private val viewModel: PartyViewModel) : BaseFrag
             recyclerView.layoutManager = layoutManager
         }
 
-        chatAdapter = ChatRecyclerViewAdapter(null, true, null, true, configManager.enableUsernameRelease())
+        chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
         chatAdapter.notNull {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
                 context.notNull { FullProfileActivity.open(it, userId) }

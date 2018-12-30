@@ -138,7 +138,7 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
                 val timestampTextView = entry?.findViewById(R.id.timestamp_textview) as? TextView
                 timestampTextView?.text = message.getAgoString(resources)
                 val usernameTextView = entry?.findViewById(R.id.username_textview) as? TextView
-                if (configManager.enableUsernameRelease() && message.username != null) {
+                if (message.username != null) {
                     usernameTextView?.text = message.formattedUsername
                     usernameTextView?.visibility = View.VISIBLE
                 } else {

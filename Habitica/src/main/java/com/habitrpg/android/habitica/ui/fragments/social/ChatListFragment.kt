@@ -114,7 +114,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             recyclerView.layoutManager = layoutManager
         }
 
-        chatAdapter = ChatRecyclerViewAdapter(null, true, user, true, configManager.enableUsernameRelease())
+        chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
         chatAdapter.notNull {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
                 context.notNull { FullProfileActivity.open(it, userId) }

@@ -190,11 +190,7 @@ class PartyFragment : BaseMainFragment() {
                         val userIDs = data?.getStringArrayExtra(PartyInviteActivity.USER_IDS_KEY)
                         val invites = ArrayList<String>()
                         Collections.addAll(invites, *userIDs)
-                        if (configRepository.enableUsernameRelease()) {
-                            inviteData["usernames"] = invites
-                        } else {
-                            inviteData["uuids"] = invites
-                        }
+                        inviteData["usernames"] = invites
                     }
                     viewModel.inviteToGroup(inviteData)
                 }

@@ -32,7 +32,7 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import net.pherth.android.emoji_library.EmojiTextView
 
-class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, user: User?, private val isTavern: Boolean, private val releasedUsernames: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
+class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, user: User?, private val isTavern: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
     internal var user = user
     set(value) {
         field = value
@@ -137,7 +137,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             userLabel.setOnClickListener { _ -> chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
             avatarView.setOnClickListener { _ -> chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
             replyButton.setOnClickListener { _ ->
-                if (releasedUsernames && chatMessage?.username != null) {
+                if (chatMessage?.username != null) {
                     chatMessage?.username.notNull { replyMessageEvents.onNext(it) }
                 } else {
                     chatMessage?.user.notNull { replyMessageEvents.onNext(it) }
@@ -165,7 +165,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             if (messageWasSent()) {
                 userLabel.tier = user?.contributor?.level ?: 0
                 userLabel.username = name
-                if (user?.username != null && releasedUsernames) {
+                if (user?.username != null) {
                     @SuppressLint("SetTextI18n")
                     sublineTextView.text = "${user?.formattedUsername} ∙ ${msg.getAgoString(res)}"
                 } else {
@@ -174,7 +174,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             } else {
                 userLabel.tier = msg.contributor?.level ?: 0
                 userLabel.username = msg.user
-                if (msg.username != null && releasedUsernames) {
+                if (msg.username != null) {
                     @SuppressLint("SetTextI18n")
                     sublineTextView.text = "${msg.formattedUsername} ∙ ${msg.getAgoString(res)}"
                 } else {

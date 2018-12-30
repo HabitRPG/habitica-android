@@ -24,7 +24,6 @@ public class RemoteConfigManager {
     private Boolean enableNewShops = false;
     private String shopSpriteSuffix = "";
     private Integer maxChatLength = 3000;
-    private Boolean enableUsernameRelease = false;
     private Boolean enableGiftOneGetOne = false;
     private String REMOTE_STRING_KEY = "remote-string";
 
@@ -47,8 +46,6 @@ public class RemoteConfigManager {
     }
 
     public Integer maxChatLength() { return maxChatLength; }
-
-    public Boolean enableUsernameRelease() { return enableUsernameRelease; }
 
     public boolean enableGiftOneGetOne() { return enableGiftOneGetOne; }
 
@@ -75,9 +72,6 @@ public class RemoteConfigManager {
             }
             if (obj.has("maxChatLength")) {
                 maxChatLength = obj.getInt("maxChatLength");
-            }
-            if (obj.has("enableUsernameRelease")) {
-                enableUsernameRelease = obj.getBoolean("enableUsernameRelease");
             }
             if (obj.has("enableGiftOneGetOne")) {
                 enableGiftOneGetOne = obj.getBoolean("enableGiftOneGetOne");

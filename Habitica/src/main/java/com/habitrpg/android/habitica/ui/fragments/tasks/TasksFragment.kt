@@ -55,10 +55,10 @@ class TasksFragment : BaseMainFragment() {
         viewPager = v.findViewById(R.id.viewPager)
         val view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true)
         floatingMenu = if (FloatingActionMenu::class.java == view.javaClass) {
-            view as FloatingActionMenu
+            view as? FloatingActionMenu
         } else {
-            val frame = view as ViewGroup
-            frame.findViewById(R.id.fab_menu)
+            val frame = view as? ViewGroup
+            frame?.findViewById(R.id.fab_menu)
         }
         val habitFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_habit)
         habitFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_HABIT) }

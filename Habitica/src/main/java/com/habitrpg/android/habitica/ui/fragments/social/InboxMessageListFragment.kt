@@ -63,7 +63,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         recyclerView.layoutManager = layoutManager
 
-        chatAdapter = ChatRecyclerViewAdapter(null, true, user, false, configManager.enableUsernameRelease())
+        chatAdapter = ChatRecyclerViewAdapter(null, true, user, false)
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter.notNull { adapter ->

@@ -304,22 +304,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             putBoolean("preventDailyReminder", false)
         }
 
-        //after the activity has been stopped and is thereafter resumed,
-        //a state can arise in which the active fragment no longer has a
-        //reference to the tabLayout (and all its adapters are null).
-        //Recreate the fragment as a result.
-        if (activeFragment?.get()?.tabLayout == null) {
-            activeFragment = null
-            var selection: String? = NavigationDrawerFragment.SIDEBAR_TASKS
-            try {
-                selection = this.sharedPreferences.getString("lastActivePosition", NavigationDrawerFragment.SIDEBAR_TASKS)
-            } catch (ignored: java.lang.RuntimeException) {
-            }
-            if (selection != null) {
-                selectMenuItem(selection)
-            }
-        }
-
         if (intent.hasExtra("notificationIdentifier")) {
             val identifier = intent.getStringExtra("notificationIdentifier")
             val additionalData = HashMap<String, Any>()
@@ -396,11 +380,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             drawerFragment?.setMessagesCount(this.user?.inbox?.newMessages ?: 0)
             drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
 
-            if (remoteConfigManager.enableUsernameRelease()) {
-                if (user?.flags?.isVerifiedUsername == false && isActivityVisible) {
-                    val intent = Intent(this, VerifyUsernameActivity::class.java)
-                    startActivity(intent)
-                }
+            if (user?.flags?.isVerifiedUsername == false && isActivityVisible) {
+                val intent = Intent(this, VerifyUsernameActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -408,9 +390,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private fun updateSidebar() {
         drawerFragment?.setDisplayName(user?.profile?.name)
-        if (remoteConfigManager.enableUsernameRelease()) {
-            drawerFragment?.setUsername(user?.formattedUsername)
-        }
+        drawerFragment?.setUsername(user?.formattedUsername)
 
         if (user?.preferences == null || user?.flags == null) {
             return
@@ -889,10 +869,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     val dialog = builder.create()
                     dialog.show()
                 }, RxErrorHandler.handleEmptyError())
-    }
-
-    public fun selectMenuItem(identifier: String, openSelection: Boolean = true) {
-        //drawerFragment?.setSelection(identifier, openSelection)
     }
 
     companion object {
