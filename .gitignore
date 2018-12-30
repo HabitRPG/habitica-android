@@ -65,3 +65,4 @@ captures
 /fastlane/report.xml
 fastlane/metadata/android/*/changelogs/
 /Habitica/amazon
+/fastlane/Fastfile.bkp

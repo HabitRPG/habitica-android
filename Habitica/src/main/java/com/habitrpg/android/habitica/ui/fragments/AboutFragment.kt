@@ -14,17 +14,26 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.fragment_about.*
+import javax.inject.Inject
+import javax.inject.Named
 
 
 class AboutFragment : BaseMainFragment() {
+
+    @field:[Inject Named(AppModule.NAMED_USER_ID)]
+    lateinit var userId: String
+
     override fun injectFragment(component: AppComponent) {
+        component.inject(this)
     }
 
-    internal var userId = ""
     private val androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/"
     private val twitterLink = "https://twitter.com/habitica"
 
@@ -37,8 +46,6 @@ class AboutFragment : BaseMainFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //Gets the userId that was passed from MainActivity -> MainDrawerBuilder -> About Activity
-        userId = this.activity?.intent?.getStringExtra("userId") ?: ""
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
@@ -105,11 +112,21 @@ class AboutFragment : BaseMainFragment() {
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
         val device = Build.DEVICE
-        val bodyOfEmail = "Device: " + device +
+        var bodyOfEmail = "Device: " + device +
                 " \nAndroid Version: " + version +
                 " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
-                " \nUser ID: " + userId +
-                " \nDetails: "
+                " \nUser ID: " + userId
+
+        val user = this.user
+        if (user != null) {
+            bodyOfEmail += " \nLevel: " + (user.stats?.lvl ?: 0) +
+                    " \nClass: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None")) +
+                    " \nIs in Inn: " + (user.preferences?.sleep ?: false) +
+                    " \nUses Costume: " + (user.preferences?.costume ?: false) +
+                    " \nCustom Day Start: " + (user.preferences?.dayStart ?: 0)
+        }
+
+        bodyOfEmail += " \nDetails: "
 
         val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto", "mobile@habitica.com", null))
