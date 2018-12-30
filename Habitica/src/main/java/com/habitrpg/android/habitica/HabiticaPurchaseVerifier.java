@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
 
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.models.IAPGift;
@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Transaction;
 import com.habitrpg.android.habitica.models.responses.ErrorResponse;
+import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.playseeds.android.sdk.Seeds;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
 import retrofit2.HttpException;
 
 /**
@@ -79,7 +81,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         purchasedOrderList.add(purchase.orderId);
 
                         requestListener.onSuccess(verifiedPurchases);
-
+                        EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
 
                         //TODO: find way to get $ price automatically.
                         if (purchase.sku.equals(PurchaseTypes.Purchase4Gems)) {
@@ -100,6 +102,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                                     purchasedOrderList.add(purchase.orderId);
 
                                     requestListener.onSuccess(verifiedPurchases);
+                                    EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
                                     return;
                                 }
                             }
@@ -124,6 +127,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                             pendingGifts.remove(purchase.sku);
                         }
                         requestListener.onSuccess(verifiedPurchases);
+                        EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
                     }, throwable -> {
                         if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
                             HttpException error = (HttpException)throwable;
@@ -133,6 +137,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                                     purchasedOrderList.add(purchase.orderId);
 
                                     requestListener.onSuccess(verifiedPurchases);
+                                    EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
                                     return;
                                 }
                             }

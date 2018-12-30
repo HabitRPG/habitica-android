@@ -848,8 +848,12 @@
     <string name="gift_one_get_one_description">Gift a sub and get a sub free event going on now!</string>
     <string name="gift_title">Who would you like to gift to?</string>
     <string name="gift_one_get_one">Gift one, Get one!</string>
-    <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive  a matching subscription automatically after sending your gift.</string>
+    <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive a matching subscription automatically after sending your gift.</string>
     <string name="gift_subscription_subtitle">Choose the subscription you’d like to gift below! This purchase won’t automatically renew.</string>
     <string name="send_gift">Send Gift</string>
     <string name="server">Server</string>
+    <string name="gift_confirmation_title">Your gift was sent!</string>
+    <string name="gift_confirmation_text_g1g1">Your gifted subscription was sent and your subscription applied to your account.</string>
+    <string name="gift_confirmation_text">Your gifted subscription was sent and your subscription applied to your account.</string>
+
 </resources>

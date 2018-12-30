@@ -250,7 +250,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun hasAuthenticationKeys(): Boolean {
-        return this.hostConfig.user != null
+        return this.hostConfig.user.isNotEmpty() && hostConfig.api.isNotEmpty()
     }
 
     private fun showConnectionProblemDialog(resourceMessageString: Int) {

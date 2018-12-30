@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -23,6 +24,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.playseeds.android.sdk.Seeds
 import com.playseeds.android.sdk.inappmessaging.InAppMessageListener
 import io.reactivex.functions.Consumer
+import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.*
 import java.util.*
 import javax.inject.Inject
@@ -38,6 +40,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     internal val viewPager: androidx.viewpager.widget.ViewPager by bindView(R.id.viewPager)
 
     internal var fragments: MutableList<CheckoutFragment> = ArrayList()
+    var isActive = false
     var activityCheckout: ActivityCheckout? = null
         private set
     private var billingRequests: BillingRequests? = null
@@ -91,28 +94,15 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         setupCheckout()
 
         activityCheckout?.destroyPurchaseFlow()
 
         activityCheckout?.createPurchaseFlow(object : RequestListener<Purchase> {
             override fun onSuccess(purchase: Purchase) {
-                if (PurchaseTypes.allGemTypes.contains(purchase.sku) || PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
-                    billingRequests?.consume(purchase.token, object : RequestListener<Any> {
-                        override fun onSuccess(o: Any) {
-                            //EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
-                            if (purchase.sku == PurchaseTypes.Purchase84Gems) {
-                                this@GemPurchaseActivity.showSeedsPromo(getString(R.string.seeds_interstitial_sharing), "store")
-                            }
-                        }
 
-                        override fun onError(i: Int, e: Exception) {
-                            crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
-                        }
-                    })
-                }
             }
 
             override fun onError(i: Int, e: Exception) {
@@ -140,9 +130,19 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         })
     }
 
-    public override fun onPause() {
-        activityCheckout?.stop()
+    override fun onResume() {
+        super.onResume()
+        isActive = true
+    }
+
+    override fun onPause() {
         super.onPause()
+        isActive = false
+    }
+
+    public override fun onStop() {
+        activityCheckout?.stop()
+        super.onStop()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -270,6 +270,13 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         })
     }
 
+    @Subscribe
+    public fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
+        if (isActive) {
+            consumePurchase(event.purchase)
+        }
+    }
+
     interface CheckoutFragment {
 
         fun setupCheckout()
@@ -279,4 +286,18 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         fun setBillingRequests(billingRequests: BillingRequests?)
     }
 
+    private fun consumePurchase(purchase: Purchase) {
+        if (PurchaseTypes.allGemTypes.contains(purchase.sku) || PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
+            billingRequests?.consume(purchase.token, object : RequestListener<Any> {
+
+                override fun onSuccess(result: Any) {
+
+                }
+
+                override fun onError(response: Int, e: Exception) {
+                    crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
+                }
+            })
+        }
+    }
 }

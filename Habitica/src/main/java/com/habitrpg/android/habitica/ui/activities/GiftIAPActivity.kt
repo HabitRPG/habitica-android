@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.AttributeSet
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -14,6 +16,7 @@ import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
@@ -25,11 +28,9 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import io.reactivex.functions.Consumer
+import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.*
 import javax.inject.Inject
-import android.content.Intent
-
-
 
 
 class GiftIAPActivity: BaseActivity() {
@@ -100,9 +101,8 @@ class GiftIAPActivity: BaseActivity() {
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    override fun onResume() {
-        super.onResume()
-
+    override fun onStart() {
+        super.onStart()
         setupCheckout()
 
         activityCheckout?.destroyPurchaseFlow()
@@ -135,6 +135,10 @@ class GiftIAPActivity: BaseActivity() {
 
             override fun onReady(billingRequests: BillingRequests, s: String, b: Boolean) {}
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         this.subscription1MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription1MonthNoRenew) })
         this.subscription3MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription3MonthNoRenew) })
@@ -142,17 +146,23 @@ class GiftIAPActivity: BaseActivity() {
         this.subscription12MonthView?.setOnPurchaseClickListener(View.OnClickListener { selectSubscription(PurchaseTypes.Subscription12MonthNoRenew) })
     }
 
-    override fun onPause() {
+    override fun onStop() {
         activityCheckout?.stop()
-        super.onPause()
+        super.onStop()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         activityCheckout?.onActivityResult(requestCode, resultCode, data)
-
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun updateButtonLabel(sku: Sku, price: String, subscriptions: Inventory.Product) {
         val matchingView = buttonForSku(sku)
@@ -197,9 +207,8 @@ class GiftIAPActivity: BaseActivity() {
     }
 
     private fun selectSubscription(sku: Sku) {
-        if (this.selectedSubscriptionSku != null) {
-            val oldButton = buttonForSku(this.selectedSubscriptionSku)
-            oldButton?.setIsPurchased(false)
+        for (thisSku in skus) {
+            buttonForSku(sku)?.setIsPurchased(false)
         }
         this.selectedSubscriptionSku = sku
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
@@ -227,6 +236,42 @@ class GiftIAPActivity: BaseActivity() {
         activityCheckout.notNull {
             HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
             billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.purchaseFlow)
+        }
+    }
+
+
+    @Subscribe
+    public fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
+        consumePurchase(event.purchase)
+        displayConfirmationDialog()
+        finish()
+    }
+
+    private fun displayConfirmationDialog() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert)
+        } else {
+            AlertDialog.Builder(this)
+        }
+                .setTitle(R.string.gift_confirmation_title)
+                .setMessage(if (remoteConfigManager.enableGiftOneGetOne()) R.string.gift_confirmation_text_g1g1 else R.string.gift_confirmation_text)
+                .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+    }
+
+    private fun consumePurchase(purchase: Purchase) {
+        if (PurchaseTypes.allGemTypes.contains(purchase.sku) || PurchaseTypes.allSubscriptionNoRenewTypes.contains(purchase.sku)) {
+            billingRequests?.consume(purchase.token, object : RequestListener<Any> {
+
+                override fun onSuccess(result: Any) {
+                }
+
+                override fun onError(response: Int, e: Exception) {
+                    crashlyticsProxy.fabricLogE("PurchaseConsumeException", "Consume", e)
+                }
+            })
         }
     }
 }
