@@ -115,7 +115,7 @@
     <activity
         android:id="@+id/gemPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
-        android:label="GemPurchaseActivity" />
+        android:label="@string/gem.purchase.toolbartitle" />
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.NewsFragment"
@@ -181,12 +181,12 @@
     <activity
         android:id="@+id/prefsActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.PrefsActivity"
-        android:label="activity_prefs"
+        android:label="@string/app_settings"
         tools:layout="@layout/activity_prefs" />
     <fragment
         android:id="@+id/inboxMessageListFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment"
-        android:label="InboxMessageListFragment" >
+        android:label="@string/inbox" >
         <argument
             android:name="userID"
             app:argType="string" />
@@ -197,7 +197,7 @@
     <fragment
         android:id="@+id/petDetailRecyclerFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment"
-        android:label="PetDetailRecyclerFragment" >
+        android:label="@string/pets" >
         <argument
             android:name="type"
             app:argType="string" />
@@ -208,7 +208,7 @@
     <fragment
         android:id="@+id/mountDetailRecyclerFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment"
-        android:label="MountDetailRecyclerFragment" >
+        android:label="@string/mounts" >
         <argument
             android:name="type"
             app:argType="string" />
@@ -219,7 +219,7 @@
     <fragment
         android:id="@+id/challengeDetailFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailFragment"
-        android:label="Challenge" >
+        android:label="@string/challenge" >
         <argument
             android:name="challengeID"
             app:argType="string" />
