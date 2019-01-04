@@ -208,7 +208,7 @@ class GiftIAPActivity: BaseActivity() {
 
     private fun selectSubscription(sku: Sku) {
         for (thisSku in skus) {
-            buttonForSku(sku)?.setIsPurchased(false)
+            buttonForSku(thisSku)?.setIsPurchased(false)
         }
         this.selectedSubscriptionSku = sku
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
@@ -243,20 +243,18 @@ class GiftIAPActivity: BaseActivity() {
     @Subscribe
     public fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         consumePurchase(event.purchase)
-        displayConfirmationDialog()
-        finish()
+        runOnUiThread {
+            displayConfirmationDialog()
+        }
     }
 
     private fun displayConfirmationDialog() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert)
-        } else {
-            AlertDialog.Builder(this)
-        }
+        AlertDialog.Builder(this)
                 .setTitle(R.string.gift_confirmation_title)
                 .setMessage(if (remoteConfigManager.enableGiftOneGetOne()) R.string.gift_confirmation_text_g1g1 else R.string.gift_confirmation_text)
                 .setPositiveButton(android.R.string.ok) { dialog, _ ->
                     dialog.dismiss()
+                    finish()
                 }
                 .show()
     }
