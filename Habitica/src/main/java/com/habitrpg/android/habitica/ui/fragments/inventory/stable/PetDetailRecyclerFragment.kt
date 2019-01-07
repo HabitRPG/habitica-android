@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -123,12 +121,6 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
             fragment.itemTypeText = getString(R.string.food)
             fragment.show(fragmentManager, "feedDialog")
         }
-    }
-
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.pets)
     }
 
     companion object {

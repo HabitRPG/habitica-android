@@ -96,9 +96,4 @@ class TavernFragment : BaseMainFragment() {
         tabLayout?.setupWithViewPager(viewPager)
     }
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_tavern)
-    }
 }

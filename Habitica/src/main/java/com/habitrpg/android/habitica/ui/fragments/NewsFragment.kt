@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,9 +46,4 @@ class NewsFragment : BaseMainFragment() {
     }
 
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_news)
-    }
 }

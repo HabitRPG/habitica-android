@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,11 +110,4 @@ class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, android
     }
 
 
-    override fun customTitle(): String {
-        return if (isAdded) {
-            getString(R.string.sidebar_guilds)
-        } else {
-            ""
-        }
-    }
 }

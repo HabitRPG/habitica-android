@@ -2,9 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -113,9 +111,4 @@ class ItemsFragment : BaseMainFragment() {
     }
 
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_items)
-    }
 }

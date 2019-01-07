@@ -368,8 +368,6 @@ class TasksFragment : BaseMainFragment() {
     override val displayedClassName: String?
         get() = null
 
-    override fun customTitle(): String = ""
-
     override fun addToBackStack(): Boolean = false
 
     companion object {

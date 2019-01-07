@@ -284,10 +284,4 @@ class StatsFragment: BaseMainFragment() {
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_stats)
-    }
-
 }

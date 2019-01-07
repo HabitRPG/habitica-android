@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -88,9 +87,4 @@ class ChallengesOverviewFragment : BaseMainFragment() {
         statePagerAdapter?.notifyDataSetChanged()
     }
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.challenges)
-    }
 }

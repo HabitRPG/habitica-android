@@ -120,10 +120,4 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         MainNavigationController.navigate(EquipmentOverviewFragmentDirections.openEquipmentDetail(type, isCostume ?: false, equipped ?: ""))
     }
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_equipment)
-    }
-
 }

@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,6 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragmentArgs
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -104,12 +101,6 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
         if (animalType != null && animalGroup != null) {
             compositeSubscription.add(inventoryRepository.getMounts(animalType!!, animalGroup!!).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
-    }
-
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.mounts)
     }
 
     companion object {

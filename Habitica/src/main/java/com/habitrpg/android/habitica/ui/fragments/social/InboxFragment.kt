@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.appcompat.app.AlertDialog
 import android.view.*
 import android.widget.EditText
@@ -166,9 +165,4 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
         MainNavigationController.navigate(InboxFragmentDirections.openInboxDetail(userID, username))
     }
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_inbox)
-    }
 }

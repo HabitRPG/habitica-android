@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
-import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
@@ -275,11 +274,5 @@ class PartyFragment : BaseMainFragment() {
         tabLayout?.setupWithViewPager(viewPager)
     }
 
-
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_party)
-    }
 
 }

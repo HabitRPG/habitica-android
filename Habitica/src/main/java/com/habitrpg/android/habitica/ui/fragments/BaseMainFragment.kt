@@ -105,10 +105,6 @@ abstract class BaseMainFragment : BaseFragment() {
         super.onSaveInstanceState(outState)
     }
 
-    open fun customTitle(): String {
-        return ""
-    }
-
     fun hideToolbar() {
         activity?.avatarWithBars?.visibility = View.GONE
     }

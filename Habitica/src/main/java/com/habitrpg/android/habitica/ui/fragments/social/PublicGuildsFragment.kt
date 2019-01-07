@@ -2,9 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
 import android.view.*
 import com.habitrpg.android.habitica.R
@@ -95,9 +92,4 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
         return true
     }
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.public_guilds)
-    }
 }

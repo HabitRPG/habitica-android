@@ -1,9 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.faq
 
 import android.os.Bundle
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,9 +63,4 @@ class FAQOverviewFragment : BaseMainFragment() {
         compositeSubscription.add(faqRepository.getArticles().subscribe(Consumer { adapter?.setArticles(it) }, RxErrorHandler.handleEmptyError()))
     }
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.FAQ)
-    }
 }

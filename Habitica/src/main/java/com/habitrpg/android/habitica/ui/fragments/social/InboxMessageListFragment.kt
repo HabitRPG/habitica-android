@@ -180,7 +180,4 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         }
     }
 
-    override fun customTitle(): String {
-        return chatRoomUser ?: ""
-    }
 }

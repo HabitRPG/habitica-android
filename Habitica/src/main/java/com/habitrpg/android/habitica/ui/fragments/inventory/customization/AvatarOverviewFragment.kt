@@ -105,9 +105,4 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
     override fun onNothingSelected(parent: AdapterView<*>) {}
 
 
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_avatar)
-    }
 }
