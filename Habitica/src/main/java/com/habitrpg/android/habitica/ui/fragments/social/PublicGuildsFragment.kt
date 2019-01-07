@@ -66,7 +66,7 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
         compositeSubscription.add(this.socialRepository.getPublicGuilds()
                 .firstElement()
                 .subscribe(Consumer { groups ->
-                    this@PublicGuildsFragment.viewAdapter.updateData(groups)
+                    this@PublicGuildsFragment.viewAdapter.setUnfilteredData(groups)
                 }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(this.socialRepository.retrieveGroups("publicGuilds").subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }

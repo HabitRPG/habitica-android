@@ -81,6 +81,13 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         return this.memberGuildIDs.contains(guild.id)
     }
 
+    private var unfilteredData: OrderedRealmCollection<Group>? = null
+
+    fun setUnfilteredData(data: OrderedRealmCollection<Group>?) {
+        updateData(data)
+        unfilteredData = data
+    }
+
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence): Filter.FilterResults {
@@ -90,7 +97,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             }
 
             override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
-                data.notNull {
+                unfilteredData.notNull {
                     if (constraint.isNotEmpty()) {
                         updateData(it.where()
                                 .contains("name", constraint.toString(), Case.INSENSITIVE)
