@@ -23,6 +23,7 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
 
     var username: String? = ""
     set(value) {
+        field = value
         textView.text = value
     }
 
