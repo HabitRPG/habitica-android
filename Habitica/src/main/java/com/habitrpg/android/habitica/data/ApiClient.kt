@@ -40,7 +40,7 @@ interface ApiClient {
 
     /* challenges api */
 
-    val userChallenges: Flowable<List<Challenge>>
+    fun getUserChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>>
 
     val worldState: Flowable<WorldState>
     fun setLanguageCode(languageCode: String)

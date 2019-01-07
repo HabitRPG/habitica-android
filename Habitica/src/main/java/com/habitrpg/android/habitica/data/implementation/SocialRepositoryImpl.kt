@@ -196,8 +196,6 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<String>> = apiClient.inviteToGroup(id, inviteData)
 
-    override fun getUserChallenges(): Flowable<List<Challenge>> = apiClient.userChallenges
-
     override fun getMember(userId: String?): Flowable<Member> {
         return if (userId == null) {
             Flowable.empty()

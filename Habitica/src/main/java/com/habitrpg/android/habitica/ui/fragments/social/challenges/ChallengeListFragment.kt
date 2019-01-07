@@ -2,24 +2,25 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.MenuItemCompat
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.view.MenuItemCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -30,13 +31,20 @@ import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import javax.inject.Inject
 import javax.inject.Named
+import android.widget.Toast
+import com.habitrpg.android.habitica.R.id.recyclerView
 
-class ChallengeListFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+
+
+class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
+    @Inject
+    lateinit var userRepository: UserRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
+    var user: User? = null
 
     private val swipeRefreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? by bindView(R.id.refreshLayout)
     private val recyclerView: RecyclerViewEmptySupport? by bindView(R.id.recyclerView)
@@ -45,6 +53,8 @@ class ChallengeListFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     private var challengeAdapter: ChallengesListViewAdapter? = null
     private var viewUserChallengesOnly: Boolean = false
 
+    private var nextPageToLoad = 0
+    private var loadedAllData = false
 
     private var challenges: RealmResults<Challenge>? = null
 
@@ -82,11 +92,23 @@ class ChallengeListFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
             this.recyclerView?.setBackgroundResource(R.color.white)
         }
 
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { this.user = it}, RxErrorHandler.handleEmptyError()))
+
         recyclerView?.setEmptyView(emptyView)
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         challengeAdapter?.updateUnfilteredData(challenges)
         loadLocalChallenges()
+
+        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    retrieveChallengesPage()
+                }
+            }
+        })
     }
 
     private fun openDetailFragment(challengeID: String) {
@@ -98,7 +120,7 @@ class ChallengeListFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
     }
 
     override fun onRefresh() {
-        fetchOnlineChallenges()
+        retrieveChallengesPage()
     }
 
     private fun setRefreshing(state: Boolean) {
@@ -114,26 +136,26 @@ class ChallengeListFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
 
         compositeSubscription.add(observable.firstElement().subscribe(Consumer { challenges ->
             if (challenges.size == 0) {
-                fetchOnlineChallenges()
+                retrieveChallengesPage()
             }
             this.challenges = challenges
             challengeAdapter?.updateUnfilteredData(challenges)
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun fetchOnlineChallenges() {
-        setRefreshing(true)
-        user.notNull {
-            challengeRepository.retrieveChallenges(it).doOnComplete {
-                setRefreshing(false)
-            } .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+    private fun retrieveChallengesPage() {
+        if (swipeRefreshLayout?.isRefreshing == true || loadedAllData) {
+            return
         }
-    }
-
-    override fun customTitle(): String {
-        return if (!isAdded) {
-            ""
-        } else getString(R.string.sidebar_challenges)
+        setRefreshing(true)
+        compositeSubscription.add(challengeRepository.retrieveChallenges(nextPageToLoad, viewUserChallengesOnly).doOnComplete {
+            setRefreshing(false)
+        } .subscribe(Consumer {
+            if (it.size < 10) {
+                loadedAllData = true
+            }
+            nextPageToLoad += 1
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -180,7 +202,7 @@ class ChallengeListFragment : BaseMainFragment(), androidx.swiperefreshlayout.wi
                 return true
             }
             R.id.action_reload -> {
-                fetchOnlineChallenges()
+                retrieveChallengesPage()
                 return true
             }
             R.id.action_search -> {

@@ -302,7 +302,9 @@ public interface ApiService {
     /* challenges api */
 
     @GET("challenges/user")
-    Flowable<HabitResponse<List<Challenge>>> getUserChallenges();
+    Flowable<HabitResponse<List<Challenge>>> getUserChallenges(@Query("page") Integer page, @Query("member") boolean memberOnly);
+    @GET("challenges/user")
+    Flowable<HabitResponse<List<Challenge>>> getUserChallenges(@Query("page") Integer page);
 
     @GET("tasks/challenge/{challengeId}")
     Flowable<HabitResponse<TaskList>> getChallengeTasks(@Path("challengeId") String challengeId);

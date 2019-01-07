@@ -9,13 +9,11 @@ import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
 
 class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, userID), ChallengeRepository {
-
 
     override fun isChallengeMember(challengeID: String): Flowable<Boolean> {
         return localRepository.isChallengeMember(userID, challengeID)
@@ -124,9 +122,9 @@ class ChallengeRepositoryImpl(localRepository: ChallengeLocalRepository, apiClie
         return localRepository.getUserChallenges(userId)
     }
 
-    override fun retrieveChallenges(user: User): Flowable<List<Challenge>> {
-        return apiClient.userChallenges
-                .doOnNext { localRepository.saveChallenges(it) }
+    override fun retrieveChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>> {
+        return apiClient.getUserChallenges(page, memberOnly)
+                .doOnNext { localRepository.saveChallenges(it, page == 0, memberOnly) }
     }
 
     override fun leaveChallenge(challenge: Challenge, keepTasks: String): Flowable<Void> {

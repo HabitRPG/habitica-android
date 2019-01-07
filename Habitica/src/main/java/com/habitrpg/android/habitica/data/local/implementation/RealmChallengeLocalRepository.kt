@@ -94,17 +94,19 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
         }
     }
 
-    override fun saveChallenges(challenges: List<Challenge>) {
-        val localChallenges = realm.where(Challenge::class.java).findAll().createSnapshot()
-        val challengesToDelete = ArrayList<Challenge>()
-        for (localTask in localChallenges) {
-            if (!challenges.contains(localTask)) {
-                challengesToDelete.add(localTask)
+    override fun saveChallenges(challenges: List<Challenge>, clearChallenges: Boolean, memberOnly: Boolean) {
+        if (clearChallenges && !memberOnly) {
+            val localChallenges = realm.where(Challenge::class.java).findAll().createSnapshot()
+            val challengesToDelete = ArrayList<Challenge>()
+            for (localTask in localChallenges) {
+                if (!challenges.contains(localTask)) {
+                    challengesToDelete.add(localTask)
+                }
             }
-        }
-        realm.executeTransaction {
-            for (localTask in challengesToDelete) {
-                localTask.deleteFromRealm()
+            realm.executeTransaction {
+                for (localTask in challengesToDelete) {
+                    localTask.deleteFromRealm()
+                }
             }
         }
         realm.executeTransaction { realm1 -> realm1.insertOrUpdate(challenges) }

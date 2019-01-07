@@ -599,8 +599,13 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.deletePushDevice(regId).compose(configureApiCallObserver())
     }
 
-    override val userChallenges: Flowable<List<Challenge>>
-        get() = apiService.userChallenges.compose(configureApiCallObserver())
+    override fun getUserChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>> {
+        return if (memberOnly) {
+            apiService.getUserChallenges(page, memberOnly).compose(configureApiCallObserver())
+        } else {
+            apiService.getUserChallenges(page).compose(configureApiCallObserver())
+        }
+    }
 
     override fun getChallengeTasks(challengeId: String): Flowable<TaskList> {
         return apiService.getChallengeTasks(challengeId).compose(configureApiCallObserver())

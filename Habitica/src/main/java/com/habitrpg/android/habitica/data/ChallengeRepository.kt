@@ -11,7 +11,7 @@ import io.realm.RealmResults
 
 interface ChallengeRepository : BaseRepository {
 
-    fun retrieveChallenges(user: User): Flowable<List<Challenge>>
+    fun retrieveChallenges(page: Int = 0, memberOnly: Boolean): Flowable<List<Challenge>>
     fun getChallenges(): Flowable<RealmResults<Challenge>>
     fun getChallenge(challengeId: String): Flowable<Challenge>
     fun getChallengeTasks(challengeId: String): Flowable<RealmResults<Task>>
