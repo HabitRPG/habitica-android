@@ -68,7 +68,7 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
                 "photo_url" -> {
                     val newName = sharedPreferences.getString(key, "") ?: ""
                     if (newName != user?.profile?.imageUrl) {
-                        userRepository.updateUser(user, "profile.photo", newValue)
+                        userRepository.updateUser(user, "profile.imageUrl", newValue)
                     } else {
                         null
                     }
