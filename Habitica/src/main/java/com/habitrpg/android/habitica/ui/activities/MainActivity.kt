@@ -175,8 +175,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
         Locale.setDefault(languageHelper.locale)
@@ -190,7 +188,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         @Suppress("Deprecation")
         resources.updateConfiguration(configuration,
                 resources.displayMetrics)
-
+        super.onCreate(savedInstanceState)
 
         if (!HabiticaBaseApplication.checkUserAuthentication(this, hostConfig)) {
             return
