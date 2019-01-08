@@ -16,10 +16,9 @@ import kotlinx.android.synthetic.main.fragment_news.*
 class NewsFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
-        val view = container?.inflate(R.layout.fragment_news)
-        hideToolbar()
-        return view
+        return container?.inflate(R.layout.fragment_news)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,11 +33,6 @@ class NewsFragment : BaseMainFragment() {
             }
         }
         newsWebview.loadUrl("$address/static/new-stuff")
-    }
-
-    override fun onDestroyView() {
-        showToolbar()
-        super.onDestroyView()
     }
 
     override fun injectFragment(component: AppComponent) {

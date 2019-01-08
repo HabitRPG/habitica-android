@@ -47,6 +47,7 @@ class AboutFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        this.hidesToolbar = true
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 

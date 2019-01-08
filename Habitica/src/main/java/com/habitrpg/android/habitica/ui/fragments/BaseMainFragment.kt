@@ -37,8 +37,8 @@ abstract class BaseMainFragment : BaseFragment() {
     var bottomNavigation: BottomBar? = null
     var floatingMenuWrapper: ViewGroup? = null
     var usesTabLayout: Boolean = false
+    var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
-    var fragmentSidebarIdentifier: String? = null
     open var user: User? = null
 
     open fun updateUserData(user: User?) {
@@ -79,6 +79,14 @@ abstract class BaseMainFragment : BaseFragment() {
 
         updateTabLayoutVisibility()
 
+        if (hidesToolbar) {
+            hideToolbar()
+            disableToolbarScrolling()
+        } else {
+            showToolbar()
+            enableToolbarScrolling()
+        }
+
         return null
     }
 
@@ -105,20 +113,20 @@ abstract class BaseMainFragment : BaseFragment() {
         super.onSaveInstanceState(outState)
     }
 
-    fun hideToolbar() {
+    private fun hideToolbar() {
         activity?.avatarWithBars?.visibility = View.GONE
     }
 
-    fun showToolbar() {
+    private fun showToolbar() {
         activity?.avatarWithBars?.visibility = View.VISIBLE
     }
 
-    fun disableToolbarScrolling() {
+    private fun disableToolbarScrolling() {
         val params = collapsingToolbar?.layoutParams as? AppBarLayout.LayoutParams
         params?.scrollFlags = 0
     }
 
-    fun enableToolbarScrolling() {
+    private fun enableToolbarScrolling() {
         val params = collapsingToolbar?.layoutParams as? AppBarLayout.LayoutParams
         params?.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
     }

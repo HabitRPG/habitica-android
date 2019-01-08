@@ -26,9 +26,8 @@ class ShopsFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
-        hideToolbar()
-        disableToolbarScrolling()
         return inflater.inflate(R.layout.fragment_viewpager, container, false)
     }
 
@@ -42,10 +41,12 @@ class ShopsFragment : BaseMainFragment() {
 
     override fun onDestroyView() {
         toolbarAccessoryContainer?.removeView(currencyView)
-        showToolbar()
-        enableToolbarScrolling()
-        inventoryRepository.close()
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        inventoryRepository.close()
+        super.onDestroy()
     }
 
     override fun injectFragment(component: AppComponent) {
@@ -55,7 +56,7 @@ class ShopsFragment : BaseMainFragment() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        viewPager!!.adapter = object : FragmentPagerAdapter(fragmentManager) {
+        viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment {
 
@@ -77,10 +78,10 @@ class ShopsFragment : BaseMainFragment() {
 
             override fun getPageTitle(position: Int): CharSequence? {
                 return when (position) {
-                    0 -> return context?.getString(R.string.market)
-                    1 -> return context?.getString(R.string.quests)
-                    2 -> return context?.getString(R.string.seasonalShop)
-                    3 -> return context?.getString(R.string.timeTravelers)
+                    0 -> context?.getString(R.string.market)
+                    1 -> context?.getString(R.string.quests)
+                    2 -> context?.getString(R.string.seasonalShop)
+                    3 -> context?.getString(R.string.timeTravelers)
                     else -> ""
                 }
             }

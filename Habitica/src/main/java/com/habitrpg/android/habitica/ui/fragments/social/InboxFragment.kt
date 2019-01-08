@@ -38,9 +38,8 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
-        hideToolbar()
-        disableToolbarScrolling()
 
         compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 

@@ -44,9 +44,8 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
-        hideToolbar()
-        disableToolbarScrolling()
 
         return inflater.inflate(R.layout.fragment_inbox_message_list, container, false)
     }
@@ -96,12 +95,6 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
                     .firstElement()
                     .subscribe(Consumer { this.chatAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
-    }
-
-    override fun onDestroyView() {
-        showToolbar()
-        enableToolbarScrolling()
-        super.onDestroyView()
     }
 
     override fun onDestroy() {

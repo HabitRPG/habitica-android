@@ -42,9 +42,8 @@ class PartyFragment : BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = true
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
-        hideToolbar()
-        disableToolbarScrolling()
         return inflater.inflate(R.layout.fragment_viewpager, container, false)
     }
 
@@ -77,12 +76,6 @@ class PartyFragment : BaseMainFragment() {
 
     private fun userHasParty(): Boolean {
         return user?.party?.id?.isNotEmpty() == true
-    }
-
-    override fun onDestroyView() {
-        showToolbar()
-        enableToolbarScrolling()
-        super.onDestroyView()
     }
 
     override fun injectFragment(component: AppComponent) {

@@ -60,16 +60,10 @@ class StatsFragment: BaseMainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         tutorialStepIdentifier = "stats"
         tutorialText = getString(R.string.tutorial_stats)
-
+        this.hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
-        hideToolbar()
 
         return container?.inflate(R.layout.fragment_stats)
-    }
-
-    override fun onDestroyView() {
-        showToolbar()
-        super.onDestroyView()
     }
 
     override fun onDestroy() {
