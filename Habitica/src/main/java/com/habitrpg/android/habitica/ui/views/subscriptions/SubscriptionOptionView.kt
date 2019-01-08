@@ -56,26 +56,24 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
     }
 
     fun setIsPurchased(purchased: Boolean) {
-        val horizontalPadding = resources.getDimension(R.dimen.pill_horizontal_padding).toInt()
-        val verticalPadding = resources.getDimension(R.dimen.pill_vertical_padding).toInt()
         if (purchased) {
             subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_selected)
             subscriptionSelectedFrameView.setBackgroundResource(R.color.brand_300)
             gemCapTextView.setBackgroundResource(R.drawable.pill_bg_green)
             gemCapTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-            gemCapTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
             hourGlassTextView.setBackgroundResource(R.drawable.pill_bg_green)
             hourGlassTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-            hourGlassTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
         } else {
             subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_unselected)
             subscriptionSelectedFrameView.setBackgroundResource(R.color.brand_700)
             gemCapTextView.setBackgroundResource(R.drawable.pill_bg)
-            gemCapTextView.setTextColor(ContextCompat.getColor(context, R.color.text_light))
-            gemCapTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
+            gemCapTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_50))
             hourGlassTextView.setBackgroundResource(R.drawable.pill_bg)
-            hourGlassTextView.setTextColor(ContextCompat.getColor(context, R.color.text_light))
-            hourGlassTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
+            hourGlassTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_50))
         }
+        val horizontalPadding = resources.getDimension(R.dimen.pill_horizontal_padding).toInt()
+        val verticalPadding = resources.getDimension(R.dimen.pill_vertical_padding).toInt()
+        gemCapTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
+        hourGlassTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
     }
 }

@@ -119,7 +119,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     override fun onRefresh() {
         nextPageToLoad = 0
         loadedAllData = false
-        retrieveChallengesPage()
+        retrieveChallengesPage(true)
     }
 
     private fun setRefreshing(state: Boolean) {
@@ -142,8 +142,8 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun retrieveChallengesPage() {
-        if (swipeRefreshLayout?.isRefreshing == true || loadedAllData) {
+    private fun retrieveChallengesPage(forced: Boolean = false) {
+        if ((!forced && swipeRefreshLayout?.isRefreshing == true) || loadedAllData) {
             return
         }
         setRefreshing(true)
