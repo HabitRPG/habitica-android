@@ -31,9 +31,6 @@ import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 import javax.inject.Inject
 import javax.inject.Named
-import android.widget.Toast
-import com.habitrpg.android.habitica.R.id.recyclerView
-
 
 
 class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
@@ -120,6 +117,8 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     }
 
     override fun onRefresh() {
+        nextPageToLoad = 0
+        loadedAllData = false
         retrieveChallengesPage()
     }
 

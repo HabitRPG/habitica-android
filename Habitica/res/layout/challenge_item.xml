@@ -66,25 +66,26 @@
             android:textSize="12sp"
             tools:text="Description"
             android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_medium"/>
+            android:layout_marginBottom="@dimen/spacing_small"/>
 
         <LinearLayout
             android:id="@+id/leaderParticipantLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="18dp"
-                android:layout_height="match_parent"
+                android:layout_height="20dp"
                 android:src="@drawable/dialogue_participants" />
 
             <TextView
                 android:id="@+id/participantCount"
                 style="@style/ChallengeTaskDetails"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginStart="4dp"
+                android:gravity="center_vertical"
                 tools:text="12334" />
             <TextView
                 android:id="@+id/official_challenge_view"

@@ -61,12 +61,10 @@ class ChallengesOverviewFragment : BaseMainFragment() {
         statePagerAdapter = object : FragmentStatePagerAdapter(fragmentManager) {
 
             override fun getItem(position: Int): androidx.fragment.app.Fragment? {
-                val fragment = Fragment()
-
-                return when (position) {
-                    0 -> userChallengesFragment
-                    1 -> availableChallengesFragment
-                    else -> fragment
+                return if (position == 0) {
+                    userChallengesFragment
+                } else {
+                    availableChallengesFragment
                 }
             }
 
@@ -77,7 +75,7 @@ class ChallengesOverviewFragment : BaseMainFragment() {
             override fun getPageTitle(position: Int): CharSequence? {
                 return when (position) {
                     0 -> getString(R.string.my_challenges)
-                    1 -> getString(R.string.public_challenges)
+                    1 -> getString(R.string.discover)
                     else -> ""
                 }
             }

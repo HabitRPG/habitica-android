@@ -855,5 +855,6 @@
     <string name="gift_confirmation_title">Your gift was sent!</string>
     <string name="gift_confirmation_text_g1g1">Your gifted subscription was sent and your subscription applied to your account.</string>
     <string name="gift_confirmation_text">Your gifted subscription was sent and your subscription applied to your account.</string>
+    <string name="discover">Discover</string>
 
 </resources>

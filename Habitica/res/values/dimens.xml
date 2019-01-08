@@ -135,7 +135,7 @@
     <dimen name="header_border_spacing">16dp</dimen>
     <dimen name="login_field_width">300dp</dimen>
 
-    <dimen name="bb_height">60dp</dimen>
+    <dimen name="bb_height">65dp</dimen>
     <dimen name="bb_default_elevation">8dp</dimen>
     <dimen name="bb_fake_shadow_height">4dp</dimen>
 </resources>
