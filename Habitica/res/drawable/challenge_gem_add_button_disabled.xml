@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item >
         <bitmap
-            android:src="@drawable/plus"
+            android:src="@drawable/ic_add_white_18dp"
             android:tint="#e1e0e3" />
     </item>
 </layer-list>

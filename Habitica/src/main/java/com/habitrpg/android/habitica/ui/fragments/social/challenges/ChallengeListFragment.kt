@@ -142,7 +142,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun retrieveChallengesPage(forced: Boolean = false) {
+    internal fun retrieveChallengesPage(forced: Boolean = false) {
         if ((!forced && swipeRefreshLayout?.isRefreshing == true) || loadedAllData) {
             return
         }
@@ -157,20 +157,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_list_challenges, menu)
-
-        @Suppress("Deprecation")
-        val badgeLayout = MenuItemCompat.getActionView(menu?.findItem(R.id.action_search)) as? RelativeLayout
-        if (badgeLayout != null) {
-            val filterCountTextView = badgeLayout.findViewById<TextView>(R.id.badge_textview)
-            filterCountTextView.text = null
-            filterCountTextView.visibility = View.GONE
-            badgeLayout.setOnClickListener { showFilterDialog() }
-        }
-    }
-
-    private fun showFilterDialog() {
+    internal fun showFilterDialog() {
         activity.notNull {
             ChallengeFilterDialogHolder.showDialog(it,
                     challenges ?: emptyList(),
@@ -185,31 +172,5 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     private fun changeFilter(challengeFilterOptions: ChallengeFilterOptions) {
         filterOptions = challengeFilterOptions
         challengeAdapter?.filter(challengeFilterOptions)
-    }
-
-    @Suppress("ReturnCount")
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item?.itemId
-
-        when (id) {
-            R.id.action_create_challenge -> {
-                val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            R.id.action_reload -> {
-                retrieveChallengesPage()
-                return true
-            }
-            R.id.action_search -> {
-                showFilterDialog()
-                return true
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 }

@@ -1,18 +1,23 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.*
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
+import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.utils.Action1
 
 import javax.inject.Inject
 
@@ -53,6 +58,54 @@ class ChallengesOverviewFragment : BaseMainFragment() {
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_list_challenges, menu)
+
+        @Suppress("Deprecation")
+        val badgeLayout = MenuItemCompat.getActionView(menu?.findItem(R.id.action_search)) as? RelativeLayout
+        if (badgeLayout != null) {
+            val filterCountTextView = badgeLayout.findViewById<TextView>(R.id.badge_textview)
+            filterCountTextView.text = null
+            filterCountTextView.visibility = View.GONE
+            badgeLayout.setOnClickListener { getActiveFragment()?.showFilterDialog() }
+        }
+    }
+
+    @Suppress("ReturnCount")
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        val id = item?.itemId
+
+        when (id) {
+            R.id.action_create_challenge -> {
+                val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.action_reload -> {
+                getActiveFragment()?.retrieveChallengesPage()
+                return true
+            }
+            R.id.action_search -> {
+                getActiveFragment()?.showFilterDialog()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun getActiveFragment(): ChallengeListFragment? {
+        return if (viewPager?.currentItem == 0) {
+            userChallengesFragment
+        } else {
+            availableChallengesFragment
+        }
     }
 
     private fun setViewPagerAdapter() {
