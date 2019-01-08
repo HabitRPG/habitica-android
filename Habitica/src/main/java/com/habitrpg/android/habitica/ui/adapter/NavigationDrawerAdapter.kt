@@ -129,7 +129,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): android
                         val pR = pillView.paddingRight
                         val pB = pillView.paddingBottom
 
-                        pillView.backgroundCompat = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_300)
+                        pillView.backgroundCompat = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_200)
                         pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
                         pillView.setPadding(pL, pT, pR, pB)
                     }

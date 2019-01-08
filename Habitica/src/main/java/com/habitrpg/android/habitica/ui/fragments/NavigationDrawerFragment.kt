@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments
 
 
 import android.app.ActionBar
-import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -21,25 +20,9 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.ui.activities.AboutActivity
-import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
-import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment
-import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment
-import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment
-import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
-import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment
-import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import io.reactivex.disposables.CompositeDisposable
@@ -199,6 +182,12 @@ class NavigationDrawerFragment : DialogFragment() {
             setDisplayName(it.profile?.name)
             avatarView.setAvatar(it)
             questMenuView.configure(it)
+            val tavernItem = adapter.items.find { item -> item.identifier == SIDEBAR_TAVERN }
+            if (it.preferences?.sleep == true) {
+                tavernItem?.additionalInfo = context?.getString(R.string.damage_paused)
+            } else {
+                tavernItem?.additionalInfo = null
+            }
         }, RxErrorHandler.handleEmptyError()))
 
         messagesButtonWrapper.setOnClickListener { setSelection(R.id.inboxFragment) }
@@ -220,7 +209,7 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.skillsFragment, SIDEBAR_SKILLS, context.getString(R.string.sidebar_skills)))
             items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
             items.add(HabiticaDrawerItem(0, SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
-            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern)))
+            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern), false, false))
             items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
             items.add(HabiticaDrawerItem(R.id.guildsOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
             items.add(HabiticaDrawerItem(R.id.challengesOverviewFragment, SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
