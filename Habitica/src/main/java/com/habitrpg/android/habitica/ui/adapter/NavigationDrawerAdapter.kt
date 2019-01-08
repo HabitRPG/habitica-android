@@ -123,19 +123,15 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): android
                     if (pillView != null) {
                         pillView.visibility = View.VISIBLE
                         pillView.text = drawerItem.additionalInfo
-                        val drawable = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg)
-                        if (drawable != null) {
-                            DrawableCompat.setTint(drawable, backgroundTintColor)
 
-                            val pL = pillView.paddingLeft
-                            val pT = pillView.paddingTop
-                            val pR = pillView.paddingRight
-                            val pB = pillView.paddingBottom
+                        val pL = pillView.paddingLeft
+                        val pT = pillView.paddingTop
+                        val pR = pillView.paddingRight
+                        val pB = pillView.paddingBottom
 
-                            pillView.backgroundCompat = drawable
-                            pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
-                            pillView.setPadding(pL, pT, pR, pB)
-                        }
+                        pillView.backgroundCompat = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_300)
+                        pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
+                        pillView.setPadding(pL, pT, pR, pB)
                     }
                 } else {
                     pillView?.visibility = View.GONE
