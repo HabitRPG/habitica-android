@@ -58,7 +58,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         activityCheckout?.onActivityResult(requestCode, resultCode, data)
     }
 
-    private var showSubscriptionPageFirst = false
+    private var showSubscriptionPageFirst = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

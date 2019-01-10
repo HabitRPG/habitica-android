@@ -50,10 +50,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         HabiticaBaseApplication.component?.inject(this)
         super.onCreate(savedInstanceState)
 
-        val userID = preferenceManager.sharedPreferences.getString(context?.getString(R.string.SP_userID), null)
-        if (userID != null) {
-            compositeSubscription.add(userRepository.getUser(userID).subscribe(Consumer { this@PreferencesFragment.setUser(it) }, RxErrorHandler.handleEmptyError()))
-        }
     }
 
     override fun setupPreferences() {
@@ -240,8 +236,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         }
     }
 
-    fun setUser(user: User?) {
-        this.user = user
+    override fun setUser(user: User?) {
+        super.setUser(user)
         if (10 <= user?.stats?.lvl ?: 0) {
             if (user?.flags?.classSelected == true) {
                 if (user.preferences?.disableClasses == true) {

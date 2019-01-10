@@ -31,6 +31,7 @@ open class Preferences : RealmObject(), AvatarPreferences {
     var sound: String? = null
     var dayStart: Int = 0
     var timezoneOffset: Int = 0
+    var pushNotifications: PushNotificationsPreference? = null
 
     override fun getBackground(): String? {
         return background

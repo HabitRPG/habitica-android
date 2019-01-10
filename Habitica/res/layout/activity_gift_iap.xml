@@ -121,7 +121,7 @@
                 android:id="@+id/gift_subscription_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/blue_50"
+                android:background="@color/teal_50"
                 android:padding="@dimen/spacing_large"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">

@@ -853,9 +853,10 @@
     <string name="send_gift">Send Gift</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
-    <string name="gift_confirmation_text_g1g1">Your gifted subscription was sent and your subscription applied to your account.</string>
-    <string name="gift_confirmation_text">Your gifted subscription was sent and your subscription applied to your account.</string>
+    <string name="gift_confirmation_text_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
+    <string name="gift_confirmation_text">You sent %s a %s-month Habitica subscription.</string>
     <string name="discover">Discover</string>
     <string name="damage_paused">Damage paused</string>
+    <string name="preference_push_important_announcements">Important Announcements</string>
 
 </resources>

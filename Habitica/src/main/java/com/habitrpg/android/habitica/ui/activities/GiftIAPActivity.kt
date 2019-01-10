@@ -233,6 +233,9 @@ class GiftIAPActivity: BaseActivity() {
     }
 
     private fun purchaseSubscription(sku: Sku) {
+        if (giftedUserID?.isNotEmpty() != true) {
+            return
+        }
         activityCheckout.notNull {
             HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
             billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.purchaseFlow)
@@ -248,10 +251,25 @@ class GiftIAPActivity: BaseActivity() {
         }
     }
 
+    private fun selectedDurationString(): String {
+        return when (selectedSubscriptionSku?.id?.code) {
+            PurchaseTypes.Subscription1MonthNoRenew -> "1"
+            PurchaseTypes.Subscription3MonthNoRenew -> "3"
+            PurchaseTypes.Subscription6MonthNoRenew -> "6"
+            PurchaseTypes.Subscription12MonthNoRenew -> "12"
+            else -> ""
+        }
+    }
+
     private fun displayConfirmationDialog() {
+        val message = getString(if (remoteConfigManager.enableGiftOneGetOne()){
+            R.string.gift_confirmation_text_g1g1
+        } else {
+            R.string.gift_confirmation_text
+        }, giftedUsername, selectedDurationString())
         AlertDialog.Builder(this)
                 .setTitle(R.string.gift_confirmation_title)
-                .setMessage(if (remoteConfigManager.enableGiftOneGetOne()) R.string.gift_confirmation_text_g1g1 else R.string.gift_confirmation_text)
+                .setMessage(message)
                 .setPositiveButton(android.R.string.ok) { dialog, _ ->
                     dialog.dismiss()
                     finish()

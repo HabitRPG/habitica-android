@@ -27,6 +27,8 @@ public class HabiticaLocalNotificationFactory {
             return new WonChallengeLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY)) {
             return new ChangeUsernameLocalNotification(context, notificationType);
+        } else if (notificationType.contains(PushNotificationManager.GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY)) {
+            return new GiftOneGetOneLocalNotification(context, notificationType);
         } else {
             return new GenericLocalNotification(context, notificationType);
         }

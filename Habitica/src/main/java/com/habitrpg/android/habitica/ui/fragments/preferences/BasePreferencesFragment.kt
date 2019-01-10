@@ -26,9 +26,10 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer<User> {
-            this.user = it
-        }, RxErrorHandler.handleEmptyError()))
+        val userID = preferenceManager.sharedPreferences.getString(context?.getString(R.string.SP_userID), null)
+        if (userID != null) {
+            compositeSubscription.add(userRepository.getUser(userID).subscribe(Consumer { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        }
     }
 
     override fun onDestroy() {
@@ -44,4 +45,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     protected abstract fun setupPreferences()
 
+    open fun setUser(user: User?) {
+        this.user = user
+    }
 }

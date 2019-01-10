@@ -120,6 +120,7 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
         const val QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted"
         const val WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge"
         const val CHANGE_USERNAME_PUSH_NOTIFICATION_KEY = "changeUsername"
+        const val GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY = "gift1get1"
         private const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
     }
 }

@@ -17,14 +17,25 @@ class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClien
 
     override fun createTag(tag: Tag): Flowable<Tag> {
         return apiClient.createTag(tag)
+                .doOnNext {
+                    it.userId = userID
+                    localRepository.save(it)
+                }
     }
 
     override fun updateTag(tag: Tag): Flowable<Tag> {
         return apiClient.updateTag(tag.id, tag)
+                .doOnNext {
+                    it.userId = userID
+                    localRepository.save(it)
+                }
     }
 
     override fun deleteTag(id: String): Flowable<Void> {
         return apiClient.deleteTag(id)
+                .doOnNext {
+                    localRepository.deleteTag(id)
+                }
     }
 
     override fun createTags(tags: Collection<Tag>): Single<List<Tag>> {

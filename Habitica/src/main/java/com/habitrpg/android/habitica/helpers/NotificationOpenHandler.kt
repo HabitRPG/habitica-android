@@ -1,19 +1,10 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity
-import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
-import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment
-import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment_MembersInjector
-import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment
-import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment
-import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment
 
 class NotificationOpenHandler {
 
@@ -29,7 +20,12 @@ class NotificationOpenHandler {
                 PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY -> openGuildDetailScreen(intent.getStringExtra("groupID"))
                 PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY -> openPrivateMessageScreen(intent.getStringExtra("replyTo"))
                 PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY -> openSettingsScreen()
+                PushNotificationManager.GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY -> openSubscriptionScreen()
             }
+        }
+
+        private fun openSubscriptionScreen() {
+            MainNavigationController.navigate(R.id.gemPurchaseActivity)
         }
 
         private fun openPrivateMessageScreen(userID: String?) {
