@@ -115,6 +115,8 @@
   <string name="friday">Sexta</string>
   <string name="saturday">Sábado</string>
   <string name="sunday">Domingo</string>
+  <string name="levelup_header">Você alcançou o Nível %1$d!</string>
+  <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está totalmente curado!</string>
   <string name="levelup_button">Hurra!</string>
   <string name="faint_subtitle">Não se desespere!</string>
   <string name="faint_penalty_body">Você perdeu um Nível. seu Ouro, e uma parte de Equipamento, mas você pode ganhar todos eles de volta com trabalho pesado! Boa sorte--Você se sairá bem!</string>
@@ -443,19 +445,21 @@
   <string name="subscribe.listitem4">Quantidade máxima de drop duplicada</string>
   <string name="subscriptions">Assinaturas</string>
   <string name="subscription_duration">Acontece a cada %s</string>
+  <string name="subscription_duration_norenew">Por%s</string>
   <string name="subscribe">Assinar</string>
   <string name="subscribe.listitem1.description">Alexandre, o Mercador irá agora vender a você Gemas por 20 ouros cada uma!\n\nSuas remessas mensais são inicialmente restritas a 25 Gemas por mês, aumentam baseado no seu tempo de assinatura. A capacidade aumenta em 5 Gemas para cada três meses de assinatura, limitando-se a um máximo de 50 Gemas por mês!</string>
   <string name="subscribe.listitem2.description">Cada mês você irá receber um item cosmético único para o seu personagem!\n\nAlém disso, para cada três meses de inscrição, os Viajantes Misteriosos do Tempo irão te dar acesso a itens cosméticos históricos (e futuristas)!</string>
   <string name="subscribe.listitem3.description">Torna Afazeres completos e histórico de tarefas disponíveis por mais tempo.</string>
   <string name="subscribe.listitem4.description">A capacidade de drop dobrada fará com que você receba mais itens de atividades completas todos os dias ajudando você a completar o seu estábulo mais rápido!</string>
-  <string name="subscribe1month.gemcap">Capacidade de gema começa em 25</string>
-  <string name="subscribe3month.gemcap">Capacidade de gema aumentada para 30</string>
-  <string name="subscribe6month.gemcap">Capacidade de gema aumentada para 35</string>
-  <string name="subscribe12month.gemcap">Capacidade de gema aumentada para 45</string>
+  <string name="subscribe1month.gemcap">Limite de 25 Gemas</string>
+  <string name="subscribe3month.gemcap">Limite de 30 Gemas</string>
+  <string name="subscribe6month.gemcap">Limite de 35 Gemas</string>
+  <string name="subscribe12month.gemcap">Limite de 45 Gemas </string>
   <string name="subscription_hourglasses">+%d Ampola Mística</string>
   <string name="payment_method">Método de pagamento</string>
   <string name="subscription">Assinatura</string>
   <string name="active">Ativo</string>
+  <string name="due">Data de vencimento</string>
   <string name="cancel_subscription">Cancelar Assinatura</string>
   <string name="cancel_subscription_google.description">Não quer mais ser Assinante? Você pode achar a opção de Cancelar a Assinatura na seção \"Meus apps\" da Google Play Store.</string>
   <string name="cancel_subscription_notgoogle.description">Não quer mais ser Assinante? Devido ao seu método de pagamento, você só pode cancelar sua inscrição pelo site. Clique no botão abaixo para abrir o site no seu navegador!</string>
@@ -525,6 +529,7 @@
   <string name="login_btn_fb">Logar com Facebook</string>
   <string name="login_btn_google">Logar com Google</string>
   <string name="action_back">Voltar</string>
+  <string name="welcome_text">Oh, você deve ser novo aqui. Eu sou o Justin e serei seu guia no Habitica.\n\nPrimeiro, como devemos chamá-lo? Sinta-se livre para mudar o nome que eu havia escolhido. Quando você estiver com tudo definido, vamos criar seu avatar!</string>
   <string name="randomize">Aleatório</string>
   <string name="avatar_extras">Extras</string>
   <string name="avatar_skin_color">Cor da Pele</string>
@@ -780,6 +785,7 @@
   <string name="two_handed">Duas mãos</string>
   <string name="usernamePromptTitle">É hora de definir seu nome de usuário!</string>
   <string name="usernamePromptBody">Nomes de login agora são nomes de usuário únicos e estarão visíveis ao lado do seu nome de exibição e serão usados para convites, @menções em bate-papo e mensagens.</string>
+  <string name="usernamePromptWiki">Se você quiser saber mais sobre essa mudança, <a href="https://habitica.wikia.com/wiki/Player_Names">visite nossa wiki.</a></string>
   <string name="confirmUsername">Confirmar nome de usuário</string>
   <string name="usernamePromptDisclaimer">Nomes de usuários devem estar de acordo com os nossos <a href="https://habitica.com/static/terms">Termos de Serviço</a> e <a href="https://habitica.com/static/community-guidelines">Diretrizes da Comunidade</a>. Se você não definiu um nome de login anteriormente, seu nome de usuário foi gerado automaticamente.</string>
   <string name="confirm_username_title">Você ter certeza que deseja confirmar seu nome de usuário atual?</string>
@@ -788,6 +794,31 @@
   <string name="confirm_username">Confirmar nome de usuário</string>
   <string name="username_not_confirmed">Nome de usuário não confirmado</string>
   <string name="username_confirmed">Nome de Usuário Confirmado</string>
-  <string name="enter_recipient_username">Insira o nome de usuário do destinatário</string>
+  <string name="username_level">\@%s・Nível %d</string>
+  <string name="enter_recipient_username">Digite o @ nome de usuário do destinatário</string>
   <string name="username_copied">Nome de usuário copiado para Área de Transferência</string>
+  <string name="verification_pet">Um desses Mascotes Veteranos estará esperando por você depois que tiver terminado de confirmar!</string>
+  <string name="welcomeNameTitle">Como devemos chamá-lo?</string>
+  <string name="display_name_length_error">Nomes de exibição devem conter entre 1 e 30 caracteres</string>
+  <string name="setup_task_join_habitica">Junte-se ao Habitica (Confira-me!)</string>
+  <string name="setup_task_join_habitica_notes">Você pode concluir esse Afazer, editá-lo ou removê-lo.</string>
+  <string name="setup_task_reward">Recompense-se! </string>
+  <string name="setup_task_reward_notes">Assista TV, jogue um game, coma uma doce, você escolhe!</string>
+  <string name="equipment_str">FOR:</string>
+  <string name="equipment_con">CON:</string>
+  <string name="equipment_int">INT:</string>
+  <string name="equipment_per">PER:</string>
+  <string name="visit_website">Visitar website</string>
+  <string name="subscribe_gift_description">Quer dar os benefícios de uma assinatura para outra pessoa?</string>
+  <string name="gift_subscription">Dê uma Assinatura de presente</string>
+  <string name="gift_one_get_one_description">O evento de \"Dê uma assinatura e ganhe outra de graça\" está acontecendo agora!</string>
+  <string name="gift_title">Quem você gostaria de presentear?</string>
+  <string name="gift_one_get_one">Presenteie uma, Ganhe uma!</string>
+  <string name="gift_one_get_one_detailed_description">Enquanto esta promoção estiver ativa, você receberá uma assinatura correspondente automaticamente após o envio do seu presente.</string>
+  <string name="gift_subscription_subtitle">Escolha abaixo a assinatura que você gostaria de presentear! Essa compra não se renovará automaticamente.</string>
+  <string name="send_gift">Enviar Presente</string>
+  <string name="server">Servidor</string>
+  <string name="gift_confirmation_title">Seu presente foi enviado!</string>
+  <string name="gift_confirmation_text_g1g1">Sua assinatura de presente foi enviada e uma outra assinatura foi aplicada à sua conta.</string>
+  <string name="gift_confirmation_text">Sua assinatura de presente foi enviada e uma outra assinatura foi aplicada à sua conta.</string>
 </resources>

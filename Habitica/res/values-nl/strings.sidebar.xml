@@ -3,7 +3,7 @@
   <string name="sidebar.tasks">Taken</string>
   <string name="sidebar.skills">Vaardigheden</string>
   <string name="sidebar.section.social">Sociaal</string>
-  <string name="sidebar.inbox">Inbox</string>
+  <string name="sidebar.inbox">Berichten</string>
   <string name="sidebar.tavern">Herberg</string>
   <string name="sidebar.party">Groep</string>
   <string name="sidebar.purchaseGems">Edelstenen &amp; abonnement</string>
@@ -17,4 +17,5 @@
   <string name="sidebar.settings">Instellingen</string>
   <string name="sidebar.about">Over</string>
   <string name="sidebar_shops">Winkels</string>
+  <string name="sidebar_stats">Statistieken</string>
 </resources>

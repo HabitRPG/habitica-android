@@ -441,10 +441,6 @@
   <string name="subscribe.listitem2.description">每個月你將會收到一件獨特的角色飾品！另外，每連續捐助三個月，神秘的時間旅行者將授予你得到過去(和未來)的飾品的資格。</string>
   <string name="subscribe.listitem3.description">使完成的待辦事項和任務的歷史記錄保留更長時間</string>
   <string name="subscribe.listitem4.description">雙倍掉落讓你每天能夠從完成的任務中得到更多的物品，幫助你更快地馴服坐騎！</string>
-  <string name="subscribe1month.gemcap">寶石上限起始為25</string>
-  <string name="subscribe3month.gemcap">寶石上限增加到30</string>
-  <string name="subscribe6month.gemcap">寶石上限增加到35</string>
-  <string name="subscribe12month.gemcap">寶石上限增加到45</string>
   <string name="subscription_hourglasses">%d神秘沙漏</string>
   <string name="payment_method">付款方式</string>
   <string name="subscription">捐助</string>

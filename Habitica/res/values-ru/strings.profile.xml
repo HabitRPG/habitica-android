@@ -3,6 +3,7 @@
     <string name="profile_pets_and_mounts">Питомцы &amp; Скакуны</string>
     <string name="profile_pets_found">Найденые питомцы</string>
     <string name="profile_mounts_tamed">Прирученые скакуны</string>
+    <string name="profile_loading_data">Загрузка данных участника...</string>
     <string name="profile_send_message_to">Отправить сообщение %s</string>
     <string name="profile_message_sent_to">Сообщение отправлено %s</string>
     <string name="profile_level">Уровень:</string>

@@ -257,6 +257,9 @@
   <string name="quest_cancel_message">Tem a certeza que deseja cancelar esta missão? Todos os convites aceites serão perdidos. O dono da missão manterá a posse do pergaminho da missão.</string>
   <string name="quest.invitation">Convite de Missão</string>
   <string name="quest.invitation.text">Foi convidado para participar numa missão!</string>
+  <string name="ago_minutes">%dm atrás</string>
+  <string name="ago_hours">%dh atrás</string>
+  <string name="ago_1hour">1h atrás</string>
   <string name="today">Hoje</string>
   <string name="sidebar_items">Itens</string>
   <string name="eggs">Ovos</string>

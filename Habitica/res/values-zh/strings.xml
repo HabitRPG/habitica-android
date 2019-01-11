@@ -115,6 +115,8 @@
   <string name="friday">星期五</string>
   <string name="saturday">星期六</string>
   <string name="sunday">星期日</string>
+  <string name="levelup_header">你达到%1$d级！</string>
+  <string name="levelup_detail">通过完成您现实生活中的目标，你提升等级并恢复满血状态了！</string>
   <string name="levelup_button">吼啊~！</string>
   <string name="faint_subtitle">别失望！</string>
   <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你就可以把他们都拿回来！加油，你会更棒的！</string>
@@ -349,6 +351,7 @@
   <string name="send">发送</string>
   <string name="invite">邀请朋友</string>
   <string name="invite_id_description">如果你的朋友们已经在使用Habitica 了，通过&lt;用户ID邀请他们 。</string>
+  <string name="invite_username_description">如果你已有朋友在使用Habitica，通过这里的用户名邀请他们。</string>
   <string name="invite_email_description">如果你的朋友通过你的邮件加入Habitica，他们将自动被邀请加入你的队伍。</string>
   <string name="add_invites">添加邀请</string>
   <string name="user_id">用户ID</string>
@@ -447,10 +450,10 @@
   <string name="subscribe.listitem2.description">每个月你将会收到一件独特的角色饰品！另外，每连续捐助三个月，神秘的时间旅行者将授予你得到过去(和将来)的饰品的资格。</string>
   <string name="subscribe.listitem3.description">使完成的待办事项和任务的历史记录保留更长时间</string>
   <string name="subscribe.listitem4.description">双倍掉落让你每天能够从完成的任务中得到更多的物品，帮助你更快地驯服坐骑！</string>
-  <string name="subscribe1month.gemcap">宝石上限起始为25</string>
-  <string name="subscribe3month.gemcap">宝石上限增加到30</string>
-  <string name="subscribe6month.gemcap">宝石上限增加到35</string>
-  <string name="subscribe12month.gemcap">宝石上限增加到45</string>
+  <string name="subscribe1month.gemcap">25 宝石</string>
+  <string name="subscribe3month.gemcap">30 宝石</string>
+  <string name="subscribe6month.gemcap">35 宝石</string>
+  <string name="subscribe12month.gemcap">45 宝石</string>
   <string name="subscription_hourglasses">+%d 神秘沙漏</string>
   <string name="payment_method">付款方式</string>
   <string name="subscription">捐助</string>
@@ -525,6 +528,7 @@
   <string name="login_btn_fb">Facebook登录</string>
   <string name="login_btn_google">Google登录</string>
   <string name="action_back">背部</string>
+  <string name="welcome_text">哦，你一定是新来的。我是贾斯汀，你在Habitica的向导。\n\n开始之前，我们该怎么称呼您? 可随意修改我预先设定的。 都设置完毕后，创建你的物形象。</string>
   <string name="randomize">随机</string>
   <string name="avatar_extras">额外收益</string>
   <string name="avatar_skin_color">肤色</string>
@@ -593,6 +597,7 @@
   <string name="loading">加载中...</string>
   <string name="reloading_content">重新加载内容</string>
   <string name="your_balance">你的余额：</string>
+  <string name="available_until" formatted="false">到%s可用</string>
   <string name="gems_left_nomax" formatted="false">每月宝石：还剩%d 颗</string>
   <string name="health">生命值</string>
   <string name="collect">收集</string>
@@ -607,7 +612,10 @@
   <string name="int_abbrv">智力</string>
   <string name="con_abbrv">体质</string>
   <string name="reset_account">重置账户</string>
+  <string name="reset_account_description">警告！这会重置你角色的许多数值。强烈不建议你这样做。不过，在短暂的试玩一段时间后，进行重置或许会有所帮助。
+将丢失级别、金币、经验信息；永久删除所有任务及其历史记录（除挑战外）；丢失所有装备，包括限定装备和捐赠获得的神秘装备（重置后仍可购买获得，职业装备仍需达到级别才能重新购买）；同时保持当前职业，拥有宠物和坐骑。你可能需要另一种方案，如果使用重生球任务与装备不会丢失。</string>
   <string name="delete_account">删除账号</string>
+  <string name="delete_account_description">你确定吗？这会永久地删除你的帐号，并且永远也无法恢复！如果希望再次使用Habitica需要注册一个新的帐号。已有的金钱和花掉的宝石无法被退费。如果你非常确定，在下面的文本框中输入你的密码。</string>
   <string name="reset_account_confirmation">重置我的账号</string>
   <string name="delete_account_confirmation">删除我的账户</string>
   <string name="danger_zone">危险区域</string>
@@ -623,6 +631,7 @@
   <string name="timetravelers_closed_description">每三个月获得一次神秘沙漏，然後用它们解锁过去和未来的限量版物品，宠物和坐骑！</string>
   <string name="want_to_subscribe">我想订阅</string>
   <string name="seasonal_closed_description">盛大庆典在二分二至日前后举行，到时再来看看各种各样的特殊季节物品吧！</string>
+  <string name="come_back_soon">稍后回来！</string>
   <string name="level">属性等级</string>
   <string name="streak_label">21天连续登陆</string>
   <string name="stats">属性</string>
@@ -630,6 +639,7 @@
   <string name="fix_character_values">修复角色数值</string>
   <string name="saving">保存</string>
   <string name="forgot_password_title">邮箱发送密码重置链接</string>
+  <string name="forgot_password_description">输入你的email注册Habitica帐户</string>
   <string name="profile">个人信息</string>
   <string name="profile_summary">完善你的公开资料</string>
   <string name="display_name">角色名</string>
@@ -642,6 +652,7 @@
   <string name="change_password">修改密码</string>
   <string name="change_email">修改邮箱</string>
   <string name="change_login_name">更换你的登录名</string>
+  <string name="change_username">修改用户名</string>
   <string name="change">确定修改</string>
   <string name="character_level">角色等级</string>
   <string name="auto_allocate_points">自动分配点数</string>
@@ -671,6 +682,7 @@
   <string name="classless">无职业</string>
   <string name="class_equipment_shop_dialog">这个物品只对特定职业开放。\n你可以在设置改变你的职业。</string>
   <string name="class_gear_disclaimer">你只能购买当前职业的装备。</string>
+  <string name="available_stats" formatted="false">%d分</string>
   <string name="tavern_description">欢迎来到客栈！ 拉张凳子坐下聊天，或者暂停任务休息一下。</string>
   <string name="check_into_inn">入住客栈</string>
   <string name="community_guidelines">社区守则</string>
@@ -681,6 +693,8 @@
   <string name="report_bug">报告漏洞</string>
   <string name="player_tiers">玩家头衔</string>
   <string name="tiers_descriptions">聊天中你见到的彩色用户名代表一个玩家的贡献等级。等级越高，说明这个玩家对Habitica的贡献越大，无论是美术，编程，社区，还是别的贡献！</string>
+  <string name="navigation_drawer_open">打开导航栏</string>
+  <string name="navigation_drawer_close">关闭导航栏</string>
   <string name="world_boss">世界Boss</string>
   <string name="world_boss_art">boss图像</string>
   <string name="boss_art">boss图像</string>
@@ -689,11 +703,13 @@
   <string name="strike_description_title">There are 3 potential Rage Strikes</string>
   <string name="strike_description_subtitle">Boss可以有3次暴走。</string>
   <string name="strike_active_title" formatted="false">%s被攻击了！</string>
+  <string name="questShop">用户商店</string>
   <string name="market_owner_long">商人Alex</string>
   <string name="tavern_owner_long">客栈老板Daniel</string>
   <string name="stable_owner_long">驯兽师Matt</string>
   <string name="hide_boss_art">隐藏boss图像</string>
   <string name="active_world_boss">活跃的世界boss</string>
+  <string name="no_party_title">在队伍中玩Habitica </string>
   <string name="join_party_title">想要加入队伍？</string>
   <string name="create_party_website">打开网页来创建队伍</string>
   <string name="id_copied">ID已复制到剪贴板</string>
@@ -703,5 +719,14 @@
   <string name="world_boss_description_1">完成任务就会伤害boss</string>
   <string name="questShop_owner_long">探索任务向导Ian</string>
   <string name="rage_attack">愤怒攻击:</string>
+  <string name="report">报告</string>
+  <string name="like">赞</string>
+  <string name="reply">回复</string>
+  <string name="challenge_prize">挑战奖品</string>
+  <string name="created_challenge">新建挑战</string>
+  <string name="public_challenge">公开挑战</string>
+  <string name="same_day_reminder_title">你添加任务了么？</string>
+  <string name="next_day_reminder_title">今天完成任务了么？</string>
+  <string name="next_day_reminder_text">升级后有许多可解锁和发现的，所以继续你的任务。祝玩得愉快！</string>
   <string name="two_handed">双手握持</string>
 </resources>

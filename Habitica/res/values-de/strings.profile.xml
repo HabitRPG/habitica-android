@@ -3,6 +3,7 @@
     <string name="profile_pets_and_mounts">Haustiere &amp; Reittiere</string>
     <string name="profile_pets_found">Gefundene Haustiere</string>
     <string name="profile_mounts_tamed">Gezähmte Reittiere</string>
+    <string name="profile_loading_data">Lade Mitgliederdaten...</string>
     <string name="profile_send_message_to">Nachricht an %s schicken</string>
     <string name="profile_message_sent_to">Nachricht an %s gesendet</string>
     <string name="profile_level">Level:</string>

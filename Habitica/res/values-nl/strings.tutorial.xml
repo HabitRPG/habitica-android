@@ -19,4 +19,5 @@
   <string name="tutorial_party">Dit is waar jij en je vrienden elkaar verantwoordelijk kunnen houden voor het bereiken van je doelen en je samen monsters kan bevechten met je taken!</string>
   <string name="tutorial_tavern">Welkom in de Herberg, een openbare chatroom voor alle leeftijden! Hier kan je praten over productiviteit en vragen stellen. Veel plezier!</string>
   <string name="tutorial_classes">Kies hier of je Krijger, Magiër, Heler of Dief wilt worden! Elke klasse heeft unieke uitrustingen en vaardigheden. Tik op de (?) om meer te weten te komen!</string>
+  <string name="tutorial_stats">Tik de grijze knop aan om meerdere punten ineens aan te wijzen, of tik op de pijlen om ze één punt per keer toe  te voegen.</string>
 </resources>

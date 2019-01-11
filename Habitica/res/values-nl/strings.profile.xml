@@ -3,6 +3,7 @@
     <string name="profile_pets_and_mounts">Huis- &amp; rijdieren</string>
     <string name="profile_pets_found">Gevonden huisdieren</string>
     <string name="profile_mounts_tamed">Getemde rijdieren</string>
+    <string name="profile_loading_data">Gebruikersgegevens aan het laden...</string>
     <string name="profile_send_message_to">Stuur bericht naar %s</string>
     <string name="profile_message_sent_to">Bericht verzonden naar %s</string>
     <string name="profile_level">Niveau:</string>

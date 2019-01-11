@@ -115,6 +115,8 @@
   <string name="friday">Cuma</string>
   <string name="saturday">Cumartesi</string>
   <string name="sunday">Pazar</string>
+  <string name="levelup_header">%1$d. Seviyeye Yükseldin!</string>
+  <string name="levelup_detail">Gerçek hayattaki hedeflerini gerçekleştirerek seviye atladın ve sağlığın yenilendi!</string>
   <string name="levelup_button">Yaşasın!</string>
   <string name="faint_subtitle">Umudunu kaybetme!</string>
   <string name="faint_penalty_body">Bir Seviye, Altınlarını ve bir parça Ekipman kaybettin, ama çok çalışarak hepsini yeniden kazanabilirsin! İyi şanslar—bu işi becereceksin.</string>
@@ -447,10 +449,10 @@
   <string name="subscribe.listitem2.description">Her ay avatarın için özel görsel bir eşya alırsın!\n\nAyrıca, her üç aylık ardışık abonelik için, Gizemli Zaman Yolcuları sana tarihi (ve fütürist!) görsel eşyalara erişim sağlar.</string>
   <string name="subscribe.listitem3.description">Tamamlanmış Yapılacak İş ve iş geçmişlerine daha uzun süre erişim sağlar.</string>
   <string name="subscribe.listitem4.description">İki katı ganimet limiti tamamladığın işlerinden her gün daha fazla eşya almana ve ahırını daha hızlı tamamlamana yardımcı olur!</string>
-  <string name="subscribe1month.gemcap">Elmas limiti 25\'le başlar</string>
-  <string name="subscribe3month.gemcap">Elmas limiti 30\'a çıkar</string>
-  <string name="subscribe6month.gemcap">Elmas limiti 35\'e çıkar</string>
-  <string name="subscribe12month.gemcap">Elmas limiti 45\'e çıkar</string>
+  <string name="subscribe1month.gemcap">25 Elmas limiti</string>
+  <string name="subscribe3month.gemcap">30 Elmas limiti</string>
+  <string name="subscribe6month.gemcap">35 Elmas limiti</string>
+  <string name="subscribe12month.gemcap">45 Elmas limiti</string>
   <string name="subscription_hourglasses">+%d Mistik Kum Saati</string>
   <string name="payment_method">Ödeme şekli</string>
   <string name="subscription">Abonelik</string>
@@ -790,11 +792,20 @@
   <string name="username_not_confirmed">Kullanıcı adı onaylanmadı</string>
   <string name="username_confirmed">Kullanıcı Adı Onaylandı</string>
   <string name="username_level">\@%s ・Svy %d</string>
-  <string name="enter_recipient_username">Alıcının kullanıcı adını gir</string>
+  <string name="enter_recipient_username">Alıcının @ kullanıcı adını Gir</string>
   <string name="username_copied">Kullanıcı adı panoya kopyalandı</string>
   <string name="verification_pet">Onaylamayı tamamladığında Kıdemli Hayvanlardan biri seni bekliyor olacak!</string>
   <string name="welcomeNameTitle">Sana nasıl hitap edelim?</string>
   <string name="display_name_length_error">Görünür isimler 1 ile 30 karakter arası uzunlukta olmalıdır.</string>
   <string name="setup_task_join_habitica">Habitica\'ya Katıl (Beni işaretle!)</string>
   <string name="setup_task_join_habitica_notes">Bu Yapılacak İşi tamamlayabilir, düzenleyebilir ya da kaldırabilirsin.</string>
+  <string name="setup_task_reward">Kendini ödüllendir</string>
+  <string name="setup_task_reward_notes">Televizyon izle, oyun oyna, şekerleme ye, tamamen sana bağlı!</string>
+  <string name="equipment_str">GÜÇ:</string>
+  <string name="equipment_con">BÜNYE:</string>
+  <string name="equipment_int">ZEKA:</string>
+  <string name="equipment_per">SEZGİ:</string>
+  <string name="visit_website">websiteyi ziyaret et</string>
+  <string name="gift_subscription">Abonelik Hediye Et</string>
+  <string name="send_gift">Hediye Gönder</string>
 </resources>

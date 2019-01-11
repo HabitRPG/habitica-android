@@ -416,10 +416,6 @@
   <string name="subscribe.listitem2.description">Each month you will receive a unique cosmetic item for your avatar!\n\nPlus, for every three months of consecutive subscription, the Mysterious Time Travellers will grant you access to historic (and futuristic!) cosmetic items.</string>
   <string name="subscribe.listitem3.description">Makes completed To-Dos and task history available for longer.</string>
   <string name="subscribe.listitem4.description">Double drop caps will let you receive more items from your completed tasks every day, helping you complete your stable faster!</string>
-  <string name="subscribe1month.gemcap">Gem cap starts at 25</string>
-  <string name="subscribe3month.gemcap">Gem cap raised to 30</string>
-  <string name="subscribe6month.gemcap">Gem cap raised to 35</string>
-  <string name="subscribe12month.gemcap">Gem cap raised to 45</string>
   <string name="subscription_hourglasses">+%d Mystic Hourglass</string>
   <string name="payment_method">Payment method</string>
   <string name="subscription">Subscription</string>

@@ -78,6 +78,7 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.lang.IllegalStateException
 import java.lang.ref.WeakReference
 import java.util.*
 import javax.inject.Inject
@@ -350,11 +351,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         this.activeFragment = WeakReference(fragment)
         fragment.user = user
         fragment.activity = this
-        fragment.tabLayout = detailTabs
-        fragment.toolbarAccessoryContainer = toolbarAccessoryContainer
-        fragment.collapsingToolbar = collapsingToolbar
-        fragment.bottomNavigation = bottomNavigation
-        fragment.floatingMenuWrapper = floatingMenuWrapper
+        try {
+            fragment.tabLayout = detailTabs
+            fragment.toolbarAccessoryContainer = toolbarAccessoryContainer
+            fragment.collapsingToolbar = collapsingToolbar
+            fragment.bottomNavigation = bottomNavigation
+            fragment.floatingMenuWrapper = floatingMenuWrapper
+        } catch (e: IllegalStateException) {
+            crashlyticsProxy.logException(e)
+        }
     }
 
     fun navigate(transitionId: Int) {

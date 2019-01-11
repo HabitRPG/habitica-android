@@ -115,6 +115,8 @@
   <string name="friday">Piątek</string>
   <string name="saturday">Sobota</string>
   <string name="sunday">Niedziela</string>
+  <string name="levelup_header">Udało Ci się osiągnąć poziom 1%1$d!</string>
+  <string name="levelup_detail">Wypełniając swoje cele życiowe, udało Ci się zyskać kolejny poziom i pełne uzdrowienie postaci!</string>
   <string name="levelup_button">Hurra!</string>
   <string name="faint_subtitle">Nie rozpaczaj!</string>
   <string name="faint_header">Możesz stracić całe Zdrowie!</string>
@@ -434,10 +436,6 @@
   <string name="subscribe">Subskrybuj</string>
   <string name="subscribe.listitem1.description">Kupiec Alexander będzie ci teraz sprzedawać Klejnoty po 20 złota każdy!\n\nJego miesięczne wysyłki są początkowo ograniczone do 25 Klejnotów na miesiąc, ale mogą się zwiększyć na podstawie długości twojego abonamentu.\n\nLimit zwiększa się o 5 Klejnotów co każde trzy miesiące ciągłego abonamentu, aż do maksymalnie 50 Klejnotów na miesiąc!</string>
   <string name="subscribe.listitem3.description">Historia ukończonych Do-Zrobienia i zadań jest dostępna dłużej.</string>
-  <string name="subscribe1month.gemcap">Limit klejnotów zaczyna się od 25</string>
-  <string name="subscribe3month.gemcap">Limit klejnotów zwiększony do 30</string>
-  <string name="subscribe6month.gemcap">Limit klejnotów zwiększony do 35</string>
-  <string name="subscribe12month.gemcap">Limit klejnotów zwiększony do 45</string>
   <string name="subscription_hourglasses">+%d Mistycznej Klepsydry</string>
   <string name="payment_method">Metoda płatności</string>
   <string name="subscription">Subskrypcja</string>

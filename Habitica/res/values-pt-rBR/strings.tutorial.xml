@@ -1,5 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="tutorial_overview">Aqui estamos! Eu inseri algumas tarefas para você com base em seus interesses. Experimente adicionar algumas por sua conta. Você pode editar qualquer tarefa ao tocar o título.</string>
+  <string name="tutorial_habits_1">Primeiramente os Hábitos. Eles podem ser Hábitos positivos que você queira melhorar ou Hábitos negativos que você queira eliminar.</string>
+  <string name="tutorial_habits_2">Cada vez que você fizer um Hábito positivo, toque no + para ganhar experiência e ouro.</string>
+  <string name="tutorial_habits_3">Se você der um escorregão e fizer um Hábito negativo, tocar no - irá reduzir a vida de seu avatar para te ajudar a se manter responsável.</string>
+  <string name="tutorial_habits_4">Tente! Você pode explorar outros tipos de tarefas usando a navegação abaixo.</string>
+  <string name="tutorial_dailies_1">Crie Diárias para tarefas que devem ser feitas em intervalos regulares de tempo.</string>
+  <string name="tutorial_dailies_2">Tome cuidado - se você deixar passar uma, seu avatar vai tomar dano à noite. Marcando-as com consistência trará grandes recompensas!</string>
+  <string name="tutorial_todos_1">Use os Afazeres para acompanhar as tarefas que você precisa fazer apenas uma vez.</string>
+  <string name="tutorial_todos_2">Se o seu Afazer tem de ser feito em um certo tempo, defina uma data limite. Parece que você pode marcar um - vá em frente!</string>
+  <string name="tutorial_rewards_1">Compre equipamento para seu personagem com o ouro que você ganha!</string>
+  <string name="tutorial_rewards_2">Você também pode fazer recompensas reais personalizadas baseadas em o que motiva você.</string>
+  <string name="tutorial_tasks_complete">Isso é tudo por enquanto. Se você precisa de um lembrete, cheque a seção de Perguntas Frequentes.</string>
   <string name="tutorial_equipment">Quando você compra equipamentos, eles aparecem aqui. Seu Equipamento de Batalha afeta seus status e suas Fantasias (se habilitadas) afetam o que o seu avatar veste.</string>
   <string name="tutorial_items">Obtenha itens ao completar tarefas e subir de nível. Selecione um item para usá-lo!</string>
   <string name="tutorial_pets">Ao completar tarefas do mundo real, você tem uma chance aleatória de encontrar ovos e poções. Combine-os para obter mascotes.</string>
@@ -7,4 +19,5 @@
   <string name="tutorial_party">É aqui que você e seus amigos podem se ajudar em seus objetivos e lutar contra monstros usando suas tarefas!</string>
   <string name="tutorial_tavern">Seja bem vindo à Taberna, uma sala de bate-papo pública e para todas as idades! Aqui você pode conversar sobre produtividade e fazer perguntas. Divirta-se.</string>
   <string name="tutorial_classes">Escolha se será um Guerreiro, Mago, Curandeiro ou Andarilho. Cada classe tem Equipamentos e Habilidades únicos. Selecione (?) para saber mais! </string>
+  <string name="tutorial_stats">Toque no botão cinza para alocar todos seus atributos de uma vez ou toque nas setas para adicionar um ponto de cada vez.</string>
 </resources>
