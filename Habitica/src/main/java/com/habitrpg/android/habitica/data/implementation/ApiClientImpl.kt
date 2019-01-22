@@ -117,7 +117,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                                 .header("x-api-user", this.hostConfig.user)
                     }
                     builder = builder.header("x-client", "habitica-android")
-                            .header("x-user-timzoneOffset", timezoneOffset.toString())
+                            .header("x-user-timezoneOffset", timezoneOffset.toString())
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent)
                     }
