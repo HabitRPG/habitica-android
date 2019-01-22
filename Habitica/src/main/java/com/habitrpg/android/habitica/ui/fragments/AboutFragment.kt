@@ -124,7 +124,8 @@ class AboutFragment : BaseMainFragment() {
                     " \nClass: " + (if (user.preferences?.disableClasses == true) "Disabled" else (user.stats?.habitClass ?: "None")) +
                     " \nIs in Inn: " + (user.preferences?.sleep ?: false) +
                     " \nUses Costume: " + (user.preferences?.costume ?: false) +
-                    " \nCustom Day Start: " + (user.preferences?.dayStart ?: 0)
+                    " \nCustom Day Start: " + (user.preferences?.dayStart ?: 0) +
+                    " \nTimezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
         }
 
         bodyOfEmail += " \nDetails: "
