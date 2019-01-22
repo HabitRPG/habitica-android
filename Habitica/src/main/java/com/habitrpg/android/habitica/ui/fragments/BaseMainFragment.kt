@@ -30,12 +30,12 @@ abstract class BaseMainFragment : BaseFragment() {
     @Inject
     lateinit var soundManager: SoundManager
 
-    open var activity: MainActivity? = null
-    var tabLayout: TabLayout? = null
-    var collapsingToolbar: CollapsingToolbarLayout? = null
-    var toolbarAccessoryContainer: FrameLayout? = null
-    var bottomNavigation: BottomBar? = null
-    var floatingMenuWrapper: ViewGroup? = null
+    open val activity get() = getActivity() as? MainActivity
+    val tabLayout get() = activity?.detailTabs
+    val collapsingToolbar get() = activity?.toolbar
+    val toolbarAccessoryContainer get() = activity?.toolbarAccessoryContainer
+    val bottomNavigation get() = activity?.bottomNavigation
+    val floatingMenuWrapper get() = activity?.floatingMenuWrapper
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
@@ -49,8 +49,7 @@ abstract class BaseMainFragment : BaseFragment() {
         super.onAttach(context)
 
         if (getActivity()?.javaClass == MainActivity::class.java) {
-            this.activity = getActivity() as? MainActivity
-            activity?.makeActiveFragment(this)
+            user = activity?.user
         }
     }
 

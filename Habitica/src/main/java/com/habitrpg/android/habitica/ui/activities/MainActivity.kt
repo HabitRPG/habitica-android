@@ -130,14 +130,14 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     internal lateinit var remoteConfigManager: RemoteConfigManager
 
     val floatingMenuWrapper: ViewGroup by bindView(R.id.floating_menu_wrapper)
-    private val bottomNavigation: BottomBar by bindView(R.id.bottom_navigation)
+    internal val bottomNavigation: BottomBar by bindView(R.id.bottom_navigation)
 
     private val appBar: AppBarLayout by bindView(R.id.appbar)
-    private val toolbar: Toolbar by bindView(R.id.toolbar)
-    private val toolbarAccessoryContainer: FrameLayout by bindView(R.id.toolbar_accessory_container)
+    internal val toolbar: Toolbar by bindView(R.id.toolbar)
+    internal val toolbarAccessoryContainer: FrameLayout by bindView(R.id.toolbar_accessory_container)
     private val toolbarTitleTextView: TextView by bindView(R.id.toolbar_title)
     private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
-    private val detailTabs: TabLayout by bindView(R.id.detail_tabs)
+    internal val detailTabs: TabLayout by bindView(R.id.detail_tabs)
     val avatarWithBars: View by bindView(R.id.avatar_with_bars)
     private val overlayLayout: ViewGroup by bindView(R.id.overlayFrameLayout)
 
@@ -345,21 +345,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val ids = AppWidgetManager.getInstance(application).getAppWidgetIds(ComponentName(application, widgetClass))
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         sendBroadcast(intent)
-    }
-
-    public fun makeActiveFragment(fragment: BaseMainFragment) {
-        this.activeFragment = WeakReference(fragment)
-        fragment.user = user
-        fragment.activity = this
-        try {
-            fragment.tabLayout = detailTabs
-            fragment.toolbarAccessoryContainer = toolbarAccessoryContainer
-            fragment.collapsingToolbar = collapsingToolbar
-            fragment.bottomNavigation = bottomNavigation
-            fragment.floatingMenuWrapper = floatingMenuWrapper
-        } catch (e: IllegalStateException) {
-            crashlyticsProxy.logException(e)
-        }
     }
 
     fun navigate(transitionId: Int) {
