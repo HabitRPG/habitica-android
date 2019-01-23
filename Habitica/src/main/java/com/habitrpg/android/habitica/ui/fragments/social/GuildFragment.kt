@@ -60,8 +60,9 @@ class GuildFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (arguments != null) {
-            val args = GuildFragmentArgs.fromBundle(arguments)
+        val newArguments = arguments
+        if (newArguments != null) {
+            val args = GuildFragmentArgs.fromBundle(newArguments)
             guildId = args.groupID
             isMember = args.isMember
         }

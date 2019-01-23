@@ -385,34 +385,33 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun addAttributeRow(label: String, strVal: Float, intVal: Float, conVal: Float, perVal: Float, roundDown: Boolean, isSummary: Boolean) {
-        val tableRow = layoutInflater.inflate(R.layout.profile_attributetablerow, attributesTableLayout, false) as TableRow
+        val tableRow = layoutInflater.inflate(R.layout.profile_attributetablerow, attributesTableLayout, false) as? TableRow ?: return
         val keyTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_type)
-        keyTextView.text = label
+        keyTextView?.text = label
 
         val strTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_str)
-        strTextView.text = getFloorValueString(strVal, roundDown)
+        strTextView?.text = getFloorValueString(strVal, roundDown)
 
         val intTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_int)
-        intTextView.text = getFloorValueString(intVal, roundDown)
+        intTextView?.text = getFloorValueString(intVal, roundDown)
 
         val conTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_con)
-        conTextView.text = getFloorValueString(conVal, roundDown)
+        conTextView?.text = getFloorValueString(conVal, roundDown)
 
         val perTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_per)
-        perTextView.text = getFloorValueString(perVal, roundDown)
+        perTextView?.text = getFloorValueString(perVal, roundDown)
 
 
         if (isSummary) {
-            strTextView.setTypeface(null, Typeface.BOLD)
-            intTextView.setTypeface(null, Typeface.BOLD)
-            conTextView.setTypeface(null, Typeface.BOLD)
-            perTextView.setTypeface(null, Typeface.BOLD)
+            strTextView?.setTypeface(null, Typeface.BOLD)
+            intTextView?.setTypeface(null, Typeface.BOLD)
+            conTextView?.setTypeface(null, Typeface.BOLD)
+            perTextView?.setTypeface(null, Typeface.BOLD)
         } else {
             attributeStrSum += getFloorValue(strVal, roundDown)
             attributeIntSum += getFloorValue(intVal, roundDown)
             attributeConSum += getFloorValue(conVal, roundDown)
             attributePerSum += getFloorValue(perVal, roundDown)
-
             attributeRows.add(tableRow)
             tableRow.visibility = if (attributeDetailsHidden) View.GONE else View.VISIBLE
         }
