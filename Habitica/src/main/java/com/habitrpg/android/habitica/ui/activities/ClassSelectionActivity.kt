@@ -182,19 +182,19 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
 
     private fun optOutOfClasses() {
         shouldFinish = true
-        this.displayProgressDialog()
+        this.displayProgressDialog(getString(R.string.opting_out_progress))
         compositeSubscription.add(userRepository.disableClasses().subscribe(this, RxErrorHandler.handleEmptyError()))
     }
 
     private fun selectClass(selectedClass: String) {
         shouldFinish = true
-        this.displayProgressDialog()
+        this.displayProgressDialog(getString(R.string.changing_class_progress))
         compositeSubscription.add(userRepository.changeClass(selectedClass).subscribe(this, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun displayProgressDialog() {
+    private fun displayProgressDialog(progressText: String) {
         @Suppress("DEPRECATION")
-        progressDialog = ProgressDialog.show(this, getString(R.string.changing_class_progress), null, true)
+        progressDialog = ProgressDialog.show(this, progressText, null, true)
     }
 
     override fun accept(user: User) {
