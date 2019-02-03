@@ -134,7 +134,13 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
     private fun showAccountDeleteConfirmation() {
         val input = EditText(context)
-        input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        var deleteMessage = getString(R.string.delete_account_description)
+        if (user?.authentication?.localAuthentication != null) {
+            input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        } else {
+            deleteMessage = getString(R.string.delete_oauth_account_description)
+            input.inputType = InputType.TYPE_CLASS_TEXT
+        }
         val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT)
@@ -142,7 +148,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         context.notNull { context ->
             val dialog = AlertDialog.Builder(context)
                     .setTitle(R.string.delete_account)
-                    .setMessage(R.string.delete_account_description)
+                    .setMessage(deleteMessage)
                     .setPositiveButton(R.string.delete_account_confirmation) { thisDialog, _ ->
                         thisDialog.dismiss()
                         deleteAccount(input.text.toString())
