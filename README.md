@@ -59,6 +59,10 @@ You can install our code style scheme to Intellij and/or Android Studio via this
    You also need `google-services.json`. Download it from Firebase in the next step.
 
 
+   Note: this is the default production `habitica.properties` file for habitica.com. If you want to use a local Habitica server, please modify the values in the properties file accordingly.
+
+
+
 
 2. Go to https://console.firebase.google.com
 
