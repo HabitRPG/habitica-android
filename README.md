@@ -50,14 +50,28 @@ You can install our code style scheme to Intellij and/or Android Studio via this
 
 ### Config Files
 
-Setup Habitica build config files by simply copying the example habitica files.
+1. Setup Habitica build config files by simply copying or renaming the example habitica files:
 
-    $ cp habitica.properties.example habitica.properties
-    $ cp habitica.resources.example habitica.resources
-    $ cp Habitica/google-services.json.example Habitica/google-services.json (Get .json from Firebase Console)
+   `habitica.properties.example` to `habitica.properties`
 
-Note: this is the default production `habitica.properties` file for habitica.com. If you
-want to use a local habitica server, please modify the values in the properties file accordingly.
+   `habitica.resources.example` to `habitica.resources`
 
-Building also requires a google-services.json file:  Register/Login to Firebase, create new project called Habitica, create two apps, com.habitrpg.android.habitica and com.habitrpg.android.habitica.debug.
-Download google-services.json, copy to Habitica/google-services.json.
+   You also need `google-services.json`. Download it from Firebase in the next step.
+
+
+
+2. Go to https://console.firebase.google.com
+
+   a. Register/Login to Firebase. (You can use a Google account.)
+
+   b. Create a new project called Habitica
+
+   c. Create two apps in the project: `com.habitrpg.android.habitica` and `com.habitrpg.android.habitica.debug`
+
+   d. Creating each app will generate a `google-services.json` file. Download the `google-services.json` file from the second app and put it in `\Habitica\`
+
+   You can skip the last part of the app creation wizards (where you run the app to verify installation).
+
+
+
+3. If using Android Studio, click Sync Project with Gradle Files. Update Android Studio if it asks you to update. Run Habitica.
