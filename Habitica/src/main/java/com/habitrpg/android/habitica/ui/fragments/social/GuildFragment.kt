@@ -78,7 +78,7 @@ class GuildFragment : BaseMainFragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (this.activity != null && this.guild != null) {
             if (this.isMember) {
                 if (this.user != null && this.user?.id == this.guild?.leaderID) {
@@ -94,8 +94,8 @@ class GuildFragment : BaseMainFragment() {
     }
 
     @Suppress("ReturnCount")
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val id = item?.itemId
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
 
         when (id) {
             R.id.menu_guild_join -> {
@@ -124,7 +124,7 @@ class GuildFragment : BaseMainFragment() {
 
         viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment? {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
 
                 val fragment: androidx.fragment.app.Fragment?
 
@@ -141,7 +141,7 @@ class GuildFragment : BaseMainFragment() {
                     else -> fragment = Fragment()
                 }
 
-                return fragment
+                return fragment ?: Fragment()
             }
 
             override fun getCount(): Int {

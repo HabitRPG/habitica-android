@@ -114,7 +114,7 @@ class ItemRecyclerFragment : BaseFragment() {
 
         when {
             this.isHatching -> {
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 this.titleView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
                 this.titleView?.visibility = View.VISIBLE
                 this.footerView?.text = getString(R.string.hatching_market_info)
@@ -122,7 +122,7 @@ class ItemRecyclerFragment : BaseFragment() {
                 this.openMarketButton?.visibility = View.VISIBLE
             }
             this.isFeeding -> {
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 this.titleView?.text = getString(R.string.dialog_feeding, this.feedingPet?.colorText, this.feedingPet?.animalText)
                 this.titleView?.visibility = View.VISIBLE
                 this.footerView?.text = getString(R.string.feeding_market_info)
@@ -147,11 +147,11 @@ class ItemRecyclerFragment : BaseFragment() {
     }
 
     override fun onResume() {
-        if ((this.isHatching || this.isFeeding) && dialog.window != null) {
-            val params = dialog.window?.attributes
+        if ((this.isHatching || this.isFeeding) && dialog?.window != null) {
+            val params = dialog?.window?.attributes
             params?.width = ViewGroup.LayoutParams.MATCH_PARENT
             params?.verticalMargin = 60f
-            dialog.window?.attributes = params
+            dialog?.window?.attributes = params
         }
 
         super.onResume()

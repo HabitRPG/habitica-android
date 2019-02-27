@@ -145,23 +145,23 @@ class ChallengeDetailFragment: BaseMainFragment() {
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        joinButton?.setOnClickListener { _ -> challenge.notNull { challenge -> challengeRepository.joinChallenge(challenge).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
+        joinButton?.setOnClickListener { challenge.notNull { challenge -> challengeRepository.joinChallenge(challenge).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
         leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (!isCreator) {
             return
         }
-        inflater?.inflate(R.menu.menu_challenge_details, menu)
-        val editMenuItem = menu?.findItem(R.id.action_edit)
+        inflater.inflate(R.menu.menu_challenge_details, menu)
+        val editMenuItem = menu.findItem(R.id.action_edit)
         editMenuItem?.isVisible = isCreator
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.action_edit) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_edit) {
             val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
             val bundle = Bundle()
             bundle.putString(ChallengeFormActivity.CHALLENGE_ID_KEY, challengeID)

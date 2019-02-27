@@ -188,7 +188,7 @@ class PartyDetailFragment constructor(private val viewModel: PartyViewModel) : B
         val fragment = ItemRecyclerFragment()
         fragment.itemType = "quests"
         fragment.itemTypeText = getString(R.string.quest)
-        fragment.show(fragmentManager, "questDialog")
+        fragmentManager?.let { fragment.show(it, "questDialog") }
     }
 
     private fun leaveParty() {

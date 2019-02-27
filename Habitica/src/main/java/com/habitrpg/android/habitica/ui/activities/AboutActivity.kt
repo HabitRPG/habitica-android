@@ -82,7 +82,7 @@ class AboutActivity : BaseActivity() {
 
     private inner class PagerAdapter(fm: androidx.fragment.app.FragmentManager, internal var mNumOfTabs: Int) : FragmentStatePagerAdapter(fm) {
 
-        override fun getItem(position: Int): androidx.fragment.app.Fragment? {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             return when (position) {
                 0 -> AboutFragment()
                 1 -> LibsBuilder()
@@ -96,7 +96,7 @@ class AboutActivity : BaseActivity() {
                         .withAboutVersionShownCode(true)
                         .withAboutVersionShownName(true)
                         .supportFragment()
-                else -> null
+                else -> Fragment()
             }
         }
 

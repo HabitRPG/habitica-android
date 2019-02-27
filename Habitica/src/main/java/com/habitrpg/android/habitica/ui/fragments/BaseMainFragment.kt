@@ -45,7 +45,7 @@ abstract class BaseMainFragment : BaseFragment() {
         this.user = user
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if (getActivity()?.javaClass == MainActivity::class.java) {

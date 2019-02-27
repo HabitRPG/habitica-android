@@ -222,13 +222,17 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         if (preference is TimePreference) {
             if (preference.getKey() == "cds_time") {
                 if (fragmentManager?.findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
-                    DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
-                            .show(fragmentManager, DayStartPreferenceDialogFragment.TAG)
+                    fragmentManager?.let {
+                        DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
+                                .show(it, DayStartPreferenceDialogFragment.TAG)
+                    }
                 }
             } else {
                 if (fragmentManager?.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                    TimePreferenceDialogFragment.newInstance(this, preference.getKey())
-                            .show(fragmentManager, TimePreferenceDialogFragment.TAG)
+                    fragmentManager?.let {
+                        TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                                .show(it, TimePreferenceDialogFragment.TAG)
+                    }
                 }
             }
         } else {

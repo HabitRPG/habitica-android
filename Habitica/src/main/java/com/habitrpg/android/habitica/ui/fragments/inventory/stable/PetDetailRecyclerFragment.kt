@@ -119,7 +119,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
             fragment.isHatching = false
             fragment.itemType = "food"
             fragment.itemTypeText = getString(R.string.food)
-            fragment.show(fragmentManager, "feedDialog")
+            fragmentManager?.let { fragment.show(it, "feedDialog") }
         }
     }
 

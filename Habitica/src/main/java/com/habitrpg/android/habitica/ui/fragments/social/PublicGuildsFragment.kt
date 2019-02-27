@@ -68,8 +68,8 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
         compositeSubscription.add(this.socialRepository.retrieveGroups("publicGuilds").subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_public_guild, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_public_guild, menu)
 
         val searchItem = menu?.findItem(R.id.action_guild_search)
         val guildSearchView = searchItem?.actionView as? SearchView

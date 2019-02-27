@@ -61,11 +61,11 @@ class ChallengesOverviewFragment : BaseMainFragment() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_list_challenges, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_list_challenges, menu)
 
         @Suppress("Deprecation")
-        val badgeLayout = MenuItemCompat.getActionView(menu?.findItem(R.id.action_search)) as? RelativeLayout
+        val badgeLayout = MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as? RelativeLayout
         if (badgeLayout != null) {
             val filterCountTextView = badgeLayout.findViewById<TextView>(R.id.badge_textview)
             filterCountTextView.text = null
@@ -75,11 +75,11 @@ class ChallengesOverviewFragment : BaseMainFragment() {
     }
 
     @Suppress("ReturnCount")
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        val id = item?.itemId
+        val id = item.itemId
 
         when (id) {
             R.id.action_create_challenge -> {
@@ -113,12 +113,12 @@ class ChallengesOverviewFragment : BaseMainFragment() {
 
         statePagerAdapter = object : FragmentStatePagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment? {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 return if (position == 0) {
                     userChallengesFragment
                 } else {
                     availableChallengesFragment
-                }
+                } ?: Fragment()
             }
 
             override fun getCount(): Int {

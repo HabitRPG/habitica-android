@@ -97,20 +97,20 @@ class PartyFragment : BaseMainFragment() {
         this.activity?.invalidateOptionsMenu()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val group = viewModel.getGroupData().value
         if (group != null && this.user != null) {
             if (group.leaderID == this.user?.id) {
-                inflater?.inflate(R.menu.menu_party_admin, menu)
+                inflater.inflate(R.menu.menu_party_admin, menu)
             } else {
-                inflater?.inflate(R.menu.menu_party, menu)
+                inflater.inflate(R.menu.menu_party, menu)
             }
         }
     }
 
     @Suppress("ReturnCount")
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val id = item?.itemId
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
 
         when (id) {
             R.id.menu_invite_item -> {
@@ -198,7 +198,7 @@ class PartyFragment : BaseMainFragment() {
 
         viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment? {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 return when (position) {
                     0 -> {
                         if (user?.hasParty() == true) {
@@ -212,7 +212,7 @@ class PartyFragment : BaseMainFragment() {
                         if (chatFragment == null) {
                             chatFragment = ChatFragment(viewModel)
                         }
-                        chatFragment
+                        chatFragment ?: Fragment()
                     }
                     2 -> {
                         if (partyMemberListFragment == null) {
@@ -221,7 +221,7 @@ class PartyFragment : BaseMainFragment() {
                                 partyMemberListFragment?.setPartyId(user?.party?.id ?: "")
                             }
                         }
-                        partyMemberListFragment
+                        partyMemberListFragment ?: Fragment()
                     }
                     else -> Fragment()
                 }
