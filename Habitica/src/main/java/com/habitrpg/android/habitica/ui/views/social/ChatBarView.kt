@@ -2,8 +2,6 @@ package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
 import android.os.Build
-import androidx.core.content.ContextCompat
-import androidx.appcompat.widget.AppCompatEditText
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -12,18 +10,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
+import com.habitrpg.android.habitica.ui.helpers.ChatInputTokenizer
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import net.pherth.android.emoji_library.EmojiEditText
 import net.pherth.android.emoji_library.EmojiPopup
-import net.pherth.android.emoji_library.EmojiTextView
+import javax.inject.Inject
+
 
 class ChatBarView : FrameLayout {
 
+    @Inject
+    lateinit var socialRepository: SocialRepository
+
     private val sendButton: ImageButton by bindView(R.id.sendButton)
-    private val chatEditText: EmojiEditText by bindView(R.id.chatEditText)
+    private val chatEditText: MultiAutoCompleteTextView by bindView(R.id.chatEditText)
     private val textIndicator: TextView by bindView(R.id.text_indicator)
     private val indicatorSpacing: View by bindView(R.id.indicator_spacing)
     private val emojiButton: ImageButton by bindView(R.id.emojiButton)
@@ -49,6 +55,8 @@ class ChatBarView : FrameLayout {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         inflater?.inflate(R.layout.tavern_chat_new_entry_item, this)
         this.setBackgroundResource(R.color.white)
+
+        HabiticaBaseApplication.component?.inject(this)
 
         chatEditText.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -98,6 +106,12 @@ class ChatBarView : FrameLayout {
             chatEditText.dispatchKeyEvent(event)
         }
         resizeForDrawingUnderNavbar()
+
+        val tagArray = AutocompleteAdapter(context, socialRepository)
+        chatEditText.setAdapter(tagArray)
+        chatEditText.threshold = 2
+
+        chatEditText.setTokenizer(ChatInputTokenizer())
     }
 
     private fun updateTextIndicator(text: String) {
@@ -166,7 +180,7 @@ class ChatBarView : FrameLayout {
         }
     }
 
-    private inner class EmojiClickListener internal constructor(internal var view: EmojiEditText) : View.OnClickListener {
+    private inner class EmojiClickListener internal constructor(internal var view: MultiAutoCompleteTextView) : View.OnClickListener {
 
         override fun onClick(v: View) {
             if (!popup.isShowing) {

@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
@@ -248,4 +249,5 @@ interface ApiClient {
     fun retrieveMarketGear(): Flowable<Shop>
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
     fun updateServerUrl(newAddress: String?)
+    fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>>
 }

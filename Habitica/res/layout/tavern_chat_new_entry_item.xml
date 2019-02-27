@@ -34,7 +34,7 @@
                 app:hintEnabled="false"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_medium">
-                <net.pherth.android.emoji_library.EmojiEditText
+                <MultiAutoCompleteTextView
                     android:id="@+id/chatEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

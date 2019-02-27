@@ -9,10 +9,7 @@ import com.habitrpg.android.habitica.models.AchievementResult
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
-import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -21,6 +18,7 @@ import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 
 class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
+
     override fun getGroupMembership(id: String): Flowable<GroupMembership> {
         return localRepository.getGroupMembership(userID, id)
     }
@@ -206,6 +204,10 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         return if (username == null) {
             Flowable.empty()
         } else apiClient.getMemberWithUsername(username)
+    }
+
+    override fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>> {
+        return apiClient.findUsernames(username, context, id)
     }
 
     override fun markPrivateMessagesRead(user: User?): Flowable<Void> {

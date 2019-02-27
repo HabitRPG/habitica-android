@@ -92,6 +92,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFr
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
+import com.habitrpg.android.habitica.ui.views.social.ChatBarView;
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog;
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
@@ -308,4 +309,6 @@ public interface AppComponent {
     void inject(@NotNull GiftIAPActivity giftIAPActivity);
 
     void inject(@NotNull AboutFragment aboutFragment);
+
+    void inject(@NotNull ChatBarView chatBarView);
 }

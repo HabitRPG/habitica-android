@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.FindUsernameResult;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
@@ -286,6 +287,9 @@ public interface ApiService {
 
     @POST("members/send-private-message")
     Flowable<HabitResponse<PostChatMessageResult>> postPrivateMessage(@Body Map<String, String> messageDetails);
+
+    @GET("members/find/{username}")
+    Flowable<HabitResponse<List<FindUsernameResult>>> findUsernames(@Path("username") String username, @Query("context") String context, @Query("id") String id);
 
     @GET("shops/{identifier}")
     Flowable<HabitResponse<Shop>> retrieveShopInventory(@Path("identifier") String identifier);

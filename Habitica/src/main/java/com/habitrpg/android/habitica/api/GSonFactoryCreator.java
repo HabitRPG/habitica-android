@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.FindUsernameResult;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
@@ -41,6 +42,7 @@ import com.habitrpg.android.habitica.utils.EggListDeserializer;
 import com.habitrpg.android.habitica.utils.EquipmentListDeserializer;
 import com.habitrpg.android.habitica.utils.FAQArticleListDeserilializer;
 import com.habitrpg.android.habitica.utils.FeedResponseDeserializer;
+import com.habitrpg.android.habitica.utils.FindUsernameResultDeserializer;
 import com.habitrpg.android.habitica.utils.FoodListDeserializer;
 import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.HatchingPotionListDeserializer;
@@ -130,6 +132,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())
+                .registerTypeAdapter(FindUsernameResult.class, new FindUsernameResultDeserializer())
                 //.registerTypeAdapter(Task.class, new TaskDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();

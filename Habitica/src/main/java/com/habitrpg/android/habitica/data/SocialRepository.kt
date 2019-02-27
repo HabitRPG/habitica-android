@@ -4,10 +4,7 @@ import com.habitrpg.android.habitica.models.AchievementResult
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
-import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -59,6 +56,8 @@ interface SocialRepository : BaseRepository {
 
     fun getMember(userId: String?): Flowable<Member>
     fun getMemberWithUsername(username: String?): Flowable<Member>
+
+    fun findUsernames(username: String, context: String? = null, id: String? = null): Flowable<List<FindUsernameResult>>
 
     fun markPrivateMessagesRead(user: User?): Flowable<Void>
 

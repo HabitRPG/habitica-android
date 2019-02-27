@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
@@ -581,6 +582,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
     override fun getMemberAchievements(memberId: String): Flowable<AchievementResult> {
         return apiService.getMemberAchievements(memberId).compose(configureApiCallObserver())
+    }
+
+    override fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>> {
+        return apiService.findUsernames(username, context, id).compose(configureApiCallObserver())
     }
 
     override fun postPrivateMessage(messageDetails: Map<String, String>): Flowable<PostChatMessageResult> {
