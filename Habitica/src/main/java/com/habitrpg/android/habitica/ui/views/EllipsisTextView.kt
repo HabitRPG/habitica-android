@@ -16,9 +16,9 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
-import net.pherth.android.emoji_library.EmojiTextView
+import com.habitrpg.android.habitica.R
 
-class EllipsisTextView : EmojiTextView {
+class EllipsisTextView : HabiticaEmojiTextView {
 
     private val ellipsesListeners = ArrayList<EllipsisListener>()
 

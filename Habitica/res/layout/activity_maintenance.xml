@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:scaleType="centerInside"/>
-        <net.pherth.android.emoji_library.EmojiTextView
+        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                 android:id="@+id/descriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

@@ -93,7 +93,7 @@
                 tools:text="2d ago"
                 android:textSize="12sp"
                 android:textColor="@color/gray_300"/>
-            <net.pherth.android.emoji_library.EmojiTextView
+            <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                 android:id="@+id/message_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

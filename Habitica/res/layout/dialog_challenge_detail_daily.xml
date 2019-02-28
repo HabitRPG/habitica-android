@@ -31,7 +31,7 @@
         android:layout_gravity="center"
         android:layout_weight="3">
 
-        <net.pherth.android.emoji_library.EmojiTextView
+        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
             android:id="@+id/daily_title"
             style="@style/Body1"
             android:layout_width="wrap_content"

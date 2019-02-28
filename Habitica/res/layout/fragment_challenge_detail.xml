@@ -20,7 +20,7 @@
             android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
-            <net.pherth.android.emoji_library.EmojiTextView
+            <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                 android:id="@+id/challenge_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
             android:layout_height="wrap_content"
             app:title="@string/challenge_categories"
             android:background="@color/white">
-            <net.pherth.android.emoji_library.EmojiTextView
+            <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                 android:id="@+id/challenge_description"
                 style="@style/Body2"
                 android:layout_width="wrap_content"

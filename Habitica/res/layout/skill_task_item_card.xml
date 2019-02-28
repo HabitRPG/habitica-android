@@ -21,13 +21,13 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp">
-                <net.pherth.android.emoji_library.EmojiTextView
+                <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                     android:id="@+id/titleTextView"
                     style="@style/CardTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <net.pherth.android.emoji_library.EmojiTextView
+                <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                     android:id="@+id/notesTextView"
                     style="@style/CardText"
                     android:layout_width="match_parent"

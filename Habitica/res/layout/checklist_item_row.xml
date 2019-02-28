@@ -18,7 +18,7 @@
             android:button="@drawable/checklist_checkbox"
             android:layout_gravity="center" />
         </FrameLayout>
-        <net.pherth.android.emoji_library.EmojiTextView
+        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
             android:id="@+id/checkedTextView"
             style="@style/Body2"
             android:layout_width="match_parent"

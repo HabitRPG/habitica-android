@@ -177,13 +177,13 @@
                     android:showDividers="middle"
                     android:orientation="vertical">
 
-                    <net.pherth.android.emoji_library.EmojiTextView
+                    <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                         android:id="@+id/groupSummaryView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_medium" />
 
-                    <net.pherth.android.emoji_library.EmojiTextView
+                    <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
                         android:id="@+id/groupDescriptionView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

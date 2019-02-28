@@ -34,7 +34,7 @@
                 android:button="@drawable/daily_checkbox"
                 android:gravity="center" />
         </FrameLayout>
-        <net.pherth.android.emoji_library.EmojiTextView
+        <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
             android:id="@+id/text_view"
             style="@style/Subheader3"
             android:layout_width="match_parent"

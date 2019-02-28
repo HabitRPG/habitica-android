@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/spacing_medium"
     android:paddingStart="@dimen/spacing_large"
     android:paddingEnd="@dimen/spacing_large">
-    <net.pherth.android.emoji_library.EmojiTextView
+    <com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
         android:id="@+id/emoji_textview"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
