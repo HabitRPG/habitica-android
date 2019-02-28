@@ -52,9 +52,7 @@ class PartyMemberListFragment constructor(private val viewModel: PartyViewModel)
 
         recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         adapter = PartyMemberRecyclerViewAdapter(null, true)
-        context.notNull {
-            adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(it, userId) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
-        }
+        adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(userId) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
         recyclerView?.adapter = adapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 

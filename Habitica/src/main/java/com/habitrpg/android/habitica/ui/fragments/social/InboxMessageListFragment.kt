@@ -67,7 +67,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter.notNull { adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer<String> {
-                context.notNull { context -> FullProfileActivity.open(context, it) }
+                FullProfileActivity.open(it)
             }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))

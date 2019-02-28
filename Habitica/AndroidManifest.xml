@@ -37,6 +37,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="habitica.com"
+                    android:pathPattern="/"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.PrefsActivity"
@@ -44,6 +52,14 @@
             android:label="@string/PS_settings_title"
             android:screenOrientation="portrait"
             tools:ignore="UnusedAttribute">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="habitica.com"
+                    android:pathPattern="/settings/.*"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.FixCharacterValuesActivity"
@@ -141,16 +157,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
-        </activity>
-        <activity
-            android:name=".ui.activities.ChallengeDetailActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"
-            tools:ignore="UnusedAttribute">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.MainActivity" />
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="habitica.com"
+                    android:pathPattern="/profile/.*"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.ChallengeFormActivity"

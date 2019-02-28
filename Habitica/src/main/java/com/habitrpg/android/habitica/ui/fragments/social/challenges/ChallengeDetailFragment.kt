@@ -90,7 +90,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
         challengeLeaderWrapper?.setOnClickListener {
             val leaderID = challenge?.leaderId ?: return@setOnClickListener
-            FullProfileActivity.open(it.context, leaderID)
+            FullProfileActivity.open(leaderID)
         }
 
         challengeID.notNull {id ->

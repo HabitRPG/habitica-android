@@ -7,9 +7,6 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import android.widget.*
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -22,6 +19,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.AchievementGroup
@@ -79,7 +77,7 @@ class FullProfileActivity : BaseActivity() {
     private val lastLoginView: TextView by bindView(R.id.last_login_view)
     private val totalCheckinsView: TextView by bindView(R.id.total_checkins_view)
 
-    private var userId = ""
+    private var userID = ""
     private var userName: String? = null
     private var avatarWithBars: AvatarWithBarsViewModel? = null
     private var attributeStrSum = 0f
@@ -93,13 +91,14 @@ class FullProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent = intent
-        val bundle = intent.extras
-        this.userId = bundle?.getString("userId") ?: ""
+        userID = intent?.extras?.getString("userID", "") ?: ""
+        if (userID.isEmpty()) {
+            userID = intent?.data?.path?.removePrefix("/profile/") ?: ""
+        }
 
         setTitle(R.string.profile_loading_data)
 
-        compositeSubscription.add(socialRepository.getMember(this.userId).subscribe(Consumer { this.updateView(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getMember(this.userID).subscribe(Consumer { this.updateView(it) }, RxErrorHandler.handleEmptyError()))
 
         avatarWithBars?.valueBarLabelsToBlack()
 
@@ -144,7 +143,7 @@ class FullProfileActivity : BaseActivity() {
 
         val addMessageDialog = AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
-                    socialRepository.postPrivateMessage(userId, emojiEditText.text.toString())
+                    socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
                             .subscribe(Consumer {
                                 HabiticaSnackbar.showSnackbar(this@FullProfileActivity.fullprofile_scrollview.getChildAt(0) as ViewGroup,
                                         String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL)
@@ -214,7 +213,7 @@ class FullProfileActivity : BaseActivity() {
 
 
         // Load the members achievements now
-        compositeSubscription.add(socialRepository.getMemberAchievements(this.userId).subscribe(Consumer<AchievementResult> { this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getMemberAchievements(this.userID).subscribe(Consumer<AchievementResult> { this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun updatePetsMountsView(user: Member) {
@@ -467,17 +466,13 @@ class FullProfileActivity : BaseActivity() {
 
     companion object {
 
-        fun open(context: Context, userId: String) {
+        fun open(userId: String) {
             if (userId == "system") {
                 return
             }
             val bundle = Bundle()
-            bundle.putString("userId", userId)
-
-            val intent = Intent(context, FullProfileActivity::class.java)
-            intent.putExtras(bundle)
-            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-            context.startActivity(intent)
+            bundle.putString("userID", userId)
+            MainNavigationController.navigate(R.id.fullProfileActivity, bundle)
         }
     }
 

@@ -9,6 +9,7 @@
         android:id="@+id/equipmentOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment"
         android:label="@string/sidebar.equipment" >
+        <deepLink app:uri="habitica.com/inventory/equipment" />
         <action
             android:id="@+id/openEquipmentDetail"
             app:destination="@id/equipmentDetailFragment" />
@@ -30,6 +31,7 @@
         android:id="@+id/tasksFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment">
         <deepLink app:uri="habitica.com/tasks" />
+        <deepLink app:uri="habitica.com" />
     </fragment>
     <fragment
         android:id="@+id/partyFragment"
@@ -43,6 +45,7 @@
     <fragment
         android:id="@+id/questDetailFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment">
+        <deepLink app:uri="habitica.com/party/quest" />
         <argument
             android:name="partyID"
             app:argType="string"/>
@@ -53,19 +56,26 @@
     <fragment
         android:id="@+id/skillsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment"
-        android:label="@string/sidebar.skills" />
+        android:label="@string/sidebar.skills">
+
+    </fragment>
     <fragment
         android:id="@+id/statsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.StatsFragment"
-        android:label="@string/stats" />
+        android:label="@string/stats">
+        <deepLink app:uri="habitica.com/user/stats" />
+    </fragment>
     <fragment
         android:id="@+id/tavernFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.TavernFragment"
-        android:label="@string/sidebar.tavern" />
+        android:label="@string/sidebar.tavern">
+        <deepLink app:uri="habitica.com/tavern" />
+    </fragment>
     <fragment
         android:id="@+id/guildsOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment"
         android:label="@string/sidebar.guilds" >
+        <deepLink app:uri="habitica.com/groups/myGuilds" />
         <action
             android:id="@+id/openGuildDetail"
             app:destination="@id/guildFragment" >
@@ -81,6 +91,8 @@
         android:id="@+id/challengesOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment"
         android:label="@string/sidebar.challenges" >
+        <deepLink app:uri="habitica.com/challenges/myChallenges" />
+        <deepLink app:uri="habitica.com/challenges/findChallenges" />
         <action
             android:id="@+id/openChallengeDetail"
             app:destination="@id/challengeDetailFragment" />
@@ -100,11 +112,14 @@
     <fragment
         android:id="@+id/itemsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment"
-        android:label="@string/sidebar_items" />
+        android:label="@string/sidebar_items">
+        <deepLink app:uri="habitica.com/inventory/items" />
+    </fragment>
     <fragment
         android:id="@+id/stableFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment"
         android:label="@string/sidebar.stable" >
+        <deepLink app:uri="habitica.com/inventory/stable" />
         <action
             android:id="@+id/openPetDetail"
             app:destination="@id/petDetailRecyclerFragment" />
@@ -124,6 +139,7 @@
         android:id="@+id/FAQOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment"
         android:label="@string/sidebar_help" >
+        <deepLink app:uri="habitica.com/static/faq" />
         <action
             android:id="@+id/openFAQDetail"
             app:destination="@id/FAQDetailFragment" />
@@ -144,12 +160,14 @@
         android:id="@+id/guildFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.GuildFragment"
         android:label="@string/guild" >
+        <deepLink app:uri="habitica.com/groups/guild/{groupID}" />
         <argument
             android:name="groupID"
             app:argType="string" />
         <argument
             android:name="isMember"
-            app:argType="boolean" />
+            app:argType="boolean"
+            android:defaultValue="false"/>
     </fragment>
     <fragment
         android:id="@+id/publicGuildsFragment"
@@ -182,7 +200,8 @@
         android:id="@+id/prefsActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.PrefsActivity"
         android:label="@string/app_settings"
-        tools:layout="@layout/activity_prefs" />
+        tools:layout="@layout/activity_prefs">
+    </activity>
     <fragment
         android:id="@+id/inboxMessageListFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment"
@@ -197,7 +216,7 @@
     <fragment
         android:id="@+id/petDetailRecyclerFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment"
-        android:label="@string/pets" >
+        android:label="@string/pets">
         <argument
             android:name="type"
             app:argType="string" />
@@ -219,7 +238,8 @@
     <fragment
         android:id="@+id/challengeDetailFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailFragment"
-        android:label="@string/challenge" >
+        android:label="@string/challenge">
+        <deepLink app:uri="habitica.com/challenges/{challengeID}" />
         <argument
             android:name="challengeID"
             app:argType="string" />
@@ -228,4 +248,12 @@
         android:id="@+id/taskFormActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.TaskFormActivity"
         android:label="TaskFormActivity" />
+    <activity
+        android:id="@+id/fullProfileActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.FullProfileActivity"
+        android:label="FullProfileActivity">
+        <argument
+            android:name="userID"
+            app:argType="string" />
+    </activity>
 </navigation>

@@ -23,14 +23,14 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/presents1"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_marginTop="18dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/presents2"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="18dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,8 +39,8 @@
                 android:paddingBottom="21dp"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true">
                 <TextView
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
                     android:id="@+id/subscribe.listitem1.expand"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="end"/>
 
             </FrameLayout>
 
@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
                     android:id="@+id/subscribe.listitem2.expand"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="end"/>
             </FrameLayout>
 
             <TextView
@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
                     android:id="@+id/subscribe.listitem3.expand"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="end"/>
             </FrameLayout>
 
             <TextView
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
                     android:id="@+id/subscribe.listitem4.expand"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="end"/>
             </FrameLayout>
 
             <TextView

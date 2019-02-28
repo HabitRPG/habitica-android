@@ -75,7 +75,7 @@ class ChatFragment constructor(private val viewModel: PartyViewModel) : BaseFrag
         chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
         chatAdapter.notNull {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
-                context.notNull { FullProfileActivity.open(it, userId) }
+                FullProfileActivity.open(userId)
             }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))

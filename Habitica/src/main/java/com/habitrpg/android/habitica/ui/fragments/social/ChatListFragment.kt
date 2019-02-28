@@ -117,7 +117,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
         chatAdapter.notNull {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
-                context.notNull { FullProfileActivity.open(it, userId) }
+                FullProfileActivity.open(userId)
             }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe(Consumer { this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
