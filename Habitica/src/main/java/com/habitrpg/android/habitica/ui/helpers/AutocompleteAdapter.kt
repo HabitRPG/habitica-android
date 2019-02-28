@@ -9,21 +9,35 @@ import android.widget.Filterable
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+import net.pherth.android.emoji_library.EmojiMap
+import net.pherth.android.emoji_library.EmojiParser
+import net.pherth.android.emoji_library.EmojiTextView
 
 class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository, var autocompleteContext: String, var groupID: String?) : BaseAdapter(), Filterable {
-    private var results: List<FindUsernameResult> = arrayListOf()
+    private var userResults: List<FindUsernameResult> = arrayListOf()
+    private var emojiResults: List<String> = arrayListOf()
+    private var isAutocompletingUsers = true
 
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
                 if (constraint != null && constraint.isNotEmpty()) {
-                    results = socialRepository.findUsernames(constraint.toString(), autocompleteContext, groupID).blockingFirst(arrayListOf())
-                    filterResults.values = results
-                    filterResults.count = results.size
+                    if (constraint[0] == '@') {
+                        isAutocompletingUsers = true
+                        userResults = socialRepository.findUsernames(constraint.toString().drop(1), autocompleteContext, groupID).blockingFirst(arrayListOf())
+                        filterResults.values = userResults
+                        filterResults.count = userResults.size
+                    } else {
+                        isAutocompletingUsers = false
+                        emojiResults = EmojiMap.invertedEmojiMap.keys.filter { it.startsWith(constraint) }
+                        filterResults.values = emojiResults
+                        filterResults.count = emojiResults.size
+                    }
                 }
                 return filterResults
             }
@@ -39,25 +53,35 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = parent?.inflate(R.layout.autocomplete_username)
-        val result = getItem(position)
-        val displaynameView = view?.findViewById<UsernameLabel>(R.id.display_name_view)
-        displaynameView?.username = result.username
-        displaynameView?.tier = result.contributor?.level ?: 0
-        view?.findViewById<TextView>(R.id.username_view)?.text = result.formattedUsername
-        return view ?: View(context)
+        return if (isAutocompletingUsers) {
+            val view = parent?.inflate(R.layout.autocomplete_username)
+            val result = getItem(position) as? FindUsernameResult
+            val displaynameView = view?.findViewById<UsernameLabel>(R.id.display_name_view)
+            displaynameView?.username = result?.username
+            displaynameView?.tier = result?.contributor?.level ?: 0
+            view?.findViewById<TextView>(R.id.username_view)?.text = result?.formattedUsername
+            view
+        } else {
+            val view = parent?.inflate(R.layout.autocomplete_emoji)
+            val result = getItem(position) as? String
+            val emojiTextView = view?.findViewById<EmojiTextView>(R.id.emoji_textview)
+            emojiTextView?.setEmojiconSize(24.dpToPx(context))
+            emojiTextView?.text = EmojiParser.parseEmojis(result)
+            view?.findViewById<TextView>(R.id.label)?.text = result
+            view
+        } ?: View(context)
     }
 
-    override fun getItem(position: Int): FindUsernameResult {
-        return results[position]
+    override fun getItem(position: Int): Any {
+        return if (isAutocompletingUsers) userResults[position] else emojiResults[position]
     }
 
     override fun getItemId(position: Int): Long {
-        return getItem(position).id.hashCode().toLong()
+        return getItem(position).hashCode().toLong()
     }
 
     override fun getCount(): Int {
-        return results.size
+        return if (isAutocompletingUsers) userResults.size else emojiResults.size
     }
 
 

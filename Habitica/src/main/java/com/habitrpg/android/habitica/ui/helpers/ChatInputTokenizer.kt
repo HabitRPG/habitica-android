@@ -11,15 +11,16 @@ class ChatInputTokenizer : MultiAutoCompleteTextView.Tokenizer {
     override fun findTokenStart(text: CharSequence, cursor: Int): Int {
         var i = cursor
 
-        while (i > 0 && text[i - 1] != '@') {
+        while (i > 0 && text[i - 1] != '@' && text[i - 1] != ':') {
             i--
         }
 
         //Check if token really started with @, else we don't have a valid token
-        return if (i < 1 || text[i - 1] != '@') {
+        return if (i < 1 || (text[i - 1] != '@' && text[i - 1] != ':')) {
             cursor
-        } else i
-
+        } else {
+            i - 1
+        }
     }
 
     override fun findTokenEnd(text: CharSequence, cursor: Int): Int {
@@ -48,12 +49,12 @@ class ChatInputTokenizer : MultiAutoCompleteTextView.Tokenizer {
             text
         } else {
             if (text is Spanned) {
-                val sp = SpannableString(text.toString() + " ")
+                val sp = SpannableString("$text ")
                 TextUtils.copySpansFrom(text, 0, text.length,
                         Any::class.java, sp, 0)
                 sp
             } else {
-                text.toString() + " "
+                "$text "
             }
         }
     }

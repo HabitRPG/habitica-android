@@ -19,6 +19,6 @@ class FindUsernameResult {
         get() = if (username != null) "@$username" else null
 
     override fun toString(): String {
-        return authentication?.localAuthentication?.username ?: ""
+        return "@${authentication?.localAuthentication?.username ?: ""}"
     }
 }
