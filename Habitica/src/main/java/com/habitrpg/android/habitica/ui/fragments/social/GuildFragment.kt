@@ -135,7 +135,7 @@ class GuildFragment : BaseMainFragment() {
                     }
                     1 -> {
                         chatListFragment = ChatListFragment()
-                        chatListFragment?.configure(this@GuildFragment.guildId ?: "", user, false)
+                        chatListFragment?.configure(this@GuildFragment.guildId ?: "", user, false, "guild")
                         fragment = chatListFragment
                     }
                     else -> fragment = Fragment()
@@ -218,6 +218,12 @@ class GuildFragment : BaseMainFragment() {
             this.guild = group
         }
         this.activity?.invalidateOptionsMenu()
+
+        if (group?.privacy == "public") {
+            chatListFragment?.autocompleteContext = "publicGuild"
+        } else {
+            chatListFragment?.autocompleteContext = "privateGuild"
+        }
     }
 
 }

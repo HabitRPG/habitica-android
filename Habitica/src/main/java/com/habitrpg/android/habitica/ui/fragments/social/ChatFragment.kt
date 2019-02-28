@@ -86,6 +86,8 @@ class ChatFragment constructor(private val viewModel: PartyViewModel) : BaseFrag
 
         chatBarView.sendAction = { sendChatMessage(it) }
         chatBarView.maxChatLength = configManager.maxChatLength()
+        chatBarView.autocompleteContext = "party"
+        chatBarView.groupID = viewModel.getGroupData().value?.id
 
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()

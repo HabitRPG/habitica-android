@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 
-class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository) : BaseAdapter(), Filterable {
+class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository, var autocompleteContext: String, var groupID: String?) : BaseAdapter(), Filterable {
     private var results: List<FindUsernameResult> = arrayListOf()
 
     override fun getFilter(): Filter {
@@ -21,7 +21,7 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
                 if (constraint != null && constraint.isNotEmpty()) {
-                    results = socialRepository.findUsernames(constraint.toString()).blockingFirst(arrayListOf())
+                    results = socialRepository.findUsernames(constraint.toString(), autocompleteContext, groupID).blockingFirst(arrayListOf())
                     filterResults.values = results
                     filterResults.count = results.size
                 }

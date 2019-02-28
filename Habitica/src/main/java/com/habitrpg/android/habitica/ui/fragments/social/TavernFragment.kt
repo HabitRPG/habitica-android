@@ -64,7 +64,7 @@ class TavernFragment : BaseMainFragment() {
                         tavernDetailFragment
                     }
                     1 -> {
-                        chatListFragment.configure(Group.TAVERN_ID, user, true)
+                        chatListFragment.configure(Group.TAVERN_ID, user, true, "tavern")
                         chatListFragment
                     }
                     else -> Fragment()

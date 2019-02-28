@@ -52,6 +52,13 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     lateinit var configManager: RemoteConfigManager
 
     private var isTavern: Boolean = false
+    internal var autocompleteContext: String = ""
+    set(value) {
+        field = value
+        if (chatBarView != null) {
+            chatBarView.autocompleteContext = value
+        }
+    }
     internal var layoutManager: LinearLayoutManager? = null
     internal var groupId: String? = null
     private var user: User? = null
@@ -62,13 +69,14 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private var isScrolledToTop = true
     private var refreshDisposable: Disposable? = null
 
-    fun configure(groupId: String, user: User?, isTavern: Boolean) {
+    fun configure(groupId: String, user: User?, isTavern: Boolean, autocompleteContext: String) {
         this.groupId = groupId
         this.user = user
         if (this.user != null) {
             this.userId = this.user?.id
         }
         this.isTavern = isTavern
+        this.autocompleteContext = autocompleteContext
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -128,6 +136,8 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
         chatBarView.sendAction = { sendChatMessage(it) }
         chatBarView.maxChatLength = configManager.maxChatLength()
+        chatBarView.autocompleteContext = autocompleteContext
+        chatBarView.groupID = groupId
 
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()

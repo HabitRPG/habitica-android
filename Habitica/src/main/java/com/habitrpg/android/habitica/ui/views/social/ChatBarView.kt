@@ -42,6 +42,16 @@ class ChatBarView : FrameLayout {
     internal var maxChatLength = 3000
 
     var sendAction: ((String) -> Unit)? = null
+    var autocompleteContext: String = ""
+        set(value) {
+            field = value
+            autocompleteAdapter?.autocompleteContext = value
+        }
+    var groupID: String? = null
+        set(value) {
+            field = value
+            autocompleteAdapter?.groupID = value
+        }
 
     constructor(context: Context) : super(context) {
         setupView(context)
@@ -51,6 +61,8 @@ class ChatBarView : FrameLayout {
         setupView(context)
     }
 
+    private var autocompleteAdapter: AutocompleteAdapter? = null
+
     private fun setupView(context: Context) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         inflater?.inflate(R.layout.tavern_chat_new_entry_item, this)
@@ -58,7 +70,7 @@ class ChatBarView : FrameLayout {
 
         HabiticaBaseApplication.component?.inject(this)
 
-        chatEditText.addTextChangedListener(object: TextWatcher {
+        chatEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -107,8 +119,8 @@ class ChatBarView : FrameLayout {
         }
         resizeForDrawingUnderNavbar()
 
-        val tagArray = AutocompleteAdapter(context, socialRepository)
-        chatEditText.setAdapter(tagArray)
+        autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID)
+        chatEditText.setAdapter(autocompleteAdapter)
         chatEditText.threshold = 2
 
         chatEditText.setTokenizer(ChatInputTokenizer())
