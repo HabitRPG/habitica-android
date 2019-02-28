@@ -36,15 +36,9 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmList
-import net.pherth.android.emoji_library.EmojiEditText
-import net.pherth.android.emoji_library.EmojiPopup
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.ParseException
@@ -59,24 +53,20 @@ class TaskFormActivity : BaseActivity() {
     private val difficultyWrapper: LinearLayout by bindView(R.id.task_difficulty_wrapper)
     private val attributeWrapper: LinearLayout by bindView(R.id.task_attribute_wrapper)
     private val mainWrapper: LinearLayout by bindView(R.id.task_main_wrapper)
-    private val taskText: EmojiEditText by bindView(R.id.task_text_edittext)
-    private val taskNotes: EmojiEditText by bindView(R.id.task_notes_edittext)
+    private val taskText: MultiAutoCompleteTextView by bindView(R.id.task_text_edittext)
+    private val taskNotes: MultiAutoCompleteTextView by bindView(R.id.task_notes_edittext)
     private val taskDifficultySpinner: Spinner by bindView(R.id.task_difficulty_spinner)
     private val taskAttributeSpinner: Spinner by bindView(R.id.task_attribute_spinner)
     private val btnDelete: Button by bindView(R.id.btn_delete_task)
-    private val taskWrapper: LinearLayout by bindView(R.id.task_task_wrapper)
     private val positiveCheckBox: CheckBox by bindView(R.id.task_positive_checkbox)
     private val negativeCheckBox: CheckBox by bindView(R.id.task_negative_checkbox)
     private val actionsLayout: LinearLayout by bindView(R.id.task_actions_wrapper)
     private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.checklist_recycler_view)
-    private val newCheckListEditText: EmojiEditText by bindView(R.id.new_checklist)
+    private val newCheckListEditText: MultiAutoCompleteTextView by bindView(R.id.new_checklist)
     private val addChecklistItemButton: Button by bindView(R.id.add_checklist_button)
     private val remindersWrapper: LinearLayout by bindView(R.id.task_reminders_wrapper)
     private val newRemindersEditText: EditText by bindView(R.id.new_reminder_edittext)
     private val remindersRecyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.reminders_recycler_view)
-    private val emojiToggle0: ImageButton by bindView(R.id.emoji_toggle_btn0)
-    private val emojiToggle1: ImageButton by bindView(R.id.emoji_toggle_btn1)
-    private var emojiToggle2: ImageButton? = null
     private val dueDateLayout: LinearLayout by bindView(R.id.task_duedate_layout)
     private val dueDatePickerLayout: LinearLayout by bindView(R.id.task_duedate_picker_layout)
     private val dueDateCheckBox: CheckBox by bindView(R.id.duedate_checkbox)
@@ -123,7 +113,6 @@ class TaskFormActivity : BaseActivity() {
 
     private var taskType: String? = null
     private var taskId: String? = null
-    private var popup: EmojiPopup? = null
 
     private var shouldSaveTask = true
 
@@ -134,8 +123,6 @@ class TaskFormActivity : BaseActivity() {
     @Suppress("ReturnCount")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        popup = EmojiPopup(emojiToggle0.rootView, this, ContextCompat.getColor(this, R.color.brand))
 
         val bundle = intent.extras ?: return
 
@@ -242,68 +229,6 @@ class TaskFormActivity : BaseActivity() {
             createRemindersRecyclerView()
         }
 
-        // Emoji keyboard stuff
-        var isTodo = false
-        if (taskType == Task.TYPE_TODO) {
-            isTodo = true
-        }
-
-        // If it's a to-do, change the emojiToggle2 to the actual emojiToggle2 (prevents NPEs when not a to-do task)
-        emojiToggle2 = if (isTodo) {
-            findViewById<View>(R.id.emoji_toggle_btn2) as? ImageButton
-        } else {
-            emojiToggle0
-        }
-
-        // if showChecklist is inactive the wrapper is wrapper, so the reference can't be found
-        if (emojiToggle2 == null) {
-            emojiToggle2 = emojiToggle0
-        }
-
-        popup?.setSizeForSoftKeyboard()
-        popup?.setOnDismissListener { changeEmojiKeyboardIcon(false) }
-        popup?.setOnSoftKeyboardOpenCloseListener(object : EmojiPopup.OnSoftKeyboardOpenCloseListener {
-
-            override fun onKeyboardOpen(keyBoardHeight: Int) {
-
-            }
-
-            override fun onKeyboardClose() {
-                if (popup?.isShowing == true) {
-                    popup?.dismiss()
-                }
-            }
-        })
-
-        popup?.setOnEmojiconClickedListener { emojicon ->
-            if (currentFocus == null || !isEmojiEditText(currentFocus) || emojicon == null) {
-                return@setOnEmojiconClickedListener
-            }
-            val emojiEditText = currentFocus as? EmojiEditText
-            val start = emojiEditText?.selectionStart ?: 0
-            val end = emojiEditText?.selectionEnd ?: 0
-            if (start < 0) {
-                emojiEditText?.append(emojicon.emoji)
-            } else {
-                emojiEditText?.text?.replace(Math.min(start, end),
-                        Math.max(start, end), emojicon.emoji, 0,
-                        emojicon.emoji.length)
-            }
-        }
-
-        popup?.setOnEmojiconBackspaceClickedListener {
-            if (isEmojiEditText(currentFocus)) {
-                val event = KeyEvent(
-                        0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL)
-                currentFocus?.dispatchKeyEvent(event)
-            }
-        }
-
-        emojiToggle0.setOnClickListener(EmojiClickListener(taskText))
-        emojiToggle1.setOnClickListener(EmojiClickListener(taskNotes))
-        if (isTodo) {
-            emojiToggle2?.setOnClickListener(EmojiClickListener(newCheckListEditText))
-        }
 
         enableRepeatables()
 
@@ -571,22 +496,6 @@ class TaskFormActivity : BaseActivity() {
         frequencyPicker.minValue = 0
         frequencyPicker.maxValue = 366
         frequencyPicker.value = 1
-    }
-
-    private fun isEmojiEditText(view: View?): Boolean {
-        return view is EmojiEditText
-    }
-
-    private fun changeEmojiKeyboardIcon(keyboardOpened: Boolean) {
-        if (keyboardOpened) {
-            emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp))
-            emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp))
-            emojiToggle2?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp))
-        } else {
-            emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp))
-            emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp))
-            emojiToggle2?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp))
-        }
     }
 
     private fun createCheckListRecyclerView() {
@@ -1020,8 +929,6 @@ class TaskFormActivity : BaseActivity() {
         if (currentFocus != null) {
             imm?.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }
-        popup?.dismiss()
-        popup = null
     }
 
     private inner class DateEditTextListener internal constructor(internal var datePickerText: EditText) : View.OnClickListener, DatePickerDialog.OnDateSetListener {
@@ -1077,29 +984,6 @@ class TaskFormActivity : BaseActivity() {
 
         private fun updateDateText() {
             datePickerText.setText(dateFormatter.format(calendar.time))
-        }
-    }
-
-    private inner class EmojiClickListener internal constructor(internal var view: EmojiEditText) : View.OnClickListener {
-
-        override fun onClick(v: View) {
-            if (popup?.isShowing == false) {
-
-                if (popup?.isKeyBoardOpen == true) {
-                    popup?.showAtBottom()
-                    changeEmojiKeyboardIcon(true)
-                } else {
-                    view.isFocusableInTouchMode = true
-                    view.requestFocus()
-                    popup?.showAtBottomPending()
-                    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-                    changeEmojiKeyboardIcon(true)
-                }
-            } else {
-                popup?.dismiss()
-                changeEmojiKeyboardIcon(false)
-            }
         }
     }
 

@@ -1,3 +1,1 @@
-This update brings a new navigation architecture, which is the groundwork for additional features like in-app linking and deep links. If there are any views that do not open correctly anymore or any new issues that seem releated to navigation, please let us know.
-
-This update also has a new way to load challenge data, so please test that the challenge list still displays.
+This update brings username and emoji autocomplete, deep linking (open https://habitica.com urls from anywhere on your device with the app), bigger emojis and bugfixes.

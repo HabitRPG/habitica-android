@@ -5,10 +5,8 @@ import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
@@ -19,7 +17,6 @@ import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.ChatInputTokenizer
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import net.pherth.android.emoji_library.EmojiPopup
 import javax.inject.Inject
 
 
@@ -32,11 +29,7 @@ class ChatBarView : FrameLayout {
     private val chatEditText: MultiAutoCompleteTextView by bindView(R.id.chatEditText)
     private val textIndicator: TextView by bindView(R.id.text_indicator)
     private val indicatorSpacing: View by bindView(R.id.indicator_spacing)
-    private val emojiButton: ImageButton by bindView(R.id.emojiButton)
     private val spacing: Space by bindView(R.id.spacing)
-    private val popup: EmojiPopup by lazy {
-        EmojiPopup(emojiButton.rootView, context, ContextCompat.getColor(context, R.color.brand))
-    }
     private var navBarAccountedHeightCalculated = false
 
     internal var maxChatLength = 3000
@@ -83,40 +76,6 @@ class ChatBarView : FrameLayout {
 
         sendButton.setOnClickListener { sendButtonPressed() }
 
-        emojiButton.setOnClickListener(EmojiClickListener(chatEditText))
-
-        popup.setSizeForSoftKeyboard()
-        popup.setOnDismissListener { changeEmojiKeyboardIcon(false) }
-        popup.setOnSoftKeyboardOpenCloseListener(object : EmojiPopup.OnSoftKeyboardOpenCloseListener {
-
-            override fun onKeyboardOpen(keyBoardHeight: Int) {
-
-            }
-
-            override fun onKeyboardClose() {
-                if (popup.isShowing) {
-                    popup.dismiss()
-                }
-            }
-        })
-
-        popup.setOnEmojiconClickedListener { emojicon ->
-            val start = chatEditText.selectionStart
-            val end = chatEditText.selectionEnd
-            if (start < 0) {
-                chatEditText.append(emojicon.emoji)
-            } else {
-                chatEditText.text?.replace(Math.min(start, end),
-                        Math.max(start, end), emojicon.emoji, 0,
-                        emojicon.emoji.length)
-            }
-        }
-
-        popup.setOnEmojiconBackspaceClickedListener {
-            val event = KeyEvent(
-                        0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL)
-            chatEditText.dispatchKeyEvent(event)
-        }
         resizeForDrawingUnderNavbar()
 
         autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID)
@@ -181,36 +140,6 @@ class ChatBarView : FrameLayout {
         if (chatText.isNotEmpty()) {
             chatEditText.text = null
             sendAction?.invoke(chatText)
-        }
-    }
-
-    private fun changeEmojiKeyboardIcon(keyboardOpened: Boolean) {
-        if (keyboardOpened) {
-            emojiButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_keyboard_grey600_24dp))
-        } else {
-            emojiButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_emoticon_grey600_24dp))
-        }
-    }
-
-    private inner class EmojiClickListener internal constructor(internal var view: MultiAutoCompleteTextView) : View.OnClickListener {
-
-        override fun onClick(v: View) {
-            if (!popup.isShowing) {
-                if (popup.isKeyBoardOpen == true) {
-                    popup.showAtBottom()
-                    changeEmojiKeyboardIcon(true)
-                } else {
-                    view.isFocusableInTouchMode = true
-                    view.requestFocus()
-                    popup.showAtBottomPending()
-                    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-                    changeEmojiKeyboardIcon(true)
-                }
-            } else {
-                popup.dismiss()
-                changeEmojiKeyboardIcon(false)
-            }
         }
     }
 }

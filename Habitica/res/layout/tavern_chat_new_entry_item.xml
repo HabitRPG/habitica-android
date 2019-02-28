@@ -15,17 +15,6 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/emojiButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_emoticon_grey600_24dp"
-                android:scaleType="center"
-                android:backgroundTint="@color/transparent"
-                android:contentDescription="@string/toogle_emojis"
-                android:tint="@color/brand_400"
-                android:layout_gravity="center"/>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
