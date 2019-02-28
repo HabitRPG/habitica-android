@@ -36,6 +36,7 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter
+import com.habitrpg.android.habitica.ui.helpers.*
 import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmList
@@ -229,6 +230,14 @@ class TaskFormActivity : BaseActivity() {
             createRemindersRecyclerView()
         }
 
+        val textAutocompleteAdapter = AutocompleteAdapter(this)
+        taskText.setAdapter(textAutocompleteAdapter)
+        taskText.threshold = 2
+        taskText.setTokenizer(ChatInputTokenizer())
+        val notesAutocompleteAdapter = AutocompleteAdapter(this)
+        taskNotes.setAdapter(notesAutocompleteAdapter)
+        taskNotes.threshold = 2
+        taskNotes.setTokenizer(ChatInputTokenizer())
 
         enableRepeatables()
 

@@ -17,7 +17,7 @@ import net.pherth.android.emoji_library.EmojiMap
 import net.pherth.android.emoji_library.EmojiParser
 import net.pherth.android.emoji_library.EmojiTextView
 
-class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository, var autocompleteContext: String, var groupID: String?) : BaseAdapter(), Filterable {
+class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository? = null, var autocompleteContext: String? = null, var groupID: String? = null) : BaseAdapter(), Filterable {
     private var userResults: List<FindUsernameResult> = arrayListOf()
     private var emojiResults: List<String> = arrayListOf()
     private var isAutocompletingUsers = true
@@ -27,12 +27,12 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
                 if (constraint != null && constraint.isNotEmpty()) {
-                    if (constraint[0] == '@') {
+                    if (constraint[0] == '@' && socialRepository != null) {
                         isAutocompletingUsers = true
                         userResults = socialRepository.findUsernames(constraint.toString().drop(1), autocompleteContext, groupID).blockingFirst(arrayListOf())
                         filterResults.values = userResults
                         filterResults.count = userResults.size
-                    } else {
+                    } else if (constraint[0] == ':') {
                         isAutocompletingUsers = false
                         emojiResults = EmojiMap.invertedEmojiMap.keys.filter { it.startsWith(constraint) }
                         filterResults.values = emojiResults
