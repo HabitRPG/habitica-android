@@ -118,6 +118,7 @@ dependencies {
     //Push Notifications
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.4.0'
+    implementation 'com.google.firebase:firebase-config:16.3.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'io.realm:android-adapters:3.1.0'
     implementation(project(':seeds-sdk')) {
@@ -147,7 +148,7 @@ android {
         buildConfigField "String", "STORE", "\"google\""
         multiDexEnabled true
 
-        versionCode 2067
+        versionCode 2068
         versionName "1.8"
     }
 

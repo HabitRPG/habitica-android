@@ -17,6 +17,7 @@ import com.facebook.drawee.view.MultiDraweeHolder
 import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.Avatar
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -153,7 +154,8 @@ class AvatarView : View {
     }
 
     private fun getLayerMap(avatar: Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
-        val layerMap = getAvatarLayerMap(avatar)
+        val substitutions = RemoteConfigManager().spriteSubstitutions()
+        val layerMap = getAvatarLayerMap(avatar, substitutions)
 
         if (resetHasAttributes) {
             hasPet = false
@@ -161,21 +163,24 @@ class AvatarView : View {
             hasBackground = hasMount
         }
 
-        val mountName = avatar.currentMount
-        if (showMount && !TextUtils.isEmpty(mountName)) {
+        var mountName = avatar.currentMount
+        if (showMount && mountName?.isNotEmpty() == true) {
+            mountName = substituteOrReturn(substitutions["mounts"], mountName)
             layerMap[LayerType.MOUNT_BODY] = "Mount_Body_$mountName"
             layerMap[LayerType.MOUNT_HEAD] = "Mount_Head_$mountName"
             if (resetHasAttributes) hasMount = true
         }
 
-        val petName = avatar.currentPet
-        if (showPet && !TextUtils.isEmpty(petName)) {
+        var petName = avatar.currentPet
+        if (showPet && petName?.isNotEmpty() == true) {
+            petName = substituteOrReturn(substitutions["pets"], petName)
             layerMap[LayerType.PET] = "Pet-$petName"
             if (resetHasAttributes) hasPet = true
         }
 
-        val backgroundName = avatar.preferences?.background
-        if (showBackground && !TextUtils.isEmpty(backgroundName)) {
+        var backgroundName = avatar.preferences?.background
+        if (showBackground && backgroundName?.isNotEmpty() == true) {
+            backgroundName = substituteOrReturn(substitutions["backgrounds"], backgroundName)
             layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
             if (resetHasAttributes) hasBackground = true
         }
@@ -187,8 +192,17 @@ class AvatarView : View {
         return layerMap
     }
 
+    private fun substituteOrReturn(substitutions: Map<String, String>?, name: String): String {
+        for (key in substitutions?.keys ?: arrayListOf<String>()) {
+            if (name.contains(key)) {
+                return substitutions?.get(key) ?: name
+            }
+        }
+        return name
+    }
+
     @Suppress("ReturnCount")
-    private fun getAvatarLayerMap(avatar: Avatar): EnumMap<AvatarView.LayerType, String> {
+    private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<AvatarView.LayerType, String> {
         val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
 
         if (!avatar.isValid) {
@@ -226,6 +240,12 @@ class AvatarView : View {
                 layerMap[AvatarView.LayerType.VISUAL_BUFF] = "ghost"
                 hasVisualBuffs = true
             }
+        }
+
+        val substitutedVisualBuff = substitutions["visualBuff"]?.get("full")
+        if (substitutedVisualBuff != null) {
+            layerMap[AvatarView.LayerType.VISUAL_BUFF] = substitutedVisualBuff
+            hasVisualBuffs = true
         }
 
         if (!hasVisualBuffs) {

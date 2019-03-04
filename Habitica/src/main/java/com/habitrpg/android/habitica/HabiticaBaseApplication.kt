@@ -17,6 +17,8 @@ import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -79,6 +81,7 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         }
         setupRealm()
         setupDagger()
+        setupRemoteConfig()
         refWatcher = LeakCanary.install(this)
         setupInstabug()
         createBillingAndCheckout()
@@ -198,6 +201,19 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         })
 
         billing.notNull { checkout = Checkout.forApplication(it) }
+    }
+
+    private fun setupRemoteConfig() {
+        val remoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build()
+        remoteConfig.setConfigSettings(configSettings)
+        remoteConfig.setDefaults(R.xml.remote_config_defaults)
+        remoteConfig.fetch(if (BuildConfig.DEBUG) 0 else 3600)
+                .addOnCompleteListener {
+                    remoteConfig.activateFetched()
+                }
     }
 
     companion object {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>maxChatLength</key>
+        <value>3000</value>
+    </entry>
+    <entry>
+        <key>enableGiftOneGetOne</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>shopSpriteSuffix</key>
+    </entry>
+    <entry>
+        <key>spriteSubstitutions</key>
+        <value>{}</value>
+    </entry>
+</defaultsMap>
+    <!-- END xml_defaults -->

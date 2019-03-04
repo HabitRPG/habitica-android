@@ -32,7 +32,7 @@ class ChatBarView : FrameLayout {
     private val spacing: Space by bindView(R.id.spacing)
     private var navBarAccountedHeightCalculated = false
 
-    internal var maxChatLength = 3000
+    internal var maxChatLength = 3000L
 
     var sendAction: ((String) -> Unit)? = null
     var autocompleteContext: String = ""

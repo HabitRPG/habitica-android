@@ -105,7 +105,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    RemoteConfigManager providesRemoteConfiigManager(Context context) {
-        return new RemoteConfigManager(context);
+    RemoteConfigManager providesRemoteConfiigManager() {
+        return new RemoteConfigManager();
     }
 }
