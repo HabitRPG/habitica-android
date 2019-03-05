@@ -233,9 +233,11 @@ class TaskFormActivity : BaseActivity() {
         val textAutocompleteAdapter = AutocompleteAdapter(this)
         val tokenizer = AutocompleteTokenizer(listOf(':'))
         taskText.setAdapter(textAutocompleteAdapter)
+        taskText.threshold = 2
         taskText.setTokenizer(tokenizer)
         val notesAutocompleteAdapter = AutocompleteAdapter(this)
         taskNotes.setAdapter(notesAutocompleteAdapter)
+        taskText.threshold = 2
         taskNotes.setTokenizer(tokenizer)
 
         enableRepeatables()

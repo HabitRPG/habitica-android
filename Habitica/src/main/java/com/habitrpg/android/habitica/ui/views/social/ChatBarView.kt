@@ -80,7 +80,7 @@ class ChatBarView : FrameLayout {
 
         autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID)
         chatEditText.setAdapter(autocompleteAdapter)
-        chatEditText.threshold = 3
+        chatEditText.threshold = 2
 
         chatEditText.setTokenizer(AutocompleteTokenizer(listOf('@', ':')))
     }

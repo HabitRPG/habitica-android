@@ -69,9 +69,11 @@ class GroupFormActivity : BaseActivity() {
         autocompleteAdapter = AutocompleteAdapter(this)
         val tokenizer = AutocompleteTokenizer(listOf(':'))
         groupNameEditText.setAdapter(autocompleteAdapter)
+        groupNameEditText.threshold = 2
         groupNameEditText.setTokenizer(tokenizer)
         groupDescriptionEditText.setAdapter(autocompleteAdapter)
         groupDescriptionEditText.setTokenizer(tokenizer)
+        groupDescriptionEditText.threshold = 2
     }
 
 
