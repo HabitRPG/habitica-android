@@ -6,17 +6,16 @@ import android.text.TextUtils
 import android.widget.MultiAutoCompleteTextView
 
 
-class ChatInputTokenizer : MultiAutoCompleteTextView.Tokenizer {
+class AutocompleteTokenizer(val tokens: List<Char>) : MultiAutoCompleteTextView.Tokenizer {
 
     override fun findTokenStart(text: CharSequence, cursor: Int): Int {
         var i = cursor
 
-        while (i > 0 && text[i - 1] != '@' && text[i - 1] != ':') {
+        while (i > 0 && !tokens.contains(text[i-1])) {
             i--
         }
 
-        //Check if token really started with @, else we don't have a valid token
-        return if (i < 1 || (text[i - 1] != '@' && text[i - 1] != ':')) {
+        return if (i < 1 || !tokens.contains(text[i-1])) {
             cursor
         } else {
             i - 1

@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
-import com.habitrpg.android.habitica.ui.helpers.ChatInputTokenizer
+import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import javax.inject.Inject
@@ -80,9 +80,9 @@ class ChatBarView : FrameLayout {
 
         autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID)
         chatEditText.setAdapter(autocompleteAdapter)
-        chatEditText.threshold = 2
+        chatEditText.threshold = 3
 
-        chatEditText.setTokenizer(ChatInputTokenizer())
+        chatEditText.setTokenizer(AutocompleteTokenizer(listOf('@', ':')))
     }
 
     private fun updateTextIndicator(text: String) {

@@ -66,6 +66,12 @@ class GroupFormActivity : BaseActivity() {
             finishActivitySuccessfuly()
         }
 
+        autocompleteAdapter = AutocompleteAdapter(this)
+        val tokenizer = AutocompleteTokenizer(listOf(':'))
+        groupNameEditText.setAdapter(autocompleteAdapter)
+        groupNameEditText.setTokenizer(tokenizer)
+        groupDescriptionEditText.setAdapter(autocompleteAdapter)
+        groupDescriptionEditText.setTokenizer(tokenizer)
     }
 
 
