@@ -65,7 +65,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             if (it[position].isSystemMessage) {
                 (holder as? SystemChatMessageViewHolder)?.bind(it[position])
             } else {
-                (holder as? ChatRecyclerViewHolder)?.bind(it[position])
+                (holder as? ChatRecyclerViewHolder)?.bind(it[position], uuid)
             }
         }
     }
@@ -107,7 +107,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
     }
 
-    inner class ChatRecyclerViewHolder(itemView: View, private val userId: String, private val isTavern: Boolean) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class ChatRecyclerViewHolder(itemView: View, private var userId: String, private val isTavern: Boolean) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val messageWrapper: ViewGroup by bindView(R.id.message_wrapper)
         private val avatarView: AvatarView by bindView(R.id.avatar_view)
@@ -156,13 +156,16 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                     null, null, null)
         }
 
-        fun bind(msg: ChatMessage) {
+        fun bind(msg: ChatMessage, uuid: String) {
             chatMessage = msg
+            userId = uuid
 
             setLikeProperties()
 
+            val wasSent = messageWasSent()
+
             val name = user?.profile?.name
-            if (messageWasSent()) {
+            if (wasSent) {
                 userLabel.tier = user?.contributor?.level ?: 0
                 userLabel.username = name
                 if (user?.username != null) {
@@ -197,7 +200,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                 else -> modView.visibility = View.GONE
             }
 
-            if (messageWasSent()) {
+            if (wasSent) {
                 avatarView.visibility = View.GONE
                 itemView.setPadding(64.dpToPx(context), itemView.paddingTop, itemView.paddingRight, itemView.paddingBottom)
             } else {
