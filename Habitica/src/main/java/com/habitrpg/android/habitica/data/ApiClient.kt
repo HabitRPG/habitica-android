@@ -129,6 +129,7 @@ interface ApiClient {
 
     fun getGroup(groupId: String): Flowable<Group>
 
+    fun createGroup(group: Group): Flowable<Group>
     fun updateGroup(id: String, item: Group): Flowable<Void>
 
     fun listGroupChat(groupId: String): Flowable<List<ChatMessage>>

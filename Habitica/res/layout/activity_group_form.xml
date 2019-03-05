@@ -2,62 +2,130 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray_700">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/cancel_button"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_purple_300_24dp"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:contentDescription="@string/cancel" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create"
+                style="@style/HabiticaButton"
+                android:textColor="@color/brand_400"
+                android:paddingEnd="@dimen/spacing_large"
+                android:paddingStart="@dimen/spacing_large"
+                android:minWidth="20dp"/>
+        </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:hintTextAppearance="@style/TextAppearance.AppCompat">
-            <EditText
+            app:hintTextAppearance="@style/TextAppearance.AppCompat"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginLeft="@dimen/spacing_large"
+            android:layout_marginRight="@dimen/spacing_large"
+            android:background="@drawable/edittext"
+            android:textColorHint="@color/gray_50">
+            <MultiAutoCompleteTextView
                 android:id="@+id/group_name_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:hint="@string/name"
                 android:textColor="@android:color/black"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapSentences"
+                android:background="@color/transparent"
+                android:paddingStart="@dimen/spacing_large"
+                android:paddingEnd="@dimen/spacing_large"
+                android:paddingBottom="@dimen/spacing_large"
+                android:paddingTop="20dp"
+                android:textColorHint="@color/gray_50"
+                />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:orientation="horizontal" >
-
-            <ImageButton
-                android:id="@+id/emoji.toggle.btn"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_emoticon_grey600_24dp"
-                android:background="@drawable/md_transparent"
-                android:contentDescription="Toogle Emoji"
-                android:focusable="true"
-                android:focusableInTouchMode="true" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+                app:hintTextAppearance="@style/TextAppearance.AppCompat"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginLeft="@dimen/spacing_large"
+                android:layout_marginRight="@dimen/spacing_large"
+                android:background="@drawable/edittext"
+                android:textColorHint="@color/gray_50">
 
-                <net.pherth.android.emoji_library.EmojiEditText
+                <MultiAutoCompleteTextView
                     android:id="@+id/group_description_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/description"
                     android:textColor="@android:color/black"
-                    android:inputType="textCapSentences|textMultiLine" />
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:background="@color/transparent"
+                    android:paddingStart="@dimen/spacing_large"
+                    android:paddingEnd="@dimen/spacing_large"
+                    android:paddingBottom="@dimen/spacing_large"
+                    android:paddingTop="20dp"
+                    android:textColorHint="@color/gray_50"
+                    android:minLines="3"
+                    android:gravity="top" />
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginLeft="@dimen/spacing_large"
+            android:layout_marginRight="@dimen/spacing_large">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/only_leader_create_challenge"/>
+            <Switch
+                android:id="@+id/leader_create_challenge_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+        <View
+            android:id="@+id/privacy_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            tools:visibility="gone" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/privacyWrapper">
+            android:id="@+id/privacyWrapper"
+            android:layout_marginLeft="@dimen/spacing_large"
+            android:layout_marginRight="@dimen/spacing_large"
+            tools:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,5 +138,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/privacySpinner" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000"
+            android:layout_marginTop="@dimen/spacing_medium" />
     </LinearLayout>
 </ScrollView>

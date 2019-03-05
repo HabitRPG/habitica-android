@@ -256,4 +256,8 @@
             android:name="userID"
             app:argType="string" />
     </activity>
+    <activity
+        android:id="@+id/groupFormActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.GroupFormActivity"
+        android:label="GroupFormActivity" />
 </navigation>

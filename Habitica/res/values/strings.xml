@@ -860,5 +860,8 @@
     <string name="discover">Discover</string>
     <string name="damage_paused">Damage paused</string>
     <string name="preference_push_important_announcements">Important Announcements</string>
+    <string name="create">Create</string>
+    <string name="only_leader_create_challenge">Only leader can create Challenges</string>
+    <string name="create_party">Create Party</string>
 
 </resources>

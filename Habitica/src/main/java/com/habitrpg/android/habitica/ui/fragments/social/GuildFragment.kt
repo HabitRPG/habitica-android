@@ -180,11 +180,13 @@ class GuildFragment : BaseMainFragment() {
 
     private fun displayEditForm() {
         val bundle = Bundle()
-        bundle.putString("groupID", this.guild?.id)
-        bundle.putString("name", this.guild?.name)
-        bundle.putString("description", this.guild?.description)
-        bundle.putString("privacy", this.guild?.privacy)
-        bundle.putString("leader", this.guild?.leaderID)
+        bundle.putString("groupID", guild?.id)
+        bundle.putString("name", guild?.name)
+        bundle.putString("description", guild?.description)
+        bundle.putString("privacy", guild?.privacy)
+        bundle.putString("leader", guild?.leaderID)
+        bundle.putBoolean("leaderCreateChallenge", guild?.leaderOnlyChallenges ?: true)
+
 
         val intent = Intent(activity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
@@ -202,7 +204,7 @@ class GuildFragment : BaseMainFragment() {
                             bundle?.getString("name"),
                             bundle?.getString("description"),
                             bundle?.getString("leader"),
-                            bundle?.getString("privacy"))
+                            bundle?.getBoolean("leaderCreateChallenge"))
                             .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 }
             }

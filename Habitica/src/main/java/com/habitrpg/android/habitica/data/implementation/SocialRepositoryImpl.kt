@@ -19,6 +19,7 @@ import io.realm.RealmResults
 
 class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
 
+
     override fun getGroupMembership(id: String): Flowable<GroupMembership> {
         return localRepository.getGroupMembership(userID, id)
     }
@@ -131,7 +132,19 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 }
     }
 
-    override fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, privacy: String?): Flowable<Void> {
+    override fun createGroup(name: String?, description: String?, leader: String?, type: String?, privacy: String?, leaderCreateChallenge: Boolean?): Flowable<Group> {
+        val group = Group()
+        group.name = name
+        group.description = description
+        group.type = type
+        group.leaderID = leader
+        group.privacy = privacy
+        return apiClient.createGroup(group).doOnNext {
+            localRepository.save(it)
+        }
+    }
+
+    override fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Void> {
         if (group == null) {
             return Flowable.empty()
         }
@@ -139,7 +152,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         copiedGroup.name = name
         copiedGroup.description = description
         copiedGroup.leaderID = leader
-        copiedGroup.privacy = privacy
+        copiedGroup.leaderOnlyChallenges = leaderCreateChallenge ?: false
         localRepository.save(copiedGroup)
         return apiClient.updateGroup(copiedGroup.id, copiedGroup)
     }

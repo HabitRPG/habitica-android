@@ -122,7 +122,7 @@
         </activity>
         <activity
             android:name=".ui.activities.GroupFormActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText"
+            android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="UnusedAttribute">

@@ -36,7 +36,8 @@ interface SocialRepository : BaseRepository {
 
     fun joinGroup(id: String?): Flowable<Group>
 
-    fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, privacy: String?): Flowable<Void>
+    fun createGroup(name: String?, description: String?, leader: String?, type: String?, privacy: String?, leaderCreateChallenge: Boolean?): Flowable<Group>
+    fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Void>
 
     fun retrieveGroups(type: String): Flowable<List<Group>>
     fun getGroups(type: String): Flowable<RealmResults<Group>>

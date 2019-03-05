@@ -111,7 +111,7 @@
                         style="@style/HabiticaButton.Gray.600"
                         android:background="@drawable/layout_rounded_bg_gray_700"
                         android:textSize="16sp"
-                        android:text="@string/create_party_website"
+                        android:text="@string/create_party"
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
                 <View

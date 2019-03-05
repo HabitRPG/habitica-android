@@ -195,7 +195,7 @@ class PartyDetailFragment constructor(private val viewModel: PartyViewModel) : B
         val builder = AlertDialog.Builder(activity)
                 .setMessage(R.string.leave_party_confirmation)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    viewModel.leaveGroup { activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit() }
+                    viewModel.leaveGroup { }
                 }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()
     }

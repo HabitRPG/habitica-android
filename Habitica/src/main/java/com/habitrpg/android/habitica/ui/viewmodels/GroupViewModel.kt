@@ -89,15 +89,23 @@ open class GroupViewModel: BaseViewModel() {
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
-    fun updateGroup(bundle: Bundle?) {
+
+
+    fun updateOrCreateGroup(bundle: Bundle?) {
         if (group.value == null) {
-            return
+            socialRepository.createGroup(bundle?.getString("name"),
+                    bundle?.getString("description"),
+                    bundle?.getString("leader"),
+                    bundle?.getString("groupType"),
+                    bundle?.getString("privacy"),
+                    bundle?.getBoolean("leaderCreateChallenge"))
+        } else {
+            disposable.add(socialRepository.updateGroup(group.value, bundle?.getString("name"),
+                    bundle?.getString("description"),
+                    bundle?.getString("leader"),
+                    bundle?.getBoolean("leaderCreateChallenge"))
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
-        disposable.add(socialRepository.updateGroup(group.value, bundle?.getString("name"),
-                bundle?.getString("description"),
-                bundle?.getString("leader"),
-                bundle?.getString("privacy"))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     fun leaveGroup(function: () -> Unit) {
@@ -148,10 +156,13 @@ open class GroupViewModel: BaseViewModel() {
     }
 
     fun retrieveGroupChat(onComplete: () -> Unit) {
-        groupIDSubject.value?.value.notNull {
-            disposable.add(socialRepository.retrieveGroupChat(it).subscribe(Consumer {
-                onComplete()
-            }, RxErrorHandler.handleEmptyError()))
+        val groupID = groupIDSubject.value?.value
+        if (groupID.isNullOrEmpty()) {
+            onComplete()
+            return
         }
+        disposable.add(socialRepository.retrieveGroupChat(groupID).subscribe(Consumer {
+            onComplete()
+        }, RxErrorHandler.handleEmptyError()))
     }
 }

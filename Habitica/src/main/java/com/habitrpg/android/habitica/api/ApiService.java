@@ -201,6 +201,9 @@ public interface ApiService {
     @GET("groups/{gid}")
     Flowable<HabitResponse<Group>> getGroup(@Path("gid") String groupId);
 
+    @POST("groups")
+    Flowable<HabitResponse<Group>> createGroup(@Body Group item);
+
     @PUT("groups/{id}")
     Flowable<HabitResponse<Void>> updateGroup(@Path("id") String id, @Body Group item);
 

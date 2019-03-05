@@ -27,7 +27,7 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
                 if (constraint != null && constraint.isNotEmpty()) {
-                    if (constraint[0] == '@' && socialRepository != null) {
+                    if (constraint[0] == '@' && constraint.length >= 3 && socialRepository != null) {
                         isAutocompletingUsers = true
                         userResults = socialRepository.findUsernames(constraint.toString().drop(1), autocompleteContext, groupID).blockingFirst(arrayListOf())
                         filterResults.values = userResults

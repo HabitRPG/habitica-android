@@ -106,6 +106,16 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
                 }
             }
         }
+
+        if (obj.has("leaderOnly")) {
+            val leaderOnly = obj.getAsJsonObject("leaderOnly")
+            if (leaderOnly.has("challenges")) {
+                group.leaderOnlyChallenges = leaderOnly.get("challenges").asBoolean
+            }
+            if (leaderOnly.has("getGems")) {
+                group.leaderOnlyGetGems = leaderOnly.get("getGems").asBoolean
+            }
+        }
         return group
     }
 
@@ -118,6 +128,10 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
         obj.addProperty("type", src.type)
         obj.addProperty("type", src.type)
         obj.addProperty("leader", src.leaderID)
+        val leaderOnly = JsonObject()
+        leaderOnly.addProperty("challenges", src.leaderOnlyChallenges)
+        leaderOnly.addProperty("getGems", src.leaderOnlyGetGems)
+        obj.add("leaderOnly", leaderOnly)
         return obj
     }
 }

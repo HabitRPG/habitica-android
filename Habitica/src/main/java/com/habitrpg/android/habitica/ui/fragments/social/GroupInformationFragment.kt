@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -7,24 +8,24 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -71,7 +72,7 @@ class GroupInformationFragment : BaseFragment() {
 
         updateGroup(group)
 
-        buttonPartyInviteAccept.setOnClickListener { _ ->
+        buttonPartyInviteAccept.setOnClickListener {
             val userId = user?.invitations?.party?.id
             if (userId != null) {
                 socialRepository.joinGroup(userId)
@@ -83,7 +84,7 @@ class GroupInformationFragment : BaseFragment() {
             }
         }
 
-        buttonPartyInviteReject.setOnClickListener { _ ->
+        buttonPartyInviteReject.setOnClickListener {
             val userId = user?.invitations?.party?.id
             if (userId != null) {
                 socialRepository.rejectGroupInvite(userId)
@@ -91,7 +92,7 @@ class GroupInformationFragment : BaseFragment() {
             }
         }
 
-        username_textview.setOnClickListener { _ ->
+        username_textview.setOnClickListener {
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = ClipData.newPlainText(context?.getString(R.string.username), user?.username)
             clipboard?.primaryClip = clip
@@ -102,16 +103,21 @@ class GroupInformationFragment : BaseFragment() {
         }
 
         craetePartyButton.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, "https://habitica.com/party".toUri())
-            startActivity(browserIntent)
+            val bundle = Bundle()
+            bundle.putString("groupType", "party")
+            bundle.putString("leader", user?.id)
+            val intent = Intent(activity, GroupFormActivity::class.java)
+            intent.putExtras(bundle)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+            startActivityForResult(intent, GroupFormActivity.GROUP_FORM_ACTIVITY)
         }
 
         context.notNull { context ->
-            DataBindingUtils.loadImage("timeTravelersShop_background_fall") {
-                val aspectRatio = it.width / it.height.toFloat()
+            DataBindingUtils.loadImage("timeTravelersShop_background_fall") {bitmap ->
+                val aspectRatio = bitmap.width / bitmap.height.toFloat()
                 val height = context.resources.getDimension(R.dimen.shop_height).toInt()
                 val width = Math.round(height * aspectRatio)
-                val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it, width, height, false))
+                val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
                 drawable.tileModeX = Shader.TileMode.REPEAT
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
@@ -123,6 +129,37 @@ class GroupInformationFragment : BaseFragment() {
 
         groupDescriptionView.movementMethod = LinkMovementMethod.getInstance()
         groupSummaryView.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            GroupFormActivity.GROUP_FORM_ACTIVITY -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val bundle = data?.extras
+                    if (bundle?.getString("groupType") == "party") {
+                        socialRepository.createGroup(bundle.getString("name"),
+                                bundle.getString("description"),
+                                bundle.getString("leader"),
+                                "party",
+                                bundle.getString("privacy"),
+                                bundle.getBoolean("leaderCreateChallenge"))
+                                .flatMap {
+                                    userRepository.retrieveUser(false)
+                                }
+                                .subscribe(Consumer {
+                                }, RxErrorHandler.handleEmptyError())
+                    } else {
+                        this.socialRepository.updateGroup(this.group,
+                                bundle?.getString("name"),
+                                bundle?.getString("description"),
+                                bundle?.getString("leader"),
+                                bundle?.getBoolean("leaderCreateChallenge"))
+                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    }
+                }
+            }
+        }
     }
 
     private fun refresh() {
