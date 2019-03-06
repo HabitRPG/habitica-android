@@ -24,11 +24,9 @@ import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-/**
- * Created by Negue on 15.09.2015.
- */
-@SuppressLint("ValidFragment")
-class PartyMemberListFragment constructor(private val viewModel: PartyViewModel) : BaseFragment() {
+class PartyMemberListFragment constructor() : BaseFragment() {
+
+    lateinit var viewModel: PartyViewModel
 
     @Inject
     lateinit var socialRepository: SocialRepository

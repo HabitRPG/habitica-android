@@ -59,6 +59,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -138,7 +139,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     internal val toolbarAccessoryContainer: FrameLayout by bindView(R.id.toolbar_accessory_container)
     private val toolbarTitleTextView: TextView by bindView(R.id.toolbar_title)
     private val collapsingToolbar: CollapsingToolbarLayout by bindView(R.id.collapsing_toolbar)
-    internal val detailTabs: TabLayout by bindView(R.id.detail_tabs)
+    internal val detailTabs: TabLayout? by bindOptionalView(R.id.detail_tabs)
     val avatarWithBars: View by bindView(R.id.avatar_with_bars)
     private val overlayLayout: ViewGroup by bindView(R.id.overlayFrameLayout)
 

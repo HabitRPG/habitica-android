@@ -40,8 +40,9 @@ import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-@SuppressLint("ValidFragment")
-class ChatFragment constructor(private val viewModel: PartyViewModel) : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+class ChatFragment constructor() : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+
+    lateinit var viewModel: PartyViewModel
 
     @Inject
     lateinit var configManager: RemoteConfigManager

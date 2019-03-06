@@ -214,7 +214,8 @@ class PartyFragment : BaseMainFragment() {
                 return when (position) {
                     0 -> {
                         firstFragment = if (user?.hasParty() == true) {
-                            val detailFragment = PartyDetailFragment(viewModel)
+                            val detailFragment = PartyDetailFragment()
+                            detailFragment.viewModel = viewModel
                             detailFragment
                         } else {
                             GroupInformationFragment.newInstance(null, user)
@@ -223,13 +224,15 @@ class PartyFragment : BaseMainFragment() {
                     }
                     1 -> {
                         if (chatFragment == null) {
-                            chatFragment = ChatFragment(viewModel)
+                            chatFragment = ChatFragment()
+                            chatFragment?.viewModel = viewModel
                         }
                         chatFragment
                     }
                     2 -> {
                         if (partyMemberListFragment == null) {
-                            partyMemberListFragment = PartyMemberListFragment(viewModel)
+                            partyMemberListFragment = PartyMemberListFragment()
+                            partyMemberListFragment?.viewModel = viewModel
                             if (user?.hasParty() == true) {
                                 partyMemberListFragment?.setPartyId(user?.party?.id ?: "")
                             }

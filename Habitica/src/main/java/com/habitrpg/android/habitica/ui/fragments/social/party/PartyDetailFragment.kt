@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
@@ -21,10 +20,8 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
-import com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -36,8 +33,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-@SuppressLint("ValidFragment")
-class PartyDetailFragment constructor(private val viewModel: PartyViewModel) : BaseFragment() {
+class PartyDetailFragment constructor() : BaseFragment() {
+
+    lateinit var viewModel: PartyViewModel
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
