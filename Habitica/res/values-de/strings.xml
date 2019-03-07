@@ -798,4 +798,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="username_level">\@%s ・Lvl %d</string>
     <string name="verification_pet">Eines dieser Veteranen-Haustiere wartet auf Dich wenn Du die Bestätigung abgeschlossen hast!</string>
     <string name="gift_subscription">Abonnement verschenken</string>
-    </resources>
+    <string name="create_party">Gruppe erstellen</string>
+
+</resources>
