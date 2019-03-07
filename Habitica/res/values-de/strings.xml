@@ -290,7 +290,7 @@
   <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
   <string name="armoireNotesFull">Öffne den Schrank um zufällig spezielle Gegenstände, Erfahrung oder Nahrung zu erhalten! Verbleibende Ausrüstungsgegenstände: %d</string>
   <string name="armoireLastItem">Du hast das letzte Stück der seltenen Ausrüstung im verzauberten Schrank gefunden.</string>
-  <string name="armoireNotesEmpty">Der Schrank wird jeden Monat neue Ausrüstung beinhalten. Bis dahin kannst Du weiterklicken um Erfahrung und Nahrung zu erhalten.</string>
+  <string name="armoireNotesEmpty">Der Schrank wird jeden Monat neue Ausrüstung beinhalten. Bis dahin kannst Du weiterklicken um Erfahrung und Nahrung zu erhalten!</string>
   <string name="sell">Verkaufen (%d Gold)</string>
   <string name="hatch_with_potion">Mit Elixier ausbrüten</string>
   <string name="feed_to_pet">An Haustier verfüttern</string>
