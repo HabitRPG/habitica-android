@@ -97,6 +97,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         messagesBadge.visibility = View.GONE
         settingsBadge.visibility = View.GONE
+        notificationsBadge.visibility = View.GONE
 
         /* Reenable this once the boss art can be displayed correctly.
 
@@ -192,6 +193,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         messagesButtonWrapper.setOnClickListener { setSelection(R.id.inboxFragment) }
         settingsButtonWrapper.setOnClickListener { setSelection(R.id.prefsActivity) }
+        notificationsButtonWrapper.setOnClickListener { setSelection(R.id.notificationsActivity) }
     }
 
     override fun onDestroy() {

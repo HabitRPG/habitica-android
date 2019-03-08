@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.MaintenanceActivity;
+import com.habitrpg.android.habitica.ui.activities.NotificationsActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.activities.ReportMessageActivity;
@@ -132,6 +133,8 @@ public interface AppComponent {
     void inject(GroupInviteActivity groupInviteActivity);
 
     void inject(PrefsActivity prefsActivity);
+
+    void inject(NotificationsActivity notificationsActivity);
 
     void inject(SetupActivity setupActivity);
 

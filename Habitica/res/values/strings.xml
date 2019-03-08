@@ -535,6 +535,7 @@
     <string name="open_settings">Open Settings</string>
     <string name="dont_keep_activities_warning">It seems like you have the Developer option \“Don\'t keep Activities\” active. Currently this option causes issues with the habitica app, so we suggest disabling it.</string>
     <string name="inbox">Messages</string>
+    <string name="notifications">Notifications</string>
     <string name="FAQ">Frequently Asked Questions</string>
     <string name="special">Special</string>
     <string name="gem_for_gold_description">Because you subscribe to Habitica, you can purchase a number of Gems each month using Gold.</string>
