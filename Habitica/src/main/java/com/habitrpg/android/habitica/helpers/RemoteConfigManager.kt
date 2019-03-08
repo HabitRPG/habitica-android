@@ -42,4 +42,8 @@ class RemoteConfigManager {
         val type = object : TypeToken<Map<String, Map<String, String>>>() {}.type
         return Gson().fromJson(remoteConfig.getString("spriteSubstitutions"), type)
     }
+
+    fun supportEmail(): String {
+        return remoteConfig.getString("supportEmail")
+    }
 }

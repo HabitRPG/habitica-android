@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -29,6 +30,9 @@ class AboutFragment : BaseMainFragment() {
 
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
+
+    @Inject
+    lateinit var remoteConfigManager: RemoteConfigManager
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
@@ -131,7 +135,7 @@ class AboutFragment : BaseMainFragment() {
         bodyOfEmail += " \nDetails: "
 
         val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto", "mobile@habitica.com", null))
+                "mailto", remoteConfigManager.supportEmail(), null))
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
         emailIntent.putExtra(Intent.EXTRA_TEXT, bodyOfEmail)
         startActivity(Intent.createChooser(emailIntent, "Send email..."))
