@@ -188,11 +188,9 @@
         <activity android:name=".ui.activities.VerifyUsernameActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <receiver  android:process=":remote" android:name=".receivers.NotificationPublisher" />
+        <receiver android:name=".receivers.NotificationPublisher" />
 
-        <receiver
-                android:process=":remote"
-                android:name=".receivers.TaskReceiver"/>
+        <receiver android:name=".receivers.TaskReceiver"/>
 
         <receiver android:name=".receivers.LocalNotificationActionReceiver"
             android:exported="false">
