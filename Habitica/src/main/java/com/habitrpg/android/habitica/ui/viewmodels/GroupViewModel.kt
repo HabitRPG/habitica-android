@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
@@ -71,7 +72,7 @@ open class GroupViewModel : BaseViewModel() {
     fun getChatMessages(): Flowable<RealmResults<ChatMessage>> {
         return groupIDSubject.toFlowable(BackpressureStrategy.BUFFER)
                 .filterMapEmpty()
-                .flatMap { socialRepository.getGroupChat(it) }
+                .flatMapMaybe { socialRepository.getGroupChat(it).firstElement() }
     }
 
     fun retrieveGroup(function: (() -> Unit)?) {
@@ -147,9 +148,9 @@ open class GroupViewModel : BaseViewModel() {
 
     fun postGroupChat(chatText: String, onComplete: () -> Unit?) {
         groupIDSubject.value?.value.notNull {
-            disposable.add(socialRepository.postGroupChat(it, chatText).subscribe(Consumer {
+            socialRepository.postGroupChat(it, chatText).subscribe(Consumer {
                 onComplete()
-            }, RxErrorHandler.handleEmptyError()))
+            }, RxErrorHandler.handleEmptyError())
         }
     }
 

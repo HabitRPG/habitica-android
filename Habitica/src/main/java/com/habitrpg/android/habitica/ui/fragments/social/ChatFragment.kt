@@ -93,7 +93,7 @@ class ChatFragment constructor() : BaseFragment(), SwipeRefreshLayout.OnRefreshL
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        compositeSubscription.add(viewModel.getChatMessages().firstElement().subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(viewModel.getChatMessages().subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError()))
 
         viewModel.getUserData().observe(viewLifecycleOwner, Observer {
             chatAdapter?.user = it

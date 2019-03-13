@@ -106,7 +106,7 @@ class GuildFragment : BaseMainFragment() {
             R.id.menu_guild_leave -> {
                 this.socialRepository.leaveGroup(this.guild?.id)
                         .subscribe(Consumer {
-                            this.activity?.invalidateOptionsMenu()
+                            fragmentManager?.popBackStack()
                         }, RxErrorHandler.handleEmptyError())
                 this.isMember = false
                 return true

@@ -141,12 +141,12 @@ class TasksFragment : BaseMainFragment() {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
             }
             dialog.setActiveTags(taskFilterHelper.tags)
-            /*if (activeFragment != null) {
+            if (activeFragment != null) {
                 val taskType = activeFragment?.classType
                 if (taskType != null) {
                     dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
                 }
-            }*/
+            }
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
 
                 override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {

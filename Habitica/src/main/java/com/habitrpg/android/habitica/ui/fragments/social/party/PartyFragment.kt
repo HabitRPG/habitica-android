@@ -141,6 +141,7 @@ class PartyFragment : BaseMainFragment() {
                         .setMessage(context?.getString(R.string.leave_party_confirmation))
                         .setPositiveButton(context?.getString(R.string.yes)) { _, _ ->
                             viewModel.leaveGroup {
+                                fragmentManager?.popBackStack()
                             }
                         }
                         .setNegativeButton(context?.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
