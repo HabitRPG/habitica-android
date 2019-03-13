@@ -72,6 +72,12 @@ class TasksFragment : BaseMainFragment() {
 
         loadTaskLists()
 
+        return v
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         bottomNavigation?.setBadgesHideWhenActive(true)
         bottomNavigation?.setOnTabSelectListener { tabId ->
             when (tabId) {
@@ -82,8 +88,6 @@ class TasksFragment : BaseMainFragment() {
             }
             updateBottomBarBadges()
         }
-
-        return v
     }
 
     override fun onDestroy() {
@@ -137,12 +141,12 @@ class TasksFragment : BaseMainFragment() {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
             }
             dialog.setActiveTags(taskFilterHelper.tags)
-            if (activeFragment != null) {
+            /*if (activeFragment != null) {
                 val taskType = activeFragment?.classType
                 if (taskType != null) {
                     dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType))
                 }
-            }
+            }*/
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
 
                 override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {
