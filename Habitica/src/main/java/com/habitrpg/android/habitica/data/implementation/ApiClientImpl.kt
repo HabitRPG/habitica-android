@@ -201,6 +201,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 return
             }
 
+            if (status == 404) {
+                return
+            }
+
             if (status in 400..499) {
                 if (res.displayMessage.isNotEmpty()) {
                     showConnectionProblemDialog("", res.displayMessage)

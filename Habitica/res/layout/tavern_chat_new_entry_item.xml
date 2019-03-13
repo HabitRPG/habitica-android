@@ -23,7 +23,7 @@
                 app:hintEnabled="false"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_medium">
-                <MultiAutoCompleteTextView
+                <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
                     android:id="@+id/chatEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

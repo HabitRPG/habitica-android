@@ -37,6 +37,7 @@ import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter
 import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
 import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmList
@@ -54,8 +55,8 @@ class TaskFormActivity : BaseActivity() {
     private val difficultyWrapper: LinearLayout by bindView(R.id.task_difficulty_wrapper)
     private val attributeWrapper: LinearLayout by bindView(R.id.task_attribute_wrapper)
     private val mainWrapper: LinearLayout by bindView(R.id.task_main_wrapper)
-    private val taskText: MultiAutoCompleteTextView by bindView(R.id.task_text_edittext)
-    private val taskNotes: MultiAutoCompleteTextView by bindView(R.id.task_notes_edittext)
+    private val taskText: HabiticaAutocompleteTextView by bindView(R.id.task_text_edittext)
+    private val taskNotes: HabiticaAutocompleteTextView by bindView(R.id.task_notes_edittext)
     private val taskDifficultySpinner: Spinner by bindView(R.id.task_difficulty_spinner)
     private val taskAttributeSpinner: Spinner by bindView(R.id.task_attribute_spinner)
     private val btnDelete: Button by bindView(R.id.btn_delete_task)
@@ -63,7 +64,7 @@ class TaskFormActivity : BaseActivity() {
     private val negativeCheckBox: CheckBox by bindView(R.id.task_negative_checkbox)
     private val actionsLayout: LinearLayout by bindView(R.id.task_actions_wrapper)
     private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.checklist_recycler_view)
-    private val newCheckListEditText: MultiAutoCompleteTextView by bindView(R.id.new_checklist)
+    private val newCheckListEditText: HabiticaAutocompleteTextView by bindView(R.id.new_checklist)
     private val addChecklistItemButton: Button by bindView(R.id.add_checklist_button)
     private val remindersWrapper: LinearLayout by bindView(R.id.task_reminders_wrapper)
     private val newRemindersEditText: EditText by bindView(R.id.new_reminder_edittext)

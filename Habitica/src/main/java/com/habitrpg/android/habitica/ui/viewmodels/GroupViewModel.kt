@@ -30,7 +30,7 @@ enum class GroupViewType(internal val order: String) {
     TAVERN("tavern")
 }
 
-open class GroupViewModel: BaseViewModel() {
+open class GroupViewModel : BaseViewModel() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -88,8 +88,6 @@ open class GroupViewModel: BaseViewModel() {
         disposable.add(socialRepository.inviteToGroup(group.value?.id ?: "", inviteData)
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
-
-
 
     fun updateOrCreateGroup(bundle: Bundle?) {
         if (group.value == null) {

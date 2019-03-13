@@ -23,7 +23,7 @@
                     android:layout_height="wrap_content"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                    <MultiAutoCompleteTextView
+                    <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
                         android:id="@+id/task_text_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                    <MultiAutoCompleteTextView
+                    <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
                         android:id="@+id/task_notes_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

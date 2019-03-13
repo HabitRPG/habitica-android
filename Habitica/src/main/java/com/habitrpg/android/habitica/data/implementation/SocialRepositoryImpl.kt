@@ -225,7 +225,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun markPrivateMessagesRead(user: User?): Flowable<Void> {
         return apiClient.markPrivateMessagesRead()
-                .doOnNext { _ ->
+                .doOnNext {
                     if (user?.isManaged == true) {
                         localRepository.executeTransaction { user.inbox?.newMessages = 0 }
                     }
@@ -236,7 +236,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)
-                .doOnNext { _ ->
+                .doOnNext {
                     user.notNull {
                         localRepository.updateRSVPNeeded(it, false)
                     }

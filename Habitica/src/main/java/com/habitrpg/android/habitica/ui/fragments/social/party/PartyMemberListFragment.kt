@@ -1,10 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +20,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-class PartyMemberListFragment constructor() : BaseFragment() {
+class PartyMemberListFragment : BaseFragment() {
 
     lateinit var viewModel: PartyViewModel
 
