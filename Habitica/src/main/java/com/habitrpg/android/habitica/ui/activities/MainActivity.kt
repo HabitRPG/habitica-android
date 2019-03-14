@@ -34,6 +34,7 @@ import androidx.core.content.edit
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.facebook.drawee.view.SimpleDraweeView
+import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
@@ -176,8 +177,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         return R.layout.activity_main
     }
 
+    private var launchTrace: com.google.firebase.perf.metrics.Trace? = null
+
     @SuppressLint("ObsoleteSdkInt")
     public override fun onCreate(savedInstanceState: Bundle?) {
+        launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
+        launchTrace?.start()
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
         Locale.setDefault(languageHelper.locale)
@@ -312,6 +317,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent, user)
         }
+
+        launchTrace?.stop()
+        launchTrace = null
     }
 
     override fun onPause() {
