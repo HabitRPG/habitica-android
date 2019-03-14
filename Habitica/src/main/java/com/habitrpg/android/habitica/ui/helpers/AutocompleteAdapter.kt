@@ -11,14 +11,21 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.auth.LocalAuthentication
+import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
+import com.habitrpg.android.habitica.models.user.Authentication
+import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+import io.reactivex.functions.Consumer
 import net.pherth.android.emoji_library.EmojiMap
 import net.pherth.android.emoji_library.EmojiParser
 import net.pherth.android.emoji_library.EmojiTextView
 import java.util.Date
 
-class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository? = null, var autocompleteContext: String? = null, var groupID: String? = null) : BaseAdapter(), Filterable {
+class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository? = null, var autocompleteContext: String? = null, var groupID: String? = null, val remoteAutocomplete: Boolean = false) : BaseAdapter(), Filterable {
+    var chatMessages: List<ChatMessage> = arrayListOf()
     private var userResults: List<FindUsernameResult> = arrayListOf()
     private var emojiResults: List<String> = arrayListOf()
     private var isAutocompletingUsers = true
@@ -29,7 +36,7 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
                 if (constraint != null && constraint.isNotEmpty()) {
-                    if (constraint[0] == '@' && constraint.length >= 3 && socialRepository != null) {
+                    if (constraint[0] == '@' && constraint.length >= 3 && socialRepository != null && remoteAutocomplete) {
                         if (Date().time - lastAutocomplete > 2000) {
                             lastAutocomplete = Date().time
                             userResults = arrayListOf()
@@ -43,6 +50,24 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
                             filterResults.values = userResults
                             filterResults.count = userResults.size
                         }
+                    } else if (constraint[0] == '@') {
+                        lastAutocomplete = Date().time
+                        isAutocompletingUsers = true
+                        userResults = chatMessages.distinctBy {
+                            it.username
+                        }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map {message ->
+                            val result = FindUsernameResult()
+                            result.authentication = Authentication()
+                            result.authentication?.localAuthentication = LocalAuthentication()
+                            result.authentication?.localAuthentication?.userID = message.uuid
+                            result.authentication?.localAuthentication?.username = message.username
+                            result.contributor = message.contributor
+                            result.profile = Profile()
+                            result.profile?.name = message.user
+                            result
+                        }
+                        filterResults.values = userResults
+                        filterResults.count = userResults.size
                     } else if (constraint[0] == ':') {
                         isAutocompletingUsers = false
                         emojiResults = EmojiMap.invertedEmojiMap.keys.filter { it.startsWith(constraint) }
@@ -68,7 +93,7 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
             val view = parent?.inflate(R.layout.autocomplete_username)
             val result = getItem(position) as? FindUsernameResult
             val displaynameView = view?.findViewById<UsernameLabel>(R.id.display_name_view)
-            displaynameView?.username = result?.username
+            displaynameView?.username = result?.profile?.name
             displaynameView?.tier = result?.contributor?.level ?: 0
             view?.findViewById<TextView>(R.id.username_view)?.text = result?.formattedUsername
             view

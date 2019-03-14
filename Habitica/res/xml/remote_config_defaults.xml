@@ -16,5 +16,9 @@
         <key>spriteSubstitutions</key>
         <value>{}</value>
     </entry>
+    <entry>
+        <key>enableUsernameAutocomplete</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

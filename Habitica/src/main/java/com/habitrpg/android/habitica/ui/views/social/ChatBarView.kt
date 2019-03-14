@@ -13,6 +13,8 @@ import androidx.core.view.updateLayoutParams
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
@@ -25,12 +27,21 @@ class ChatBarView : FrameLayout {
     @Inject
     lateinit var socialRepository: SocialRepository
 
+    @Inject
+    lateinit var remoteConfig: RemoteConfigManager
+
     private val sendButton: ImageButton by bindView(R.id.sendButton)
     private val chatEditText: MultiAutoCompleteTextView by bindView(R.id.chatEditText)
     private val textIndicator: TextView by bindView(R.id.text_indicator)
     private val indicatorSpacing: View by bindView(R.id.indicator_spacing)
     private val spacing: Space by bindView(R.id.spacing)
     private var navBarAccountedHeightCalculated = false
+
+    var chatMessages: List<ChatMessage>
+        get() = autocompleteAdapter?.chatMessages ?: listOf()
+        set(value) {
+            autocompleteAdapter?.chatMessages = value
+        }
 
     internal var maxChatLength = 3000L
 
@@ -78,7 +89,7 @@ class ChatBarView : FrameLayout {
 
         resizeForDrawingUnderNavbar()
 
-        autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID)
+        autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID, remoteConfig.enableUsernameAutocomplete())
         chatEditText.setAdapter(autocompleteAdapter)
         chatEditText.threshold = 2
 

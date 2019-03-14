@@ -290,6 +290,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun setChatMessages(chatMessages: RealmResults<ChatMessage>) {
         chatAdapter?.updateData(chatMessages)
+        chatBarView.chatMessages = socialRepository.getUnmanagedCopy(chatMessages)
         recyclerView.scrollToPosition(0)
 
         gotNewMessages = true

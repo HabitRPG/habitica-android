@@ -46,4 +46,8 @@ class RemoteConfigManager {
     fun supportEmail(): String {
         return remoteConfig.getString("supportEmail")
     }
+
+    fun enableUsernameAutocomplete(): Boolean {
+        return remoteConfig.getBoolean("enableUsernameAutocomplete")
+    }
 }
