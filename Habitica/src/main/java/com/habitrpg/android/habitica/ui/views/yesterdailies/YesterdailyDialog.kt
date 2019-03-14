@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -147,7 +148,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                             taskRepository.updateDailiesIsDue(cal.time).firstElement()
                         }
                         .flatMapMaybe { taskRepository.getTasks(Task.TYPE_DAILY, userId).firstElement() }
-                        .map { tasks -> tasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll() }
+                        .map { tasks -> tasks.where().equalTo("isDue", true).notEqualTo("completed", true).notEqualTo("yesterDaily", false).findAll() }
                         .flatMapMaybe<List<Task>> { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
                         .retry(1)
                         .subscribe(Consumer { tasks ->
@@ -158,6 +159,9 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                             if (Math.abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
                                 return@Consumer
                             }
+                            val additionalData = HashMap<String, Any>()
+                            additionalData["task count"] = tasks.size
+                            AmplitudeManager.sendEvent("show cron", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
                             if (tasks.isNotEmpty()) {
                                 showDialog(activity, userRepository, taskRepository, tasks)
