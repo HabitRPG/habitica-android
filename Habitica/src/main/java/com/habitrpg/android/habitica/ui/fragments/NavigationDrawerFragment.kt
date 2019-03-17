@@ -306,6 +306,15 @@ class NavigationDrawerFragment : DialogFragment() {
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition)
     }
 
+    fun setNotificationsCount(unreadNotifications: Int) {
+        if (unreadNotifications == 0) {
+            notificationsBadge.visibility = View.GONE
+        } else {
+            notificationsBadge.visibility = View.VISIBLE
+            notificationsBadge.text = unreadNotifications.toString()
+        }
+    }
+
     fun setMessagesCount(unreadMessages: Int) {
         if (unreadMessages == 0) {
             messagesBadge.visibility = View.GONE

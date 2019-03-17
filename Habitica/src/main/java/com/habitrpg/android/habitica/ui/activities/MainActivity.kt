@@ -374,6 +374,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user?.id, userRepository, taskRepository)
 
+            drawerFragment?.setNotificationsCount(this.user?.notifications?.count() ?: 0)
             drawerFragment?.setMessagesCount(this.user?.inbox?.newMessages ?: 0)
             drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
 
