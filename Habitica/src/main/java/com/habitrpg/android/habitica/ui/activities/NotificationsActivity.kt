@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -56,6 +58,19 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun setNotifications(notifications: RealmList<GlobalNotification>) {
+        if (notification_items == null) {
+            return
+        }
+
+        notification_items.removeAllViewsInLayout()
+
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
+        if (notifications.isEmpty()) {
+            val item = inflater?.inflate(R.layout.no_notifications, notification_items, false)
+            notification_items.addView(item)
+            return
+        }
+
         //TODO("not implemented")
     }
 }
