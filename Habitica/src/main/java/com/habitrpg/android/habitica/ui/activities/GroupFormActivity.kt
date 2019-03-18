@@ -102,9 +102,13 @@ class GroupFormActivity : BaseActivity() {
     }
 
     private fun finishActivitySuccessfuly() {
+        val name = groupNameEditText.text.toString()
+        if (name.isEmpty()) {
+            return
+        }
         val resultIntent = Intent()
         val bundle = Bundle()
-        bundle.putString("name", this.groupNameEditText.text.toString())
+        bundle.putString("name", name)
         bundle.putString("groupType", groupType)
         bundle.putString("description", MarkdownParser.parseCompiled(this.groupDescriptionEditText.text))
         bundle.putBoolean("leaderCreateChallenge", leaderCreateChallengeSwitch.isActivated)

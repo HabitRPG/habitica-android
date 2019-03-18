@@ -192,7 +192,7 @@
                     android:background="@drawable/md_transparent"
                     android:contentDescription="Toogle Emoji" />
 
-                <net.pherth.android.emoji_library.EmojiEditText
+                <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
                     android:id="@+id/new_checklist"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

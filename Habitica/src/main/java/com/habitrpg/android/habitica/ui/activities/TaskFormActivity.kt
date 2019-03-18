@@ -238,8 +238,13 @@ class TaskFormActivity : BaseActivity() {
         taskText.setTokenizer(tokenizer)
         val notesAutocompleteAdapter = AutocompleteAdapter(this)
         taskNotes.setAdapter(notesAutocompleteAdapter)
-        taskText.threshold = 2
+        taskNotes.threshold = 2
         taskNotes.setTokenizer(tokenizer)
+
+        val checklistAutocompleteAdapter = AutocompleteAdapter(this)
+        newCheckListEditText.setAdapter(checklistAutocompleteAdapter)
+        newCheckListEditText.threshold = 2
+        newCheckListEditText.setTokenizer(tokenizer)
 
         enableRepeatables()
 

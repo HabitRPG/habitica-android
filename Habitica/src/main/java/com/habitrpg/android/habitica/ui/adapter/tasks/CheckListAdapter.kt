@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
 import net.pherth.android.emoji_library.EmojiEditText
 import java.util.*
 
@@ -65,7 +66,7 @@ class CheckListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Check
     inner class ItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder, View.OnClickListener {
 
         internal val textWatcher: ChecklistTextWatcher = ChecklistTextWatcher()
-        internal val checkListTextView: EmojiEditText by bindView(itemView, R.id.item_edittext)
+        internal val checkListTextView: HabiticaAutocompleteTextView by bindView(itemView, R.id.item_edittext)
         private val deleteButton: Button by bindView(itemView, R.id.delete_item_button)
 
         init {

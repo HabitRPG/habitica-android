@@ -48,6 +48,13 @@
                     android:persistent="false"
                     android:shouldDisableView="false"
                     android:layout="@layout/preference_child_summary"/>
+            <Preference
+                android:key="add_local_auth"
+                android:title="@string/add_local_authentication"
+                android:selectable="true"
+                android:persistent="false"
+                android:shouldDisableView="false"
+                android:layout="@layout/preference_child_summary"/>
                 <Preference
                         android:key="subscription_status"
                         android:title="@string/subscription_status"

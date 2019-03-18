@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -29,6 +30,9 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
     @Inject
     lateinit var configManager: RemoteConfigManager
+
+    @Inject
+    lateinit var apiClient: ApiClient
 
     override var user: User? = null
         set(value) {
@@ -46,13 +50,17 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun updateUserFields() {
-        configurePreference(findPreference("login_name"), user?.authentication?.localAuthentication?.username)
-        configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email)
+        configurePreference(findPreference("login_name"), user?.authentication?.localAuthentication?.username, false)
+        configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email, true)
+        findPreference("add_local_auth").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
         findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
     }
 
-    private fun configurePreference(preference: Preference?, value: String?) {
+    private fun configurePreference(preference: Preference?, value: String?, hideIfEmpty: Boolean) {
         preference?.summary = value
+        if (hideIfEmpty) {
+            preference?.isVisible = value?.isNotEmpty() == true
+        }
     }
 
     override fun setupPreferences() {
@@ -101,7 +109,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                         thisDialog.dismiss()
                         userRepository.updateEmail(emailEditText?.text.toString(), passwordEditText?.text.toString())
                                 .subscribe(Consumer {
-                                    configurePreference(findPreference("email"), emailEditText?.text.toString())
+                                    configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
                                 }, RxErrorHandler.handleEmptyError())
                     }
                     .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
@@ -122,7 +130,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                         thisDialog.dismiss()
                         userRepository.updateLoginName(loginNameEditText?.text.toString())
                                 .subscribe(Consumer {
-                                    configurePreference(findPreference("login_name"), loginNameEditText?.text.toString())
+                                    configurePreference(findPreference("login_name"), loginNameEditText?.text.toString(), true)
                                 }, RxErrorHandler.handleEmptyError())
                     }
                     .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
@@ -157,6 +165,33 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                     .create()
             dialog.setOnShowListener { _ -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
             dialog.setView(input)
+            dialog.show()
+        }
+    }
+
+    private fun showAddLocalNotificationDialog() {
+        val inflater = context?.layoutInflater
+        val view = inflater?.inflate(R.layout.dialog_edittext_add_local_auth, null)
+        val emailEditText = view?.findViewById<EditText>(R.id.editText)
+        val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
+        val passwordRepeatEditText = view?.findViewById<EditText>(R.id.passwordRepeatEditText)
+        context.notNull { context ->
+            val dialog = AlertDialog.Builder(context)
+                    .setTitle(R.string.add_local_authentication)
+                    .setPositiveButton(R.string.save) { thisDialog, _ ->
+                        if (passwordEditText?.text == passwordRepeatEditText?.text) {
+                            return@setPositiveButton
+                        }
+                        thisDialog.dismiss()
+                        apiClient.registerUser(user?.username ?: "", emailEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
+                                .flatMap { userRepository.retrieveUser(false) }
+                                .subscribe(Consumer {
+                                    configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
+                                }, RxErrorHandler.handleEmptyError())
+                    }
+                    .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
+                    .create()
+            dialog.setView(view)
             dialog.show()
         }
     }

@@ -1,1 +1,1 @@
-This update brings username and emoji autocomplete, deep linking (open https://habitica.com urls from anywhere on your device with the app), bigger emojis and bugfixes.
+This update brings username and emoji autocomplete, deep linking (open https://habitica.com urls from anywhere on your device with the app), bigger emojis, party creation and many bugfixes.
