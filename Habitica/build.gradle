@@ -150,7 +150,7 @@ android {
         buildConfigField "String", "STORE", "\"google\""
         multiDexEnabled true
 
-        versionCode 2075
+        versionCode 2076
         versionName "1.8"
     }
 

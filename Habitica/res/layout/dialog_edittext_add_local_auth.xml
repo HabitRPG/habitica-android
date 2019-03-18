@@ -3,6 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/spacing_medium">
+    <TextView
+        android:id="@+id/emailTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:layout_marginTop="@dimen/content_section_spacing"/>
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
@@ -16,7 +22,8 @@
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="textPassword" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,5 +32,6 @@
     <EditText
         android:id="@+id/passwordRepeatEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"/>
 </LinearLayout>

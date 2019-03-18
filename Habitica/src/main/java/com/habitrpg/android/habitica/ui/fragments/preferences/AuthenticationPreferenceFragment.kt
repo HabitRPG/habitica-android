@@ -83,6 +83,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             }
             "reset_account" -> showAccountResetConfirmation()
             "delete_account" -> showAccountDeleteConfirmation()
+            "add_local_auth" -> showAddLocalNotificationDialog()
             else -> {
                 val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
                 clipMan?.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
