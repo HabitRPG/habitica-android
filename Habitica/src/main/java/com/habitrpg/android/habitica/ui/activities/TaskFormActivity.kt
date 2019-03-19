@@ -64,7 +64,7 @@ class TaskFormActivity : BaseActivity() {
     private val negativeCheckBox: CheckBox by bindView(R.id.task_negative_checkbox)
     private val actionsLayout: LinearLayout by bindView(R.id.task_actions_wrapper)
     private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.checklist_recycler_view)
-    private val newCheckListEditText: HabiticaAutocompleteTextView by bindView(R.id.new_checklist)
+    private val newCheckListEditText: HabiticaAutocompleteTextView? by bindOptionalView(R.id.new_checklist)
     private val addChecklistItemButton: Button by bindView(R.id.add_checklist_button)
     private val remindersWrapper: LinearLayout by bindView(R.id.task_reminders_wrapper)
     private val newRemindersEditText: EditText by bindView(R.id.new_reminder_edittext)
@@ -242,9 +242,9 @@ class TaskFormActivity : BaseActivity() {
         taskNotes.setTokenizer(tokenizer)
 
         val checklistAutocompleteAdapter = AutocompleteAdapter(this)
-        newCheckListEditText.setAdapter(checklistAutocompleteAdapter)
-        newCheckListEditText.threshold = 2
-        newCheckListEditText.setTokenizer(tokenizer)
+        newCheckListEditText?.setAdapter(checklistAutocompleteAdapter)
+        newCheckListEditText?.threshold = 2
+        newCheckListEditText?.setTokenizer(tokenizer)
 
         enableRepeatables()
 
@@ -542,10 +542,10 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun addChecklistItem() {
-        val text = newCheckListEditText.text.toString()
+        val text = newCheckListEditText?.text?.toString() ?: ""
         val item = ChecklistItem(null, text)
         checklistAdapter?.addItem(item)
-        newCheckListEditText.setText("")
+        newCheckListEditText?.setText("")
     }
 
     private fun createRemindersRecyclerView() {
