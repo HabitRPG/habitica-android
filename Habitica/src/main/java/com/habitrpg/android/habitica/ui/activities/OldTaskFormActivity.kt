@@ -48,7 +48,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class TaskFormActivity : BaseActivity() {
+class OldTaskFormActivity : BaseActivity() {
     private val taskValue: EditText by bindView(R.id.task_value_edittext)
     private val taskValueLayout: TextInputLayout by bindView(R.id.task_value_layout)
     private val checklistWrapper: LinearLayout by bindView(R.id.task_checklist_wrapper)
@@ -930,9 +930,9 @@ class TaskFormActivity : BaseActivity() {
         val mainHandler = Handler(this.mainLooper)
         mainHandler.postDelayed({
             val resultIntent = Intent()
-            resultIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, taskType)
+            resultIntent.putExtra(OldTaskFormActivity.TASK_TYPE_KEY, taskType)
             if (!shouldSaveTask) {
-                resultIntent.putExtra(TaskFormActivity.PARCELABLE_TASK, task)
+                resultIntent.putExtra(OldTaskFormActivity.PARCELABLE_TASK, task)
             }
             setResult(Activity.RESULT_OK, resultIntent)
             finish()

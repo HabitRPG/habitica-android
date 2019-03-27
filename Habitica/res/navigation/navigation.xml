@@ -246,7 +246,7 @@
     </fragment>
     <activity
         android:id="@+id/taskFormActivity"
-        android:name="com.habitrpg.android.habitica.ui.activities.TaskFormActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.OldTaskFormActivity"
         android:label="TaskFormActivity" />
     <activity
         android:id="@+id/fullProfileActivity"

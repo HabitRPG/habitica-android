@@ -111,7 +111,7 @@
             android:theme="@style/AppThemeWithActionBarBlackText"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activities.TaskFormActivity"
+            android:name=".ui.activities.OldTaskFormActivity"
             android:theme="@style/AppThemeWithActionBarBlackText"
             android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="portrait"
