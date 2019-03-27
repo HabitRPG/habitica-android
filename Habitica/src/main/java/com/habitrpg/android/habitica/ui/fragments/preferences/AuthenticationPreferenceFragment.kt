@@ -52,6 +52,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     private fun updateUserFields() {
         configurePreference(findPreference("login_name"), user?.authentication?.localAuthentication?.username, false)
         configurePreference(findPreference("email"), user?.authentication?.localAuthentication?.email, true)
+        findPreference("change_password").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() == true
         findPreference("add_local_auth").isVisible = user?.authentication?.localAuthentication?.email?.isNotEmpty() != true
         findPreference("confirm_username").isVisible = user?.flags?.isVerifiedUsername != true
     }
@@ -94,7 +95,25 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showChangePasswordDialog() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val inflater = context?.layoutInflater
+        val view = inflater?.inflate(R.layout.dialog_edittext_change_pw, null)
+        val oldPasswordEditText = view?.findViewById<EditText>(R.id.editText)
+        val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
+        val passwordRepeatEditText = view?.findViewById<EditText>(R.id.passwordRepeatEditText)
+        context.notNull { context ->
+            val dialog = AlertDialog.Builder(context)
+                    .setTitle(R.string.change_password)
+                    .setPositiveButton(R.string.change) { thisDialog, _ ->
+                        thisDialog.dismiss()
+                        userRepository.updatePassword(oldPasswordEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
+                                .subscribe(Consumer {
+                                }, RxErrorHandler.handleEmptyError())
+                    }
+                    .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
+                    .create()
+            dialog.setView(view)
+            dialog.show()
+        }
     }
 
     private fun showEmailDialog() {

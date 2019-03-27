@@ -63,7 +63,7 @@ interface UserRepository : BaseRepository {
 
     fun updateLoginName(newLoginName: String, password: String? = null): Maybe<User>
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
-    fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void>
+    fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 
     fun allocatePoint(user: User?, stat: String): Flowable<Stats>

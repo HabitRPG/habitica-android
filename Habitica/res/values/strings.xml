@@ -866,5 +866,8 @@
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>
     <string name="create_party">Create Party</string>
     <string name="add_local_authentication">Add Local Authentication</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="new_password_repeat">Repeat new Password</string>
 
 </resources>

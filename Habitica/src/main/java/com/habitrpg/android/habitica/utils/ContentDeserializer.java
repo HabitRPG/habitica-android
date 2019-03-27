@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,11 +58,17 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         Map<String, Pet> premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<Map<String, Pet>>() {}.getType());
         Map<String, Pet> questPets = context.deserialize(object.get("questPets"), new TypeToken<Map<String, Pet>>() {}.getType());
         Map<String, Pet> whackyPets = context.deserialize(object.get("whackyPets"), new TypeToken<Map<String, Pet>>() {}.getType());
+        if (whackyPets == null) {
+            whackyPets = new HashMap<>();
+        }
         Map<String, Mount> mounts = context.deserialize(object.get("mounts"), new TypeToken<Map<String, Mount>>() {}.getType());
         Map<String, Mount> specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
         Map<String, Mount> premiumMounts = context.deserialize(object.get("premiumMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
         Map<String, Mount> questMounts = context.deserialize(object.get("questMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
         Map<String, Mount> whackyMounts = context.deserialize(object.get("whackyMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
+        if (whackyMounts == null) {
+            whackyMounts = new HashMap<>();
+        }
 
         for (Egg egg : result.eggs) {
             for (HatchingPotion potion : result.hatchingPotions) {

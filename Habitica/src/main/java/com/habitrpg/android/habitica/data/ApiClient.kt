@@ -241,7 +241,7 @@ interface ApiClient {
 
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
 
-    fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void>
+    fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
 
     fun allocatePoint(stat: String): Flowable<Stats>
 

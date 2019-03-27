@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
-import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -211,8 +210,8 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
             apiClient.updateEmail(newEmail, password)
 
-    override fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void> =
-            apiClient.updatePassword(newPassword, oldPassword, oldPasswordConfirmation)
+    override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> =
+            apiClient.updatePassword(oldPassword, newPassword, newPasswordConfirmation)
 
     override fun allocatePoint(user: User?, stat: String): Flowable<Stats> {
         if (user != null && user.isManaged) {

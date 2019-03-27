@@ -723,11 +723,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.updateEmail(updateObject).compose(configureApiCallObserver())
     }
 
-    override fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void> {
+    override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
-        updateObject["newPassword"] = newPassword
         updateObject["password"] = oldPassword
-        updateObject["confirmPassowrd"] = oldPasswordConfirmation
+        updateObject["newPassword"] = newPassword
+        updateObject["confirmPassword"] = newPasswordConfirmation
         return apiService.updatePassword(updateObject).compose(configureApiCallObserver())
     }
 
