@@ -56,10 +56,12 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         Map<String, Pet> specialPets = context.deserialize(object.get("specialPets"), new TypeToken<Map<String, Pet>>() {}.getType());
         Map<String, Pet> premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<Map<String, Pet>>() {}.getType());
         Map<String, Pet> questPets = context.deserialize(object.get("questPets"), new TypeToken<Map<String, Pet>>() {}.getType());
+        Map<String, Pet> whackyPets = context.deserialize(object.get("whackyPets"), new TypeToken<Map<String, Pet>>() {}.getType());
         Map<String, Mount> mounts = context.deserialize(object.get("mounts"), new TypeToken<Map<String, Mount>>() {}.getType());
         Map<String, Mount> specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
         Map<String, Mount> premiumMounts = context.deserialize(object.get("premiumMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
         Map<String, Mount> questMounts = context.deserialize(object.get("questMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
+        Map<String, Mount> whackyMounts = context.deserialize(object.get("whackyMounts"), new TypeToken<Map<String, Mount>>() {}.getType());
 
         for (Egg egg : result.eggs) {
             for (HatchingPotion potion : result.hatchingPotions) {
@@ -76,6 +78,9 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
                 if (questPets.containsKey(key)) {
                     questPets.put(key, this.populatePet(questPets.get(key), egg, potion, "questPets"));
                 }
+                if (whackyPets.containsKey(key)) {
+                    whackyPets.put(key, this.populatePet(whackyPets.get(key), egg, potion, "whackyPets"));
+                }
                 if (mounts.containsKey(key)) {
                     mounts.put(key, this.populateMount(mounts.get(key), egg, potion, "mounts"));
                 }
@@ -87,6 +92,9 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
                 }
                 if (questMounts.containsKey(key)) {
                     questMounts.put(key, this.populateMount(questMounts.get(key), egg, potion, "questMounts"));
+                }
+                if (whackyMounts.containsKey(key)) {
+                    whackyMounts.put(key, this.populateMount(whackyMounts.get(key), egg, potion, "whackyMounts"));
                 }
             }
         }
