@@ -11,6 +11,10 @@ import io.realm.RealmResults
 
 class TagRepositoryImpl(localRepository: TagLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<TagLocalRepository>(localRepository, apiClient, userID), TagRepository {
 
+    override fun getTags(): Flowable<RealmResults<Tag>> {
+        return getTags(userID)
+    }
+
     override fun getTags(userId: String): Flowable<RealmResults<Tag>> {
         return localRepository.getTags(userId)
     }

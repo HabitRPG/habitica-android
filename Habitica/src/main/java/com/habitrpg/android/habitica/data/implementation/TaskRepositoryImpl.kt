@@ -140,29 +140,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             return Flowable.empty()
         }
         lastTaskAction = now
-        task.tags?.let {
-            if (it.size > 0) {
-                val tags = RealmList<Tag>()
-                tags.addAll(localRepository.getUnmanagedCopy(it))
-                task.tags = tags
-            }
-        }
-
-        task.checklist?.let {
-            if (it.size > 0) {
-                val checklist = RealmList<ChecklistItem>()
-                checklist.addAll(localRepository.getUnmanagedCopy(it))
-                task.checklist = checklist
-            }
-        }
-
-        task.reminders?.let {
-            if (it.size > 0) {
-                val reminders = RealmList<RemindersItem>()
-                reminders.addAll(localRepository.getUnmanagedCopy(it))
-                task.reminders = reminders
-            }
-        }
 
         task.isSaving = true
         task.isCreating = true

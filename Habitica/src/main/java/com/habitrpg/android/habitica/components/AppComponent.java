@@ -34,6 +34,7 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.OldTaskFormActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.activities.VerifyUsernameActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
@@ -311,4 +312,6 @@ public interface AppComponent {
     void inject(@NotNull AboutFragment aboutFragment);
 
     void inject(@NotNull ChatBarView chatBarView);
+
+    void inject(@NotNull TaskFormActivity taskFormActivity);
 }

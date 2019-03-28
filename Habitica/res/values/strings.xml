@@ -102,8 +102,8 @@
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
     <string name="start_date">Start Date</string>
-    <string name="positive_habit_form">Positive ( + )</string>
-    <string name="negative_habit_form">Negative ( - )</string>
+    <string name="positive_habit_form">Positive</string>
+    <string name="negative_habit_form">Negative</string>
     <string name="checklist">Checklist</string>
     <string name="reminders">Reminders</string>
     <string name="actions">Actions</string>
@@ -866,8 +866,13 @@
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>
     <string name="create_party">Create Party</string>
     <string name="add_local_authentication">Add Local Authentication</string>
+    <string name="task_title">Task Title</string>
+
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="new_password_repeat">Repeat new Password</string>
-
+    <string name="adjust_streak">Adjust Streak</string>
+    <string name="assigned_stat">Assigned Stat</string>
+    <string name="monthly">Monthly</string>
+    <string name="weekly">Weekly</string>
 </resources>
