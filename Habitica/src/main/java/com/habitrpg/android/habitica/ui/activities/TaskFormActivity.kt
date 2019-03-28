@@ -1,0 +1,298 @@
+package com.habitrpg.android.habitica.ui.activities
+
+import android.content.Context
+import android.os.Bundle
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.models.tasks.HabitResetOption
+import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.tasks.form.HabitResetStreakButtons
+import com.habitrpg.android.habitica.ui.views.tasks.form.HabitScoringButtonsView
+import com.habitrpg.android.habitica.ui.views.tasks.form.TaskDifficultyButtons
+import io.reactivex.functions.Consumer
+import javax.inject.Inject
+import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
+import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.core.view.children
+import androidx.core.view.forEach
+import androidx.core.view.forEachIndexed
+import com.habitrpg.android.habitica.extensions.dpToPx
+import io.realm.RealmList
+
+
+class TaskFormActivity : BaseActivity() {
+
+    @Inject
+    lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var taskRepository: TaskRepository
+    @Inject
+    lateinit var tagRepository: TagRepository
+
+    private val toolbar: Toolbar by bindView(R.id.toolbar)
+    private val upperTextWrapper: LinearLayout by bindView(R.id.upper_text_wrapper)
+    private val textEditText: EditText by bindView(R.id.text_edit_text)
+    private val notesEditText: EditText by bindView(R.id.notes_edit_text)
+    private val habitScoringButtons: HabitScoringButtonsView by bindView(R.id.habit_scoring_buttons)
+    private val habitResetStreakTitleView: TextView by bindView(R.id.habit_reset_streak_title)
+    private val habitResetStreakButtons: HabitResetStreakButtons by bindView(R.id.habit_reset_streak_buttons)
+    private val adjustStreakWrapper: ViewGroup by bindView(R.id.adjust_streak_wrapper)
+    private val adjustStreakTitleView: TextView by bindView(R.id.adjust_streak_title)
+    private val habitAdjustPositiveStreakView: EditText by bindView(R.id.habit_adjust_positive_streak)
+    private val habitAdjustNegativeStreakView: EditText by bindView(R.id.habit_adjust_negative_streak)
+
+    private val taskDifficultyButtons: TaskDifficultyButtons by bindView(R.id.task_difficulty_buttons)
+
+    private val statWrapper: ViewGroup by bindView(R.id.stat_wrapper)
+    private val statStrengthButton: TextView by bindView(R.id.stat_strength_button)
+    private val statIntelligenceButton: TextView by bindView(R.id.stat_intelligence_button)
+    private val statConstitutionButton: TextView by bindView(R.id.stat_constitution_button)
+    private val statPerceptionButton: TextView by bindView(R.id.stat_perception_button)
+
+    private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
+
+    private var isCreating = true
+    private var usesTaskAttributeStats = false
+    private var task: Task? = null
+    private var taskType: String = ""
+    private var tags = listOf<Tag>()
+    private var selectedStat = Stats.STRENGTH
+    set(value) {
+        field = value
+        setSelectedAttribute(value)
+    }
+
+    private var tintColor: Int = 0
+    set(value) {
+        field = value
+        upperTextWrapper.setBackgroundColor(value)
+        taskDifficultyButtons.tintColor = value
+        habitScoringButtons.tintColor = value
+        habitResetStreakButtons.tintColor = value
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(value))
+        updateTagViewsColors()
+    }
+
+    override fun getLayoutResId(): Int {
+        return R.layout.activity_task_form
+    }
+
+    override fun injectActivity(component: AppComponent?) {
+        component?.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        title = ""
+        tintColor = ContextCompat.getColor(this, R.color.brand_300)
+
+        val bundle = intent.extras ?: return
+
+        taskType = bundle.getString(OldTaskFormActivity.TASK_TYPE_KEY) ?: Task.TYPE_HABIT
+        val taskId = bundle.getString(OldTaskFormActivity.TASK_ID_KEY)
+        if (taskId != null) {
+            isCreating = false
+            compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).subscribe(Consumer {
+                task = it
+                //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
+                fillForm(it)
+            }, RxErrorHandler.handleEmptyError()))
+        }
+
+        compositeSubscription.add(tagRepository.getTags()
+                .map { tagRepository.getUnmanagedCopy(it) }
+                .subscribe(Consumer {
+                    tags = it
+                    setTagViews()
+                }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
+            usesTaskAttributeStats = it.preferences?.allocationMode == "taskbased"
+            configureForm()
+        }, RxErrorHandler.handleEmptyError()))
+
+        statStrengthButton.setOnClickListener { selectedStat = Stats.STRENGTH }
+        statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
+        statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
+        statPerceptionButton.setOnClickListener { selectedStat = Stats.PERCEPTION }
+
+        configureForm()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if (isCreating) {
+            menuInflater.inflate(R.menu.menu_task_create, menu)
+        } else {
+            menuInflater.inflate(R.menu.menu_task_edit, menu)
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_create -> saveTask()
+            R.id.action_save_changes -> saveTask()
+            R.id.action_delete -> deleteTask()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun configureForm() {
+        val habitViewsVisibility = if (taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
+        habitScoringButtons.visibility = habitViewsVisibility
+        habitResetStreakTitleView.visibility = habitViewsVisibility
+        habitResetStreakButtons.visibility = habitViewsVisibility
+        habitAdjustPositiveStreakView.visibility = habitViewsVisibility
+        habitAdjustNegativeStreakView.visibility = habitViewsVisibility
+
+        val dailyViewsVisibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        val todoViewsVisibility = if (taskType == Task.TYPE_TODO) View.VISIBLE else View.GONE
+
+        statWrapper.visibility = if (usesTaskAttributeStats) View.VISIBLE else View.GONE
+        if (isCreating) {
+            adjustStreakTitleView.visibility = View.GONE
+            adjustStreakWrapper.visibility = View.GONE
+        }
+    }
+
+    private fun setTagViews() {
+        tagsWrapper.removeAllViews()
+        val padding = 20.dpToPx(this)
+        for (tag in tags) {
+            val view = CheckBox(this)
+            view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
+            view.text = tag.name
+            tagsWrapper.addView(view)
+        }
+        setAllTagSelections()
+        updateTagViewsColors()
+    }
+
+    private fun setAllTagSelections() {
+        tags.forEachIndexed { index, tag ->
+            val view = tagsWrapper.getChildAt(index) as? CheckBox
+            view?.isChecked = task?.tags?.find { it.id == tag.id } != null
+        }
+    }
+
+    private fun fillForm(task: Task) {
+        textEditText.setText(task.text)
+        notesEditText.setText(task.notes)
+        taskDifficultyButtons.selectedDifficulty = task.priority
+        if (taskType == Task.TYPE_HABIT) {
+            habitScoringButtons.isPositive = task.up ?: false
+            habitScoringButtons.isNegative = task.down ?: false
+            task.frequency?.let { habitResetStreakButtons.selectedResetOption = HabitResetOption.valueOf(it.toUpperCase()) }
+            habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
+            habitAdjustNegativeStreakView.setText((task.counterDown ?: 0).toString())
+        }
+        task.attribute?.let { setSelectedAttribute(it) }
+        setAllTagSelections()
+    }
+
+    private fun setSelectedAttribute(attributeName: String) {
+        if (!usesTaskAttributeStats) return
+        configureStatsButton(statStrengthButton, attributeName == Stats.STRENGTH )
+        configureStatsButton(statIntelligenceButton, attributeName == Stats.INTELLIGENCE )
+        configureStatsButton(statConstitutionButton, attributeName == Stats.CONSTITUTION )
+        configureStatsButton(statPerceptionButton, attributeName == Stats.PERCEPTION )
+    }
+
+    private fun configureStatsButton(button: TextView, isSelected: Boolean) {
+        button.background.setTint(if (isSelected) tintColor else ContextCompat.getColor(this, R.color.taskform_gray))
+        val textColorID = if (isSelected) R.color.white else R.color.gray_100
+        button.setTextColor(ContextCompat.getColor(this, textColorID))
+    }
+
+    private fun updateTagViewsColors() {
+        tagsWrapper.children.forEach { view ->
+            val tagView = view as? AppCompatCheckBox
+            val colorStateList = ColorStateList(
+                    arrayOf(intArrayOf(-android.R.attr.state_checked), // unchecked
+                            intArrayOf(android.R.attr.state_checked)  // checked
+                    ),
+                    intArrayOf(ContextCompat.getColor(this, R.color.gray_400), tintColor)
+            )
+            tagView?.buttonTintList = colorStateList
+        }
+    }
+
+    private fun saveTask() {
+        var thisTask = task
+        if (thisTask == null) {
+            thisTask = Task()
+            thisTask.type = taskType
+        }
+        thisTask.text = textEditText.text.toString()
+        thisTask.notes = notesEditText.text.toString()
+        thisTask.priority = taskDifficultyButtons.selectedDifficulty
+        if (taskType == Task.TYPE_HABIT) {
+            thisTask.up = habitScoringButtons.isPositive
+            thisTask.down = habitScoringButtons.isNegative
+            thisTask.frequency = habitResetStreakButtons.selectedResetOption.value
+            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.counterUp = habitAdjustPositiveStreakView.text.toString().toInt()
+            if (habitAdjustNegativeStreakView.text.isNotEmpty()) thisTask.counterDown = habitAdjustNegativeStreakView.text.toString().toInt()
+        }
+
+        thisTask.tags = RealmList()
+        tagsWrapper.forEachIndexed { index, view ->
+            val tagView = view as? CheckBox
+            if (tagView?.isChecked == true) {
+                thisTask.tags?.add(tags[index])
+            }
+        }
+
+        if (isCreating) {
+            taskRepository.createTaskInBackground(thisTask)
+        } else {
+            taskRepository.updateTaskInBackground(thisTask)
+        }
+        dismissKeyboard()
+        finish()
+    }
+
+    private fun deleteTask() {
+        task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
+        dismissKeyboard()
+        finish()
+    }
+
+    private fun dismissKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        val currentFocus = currentFocus
+        if (currentFocus != null) {
+            imm?.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        }
+    }
+
+    companion object {
+        const val TASK_ID_KEY = "taskId"
+        const val TASK_TYPE_KEY = "type"
+        const val SHOW_TAG_SELECTION = "show_tag_selection"
+
+        // in order to disable the event handler in MainActivity
+        const val SET_IGNORE_FLAG = "ignoreFlag"
+    }
+}

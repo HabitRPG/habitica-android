@@ -111,6 +111,15 @@
             android:theme="@style/AppThemeWithActionBarBlackText"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".ui.activities.TaskFormActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+        <activity
             android:name=".ui.activities.OldTaskFormActivity"
             android:theme="@style/AppThemeWithActionBarBlackText"
             android:parentActivityName=".ui.activities.MainActivity"

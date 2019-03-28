@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.OldTaskFormActivity
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.functions.Consumer
@@ -293,7 +294,7 @@ class TasksFragment : BaseMainFragment() {
         bundle.putBoolean(OldTaskFormActivity.ALLOCATION_MODE_KEY, allocationMode)
         bundle.putBoolean(OldTaskFormActivity.SAVE_TO_DB, true)
 
-        val intent = Intent(activity, OldTaskFormActivity::class.java)
+        val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         if (this.isAdded) {
@@ -317,7 +318,7 @@ class TasksFragment : BaseMainFragment() {
         bundle.putBoolean(OldTaskFormActivity.ALLOCATION_MODE_KEY, allocationMode)
         bundle.putBoolean(OldTaskFormActivity.SAVE_TO_DB, true)
 
-        val intent = Intent(activity, OldTaskFormActivity::class.java)
+        val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
         this.displayingTaskForm = true
         if (isAdded) {
