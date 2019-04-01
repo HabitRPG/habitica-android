@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -66,10 +67,15 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         if (notifications.isEmpty()) {
-            val item = inflater?.inflate(R.layout.no_notifications, notification_items, false)
-            notification_items.addView(item)
+            val no_notifications = inflater?.inflate(R.layout.no_notifications, notification_items, false)
+            notification_items.addView(no_notifications)
             return
         }
+
+        val header = inflater?.inflate(R.layout.notifications_header, notification_items, false)
+        val badge = header?.findViewById(R.id.notificationsTitleBadge) as? TextView
+        badge?.setText(notifications.count().toString())
+        notification_items.addView(header)
 
         //TODO("not implemented")
     }

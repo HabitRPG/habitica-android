@@ -862,6 +862,7 @@
     <string name="preference_push_important_announcements">Important Announcements</string>
     <string name="no_notifications_title">You’re all caught up!</string>
     <string name="no_notifications_text">The notification fairies give you a raucous round of applause! Well done!</string>
+    <string name="dismiss_all">Dismiss All</string>
     <string name="create">Create</string>
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>
     <string name="create_party">Create Party</string>
