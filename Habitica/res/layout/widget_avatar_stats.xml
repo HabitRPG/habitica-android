@@ -224,6 +224,7 @@
                 android:id="@+id/hourglasses_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
                 android:textColor="@color/textColorSecondaryDark"
                 style="@style/CurrencyTextView"
                 />
@@ -236,6 +237,7 @@
                     android:id="@+id/gems_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:textColor="@color/textColorSecondaryDark"
                 style="@style/CurrencyTextView"
                     />
