@@ -64,6 +64,4 @@ class HabitScoringButtonsView @JvmOverloads constructor(
         isPositive = true
         isNegative = true
     }
-
-
 }

@@ -286,12 +286,8 @@ class TasksFragment : BaseMainFragment() {
             return
         }
 
-        val allocationMode = user?.preferences?.hasTaskBasedAllocation() ?: false
-
         val bundle = Bundle()
         bundle.putString(OldTaskFormActivity.TASK_TYPE_KEY, type)
-        bundle.putString(OldTaskFormActivity.USER_ID_KEY, if (this.user != null) this.user?.id else null)
-        bundle.putBoolean(OldTaskFormActivity.ALLOCATION_MODE_KEY, allocationMode)
         bundle.putBoolean(OldTaskFormActivity.SAVE_TO_DB, true)
 
         val intent = Intent(activity, TaskFormActivity::class.java)
@@ -309,14 +305,9 @@ class TasksFragment : BaseMainFragment() {
             return
         }
 
-        val allocationMode = user?.preferences?.hasTaskBasedAllocation() ?: false
-
         val bundle = Bundle()
         bundle.putString(OldTaskFormActivity.TASK_TYPE_KEY, event.Task.type)
         bundle.putString(OldTaskFormActivity.TASK_ID_KEY, event.Task.id)
-        bundle.putString(OldTaskFormActivity.USER_ID_KEY, if (this.user != null) this.user?.id else null)
-        bundle.putBoolean(OldTaskFormActivity.ALLOCATION_MODE_KEY, allocationMode)
-        bundle.putBoolean(OldTaskFormActivity.SAVE_TO_DB, true)
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
