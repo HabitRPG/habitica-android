@@ -81,10 +81,10 @@ open class Task : RealmObject, Parcelable {
     private var weeksOfMonthString: String? = null
 
     @Ignore
-    private var daysOfMonth: MutableList<Int>? = null
+    private var daysOfMonth: List<Int>? = null
 
     @Ignore
-    private var weeksOfMonth: MutableList<Int>? = null
+    private var weeksOfMonth: List<Int>? = null
 
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
@@ -306,56 +306,54 @@ open class Task : RealmObject, Parcelable {
     }
 
 
-    fun setWeeksOfMonth(weeksOfMonth: MutableList<Int>) {
+    fun setWeeksOfMonth(weeksOfMonth: List<Int>?) {
         this.weeksOfMonth = weeksOfMonth
         this.weeksOfMonthString = this.weeksOfMonth?.toString()
     }
 
     fun getWeeksOfMonth(): List<Int>? {
         if (weeksOfMonth == null) {
-            weeksOfMonth = ArrayList()
+            val weeksOfMonth = mutableListOf<Int>()
             if (weeksOfMonthString != null) {
                 try {
                     val obj = JSONArray(weeksOfMonthString)
                     var i = 0
                     while (i < obj.length()) {
-                        weeksOfMonth?.add(obj.getInt(i))
+                        weeksOfMonth.add(obj.getInt(i))
                         i += 1
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
 
-            } else {
-                weeksOfMonth = ArrayList()
             }
+            this.weeksOfMonth = weeksOfMonth.toList()
         }
         return weeksOfMonth
     }
 
-    fun setDaysOfMonth(daysOfMonth: MutableList<Int>) {
+    fun setDaysOfMonth(daysOfMonth: List<Int>?) {
         this.daysOfMonth = daysOfMonth
         this.daysOfMonthString = daysOfMonth.toString()
     }
 
     fun getDaysOfMonth(): List<Int>? {
         if (daysOfMonth == null) {
-            daysOfMonth = ArrayList()
+            val daysOfMonth = mutableListOf<Int>()
             if (daysOfMonthString != null) {
                 try {
                     val obj = JSONArray(daysOfMonthString)
                     var i = 0
                     while (i < obj.length()) {
-                        daysOfMonth?.add(obj.getInt(i))
+                        daysOfMonth.add(obj.getInt(i))
                         i += 1
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
 
-            } else {
-                daysOfMonth = ArrayList()
             }
+            this.daysOfMonth = daysOfMonth
         }
 
         return daysOfMonth
@@ -381,6 +379,7 @@ open class Task : RealmObject, Parcelable {
         const val FREQUENCY_WEEKLY = "weekly"
         const val FREQUENCY_DAILY = "daily"
         const val FREQUENCY_MONTHLY = "monthly"
+        const val FREQUENCY_YEARLY = "yearly"
 
         @JvmField
         val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {
