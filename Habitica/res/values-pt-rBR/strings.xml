@@ -16,7 +16,7 @@
   <string name="Language_summary">Mudar idioma do Habitica</string>
   <string name="SP_user_qr_code">Seu QR Code</string>
   <string name="PS_contact_title">Contate-me</string>
-  <string name="unknown_error">Aconteceu um erro...</string>
+  <string name="unknown_error">Aconteceu um erro…</string>
   <string name="pref_account_header">Conta</string>
   <string name="pref_first_day_of_the_week_title">Primeiro dia da semana</string>
   <string name="pref_first_day_of_the_week_summary">Primeiro dia da semana em todos os calendários</string>
@@ -81,7 +81,7 @@
   <string name="text">Texto</string>
   <string name="difficulty">Dificuldade</string>
   <string name="tags">Marcadores</string>
-  <string name="trivial">Trivial</string>
+  <string name="trivial">Trivia</string>
   <string name="easy">Fácil</string>
   <string name="medium">Médio</string>
   <string name="hard">Dificil</string>
@@ -119,7 +119,7 @@
   <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está totalmente curado!</string>
   <string name="levelup_button">Hurra!</string>
   <string name="faint_subtitle">Não se desespere!</string>
-  <string name="faint_penalty_body">Você perdeu um Nível. seu Ouro, e uma parte de Equipamento, mas você pode ganhar todos eles de volta com trabalho pesado! Boa sorte--Você se sairá bem!</string>
+  <string name="faint_penalty_body">Você perdeu um Nível. seu Ouro, e uma parte de Equipamento, mas você pode ganhar todos eles de volta com trabalho pesado! Boa sorte--Você se sairá bem.</string>
   <string name="faint_header">Sua vida caiu abaixo de zero!</string>
   <string name="faint_button">Restaurar Vida &amp; Tentar Novamente</string>
   <string name="filter">Filtro</string>
@@ -129,7 +129,7 @@
   <string name="used_skill_without_mana">Você usou %1$s.</string>
   <string name="new_checklist_item">Novo item de Lista</string>
   <string name="add_checklist_item">Adicionar</string>
-  <string name="reminder_title">Lembre-se de marcar suas Diárias!</string>
+  <string name="reminder_title">Lembre-se de marcar suas Diárias</string>
   <string name="skill_progress_title">Usando Habilidade</string>
   <string name="coming_soon">Em Breve</string>
   <string name="chat_flag_confirmation">Você tem certeza que quer reportar esta mensagem por violação?</string>
@@ -351,7 +351,7 @@
   <string name="invite">Convidar amigos</string>
   <string name="invite_id_description">Se você tem amigos que já usam o Habitica, convide-os através do ID de Usuário aqui.</string>
   <string name="invite_username_description">Se você já tem amigos usando o Habitica, convide-os pelo nome de usuário aqui.</string>
-  <string name="invite_email_description">Se um amigo entra no Habitica pelo seu e-mail, ele automaticamente é convidado ao seu grupo.</string>
+  <string name="invite_email_description">Se um amigo entra no Habitica pelo seu e-mail, ele automaticamente é convidado ao seu grupo!</string>
   <string name="add_invites">Adicionar convites</string>
   <string name="user_id">ID de usuário
 </string>
@@ -416,14 +416,14 @@
   <string name="widget_dailies">Habitica Diárias</string>
   <string name="widget_todo_list">Lista de Afazeres do Habitica</string>
   <string name="widget_add_task">Habitica Adicionar Tarefa</string>
-  <string name="google_services_missing">Servidores da Google Play não foram encontrados</string>
+  <string name="google_services_missing">Servidores da Google Play não foram encontrados.</string>
   <string name="gem.purchase.toolbartitle">Comprar</string>
   <string name="gem.purchase.title">Comprar gemas irá contribuir com os desenvolvedores e ajudará a manter o Habitica funcionando</string>
   <string name="gem.purchase.subtitle">Gemas permitem que você compre acessórios diferenciados para a sua conta, incluindo:</string>
   <string name="gem.purchase.listitem1">Fantasias super legais para o seu avatar</string>
   <string name="gem.purchase.listitem2">Cenários Super Legais</string>
-  <string name="gem.purchase.listitem3">Missões que recompensam você com ovos de mascotes.</string>
-  <string name="gem.purchase.listitem4">Habilidade de trocar a sua classe antes do nível 100.</string>
+  <string name="gem.purchase.listitem3">Missões que recompensam você com ovos de mascotes</string>
+  <string name="gem.purchase.listitem4">Habilidade de trocar a sua classe antes do nível 100</string>
   <string name="support_habitica">Contribua com o Habitica</string>
   <string name="skill_transformation_use">usar</string>
   <string name="hatching_market_info">Não conseguindo o drop certo? Dê uma olhada no Mercado!</string>
@@ -438,7 +438,7 @@
   <string name="has_reminder">Tem Lembrete</string>
   <string name="has_tag">Tem Etiqueta</string>
   <string name="subscribe.title">Assinaturas contribuen com os desenvolvedores e ajudam a manter o Habitica funcionando</string>
-  <string name="subscribe_prompt">Seja um assinante e você terá estes úteis benefícios</string>
+  <string name="subscribe_prompt">Seja um assinante e você terá estes úteis benefícios:</string>
   <string name="subscribe.listitem1">Comprar gemas com ouro</string>
   <string name="subscribe.listitem2">Itens mensais exclusivos</string>
   <string name="subscribe.listitem3">Manter entradas adicionais no histórico</string>
@@ -448,7 +448,9 @@
   <string name="subscription_duration_norenew">Por%s</string>
   <string name="subscribe">Assinar</string>
   <string name="subscribe.listitem1.description">Alexandre, o Mercador irá agora vender a você Gemas por 20 ouros cada uma!\n\nSuas remessas mensais são inicialmente restritas a 25 Gemas por mês, aumentam baseado no seu tempo de assinatura. A capacidade aumenta em 5 Gemas para cada três meses de assinatura, limitando-se a um máximo de 50 Gemas por mês!</string>
-  <string name="subscribe.listitem2.description">Cada mês você irá receber um item cosmético único para o seu personagem!\n\nAlém disso, para cada três meses de inscrição, os Viajantes Misteriosos do Tempo irão te dar acesso a itens cosméticos históricos (e futuristas)!</string>
+  <string name="subscribe.listitem2.description">Cada mês você irá receber um item cosmético único para o seu personagem!
+\n
+\nAlém disso, para cada três meses de inscrição, os Viajantes Misteriosos do Tempo irão te dar acesso a itens cosméticos históricos (e futuristas).</string>
   <string name="subscribe.listitem3.description">Torna Afazeres completos e histórico de tarefas disponíveis por mais tempo.</string>
   <string name="subscribe.listitem4.description">A capacidade de drop dobrada fará com que você receba mais itens de atividades completas todos os dias ajudando você a completar o seu estábulo mais rápido!</string>
   <string name="subscribe1month.gemcap">Limite de 25 Gemas</string>
@@ -461,8 +463,8 @@
   <string name="active">Ativo</string>
   <string name="due">Data de vencimento</string>
   <string name="cancel_subscription">Cancelar Assinatura</string>
-  <string name="cancel_subscription_google.description">Não quer mais ser Assinante? Você pode achar a opção de Cancelar a Assinatura na seção \"Meus apps\" da Google Play Store.</string>
-  <string name="cancel_subscription_notgoogle.description">Não quer mais ser Assinante? Devido ao seu método de pagamento, você só pode cancelar sua inscrição pelo site. Clique no botão abaixo para abrir o site no seu navegador!</string>
+  <string name="cancel_subscription_google.description">Não quer mais ser Assinante\? Você pode achar a opção de Cancelar a Assinatura na seção \"Meus apps\" no menu do Google Play Store.</string>
+  <string name="cancel_subscription_notgoogle.description">Não quer mais ser Assinante\? Devido ao seu método de pagamento, você precisará cancelar em nosso site. Para fazer isso, toque no botão abaixo, faça login na sua conta, toque no ícone do usuário no canto superior direito e vá para Assinatura. Nós sentiremos sua falta. Só e possível cancelar sua inscrição pelo site. Clique no botão abaixo para abrir o site no seu navegador!</string>
   <string name="visit_habitica_website">Visite o site do Habitica</string>
   <string name="current_bonuses">Bônus Atuais</string>
   <string name="months_subscribed">Meses Assinando</string>
@@ -496,7 +498,7 @@
   <string name="participating">Participando</string>
   <string name="challenge">Desafio</string>
   <string name="go_to_challenge">Vá para o Desafio</string>
-  <string name="not_part_of_a_challenge">Você não está participando de nenhum Desafio no momento</string>
+  <string name="not_part_of_a_challenge">Você não está participando de nenhum Desafio no momento!</string>
   <string name="join_a_challenge">Participe de um Desafio para adicionar um conjunto de tarefas selecionadas para sua lista, então concorra com outros Habiticanos para ganhar conquistas e até gemas!</string>
   <string name="check_the_public_challenge_tab">Toque na guia \"Público\" para encontrar os Desafios criados por usuários que sejam mais adequados para você!</string>
   <string name="add_reminder">Adicionar Lembrete</string>
@@ -547,9 +549,9 @@
   <string name="clear">Limpar</string>
   <string name="empty_title_habits">Você não tem nenhum Hábito</string>
   <string name="empty_description_habits">Hábitos são tarefas que não tem um cronograma rígido. Você pode tanto fazê-los várias vezes ao dia como nenhuma vez.</string>
-  <string name="empty_title_dailies">Você não tem nenhuma Diária.</string>
+  <string name="empty_title_dailies">Você não tem nenhuma Diária</string>
   <string name="empty_description_dailies">Diárias são tarefas que se repetem regularmente. Escolha a repetição que irá funcionar para você!</string>
-  <string name="empty_title_todos">Você não tem nenhum Afazer.</string>
+  <string name="empty_title_todos">Você não tem nenhum Afazer</string>
   <string name="empty_description_todos">Afazeres são tarefas que só precisam ser completadas uma única vez. Adicione Listas aos seus Afazeres para aumentar o valor deles.</string>
   <string name="empty_title_rewards">Você não tem nenhuma Recompensa</string>
   <string name="reset_walkthrough">Refazer o Tutorial do Justin</string>
@@ -567,12 +569,12 @@
   <string name="tasks">Tarefas</string>
   <string name="create_challenge">Criar Desafio</string>
   <string name="edit_challenge">Editar</string>
-  <string name="challenge_create_error_tavern_one_gem">Você necessita de pelo menos 1 Gema para criar um desafio público</string>
-  <string name="challenge_create_error_enough_gems">Você não possui gemas suficiente para criar um desafio</string>
+  <string name="challenge_create_error_tavern_one_gem">Você necessita de pelo menos 1 Gema para criar um desafio público.</string>
+  <string name="challenge_create_error_enough_gems">Você não possui gemas suficiente para criar um desafio.</string>
   <string name="identify_your_challenge_with_a_tag">Classifique seus desafios com um nome curto</string>
   <string name="challenge_create_error_tag">Você necessita de um nome curto para criar esse Desafio.</string>
-  <string name="challenge_create_error_no_tasks">Você precisa adicionar no mínimo uma tarefa para criar este Desafio</string>
-  <string name="challenge_create_error_title">Você precisa de um titulo para criar este Desafio</string>
+  <string name="challenge_create_error_no_tasks">Você precisa adicionar no mínimo uma tarefa para criar este Desafio.</string>
+  <string name="challenge_create_error_title">Você precisa de um titulo para criar este Desafio.</string>
   <string name="description_optional">Descrição (opcional)</string>
   <string name="new_challenge_title">Novo titulo do desafio</string>
   <string name="ownership">Propriedade</string>
@@ -596,7 +598,7 @@
   <string name="invitations">Convites</string>
   <string name="quest_leader_header" formatted="false">Iniciado por %s</string>
   <string name="quest_abort_message">Tem certeza que quer abortar a missão? Isso vai abortar para todos do seu grupo e todo o progresso será perdido. O pergaminho de missão será devolvido ao dono.</string>
-  <string name="loading">Carregando...</string>
+  <string name="loading">Carregando…</string>
   <string name="reloading_content">Recarregando Conteúdo</string>
   <string name="thousand_abbrev">k</string>
   <string name="million_abbrev">mi</string>
@@ -690,7 +692,7 @@
   <string name="equipment_empty">Você já tem todos os equipamentos! Outros serão liberados durante as Grand Galas, que acontecem ao fim de cada estação do ano.</string>
   <string name="classless">Sem classe</string>
   <string name="class_equipment_shop_dialog">Este item está disponível apenas para uma classe específica.\nVocê pode alterar sua classe em Configurações.</string>
-  <string name="class_gear_disclaimer">Você apenas pode comprar equipamento para sua classe atual.</string>
+  <string name="class_gear_disclaimer">Você apenas pode comprar equipamento para sua classe atual</string>
   <string name="available_stats" formatted="false">%dPontos</string>
   <string name="toogle_emojis">Alternar emojis</string>
   <string name="tavern_description">Bem-vindo a Taverna. Puxe uma cadeira e se junte ao chat ou dê um descanso de suas tarefas. </string>
@@ -729,7 +731,7 @@
   <string name="no_party_description">Faça missões com amigos ou por conta própria. Combata monstros, crie desafios e ajude a si mesmo a continuar responsável através dos Grupos.</string>
   <string name="no_party_title">Jogar Habitica em um Grupo</string>
   <string name="join_party_description">Dê a um membro do Grupo o nome de usuário abaixo e eles poderão enviá-lo um convite</string>
-  <string name="join_party_description_id">Informe o seu ID de usuário ou faça com que eles digitalizem seu código QR para convidar.</string>
+  <string name="join_party_description_id">Informe o seu ID de usuário ou faça com que eles digitalizem seu código QR para convidar</string>
   <string name="join_party_title">Deseja entrar em um grupo?</string>
   <string name="create_party_website">Entre no site para criar um grupo</string>
   <string name="id_copied">ID copiado para a área de transferência</string>
@@ -802,7 +804,7 @@
   <string name="display_name_length_error">Nomes de exibição devem conter entre 1 e 30 caracteres</string>
   <string name="setup_task_join_habitica">Junte-se ao Habitica (Confira-me!)</string>
   <string name="setup_task_join_habitica_notes">Você pode concluir esse Afazer, editá-lo ou removê-lo.</string>
-  <string name="setup_task_reward">Recompense-se! </string>
+  <string name="setup_task_reward">Recompense-se</string>
   <string name="setup_task_reward_notes">Assista TV, jogue um game, coma uma doce, você escolhe!</string>
   <string name="equipment_str">FOR:</string>
   <string name="equipment_con">CON:</string>
@@ -819,6 +821,15 @@
   <string name="send_gift">Enviar Presente</string>
   <string name="server">Servidor</string>
   <string name="gift_confirmation_title">Seu presente foi enviado!</string>
-  <string name="gift_confirmation_text_g1g1">Sua assinatura de presente foi enviada e uma outra assinatura foi aplicada à sua conta.</string>
+  <string name="gift_confirmation_text_g1g1">Sua assinatura de presente foi enviada e uma outra assinatura foi aplicada à sua conta!</string>
   <string name="gift_confirmation_text">Sua assinatura de presente foi enviada e uma outra assinatura foi aplicada à sua conta.</string>
+<string name="opting_out_progress">Cancelando</string>
+    <string name="delete_oauth_account_description">Você tem certeza\? Isso vai apagar sua conta para sempre e voce nao vai poder restaurar-la! You vai precisar registrar uma nova conta para usar o Habitica novamente. As Gems salvas ou gastas não serão reembolsadas. Se você estiver absolutamente certo, digite DELETE na caixa de texto abaixo.</string>
+    <string name="discover">Explorar</string>
+    <string name="damage_paused">Dano pausado</string>
+    <string name="preference_push_important_announcements">Anúncio Importante</string>
+    <string name="create">Criar</string>
+    <string name="only_leader_create_challenge">Somente líderes podem criar desafios</string>
+    <string name="create_party">Criar equipe</string>
+
 </resources>
