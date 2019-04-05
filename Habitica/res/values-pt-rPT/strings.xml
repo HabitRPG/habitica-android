@@ -279,14 +279,14 @@
   <string name="feed_to_pet">Alimento para o animal</string>
   <string name="hatch_egg">Nascimento com ovo</string>
   <string name="invite_party">Convidar a equipa</string>
-  <string name="dialog_feeding">Alimente %1$s %2$s com:</string>
+  <string name="dialog_feeding">Alimente %s com:</string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
   <string name="hatch_with">Nascimento do animal com %s</string>
-  <string name="hatched_pet_title">Chocou um %1$s %2$s!</string>
+  <string name="hatched_pet_title">Chocou um %s!</string>
   <string name="close">Fechar</string>
   <string name="share">Partilhar</string>
-  <string name="notification_pet_fed">Alimentou o seu %1$s %2$s!</string>
+  <string name="notification_pet_fed">Alimentou o seu %s!</string>
   <string name="notification_purchase">Comprou %s</string>
   <string name="notification_purchase_reward">Comprou uma recompensa</string>
   <string name="sectionpets">Padrão</string>

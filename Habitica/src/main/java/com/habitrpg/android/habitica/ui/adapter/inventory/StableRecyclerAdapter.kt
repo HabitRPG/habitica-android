@@ -74,7 +74,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
 
         fun bind(item: Animal) {
             this.animal = item
-            titleView.text = item.animalText
+            titleView.text = item.animal
             ownedTextView.visibility = View.VISIBLE
             this.imageView.alpha = 1.0f
             if (item.numberOwned > 0) {

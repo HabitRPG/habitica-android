@@ -19,10 +19,11 @@ import io.realm.Sort
 class RealmInventoryLocalRepository(realm: Realm, private val context: Context) : RealmContentLocalRepository(realm), InventoryLocalRepository {
 
     override fun getQuestContent(key: String): Flowable<QuestContent> {
-        return realm.where(QuestContent::class.java).equalTo("key", key).findFirstAsync()
-                .asFlowable<RealmObject>()
-                .filter { realmObject -> realmObject.isLoaded }
-                .cast(QuestContent::class.java)
+        return realm.where(QuestContent::class.java).equalTo("key", key)
+                .findAll()
+                .asFlowable()
+                .filter { content -> content.isLoaded && content.isValid && !content.isEmpty() }
+                .map { content -> content.first() }
     }
 
     override fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>> {
@@ -126,7 +127,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     override fun getMounts(type: String, group: String): Flowable<RealmResults<Mount>> {
         return realm.where(Mount::class.java)
                 .sort("color", Sort.ASCENDING)
-                .equalTo("animalGroup", group)
+                .equalTo("type", group)
                 .equalTo("animal", type)
                 .findAll()
                 .asFlowable()
@@ -136,16 +137,15 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     override fun getOwnedMounts(): Flowable<RealmResults<Mount>> {
         return realm.where(Mount::class.java)
                 .equalTo("owned", true)
-                .sort("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
+                .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
 
     override fun getOwnedMounts(animalType: String, animalGroup: String): Flowable<RealmResults<Mount>> {
-        val thisAnimalGroup = animalGroup.replace("pets", "mounts").replace("Pets", "Mounts")
         return realm.where(Mount::class.java)
-                .equalTo("animalGroup", thisAnimalGroup)
+                .equalTo("type", animalGroup)
                 .equalTo("animal", animalType)
                 .equalTo("owned", true)
                 .sort("animal")
@@ -156,7 +156,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getPets(): Flowable<RealmResults<Pet>> {
         return realm.where(Pet::class.java)
-                .sort("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
+                .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
@@ -165,7 +165,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     override fun getPets(type: String, group: String): Flowable<RealmResults<Pet>> {
         return realm.where(Pet::class.java)
                 .sort("color", Sort.ASCENDING)
-                .equalTo("animalGroup", group)
+                .equalTo("type", group)
                 .equalTo("animal", type)
                 .findAll()
                 .asFlowable()
@@ -175,7 +175,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     override fun getOwnedPets(): Flowable<RealmResults<Pet>> {
         return realm.where(Pet::class.java)
                 .greaterThan("trained", 0)
-                .sort("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
+                .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
@@ -183,7 +183,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getOwnedPets(type: String, group: String): Flowable<RealmResults<Pet>> {
         return realm.where(Pet::class.java)
-                .equalTo("animalGroup", group)
+                .equalTo("type", group)
                 .equalTo("animal", type)
                 .greaterThan("trained", 0)
                 .sort("animal")

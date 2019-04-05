@@ -19,7 +19,7 @@ abstract class ContentRepositoryImpl<T : ContentLocalRepository>(localRepository
 
     override fun retrieveContent(forced: Boolean): Flowable<ContentResult> {
         val now = Date().time
-        return if (forced || now - this.lastContentSync > 3600000) {
+        return if (forced || now - this.lastContentSync > 3) {
             lastContentSync = now
             apiClient.content.doOnNext { localRepository.saveContent(it) }
         } else {

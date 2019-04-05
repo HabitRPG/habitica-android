@@ -42,11 +42,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
-                    var updatePath = "preferences." + customization.type
-                    if (customization.category != null) {
-                        updatePath = updatePath + "." + customization.category
-                    }
-                    userRepository.updateUser(user, updatePath, customization.identifier)
+                    userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
                 }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()

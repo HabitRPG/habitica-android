@@ -285,14 +285,14 @@
   <string name="feed_to_pet">Feed to pet</string>
   <string name="hatch_egg">Hatch with egg</string>
   <string name="invite_party">Invite party</string>
-  <string name="dialog_feeding">Feed %1$s %2$s with:</string>
+  <string name="dialog_feeding">Feed %s with:</string>
   <string name="use_animal">Use</string>
   <string name="feed">Feed</string>
   <string name="hatch_with">Hatch pet with %s</string>
-  <string name="hatched_pet_title">You hatched a %1$s %2$s!</string>
+  <string name="hatched_pet_title">You hatched a %s!</string>
   <string name="close">Close</string>
   <string name="share">Share</string>
-  <string name="notification_pet_fed">You fed your %1$s %2$s!</string>
+  <string name="notification_pet_fed">You fed your %s!</string>
   <string name="world_quest">World Quest</string>
   <string name="empty_items">You don\'t have any %s</string>
   <string name="user_level">Lvl %d</string>

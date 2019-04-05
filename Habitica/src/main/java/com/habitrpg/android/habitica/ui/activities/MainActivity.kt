@@ -187,15 +187,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
         Locale.setDefault(languageHelper.locale)
         val configuration = Configuration()
-        if (SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-            @Suppress("Deprecation")
-            configuration.locale = languageHelper.locale
-        } else {
-            configuration.setLocale(languageHelper.locale)
-        }
-        @Suppress("Deprecation")
-        resources.updateConfiguration(configuration,
-                resources.displayMetrics)
+        configuration.setLocale(languageHelper.locale)
         super.onCreate(savedInstanceState)
 
         if (!HabiticaBaseApplication.checkUserAuthentication(this, hostConfig)) {
@@ -207,18 +199,16 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         avatarInHeader = AvatarWithBarsViewModel(this, avatarWithBars, userRepository)
         sideAvatarView = AvatarView(this, true, false, false)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val window = window
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.statusBarColor = ContextCompat.getColor(this, R.color.black_10_alpha)
-            }
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            toolbar.setPadding(0, statusBarHeight, 0, 0)
-            val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
-            avatarWithBars.setPadding(px.toInt(), statusBarHeight, px.toInt(), 0)
+        val window = window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.black_10_alpha)
         }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        toolbar.setPadding(0, statusBarHeight, 0, 0)
+        val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
+        avatarWithBars.setPadding(px.toInt(), statusBarHeight, px.toInt(), 0)
 
-        compositeSubscription.add(userRepository.getUser(hostConfig.user ?: "")
+        compositeSubscription.add(userRepository.getUser(hostConfig.user)
                 .subscribe(Consumer { newUser ->
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
@@ -566,21 +556,19 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val pet = event.usingPet
         this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
                 .subscribe(Consumer { feedResponse ->
-                    HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.colorText, pet.animalText), SnackbarDisplayType.NORMAL)
+                    HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.text), SnackbarDisplayType.NORMAL)
                     if (feedResponse.value == -1) {
                         val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as FrameLayout
                         val mountImageView = mountWrapper.findViewById<View>(R.id.pet_imageview) as SimpleDraweeView
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.key)
-                        val colorName = event.usingPet.colorText
-                        val animalName = event.usingPet.animalText
                         val dialog = AlertDialog.Builder(this@MainActivity)
-                                .setTitle(getString(R.string.evolved_pet_title, colorName, animalName))
+                                .setTitle(getString(R.string.evolved_pet_title, pet.text))
                                 .setView(mountWrapper)
                                 .setPositiveButton(R.string.close) { hatchingDialog, _ -> hatchingDialog.dismiss() }
                                 .setNeutralButton(R.string.share) { hatchingDialog, _ ->
                                     val event1 = ShareEvent()
-                                    event1.sharedMessage = getString(R.string.share_raised, colorName, animalName) + " https://habitica.com/social/raise-pet"
+                                    event1.sharedMessage = getString(R.string.share_raised, pet.text) + " https://habitica.com/social/raise-pet"
                                     val sharedImage = Bitmap.createBitmap(99, 99, Bitmap.Config.ARGB_8888)
                                     val canvas = Canvas(sharedImage)
                                     canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
@@ -661,7 +649,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         pushNotificationManager.setUser(user1)
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
-                    .flatMap { socialRepository.retrieveInboxMessages() }
                     .flatMap { inventoryRepository.retrieveContent(false) }
                     .flatMap { inventoryRepository.retrieveWorldState() }
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())

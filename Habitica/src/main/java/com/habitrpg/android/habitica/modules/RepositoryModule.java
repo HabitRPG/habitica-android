@@ -42,6 +42,7 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmTagLocalRepo
 import com.habitrpg.android.habitica.data.local.implementation.RealmTaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRepository;
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -100,8 +101,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, TaskRepository taskRepository) {
-        return new UserRepositoryImpl(localRepository, apiClient, userId, taskRepository);
+    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, TaskRepository taskRepository, RemoteConfigManager remoteConfigManager) {
+        return new UserRepositoryImpl(localRepository, apiClient, userId, taskRepository, remoteConfigManager);
     }
 
     @Provides
@@ -120,10 +121,9 @@ public class RepositoryModule {
     }
 
     @Provides
-    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
-        return new InventoryRepositoryImpl(localRepository, apiClient, userId);
+    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, RemoteConfigManager remoteConfig) {
+        return new InventoryRepositoryImpl(localRepository, apiClient, userId, remoteConfig);
     }
-
 
     @Provides
     FAQLocalRepository providesFAQLocalRepository(Realm realm) {

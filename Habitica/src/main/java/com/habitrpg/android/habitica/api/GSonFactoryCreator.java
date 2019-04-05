@@ -57,11 +57,10 @@ import com.habitrpg.android.habitica.utils.QuestDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.QuestListDeserializer;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
-import com.habitrpg.android.habitica.utils.TaskDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskSerializer;
-import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
+import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.UserDeserializer;
 import com.habitrpg.android.habitica.utils.WorldStateSerialization;
 
@@ -76,8 +75,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GSonFactoryCreator {
 
     public static GsonConverterFactory create() {
-        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {}.getType();
         Type skillListType = new TypeToken<List<Skill>>() {}.getType();
+        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {}.getType();
         Type customizationListType = new TypeToken<RealmList<Customization>>() {}.getType();
         Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {}.getType();
         Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {}.getType();
@@ -133,7 +132,6 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())
                 .registerTypeAdapter(FindUsernameResult.class, new FindUsernameResultDeserializer())
-                //.registerTypeAdapter(Task.class, new TaskDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
@@ -13,7 +14,7 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
-class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String) : ContentRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
+class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String, var remoteConfigManager: RemoteConfigManager) : ContentRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
 
     override fun getQuestContent(key: String): Flowable<QuestContent> {
         return localRepository.getQuestContent(key)
@@ -142,6 +143,30 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun equip(user: User?, type: String, key: String): Flowable<Items> {
+        if (user != null && remoteConfigManager.enableLocalChanges()) {
+            localRepository.executeTransaction {
+                if (type == "mount") {
+                    user.items?.currentMount = key
+                } else if (type == "pet") {
+                    user.items?.currentPet = key
+                }
+                val outfit = if (type == "costume") {
+                    user.items?.gear?.costume
+                } else {
+                    user.items?.gear?.equipped
+                }
+                when (key.split("_").firstOrNull()) {
+                    "weapon" -> outfit?.head = key
+                    "armor" -> outfit?.armor = key
+                    "shield" -> outfit?.shield = key
+                    "eyewear" -> outfit?.eyeWear = key
+                    "head" -> outfit?.head = key
+                    "back" -> outfit?.back = key
+                    "headAccessory" -> outfit?.headAccessory = key
+                    "body" -> outfit?.body = key
+                }
+            }
+        }
         return apiClient.equipItem(type, key)
                 .doOnNext { items ->
                     if (user == null) {

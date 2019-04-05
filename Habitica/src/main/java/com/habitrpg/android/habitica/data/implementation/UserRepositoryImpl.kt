@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.Customization
@@ -21,7 +22,7 @@ import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, userID: String, private val taskRepository: TaskRepository) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
+class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, userID: String, private val taskRepository: TaskRepository, var remoteConfigManager: RemoteConfigManager) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
 
     private var lastSync: Date? = null
 
@@ -272,6 +273,34 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         observable.flatMap { apiClient.runCron().firstElement() }
                 .flatMap { this.retrieveUser(true, true).firstElement() }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+    }
+
+    override fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User> {
+        if (user != null && remoteConfigManager.enableLocalChanges()) {
+            localRepository.executeTransaction {
+                when (type) {
+                    "skin" -> user.preferences?.setSkin(identifier)
+                    "shirt" -> user.preferences?.setShirt(identifier)
+                    "hair" -> {
+                        when (category) {
+                            "color" -> user.preferences?.hair?.color = identifier
+                            "flower" -> user.preferences?.hair?.flower = identifier.toInt()
+                            "mustache" -> user.preferences?.hair?.mustache = identifier.toInt()
+                            "beard" -> user.preferences?.hair?.beard = identifier.toInt()
+                            "bangs" -> user.preferences?.hair?.bangs = identifier.toInt()
+                            "base" -> user.preferences?.hair?.base = identifier.toInt()
+                        }
+                    }
+                    "background" -> user.preferences?.setBackground(identifier)
+                    "chair" -> user.preferences?.setChair(identifier)
+                }
+            }
+        }
+        var updatePath = "preferences.$type"
+        if (category != null) {
+            updatePath = "$updatePath.$category"
+        }
+        return updateUser(user, updatePath, identifier)
     }
 
     private fun mergeUser(oldUser: User?, newUser: User): User {
