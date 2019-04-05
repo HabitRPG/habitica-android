@@ -175,6 +175,8 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
 
         private fun showDialog(activity: Activity, userRepository: UserRepository, taskRepository: TaskRepository, tasks: List<Task>) {
             val dialog = YesterdailyDialog(activity, userRepository, taskRepository, tasks)
+            dialog.setCancelable(false)
+            dialog.setCanceledOnTouchOutside(false)
             if (!activity.isFinishing) {
                 dialog.show()
                 isDisplaying = true
