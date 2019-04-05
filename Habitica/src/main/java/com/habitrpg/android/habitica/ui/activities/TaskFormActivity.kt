@@ -75,6 +75,9 @@ class TaskFormActivity : BaseActivity() {
     private val statConstitutionButton: TextView by bindView(R.id.stat_constitution_button)
     private val statPerceptionButton: TextView by bindView(R.id.stat_perception_button)
 
+    private val rewardValueTitleView: TextView by bindView(R.id.reward_value_title)
+    private val rewardValueFormView: RewardValueFormView by bindView(R.id.reward_value)
+
     private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
 
     private var isCreating = true
@@ -189,13 +192,17 @@ class TaskFormActivity : BaseActivity() {
         remindersTitleView.visibility = todoDailyViewsVisibility
         remindersContainer.visibility = todoDailyViewsVisibility
 
+        taskSchedulingTitleView.visibility = todoDailyViewsVisibility
+        taskSchedulingControls.visibility = todoDailyViewsVisibility
+        taskSchedulingControls.taskType = taskType
+
         val rewardHideViews = if (taskType == Task.TYPE_REWARD) View.GONE else View.VISIBLE
         taskDifficultyTitleView.visibility = rewardHideViews
         taskDifficultyButtons.visibility = rewardHideViews
 
-        taskSchedulingTitleView.visibility = todoDailyViewsVisibility
-        taskSchedulingControls.visibility = todoDailyViewsVisibility
-        taskSchedulingControls.taskType = taskType
+        val rewardViewsVisibility = if (taskType == Task.TYPE_REWARD) View.VISIBLE else View.GONE
+        rewardValueTitleView.visibility = rewardViewsVisibility
+        rewardValueFormView.visibility = rewardViewsVisibility
 
         statWrapper.visibility = if (usesTaskAttributeStats) View.VISIBLE else View.GONE
         if (isCreating) {
@@ -246,6 +253,7 @@ class TaskFormActivity : BaseActivity() {
                 habitAdjustPositiveStreakView.setText((task.streak ?: 0).toString())
             }
             Task.TYPE_TODO -> taskSchedulingControls.dueDate = task.dueDate
+            Task.TYPE_REWARD -> rewardValueFormView.value = task.value
         }
         if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
             task.checklist?.let { checklistContainer.checklistItems = it }
@@ -307,6 +315,8 @@ class TaskFormActivity : BaseActivity() {
             if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.streak = habitAdjustPositiveStreakView.text.toString().toInt()
         } else if (taskType == Task.TYPE_TODO) {
             thisTask.dueDate = taskSchedulingControls.dueDate
+        } else if (taskType == Task.TYPE_REWARD) {
+            thisTask.value = rewardValueFormView.value
         }
 
         if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {

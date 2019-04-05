@@ -75,6 +75,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@+id/reward_value_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checklist"
+                    style="@style/TaskFormSectionheader"/>
+                <com.habitrpg.android.habitica.ui.views.tasks.form.RewardValueFormView
+                    android:id="@+id/reward_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp" />
+                <TextView
                     android:id="@+id/checklist_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -11,7 +11,8 @@
     android:paddingEnd="@dimen/spacing_medium"
     android:paddingTop="@dimen/spacing_small"
     android:paddingBottom="@dimen/spacing_small"
-    android:layout_marginBottom="@dimen/spacing_medium"
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_small"
     tools:parentTag="android.widget.LinearLayout">
     <ImageButton
         android:id="@+id/button"
