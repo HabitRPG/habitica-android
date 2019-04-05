@@ -1,18 +1,8 @@
 package com.habitrpg.android.habitica.helpers
 
-import android.content.Context
-import android.os.AsyncTask
-import androidx.preference.PreferenceManager
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
-import okhttp3.OkHttpClient
-import okhttp3.Request
-
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.*
 
 class RemoteConfigManager {
 
@@ -49,5 +39,9 @@ class RemoteConfigManager {
 
     fun enableUsernameAutocomplete(): Boolean {
         return remoteConfig.getBoolean("enableUsernameAutocomplete")
+    }
+
+    fun enableLocalChanges(): Boolean {
+        return remoteConfig.getBoolean("enableLocalChanges")
     }
 }

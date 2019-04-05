@@ -10,8 +10,8 @@ public class Pet extends RealmObject implements Animal{
     Integer trained;
     @PrimaryKey
     String key;
-    String animal, color, animalGroup, animalText, colorText;
-    boolean premium, limited;
+    String animal, color, animalGroup, text, type;
+    boolean premium;
 
     @Ignore
     private Integer numberOwned;
@@ -22,6 +22,26 @@ public class Pet extends RealmObject implements Animal{
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public String getText() {
+        return text;
+    }
+
+    @Override
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getAnimal() {
@@ -57,42 +77,12 @@ public class Pet extends RealmObject implements Animal{
         this.animalGroup = group;
     }
 
-    public String getAnimalText() {
-        if (animalText == null) {
-            return animal;
-        }
-        return animalText;
-    }
-
-    public void setAnimalText(String animalText) {
-        this.animalText = animalText;
-    }
-
-    public String getColorText() {
-        if (colorText == null) {
-            return color;
-        }
-        return colorText;
-    }
-
-    public void setColorText(String colorText) {
-        this.colorText = colorText;
-    }
-
     public boolean getPremium() {
         return premium;
     }
 
     public void setPremium(boolean premium) {
         this.premium = premium;
-    }
-
-    public boolean getLimited() {
-        return limited;
-    }
-
-    public void setLimited(boolean limited) {
-        this.limited = limited;
     }
 
     public Integer getNumberOwned() {

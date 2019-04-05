@@ -20,5 +20,9 @@
         <key>enableUsernameAutocomplete</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>enableLocalChanges</key>
+        <value>true</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

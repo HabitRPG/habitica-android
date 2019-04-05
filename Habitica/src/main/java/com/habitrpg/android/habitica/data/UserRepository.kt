@@ -69,4 +69,5 @@ interface UserRepository : BaseRepository {
     fun allocatePoint(user: User?, stat: String): Flowable<Stats>
 
     fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
+    fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User>
 }

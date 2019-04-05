@@ -77,7 +77,7 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
 
         fun bind(item: Pet) {
             this.animal = item
-            this.titleView.text = item.colorText
+            this.titleView.text = item.color
             this.trainedProgressbar.visibility = if (animal?.animalGroup == "specialPets") View.GONE else View.VISIBLE
             this.imageView.alpha = 1.0f
             if (this.animal?.trained ?: 0 > 0) {

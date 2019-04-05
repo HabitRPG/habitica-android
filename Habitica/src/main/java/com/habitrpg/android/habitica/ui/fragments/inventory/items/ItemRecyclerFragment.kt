@@ -123,7 +123,7 @@ class ItemRecyclerFragment : BaseFragment() {
             }
             this.isFeeding -> {
                 dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                this.titleView?.text = getString(R.string.dialog_feeding, this.feedingPet?.colorText, this.feedingPet?.animalText)
+                this.titleView?.text = getString(R.string.dialog_feeding, this.feedingPet?.text)
                 this.titleView?.visibility = View.VISIBLE
                 this.footerView?.text = getString(R.string.feeding_market_info)
                 this.footerView?.visibility = View.VISIBLE

@@ -288,14 +288,14 @@
   <string name="feed_to_pet">Nakarm chowańca</string>
   <string name="hatch_egg">Wykluj za pomocą jaja</string>
   <string name="invite_party">Zaproś drużynę</string>
-  <string name="dialog_feeding">Nakarm %1$s %2$s</string>
+  <string name="dialog_feeding">Nakarm %s</string>
   <string name="use_animal">Użyj</string>
   <string name="feed">Nakarm</string>
   <string name="hatch_with">Wykluj za pomocą %s</string>
-  <string name="hatched_pet_title">Wyklułeś/as %1$s %2$s!</string>
+  <string name="hatched_pet_title">Wyklułeś/as %s!</string>
   <string name="close">Zamknij</string>
   <string name="share">Podziel się</string>
-  <string name="notification_pet_fed">Nakarmiłeś/aś %1$s %2$s!</string>
+  <string name="notification_pet_fed">Nakarmiłeś/aś %s!</string>
   <string name="notification_purchase">Kupiłeś %s</string>
   <string name="notification_purchase_reward">Kupiłeś nagrodę</string>
   <string name="sectionpets">Standardowe</string>

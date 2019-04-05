@@ -60,21 +60,15 @@ class KeyboardUtil(activity: Activity, private val contentView: View) {
     }
 
     init {
-        if (Build.VERSION.SDK_INT >= 19) {
-            decorView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
-        }
+        decorView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
     }
 
     fun enable() {
-        if (Build.VERSION.SDK_INT >= 19) {
-            decorView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
-        }
+        decorView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
     }
 
     fun disable() {
-        if (Build.VERSION.SDK_INT >= 19) {
-            decorView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
-        }
+        decorView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
     }
 
     companion object {

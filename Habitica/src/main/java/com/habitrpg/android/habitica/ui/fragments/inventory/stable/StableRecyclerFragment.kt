@@ -135,8 +135,7 @@ class StableRecyclerFragment : BaseFragment() {
             var lastAnimal: Animal = unsortedAnimals[0]
             for (animal in unsortedAnimals) {
                 if (animal.animal != lastAnimal.animal || animal === unsortedAnimals[unsortedAnimals.size - 1]) {
-                    if (!((lastAnimal.animalGroup == "premiumPets" || lastAnimal.animalGroup == "specialPets"
-                                    || lastAnimal.animalGroup == "specialMounts" || lastAnimal.animalGroup == "premiumMounts") && lastAnimal.numberOwned == 0)) {
+                    if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
                         items.add(lastAnimal)
                     }
                     lastAnimal = animal
@@ -151,14 +150,14 @@ class StableRecyclerFragment : BaseFragment() {
                 if (user != null && user?.items != null) {
                     when (itemType) {
                         "pets" -> {
-                            val pet = animal as Pet
-                            if (pet.trained > 0) {
+                            val pet = animal as? Pet
+                            if (pet?.trained ?: 0 > 0) {
                                 lastAnimal.numberOwned = lastAnimal.numberOwned + 1
                             }
                         }
                         "mounts" -> {
-                            val mount = animal as Mount
-                            if (mount.owned) {
+                            val mount = animal as? Mount
+                            if (mount?.owned == true) {
                                 lastAnimal.numberOwned = lastAnimal.numberOwned + 1
                             }
                         }

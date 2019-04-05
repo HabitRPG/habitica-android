@@ -54,7 +54,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
 
         fun bind(item: Mount) {
             animal = item
-            titleView.text = item.colorText
+            titleView.text = item.color
             ownedTextView.visibility = View.GONE
             this.imageView.alpha = 1.0f
             if (this.animal?.owned == true) {

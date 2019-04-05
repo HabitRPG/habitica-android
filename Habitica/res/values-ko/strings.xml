@@ -293,14 +293,14 @@
   <string name="feed_to_pet">펫 먹이주기</string>
   <string name="hatch_egg">알 부화</string>
   <string name="invite_party">파티에 초대</string>
-  <string name="dialog_feeding">%1$s %2$s 에게 다음의 먹이 주기:</string>
+  <string name="dialog_feeding">%s 에게 다음의 먹이 주기:</string>
   <string name="use_animal">사용</string>
   <string name="feed">먹이주기</string>
   <string name="hatch_with">%s 으로 펫 부화</string>
-  <string name="hatched_pet_title">당신은 %1$s %2$s 를 부화시켰습니다!</string>
+  <string name="hatched_pet_title">당신은 %s 를 부화시켰습니다!</string>
   <string name="close">닫기</string>
   <string name="share">나누기</string>
-  <string name="notification_pet_fed">%1$s %2$s 에게 먹이를 줬습니다!</string>
+  <string name="notification_pet_fed">%s 에게 먹이를 줬습니다!</string>
   <string name="notification_purchase">%s 를 구매했습니다</string>
   <string name="notification_purchase_reward">보상을 구매했습니다</string>
   <string name="sectionpets">기본 펫</string>
