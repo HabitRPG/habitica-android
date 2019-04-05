@@ -869,5 +869,6 @@
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="new_password_repeat">Repeat new Password</string>
+    <string name="password_changed">Password successfully changed</string>
 
 </resources>

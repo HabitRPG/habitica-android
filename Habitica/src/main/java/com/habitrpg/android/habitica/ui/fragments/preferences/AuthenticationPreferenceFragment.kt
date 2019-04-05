@@ -107,6 +107,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                         thisDialog.dismiss()
                         userRepository.updatePassword(oldPasswordEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
                                 .subscribe(Consumer {
+                                    Toast.makeText(activity, R.string.password_changed, Toast.LENGTH_SHORT).show()
                                 }, RxErrorHandler.handleEmptyError())
                     }
                     .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
