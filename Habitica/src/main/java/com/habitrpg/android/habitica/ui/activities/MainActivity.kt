@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.android.material.appbar.AppBarLayout
@@ -58,6 +59,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -209,6 +211,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
                 }, RxErrorHandler.handleEmptyError()))
+
+        val viewModel = ViewModelProviders.of(this)
+                .get(NotificationsViewModel::class.java)
+
+        compositeSubscription.add(viewModel.getNotificationCount().subscribe(Consumer {
+            drawerFragment?.setNotificationsCount(it)
+        }, RxErrorHandler.handleEmptyError()))
 
         val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
 
@@ -374,7 +383,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user?.id, userRepository, taskRepository)
 
-            drawerFragment?.setNotificationsCount(this.user?.notifications?.count() ?: 0)
             drawerFragment?.setMessagesCount(this.user?.inbox?.newMessages ?: 0)
             drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
 
