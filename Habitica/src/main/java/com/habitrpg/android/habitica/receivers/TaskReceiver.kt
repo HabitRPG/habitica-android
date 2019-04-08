@@ -12,11 +12,16 @@ import androidx.core.app.NotificationCompat
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.createOrUpdateHabiticaChannel
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import io.reactivex.functions.Consumer
 import java.util.HashMap
+import java.util.NoSuchElementException
 import javax.inject.Inject
 
 
@@ -24,6 +29,9 @@ class TaskReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var taskAlarmManager: TaskAlarmManager
+
+    @Inject
+    lateinit var taskRepository: TaskRepository
 
     override fun onReceive(context: Context, intent: Intent) {
         HabiticaBaseApplication.component?.inject(this)
@@ -36,6 +44,15 @@ class TaskReceiver : BroadcastReceiver() {
                 taskAlarmManager.addAlarmForTaskId(taskId)
             }
 
+            try {
+                val task = taskRepository.getTask(taskId ?: "").blockingFirst()
+
+                if (task.completed) {
+                    return
+                }
+            } catch (e: NoSuchElementException) {
+
+            }
             val additionalData = HashMap<String, Any>()
             additionalData["identifier"] = "task_reminder"
             AmplitudeManager.sendEvent("receive notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
@@ -44,7 +61,7 @@ class TaskReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun createNotification(context: Context, taskTitle: String) {
+    private fun createNotification(context: Context, taskTitle: String?) {
         val intent = Intent(context, MainActivity::class.java)
 
         intent.putExtra("notificationIdentifier", "task_reminder")
