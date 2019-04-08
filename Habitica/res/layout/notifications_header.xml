@@ -29,7 +29,7 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/notificationsTitleBadge"
+            android:id="@+id/notifications_title_badge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -40,7 +40,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/dismissAllButton"
+        android:id="@+id/dismiss_all_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/transparent"

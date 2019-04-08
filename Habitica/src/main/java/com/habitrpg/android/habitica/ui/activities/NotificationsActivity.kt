@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 import com.habitrpg.android.habitica.R
@@ -17,6 +19,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     lateinit var viewModel: NotificationsViewModel
 
+    lateinit var inflater: LayoutInflater
+
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,11 +28,14 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         setupToolbar(toolbar)
 
+        inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
         viewModel = ViewModelProviders.of(this)
                 .get(NotificationsViewModel::class.java)
 
         compositeSubscription.add(viewModel.getNotifications().subscribe(Consumer {
             this.setNotifications(it)
+            viewModel.markNotificationsAsSeen()
         }, RxErrorHandler.handleEmptyError()))
 
         notifications_refresh_layout?.setOnRefreshListener(this)
@@ -61,18 +68,42 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         notification_items.removeAllViewsInLayout()
 
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
-        if (notifications.isEmpty()) {
-            val no_notifications = inflater?.inflate(R.layout.no_notifications, notification_items, false)
-            notification_items.addView(no_notifications)
-            return
+        when {
+            notifications.isEmpty() -> displayNoNotificationsVew()
+            else -> displayNotificationsListView(notifications)
         }
+    }
 
-        val header = inflater?.inflate(R.layout.notifications_header, notification_items, false)
-        val badge = header?.findViewById(R.id.notificationsTitleBadge) as? TextView
-        badge?.setText(notifications.count().toString())
-        notification_items.addView(header)
+    private fun displayNoNotificationsVew() {
+        notification_items.addView(
+                inflater.inflate(R.layout.no_notifications, notification_items, false)
+        )
+    }
 
-        //TODO("not implemented")
+    private fun displayNotificationsListView(notifications: List<GlobalNotification>) {
+        notification_items.addView(
+                createNotificationsHeaderView(notifications.count())
+        )
+
+        notifications.map {
+            val item: View? = when (it.type) {
+                //TODO("not implemented")
+                else -> null
+            }
+
+            notification_items.addView(item)
+        }
+    }
+
+    private fun createNotificationsHeaderView(notificationCount: Int): View? {
+        val header = inflater.inflate(R.layout.notifications_header, notification_items, false)
+
+        val badge = header?.findViewById(R.id.notifications_title_badge) as? TextView
+        badge?.text = notificationCount.toString()
+
+        val dismissAllButton = header?.findViewById(R.id.dismiss_all_button) as? Button
+        dismissAllButton?.setOnClickListener({ viewModel.dismissAllNotifications() })
+
+        return header
     }
 }
