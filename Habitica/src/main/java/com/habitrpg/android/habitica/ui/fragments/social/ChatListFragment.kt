@@ -147,16 +147,22 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                     .subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())
         }
 
-        if (user?.flags?.isCommunityGuidelinesAccepted == true) {
-            communityGuidelinesView.visibility = View.GONE
-        } else {
-            communityGuidelinesView.setOnClickListener { _ ->
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = "https://habitica.com/static/community-guidelines".toUri()
-                context?.startActivity(i)
-                userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.getUser().subscribe {user ->
+            if (user?.flags?.isCommunityGuidelinesAccepted == true) {
+                communityGuidelinesView.visibility = View.GONE
+                chatBarContent.visibility = View.VISIBLE
+            } else {
+                chatBarContent.visibility = View.GONE
+                communityGuidelinesView.setOnClickListener {
+                    userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(Consumer {
+                        val i = Intent(Intent.ACTION_VIEW)
+                        i.data = "https://habitica.com/static/community-guidelines".toUri()
+                        context?.startActivity(i)
+                    }, RxErrorHandler.handleEmptyError())
+                }
             }
-        }
+        })
+
 
         recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {

@@ -9,8 +9,8 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/spacing_medium"
         android:paddingRight="@dimen/spacing_medium">
-
         <LinearLayout
+            android:id="@+id/chatBarContent"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
@@ -75,8 +75,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/read_community_guidelines"
-            style="@style/Caption3"
-            android:textColor="@color/brand_300" />
+            style="@style/Caption2"
+            android:gravity="center"
+            android:textColor="@color/brand_300"
+            android:paddingTop="@dimen/spacing_large"
+            android:paddingBottom="@dimen/spacing_large"/>
         <Space
             android:id="@+id/spacing"
             android:layout_width="match_parent"

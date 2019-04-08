@@ -589,7 +589,7 @@
     <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
     <string name="empty_title_rewards">You don\'t have any Rewards</string>
     <string name="reset_walkthrough">Reset Justins Walkthrough</string>
-    <string name="read_community_guidelines">Please read our Community Guidelines before posting</string>
+    <string name="read_community_guidelines">Read our Community Guidelines before posting</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Reload Content</string>
     <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
