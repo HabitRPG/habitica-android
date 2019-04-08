@@ -8,11 +8,7 @@ public interface Item extends RealmModel {
 
     String getKey();
 
-    void setOwned(int size);
-
     String getText();
-
-    Integer getOwned();
 
     Integer getValue();
 }

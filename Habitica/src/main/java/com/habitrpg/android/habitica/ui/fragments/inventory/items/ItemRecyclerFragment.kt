@@ -171,11 +171,26 @@ class ItemRecyclerFragment : BaseFragment() {
             "special" -> SpecialItem::class.java
             else -> Egg::class.java
         }
-        compositeSubscription.add(inventoryRepository.getOwnedItems(itemClass, user).firstElement().subscribe(Consumer { items ->
-            if (items.size > 0) {
-                adapter?.updateData(items as? OrderedRealmCollection<Item>)
-            }
-        }, RxErrorHandler.handleEmptyError()))
+        itemType?.let { type ->
+            compositeSubscription.add(inventoryRepository.getOwnedItems(type)
+                    .doOnNext { items ->
+                        if (items.size > 0) {
+                            adapter?.updateData(items)
+                        }
+                    }
+                    .map { items -> items.mapNotNull { it.key } }
+                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray(), user) }
+                    .map {
+                        val itemMap = mutableMapOf<String, Item>()
+                        for (item in it) {
+                            itemMap[item.key] = item
+                        }
+                        itemMap
+                    }
+                    .subscribe(Consumer { items ->
+                    adapter?.items = items
+            }, RxErrorHandler.handleEmptyError()))
+        }
 
         compositeSubscription.add(inventoryRepository.getOwnedPets().subscribe(Consumer { adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
     }

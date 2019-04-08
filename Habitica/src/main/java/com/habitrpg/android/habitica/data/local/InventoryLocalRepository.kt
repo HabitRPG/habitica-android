@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.RealmResults
@@ -26,8 +27,9 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
 
-    fun getOwnedItems(itemClass: Class<out Item>, user: User?): Flowable<out RealmResults<out Item>>
-    fun getOwnedItems(user: User): Flowable<out Map<String, Item>>
+    fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>>
+    fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>>
+    fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>>
 
     fun getEquipment(key: String): Flowable<Equipment>
     fun getMounts(type: String, group: String): Flowable<RealmResults<Mount>>
@@ -37,8 +39,8 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun updateOwnedEquipment(user: User)
 
-    fun changeOwnedCount(type: String, key: String, amountToAdd: Int)
-    fun changeOwnedCount(item: Item, amountToAdd: Int?)
+    fun changeOwnedCount(type: String, key: String, userID: String, amountToAdd: Int)
+    fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?)
 
     fun getItem(type: String, key: String): Flowable<Item>
 

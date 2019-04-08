@@ -41,10 +41,22 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         result.armoire = context.deserialize(obj.get("armoire"), Equipment::class.java)
         result.gear = context.deserialize(obj.get("gear"), ContentGear::class.java)
 
-        result.quests = context.deserialize(obj.get("quests"), object : TypeToken<RealmList<QuestContent>>() {}.type)
-        result.eggs = context.deserialize(obj.get("eggs"), object : TypeToken<RealmList<Egg>>() {}.type)
-        result.food = context.deserialize(obj.get("food"), object : TypeToken<RealmList<Food>>() {}.type)
-        result.hatchingPotions = context.deserialize(obj.get("hatchingPotions"), object : TypeToken<RealmList<HatchingPotion>>() {}.type)
+        result.quests = RealmList()
+        for (entry in obj.get("quests").asJsonObject.entrySet()) {
+            result.quests.add(context.deserialize(entry.value, QuestContent::class.java))
+        }
+        result.eggs = RealmList()
+        for (entry in obj.get("eggs").asJsonObject.entrySet()) {
+            result.eggs.add(context.deserialize(entry.value, Egg::class.java))
+        }
+        result.food = RealmList()
+        for (entry in obj.get("food").asJsonObject.entrySet()) {
+            result.food.add(context.deserialize(entry.value, Food::class.java))
+        }
+        result.hatchingPotions = RealmList()
+        for (entry in obj.get("hatchingPotions").asJsonObject.entrySet()) {
+            result.hatchingPotions.add(context.deserialize(entry.value, HatchingPotion::class.java))
+        }
 
         result.pets = RealmList()
         for (key in obj.getAsJsonObject("petInfo").keySet()) {

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import androidx.core.content.ContextCompat
@@ -338,7 +337,7 @@ class FullProfileActivity : BaseActivity() {
             outfitList.add(outfit.shield)
             outfitList.add(outfit.weapon)
         }
-        return inventoryRepository.getItems(outfitList)
+        return inventoryRepository.getEquipment(outfitList)
     }
 
     private fun gotGear(equipmentList: List<Equipment>, user: Member) {

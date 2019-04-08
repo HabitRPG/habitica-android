@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.events.commands.HatchingCommand
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.inventory.*
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -27,7 +28,7 @@ import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
 
-class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Item, ItemRecyclerAdapter.ItemViewHolder>(data, autoUpdate) {
+class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>(data, autoUpdate) {
 
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
@@ -36,6 +37,11 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boole
     var fragment: ItemRecyclerFragment? = null
     private var ownedPets: RealmResults<Pet>? = null
     var context: Context? = null
+    var items: Map<String, Item>? = null
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     private val sellItemEvents = PublishSubject.create<Item>()
     private val questInvitationEvents = PublishSubject.create<QuestContent>()
@@ -53,7 +59,10 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boole
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        data.notNull { holder.bind(it[position]) }
+        data.notNull {
+            val ownedItem = it[position]
+            holder.bind(ownedItem, items?.get(ownedItem.key))
+        }
     }
 
     fun setOwnedPets(pets: RealmResults<Pet>) {
@@ -62,6 +71,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boole
 
 
     inner class ItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        var ownedItem: OwnedItem? = null
         var item: Item? = null
 
         private val titleTextView: TextView by bindView(R.id.titleTextView)
@@ -84,10 +94,11 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boole
             itemView.setOnClickListener(this)
         }
 
-        fun bind(item: Item) {
+        fun bind(ownedItem: OwnedItem, item: Item?) {
+            this.ownedItem = ownedItem
             this.item = item
-            titleTextView.text = item.text
-            ownedTextView.text = item.owned.toString()
+            titleTextView.text = item?.text
+            ownedTextView.text = ownedItem.numberOwned.toString()
 
             var disabled = false
             val imageName: String?
@@ -102,7 +113,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boole
                     is HatchingPotion -> "HatchingPotion"
                     else -> ""
                 }
-                imageName = "Pet_" + type + "_" + item.key
+                imageName = "Pet_" + type + "_" + item?.key
 
                 if (isHatching) {
                     disabled = this.isPetOwned ?: false
@@ -133,7 +144,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<Item>?, autoUpdate: Boole
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
                 } else if (item is SpecialItem) {
                     val specialItem = item as SpecialItem
-                    if (specialItem.isMysteryItem && specialItem.owned > 0) {
+                    if (specialItem.isMysteryItem && ownedItem?.numberOwned ?: 0 > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
                     }
                 }

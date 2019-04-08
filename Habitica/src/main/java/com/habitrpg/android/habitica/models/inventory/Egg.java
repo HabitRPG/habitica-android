@@ -8,7 +8,7 @@ public class Egg extends RealmObject implements Item {
     @PrimaryKey
     String key;
     String text, notes;
-    Integer value, owned;
+    Integer value;
     String adjective, mountText;
 
     Integer stableOwned, stableTotal;
@@ -57,18 +57,8 @@ public class Egg extends RealmObject implements Item {
         return key;
     }
 
-    @Override
-    public void setOwned(int size) {
-        owned = size;
-    }
-
     public String getText() {
         return text;
-    }
-
-    @Override
-    public Integer getOwned() {
-        return owned;
     }
 
     @Override

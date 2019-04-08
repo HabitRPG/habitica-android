@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.RealmResults
@@ -20,7 +21,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getQuestContent(key)
     }
 
-    override fun getItems(searchedKeys: List<String>): Flowable<RealmResults<Equipment>> {
+    override fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>> {
         return localRepository.getEquipment(searchedKeys)
     }
 
@@ -44,12 +45,16 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getOwnedEquipment()
     }
 
-    override fun getOwnedItems(itemClass: Class<out Item>, user: User?): Flowable<out RealmResults<out Item>> {
-        return localRepository.getOwnedItems(itemClass, user)
+    override fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>> {
+        return localRepository.getOwnedItems(itemType, userID)
     }
 
-    override fun getOwnedItems(user: User): Flowable<out Map<String, Item>> {
+    override fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>> {
         return localRepository.getOwnedItems(user)
+    }
+
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {
+        return localRepository.getItems(itemClass, keys, user)
     }
 
     override fun getEquipment(key: String): Flowable<Equipment> {
@@ -105,7 +110,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun changeOwnedCount(type: String, key: String, amountToAdd: Int) {
-        localRepository.changeOwnedCount(type, key, amountToAdd)
+        localRepository.changeOwnedCount(type, key, userID, amountToAdd)
     }
 
     override fun sellItem(user: User?, type: String, key: String): Flowable<User> {
@@ -124,7 +129,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                                 val newItems = realm.copyToRealmOrUpdate(items)
                                 user.items = newItems
                             } else {
-                                item.owned = item.owned - 1
+                                //item.owned = item.owned - 1
                             }
                             val stats = user1.stats
                             if (stats != null) {
@@ -173,12 +178,12 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                         return@doOnNext
                     }
                     localRepository.executeTransaction {
-                        val newEquipped = items.gear.equipped
+                        val newEquipped = items.gear?.equipped
                         val oldEquipped = user.items?.gear?.equipped
-                        val newCostume = items.gear.costume
+                        val newCostume = items.gear?.costume
                         val oldCostume = user.items?.gear?.costume
-                        oldEquipped?.updateWith(newEquipped)
-                        oldCostume?.updateWith(newCostume)
+                        newEquipped?.let { equipped -> oldEquipped?.updateWith(equipped) }
+                        newCostume?.let { costume -> oldCostume?.updateWith(costume) }
                         user.items?.currentMount = items.currentMount
                         user.items?.currentPet = items.currentPet
                         user.balance = user.balance
@@ -189,7 +194,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     override fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse> {
         return apiClient.feedPet(pet.key, food.key)
                 .doOnNext { feedResponse ->
-                    localRepository.changeOwnedCount(food, -1)
+                    localRepository.changeOwnedCount("food", food.key, userID, -1)
                     localRepository.executeTransaction { pet.trained = feedResponse.value }
                 }
     }
@@ -197,15 +202,15 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     override fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion): Flowable<Items> {
         return apiClient.hatchPet(egg.key, hatchingPotion.key)
                 .doOnNext {
-                    localRepository.changeOwnedCount(egg, -1)
-                    localRepository.changeOwnedCount(hatchingPotion, -1)
+                    localRepository.changeOwnedCount("egg", egg.key, userID, -1)
+                    localRepository.changeOwnedCount("hatchingPotions", hatchingPotion.key, userID, -1)
                     localRepository.changePetFeedStatus(egg.key+"-"+hatchingPotion.key, 5)
                 }
     }
 
     override fun inviteToQuest(quest: QuestContent): Flowable<Quest> {
         return apiClient.inviteToQuest("party", quest.key)
-                .doOnNext { localRepository.changeOwnedCount(quest, -1) }
+                .doOnNext { localRepository.changeOwnedCount("quests", quest.key, userID, -1) }
     }
 
     override fun buyItem(user: User?, id: String, value: Double): Flowable<BuyResponse> {

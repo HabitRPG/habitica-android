@@ -245,7 +245,7 @@ class StatsFragment: BaseMainFragment() {
             outfitList.add(thisOutfit.weapon)
         }
 
-        compositeSubscription.add(inventoryRepository.getItems(outfitList).firstElement()
+        compositeSubscription.add(inventoryRepository.getEquipment(outfitList).firstElement()
                 .retry(1)
                 .subscribe(Consumer {
             val userStatComputer = UserStatComputer()

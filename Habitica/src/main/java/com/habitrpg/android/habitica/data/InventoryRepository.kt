@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 
 import io.reactivex.Flowable
@@ -36,13 +37,13 @@ interface InventoryRepository : ContentRepository {
     fun getOwnedPets(): Flowable<RealmResults<Pet>>
     fun getQuestContent(key: String): Flowable<QuestContent>
 
-    fun getItems(searchedKeys: List<String>): Flowable<RealmResults<Equipment>>
+    fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>>
     fun retrieveInAppRewards(): Flowable<List<ShopItem>>
 
     fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
 
-    fun getOwnedItems(itemClass: Class<out Item>, user: User?): Flowable<out RealmResults<out Item>>
-    fun getOwnedItems(user: User): Flowable<out Map<String, Item>>
+    fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>>
+    fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>>
 
     fun getEquipment(key: String): Flowable<Equipment>
 
@@ -84,4 +85,5 @@ interface InventoryRepository : ContentRepository {
     fun purchaseItem(purchaseType: String, key: String): Flowable<Any>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
+    fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>>
 }

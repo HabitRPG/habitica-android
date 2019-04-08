@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
@@ -62,44 +63,39 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getOwnedItems(itemClass: Class<out Item>, user: User?): Flowable<out RealmResults<out Item>> {
-        var query = realm.where(itemClass)
-        if (SpecialItem::class.java.isAssignableFrom(itemClass)) {
-            if (user?.purchased?.plan != null) {
-                val mysticItem: SpecialItem = if (query.count() == 0L) {
-                    SpecialItem.makeMysteryItem(context)
-                } else {
-                    getUnmanagedCopy((query.findFirst() as SpecialItem?)!!)
-                }
-                mysticItem.owned = user.purchased?.plan?.mysteryItemCount
-                this.save(mysticItem)
-            }
-        } else {
-            query = query.greaterThan("owned", 0)
-        }
-        return query.findAllAsync().asFlowable()
+    override fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>> {
+        return realm.where(OwnedItem::class.java)
+                .equalTo("itemType", itemType)
+                .equalTo("userID", userID)
+                .findAll()
+                .asFlowable()
                 .filter { it.isLoaded }
     }
 
-    override fun getOwnedItems(user: User): Flowable<out Map<String, Item>> {
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {
+        return realm.where(itemClass).`in`("key", keys).findAllAsync().asFlowable()
+                .filter { it.isLoaded }
+    }
+
+    override fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>> {
         return Flowable.combineLatest(
-                getOwnedItems(Egg::class.java, user),
-                getOwnedItems(HatchingPotion::class.java, user),
-                getOwnedItems(Food::class.java, user),
-                getOwnedItems(QuestContent::class.java, user),
+                getOwnedItems("eggs", user.id ?: ""),
+                getOwnedItems("hatchingPotions", user.id ?: ""),
+                getOwnedItems("food", user.id ?: ""),
+                getOwnedItems("questContent", user.id ?: ""),
                 Function4 { eggs, hatchingPotions, food, quests ->
-                    val items = HashMap<String, Item>()
+                    val items = HashMap<String, OwnedItem>()
                     for (item in eggs) {
-                        items[item.key + "-" + item.type] = item
+                        items[item.key + "-" + item.itemType] = item
                     }
                     for (item in hatchingPotions) {
-                        items[item.key + "-" + item.type] = item
+                        items[item.key + "-" + item.itemType] = item
                     }
                     for (item in food) {
-                        items[item.key + "-" + item.type] = item
+                        items[item.key + "-" + item.itemType] = item
                     }
                     for (item in quests) {
-                        items[item.key + "-" + item.type] = item
+                        items[item.key + "-" + item.itemType] = item
                     }
                     items
                 }
@@ -196,14 +192,24 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     }
 
-    override fun changeOwnedCount(type: String, key: String, amountToAdd: Int) {
-        getItem(type, key).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
+    override fun changeOwnedCount(type: String, key: String, userID: String, amountToAdd: Int) {
+        getOwnedItem(type, key, userID).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
     }
 
-    override fun changeOwnedCount(item: Item, amountToAdd: Int?) {
+    override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {
         amountToAdd.notNull { amount ->
-            realm.executeTransaction { item.owned = item.owned + amount }
+            realm.executeTransaction { item.numberOwned = item.numberOwned + amount }
         }
+    }
+
+    fun getOwnedItem(type: String, key: String, userID: String): Flowable<OwnedItem> {
+        return realm.where(OwnedItem::class.java)
+                .equalTo("itemType", type)
+                .equalTo("key", key)
+                .equalTo("userID", userID)
+                .findFirstAsync()
+                .asFlowable<OwnedItem>()
+                .filter { realmObject -> realmObject.isLoaded }
     }
 
     override fun getItem(type: String, key: String): Flowable<Item> {
@@ -226,7 +232,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
         val item = realm.where(SpecialItem::class.java).equalTo("isMysteryItem", true).findFirst()
         realm.executeTransaction {
             if (item != null && item.isValid) {
-                item.owned = item.owned - 1
+                //item.owned = item.owned - 1
             }
             if (user.isValid) {
                 user.purchased?.plan?.mysteryItemCount = (user.purchased?.plan?.mysteryItemCount ?: 0) - 1

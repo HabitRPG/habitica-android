@@ -64,7 +64,7 @@
 //        updateData.put("preferences.timezoneOffset", 2);
 //        verify(mockedApiClient).updateUser(updateData);
 //        verify(mockedLocalRepository).saveUser(testUser);
-//        assertEquals(testUser.getItems(), newUser.getItems());
+//        assertEquals(testUser.getEquipment(), newUser.getEquipment());
 //        assertEquals(testUser.getPreferences(), newUser.getPreferences());
 //        assertEquals(testUser.getFlags(), newUser.getFlags());
 //    }

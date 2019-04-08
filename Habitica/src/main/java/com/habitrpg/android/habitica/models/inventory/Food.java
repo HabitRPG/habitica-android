@@ -8,7 +8,7 @@ public class Food extends RealmObject implements Item {
     @PrimaryKey
     String key;
     String text, notes;
-    Integer value, owned;
+    Integer value;
     String target, article;
     Boolean canDrop;
 
@@ -46,17 +46,8 @@ public class Food extends RealmObject implements Item {
     }
 
     @Override
-    public void setOwned(int size) {
-        owned = size;
-    }
-
-    @Override
     public String getText() {
         return text;
-    }
-
-    public Integer getOwned() {
-        return owned;
     }
 
     @Override
