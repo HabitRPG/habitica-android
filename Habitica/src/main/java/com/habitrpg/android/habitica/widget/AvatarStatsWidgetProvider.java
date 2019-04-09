@@ -115,11 +115,11 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
             int hourGlassCount = user.getHourglassCount();
             if (hourGlassCount == 0) {
-                remoteViews.setViewVisibility(R.id.hourglass_cion, View.GONE);
+                remoteViews.setViewVisibility(R.id.hourglass_icon, View.GONE);
                 remoteViews.setViewVisibility(R.id.hourglasses_tv, View.GONE);
             } else {
-                remoteViews.setImageViewBitmap(R.id.hourglass_cion, HabiticaIconsHelper.imageOfHourglass());
-                remoteViews.setViewVisibility(R.id.hourglass_cion, View.VISIBLE);
+                remoteViews.setImageViewBitmap(R.id.hourglass_icon, HabiticaIconsHelper.imageOfHourglass());
+                remoteViews.setViewVisibility(R.id.hourglass_icon, View.VISIBLE);
                 remoteViews.setTextViewText(R.id.hourglasses_tv, String.valueOf(hourGlassCount));
                 remoteViews.setViewVisibility(R.id.hourglasses_tv, View.VISIBLE);
             }
