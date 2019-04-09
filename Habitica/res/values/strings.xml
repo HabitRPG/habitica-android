@@ -865,6 +865,7 @@
     <string name="dismiss_all">Dismiss All</string>
     <string name="new_bailey_update">New Bailey Update!</string>
     <string name="new_msg_guild"><![CDATA[<b>%1$s</b> has new posts]]></string>
+    <string name="new_msg_party"><![CDATA[Your Party, <b>%1$s</b>, has new posts]]></string>
     <string name="unallocated_stats_points"><![CDATA[You have <b>%1$s unallocated Stat Points</b>]]></string>
     <string name="create">Create</string>
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>

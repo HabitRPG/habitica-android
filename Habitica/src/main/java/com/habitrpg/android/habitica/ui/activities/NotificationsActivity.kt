@@ -114,10 +114,11 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     private fun createNewChatMessageNotification(notification: GlobalNotification): View? {
         val data = notification.getData() as? NewChatMessageData
+        val stringId = if (viewModel.isPartyMessage(data)) R.string.new_msg_party else R.string.new_msg_guild;
 
         return createNotificationItem(
                 notification,
-                fromHtml(getString(R.string.new_msg_guild, data?.group?.name))
+                fromHtml(getString(stringId, data?.group?.name))
         )
     }
 
