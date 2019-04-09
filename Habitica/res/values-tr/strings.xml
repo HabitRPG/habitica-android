@@ -808,4 +808,7 @@
   <string name="visit_website">websiteyi ziyaret et</string>
   <string name="gift_subscription">Abonelik Hediye Et</string>
   <string name="send_gift">Hediye Gönder</string>
-</resources>
+<string name="subscription_duration_norenew">%s için</string>
+    <string name="subscribe_gift_description">Abonelik faydalarını başka biriyle paylaşmak ister misin\?</string>
+    <string name="gift_title">Kime hediye etmek istersin\?</string>
+    </resources>
