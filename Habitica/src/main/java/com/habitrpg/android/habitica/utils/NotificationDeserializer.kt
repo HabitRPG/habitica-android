@@ -4,9 +4,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.habitrpg.android.habitica.models.notifications.ChatNotificationData
-import com.habitrpg.android.habitica.models.notifications.GlobalNotification
-import com.habitrpg.android.habitica.models.notifications.NotificationType
+import com.habitrpg.android.habitica.models.notifications.*
 import java.lang.reflect.Type
 
 class NotificationDeserializer : JsonDeserializer<GlobalNotification> {
@@ -27,13 +25,11 @@ class NotificationDeserializer : JsonDeserializer<GlobalNotification> {
             notification.seen = obj.get("seen").asBoolean
         }
 
-        if (obj.has("data")) {
-            when (notification.type) {
-                NotificationType.NEW_CHAT_MESSAGE.type -> notification.newChatMessageData = context.deserialize<ChatNotificationData>(
-                        obj.getAsJsonObject("data"),
-                        ChatNotificationData::class.java
-                )
-            }
+        val dataType = notification.getDataType()
+        if (obj.has("data") && dataType != null) {
+            notification.setData(
+                    context.deserialize(obj.getAsJsonObject("data"), dataType)
+            )
         }
 
         return notification
