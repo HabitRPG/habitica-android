@@ -739,4 +739,7 @@
   <string name="short_name">簡短的名稱</string>
   <string name="unlock_attribute_points">分配屬性點在10等時解鎖</string>
   <string name="moderator">管理員</string>
-</resources>
+<string name="levelup_header">你升到第%1$d級！</string>
+    <string name="levelup_detail">你完成了你現實生活中的任務，你升級了，而且生命值也補全了！</string>
+    <string name="loading">載入中…</string>
+    </resources>
