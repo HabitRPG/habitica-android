@@ -448,7 +448,7 @@
   <string name="subscribe">捐助</string>
   <string name="subscribe.listitem1.description">商人亚历山大可以按每个宝石20金币的价格向你出售宝石！\n\n他每个月的初始进货量是25个宝石，进货量会随着您的捐助长度增长！\n\n 每三个月宝石上限就会增加5，直到最大值1个月50颗宝石！</string>
   <string name="subscribe.listitem2.description">每个月你将会收到一件独特的角色饰品！另外，每连续捐助三个月，神秘的时间旅行者将授予你得到过去(和将来)的饰品的资格。</string>
-  <string name="subscribe.listitem3.description">使完成的待办事项和任务的历史记录保留更长时间</string>
+  <string name="subscribe.listitem3.description">使完成的待办事项和任务的历史记录保留更长时间。</string>
   <string name="subscribe.listitem4.description">双倍掉落让你每天能够从完成的任务中得到更多的物品，帮助你更快地驯服坐骑！</string>
   <string name="subscribe1month.gemcap">25 宝石</string>
   <string name="subscribe3month.gemcap">30 宝石</string>
@@ -537,7 +537,7 @@
   <string name="avatar_hair_ponytail">辫子</string>
   <string name="avatar_glasses">眼镜</string>
   <string name="avatar_wheelchair">轮椅</string>
-  <string name="weak">瘦小</string>
+  <string name="weak">弱习惯</string>
   <string name="strong">强壮</string>
   <string name="gray">灰色</string>
   <string name="dated">已计划</string>
@@ -729,4 +729,6 @@
   <string name="next_day_reminder_title">今天完成任务了么？</string>
   <string name="next_day_reminder_text">升级后有许多可解锁和发现的，所以继续你的任务。祝玩得愉快！</string>
   <string name="two_handed">双手握持</string>
-</resources>
+<string name="warrior_description">战士会有更强的暴击、更高的暴击率，在完成任务时会随机触发暴击得到额外的金币、经验和物品掉率。也能够对Boss造成较强的伤害。如果碰运气式的随机奖励更能激励你，或者想对Boss打出伤害，那就当个战士吧！</string>
+    <string name="opting_out_progress">退出</string>
+    </resources>
