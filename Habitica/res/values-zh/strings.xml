@@ -235,7 +235,16 @@
   <string name="setup_task_creativity_1">学习以成为艺术能手</string>
   <string name="setup_task_creativity_2">进行创新项目</string>
   <string name="setup_task_creativity_3">完成创新项目</string>
-  <string name="gem.purchase.support">想要帮助我们维持Habitica？通过买宝石的方式来支持开发者吧！\n\n 宝石能用来购买额外的乐趣，包括：\n\n - 角色的酷酷的服装\n - 好看的背景\n - 能获得宠物蛋的有趣的任务\n - 1001级之前改变职业的能力\n\n非常感谢您帮助我们使Habitica变的更好。您的支持非常重要！</string>
+  <string name="gem.purchase.support">想要帮助我们维持Habitica？通过买宝石的方式来支持开发者吧！
+\n
+\n你可以通过宝石给你的账户购买更多有趣的额外物品，包括：
+\n
+\n - 角色的酷酷的服装
+\n - 好看的背景
+\n - 能获得宠物蛋的有趣的任务
+\n - 100级之前改变职业的能力
+\n
+\n非常感谢您帮助我们使Habitica变的更好。您的支持非常重要！</string>
   <string name="my_guilds">我的公会</string>
   <string name="public_guilds">公共公会</string>
   <string name="guild">公会</string>
@@ -331,7 +340,7 @@
   <string name="rogue">盗贼</string>
   <string name="mage">法师</string>
   <string name="healer">医师</string>
-  <string name="mage_description">法师非常善于学习，获得经验值和升级比其他职业快。他们也会获得大量的魔力值来使用一些特殊的法术。如果你喜欢玩得有策略性，或者你强烈地希望升级解锁更多的游戏内容，来玩法师吧！</string>
+  <string name="mage_description">法师相比其他职业，拥有可以通过快速学习来更快的获得经验和等级提升的优势。他们在使用特殊技能时也会获得大量的法力。如果你热衷于habitica游戏里策略性部分，或者是如果升级和解锁高级功能为你提供强大动力的话，那就来当个法师吧！</string>
   <string name="rogue_description">盗贼热衷于积累财富，比其他人获得更多的金币，还擅长寻找随机物品。他们标志性的潜行技能使得他们能够躲避未完成的日常带来的伤害。如果你希望获得更多的奖励，成就，掉落以及徽章，来玩盗贼吧！</string>
   <string name="healer_description">医师们对伤害的抗性很强，也可以保护其他的人。错过的日常任务和坏习惯无法伤害他们太多，而且他们有很多回血的技能。如果你热衷于辅助其他的队友，或者是享受那种从死神手里夺取生命的快感，那就成为一名医师吧！</string>
   <string name="select_class">选择职业</string>
@@ -439,15 +448,19 @@
   <string name="has_reminder">有任务提示</string>
   <string name="has_tag">有标签</string>
   <string name="subscribe.title">捐助支持开发者以帮助维持Habitica运行</string>
-  <string name="subscribe_prompt">成为捐助者你会得到这些好处：</string>
+  <string name="subscribe_prompt">成为会员你会得到这些好处：</string>
   <string name="subscribe.listitem1">用金币购买宝石</string>
-  <string name="subscribe.listitem2">高档的季度物品</string>
-  <string name="subscribe.listitem3">保留额外的历史条目</string>
+  <string name="subscribe.listitem2">独家月度商品</string>
+  <string name="subscribe.listitem3">保留更多历史条目</string>
   <string name="subscribe.listitem4">每日掉落上限翻倍</string>
   <string name="subscriptions">捐助</string>
   <string name="subscription_duration">每 %s 重复出现</string>
   <string name="subscribe">捐助</string>
-  <string name="subscribe.listitem1.description">商人亚历山大可以按每个宝石20金币的价格向你出售宝石！\n\n他每个月的初始进货量是25个宝石，进货量会随着您的捐助长度增长！\n\n 每三个月宝石上限就会增加5，直到最大值1个月50颗宝石！</string>
+  <string name="subscribe.listitem1.description">商人Alexander可以按每个宝石20金币的价格向你出售宝石！
+\n
+\n他每个月的初始进货量是25个宝石，进货量会随着您的捐助时长而增加！
+\n
+\n 每三个月宝石上限就会增加5，最大直到1个月50颗宝石！</string>
   <string name="subscribe.listitem2.description">每个月你将会收到一件独特的角色饰品！另外，每连续捐助三个月，神秘的时间旅行者将授予你得到过去(和将来)的饰品的资格。</string>
   <string name="subscribe.listitem3.description">使完成的待办事项和任务的历史记录保留更长时间。</string>
   <string name="subscribe.listitem4.description">双倍掉落让你每天能够从完成的任务中得到更多的物品，帮助你更快地驯服坐骑！</string>
@@ -478,7 +491,7 @@
   <string name="subscription_status">捐助状态</string>
   <string name="byLeader">由 %s</string>
   <string name="challenge_details">挑战细节</string>
-  <string name="challenge_leave_title">退出挑战</string>
+  <string name="challenge_leave_title">放弃挑战</string>
   <string name="challenge_leave_text">你是否确定想放弃这个挑战“%s”？</string>
   <string name="challenge_remove_tasks_title">删除任务</string>
   <string name="challenge_remove_tasks_text">你确定要删除这个任务吗？</string>
@@ -540,8 +553,8 @@
   <string name="avatar_hair_ponytail">辫子</string>
   <string name="avatar_glasses">眼镜</string>
   <string name="avatar_wheelchair">轮椅</string>
-  <string name="weak">虚弱</string>
-  <string name="strong">强壮</string>
+  <string name="weak">偶尔</string>
+  <string name="strong">经常</string>
   <string name="gray">灰色</string>
   <string name="dated">已计划</string>
   <string name="completed">完成</string>
@@ -604,7 +617,7 @@
   <string name="gems_left_nomax" formatted="false">每月宝石：还剩%d 颗</string>
   <string name="health">生命值</string>
   <string name="collect">收集</string>
-  <string name="rage_meter">狂暴值</string>
+  <string name="rage_meter">怒气值</string>
   <string name="boss_quest">打怪任务</string>
   <string name="collection_quest">收藏任务</string>
   <string name="experience_reward" formatted="false">%d经验值</string>
@@ -633,7 +646,7 @@
   <string name="subscribe_for_hourglasses">订阅沙漏</string>
   <string name="timetravelers_closed_description">每三个月获得一次神秘沙漏，然後用它们解锁过去和未来的限量版物品，宠物和坐骑！</string>
   <string name="want_to_subscribe">我想订阅</string>
-  <string name="seasonal_closed_description">盛大庆典在二分二至日前后举行，到时再来看看各种各样的特殊季节物品吧！</string>
+  <string name="seasonal_closed_description">盛大庆典会在春分，夏至，秋分，冬至前后开始，到时再来看看各种各样的特殊季节物品吧！</string>
   <string name="come_back_soon">稍后回来！</string>
   <string name="level">属性等级</string>
   <string name="streak_label">21天连续登陆</string>
@@ -825,7 +838,7 @@
     <string name="gift_one_get_one_description">赠送他人会员，自己也能获得同等时长会员的活动正在进行中！</string>
     <string name="gift_title">你想赠送礼物给谁？</string>
     <string name="gift_one_get_one">买一赠一！</string>
-    <string name="gift_one_get_one_detailed_description">当促销活动正在进行时，你的赠品会员时长会在你赠送完他人会员后到账。</string>
+    <string name="gift_one_get_one_detailed_description">当促销活动正在进行时，你的赠送会员时长会在你赠送完他人会员后到账。</string>
     <string name="gift_subscription_subtitle">在下方选择你想赠送的礼物！赠送购买不会自动续费。</string>
     <string name="send_gift">赠送礼物</string>
     <string name="server">服务器</string>
@@ -840,4 +853,5 @@
     <string name="create_party">创建队伍</string>
 
 <string name="daily_tip_4">偶尔审视一下你的任务以免偏离正道。</string>
+    <string name="verification_pet">确认后，其中一只久经沙场的宠物在等待着你！</string>
     </resources>
