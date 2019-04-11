@@ -839,4 +839,5 @@
     <string name="only_leader_create_challenge">只有会长可以创建挑战</string>
     <string name="create_party">创建队伍</string>
 
-</resources>
+<string name="daily_tip_4">偶尔审视一下你的任务以免偏离正道。</string>
+    </resources>
