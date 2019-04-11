@@ -10,13 +10,13 @@
   <string name="SP_address_hint">Ваш клиентский сервер</string>
   <string name="SP_userID_title">ID пользователя</string>
   <string name="SP_userID_summary">Ваш ID</string>
-  <string name="SP_APIToken_title">API Token</string>
+  <string name="SP_APIToken_title">API Знак</string>
   <string name="SP_APIToken_summary">Ваш API Token</string>
   <string name="Language_title">Язык</string>
   <string name="Language_summary">Изменить язык Habitica</string>
   <string name="SP_user_qr_code">Ваш QR код</string>
   <string name="PS_contact_title">Свяжитесь со мной</string>
-  <string name="unknown_error">Произошла ошибка...</string>
+  <string name="unknown_error">Произошла ошибка…</string>
   <string name="pref_account_header">Аккаунт</string>
   <string name="pref_first_day_of_the_week_title">Первый день недели</string>
   <string name="pref_first_day_of_the_week_summary">Первый день недели во всех календарях</string>
@@ -119,7 +119,7 @@
   <string name="levelup_detail">Благодаря выполнению своих целей в реальной жизни вы получили уровень и восполнили полностью здоровье!</string>
   <string name="levelup_button">Ура!</string>
   <string name="faint_subtitle">Не отчаивайтесь!</string>
-  <string name="faint_penalty_body">Вы потеряли Уровень, Золото и предмет Экипировки, но вы  сможете все вернуть, если продолжите выполнять задачи! Удачи! Вы справитесь!</string>
+  <string name="faint_penalty_body">Вы потеряли Уровень, Золото и предмет Экипировки, но вы сможете все вернуть, если продолжите выполнять задачи! Удачи! Вы справитесь.</string>
   <string name="faint_header">У вас закончилось здоровье!</string>
   <string name="faint_button">Восстановить здоровье &amp; Попробовать ещё раз</string>
   <string name="filter">Фильтр</string>
@@ -129,7 +129,7 @@
   <string name="used_skill_without_mana">Вы использовали %1$s.</string>
   <string name="new_checklist_item">новый пункт списка</string>
   <string name="add_checklist_item">Добавить</string>
-  <string name="reminder_title">Не забудьте отмечать свои задачи!</string>
+  <string name="reminder_title">Не забудьте отмечать свои задачи</string>
   <string name="skill_progress_title">Использовать навык</string>
   <string name="coming_soon">Скоро</string>
   <string name="chat_flag_confirmation">Вы уверены, что хотите пожаловаться на это сообщение?</string>
@@ -189,7 +189,7 @@
   <string name="complete_tutorial">Есть!</string>
   <string name="dismiss_tutorial">Напомнить позже</string>
   <string name="intro_1_subtitle">Добро пожаловать в</string>
-  <string name="intro_1_title">Habitica</string>
+  <string name="intro_1_title">Хабитика</string>
   <string name="intro_1_description">Пришло время веселиться, пока вы делаете свою работу. Присоединитесь к %s участникам, уже улучшающих свою жизнь.</string>
   <string name="intro_2_subtitle">Прогресс в игре</string>
   <string name="intro_2_title">Прогресс в жизни</string>
@@ -327,9 +327,9 @@
   <string name="mage">Маг</string>
   <string name="healer">Целитель</string>
   <string name="warrior_description">Воины чаще и лучше наносят \“критические удары\”, которые случайным образом увеличивают награду за выполнение заданий: золото, опыт и шанс выпадения предметов. Кроме того, воины наносят значительный урон монстрам-боссам. Играйте за воина, если для вас существенным стимулом станет возможность сорвать джекпот, неожиданно получив больше наград, или осыпать сильнейшими ударами босса в квестах!</string>
-  <string name="mage_description">Маги быстро учатся, получая опыт и уровни быстрее, чем другие классы. Они также выгодно используют ману на особые навыки. Играйте за мага, если вам по душе тактическая сторона Habitica или если хорошей мотивацией для вас служит получение новых уровней и открытие дополнительных возможностей.</string>
+  <string name="mage_description">Маги быстро учатся, получая опыт и уровни быстрее, чем другие классы. Они также выгодно используют ману на особые навыки. Играйте за мага, если вам по душе тактическая сторона Habitica или если хорошей мотивацией для вас служит получение новых уровней и открытие дополнительных возможностей!</string>
   <string name="rogue_description">Разбойники накапливают богатства, получая больше золота, чем кто бы там ни было. Они также эксперты по поиску различных предметов. Их культовая способность «Хитрость» позволяет им уклониться от последствий невыполненных ежедневных заданий. Играйте за разбойника, если хорошей мотивацией для вас являются награды и достижения и вы жаждете трофеев и значков!</string>
-  <string name="healer_description">Целители неуязвимы перед уроном и распространяют защиту на других. Пропущенные ежедневные задания и вредные привычки несильно их беспокоят, а после неудачи они могут восстановить здоровье. Играйте за целителя, если вам нравится помогать другим членам команды или если вас вдохновляет мысль о возможности усердным трудом обмануть смерть.</string>
+  <string name="healer_description">Целители неуязвимы перед уроном и распространяют защиту на других. Пропущенные ежедневные задания и вредные привычки несильно их беспокоят, а после неудачи они могут восстановить здоровье. Играйте за целителя, если вам нравится помогать другим членам команды или если вас вдохновляет мысль о возможности усердным трудом обмануть смерть!</string>
   <string name="select_class">Выберите класс</string>
   <string name="opt_out_class">Отказаться</string>
   <string name="opt_out_description">Не хотите утруждать себя классами? Тогда откажитесь — и останетесь воином и ваши очки будут обрабатываться автоматически. Активировать классы можно будет позже в меню настроек.</string>
@@ -340,7 +340,7 @@
   <string name="dialog_go_back">Вернуться назад</string>
   <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>
   <string name="change_class">Изменить ваш класс</string>
-  <string name="change_class_description">Измени свой класс и перераспредели очки характеристик за 3 самоцвета</string>
+  <string name="change_class_description">Измени свой класс и перераспредели очки характеристик за 3 самоцвета.</string>
   <string name="enable_class">Включить систему классов</string>
   <string name="changing_class_progress">Изменение класса</string>
   <string name="by_email">По электронной почте</string>
@@ -453,7 +453,7 @@
   <string name="active">Активный</string>
   <string name="cancel_subscription">Отменить подписку</string>
   <string name="cancel_subscription_google.description">Больше не хотите использовать подписку? При желании можете отписаться в разделе \"Мои приложения\" в Google Play Store.</string>
-  <string name="cancel_subscription_notgoogle.description">Отменяете подписку? Из-за способа оплаты вы можете отменить подписку только через веб-сайт. Нажмите кнопку ниже, чтобы открыть страницу в браузере!</string>
+  <string name="cancel_subscription_notgoogle.description">Вы хотите отменить свою подписку\? Из-за способа оплаты вы можете отменить подписку только через сайт. Нажмите кнопку ниже, чтобы открыть страницу в браузере!</string>
   <string name="visit_habitica_website">Посетите сайт Habitica</string>
   <string name="current_bonuses">Текущие бонусы</string>
   <string name="months_subscribed">Месяцев подписки</string>
@@ -489,7 +489,7 @@
   <string name="go_to_challenge">Перейти к испытанию</string>
   <string name="not_part_of_a_challenge">Сейчас вы не участвуете в испытаниях!</string>
   <string name="join_a_challenge">Присоединитесь к испытанию, чтобы добавить готовый набор задач в ваш список, и соревнуйтесь с другими хабитанцами, чтобы заработать достижения и даже самоцветы!</string>
-  <string name="check_the_public_challenge_tab">Откройте вкладку \"Общее\", чтобы найти испытания, созданные пользователями, которые больше всего подходят вам.</string>
+  <string name="check_the_public_challenge_tab">Откройте вкладку \"Общее\", чтобы найти испытания, созданные пользователями, которые больше всего подходят вам!</string>
   <string name="add_reminder">Добавить напоминание</string>
   <string name="warning">Предупреждение</string>
   <string name="open_settings">Открыть настройки</string>
@@ -548,7 +548,7 @@
   <string name="maintenance">Cодержание</string>
   <string name="reload_content">Обновить содержимое</string>
   <string name="dailyDueDefaultView">Установить ежедневные задания по умолчанию на вкладку \'действующих\'</string>
-  <string name="dailyDueDefaultViewDescription">С включённом параметром, по умолчанию будут отображаться только \'действующие\' ежедневные задания вместо \'всех\'.</string>
+  <string name="dailyDueDefaultViewDescription">С включённом параметром, по умолчанию будут отображаться только \'действующие\' ежедневные задания вместо \'всех\'</string>
   <string name="repeat_summary">Повторять %1$s каждые %2$s %3$s %4$s</string>
   <string name="no_billing_gems">На вашем устройстве нет поддерживаемых способов оплаты. Пожалуйста, используйте сайт habitica, если вы хотите приобрести драгоценные камни.</string>
   <string name="no_billing_subscriptions">На вашем устройстве не поддерживается ни один из способов оплаты. Пожалуйста используйте наш веб-сайт habitica если вы хотите оформить подписку.</string>
@@ -573,7 +573,7 @@
   <string name="leave_party">Покинуть команду</string>
   <string name="party_description">Описание команды</string>
   <string name="abort_confirmation">Вы уверены, что хотите отменить эту миссию? Это прервет её прохождение для каждого в вашей команде и весь прогресс будет потерян. Квестовый свиток останется у владельца.</string>
-  <string name="leave_quest_confirmation">Вы уверены, что хотите покинуть активный квест? Весь ваш прогресс будет потерян</string>
+  <string name="leave_quest_confirmation">Вы уверены, что хотите покинуть активный квест\? Весь ваш прогресс будет потерян.</string>
   <string name="number_participants">%1$dУчастники</string>
   <string name="welcome_back">C возвращением</string>
   <string name="yesterdaililes_prompt">Вы вчера делали какие-нибудь из этих ежедневных заданий?</string>
@@ -587,7 +587,7 @@
   <string name="invitations">Приглашения</string>
   <string name="quest_leader_header" formatted="false">Начато %s</string>
   <string name="quest_abort_message">Вы уверены, что хотите отменить эту миссию? Это прервет её прохождение для каждого в вашей команде и весь прогресс будет потерян. Квестовый свиток останется у владельца.</string>
-  <string name="loading">Загрузка...</string>
+  <string name="loading">Загрузка…</string>
   <string name="reloading_content">Обновление содержимого</string>
   <string name="thousand_abbrev">тыс</string>
   <string name="million_abbrev">млн</string>
@@ -728,12 +728,16 @@
   <string name="insufficientSubscriberGemsTitle">Достигнут ежемесячный лимит самоцветов</string>
   <string name="chat_message">Чат-сообщение</string>
   <string name="world_boss_description_title">Кто такой Мировой босс?</string>
-  <string name="world_boss_description_description">Мировой босс — особое событие, во время которого сообщество Habitica объединяет усилия, чтобы своими заданиями победить сильнейшего монстра!\nЗавершенные задачи наносят урон боссу\nБосс не тронет вас за пропущенные задания, но его счетчик ярости будет расти. Если бар заполнится, босс атакует одного из владельцев лавки!\nМожно одновременно сражаться с обычным квестовым боссом, вы нанесёте урон обоим.\nТаверне можно увидеть уровни здоровья и ярости мирового босса.</string>
+  <string name="world_boss_description_description">Мировой босс — особое событие, во время которого сообщество Habitica объединяет усилия, чтобы своими заданиями победить сильнейшего монстра!
+\nЗавершенные задачи наносят урон боссу
+\nБосс не тронет вас за пропущенные задания, но его счетчик ярости будет расти. Если бар заполнится, босс атакует одного из владельцев лавки!
+\nМожно одновременно сражаться с обычным квестовым боссом, вы нанесёте урон обоим
+\nТаверне можно увидеть уровни здоровья и ярости мирового босса</string>
   <string name="world_boss_description_intro">Мировой босс — особое событие, во время которого сообщество Habitica объединяет усилия, чтобы своими заданиями победить сильнейшего монстра!</string>
   <string name="world_boss_description_1">Завершите ваши задачи чтобы нанести урон Боссу</string>
   <string name="world_boss_description_2">Мировой босс не тронет вас за пропущенные задания, но уровень его ярости будет расти. Когда шкала ярости заполнится, босс атакует одного из владельцев лавки!</string>
-  <string name="world_boss_description_3">Вы можете продолжать сражаться с обычным боссом в квесте, вы нанесёте урон обоим.</string>
-  <string name="world_boss_description_4">Проверяйте Таверну, чтобы увидеть уровни здоровья и ярости мирового босса.</string>
+  <string name="world_boss_description_3">Вы можете продолжать сражаться с обычным боссом в квесте, вы нанесёте урон обоим</string>
+  <string name="world_boss_description_4">Проверяйте Таверну, чтобы увидеть уровни здоровья и ярости мирового босса</string>
   <string name="world_boss_action_prompt" formatted="false">Победите босса, чтобы заслужить особые награды и спасти страну страна Habitica от %s\'ских угроз!</string>
   <string name="world_boss_description_subtitle">%s атаки!</string>
   <string name="questShop_owner_long">Квест-мастер Ян</string>
@@ -789,7 +793,7 @@
   <string name="username_copied">Ник скопирован в буфер обмена</string>
   <string name="verification_pet">Один из питомцев-ветеранов будет ожидать вас, после подтверждения своего выбора!</string>
   <string name="welcomeNameTitle">Как к вам обращаться?</string>
-  <string name="display_name_length_error">Отображаемое имя должно быть от 1 до 30 символов.</string>
+  <string name="display_name_length_error">Отображаемое имя должно быть от 1 до 30 символов</string>
   <string name="setup_task_join_habitica">Присоединиться к Habitica (Подписаться!)</string>
   <string name="setup_task_join_habitica_notes">Вы можете завершить Задачу, редактировать или удалить её.</string>
   <string name="setup_task_reward">Вознаградите себя</string>
@@ -798,4 +802,27 @@
   <string name="equipment_con">ТЕЛ:</string>
   <string name="equipment_int">ИНТ:</string>
   <string name="equipment_per">ВОС:</string>
-</resources>
+<string name="ago_1Minute">1 минуту назад</string>
+    <string name="ago_minutes">%минуты назад</string>
+    <string name="opting_out_progress">Не принимать участие</string>
+    <string name="subscription_duration_norenew">Для %s</string>
+    <string name="subscribe1month.gemcap">Максимум 25 драгоценные камни</string>
+    <string name="subscribe3month.gemcap">Максимум 30 драгоценные камни</string>
+    <string name="subscribe6month.gemcap">Максимум 35 драгоценные камни</string>
+    <string name="subscribe12month.gemcap">Максимум 45 драгоценные камни</string>
+    <string name="delete_oauth_account_description">Уверены ли вы\? Это удалит вашу учетную запись навсегда и она никогда не будет восстановлена! Вам нужно будет зарегистрировать новую учетную запись, чтобы снова использовать Habitica. Банк или потраченные драгоценные камни не будут возвращены. Если вы абсолютно уверены, введите DELETE в текстовом поле ниже.</string>
+    <string name="enter_recipient_username">Введите @ имя получателя</string>
+    <string name="visit_website">посетите сайт</string>
+    <string name="subscribe_gift_description">Хотите дать преимущества подписки кому-то еще\?</string>
+    <string name="gift_subscription">Подарить Подписку</string>
+    <string name="gift_title">Кому бы вы хотели дать\?</string>
+    <string name="gift_one_get_one">Если вы подаришь кому-то один, тогда вы получишь один!</string>
+    <string name="gift_one_get_one_detailed_description">Пока эта акция активна, вы получите соответствующую подписку автоматически после отправки подарка.</string>
+    <string name="gift_subscription_subtitle">Выберите подписку, которую вы хотите подарить в низу! Эта покупка не будет автоматически продлена.</string>
+    <string name="send_gift">Посылай подарок</string>
+    <string name="server">Сервер</string>
+    <string name="gift_confirmation_title">Ваш подарок отправлен!</string>
+    <string name="gift_confirmation_text_g1g1">Вы отправили %s месячную подписку Habitica %s, и эта же подписка была применена к вашей учетной записи для нашей акции «Подарок один, получите один»!</string>
+    <string name="gift_confirmation_text">Вы отправили %s один %s-месячную подписку Habitica.</string>
+    <string name="discover">Обнаруживать</string>
+    </resources>
