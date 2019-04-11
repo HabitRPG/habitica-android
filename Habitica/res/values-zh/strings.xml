@@ -758,16 +758,16 @@
     <string name="no_party_description">和朋友一同完成任务或者独自出击。和怪物战斗，创建挑战，能力越大，责任越大。</string>
     <string name="join_party_description">把下方的用户名给一个队伍成员，这样他们就能邀请你加入了</string>
     <string name="join_party_description_id">把你的UserID给他们，或者让他们扫你的QR码来邀请你</string>
-    <string name="insufficientSubscriberGems">你已经买空了这个月所有的宝石限额！每月的前三天有更多宝石可以买买买，谢谢你的订阅！</string>
+    <string name="insufficientSubscriberGems">你已经买空了这个月所有的宝石限额！每月可购买的宝石将于当月前三天内上架，感谢你开通会员！</string>
     <string name="world_boss_description_description">世界级Boss是全体玩家一同攻略的特别活动，团结一致，用任务来打倒这个强力Boss！
 \n完成任务就可以对Boss造成伤害
-\n如果你没有完成任务，Boss不会攻击你，但是会累计怒气值，一旦怒气值达到上限，Boss就会随机攻击一个店主！
-\n你可以同时挑战一般任务的Boss，伤害对两者都有效
-\n在酒馆可以看到Boss攻略进度和</string>
+\n如果你没有完成任务，Boss不会攻击你，但是会累计怒气值，一旦怒气值达到上限，Boss就会随机攻击一个NPC店主！
+\n你可以同时挑战一般的副本Boss，伤害对两者同时有效
+\n在酒馆可以看到Boss攻略进度和Boss的怒气攻击</string>
     <string name="world_boss_description_intro">世界Boss是一個全体玩家一同参与的特殊活动，大家一起团结一致通过完成任务来打败这个强力的怪物！</string>
-    <string name="world_boss_description_2">Boss不会因为你没完成任务而攻击你，但是会积累暴走值，如果暴走值蓄满，Boss会随机攻击一个店主！</string>
+    <string name="world_boss_description_2">Boss不会因为你没完成任务而攻击你，但是会积累怒气值，如果怒气值蓄满，Boss会随机攻击一个店主！</string>
     <string name="world_boss_description_3">你可以同时挑战普通任务的Boss们，伤害对两者都有效</string>
-    <string name="world_boss_description_4">在酒馆可以看到Boss攻略进度和暴走伤害</string>
+    <string name="world_boss_description_4">在酒馆可以看到Boss攻略进度和怒气伤害</string>
     <string name="world_boss_action_prompt" formatted="false">打败Boss就能获得特殊奖励！快来从%s的手里拯救Habitica吧！</string>
     <string name="world_boss_description_subtitle">%s 发动了攻击！</string>
     <string name="seasonalShop_owner_long">季节女巫</string>
@@ -785,18 +785,18 @@
     <string name="daily_tip_6">尝试设置一个10分钟的计时看看你能完成多少！</string>
     <string name="daily_tip_7">尝试把市场里的商品固定在奖励栏里来激励自己！</string>
     <string name="daily_tip_8">你可以修改任务的难易等级来获得不同数量的奖励！</string>
-    <string name="daily_tip_9">如果一个任务太过艰巨，分散成数个子任务可能会更好。</string>
+    <string name="daily_tip_9">如果一个任务太过艰巨，分解成几个小步骤可能会更好。</string>
     <string name="moderator">管理员</string>
     <string name="staff">工作人员</string>
     <string name="expand_notes">阅读更多</string>
     <string name="collapse_notes">收起</string>
-    <string name="reset_streak">重置连击</string>
+    <string name="reset_streak">连击数归零</string>
     <string name="week_reminder_title">你的任务完成得如何了？</string>
     <string name="week_reminder_text">小憩一会很不错，你也可以做一些简单的任务来获得经验值、超酷的装备和点数！</string>
     <string name="last_login">最近的签到</string>
     <string name="total_checkins">总签到数</string>
     <string name="usernamePromptTitle">是时候设置用户名了！</string>
-    <string name="usernamePromptBody">现在用户名就是登录名，同时用户名还用于被邀请，聊天中@提到你，私信。</string>
+    <string name="usernamePromptBody">现在用户名就是登录名，同时用户名还用于邀请、聊天版上@你，还有私信。</string>
     <string name="usernamePromptWiki">如果你想了解更多关于变动的信息， <a href="https://habitica.wikia.com/wiki/Player_Names">访问我们的百科</a></string>
     <string name="confirmUsername">确认用户名</string>
     <string name="usernamePromptDisclaimer">用户名应该符合我们的<a href="https://habitica.com/static/terms">服务协议</a>以及<a href="https://habitica.com/static/community-guidelines">社区准则</a>。如果你之前没有设置登录名，你的用户名会自动生成。</string>
