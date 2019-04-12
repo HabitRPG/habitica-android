@@ -16,7 +16,7 @@
   <string name="Language_summary">Changer le langage d\'Habitica</string>
   <string name="SP_user_qr_code">Votre QR code</string>
   <string name="PS_contact_title">Contactez-moi</string>
-  <string name="unknown_error">Une erreur est survenue...</string>
+  <string name="unknown_error">Une erreur est survenue…</string>
   <string name="pref_account_header">Compte</string>
   <string name="pref_first_day_of_the_week_title">Premier jour de la semaine</string>
   <string name="pref_first_day_of_the_week_summary">Premier jour de la semaine dans tous les calendriers</string>
@@ -216,7 +216,7 @@
   <string name="setup_task_work_2">Tâche la plus importante</string>
   <string name="setup_task_work_3">Projet de travail</string>
   <string name="setup_task_exercise_1">10 minutes de cardio</string>
-  <string name="setup_task_exercise_2">Stretching</string>
+  <string name="setup_task_exercise_2">L\' élongation</string>
   <string name="setup_task_exercise_3">Définir des horaires où faire du sport</string>
   <string name="setup_task_healthWellness_1">Manger sainement / Malbouffe</string>
   <string name="setup_task_healthWellness_2">Utiliser du fil dentaire</string>
@@ -233,7 +233,16 @@
   <string name="setup_task_creativity_1">Etudier un maître de l\'art</string>
   <string name="setup_task_creativity_2">Travailler à un projet créatif</string>
   <string name="setup_task_creativity_3">Finir un projet créatif</string>
-  <string name="gem.purchase.support">Vous voulez aider Habitica à continuer d\'exister ? Vous pouvez soutenir les développeurs en achetant des gemmes !\n\nLes gemmes vous permettent d\'acheter des éléments supplémentaires pour votre compte, comme : \n\n - De supers costumes pour votre avatar\n - Des arrière-plans géniaux\n - Des quêtes amusantes où vous gagnez des œufs de familiers\n - La possibilité de changer de classe avant le niveau 100\n\nMerci infiniment de nous aider à faire d\'Habitica le meilleur site possible. Votre soutien signifie beaucoup pour nous.</string>
+  <string name="gem.purchase.support">Vous voulez aider Habitica à continuer d\'exister \? Vous pouvez soutenir les développeurs en achetant des gemmes !
+\n
+\nLes gemmes vous permettent d\'acheter des éléments supplémentaires pour votre compte, comme : 
+\n
+\n - De supers costumes pour votre avatar
+\n - Des arrière-plans géniaux
+\n - Des quêtes amusantes où vous gagnez des œufs de familiers
+\n - La possibilité de changer de classe avant le niveau 100
+\n
+\nMerci infiniment de nous aider à faire d\'Habitica le meilleur site possible. Votre soutien signifie beaucoup pour nous!</string>
   <string name="my_guilds">Mes guildes</string>
   <string name="public_guilds">Guildes publiques</string>
   <string name="guild">Guilde</string>
@@ -316,11 +325,12 @@
   <string name="sectionquestMounts">Quête</string>
   <string name="sectionspecialMounts">Rare</string>
   <string name="world_quest">Quête mondiale</string>
-  <string name="inn_description">Besoin de repos ? Reposez vous à l\'Auberge de Daniel pour faire une pause des effets de jeu les plus compliqués :\n\n
-• Les quotidiennes manquées ne vous infligeront pas de dégâts\n
-• Les tâches ne perdront pas de combo ni ne changeront de couleur\n
-• Les boss ne vous infligeront pas de dégâts pour vos quotidiennes manquées\n
-• Vos dégâts de boss ou objets de quêtes collectés resteront en cours jusqu\'à ce que vous quittiez l\'auberge.</string>
+  <string name="inn_description">Besoin de repos \? Reposez vous à l\'Auberge de Daniel pour faire une pause des effets de jeu les plus compliqués :
+\n
+\n • Les quotidiennes manquées ne vous infligeront pas de dégâts
+\n • Les tâches ne perdront pas de combo ni ne changeront de couleur
+\n • Les boss ne vous infligeront pas de dégâts pour vos quotidiennes manquées
+\n • Vos dégâts de boss ou objets de quêtes collectés resteront en cours jusqu\'à ce que vous quittiez l\'auberge</string>
   <string name="empty_items">Vous n\'avez pas de %s</string>
   <string name="user_level">Niv %d</string>
   <string name="user_level_with_class">Niv %1$d - %2$s</string>
@@ -358,7 +368,7 @@
   <string name="invite_users">Inviter dans l\'équipe</string>
   <string name="share_using">Partager avec</string>
   <string name="share_levelup">J\'ai atteint le niveau %d à Habitica en améliorant mes habitudes dans le monde réel !</string>
-  <string name="share_hatched">Je viens de faire éclore un familier%1$s %2$s à Habitica en réalisant mes tâches quotidiennes</string>
+  <string name="share_hatched">Je viens de faire éclore un familier%1$s %2$s à Habitica en réalisant mes tâches quotidiennes!</string>
   <string name="share_raised">Je viens de gagner un-e %1$s %2$s monture en réalisant mes tâches quotidiennes!</string>
   <string name="open_in_store">Ouvrir dans le Play Store</string>
   <string name="change_class_confirmation">Êtes-vous sûr·e de vouloir changer de classe ? Cela vous coûtera 3 gemmes.</string>
@@ -369,7 +379,7 @@
   <string name="market">Marché</string>
   <string name="timeTravelers">Voyageurs temporels</string>
   <string name="seasonalShop">Boutique saisonnière</string>
-  <string name="empty_inbox">Vous n\'avez pas de message. Vous pouvez envoyer un nouveau message à quelqu\'un à partir de ses message de discussion publics.</string>
+  <string name="empty_inbox">Vous n\'avez pas de message. Vous pouvez envoyer un nouveau message à quelqu\'un à partir de ses message de discussion publics!</string>
   <string name="party_invite">Débloquer en invitant des ami•e•s</string>
   <string name="login_incentive">Débloquez en vous connectant régulièrement à Habitica</string>
   <string name="create_account">Débloquez en créant un compte</string>
