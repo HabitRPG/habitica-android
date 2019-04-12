@@ -28,7 +28,7 @@
   <string name="pref_push_notifications_checkbox">Потребителски известия</string>
   <string name="push_notifications">Известия</string>
   <string name="push_notifications_sum">Настройте известията си</string>
-  <string name="preference_push_you_won_challenge">Спечелихте предизвикателство</string>
+  <string name="preference_push_you_won_challenge">Спечелихте предизвикателство!</string>
   <string name="preference_push_received_a_private_message">Получихте лично съобщение</string>
   <string name="preference_push_gifted_gems">Подарени диаманти</string>
   <string name="preference_push_gifted_subscription">Подарен абонамент</string>
@@ -138,14 +138,14 @@
   <string name="no_party_message">Вие не участвате в група. За да се присъедините към група, моля, посетете уеб сайта.</string>
   <string name="forgot_pw_btn">Забравена парола</string>
   <string name="tavern.inn.checkOut">Включете отново ежедневните си задачи</string>
-  <string name="tavern.inn.rest">Пауза на ежедн.</string>
+  <string name="tavern.inn.rest">Пауза на ежедн</string>
   <string name="reward.dialog.buy">Купуване</string>
   <string name="reward.dialog.dismiss">Премахване</string>
   <string name="party">Група</string>
   <string name="chat">Чат</string>
   <string name="members">Членове</string>
   <string name="habits">Навици</string>
-  <string name="dailies">Ежедн.</string>
+  <string name="dailies">Ежедн</string>
   <string name="todos">Задачи</string>
   <string name="rewards">Награди</string>
   <string name="taskform.delete.title">Сигурен/на ли сте?</string>
@@ -316,11 +316,12 @@
   <string name="sectionquestMounts">Мисия</string>
   <string name="sectionspecialMounts">Редки</string>
   <string name="world_quest">Световна мисия</string>
-  <string name="inn_description">Нуждаете се от почивка? Идете в странноприемницата на Даниел, за да спрете някои от по-трудните механики на Хабитика:\n\n
-• Пропуснатите ежедневни задачи няма да Ви нараняват;\n
-• Задачите няма да губят серията си или да променят цвета си;\n
-• Главатарите няма да Ви нанасят щети заради пропуснатите ежедневни задачи;\n
-• Щетите Ви срещу главатар и предметите от събираческите мисии ще Ви чакат докато излезете от странноприемницата.</string>
+  <string name="inn_description">Нуждаете се от почивка\? Идете в странноприемницата на Даниел, за да спрете някои от по-трудните механики на Хабитика:
+\n
+\n • Пропуснатите ежедневни задачи няма да Ви нараняват;
+\n • Задачите няма да губят серията си или да променят цвета си;
+\n • Главатарите няма да Ви нанасят щети заради пропуснатите ежедневни задачи;
+\n • Щетите Ви срещу главатар и предметите от събираческите мисии ще Ви чакат докато излезете от странноприемницата</string>
   <string name="empty_items">Нямате %s</string>
   <string name="user_level">Ниво %d</string>
   <string name="user_level_with_class">Ниво %1$d %2$s</string>
@@ -328,7 +329,7 @@
   <string name="rogue">Мошеник</string>
   <string name="mage">Магьосник</string>
   <string name="healer">Лечител</string>
-  <string name="warrior_description">Воините нанасят повече и по-силни „критични удари“, които на случаен принцип дават злато, опит и шанс за падане на предмет при изпълнение на задача. Те също така нанасят сериозни щети на чудовищата-главатари. Играйте като воин, ако Ви мотивират изненадващите награди, или ако искате да раздавате правосъдие в мисиите с главатари.</string>
+  <string name="warrior_description">Воините нанасят повече и по-силни „критични удари“, които на случаен принцип дават злато, опит и шанс за падане на предмет при изпълнение на задача. Те също така нанасят сериозни щети на чудовищата-главатари. Играйте като воин, ако Ви мотивират изненадващите награди, или ако искате да раздавате правосъдие в мисиите с главатари!</string>
   <string name="mage_description">Магьосниците се учат лесно, тъй като придобиват опит и нива по-бързо от останалите класове. Те имат много мана за специалните си умения. Играйте като магьосник, ако обичате тактическите страни на навиците, или ако се мотивирате от вдигане на нива и отключване на специални функционалности!</string>
   <string name="rogue_description">Мошениците обичат да трупат богатства, печелят злато повече от останалите и са майстори в намирането на случайни предмети. Отличителното им умение „Невидимост“ позволява да избегнат последствията от пропуснати ежедневни задачи. Играйте като мошеник, ако Ви мотивират наградите и постиженията, и обичате плячката и значките!</string>
   <string name="healer_description">Лечителите трудно могат да бъдат наранени и разпростират защитата си върху останалите. Пропуснатите ежедневни задачи и лошите навици не ги смущават толкова много; те винаги могат да възстановят здравето си след провал. Играйте като лечител, ако обичате да помагате на останалите в групата си или ако искате да изиграете смъртта чрез усърдна работа!</string>
@@ -353,7 +354,7 @@
   <string name="invite_username_description">Ако имате приятели, които вече използват Хабитика, поканете ги чрез потребителските им имена тук.</string>
   <string name="invite_email_description">Ако приятел се присъедини към Хабитика през Вашето е-писмо, той автоматично ще бъде поканен в групата Ви!</string>
   <string name="add_invites">Добавяне на покани</string>
-  <string name="user_id">Потребителски ид.</string>
+  <string name="user_id">Потребителски ид</string>
   <string name="email">Е-поща</string>
   <string name="invite_users">Поканване в групата</string>
   <string name="share_using">Споделяне чрез</string>
@@ -547,7 +548,7 @@
   <string name="empty_title_habits">Нямате навици</string>
   <string name="empty_description_habits">Навиците са задачи, които не се влияят от времето. Можете да ги отмятате много пъти през деня или пък да ги пропуснете.</string>
   <string name="empty_title_dailies">Нямате ежедневни задачи</string>
-  <string name="empty_description_dailies">Ежедневните задачи са такива, които се повтарят през определено време. Изберете кога трябва де ги изпълнявате.</string>
+  <string name="empty_description_dailies">Ежедневните задачи са такива, които се повтарят през определено време. Изберете кога трябва де ги изпълнявате!</string>
   <string name="empty_title_todos">Нямате задачи за изпълнение</string>
   <string name="empty_description_todos">Задачите за изпълнение трябва да бъдат изпълнение само веднъж. Към тях можете да добавите подзадачи, като така ще увеличите стойността им.</string>
   <string name="empty_title_rewards">Нямате награди</string>
@@ -581,7 +582,7 @@
   <string name="leave_party">Напускане на групата</string>
   <string name="party_description">Описание на групата</string>
   <string name="abort_confirmation">Наистина ли искате да прекъснете мисията? Така тя ще приключи за всички в групата Ви и целият Ви напредък ще бъде изгубен. Свитъкът с мисията ще бъде върнат на собственика си.</string>
-  <string name="leave_quest_confirmation">Наистина ли искате да напуснете текущата мисия? Целият Ви напредък по нея ще бъде изгубен</string>
+  <string name="leave_quest_confirmation">Наистина ли искате да напуснете текущата мисия\? Целият Ви напредък по нея ще бъде изгубен.</string>
   <string name="number_participants">%1$d участници</string>
   <string name="welcome_back">Добре дошли отново</string>
   <string name="yesterdaililes_prompt">Свършихте ли някоя от тези ежедневни задачи вчера?</string>
@@ -727,7 +728,7 @@
   <string name="active_world_boss">Текущ световен главатар</string>
   <string name="no_party_description">Изпълнявайте мисии заедно с приятели или самостоятелно. Бийте се с чудовища, създавайте предизвикателства и поддържайте отговорността си чрез групите.</string>
   <string name="no_party_title">Играйте Хабитика в група</string>
-  <string name="join_party_description">Дайте потребителското си име (по-долу) на член на гилдия, за да може да Ви изпрати покана.</string>
+  <string name="join_party_description">Дайте потребителското си име (по-долу) на член на гилдия, за да може да Ви изпрати покана</string>
   <string name="join_party_description_id">Дайте потребителския си идентификатор или покажете своя QR-код за поканата</string>
   <string name="join_party_title">Искате ли да се присъедините към група?</string>
   <string name="create_party_website">Отворете уеб сайта, за да създадете група</string>
@@ -736,12 +737,16 @@
   <string name="insufficientSubscriberGemsTitle">Достигнато е месечното ограничение на диамантите</string>
   <string name="chat_message">Съобщение в чата</string>
   <string name="world_boss_description_title">Какво е световен главатар?</string>
-  <string name="world_boss_description_description">Световният главатар е специално събитие, при което цялата общност работи заедно, за да победи могъщо чудовище, използвайки задачите си!\nЗавършете задачите си, за да нанесете щети на главатаря.\nГлаватарят няма да Ви нанесе щети за пропуснатите задачи, но яростомерът му ще се запълни. Ако лентата се запълни, главатарят ще нападне някой от продавачите!\nМожете да продължите с нормалните главатари от мисиите си, като щетите ще се прилагат и на двамата главатари.\nПогледнете в кръчмата, за да видите напредъка за главатаря и яростните удари.</string>
+  <string name="world_boss_description_description">Световният главатар е специално събитие, при което цялата общност работи заедно, за да победи могъщо чудовище, използвайки задачите си!
+\nЗавършете задачите си, за да нанесете щети на главатаря.
+\nГлаватарят няма да Ви нанесе щети за пропуснатите задачи, но яростомерът му ще се запълни. Ако лентата се запълни, главатарят ще нападне някой от продавачите!
+\nМожете да продължите с нормалните главатари от мисиите си, като щетите ще се прилагат и на двамата главатари.
+\nПогледнете в кръчмата, за да видите напредъка за главатаря и яростните удари</string>
   <string name="world_boss_description_intro">Световният главатар е специално събитие, при което цялата общност работи заедно, за да победи могъщо чудовище, използвайки задачите си!</string>
-  <string name="world_boss_description_1">Завършете задачите си, за да нанесете щети на главатаря.</string>
+  <string name="world_boss_description_1">Завършете задачите си, за да нанесете щети на главатаря</string>
   <string name="world_boss_description_2">Главатарят няма да Ви нанесе щети за пропуснатите задачи, но яростомерът му ще се запълни. Ако лентата се запълни, главатарят ще нападне някой от продавачите!</string>
-  <string name="world_boss_description_3">Можете да продължите с нормалните главатари от мисиите си, като щетите ще се прилагат и на двамата главатари.</string>
-  <string name="world_boss_description_4">Погледнете в кръчмата, за да видите напредъка за главатаря и яростните удари.</string>
+  <string name="world_boss_description_3">Можете да продължите с нормалните главатари от мисиите си, като щетите ще се прилагат и на двамата главатари</string>
+  <string name="world_boss_description_4">Погледнете в кръчмата, за да видите напредъка за главатаря и яростните удари</string>
   <string name="world_boss_action_prompt" formatted="false">Победете главатаря, за да спечелите специални награди и да спасите Хабитика от ужаса на %s!</string>
   <string name="world_boss_description_subtitle">%s атакува!</string>
   <string name="questShop_owner_long">Иън Пазителят на Мисиите</string>
@@ -784,7 +789,7 @@
   <string name="two_handed">За две ръце</string>
   <string name="usernamePromptTitle">Време е да си създадете потребителско име!</string>
   <string name="usernamePromptBody">Имената за вписване вече са уникални потребителски имена, които се виждат до екранните имена и се използват за покани, @споменавания в чата и за изпращане на съобщения.</string>
-  <string name="usernamePromptWiki">Ако искате да научите повече за тази промяна, посетете <a href="https://habitica.wikia.com/wiki/Player_Names">уикито ни</a>.</string>
+  <string name="usernamePromptWiki">Ако искате да научите повече за тази промяна, посетете <a href="https://habitica.wikia.com/wiki/Player_Names">уикито ни</a></string>
   <string name="confirmUsername">Потвърждаване на потребителското име</string>
   <string name="usernamePromptDisclaimer">Потребителските имена трябва са съобразени с <a href="https://habitica.com/static/terms">Условията за ползване</a> и <a href="https://habitica.com/static/community-guidelines">Обществените правила</a>. Ако преди това не сте имали име за вписване, то потребителското Ви име е създадено автоматично.</string>
   <string name="confirm_username_title">Наистина ли искате да потвърдите текущото си потребителско име?</string>
@@ -798,7 +803,7 @@
   <string name="username_copied">Потребителското име е копирано</string>
   <string name="verification_pet">Един от тези любимци-ветерани ще Ви чака след като завършите потвърждението!</string>
   <string name="welcomeNameTitle">Как да Ви наричаме?</string>
-  <string name="display_name_length_error">Екранното име трябва да бъде с дължина между 1 и 30 знака.</string>
+  <string name="display_name_length_error">Екранното име трябва да бъде с дължина между 1 и 30 знака</string>
   <string name="setup_task_join_habitica">Присъединяване към Хабитика (отметнете ме!)</string>
   <string name="setup_task_join_habitica_notes">Можете да изпълните тази задача, да я редактирате или да я премахнете.</string>
   <string name="setup_task_reward">Наградете се</string>
@@ -818,7 +823,7 @@
   <string name="send_gift">Изпращане на подаръка</string>
   <string name="server">Сървър</string>
   <string name="gift_confirmation_title">Подаръкът Ви беше изпратен!</string>
-  <string name="gift_confirmation_text_g1g1">Подареният от Вас абонамент беше изпратен, и Вие също получихте абонамент.</string>
+  <string name="gift_confirmation_text_g1g1">Подареният от Вас абонамент беше изпратен, и Вие също получихте абонамент!</string>
   <string name="gift_confirmation_text">Подареният от Вас абонамент беше изпратен, и Вие също получихте абонамент.</string>
   <string name="discover">Откриване</string>
   <string name="damage_paused">Щетите са спрени</string>
