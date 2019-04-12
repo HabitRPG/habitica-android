@@ -14,9 +14,10 @@
   <string name="tutorial_tasks_complete">That\'s all for now. If you need a reminder, check the FAQ section.</string>
   <string name="tutorial_equipment">When you buy equipment, it appears here. Your Battle Gear affects your stats, and your Costume (if enabled) affects what your avatar wears.</string>
   <string name="tutorial_items">Earn items by completing tasks and levelling up. Tap on an item to use it!</string>
-  <string name="tutorial_pets">As you complete real-world tasks, you now have a random chance of finding eggs and potions. Combine them to hatch pets.</string>
+  <string name="tutorial_pets">As you complete real-world tasks, you now have a random chance of finding eggs and potions. Combine them to hatch pets</string>
   <string name="tutorial_skills">Skills are special abilities that have powerful effects! Tap on a skill to use it. It will cost Mana (the blue bar), which you earn by checking in every day and by completing your real-life tasks. Check out the FAQ in the menu for more info!</string>
   <string name="tutorial_party">This is where you and your friends can hold each other accountable to your goals and fight monsters with your tasks!</string>
   <string name="tutorial_tavern">Welcome to the Tavern, a public, all-ages chatroom! Here you can chat about productivity and ask questions. Have fun!</string>
   <string name="tutorial_classes">Choose to become a Warrior, Mage, Healer, or Rogue! Each class has unique equipment and skills. Tap the (?) to learn more!</string>
+<string name="tutorial_stats">Tap the grey button to allocate lots of your stats at once, or tap the arrows to add them one point at a time.</string>
 </resources>
