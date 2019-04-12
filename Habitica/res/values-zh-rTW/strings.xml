@@ -742,4 +742,25 @@
 <string name="levelup_header">你升到第%1$d級！</string>
     <string name="levelup_detail">你完成了你現實生活中的任務，你升級了，而且生命值也補全了！</string>
     <string name="loading">載入中…</string>
+    <string name="faint_penalty_body">你降了一級，丟失了所有的金幣和一件裝備。不過繼續努力，你就可以把他們都拿回來！加油，你會更棒的。</string>
+    <string name="reminder_title">記得完成你的任務</string>
+    <string name="warrior_description">戰士會有更強的暴擊、更高的暴擊率，在完成任務時會隨機觸發暴擊得到額外的金幣、經驗和物品掉率。也能夠對Boss造成較強的傷害。如果碰運氣式的隨機獎勵更能激勵你，或者想對Boss打出傷害，那就當個戰士吧！</string>
+    <string name="opting_out_progress">退出</string>
+    <string name="invite_username_description">如果你已有朋友在使用Habitica，通過這裏的用戶名邀請他們。</string>
+    <string name="subscription_duration_norenew">為了 %s</string>
+    <string name="subscribe1month.gemcap">25 寶石</string>
+    <string name="subscribe3month.gemcap">30 寶石</string>
+    <string name="subscribe6month.gemcap">35 寶石</string>
+    <string name="subscribe12month.gemcap">45 寶石</string>
+    <string name="due">期限</string>
+    <string name="welcome_text">哦，你一定是新來的。我是Justin，你在Habitica的向導。
+\n
+\n開始之前，我們該怎麽稱呼您\? 你可隨意修改默認值，等你都填好後，我們就可以開始創建你的個人形象！</string>
+    <string name="delete_oauth_account_description">你確定嗎？這個操作會永久刪除你的賬戶，無法恢覆！你需要重新註冊才能再使用Habitica。剩余或者已經消費的寶石都無法退款，如果你已經下定決心，點擊下方的刪除按鈕。</string>
+    <string name="change_username">修改用戶名</string>
+    <string name="join_party_description">把下方的用戶名給一個隊伍成員，這樣他們就能邀請你加入了</string>
+    <string name="join_party_description_id">把你的UserID給他們，或者讓他們掃你的QR碼來邀請你</string>
+    <string name="tavern_description_world_boss">噢我親愛的老夥計，不用擔心下面的怪物，這裏仍然是一個安全的避風港，來聊聊天吧。</string>
+    <string name="same_day_reminder_title">你添加任務了麽？</string>
+    <string name="same_day_reminder_text">你增加得越多，獎勵就會越多。溪流終將匯聚成大海。</string>
     </resources>
