@@ -4,7 +4,7 @@
   <string name="XP_default">経験値</string>
   <string name="HP_default">体力</string>
   <string name="MP_default">マナ</string>
-  <string name="ERR_pb_barcode">設定をバーコードから読み込むことができませんでした。</string>
+  <string name="ERR_pb_barcode">設定をバーコードから読み込むことができませんでした</string>
   <!--Prefs-->
   <string name="PS_settings_title">設定</string>
   <string name="SP_address_hint">カスタムサーバー</string>
@@ -27,7 +27,7 @@
   <string name="pref_cds_picker">日付更新の時間を設定する</string>
   <string name="pref_push_notifications_checkbox">ユーザーへのプッシュ通知</string>
   <string name="push_notifications">プッシュ通知</string>
-  <string name="push_notifications_sum">プッシュ通知を設定してください。</string>
+  <string name="push_notifications_sum">プッシュ通知を設定してください</string>
   <string name="preference_push_you_won_challenge">チャレンジで勝ちました!</string>
   <string name="preference_push_received_a_private_message">プライベートメッセージを受信しました</string>
   <string name="preference_push_gifted_gems">ジェムが贈られました</string>
@@ -57,11 +57,11 @@
   <string name="account_details">アカウントの詳細</string>
   <string name="LoginActivityName">ようこそ</string>
   <string name="string_revive">復活</string>
-  <string name="please_connect">Widget を使う前に、アプリから接続してください。</string>
+  <string name="please_connect">Widget を使う前に、アプリから接続してください</string>
   <string name="about.title">Habitica について</string>
   <string name="about.libraries">ライブラリー</string>
   <string name="about.versionhistory">バージョン履歴</string>
-  <string name="about.habitica_open_source">Habitica は Github にてオープンソース・ソフトウェアとして開かれています。</string>
+  <string name="about.habitica_open_source">Habitica は Github にてオープンソース・ソフトウェアとして開かれています</string>
   <string name="about.rate_our_app">このアプリをレビュー</string>
   <string name="about.give_us_feedback">フィードバックを送る!</string>
   <string name="about.bugreport">バグを報告する</string>
@@ -129,7 +129,7 @@
   <string name="used_skill_without_mana">%1$s を唱えた。</string>
   <string name="new_checklist_item">新しいチェックリスト項目</string>
   <string name="add_checklist_item">追加</string>
-  <string name="reminder_title">忘れずにタスクをチェックしましょう。</string>
+  <string name="reminder_title">忘れずにタスクをチェックしましょう</string>
   <string name="skill_progress_title">使用中のスキル</string>
   <string name="coming_soon">近日中</string>
   <string name="chat_flag_confirmation">このメッセージを違反として報告します。いいですか?</string>
@@ -338,7 +338,7 @@
   <string name="opt_out_description">クラスなんてめんどくさい? 後で選びたい? 選ばなくても構わないよ。スキルのない戦士になります。クラスのしくみについてwiki を参照し、いつでも ユーザー -&gt; ステータス で有効にできる。</string>
   <string name="class_confirmation">%s になります。いいですか?</string>
   <string name="class_changed">あなたは%s に転職した！</string>
-  <string name="class_changed_description">新たな標準の武装を手に入れました。「装備」で取り換えることもできます。</string>
+  <string name="class_changed_description">新たな標準の武装を手に入れました。「装備」で取り換えることもできます！</string>
   <string name="choose_class">クラスを選ぶ</string>
   <string name="dialog_go_back">戻る</string>
   <string name="opt_out_confirmation">選ばないでいい?</string>
@@ -352,15 +352,15 @@
   <string name="invite">友達を招待する</string>
   <string name="invite_id_description">すでに Habitica に登録しているユーザーに友達がいるなら、その人たちをユーザーIDで招待するよ。</string>
   <string name="invite_username_description">Habiticaをやってる友達がいたら、ユーザー名を入力してパーティーに招待しよう。</string>
-  <string name="invite_email_description">メールを通じて、友達が Habitica に登録したら、自動的にあなたのパーティーに招待するよ。</string>
+  <string name="invite_email_description">メールを通じて、友達が Habitica に登録したら、自動的にあなたのパーティーに招待するよ！</string>
   <string name="add_invites">招待の追加</string>
   <string name="user_id">ユーザーID</string>
   <string name="email">メール</string>
   <string name="invite_users">パーティーに招待する</string>
   <string name="share_using">共有 ( シェア ) : </string>
   <string name="share_levelup">生活を改善して、Habitica でのレベルが %d になった!</string>
-  <string name="share_hatched">実生活でのタスクをこなして、Habitica で %1$s%2$s のペットを飼いはじめた。</string>
-  <string name="share_raised">実生活でのタスクをこなして、%1$s%2$s のペットが乗れるほど大きな乗騎まで成長した。</string>
+  <string name="share_hatched">実生活でのタスクをこなして、Habitica で %1$s%2$s のペットを飼いはじめた！</string>
+  <string name="share_raised">実生活でのタスクをこなして、%1$s%2$s のペットが乗れるほど大きな乗騎まで成長した！</string>
   <string name="open_in_store">Play ストアで開く</string>
   <string name="change_class_confirmation">クラスを変更します。いいですか? 3 ジェムかかります。</string>
   <string name="change_class_equipment_warning">注意 : %s クラスの装備を買うことはできなくなります。</string>
@@ -395,7 +395,7 @@
   <string name="filter_drawer_edit_tags">タグを編集</string>
   <string name="filter_drawer_filter_tags">タグでしぼる</string>
   <!--QR Strings-->
-  <string name="qr_section_title">この QR コードで招待を受けます。</string>
+  <string name="qr_section_title">この QR コードで招待を受けます</string>
   <string name="qr_save_message">QR コードの保存先</string>
   <string name="qr_dialogue_title">QR コード</string>
   <string name="download">ダウンロード</string>
@@ -418,7 +418,7 @@
   <string name="widget_add_task">Habitica のタスク追加</string>
   <string name="google_services_missing">Google Play サービスが見つかりません。</string>
   <string name="gem.purchase.toolbartitle">購入</string>
-  <string name="gem.purchase.title">ジェムの購入で、開発者を支援し、Habitica の運営に協力します。</string>
+  <string name="gem.purchase.title">ジェムの購入で、開発者を支援し、Habitica の運営に協力します</string>
   <string name="gem.purchase.subtitle">ジェムで、楽しいおまけを買うことができます : </string>
   <string name="gem.purchase.listitem1">アバター用のクールなファッション</string>
   <string name="gem.purchase.listitem2">すんごい背景</string>
@@ -437,7 +437,7 @@
   <string name="belongs_to_challenge">チャレンジに参加中</string>
   <string name="has_reminder">通知あり</string>
   <string name="has_tag">タグあり</string>
-  <string name="subscribe.title">寄付することで、開発者を支援し、Habitica の運営に協力します。</string>
+  <string name="subscribe.title">寄付することで、開発者を支援し、Habitica の運営に協力します</string>
   <string name="subscribe_prompt">寄付すれば、こんな便利な特典がもらえます：</string>
   <string name="subscribe.listitem1">ゴールドでジェムを購入</string>
   <string name="subscribe.listitem2">毎月の限定アイテム</string>
@@ -446,7 +446,11 @@
   <string name="subscriptions">寄付</string>
   <string name="subscription_duration">毎%sに起こる</string>
   <string name="subscribe">寄付する</string>
-  <string name="subscribe.listitem1.description">商人・アレクサンダーが、ジェム1個を20ゴールドで売ってくれます！\n\nアレクサンダーと1ヵ月の間に取り引きできるジェムの数は、最初は25個に限定されていますが、寄付期間によって増えます。\n\n寄付の継続3カ月ごとにその数が5個ずつ増えていき、最大で月に50個を買うことができます。</string>
+  <string name="subscribe.listitem1.description">商人・アレクサンダーが、ジェム1個を20ゴールドで売ってくれます！
+\n
+\nアレクサンダーと1ヵ月の間に取り引きできるジェムの数は、最初は25個に限定されていますが、寄付期間によって増えます。
+\n
+\n寄付の継続3カ月ごとにその数が5個ずつ増えていき、最大で月に50個を買うことができます！</string>
   <string name="subscribe.listitem2.description">毎月、アバターを個性的にメークアップするアイテムが手に入ります！\n\nさらに寄付の継続3カ月ごとに、謎のタイムトラベラーによって、歴史的（そして未来的！）なメークアップ アイテムへのアクセスが許されます。</string>
   <string name="subscribe.listitem3.description">完了した To-Do やタスクの履歴を、より長期間閲覧可能になります。</string>
   <string name="subscribe.listitem4.description">落とし物の上限が2倍になり、毎日の完了したタスクから、より多くのアイテムを獲得することができます。動物小屋のコンプリートも早くなります！</string>
@@ -512,7 +516,7 @@
   <string name="open">開く</string>
   <string name="notification_mystery_item">プレゼントボックスを開いて%sを手に入れました！</string>
   <string name="checkInRewardEarned">あなたは人生・生活を向上するために力を注いだので、ごほうびとして %1$s を獲得しました。</string>
-  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">あと%1$d日のログインで、新たな賞品が手に入ります！</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">あと%1$d日のログインで、新たな賞品が手に入ります</string>
   <string name="pending_approval">保留された承認</string>
   <string name="filters">フィルター</string>
   <string name="done">完了</string>
@@ -556,8 +560,8 @@
   <string name="maintenance">修理</string>
   <string name="reload_content">再度読み込み</string>
   <string name="dailyDueDefaultView">日課を標準で「期限」タブに入れる</string>
-  <string name="dailyDueDefaultViewDescription">この設定にチェックを入れると、日課は標準で「すべて」タブではなく「期限」タブに入ります。</string>
-  <string name="repeat_summary">%1$sを%2$s%3$s%4$sごとに繰り返し行おう。</string>
+  <string name="dailyDueDefaultViewDescription">この設定にチェックを入れると、日課は標準で「すべて」タブではなく「期限」タブに入ります</string>
+  <string name="repeat_summary">%1$sを%2$s%3$s%4$sごとに繰り返し行おう</string>
   <string name="no_billing_gems">あなたのデバイスは、サポートされている支払方法に対応していません。ジェムを購入したい場合は、Habiticaのウェブサイトをご利用ください。</string>
   <string name="no_billing_subscriptions">あなたのデバイスは、サポートされている支払方法に対応していません。寄付を購入したい場合は、Habiticaのウェブサイトをご利用ください。</string>
   <string name="save">保存</string>
@@ -657,7 +661,7 @@
   <string name="about">Habitica について</string>
   <string name="app_settings">アプリの設定</string>
   <string name="authentication">認証</string>
-  <string name="authentication_summary">認証オプションを変更する</string>
+  <string name="authentication_summary">認証オプションを変更する。</string>
   <string name="change_password">パスワードを変更する</string>
   <string name="change_email">メールアドレスを変更する</string>
   <string name="change_login_name">ログイン名を変更する</string>
@@ -692,7 +696,7 @@
   <string name="classless">クラスに属さない</string>
   <string name="class_equipment_shop_dialog">このアイテムは特定のクラスにのみ利用可能です、\n
 クラスはセッティングから変更できます。</string>
-  <string name="class_gear_disclaimer">現在のクラス用の装備しか購入できません。</string>
+  <string name="class_gear_disclaimer">現在のクラス用の装備しか購入できません</string>
   <string name="available_stats" formatted="false">%dポイント</string>
   <string name="toogle_emojis">絵文字を使う</string>
   <string name="tavern_description">ロッジにようこそ！腰掛けてチャットをし、タスクを休憩しましょう。</string>
@@ -705,7 +709,7 @@
   <string name="report_bug">バグを報告する</string>
   <string name="player_tiers">プレイヤー段位</string>
   <string name="staff_moderators">スタッフとモデレーター</string>
-  <string name="tiers_descriptions">チャットに表示される色付きのユーザー名は、その人の貢献者段位を示します。段位が高ければ高いほど、その人は作画、コーディング、コミュニティなどでHabiticaにより貢献していることになります。</string>
+  <string name="tiers_descriptions">チャットに表示される色付きのユーザー名は、その人の貢献者段位を示します。段位が高ければ高いほど、その人は作画、コーディング、コミュニティなどでHabiticaにより貢献していることになります！</string>
   <string name="navigation_drawer_open">ナビゲーションバーを開く</string>
   <string name="navigation_drawer_close">ナビゲーションバーを閉じる</string>
   <string name="world_boss">ワールドボス</string>
@@ -731,8 +735,8 @@
   <string name="active_world_boss">活動中のワールドボス</string>
   <string name="no_party_description">仲間たちと一緒に、または各自で、クエストに挑戦しましょう。モンスターと戦ったり、チャレンジを作ったり…… そして、パーティーを通じてあなた自身を責任ある状態にし続けてみましょう。</string>
   <string name="no_party_title">パーティーに参加してHabiticaをプレイする</string>
-  <string name="join_party_description">下の方に見えるユーザー名をパーティーメンバーに伝えましょう。そうすると彼らはあなたに招待を送ることができます。</string>
-  <string name="join_party_description_id">招待してもらうときは、あなたのユーザーIDを伝えるか、あなたのQRコードをスキャンしてもらいましょう。</string>
+  <string name="join_party_description">下の方に見えるユーザー名をパーティーメンバーに伝えましょう。そうすると彼らはあなたに招待を送ることができます</string>
+  <string name="join_party_description_id">招待してもらうときは、あなたのユーザーIDを伝えるか、あなたのQRコードをスキャンしてもらいましょう</string>
   <string name="join_party_title">パーティーに参加したいですか？</string>
   <string name="create_party_website">パーティーを作成するにはウェブサイトを開いてください</string>
   <string name="id_copied">IDをクリップボードにコピーしました</string>
@@ -740,12 +744,15 @@
   <string name="insufficientSubscriberGemsTitle">毎月のジェムの購入上限に達しました</string>
   <string name="chat_message">メッセージでチャットする</string>
   <string name="world_boss_description_title">ワールドボスとは何ですか？</string>
-  <string name="world_boss_description_description">ワールドボスは、Habiticaのコミュニティが一緒になってタスクをこなすことで、強力なモンスターを倒す特別なイベントです！\nタスクを完了してボスにダメージを与えましょう。\nワールドボスからサボったタスクの分のダメージを食らうことはありませんが、そのかわりに怒りメーターが上昇してゆきます。もしメーターが一杯になると、ボスはHabiticaの店主の誰か一人を攻撃してしまいます！\nあなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます。キャンプ場でボス戦の進行状況と怒りの一撃をチェックしましょう。</string>
+  <string name="world_boss_description_description">ワールドボスは、Habiticaのコミュニティが一緒になってタスクをこなすことで、強力なモンスターを倒す特別なイベントです！
+\nタスクを完了してボスにダメージを与えましょう
+\nワールドボスからサボったタスクの分のダメージを食らうことはありませんが、そのかわりに怒りメーターが上昇してゆきます。もしメーターが一杯になると、ボスはHabiticaの店主の誰か一人を攻撃してしまいます！
+\nあなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます。キャンプ場でボス戦の進行状況と怒りの一撃をチェックしましょう</string>
   <string name="world_boss_description_intro">ワールドボスは、コミュニティ全体がタスクで強力なモンスターを協力して打ち倒す特別イベントです！</string>
-  <string name="world_boss_description_1">タスクを完了してボスにダメージを与えましょう。</string>
+  <string name="world_boss_description_1">タスクを完了してボスにダメージを与えましょう</string>
   <string name="world_boss_description_2">サボったタスクによってこのボスからダメージを受けることはありませんが、怒りゲージが上昇します。怒りゲージが満タンになるとボスは商人に攻撃をします！</string>
-  <string name="world_boss_description_3">あなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます。</string>
-  <string name="world_boss_description_4">キャンプ場でボス戦の進行状況と怒りの一撃をチェックしましょう。</string>
+  <string name="world_boss_description_3">あなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます</string>
+  <string name="world_boss_description_4">キャンプ場でボス戦の進行状況と怒りの一撃をチェックしましょう</string>
   <string name="world_boss_action_prompt" formatted="false">ボスを倒して%sの脅威からHabiticaを守り、特別なごほうびを手に入れよう！</string>
   <string name="world_boss_description_subtitle">%sの攻撃！</string>
   <string name="questShop_owner_long">クエストガイドのイアン</string>
@@ -788,7 +795,7 @@
   <string name="two_handed">両手持ち</string>
   <string name="usernamePromptTitle">あなたのユーザー名を決める時間です！</string>
   <string name="usernamePromptBody">ログイン名は、現在は固有のユーザー名になりました。あなたの表示名の近くに表示されて、招待、チャットでの＠返信、メッセージのやりとりなどで使用されるでしょう。</string>
-  <string name="usernamePromptWiki">もしこの変更についてより詳しく知りたいときは、<a href="https://habitica.wikia.com/wiki/Player_Names">wiki</a>をご覧ください。</string>
+  <string name="usernamePromptWiki">もしこの変更についてより詳しく知りたいときは、<a href="https://habitica.wikia.com/wiki/Player_Names">wiki</a>をご覧ください</string>
   <string name="confirmUsername">ユーザー名を承認する</string>
   <string name="usernamePromptDisclaimer">ユーザー名は、私たちの<a href="https://habitica.com/static/terms">サービス利用規約</a>と<a href="https://habitica.com/static/community-guidelines">コミュニティーガイドライン</a>を守ったものでなければなりません。もしあなたが以前にログイン名を設定していなかった場合、あなたのユーザー名は自動生成されました。</string>
   <string name="confirm_username_title">本当に現在のユーザー名を承認しますか？</string>
