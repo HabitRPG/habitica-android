@@ -189,7 +189,7 @@
   <string name="intro_1_description">和%s玩家一起用游戲戰勝拖延症！你可以創建一個賬戶，用它來跟蹤你生活中的點滴瑣事。</string>
   <string name="intro_2_subtitle">遊戲進度</string>
   <string name="intro_2_title">生活進度</string>
-  <string name="intro_2_description">通過完成現實生活中的任務來解鎖游戲內容。得到裝備、寵物和更多的獎勵來促使你完成目標吧！</string>
+  <string name="intro_2_description">通過完成現實生活中的任務來解鎖游戲內容。得到裝備、寵物和更多的獎勵來促使你完成目標。</string>
   <string name="intro_3_subtitle">對抗怪獸</string>
   <string name="intro_3_title">與小夥伴一起，並肩擊退怪獸</string>
   <string name="intro_3_description">和朋友們一起為目標努力吧。在生活和戰鬥中互相支持，共同進步！</string>
@@ -265,7 +265,7 @@
   <string name="outfit_weapon">武器</string>
   <string name="wear_costume">穿上裝扮</string>
   <string name="equipped">裝備</string>
-  <string name="quest_cancel_message">你確定要取消任務? 所有邀請將會消失，任務擁有者會收到退還的任務卷軸</string>
+  <string name="quest_cancel_message">你確定要取消任務\? 所有邀請將會消失，任務擁有者會收到退還的任務卷軸。</string>
   <string name="quest.invitation">任務邀請</string>
   <string name="quest_begin_message">當所有玩家加入或拒絕邀請時，任務會自動開始。只有%1$d你的%2$d團隊成員加入了這個任務！你是否確定要直接開始這個探索任務？一旦開始，其他隊伍成員就不能加入這個探索任務。</string>
   <string name="quest.invitation.text">你已經被邀請加入任務!</string>
@@ -343,7 +343,7 @@
   <string name="send">發送</string>
   <string name="invite">邀請朋友</string>
   <string name="invite_id_description">如果你的朋友們已經在使用Habitica 了，通過&lt;用戶ID邀請他們 。</string>
-  <string name="invite_email_description">如果你的朋友通過你的郵件加入Habitica，他們將自動被邀請加入你的隊伍。</string>
+  <string name="invite_email_description">如果你的朋友通過你的郵件加入Habitica，他們將自動被邀請加入你的隊伍！</string>
   <string name="add_invites">添加邀請</string>
   <string name="user_id">用戶ID</string>
   <string name="email">電子郵件</string>
@@ -439,7 +439,7 @@
   <string name="subscribe">加入會員</string>
   <string name="subscribe.listitem1.description">商人亞歷山大可以按每個寶石20金幣的價格向你出售寶石！\n\n他每個月的初始進貨量是25個寶石，進貨量會隨著您的捐助額度增長！\n\n 每三個月寶石上限就會增加5，直到最大值1個月50顆寶石！</string>
   <string name="subscribe.listitem2.description">每個月你將會收到一件獨特的角色飾品！另外，每連續捐助三個月，神秘的時間旅行者將授予你得到過去(和未來)的飾品的資格。</string>
-  <string name="subscribe.listitem3.description">使完成的待辦事項和任務的歷史記錄保留更長時間</string>
+  <string name="subscribe.listitem3.description">使完成的待辦事項和任務的歷史記錄保留更長時間。</string>
   <string name="subscribe.listitem4.description">雙倍掉落讓你每天能夠從完成的任務中得到更多的物品，幫助你更快地馴服坐騎！</string>
   <string name="subscription_hourglasses">%d神秘沙漏</string>
   <string name="payment_method">付款方式</string>
@@ -447,7 +447,7 @@
   <string name="active">活躍的</string>
   <string name="cancel_subscription">取消會員</string>
   <string name="cancel_subscription_google.description">想要取消訂閱嗎？你可以在Google Play裡的「我的應用程式」取消訂閱。</string>
-  <string name="cancel_subscription_notgoogle.description">想要取消訂閱嗎？由於你的支付方式，你只能在網站上取消訂閱，點擊下方的按鈕以打開網頁。</string>
+  <string name="cancel_subscription_notgoogle.description">想要取消訂閱嗎？由於你的支付方式，你只能在網站上取消訂閱，點擊下方的按鈕以打開網頁！</string>
   <string name="visit_habitica_website">查訪Habitica官方網站</string>
   <string name="current_bonuses">現在的加成獎勵</string>
   <string name="months_subscribed">月訂閱</string>
@@ -537,7 +537,7 @@
   <string name="empty_description_todos">待辦事項是只需要完成一次的任務。在待辦事項當中增加檢核清單以提昇待辦事項的價值。</string>
   <string name="empty_title_rewards">你沒有任何獎勵</string>
   <string name="reset_walkthrough">重置Justin的教學</string>
-  <string name="read_community_guidelines">請在發表之前閱讀我們的社區守則。</string>
+  <string name="read_community_guidelines">請在發表之前閱讀我們的社區守則</string>
   <string name="maintenance">維護</string>
   <string name="reload_content">重整留言</string>
   <string name="dailyDueDefaultView">默認設置每日任務出現於即將到期頁面</string>
@@ -551,7 +551,7 @@
   <string name="tasks">任務</string>
   <string name="create_challenge">建立挑戰</string>
   <string name="edit_challenge">編輯</string>
-  <string name="challenge_create_error_tavern_one_gem">你最少需要 1 個寶石來建立公眾挑戰</string>
+  <string name="challenge_create_error_tavern_one_gem">你最少需要 1 個寶石來建立公眾挑戰。</string>
   <string name="challenge_create_error_enough_gems">你沒有足夠的寶石以創建挑戰。</string>
   <string name="identify_your_challenge_with_a_tag">給你的挑戰一個簡短的名稱</string>
   <string name="challenge_create_error_tag">你需要給你的挑戰一個簡短的名字。</string>
@@ -632,14 +632,14 @@
   <string name="forgot_password_confirmation">如果你有Email，重設密碼的信函將會寄至你的信箱。</string>
   <string name="ok">OK</string>
   <string name="profile">個人檔案</string>
-  <string name="profile_summary">編輯你的公開檔案</string>
+  <string name="profile_summary">編輯你的公開檔案。</string>
   <string name="display_name">顯示名稱</string>
   <string name="photo_url">照片網址</string>
   <string name="login_name">登入名稱</string>
   <string name="about">關於</string>
   <string name="app_settings">APP設定</string>
   <string name="authentication">認證</string>
-  <string name="authentication_summary">變更你的認證設定</string>
+  <string name="authentication_summary">變更你的認證設定。</string>
   <string name="change_password">變更密碼</string>
   <string name="change_email">變更電子郵件地址</string>
   <string name="change_login_name">變更登入名稱</string>
@@ -672,7 +672,7 @@
   <string name="equipment_empty">你已經擁有了所有裝備！春分，夏至，秋分，冬至的盛大慶典時會推出更多裝備。</string>
   <string name="classless">無職業</string>
   <string name="class_equipment_shop_dialog">這個物品只對特定職業開放。\n你可以在設置改變你的職業。</string>
-  <string name="class_gear_disclaimer">你只能購買當前職業的裝備。</string>
+  <string name="class_gear_disclaimer">你只能購買當前職業的裝備</string>
   <string name="available_stats" formatted="false">%d點</string>
   <string name="toogle_emojis">切換Emojis</string>
   <string name="tavern_description">歡迎來到客棧！拉張椅子坐下聊天，或者暫停任務休息一下。</string>
@@ -696,7 +696,7 @@
   <string name="pending_strike_description">攻擊尚未發生！\n世界Boss會在暴走值到達滿值時，毒打店主。持續完成每日任務，來避免此事發生！</string>
   <string name="pending_strike_title">即將造成的攻擊</string>
   <string name="strike_description_title">暴走攻擊是什麽？</string>
-  <string name="strike_description_subtitle">Boss可以有3次暴走攻擊。</string>
+  <string name="strike_description_subtitle">Boss可以有3次暴走攻擊</string>
   <string name="strike_description_description">這個進度條會在有玩家錯失他們的任務時提升，如果達到上限，DysHeartener會釋放驚天動地的心碎攻擊，攻擊Habitica上隨機的一個店主，所以努力完成你的任務！</string>
   <string name="pending_strike_subtitle">攻擊尚未發生！</string>
   <string name="strike_active_title" formatted="false">%s被攻擊了！</string>
@@ -708,8 +708,8 @@
   <string name="stable_owner_long">馴獸師Matt</string>
   <string name="hide_boss_art">隱藏boss圖像</string>
   <string name="active_world_boss">活躍的世界boss</string>
-  <string name="no_party_description">和朋友一同完成任務或單獨完成。和怪物戰鬥，創建挑戰，在隊伍中挑起大梁！</string>
-  <string name="no_party_title">在Habitica和隊伍的成員一起玩吧！</string>
+  <string name="no_party_description">和朋友一同完成任務或單獨完成。和怪物戰鬥，創建挑戰，在隊伍中挑起大梁。</string>
+  <string name="no_party_title">在Habitica和隊伍的成員一起玩</string>
   <string name="join_party_title">想要加入隊伍？</string>
   <string name="create_party_website">打開網頁來創建隊伍</string>
   <string name="id_copied">ID已覆制到剪貼板</string>
@@ -717,11 +717,15 @@
   <string name="insufficientSubscriberGemsTitle">已達到每月寶石上限</string>
   <string name="chat_message">聊天訊息</string>
   <string name="world_boss_description_title">什麼是世界Boss？</string>
-  <string name="world_boss_description_description">世界Boss是一個全體玩家一同參與的特殊活動，大家每天同心協力完成任務來打敗強力的怪物！完成任務即可對Boss造成傷害！\n你沒完成任務時，Boss不會攻擊你，但是暴走值會提升，當暴走值達到上限時，將會隨機攻擊一個店主！\n你可以同時挑戰一般任務的Bosses，傷害會同時灌注在兩者身上。\n點擊酒館來確認Boss的攻略進度和暴走攻擊。</string>
+  <string name="world_boss_description_description">世界Boss是一個全體玩家一同參與的特殊活動，大家每天同心協力完成任務來打敗強力的怪物！
+\n完成任務即可對Boss造成傷害
+\n你沒完成任務時，Boss不會攻擊你，但是暴走值會提升，當暴走值達到上限時，將會隨機攻擊一個店主！
+\n你可以同時挑戰一般任務的Bosses，傷害會同時灌注在兩者身上
+\n點擊酒館來確認Boss的攻略進度和暴走攻擊</string>
   <string name="world_boss_description_intro">世界Boss是一個全體玩家一同參與的特殊活動，大家每天同心協力完成任務來打敗強力的怪物！</string>
   <string name="world_boss_description_1">完成任務來對Boss造成傷害</string>
   <string name="world_boss_description_2">你沒完成任務時，Boss不會攻擊你，但是暴走值會提升，當暴走值達到上限時，將會隨機攻擊一個店主！</string>
-  <string name="world_boss_description_3">你可以同時挑戰一般任務的Bosses，傷害會同時灌注在兩者身上。</string>
+  <string name="world_boss_description_3">你可以同時挑戰一般任務的Bosses，傷害會同時灌注在兩者身上</string>
   <string name="world_boss_description_4">點擊酒館來確認Boss的攻略進度和暴走攻擊</string>
   <string name="world_boss_action_prompt" formatted="false">想要獲得特殊獎勵、從%s的魔爪中拯救Habittica嗎？那就來打敗Boss吧！</string>
   <string name="world_boss_description_subtitle">%s攻擊了！</string>
@@ -763,4 +767,70 @@
     <string name="tavern_description_world_boss">噢我親愛的老夥計，不用擔心下面的怪物，這裏仍然是一個安全的避風港，來聊聊天吧。</string>
     <string name="same_day_reminder_title">你添加任務了麽？</string>
     <string name="same_day_reminder_text">你增加得越多，獎勵就會越多。溪流終將匯聚成大海。</string>
-    </resources>
+    <string name="next_day_reminder_title">今天完成任務了麽？</string>
+    <string name="next_day_reminder_text">升級後有許多可解鎖和發現的，所以繼續你的任務。祝玩得愉快！</string>
+    <string name="daily_tip_0">想試試新東西？加入一個挑戰來擴充你的人物列表並贏得一些寶石吧！</string>
+    <string name="daily_tip_1">把待辦事項都加到你的To-Do列表來贏取獎勵！</string>
+    <string name="daily_tip_2">你可以修改你的每日任務的重覆頻率。多罕見的任務都能被安排得明明白白。</string>
+    <string name="daily_tip_3">你也可以安排特定的日程提醒。</string>
+    <string name="daily_tip_4">偶爾審視一下你的任務以免偏離正道。</string>
+    <string name="daily_tip_5">深呼吸！保持專注！你能辦到！</string>
+    <string name="daily_tip_6">嘗試設置一個10分鐘的計時看看你能完成多少！</string>
+    <string name="daily_tip_7">嘗試把市場裏的商品固定在獎勵欄裏來激勵自己！</string>
+    <string name="daily_tip_8">你可以修改任務的難易等級來獲得不同數量的獎勵！</string>
+    <string name="daily_tip_9">如果一個任務太過艱巨，分解成幾個小步驟可能會更好。</string>
+    <string name="staff">工作人員</string>
+    <string name="expand_notes">閱讀更多</string>
+    <string name="collapse_notes">收起</string>
+    <string name="reset_streak">連擊數歸零</string>
+    <string name="week_reminder_title">你的任務完成得如何了？</string>
+    <string name="week_reminder_text">小憩一會很不錯，你也可以做一些簡單的任務來獲得經驗值、超酷的裝備和點數！</string>
+    <string name="last_login">最近的簽到</string>
+    <string name="total_checkins">總簽到數</string>
+    <string name="two_handed">雙手握持</string>
+    <string name="usernamePromptTitle">是時候設置用戶名了！</string>
+    <string name="usernamePromptBody">現在用戶名就是登錄名，同時用戶名還用於邀請、聊天版上@你，還有私信。</string>
+    <string name="usernamePromptWiki">如果你想了解更多關於變動的信息， <a href="https://habitica.wikia.com/wiki/Player_Names">訪問我們的百科</a></string>
+    <string name="confirmUsername">確認用戶名</string>
+    <string name="usernamePromptDisclaimer">用戶名應該符合我們的<a href="https://habitica.com/static/terms">服務協議</a>以及<a href="https://habitica.com/static/community-guidelines">社區準則</a>。如果你之前沒有設置登錄名，你的用戶名會自動生成。</string>
+    <string name="confirm_username_title">你確定要用這個名字嗎？</string>
+    <string name="confirm_username_description">用戶名一經確認就會顯示在邀請，@提到你和私信中。你隨時都可以在設置裏修改用戶名。</string>
+    <string name="cancel">取消</string>
+    <string name="confirm_username">確認用戶名</string>
+    <string name="username_not_confirmed">用戶名未確認</string>
+    <string name="username_confirmed">用戶名已確認</string>
+    <string name="username_level">\@%s ・等級 %d</string>
+    <string name="enter_recipient_username">輸入收信人的@ 用戶名</string>
+    <string name="username_copied">用戶名已覆制到剪貼板</string>
+    <string name="verification_pet">確認後，其中一只久經沙場的寵物在等待著你！</string>
+    <string name="welcomeNameTitle">我們應該怎麽稱呼你呢？</string>
+    <string name="display_name_length_error">暱稱長度必須於1至30個字符之間</string>
+    <string name="setup_task_join_habitica">加入Habitica（完成我！）</string>
+    <string name="setup_task_join_habitica_notes">你可以任意編輯這待辦事項，完成或者刪除它。</string>
+    <string name="setup_task_reward">獎勵自己</string>
+    <string name="setup_task_reward_notes">看電視，玩遊戲，或者吃點東西，都取決於你！</string>
+    <string name="equipment_str">力量：</string>
+    <string name="equipment_con">體質：</string>
+    <string name="equipment_int">智力：</string>
+    <string name="equipment_per">感知：</string>
+    <string name="visit_website">訪問網站</string>
+    <string name="subscribe_gift_description">想贈送會員給別人嗎？</string>
+    <string name="gift_subscription">贈送會員</string>
+    <string name="gift_one_get_one_description">贈送他人會員，自己也能獲得同等時長會員的活動正在進行中！</string>
+    <string name="gift_title">你想贈送禮物給誰？</string>
+    <string name="gift_one_get_one">買一贈一！</string>
+    <string name="gift_one_get_one_detailed_description">當促銷活動正在進行時，你的贈送會員時長會在你贈送完他人會員後到賬。</string>
+    <string name="gift_subscription_subtitle">在下方選擇你想贈送的禮物！贈送購買不會自動續費。</string>
+    <string name="send_gift">贈送禮物</string>
+    <string name="server">伺服器</string>
+    <string name="gift_confirmation_title">你的禮物已送出！</string>
+    <string name="gift_confirmation_text_g1g1">你贈送了 %s 長達 %s-月的Habitica會員，同樣時長的會員已經發放到你的賬戶，這是我們的買一送一促銷活動！</string>
+    <string name="gift_confirmation_text">你贈送了 %s 長達 %s-月的Habitica 會員。</string>
+    <string name="discover">探索</string>
+    <string name="damage_paused">暫停傷害</string>
+    <string name="preference_push_important_announcements">重要通知</string>
+    <string name="create">創建</string>
+    <string name="only_leader_create_challenge">只有會長可以創建挑戰</string>
+    <string name="create_party">創建隊伍</string>
+
+</resources>
