@@ -361,7 +361,7 @@
   <string name="filter_drawer_edit_tags">Edit Tags</string>
   <string name="filter_drawer_filter_tags">Filter by Tags</string>
   <!--QR Strings-->
-  <string name="qr_section_title">Have someone invite you with this QR Code?</string>
+  <string name="qr_section_title">Have someone invite you with this QR Code</string>
   <string name="qr_save_message">QR Code saved at</string>
   <string name="qr_dialogue_title">Your QR Code</string>
   <string name="download">Download</string>
@@ -574,4 +574,100 @@
   <string name="nevermind">Never mind</string>
   <string name="resetting_account">Resetting Account</string>
   <string name="deleting_account">Deleting Account</string>
-</resources>
+<string name="levelup_header">You Reached Level %1$d!</string>
+    <string name="levelup_detail">By accomplishing your real life goals, you levelled up and are now fully healed!</string>
+    <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck—you\'ll do great.</string>
+    <string name="reminder_title">Remember to check off your tasks</string>
+    <string name="quest_begin_message">Are you sure\? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
+    <string name="ago_1day">1d ago</string>
+    <string name="ago_days">%dd ago</string>
+    <string name="ago_1Minute">1m ago</string>
+    <string name="ago_minutes">%dm ago</string>
+    <string name="ago_hours">%dh ago</string>
+    <string name="ago_1hour">1h ago</string>
+    <string name="evolved_pet_title">You have tamed %1$s %2$s, let\'s go for a ride!</string>
+    <string name="notification_purchase">You purchased %s</string>
+    <string name="notification_purchase_reward">You purchased a reward</string>
+    <string name="sectionpets">Standard</string>
+    <string name="sectionpremiumPets">Magic Potion</string>
+    <string name="sectionquestPets">Quest</string>
+    <string name="sectionspecialPets">Rare</string>
+    <string name="sectionmounts">Standard</string>
+    <string name="sectionpremiumMounts">Magic Potion</string>
+    <string name="sectionquestMounts">Quest</string>
+    <string name="sectionspecialMounts">Rare</string>
+    <string name="inn_description">Need a break\? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:
+\n
+\n • Missed Dailies won’t damage you
+\n • Tasks won’t lose streaks or decay in colour
+\n • Bosses won’t do damage for your missed Dailies
+\n • Your boss damage or collection quest items will stay pending until check-out</string>
+    <string name="warrior_description">Warriors score more and better critical hits, which randomly give bonus Gold, Experience, and drop chance for scoring a task. They also deal heavy damage to boss monsters. Play a Warrior if you find motivation from unpredictable jackpot-style rewards, or want to dish out the hurt in boss Quests!</string>
+    <string name="opting_out_progress">Opting Out</string>
+    <string name="change_class_description">Change your class and refund your stat points for 3 gems.</string>
+    <string name="invite_username_description">If you have friends already using Habitica, invite them by username here.</string>
+    <string name="empty_inbox">You don\'t have any messages. You can send a user a new message from their public chat messages!</string>
+    <string name="login_incentive">Unlock by logging into Habitica regularly</string>
+    <string name="create_account">Unlock by creating an account</string>
+    <string name="subscription_duration_norenew">For %s</string>
+    <string name="subscribe1month.gemcap">25 Gem cap</string>
+    <string name="subscribe3month.gemcap">30 Gem cap</string>
+    <string name="subscribe6month.gemcap">35 Gem cap</string>
+    <string name="subscribe12month.gemcap">45 Gem cap</string>
+    <string name="due">Due</string>
+    <string name="inbox">Messages</string>
+    <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.
+\n
+\nFirst, what should we call you\? Feel free to change what I picked. When you’re all set, let’s create your avatar!</string>
+    <string name="dated">Scheduled</string>
+    <string name="gem_reward">Gem prize</string>
+    <string name="create_challenge">Create Challenge</string>
+    <string name="edit_challenge">Edit</string>
+    <string name="challenge_create_error_tavern_one_gem">You need at least 1 gem to create a public challenge.</string>
+    <string name="identify_your_challenge_with_a_tag">Identify your challenge with a short name</string>
+    <string name="challenge_create_error_tag">You need a short name to create this Challenge.</string>
+    <string name="loading">Loading…</string>
+    <string name="str_abbrv">Str</string>
+    <string name="per_abbrv">Per</string>
+    <string name="int_abbrv">Int</string>
+    <string name="con_abbrv">Con</string>
+    <string name="delete_oauth_account_description">Are you sure\? This will delete your account forever, and it can never be restored! You will need to register a new account to use Habitica again. Banked or spent Gems will not be refunded. If you\'re absolutely certain, type DELETE into the text box below.</string>
+    <string name="insufficientGold">You need to complete more tasks before you can afford this item!</string>
+    <string name="insufficientGems">You\'ll need more Gems to buy this item!</string>
+    <string name="purchase_gems">Purchase gems</string>
+    <string name="insufficientHourglasses">You\'ll need more Mystic Hourglasses to buy this item!</string>
+    <string name="get_hourglasses">Get hourglasses</string>
+    <string name="subscribe_for_hourglasses">Subscribe for Hourglasses</string>
+    <string name="timetravelers_closed_description">Earn one Mystic Hourglass for every three months of consecutive subscription, then use them to unlock limited edition items, pets, and mounts from the past… and future!</string>
+    <string name="want_to_subscribe">I want to Subscribe</string>
+    <string name="seasonal_closed_description">The Grand Galas happen close to the solstices and equinoxes, so check back then to find a fun assortment of special seasonal items!</string>
+    <string name="come_back_soon">Come back soon!</string>
+    <string name="level">Level</string>
+    <string name="streak_label">21-Day Streaks</string>
+    <string name="stats">Stats</string>
+    <string name="fix_character_description">If you’ve encountered a bug or made a mistake that unfairly changed your character, you can manually correct those values here.</string>
+    <string name="fix_character_values">Fix Character Values</string>
+    <string name="saving">Saving</string>
+    <string name="forgot_password_title">Email a Password Reset Link</string>
+    <string name="forgot_password_description">Enter the email address you used to register your Habitica account.</string>
+    <string name="forgot_password_confirmation">If we have your email on file, instructions for setting a new password have been sent to your email.</string>
+    <string name="ok">OK</string>
+    <string name="profile">Profile</string>
+    <string name="profile_summary">Edit your public profile.</string>
+    <string name="display_name">Display Name</string>
+    <string name="photo_url">Photo URL</string>
+    <string name="login_name">Login Name</string>
+    <string name="about">About</string>
+    <string name="app_settings">App Settings</string>
+    <string name="authentication">Authentication</string>
+    <string name="authentication_summary">Change your authentication options.</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_email">Change Email Address</string>
+    <string name="change_login_name">Change Login Name</string>
+    <string name="change_username">Change Username</string>
+    <string name="change">Change</string>
+    <string name="character_level">Character Level</string>
+    <string name="auto_allocate_points">Auto Allocate Points</string>
+    <string name="stat_guide">Stat Guide</string>
+    <string name="character_build">Character Build</string>
+    </resources>
