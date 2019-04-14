@@ -115,8 +115,8 @@
   <string name="friday">Vendredi</string>
   <string name="saturday">Samedi</string>
   <string name="sunday">Dimanche</string>
-  <string name="levelup_header">Vous avez atteint le niveau %1$d!</string>
-  <string name="levelup_detail">En atteignant vos buts dans la vie réelle, vous avez gagné un niveau et êtes maintenant complètement guéri!</string>
+  <string name="levelup_header">Vous avez atteint le niveau %1$d !</string>
+  <string name="levelup_detail">En atteignant vos buts dans la vie réelle, vous avez gagné un niveau et êtes maintenant complètement guéri !</string>
   <string name="levelup_button">Bravo !</string>
   <string name="faint_subtitle">Ne désespérez pas !</string>
   <string name="faint_penalty_body">Vous avez perdu un niveau, votre l\'or, et une pièce d\'équipement, mais vous pouvez tous les récupérer en travaillant dur ! Bonne chance--vous y arriverez.</string>
@@ -830,4 +830,13 @@
   <string name="gift_confirmation_title">Votre cadeau a été envoyé !</string>
   <string name="gift_confirmation_text_g1g1">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte.</string>
   <string name="gift_confirmation_text">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte.</string>
+<string name="opting_out_progress">Ne pas choisir</string>
+    <string name="delete_oauth_account_description">Vraiment \? Cela supprimera votre compte définitivement, et il ne pourra pas être restauré ! Vous aurez besoin d\'enregistrer un nouveau compte pour utiliser Habitica à nouveau. Les gemmes économisées ou dépensées ne seront pas remboursée. Si votre décision est définitive, tapez DELETE dans le champ ci-dessous.</string>
+    <string name="discover">Découvrir</string>
+    <string name="damage_paused">Dommages en pause</string>
+    <string name="preference_push_important_announcements">Annonces importantes</string>
+    <string name="create">Créer</string>
+    <string name="only_leader_create_challenge">Seul le responsable peut créer un défi</string>
+    <string name="create_party">Créer une équipe</string>
+
 </resources>
