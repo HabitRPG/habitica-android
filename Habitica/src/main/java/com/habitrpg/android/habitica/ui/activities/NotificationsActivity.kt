@@ -92,6 +92,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 NotificationType.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
                 NotificationType.NEW_STUFF.type -> createNewStuffNotification(it)
                 NotificationType.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
+                NotificationType.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
                 //TODO rest of the notification types
                 else -> null
             }
@@ -140,6 +141,14 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 notification,
                 fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
                 R.drawable.notification_stat_sparkles
+        )
+    }
+
+    private fun createMysteryItemsNotification(notification: GlobalNotification): View? {
+        return createNotificationItem(
+                notification,
+                fromHtml(getString(R.string.new_subscriber_item)),
+                R.drawable.notification_mystery_item
         )
     }
 

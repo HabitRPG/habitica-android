@@ -7,6 +7,7 @@ import java.lang.reflect.Type
 enum class NotificationType(val type: String) {
     NEW_STUFF("NEW_STUFF"),
     NEW_CHAT_MESSAGE("NEW_CHAT_MESSAGE"),
+    NEW_MYSTERY_ITEMS("NEW_MYSTERY_ITEMS"),
     UNALLOCATED_STATS_POINTS("UNALLOCATED_STATS_POINTS");
 
     companion object {
