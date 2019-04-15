@@ -164,6 +164,10 @@ class StableRecyclerFragment : BaseFragment() {
                     }
                 }
             }
+            if (!((lastAnimal.animalGroup == "premiumPets" || lastAnimal.animalGroup == "specialPets"
+                            || lastAnimal.animalGroup == "specialMounts" || lastAnimal.animalGroup == "premiumMounts") && lastAnimal.numberOwned == 0)) {
+                items.add(lastAnimal)
+            }
             Single.just<List<Any>>(items)
         }.subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
     }

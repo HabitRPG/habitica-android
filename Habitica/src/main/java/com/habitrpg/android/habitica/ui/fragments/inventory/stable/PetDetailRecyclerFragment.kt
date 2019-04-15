@@ -106,7 +106,7 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
     private fun loadItems() {
         if (animalType.isNotEmpty() && animalGroup.isNotEmpty()) {
             compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(Consumer<RealmResults<Mount>> { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }
     }
 

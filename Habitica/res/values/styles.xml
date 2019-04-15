@@ -161,6 +161,7 @@
     <style name="BottomMenu">
         <item name="android:divider">?android:listDivider</item>
         <item name="android:showDividers">middle</item>
+        <item name="android:paddingBottom">@dimen/spacing_medium</item>
     </style>
     
     <style name="BottomMenuItem">

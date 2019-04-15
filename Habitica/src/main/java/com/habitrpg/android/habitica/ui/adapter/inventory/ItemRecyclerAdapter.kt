@@ -35,7 +35,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     var hatchingItem: Item? = null
     var feedingPet: Pet? = null
     var fragment: ItemRecyclerFragment? = null
-    private var ownedPets: RealmResults<Pet>? = null
+    private var existingPets: RealmResults<Pet>? = null
     var context: Context? = null
     var items: Map<String, Item>? = null
     set(value) {
@@ -65,8 +65,8 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         }
     }
 
-    fun setOwnedPets(pets: RealmResults<Pet>) {
-        ownedPets = pets
+    fun setExistingPets(pets: RealmResults<Pet>) {
+        existingPets = pets
     }
 
 
@@ -80,14 +80,15 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
 
         var resources: Resources = itemView.resources
 
-        private val isPetOwned: Boolean?
+        private val canHatch: Boolean
             get() {
                 val petKey: String = if (item is Egg) {
                     item?.key + "-" + hatchingItem?.key
                 } else {
                     hatchingItem?.key + "-" + item?.key
                 }
-                return ownedPets != null && ownedPets?.where()?.equalTo("key", petKey)?.count() ?: 0 > 0
+                val pet = existingPets?.where()?.equalTo("key", petKey)?.findFirst()
+                return pet != null && pet.trained <= 0
             }
 
         init {
@@ -116,7 +117,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                 imageName = "Pet_" + type + "_" + item?.key
 
                 if (isHatching) {
-                    disabled = this.isPetOwned ?: false
+                    disabled = !this.canHatch
                 }
             }
             DataBindingUtils.loadImage(imageView, imageName ?: "head_0")
@@ -131,6 +132,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         }
 
         override fun onClick(v: View) {
+            val context = context ?: return
             if (!isHatching && !isFeeding) {
                 val menu = BottomSheetMenu(context)
                 if (item !is QuestContent && item !is SpecialItem) {
@@ -177,7 +179,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                 }
                 menu.show()
             } else if (isHatching) {
-                if (this.isPetOwned == true) {
+                if (!this.canHatch) {
                     return
                 }
                 if (item is Egg) {

@@ -341,12 +341,12 @@
     <string name="sectionpremiumPets">Magic Potion</string>
     <string name="sectionquestPets">Quest</string>
     <string name="sectionspecialPets">Rare</string>
-    <string name="sectionwhackyPets">Whacky</string>
+    <string name="sectionwackyPets">Wacky</string>
     <string name="sectionmounts">Standard</string>
     <string name="sectionpremiumMounts">Magic Potion</string>
     <string name="sectionquestMounts">Quest</string>
     <string name="sectionspecialMounts">Rare</string>
-    <string name="sectionwhackyMounts">Whacky</string>
+    <string name="sectionwackyMounts">Wacky</string>
     <string name="world_quest">World Quest</string>
     <string name="inn_description">Need a break? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:\n\n
 &#8226; Missed Dailies won’t damage you\n

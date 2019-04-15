@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
@@ -29,7 +28,7 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
 
     var itemType: String? = null
     var context: Context? = null
-    private var ownedMounts: RealmResults<Mount>? = null
+    private var existingMounts: RealmResults<Mount>? = null
     private val equipEvents = PublishSubject.create<String>()
 
     fun getEquipFlowable(): Flowable<String> {
@@ -46,8 +45,8 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
         }
     }
 
-    fun setOwnedMounts(ownedMounts: RealmResults<Mount>) {
-        this.ownedMounts = ownedMounts
+    fun setExistingMounts(existingMounts: RealmResults<Mount>) {
+        this.existingMounts = existingMounts
         notifyDataSetChanged()
     }
 
@@ -61,11 +60,11 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
         private val isOwned: Boolean
             get() = this.animal?.trained ?: 0 > 0
 
-        private val isMountOwned: Boolean
+        private val canRaiseToMount: Boolean
             get() {
-                for (ownedMount in ownedMounts ?: emptyList<Mount>()) {
-                    if (ownedMount.key == animal?.key) {
-                        return true
+                for (mount in existingMounts ?: emptyList<Mount>()) {
+                    if (mount.key == animal?.key) {
+                        return !mount.owned
                     }
                 }
                 return false
@@ -81,10 +80,10 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             this.trainedProgressbar.visibility = if (animal?.animalGroup == "specialPets") View.GONE else View.VISIBLE
             this.imageView.alpha = 1.0f
             if (this.animal?.trained ?: 0 > 0) {
-                if (this.isMountOwned) {
-                    this.trainedProgressbar.visibility = View.GONE
-                } else {
+                if (this.canRaiseToMount) {
                     this.trainedProgressbar.progress = animal?.trained ?: 0
+                } else {
+                    this.trainedProgressbar.visibility = View.GONE
                 }
                 DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.color)
             } else {
@@ -102,9 +101,10 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             if (!this.isOwned) {
                 return
             }
+            val context = context ?: return
             val menu = BottomSheetMenu(context)
             menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.use_animal)))
-            if (animal?.animalGroup != "specialPets" && !this.isMountOwned) {
+            if (animal?.animalGroup != "specialPets" && canRaiseToMount) {
                 menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.feed)))
             }
             menu.setSelectionRunnable { index ->
