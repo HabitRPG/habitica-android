@@ -85,6 +85,7 @@ class StableRecyclerFragment : BaseFragment() {
             adapter = StableRecyclerAdapter()
             adapter?.activity = this.activity as? MainActivity
             adapter?.itemType = this.itemType
+            adapter?.context = context
             recyclerView?.adapter = adapter
             recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         }

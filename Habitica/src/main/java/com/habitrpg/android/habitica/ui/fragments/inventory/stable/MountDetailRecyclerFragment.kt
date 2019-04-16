@@ -63,6 +63,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
         if (adapter == null) {
             adapter = MountDetailRecyclerAdapter(null, true)
             adapter?.itemType = this.animalType
+            adapter?.context = context
             recyclerView.adapter = adapter
             recyclerView.itemAnimator = SafeDefaultItemAnimator()
             this.loadItems()

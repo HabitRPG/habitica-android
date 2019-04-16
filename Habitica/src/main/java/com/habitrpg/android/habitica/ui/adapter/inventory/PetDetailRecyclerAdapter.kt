@@ -107,23 +107,19 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                 } else {
                     this.trainedProgressbar.visibility = View.GONE
                 }
-                DataBindingUtils.loadImage(this.imageView, imageName)
             } else {
                 this.trainedProgressbar.visibility = View.GONE
-                if (this.ownedPet?.trained == null || ownedPet?.trained == 0) {
-                    DataBindingUtils.loadImage(imageName) {
-                        val drawable = BitmapDrawable(context?.resources, it.extractAlpha())
-
-                        Observable.just(drawable)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(Consumer {
-                                    imageView.backgroundCompat = drawable
-                                }, RxErrorHandler.handleEmptyError())
-                    }
-                } else {
-                    DataBindingUtils.loadImage(this.imageView, imageName)
-                }
-                this.imageView.alpha = 0.3f
+                this.imageView.alpha = 0.1f
+            }
+            imageView.backgroundCompat = null
+            val trained = ownedPet?.trained ?: 0
+            DataBindingUtils.loadImage(imageName) {
+                val drawable = BitmapDrawable(context?.resources, if (trained  == 0) it.extractAlpha() else it)
+                Observable.just(drawable)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Consumer {
+                            imageView.backgroundCompat = drawable
+                        }, RxErrorHandler.handleEmptyError())
             }
         }
 

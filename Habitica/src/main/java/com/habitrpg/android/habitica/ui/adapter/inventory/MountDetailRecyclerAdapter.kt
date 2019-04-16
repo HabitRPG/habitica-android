@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ import io.realm.RealmRecyclerViewAdapter
 class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Mount, MountDetailRecyclerAdapter.MountViewHolder>(data, autoUpdate) {
 
     var itemType: String? = null
+    var context: Context? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
 
     private val equipEvents = PublishSubject.create<String>()
@@ -72,18 +74,20 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
             titleView.text = item.color
             ownedTextView.visibility = View.GONE
             val imageName = "Mount_Icon_" + itemType + "-" + item.color
-            if (ownedMount?.owned == true) {
-                DataBindingUtils.loadImage(this.imageView, imageName)
-            } else {
-                DataBindingUtils.loadImage(imageName) {
-                    val drawable = BitmapDrawable(context?.resources, it.extractAlpha())
+            this.imageView.alpha = 1.0f
+            if (ownedMount?.owned != true) {
+                this.imageView.alpha = 0.1f
+            }
+            imageView.backgroundCompat = null
+            val owned = ownedMount?.owned ?: false
+            DataBindingUtils.loadImage(imageName) {
+                val drawable = BitmapDrawable(context?.resources, if (owned) it else it.extractAlpha())
 
-                    Observable.just(drawable)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer {
-                                imageView.backgroundCompat = drawable
-                            }, RxErrorHandler.handleEmptyError())
-                }
+                Observable.just(drawable)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Consumer {
+                            imageView.backgroundCompat = drawable
+                        }, RxErrorHandler.handleEmptyError())
             }
         }
 
