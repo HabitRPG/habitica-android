@@ -748,10 +748,10 @@
   <string name="world_boss_description_title">Qu\'est-ce qu\'un boss mondial ?</string>
   <string name="world_boss_description_description">Un boss mondial est un événement spécial où toute la communauté travaille ensemble pour combattre avec ses tâches un puissant monstre !\nRéalisez vos tâches pour infliger des dégâts au boss.\nLe boss ne vous infligera pas de dégâts pour les tâches non réalisées, mais sa jauge de rage augmentera. Lorsque la barre se remplit, le boss attaquera l\'un des marchands !\nVous pouvez continuer à faire vos quêtes de boss habituelles, vos dégâts s\'appliqueront aux deux.\nVisitez la taverne pour voir l\'avancée du combat et la jauge de rage.</string>
   <string name="world_boss_description_intro">Un boss mondial est un événement spécial où toute la communauté travaille ensemble pour combattre avec ses tâches un puissant monstre !</string>
-  <string name="world_boss_description_1">Réalisez vos tâches pour infliger des dégâts au boss.</string>
+  <string name="world_boss_description_1">Réalisez vos tâches pour infliger des dégâts au boss</string>
   <string name="world_boss_description_2">Le boss ne vous infligera pas de dégâts pour les tâches non réalisées, mais sa jauge de rage augmentera. Si la barre se remplit, le boss attaquera l\'un des marchands !</string>
-  <string name="world_boss_description_3">Vous pouvez continuer à faire vos quêtes de boss habituelles, vos dégâts s\'appliqueront aux deux.</string>
-  <string name="world_boss_description_4">Visitez la taverne pour voir l\'avancée du combat et la jauge de rage.</string>
+  <string name="world_boss_description_3">Vous pouvez continuer à faire vos quêtes de boss habituelles, vos dégâts s\'appliqueront aux deux</string>
+  <string name="world_boss_description_4">Visitez la taverne pour voir l\'avancée du combat et la jauge de rage</string>
   <string name="world_boss_action_prompt" formatted="false">Combattez le boss pour obtenir une récompense spéciale et sauver Habitica de la terreur de %s !</string>
   <string name="world_boss_description_subtitle">%s attaque !</string>
   <string name="questShop_owner_long">Ian le guide des quêtes</string>
