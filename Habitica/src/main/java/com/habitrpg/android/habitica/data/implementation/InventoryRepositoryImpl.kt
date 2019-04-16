@@ -9,9 +9,7 @@ import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.Items
-import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.*
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
@@ -81,12 +79,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getMounts(type, group)
     }
 
-    override fun getOwnedMounts(): Flowable<RealmResults<Mount>> {
-        return localRepository.getOwnedMounts()
-    }
-
-    override fun getOwnedMounts(animalType: String, animalGroup: String): Flowable<RealmResults<Mount>> {
-        return localRepository.getOwnedMounts(animalType, animalGroup)
+    override fun getOwnedMounts(): Flowable<RealmResults<OwnedMount>> {
+        return localRepository.getOwnedMounts(userID)
     }
 
     override fun getPets(): Flowable<RealmResults<Pet>> {
@@ -97,12 +91,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getPets(type, group)
     }
 
-    override fun getOwnedPets(): Flowable<RealmResults<Pet>> {
-        return localRepository.getOwnedPets()
-    }
-
-    override fun getOwnedPets(type: String, group: String): Flowable<RealmResults<Pet>> {
-        return localRepository.getOwnedPets(type, group)
+    override fun getOwnedPets(): Flowable<RealmResults<OwnedPet>> {
+        return localRepository.getOwnedPets(userID)
     }
 
     override fun updateOwnedEquipment(user: User) {
@@ -194,17 +184,14 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     override fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse> {
         return apiClient.feedPet(pet.key, food.key)
                 .doOnNext { feedResponse ->
-                    localRepository.changeOwnedCount("food", food.key, userID, -1)
-                    localRepository.executeTransaction { pet.trained = feedResponse.value }
+                    localRepository.feedPet(food.key, pet.key, feedResponse.value, userID)
                 }
     }
 
     override fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion): Flowable<Items> {
         return apiClient.hatchPet(egg.key, hatchingPotion.key)
                 .doOnNext {
-                    localRepository.changeOwnedCount("egg", egg.key, userID, -1)
-                    localRepository.changeOwnedCount("hatchingPotions", hatchingPotion.key, userID, -1)
-                    localRepository.changePetFeedStatus(egg.key+"-"+hatchingPotion.key, 5)
+                    localRepository.hatchPet(egg.key, hatchingPotion.key, userID)
                 }
     }
 

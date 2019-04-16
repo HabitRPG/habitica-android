@@ -59,9 +59,10 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         }
 
         result.pets = RealmList()
-        for (key in obj.getAsJsonObject("petInfo").keySet()) {
+        val pets = obj.getAsJsonObject("petInfo")
+        for (key in pets.keySet()) {
             val pet = Pet()
-            val petObj = obj.getAsJsonObject(key)
+            val petObj = pets.getAsJsonObject(key)
             pet.animal = petObj.getAsString("egg")
             pet.color = petObj.getAsString("potion")
             pet.key = petObj.getAsString("key")
@@ -74,9 +75,10 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         }
 
         result.mounts = RealmList()
-        for (key in obj.getAsJsonObject("mountInfo").keySet()) {
+        val mounts = obj.getAsJsonObject("mountInfo")
+        for (key in mounts.keySet()) {
             val mount = Mount()
-            val mountObj = obj.getAsJsonObject(key)
+            val mountObj = mounts.getAsJsonObject(key)
             mount.animal = mountObj.getAsString("egg")
             mount.color = mountObj.getAsString("potion")
             mount.key = mountObj.getAsString("key")

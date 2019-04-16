@@ -7,6 +7,8 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
@@ -65,8 +67,10 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>> {
         return realm.where(OwnedItem::class.java)
+                .greaterThan("numberOwned", 0)
                 .equalTo("itemType", itemType)
                 .equalTo("userID", userID)
+                .sort("key")
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
@@ -114,7 +118,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getMounts(): Flowable<RealmResults<Mount>> {
         return realm.where(Mount::class.java)
-                .sort("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
+                .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
@@ -130,21 +134,10 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getOwnedMounts(): Flowable<RealmResults<Mount>> {
-        return realm.where(Mount::class.java)
+    override fun getOwnedMounts(userID: String): Flowable<RealmResults<OwnedMount>> {
+        return realm.where(OwnedMount::class.java)
                 .equalTo("owned", true)
-                .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
-    }
-
-    override fun getOwnedMounts(animalType: String, animalGroup: String): Flowable<RealmResults<Mount>> {
-        return realm.where(Mount::class.java)
-                .equalTo("type", animalGroup)
-                .equalTo("animal", animalType)
-                .equalTo("owned", true)
-                .sort("animal")
+                .equalTo("userID", userID)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
@@ -168,21 +161,10 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getOwnedPets(): Flowable<RealmResults<Pet>> {
-        return realm.where(Pet::class.java)
+    override fun getOwnedPets(userID: String): Flowable<RealmResults<OwnedPet>> {
+        return realm.where(OwnedPet::class.java)
                 .greaterThan("trained", 0)
-                .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
-    }
-
-    override fun getOwnedPets(type: String, group: String): Flowable<RealmResults<Pet>> {
-        return realm.where(Pet::class.java)
-                .equalTo("type", group)
-                .equalTo("animal", type)
-                .greaterThan("trained", 0)
-                .sort("animal")
+                .equalTo("userID", userID)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
@@ -207,6 +189,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .equalTo("itemType", type)
                 .equalTo("key", key)
                 .equalTo("userID", userID)
+                .greaterThan("numberOwned", 0)
                 .findFirstAsync()
                 .asFlowable<OwnedItem>()
                 .filter { realmObject -> realmObject.isLoaded }
@@ -259,10 +242,57 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
         }
     }
 
-    override fun changePetFeedStatus(key: String?, feedStatus: Int) {
-        val pet = realm.where(Pet::class.java).equalTo("key", key).findFirst()
-        if (pet != null) {
-            executeTransaction { pet.trained = feedStatus }
+    override fun hatchPet(eggKey: String, potionKey: String, userID: String) {
+        val newPet = OwnedPet()
+        newPet.key = "$eggKey-$potionKey"
+        newPet.userID = userID
+        newPet.trained = 5
+
+        val egg = realm.where(OwnedItem::class.java)
+                .equalTo("itemType", "eggs")
+                .equalTo("key", eggKey)
+                .equalTo("userID", userID)
+                .greaterThan("numberOwned", 0)
+                .findFirst() ?: return
+
+        val hatchingPotion = realm.where(OwnedItem::class.java)
+                .equalTo("itemType", "hatchingPotions")
+                .equalTo("key", potionKey)
+                .equalTo("userID", userID)
+                .greaterThan("numberOwned", 0)
+                .findFirst() ?: return
+
+        executeTransaction {
+            egg.numberOwned -= 1
+            hatchingPotion.numberOwned -= 1
+            it.insertOrUpdate(newPet)
+        }
+    }
+
+    override fun feedPet(foodKey: String, petKey: String, feedValue: Int, userID: String) {
+        val pet = realm.where(OwnedPet::class.java).equalTo("key", petKey).findFirst() ?: return
+        val food = realm.where(OwnedItem::class.java).equalTo("key", foodKey).equalTo("itemType", "food").findFirst() ?: return
+        executeTransaction {
+            pet.trained = feedValue
+            food.numberOwned -= 1
+
+            if (feedValue < 0) {
+                val mount = OwnedMount()
+                mount.key = petKey
+                mount.userID = userID
+                mount.owned = true
+                it.insertOrUpdate(mount)
+            }
+        }
+    }
+
+    override fun changePetFeedStatus(key: String?, userID: String, feedStatus: Int) {
+        val newPet = OwnedPet()
+        newPet.key = key
+        newPet.userID = userID
+        newPet.trained = feedStatus
+        executeTransaction {
+            it.insertOrUpdate(newPet)
         }
     }
 }

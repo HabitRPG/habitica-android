@@ -49,13 +49,23 @@ open class Items : RealmObject {
                     it.itemType = "quests"
                 }
             }
+            pets?.forEach {
+                if (!it.isManaged) {
+                    it.userID = userId
+                }
+            }
+            mounts?.forEach {
+                if (!it.isManaged) {
+                    it.userID = userId
+                }
+            }
         }
     var eggs: RealmList<OwnedItem>? = null
     var food: RealmList<OwnedItem>? = null
     var hatchingPotions: RealmList<OwnedItem>? = null
     var quests: RealmList<OwnedItem>? = null
-    var pets: RealmList<Pet>? = null
-    var mounts: RealmList<Mount>? = null
+    var pets: RealmList<OwnedPet>? = null
+    var mounts: RealmList<OwnedMount>? = null
     var currentMount: String? = null
     var currentPet: String? = null
     var lastDrop_count: Int = 0

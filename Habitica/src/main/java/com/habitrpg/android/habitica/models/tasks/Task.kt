@@ -162,6 +162,9 @@ open class Task : RealmObject, Parcelable {
     fun checkIfDue(): Boolean? = isDue == true
 
     fun getNextReminderOccurence(oldTime: Date?): Date? {
+        if (oldTime == null) {
+            return null
+        }
         val today = Calendar.getInstance()
 
         val newTime = GregorianCalendar()

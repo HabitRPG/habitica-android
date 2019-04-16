@@ -13,9 +13,7 @@ import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.user.Items
-import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.*
 
 import io.reactivex.Flowable
 import io.realm.RealmResults
@@ -30,11 +28,11 @@ interface InventoryRepository : ContentRepository {
 
     fun getMounts(): Flowable<RealmResults<Mount>>
 
-    fun getOwnedMounts(): Flowable<RealmResults<Mount>>
+    fun getOwnedMounts(): Flowable<RealmResults<OwnedMount>>
 
     fun getPets(): Flowable<RealmResults<Pet>>
 
-    fun getOwnedPets(): Flowable<RealmResults<Pet>>
+    fun getOwnedPets(): Flowable<RealmResults<OwnedPet>>
     fun getQuestContent(key: String): Flowable<QuestContent>
 
     fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>>
@@ -51,9 +49,7 @@ interface InventoryRepository : ContentRepository {
 
     fun saveEquipment(equipment: Equipment)
     fun getMounts(type: String, group: String): Flowable<RealmResults<Mount>>
-    fun getOwnedMounts(animalType: String, animalGroup: String): Flowable<RealmResults<Mount>>
     fun getPets(type: String, group: String): Flowable<RealmResults<Pet>>
-    fun getOwnedPets(type: String, group: String): Flowable<RealmResults<Pet>>
 
     fun updateOwnedEquipment(user: User)
 

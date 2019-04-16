@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -36,6 +37,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     var feedingPet: Pet? = null
     var fragment: ItemRecyclerFragment? = null
     private var existingPets: RealmResults<Pet>? = null
+    private var ownedPets: Map<String, OwnedPet>? = null
     var context: Context? = null
     var items: Map<String, Item>? = null
     set(value) {
@@ -67,8 +69,13 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
 
     fun setExistingPets(pets: RealmResults<Pet>) {
         existingPets = pets
+        notifyDataSetChanged()
     }
 
+    fun setOwnedPets(ownedPets: Map<String, OwnedPet>) {
+        this.ownedPets = ownedPets
+        notifyDataSetChanged()
+    }
 
     inner class ItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var ownedItem: OwnedItem? = null
@@ -88,7 +95,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                     hatchingItem?.key + "-" + item?.key
                 }
                 val pet = existingPets?.where()?.equalTo("key", petKey)?.findFirst()
-                return pet != null && pet.trained <= 0
+                return pet != null && ownedPets?.get(pet.key)?.trained ?: 0 <= 0
             }
 
         init {

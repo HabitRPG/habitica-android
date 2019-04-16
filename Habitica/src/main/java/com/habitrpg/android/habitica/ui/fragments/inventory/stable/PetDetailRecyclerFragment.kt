@@ -13,6 +13,8 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
@@ -105,6 +107,20 @@ class PetDetailRecyclerFragment : BaseMainFragment() {
 
     private fun loadItems() {
         if (animalType.isNotEmpty() && animalGroup.isNotEmpty()) {
+            compositeSubscription.add(inventoryRepository.getOwnedPets()
+                    .map { ownedMounts ->
+                        val mountMap = mutableMapOf<String, OwnedPet>()
+                        ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                        return@map mountMap
+                    }
+                    .subscribe(Consumer { adapter.setOwnedPets(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(inventoryRepository.getOwnedMounts()
+                    .map { ownedMounts ->
+                        val mountMap = mutableMapOf<String, OwnedMount>()
+                        ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                        return@map mountMap
+                    }
+                    .subscribe(Consumer { adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getPets(animalType, animalGroup).firstElement().subscribe(Consumer<RealmResults<Pet>> { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup).subscribe(Consumer<RealmResults<Mount>> { adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
         }

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,11 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 
 class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
@@ -96,9 +93,9 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
             if (animal != null) {
                 if (animal.numberOwned > 0) {
                     if (itemType == "pets") {
-                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.animalGroup))
+                        MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type))
                     } else {
-                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.animalGroup))
+                        MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.type))
                     }
                 }
             }

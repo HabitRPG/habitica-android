@@ -29,6 +29,8 @@ import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.OwnedItem;
+import com.habitrpg.android.habitica.models.user.OwnedMount;
+import com.habitrpg.android.habitica.models.user.OwnedPet;
 import com.habitrpg.android.habitica.models.user.Purchases;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
@@ -48,6 +50,8 @@ import com.habitrpg.android.habitica.utils.MemberSerialization;
 import com.habitrpg.android.habitica.utils.MountListDeserializer;
 import com.habitrpg.android.habitica.utils.MountMapDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedItemListDeserializer;
+import com.habitrpg.android.habitica.utils.OwnedMountListDeserializer;
+import com.habitrpg.android.habitica.utils.OwnedPetListDeserializer;
 import com.habitrpg.android.habitica.utils.PetListDeserializer;
 import com.habitrpg.android.habitica.utils.PetMapDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
@@ -89,6 +93,9 @@ public class GSonFactoryCreator {
         Type challengeRealmListType = new TypeToken<RealmList<Challenge>>() {}.getType();
         Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {}.getType();
         Type ownedItemListType = new TypeToken<RealmList<OwnedItem>>() {}.getType();
+        Type ownedPetListType = new TypeToken<RealmList<OwnedPet>>() {}.getType();
+        Type ownedMountListType = new TypeToken<RealmList<OwnedMount>>() {}.getType();
+
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -120,6 +127,8 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(challengeRealmListType, new ChallengeListDeserializer())
                 .registerTypeAdapter(questDropItemListType, new QuestDropItemsListSerialization())
                 .registerTypeAdapter(ownedItemListType, new OwnedItemListDeserializer())
+                .registerTypeAdapter(ownedPetListType, new OwnedPetListDeserializer())
+                .registerTypeAdapter(ownedMountListType, new OwnedMountListDeserializer())
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())

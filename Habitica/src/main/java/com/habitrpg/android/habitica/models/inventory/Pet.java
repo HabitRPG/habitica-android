@@ -7,10 +7,9 @@ import io.realm.annotations.PrimaryKey;
 
 public class Pet extends RealmObject implements Animal{
 
-    Integer trained;
     @PrimaryKey
     String key;
-    String animal, color, animalGroup, text, type;
+    String animal, color, text, type;
     boolean premium;
 
     @Ignore
@@ -66,17 +65,6 @@ public class Pet extends RealmObject implements Animal{
         this.color = color;
     }
 
-    public String getAnimalGroup() {
-        if (animalGroup == null) {
-            return "";
-        }
-        return animalGroup;
-    }
-
-    public void setAnimalGroup(String group) {
-        this.animalGroup = group;
-    }
-
     public boolean getPremium() {
         return premium;
     }
@@ -94,15 +82,5 @@ public class Pet extends RealmObject implements Animal{
 
     public void setNumberOwned(Integer numberOwned) {
         this.numberOwned = numberOwned;
-    }
-    public Integer getTrained() {
-        if (trained == null) {
-            return 0;
-        }
-        return trained;
-    }
-
-    public void setTrained(Integer trained) {
-        this.trained = trained;
     }
 }

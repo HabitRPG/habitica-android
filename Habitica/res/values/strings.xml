@@ -337,16 +337,11 @@
     <string name="notification_pet_fed" >You fed your %s!</string>
     <string name="notification_purchase" >You purchased %s</string>
     <string name="notification_purchase_reward" >You purchased a reward</string>
-    <string name="sectionpets">Standard</string>
-    <string name="sectionpremiumPets">Magic Potion</string>
-    <string name="sectionquestPets">Quest</string>
-    <string name="sectionspecialPets">Rare</string>
-    <string name="sectionwackyPets">Wacky</string>
-    <string name="sectionmounts">Standard</string>
-    <string name="sectionpremiumMounts">Magic Potion</string>
-    <string name="sectionquestMounts">Quest</string>
-    <string name="sectionspecialMounts">Rare</string>
-    <string name="sectionwackyMounts">Wacky</string>
+    <string name="sectiondrop">Standard</string>
+    <string name="sectionpremium">Magic Potion</string>
+    <string name="sectionquest">Quest</string>
+    <string name="sectionspecial">Rare</string>
+    <string name="sectionwacky">Wacky</string>
     <string name="world_quest">World Quest</string>
     <string name="inn_description">Need a break? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:\n\n
 &#8226; Missed Dailies won’t damage you\n

@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
@@ -99,6 +100,13 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
 
     private fun loadItems() {
         if (animalType != null && animalGroup != null) {
+            compositeSubscription.add(inventoryRepository.getOwnedMounts().firstElement()
+                    .map { ownedMounts ->
+                        val mountMap = mutableMapOf<String, OwnedMount>()
+                        ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                        return@map mountMap
+                    }
+                    .subscribe(Consumer { adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getMounts(animalType!!, animalGroup!!).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
     }

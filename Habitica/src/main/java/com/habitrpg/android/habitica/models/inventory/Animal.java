@@ -23,10 +23,6 @@ public interface Animal {
 
     public void setColor(String color);
 
-    public String getAnimalGroup();
-
-    public void setAnimalGroup(String group);
-
     public boolean getPremium();
 
     public void setPremium(boolean premium);

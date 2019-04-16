@@ -37,7 +37,7 @@ class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerV
 
     fun bind(title: String) {
         try {
-            val stringID = context.resources.getIdentifier("section" + title, "string", context.packageName)
+            val stringID = context.resources.getIdentifier("section$title", "string", context.packageName)
             this.label.text = context.getString(stringID)
         } catch (e: Exception) {
             this.label.text = title

@@ -8,10 +8,9 @@ import io.realm.annotations.PrimaryKey;
 
 public class Mount extends RealmObject implements Animal {
 
-    Boolean owned;
     @PrimaryKey
     String key;
-    String animal, color, animalGroup, text, type;
+    String animal, color, text, type;
     boolean premium;
 
     @Ignore
@@ -67,17 +66,6 @@ public class Mount extends RealmObject implements Animal {
         this.color = color;
     }
 
-    public String getAnimalGroup() {
-        if (animalGroup == null) {
-            return "";
-        }
-        return animalGroup;
-    }
-
-    public void setAnimalGroup(String group) {
-        this.animalGroup = group;
-    }
-
     public boolean getPremium() {
         return premium;
     }
@@ -95,17 +83,5 @@ public class Mount extends RealmObject implements Animal {
 
     public void setNumberOwned(Integer numberOwned) {
         this.numberOwned = numberOwned;
-    }
-
-    public boolean getOwned() {
-        if (owned == null) {
-            return false;
-        } else {
-            return owned;
-        }
-    }
-
-    public void setOwned(@Nullable Boolean owned) {
-        this.owned = owned;
     }
 }
