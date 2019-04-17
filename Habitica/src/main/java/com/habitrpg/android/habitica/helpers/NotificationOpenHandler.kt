@@ -33,7 +33,7 @@ class NotificationOpenHandler {
             if (userID?.isNotEmpty() == true) {
                 return
             }
-            MainNavigationController.navigate(R.id.inboxFragment, bundleOf("userId" to userID))
+            MainNavigationController.navigate(R.id.inboxMessageListFragment, bundleOf("userID" to userID))
         }
 
         private fun openPartyScreen() {
@@ -44,14 +44,14 @@ class NotificationOpenHandler {
             if (partyId?.isNotEmpty() == true || questKey?.isNotEmpty() == true) {
                 return
             }
-            MainNavigationController.navigate(R.id.inboxFragment, bundleOf("partyId" to partyId, "questKey" to questKey))
+            MainNavigationController.navigate(R.id.questDetailFragment, bundleOf("partyID" to partyId, "questKey" to questKey))
         }
 
         private fun openGuildDetailScreen(groupID: String) {
             if (groupID.isEmpty()) {
                 return
             }
-            MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupId" to groupID))
+            MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
 
         }
 
@@ -63,7 +63,7 @@ class NotificationOpenHandler {
             when (type) {
                 "party" -> MainNavigationController.navigate(R.id.partyFragment)
                 "tavern" -> MainNavigationController.navigate(R.id.tavernFragment)
-                "guild" -> MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupId" to groupID))
+                "guild" -> MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
             }
         }
     }

@@ -52,4 +52,8 @@ class RemoteConfigManager {
     fun lastVersionCode(): Long {
         return remoteConfig.getLong("lastVersionCode")
     }
+
+    fun noPartyLinkPartyGuild(): Boolean {
+        return remoteConfig.getBoolean("noPartyLinkPartyGuild")
+    }
 }

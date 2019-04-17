@@ -130,7 +130,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         }
     }
 
-    private fun setReceivingUser(chatRoomUser: String, replyToUserUUID: String) {
+    private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String) {
         this.chatRoomUser = chatRoomUser
         this.replyToUserUUID = replyToUserUUID
     }

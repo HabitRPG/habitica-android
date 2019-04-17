@@ -32,5 +32,9 @@
         <key>lastVersionCode</key>
         <value>0</value>
     </entry>
+    <entry>
+        <key>noPartyLinkPartyGuild</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

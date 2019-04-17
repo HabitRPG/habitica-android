@@ -211,7 +211,8 @@
             app:argType="string" />
         <argument
             android:name="username"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/petDetailRecyclerFragment"

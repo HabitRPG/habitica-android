@@ -34,6 +34,7 @@ import androidx.core.content.edit
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.facebook.drawee.view.SimpleDraweeView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -646,6 +647,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (hostConfig.hasAuthentication()) {
             this.userRepository.retrieveUser(true)
                     .doOnNext { user1 ->
+                        FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
                         pushNotificationManager.setUser(user1)
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }

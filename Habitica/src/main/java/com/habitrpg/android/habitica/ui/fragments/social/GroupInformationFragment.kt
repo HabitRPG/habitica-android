@@ -9,15 +9,21 @@ import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
@@ -42,6 +48,8 @@ class GroupInformationFragment : BaseFragment() {
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var configManager: RemoteConfigManager
 
     var group: Group? = null
     set(value) {
@@ -127,6 +135,14 @@ class GroupInformationFragment : BaseFragment() {
 
         groupDescriptionView.movementMethod = LinkMovementMethod.getInstance()
         groupSummaryView.movementMethod = LinkMovementMethod.getInstance()
+
+        if (configManager.noPartyLinkPartyGuild()) {
+            join_party_description_textview.text = MarkdownParser.parseMarkdown(getString(R.string.join_party_description_guild, "[Party Wanted Guild](https://habitica.com/groups/guild/f2db2a7f-13c5-454d-b3ee-ea1f5089e601)"))
+            join_party_description_textview.setOnClickListener {
+                context?.let { FirebaseAnalytics.getInstance(it).logEvent("clicked_party_wanted", null) }
+                MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "f2db2a7f-13c5-454d-b3ee-ea1f5089e601"))
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
