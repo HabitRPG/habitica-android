@@ -2,11 +2,14 @@ package com.habitrpg.android.habitica.ui.fragments
 
 
 import android.app.ActionBar
+import android.content.res.ColorStateList
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -312,6 +315,15 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             notificationsBadge.visibility = View.VISIBLE
             notificationsBadge.text = unreadNotifications.toString()
+        }
+    }
+
+    fun setNotificationsSeen(allSeen: Boolean) {
+        context.notNull {
+            val colorId = if (allSeen) R.color.gray_200 else R.color.brand_400
+
+            val bg = notificationsBadge.background as GradientDrawable
+            bg.color = ColorStateList.valueOf(ContextCompat.getColor(it, colorId))
         }
     }
 

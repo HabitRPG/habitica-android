@@ -218,6 +218,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         compositeSubscription.add(viewModel.getNotificationCount().subscribe(Consumer {
             drawerFragment?.setNotificationsCount(it)
         }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(viewModel.allNotificationsSeen().subscribe(Consumer {
+            drawerFragment?.setNotificationsSeen(it)
+        }, RxErrorHandler.handleEmptyError()))
 
         val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
 
