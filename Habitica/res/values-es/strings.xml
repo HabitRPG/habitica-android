@@ -822,4 +822,5 @@
   <string name="gift_confirmation_text">Tu suscripción regalo ha sido enviada y tu suscripción ha sido aplicada a tu cuenta.</string>
   <string name="discover">Descubre</string>
   <string name="damage_paused">Daño pausado</string>
-</resources>
+<string name="opting_out_progress">optar por no</string>
+    </resources>
