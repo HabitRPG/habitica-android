@@ -251,6 +251,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val cdsTimePreference = findPreference("cds_time") as? TimePreference
         cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
         findPreference("dailyDueDefaultView").setDefaultValue(user?.preferences?.dailyDueDefaultView)
+        val languagePreference = findPreference("language") as? ListPreference
+        languagePreference?.value = user?.preferences?.language
+        languagePreference?.summary = languagePreference?.entry
+        val audioThemePreference = findPreference("audioTheme") as? ListPreference
+        audioThemePreference?.value = user?.preferences?.sound
+        audioThemePreference?.summary = audioThemePreference?.entry
 
         val preference = findPreference("authentication")
         if (user?.flags?.isVerifiedUsername == true) {
