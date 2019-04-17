@@ -31,9 +31,11 @@
         <TextView
             android:id="@+id/notifications_title_badge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/badge_gray"
+            android:gravity="center"
+            android:minWidth="24dp"
             android:textColor="@color/gray_300"
             android:textSize="12sp"
             tools:text="1" />
