@@ -525,5 +525,17 @@
         <item name="android:textAlignment">gravity</item>
     </style>
 
+    <style name="ClassSelectionClassButton">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/layout_rounded_bg_gray_700</item>
+    </style>
+
+    <style name="ToolbarDarkBackArrow" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/gray_50</item>
+        <item name="android:actionMenuTextColor">@color/gray_50</item>
+    </style>
+
     <color name="taskform_gray">#99edecee</color>
 </resources>

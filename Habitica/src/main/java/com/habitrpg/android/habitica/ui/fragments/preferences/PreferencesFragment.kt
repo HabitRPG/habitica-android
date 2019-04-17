@@ -90,14 +90,6 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             }
             "choose_class" -> {
                 val bundle = Bundle()
-                bundle.putString("size", user?.preferences?.size)
-                bundle.putString("skin", user?.preferences?.skin)
-                bundle.putString("shirt", user?.preferences?.shirt)
-                bundle.putInt("hairBangs", user?.preferences?.hair?.bangs ?: 0)
-                bundle.putInt("hairBase", user?.preferences?.hair?.base ?: 0)
-                bundle.putString("hairColor", user?.preferences?.hair?.color)
-                bundle.putInt("hairMustache", user?.preferences?.hair?.mustache ?: 0)
-                bundle.putInt("hairBeard", user?.preferences?.hair?.beard ?: 0)
                 bundle.putBoolean("isInitialSelection", user?.flags?.classSelected == false)
 
                 val intent = Intent(activity, ClassSelectionActivity::class.java)

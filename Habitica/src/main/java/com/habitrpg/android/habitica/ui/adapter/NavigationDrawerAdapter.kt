@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
@@ -129,7 +128,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): android
                         val pR = pillView.paddingRight
                         val pB = pillView.paddingBottom
 
-                        pillView.backgroundCompat = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_200)
+                        pillView.background = ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_200)
                         pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
                         pillView.setPadding(pL, pT, pR, pB)
                     }

@@ -131,12 +131,12 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             itemView.setOnClickListener {
                 expandMessage()
             }
-            tvLikes.setOnClickListener { _ -> chatMessage.notNull { likeMessageEvents.onNext(it) } }
-            messageText.setOnClickListener { _ -> expandMessage() }
+            tvLikes.setOnClickListener { chatMessage.notNull { likeMessageEvents.onNext(it) } }
+            messageText.setOnClickListener { expandMessage() }
             messageText.movementMethod = LinkMovementMethod.getInstance()
-            userLabel.setOnClickListener { _ -> chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
-            avatarView.setOnClickListener { _ -> chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
-            replyButton.setOnClickListener { _ ->
+            userLabel.setOnClickListener { chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
+            avatarView.setOnClickListener { chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
+            replyButton.setOnClickListener {
                 if (chatMessage?.username != null) {
                     chatMessage?.username.notNull { replyMessageEvents.onNext(it) }
                 } else {
@@ -145,13 +145,13 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             }
             replyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
                     null, null, null)
-            copyButton.setOnClickListener { _ -> chatMessage.notNull { copyMessageEvents.onNext(it) } }
+            copyButton.setOnClickListener { chatMessage.notNull { copyMessageEvents.onNext(it) } }
             copyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
                     null, null, null)
-            reportButton.setOnClickListener { _ -> chatMessage.notNull { flagMessageEvents.onNext(it) } }
+            reportButton.setOnClickListener { chatMessage.notNull { flagMessageEvents.onNext(it) } }
             reportButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
                     null, null, null)
-            deleteButton.setOnClickListener { _ -> chatMessage.notNull { deleteMessageEvents.onNext(it) } }
+            deleteButton.setOnClickListener { chatMessage.notNull { deleteMessageEvents.onNext(it) } }
             deleteButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
                     null, null, null)
         }
@@ -188,13 +188,13 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                 userLabel.tier == 8 -> {
                     modView.visibility = View.VISIBLE
                     modView.text = context.getString(R.string.moderator)
-                    modView.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.pill_bg_blue)
+                    modView.background = ContextCompat.getDrawable(context, R.drawable.pill_bg_blue)
                     modView.setScaledPadding(context, 12, 4, 12, 4)
                 }
                 userLabel.tier == 9 -> {
                     modView.visibility = View.VISIBLE
                     modView.text = context.getString(R.string.staff)
-                    modView.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.pill_bg_purple_300)
+                    modView.background = ContextCompat.getDrawable(context, R.drawable.pill_bg_purple_300)
                     modView.setScaledPadding(context, 12, 4, 12, 4)
                 }
                 else -> modView.visibility = View.GONE
@@ -231,10 +231,10 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             }
 
             val username = user?.formattedUsername
-            if ((name != null && msg.text?.contains(name) == true) || (username != null && msg.text?.contains(username) == true)) {
-                messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_700)
+            messageWrapper.background = if ((name != null && msg.text?.contains(name) == true) || (username != null && msg.text?.contains(username) == true)) {
+                ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_700)
             } else {
-                messageWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
+                ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
             }
             messageWrapper.setScaledPadding(context, 8, 8, 8, 8)
 

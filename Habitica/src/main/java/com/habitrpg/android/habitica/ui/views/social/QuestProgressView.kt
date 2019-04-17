@@ -19,7 +19,6 @@ import android.widget.TextView
 import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
@@ -179,7 +178,7 @@ class QuestProgressView : LinearLayout {
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     intArrayOf(ContextCompat.getColor(context, R.color.transparent), lightColor))
             gradientDrawable.cornerRadius = 0f
-            questImageWrapper.backgroundCompat = gradientDrawable
+            questImageWrapper.background = gradientDrawable
         }
         updateCaretImage()
         questDescriptionSection.caretColor = quest.colors?.extraLightColor ?: 0

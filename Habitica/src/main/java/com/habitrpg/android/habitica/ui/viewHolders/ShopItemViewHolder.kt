@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -40,7 +39,7 @@ class ShopItemViewHolder(itemView: View) : androidx.recyclerview.widget.Recycler
         field = value
         if (value > 0) {
             itemDetailIndicator.text = value.toString()
-            itemDetailIndicator.backgroundCompat = countDrawable
+            itemDetailIndicator.background = countDrawable
             itemDetailIndicator.visibility = View.VISIBLE
         }
     }
@@ -80,13 +79,13 @@ class ShopItemViewHolder(itemView: View) : androidx.recyclerview.widget.Recycler
         itemDetailIndicator.text = null
         itemDetailIndicator.visibility = View.GONE
         if (item.isLimited) {
-            itemDetailIndicator.backgroundCompat = limitedDrawable
+            itemDetailIndicator.background = limitedDrawable
             itemDetailIndicator.visibility = View.VISIBLE
         }
 
         priceLabel.isLocked = item.locked || !canBuy
         if (item.locked) {
-            itemDetailIndicator.backgroundCompat = lockedDrawable
+            itemDetailIndicator.background = lockedDrawable
             itemDetailIndicator.visibility = View.VISIBLE
         }
     }

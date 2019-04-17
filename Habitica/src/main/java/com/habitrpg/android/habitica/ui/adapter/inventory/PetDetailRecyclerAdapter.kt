@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -111,14 +110,14 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
                 this.trainedProgressbar.visibility = View.GONE
                 this.imageView.alpha = 0.1f
             }
-            imageView.backgroundCompat = null
+            imageView.background = null
             val trained = ownedPet?.trained ?: 0
             DataBindingUtils.loadImage(imageName) {
                 val drawable = BitmapDrawable(context?.resources, if (trained  == 0) it.extractAlpha() else it)
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
-                            imageView.backgroundCompat = drawable
+                            imageView.background = drawable
                         }, RxErrorHandler.handleEmptyError())
             }
         }

@@ -17,9 +17,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
@@ -122,7 +120,7 @@ class GroupInformationFragment : BaseFragment() {
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
-                            no_party_background.backgroundCompat = it
+                            no_party_background.background = it
                         }, RxErrorHandler.handleEmptyError())
             }
         }

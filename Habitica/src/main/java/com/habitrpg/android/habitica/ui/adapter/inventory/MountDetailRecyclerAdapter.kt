@@ -3,13 +3,11 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -78,7 +76,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
             if (ownedMount?.owned != true) {
                 this.imageView.alpha = 0.1f
             }
-            imageView.backgroundCompat = null
+            imageView.background = null
             val owned = ownedMount?.owned ?: false
             DataBindingUtils.loadImage(imageName) {
                 val drawable = BitmapDrawable(context?.resources, if (owned) it else it.extractAlpha())
@@ -86,7 +84,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
-                            imageView.backgroundCompat = drawable
+                            imageView.background = drawable
                         }, RxErrorHandler.handleEmptyError())
             }
         }

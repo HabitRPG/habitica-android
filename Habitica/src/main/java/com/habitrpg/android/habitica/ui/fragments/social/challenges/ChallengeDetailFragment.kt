@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -228,14 +227,14 @@ class ChallengeDetailFragment: BaseMainFragment() {
                     entry?.findViewById<View>(R.id.lock_icon_background_plus)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
                     val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
                     drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.darkTaskColor), PorterDuff.Mode.MULTIPLY)
-                    entry?.findViewById<View>(R.id.lock_icon_plus)?.backgroundCompat = drawable
+                    entry?.findViewById<View>(R.id.lock_icon_plus)?.background = drawable
                 }
                 if (task.down == true) {
                     entry?.findViewById<ImageView>(R.id.lock_icon_minus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#B3FFFFFF")))
                     entry?.findViewById<View>(R.id.lock_icon_background_minus)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
                     val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
                     drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.darkTaskColor), PorterDuff.Mode.MULTIPLY)
-                    entry?.findViewById<View>(R.id.lock_icon_plus)?.backgroundCompat = drawable
+                    entry?.findViewById<View>(R.id.lock_icon_plus)?.background = drawable
                 }
             }
 
@@ -264,7 +263,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
                 entry?.findViewById<View>(R.id.lock_icon_background)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
                 val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
                 drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.extraLightTaskColor), PorterDuff.Mode.MULTIPLY)
-                entry?.findViewById<View>(R.id.lock_icon)?.backgroundCompat = drawable
+                entry?.findViewById<View>(R.id.lock_icon)?.background = drawable
             }
             if (task.checklist != null && task.checklist?.isEmpty() == false) {
                 val checklistIndicatorWrapper = entry?.findViewById<View>(R.id.checklistIndicatorWrapper)
@@ -298,7 +297,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
                 entry?.findViewById<View>(R.id.lock_icon_background)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
                 val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
                 drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.extraLightTaskColor), PorterDuff.Mode.MULTIPLY)
-                entry?.findViewById<View>(R.id.lock_icon)?.backgroundCompat = drawable
+                entry?.findViewById<View>(R.id.lock_icon)?.background = drawable
             }
 
             if (task.checklist != null && task.checklist?.isEmpty() == false) {

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -89,13 +88,13 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
             }
             this.ownedTextView.text = animal?.numberOwned?.toString()
             ownedTextView.visibility = View.GONE
-            imageView.backgroundCompat = null
+            imageView.background = null
             DataBindingUtils.loadImage(imageName) {
                 val drawable = BitmapDrawable(context?.resources, if (item.numberOwned > 0) it else it.extractAlpha())
                 Observable.just(drawable)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer {
-                            imageView.backgroundCompat = drawable
+                            imageView.background = drawable
                         }, RxErrorHandler.handleEmptyError())
             }
             if (item.numberOwned <= 0) {

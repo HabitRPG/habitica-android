@@ -655,12 +655,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
     }
 
-    @Subscribe
-    fun displayClassSelectionActivity(event: SelectClassEvent) {
-        checkClassSelectionUseCase.observable(CheckClassSelectionUseCase.RequestValues(user, event, this))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-    }
-
     private fun displayTutorialStep(step: TutorialStep, text: String, canBeDeferred: Boolean) {
         removeActiveTutorialView()
         val view = TutorialView(this, step, this)

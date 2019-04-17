@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.ContextCompat
-import androidx.core.widget.ImageViewCompat
 import androidx.appcompat.widget.AppCompatImageButton
 import android.util.AttributeSet
 import android.view.Gravity
@@ -16,7 +14,6 @@ import android.widget.TextView
 import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -24,7 +21,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
-import com.habitrpg.android.habitica.ui.views.ValueBar
 
 class QuestMenuView : LinearLayout {
 

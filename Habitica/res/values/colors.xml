@@ -140,6 +140,7 @@
     <color name="black_10_alpha">#16000000</color>
     <color name="black_20_alpha">#33000000</color>
     <color name="black_50_alpha">#89000000</color>
+    <color name="gray_20_alpha">#331a181d</color>
     <color name="light_gray_bg">#F6F4F8</color>
 
     <color name="skin_ddc994">#ddc994</color>
@@ -167,4 +168,5 @@
     <color name="bb_inActiveBottomBarItemColor">#747474</color>
     <color name="bb_darkBackgroundColor">#212121</color>
     <color name="bb_tabletRightBorderDark">#505050</color>
+    <color name="dark_brown">#794b00</color>
 </resources>
