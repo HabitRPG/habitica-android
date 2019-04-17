@@ -10,8 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.net.toUri
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -20,6 +22,7 @@ import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
@@ -33,6 +36,9 @@ class AboutFragment : BaseMainFragment() {
 
     @Inject
     lateinit var remoteConfigManager: RemoteConfigManager
+
+    private val updateAvailableWrapper: ViewGroup by bindView(R.id.update_available_wrapper)
+    private val updateAvailableTextView: TextView by bindView(R.id.update_available_textview)
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
@@ -50,8 +56,8 @@ class AboutFragment : BaseMainFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         this.hidesToolbar = true
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
@@ -64,7 +70,7 @@ class AboutFragment : BaseMainFragment() {
                 1 -> context.notNull { context ->
                     Toast.makeText(context, "Oh! You tapped me!", Toast.LENGTH_SHORT).show()
                 }
-                in 4..7 -> context.notNull { context ->
+                in 5..7 -> context.notNull { context ->
                     Toast.makeText(context, "Only ${8 - versionNumberTappedCount} taps left!", Toast.LENGTH_SHORT).show()
                 }
                 8 -> {
@@ -100,12 +106,20 @@ class AboutFragment : BaseMainFragment() {
 
         versionInfo.text = getString(R.string.version_info, versionName, versionCode)
 
+        if (remoteConfigManager.lastVersionCode() > versionCode) {
+            updateAvailableWrapper.visibility = View.VISIBLE
+            updateAvailableTextView.text = getString(R.string.update_available, remoteConfigManager.lastVersionNumber(), remoteConfigManager.lastVersionCode())
+        } else {
+            updateAvailableWrapper.visibility = View.GONE
+        }
+
         sourceCodeLink.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         twitter.setOnClickListener { openBrowserLink(twitterLink) }
         sourceCodeButton.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         reportBug.setOnClickListener { sendEmail("[Android] Bugreport") }
         sendFeedback.setOnClickListener { sendEmail("[Android] Feedback") }
         googlePlayStoreButton.setOnClickListener { openGooglePlay() }
+        updateAvailableWrapper.setOnClickListener { openGooglePlay() }
     }
 
     private fun openBrowserLink(url: String) {
@@ -142,6 +156,7 @@ class AboutFragment : BaseMainFragment() {
     }
 
     private fun doTheThing() {
+        context?.let { FirebaseAnalytics.getInstance(it).logEvent("found_easter_egg", null) }
         DataBindingUtils.loadImage("Pet-Sabretooth-Base") {bitmap ->
             activity?.runOnUiThread {
                 activity.notNull {

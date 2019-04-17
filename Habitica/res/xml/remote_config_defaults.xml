@@ -24,5 +24,13 @@
         <key>enableLocalChanges</key>
         <value>true</value>
     </entry>
+    <entry>
+        <key>lastVersionNumber</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>lastVersionCode</key>
+        <value>0</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

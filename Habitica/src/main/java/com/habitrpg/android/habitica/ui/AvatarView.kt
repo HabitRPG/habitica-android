@@ -122,7 +122,7 @@ class AvatarView : View {
                     .build()
 
             val draweeHolder = DraweeHolder.create(hierarchy, context)
-            draweeHolder.topLevelDrawable.callback = this
+            draweeHolder.topLevelDrawable?.callback = this
             multiDraweeHolder.add(draweeHolder)
 
             val controller = Fresco.newDraweeControllerBuilder()
@@ -134,7 +134,7 @@ class AvatarView : View {
                                 anim: Animatable?) {
                             if (imageInfo != null) {
                                 if (multiDraweeHolder.size() > layerNumber) {
-                                    multiDraweeHolder.get(layerNumber).topLevelDrawable.bounds = getLayerBounds(layerKey, layerName, imageInfo)
+                                    multiDraweeHolder.get(layerNumber).topLevelDrawable?.bounds = getLayerBounds(layerKey, layerName, imageInfo)
                                 }
                                 onLayerComplete()
                             }

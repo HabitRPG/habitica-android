@@ -44,4 +44,12 @@ class RemoteConfigManager {
     fun enableLocalChanges(): Boolean {
         return remoteConfig.getBoolean("enableLocalChanges")
     }
+
+    fun lastVersionNumber(): String {
+        return remoteConfig.getString("lastVersionNumber")
+    }
+
+    fun lastVersionCode(): Long {
+        return remoteConfig.getLong("lastVersionCode")
+    }
 }
