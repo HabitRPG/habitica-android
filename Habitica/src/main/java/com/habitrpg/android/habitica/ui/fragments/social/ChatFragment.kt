@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
@@ -42,9 +43,9 @@ import kotlinx.android.synthetic.main.tavern_chat_new_entry_item.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ChatFragment constructor() : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    lateinit var viewModel: PartyViewModel
+    var viewModel: PartyViewModel? = null
 
     @Inject
     lateinit var configManager: RemoteConfigManager
@@ -84,32 +85,16 @@ class ChatFragment constructor() : BaseFragment(), SwipeRefreshLayout.OnRefreshL
             compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe(Consumer { this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getReplyMessageEvents().subscribe(Consumer{ setReplyTo(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe(Consumer { this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getLikeMessageFlowable().subscribe(Consumer { viewModel.likeMessage(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getLikeMessageFlowable().subscribe(Consumer { viewModel?.likeMessage(it) }, RxErrorHandler.handleEmptyError()))
         }
 
         chatBarView.sendAction = { sendChatMessage(it) }
         chatBarView.maxChatLength = configManager.maxChatLength()
         chatBarView.autocompleteContext = "party"
-        chatBarView.groupID = viewModel.getGroupData().value?.id
+        chatBarView.groupID = viewModel?.getGroupData()?.value?.id
 
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
-
-        compositeSubscription.add(viewModel.getChatMessages().subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError()))
-
-        viewModel.getUserData().observe(viewLifecycleOwner, Observer {
-            chatAdapter?.user = it
-            if (it?.flags?.isCommunityGuidelinesAccepted == true) {
-                communityGuidelinesView.visibility = View.GONE
-            } else {
-                communityGuidelinesView.setOnClickListener { _ ->
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = "https://habitica.com/static/community-guidelines".toUri()
-                    context?.startActivity(i)
-                    viewModel.updateUser("flags.communityGuidelinesAccepted", true)
-                }
-            }
-        })
 
         recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
@@ -119,6 +104,22 @@ class ChatFragment constructor() : BaseFragment(), SwipeRefreshLayout.OnRefreshL
         })
 
         refresh(false)
+
+        viewModel?.getChatMessages()?.subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+
+        viewModel?.getUserData()?.observe(viewLifecycleOwner, Observer {
+            chatAdapter?.user = it
+            if (it?.flags?.isCommunityGuidelinesAccepted == true) {
+                communityGuidelinesView.visibility = View.GONE
+            } else {
+                communityGuidelinesView.setOnClickListener { _ ->
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = "https://habitica.com/static/community-guidelines".toUri()
+                    context?.startActivity(i)
+                    viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
+                }
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -169,7 +170,7 @@ class ChatFragment constructor() : BaseFragment(), SwipeRefreshLayout.OnRefreshL
          if (isUserInitiated) {
              refreshLayout.isRefreshing = true
          }
-        viewModel.retrieveGroupChat {
+        viewModel?.retrieveGroupChat {
             refreshLayout?.isRefreshing = false
             if (isScrolledToTop) {
                 recyclerView.scrollToPosition(0)
@@ -184,7 +185,7 @@ class ChatFragment constructor() : BaseFragment(), SwipeRefreshLayout.OnRefreshL
 
     private fun markMessagesAsSeen() {
         if (navigatedOnceToFragment) {
-            viewModel.markMessagesSeen()
+            viewModel?.markMessagesSeen()
         }
     }
 
@@ -210,23 +211,23 @@ class ChatFragment constructor() : BaseFragment(), SwipeRefreshLayout.OnRefreshL
                     .setTitle(R.string.confirm_delete_tag_title)
                     .setMessage(R.string.confirm_delete_tag_message)
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes) { _, _ -> viewModel.deleteMessage(chatMessage) }
+                    .setPositiveButton(android.R.string.yes) { _, _ -> viewModel?.deleteMessage(chatMessage) }
                     .setNegativeButton(android.R.string.no, null).show()
         }
     }
 
     private fun setChatMessages(chatMessages: RealmResults<ChatMessage>) {
         chatAdapter?.updateData(chatMessages)
-        chatBarView.chatMessages = viewModel.socialRepository.getUnmanagedCopy(chatMessages)
+        viewModel?.socialRepository?.getUnmanagedCopy(chatMessages)?.let { chatBarView.chatMessages = it }
         recyclerView.scrollToPosition(0)
 
-        viewModel.gotNewMessages = true
+        viewModel?.gotNewMessages = true
 
         markMessagesAsSeen()
     }
 
     private fun sendChatMessage(chatText: String) {
-        viewModel.postGroupChat(chatText) {
+        viewModel?.postGroupChat(chatText) {
             recyclerView?.scrollToPosition(0)
         }
     }

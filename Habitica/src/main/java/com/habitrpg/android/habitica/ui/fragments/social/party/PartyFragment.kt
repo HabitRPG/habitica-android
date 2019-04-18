@@ -35,7 +35,7 @@ class PartyFragment : BaseMainFragment() {
     private var chatFragment: ChatFragment? = null
     private var viewPagerAdapter: androidx.fragment.app.FragmentPagerAdapter? = null
 
-    private lateinit var viewModel: PartyViewModel
+    internal lateinit var viewModel: PartyViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -84,8 +84,29 @@ class PartyFragment : BaseMainFragment() {
         viewPager?.currentItem = 0
 
         setViewPagerAdapter()
+
+        setFragments()
+
         this.tutorialStepIdentifier = "party"
         this.tutorialText = getString(R.string.tutorial_party)
+    }
+
+    fun setFragments() {
+        val fragments = childFragmentManager.fragments
+        for (childFragment in fragments) {
+            if (childFragment is ChatFragment) {
+                chatFragment = childFragment
+                chatFragment?.viewModel = viewModel
+            }
+            if (childFragment is PartyDetailFragment) {
+                firstFragment = childFragment
+                childFragment.viewModel = viewModel
+            }
+            if (childFragment is PartyMemberListFragment) {
+                partyMemberListFragment = childFragment
+                childFragment.viewModel = viewModel
+            }
+        }
     }
 
     override fun injectFragment(component: AppComponent) {

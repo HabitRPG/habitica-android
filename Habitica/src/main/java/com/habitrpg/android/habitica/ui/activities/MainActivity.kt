@@ -596,7 +596,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private fun displayDeathDialogIfNeeded() {
 
-        if (user?.stats?.hp ?: 0.0 > 0) {
+        if (user?.stats?.hp ?: 1.0 > 0) {
             return
         }
 

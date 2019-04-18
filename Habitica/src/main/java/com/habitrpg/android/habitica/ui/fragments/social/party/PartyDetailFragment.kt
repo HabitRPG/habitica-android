@@ -33,9 +33,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-class PartyDetailFragment constructor() : BaseFragment() {
+class PartyDetailFragment : BaseFragment() {
 
-    lateinit var viewModel: PartyViewModel
+    var viewModel: PartyViewModel? = null
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -89,17 +89,13 @@ class PartyDetailFragment constructor() : BaseFragment() {
         newQuestButton?.setOnClickListener { inviteNewQuest() }
         questDetailButton?.setOnClickListener { questDetailButtonClicked() }
         leaveButton?.setOnClickListener { leaveParty() }
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel.getGroupData().observe(viewLifecycleOwner, Observer { updateParty(it) })
-        viewModel.getUserData().observe(viewLifecycleOwner, Observer { updateUser(it) })
+        viewModel?.getGroupData()?.observe(viewLifecycleOwner, Observer { updateParty(it) })
+        viewModel?.getUserData()?.observe(viewLifecycleOwner, Observer { updateUser(it) })
     }
 
     private fun refreshParty() {
-        viewModel.retrieveGroup {
+        viewModel?.retrieveGroup {
             refreshLayout?.isRefreshing = false
         }
     }
@@ -158,7 +154,7 @@ class PartyDetailFragment constructor() : BaseFragment() {
     }
 
     private fun showParticipantButtons(): Boolean {
-        return viewModel.showParticipantButtons()
+        return viewModel?.showParticipantButtons() ?: false
     }
 
     private fun updateQuestContent(questContent: QuestContent) {
@@ -172,11 +168,11 @@ class PartyDetailFragment constructor() : BaseFragment() {
         } else {
             DataBindingUtils.loadImage(questImageView, "quest_" + questContent.key)
         }
-        if (viewModel.isQuestActive) {
+        if (viewModel?.isQuestActive == true) {
             questProgressView?.visibility = View.VISIBLE
-            questProgressView?.setData(questContent, viewModel.getGroupData().value?.quest?.progress)
+            questProgressView?.setData(questContent, viewModel?.getGroupData()?.value?.quest?.progress)
 
-            questParticipationView?.text = getString(R.string.number_participants, viewModel.getGroupData().value?.quest?.members?.size)
+            questParticipationView?.text = getString(R.string.number_participants, viewModel?.getGroupData()?.value?.quest?.members?.size)
         } else {
             questProgressView?.visibility = View.GONE
         }
@@ -193,34 +189,34 @@ class PartyDetailFragment constructor() : BaseFragment() {
         val builder = AlertDialog.Builder(activity)
                 .setMessage(R.string.leave_party_confirmation)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    viewModel.leaveGroup { }
+                    viewModel?.leaveGroup { }
                 }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()
     }
 
     private fun onQuestAccept() {
-        viewModel.acceptQuest()
+        viewModel?.acceptQuest()
     }
 
 
     private fun onQuestReject() {
-        viewModel.rejectQuest()
+        viewModel?.rejectQuest()
     }
 
     private fun onPartyInviteAccepted() {
-        viewModel.getUserData().value?.invitations?.party?.id.notNull {
-            viewModel.joinGroup(it)
+        viewModel?.getUserData()?.value?.invitations?.party?.id.notNull {
+            viewModel?.joinGroup(it)
         }
     }
 
     private fun onPartyInviteRejected() {
-        viewModel.getUserData().value?.invitations?.party?.id.notNull {
-            viewModel.rejectGroupInvite(it)
+        viewModel?.getUserData()?.value?.invitations?.party?.id.notNull {
+            viewModel?.rejectGroupInvite(it)
         }
     }
 
     private fun questDetailButtonClicked() {
-        viewModel.getGroupData().value.notNull { party ->
+        viewModel?.getGroupData()?.value.notNull { party ->
             MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail(party.id, party.quest?.key ?: ""))
         }
     }
