@@ -65,7 +65,6 @@ class ReportMessageActivity : BaseActivity() {
         setStatusBarDim(true)
 
         contentContainer.setOnTouchListener { _, _ -> true }
-        additionInfoEditText.setOnTouchListener { _, _ -> true }
         dismissTouchView.setOnClickListener { finish() }
         reportExplanationTextView.text = MarkdownParser.parseMarkdown(getString(R.string.report_explanation))
 

@@ -44,13 +44,18 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
             </com.google.android.material.appbar.AppBarLayout>
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0dp">
             <LinearLayout
                 android:orientation="vertical" android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="16dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
-                android:paddingBottom="25dp">
+                android:paddingBottom="25dp"
+                android:layout_marginBottom="0dp">
                 <TextView
                     android:id="@+id/title_text_view"
                     android:layout_width="wrap_content"
@@ -78,6 +83,7 @@
                     android:layout_marginBottom="@dimen/spacing_large">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/additional_info_edittext"
+                        android:overScrollMode="always"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/reason_for_report"
@@ -94,6 +100,7 @@
                     android:textColor="@color/gray_200"
                     />
             </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
