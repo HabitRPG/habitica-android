@@ -53,6 +53,11 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         }
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        isDisplaying = true
+    }
+
     private fun runCron() {
         val completedTasks = ArrayList<Task>()
         for (task in tasks) {
@@ -151,6 +156,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                         .map { tasks -> tasks.where().equalTo("isDue", true).notEqualTo("completed", true).notEqualTo("yesterDaily", false).findAll() }
                         .flatMapMaybe<List<Task>> { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
                         .retry(1)
+                        .throttleFirst(2, TimeUnit.SECONDS)
                         .subscribe(Consumer { tasks ->
                             if (isDisplaying) {
                                 return@Consumer
@@ -179,7 +185,6 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             dialog.setCanceledOnTouchOutside(false)
             if (!activity.isFinishing) {
                 dialog.show()
-                isDisplaying = true
             }
         }
     }
