@@ -60,7 +60,7 @@ class GroupFormActivity : BaseActivity() {
 
         cancelButton.setOnClickListener {
             finish()
-            KeyboardUtil.dismissKeyboard(this)
+            dismissKeyboard()
         }
 
         saveButton.setOnClickListener {
@@ -92,13 +92,13 @@ class GroupFormActivity : BaseActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
-        KeyboardUtil.dismissKeyboard(this)
+        dismissKeyboard()
         return true
     }
 
     override fun onBackPressed() {
         finish()
-        KeyboardUtil.dismissKeyboard(this)
+        dismissKeyboard()
     }
 
     private fun finishActivitySuccessfuly() {
@@ -116,7 +116,7 @@ class GroupFormActivity : BaseActivity() {
         resultIntent.putExtras(bundle)
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
-        KeyboardUtil.dismissKeyboard(this)
+        dismissKeyboard()
     }
 
     companion object {

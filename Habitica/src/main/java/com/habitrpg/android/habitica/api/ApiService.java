@@ -35,8 +35,6 @@ import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.Map;
 
@@ -236,7 +234,7 @@ public interface ApiService {
     Flowable<HabitResponse<ChatMessage>> likeMessage(@Path("gid") String groupId, @Path("mid") String mid);
 
     @POST("groups/{gid}/chat/{mid}/flag")
-    Flowable<HabitResponse<Void>> flagMessage(@Path("gid") String groupId, @Path("mid") String mid);
+    Flowable<HabitResponse<Void>> flagMessage(@Path("gid") String groupId, @Path("mid") String mid, @Body Map<String, String> data);
 
     @POST("groups/{gid}/chat/seen")
     Flowable<HabitResponse<Void>> seenMessages(@Path("gid") String groupId);

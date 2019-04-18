@@ -3,21 +3,15 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import io.realm.RealmResults
@@ -133,13 +127,6 @@ open class GroupViewModel : BaseViewModel() {
 
     fun likeMessage(message: ChatMessage) {
         disposable.add(socialRepository.likeMessage(message).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
-    }
-
-    fun flagMessage(chatMessage: ChatMessage, function: () -> Unit) {
-        disposable.add(socialRepository.flagMessage(chatMessage)
-                .subscribe(Consumer {
-                    function()
-                }, RxErrorHandler.handleEmptyError()))
     }
 
     fun deleteMessage(chatMessage: ChatMessage) {

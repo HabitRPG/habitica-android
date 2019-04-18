@@ -524,8 +524,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.likeMessage(groupId, mid).compose(configureApiCallObserver())
     }
 
-    override fun flagMessage(groupId: String, mid: String): Flowable<Void> {
-        return apiService.flagMessage(groupId, mid).compose(configureApiCallObserver())
+    override fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Flowable<Void> {
+        return apiService.flagMessage(groupId, mid, data).compose(configureApiCallObserver())
     }
 
     override fun seenMessages(groupId: String): Flowable<Void> {

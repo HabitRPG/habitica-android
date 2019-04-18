@@ -15,6 +15,12 @@ import java.util.*
 
 
 class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), SocialLocalRepository {
+    override fun getChatMessage(messageID: String): Flowable<ChatMessage> = realm.where(ChatMessage::class.java)
+            .equalTo("id", messageID)
+            .findAll()
+            .asFlowable()
+            .filter { it.isLoaded && it.isNotEmpty() }
+            .map { it.first() }
 
     override fun getGroupMembership(userId: String, id: String): Flowable<GroupMembership> = realm.where(GroupMembership::class.java)
             .equalTo("userID", userId)

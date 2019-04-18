@@ -80,3 +80,8 @@ class KeyboardUtil(activity: Activity, private val contentView: View) {
         }
     }
 }
+
+
+fun Activity.dismissKeyboard() {
+    KeyboardUtil.dismissKeyboard(this)
+}

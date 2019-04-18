@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.MaintenanceActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
+import com.habitrpg.android.habitica.ui.activities.ReportMessageActivity;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
@@ -314,4 +315,6 @@ public interface AppComponent {
     void inject(@NotNull ChatBarView chatBarView);
 
     void inject(@NotNull TaskFormActivity taskFormActivity);
+
+    void inject(@NotNull ReportMessageActivity reportMessageActivity);
 }

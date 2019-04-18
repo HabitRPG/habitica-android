@@ -229,6 +229,11 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activities.ReportMessageActivity"
+            android:theme="@style/BottomSheetTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
         <service
             android:name=".helpers.notifications.HabiticaFirebaseMessagingService"
             android:exported="false">

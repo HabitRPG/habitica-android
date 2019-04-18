@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
@@ -146,19 +148,8 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     }
 
     private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-        val activity = getActivity() as? MainActivity ?: return
-        val builder = AlertDialog.Builder(activity)
-        builder.setMessage(R.string.chat_flag_confirmation)
-                .setPositiveButton(R.string.flag_confirm) { _, _ ->
-                    socialRepository.flagMessage(chatMessage)
-                            .subscribe(Consumer { _ ->
-                                activity.floatingMenuWrapper.notNull {
-                                    showSnackbar(it, "Flagged message by " + chatMessage.user, HabiticaSnackbar.SnackbarDisplayType.NORMAL)
-                                }
-                            }, RxErrorHandler.handleEmptyError())
-                }
-                .setNegativeButton(R.string.action_cancel) { _, _ -> }
-        builder.show()
+        val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id)
+        MainNavigationController.navigate(directions)
     }
 
     private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {

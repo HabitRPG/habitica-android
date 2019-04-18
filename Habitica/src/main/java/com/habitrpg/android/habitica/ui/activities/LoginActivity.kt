@@ -44,6 +44,7 @@ import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
 import io.reactivex.Flowable
@@ -555,7 +556,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.start()
-        KeyboardUtil.dismissKeyboard(this)
+        dismissKeyboard()
     }
 
     private fun onForgotPasswordClicked() {

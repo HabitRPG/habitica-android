@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation"
+    android:id="@+id/main_nav"
     app:startDestination="@id/tasksFragment">
 
     <fragment
@@ -261,4 +261,37 @@
         android:id="@+id/groupFormActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GroupFormActivity"
         android:label="GroupFormActivity" />
+    <activity
+        android:id="@+id/classSelectionActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity"
+        android:label="ClassSelectionActivity" >
+        <argument
+            android:name="isInitialSelection"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="className"
+            app:argType="string"
+            android:defaultValue="warrior" />
+    </activity>
+    <activity
+        android:id="@+id/reportMessageActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.ReportMessageActivity"
+        android:label="ReportMessageActivity" >
+        <argument
+            android:name="text"
+            app:argType="string" />
+        <argument
+            android:name="profileName"
+            app:argType="string" />
+        <argument
+            android:name="messageID"
+            app:argType="string" />
+    </activity>
+    <action
+        android:id="@+id/action_global_reportMessageActivity"
+        app:destination="@id/reportMessageActivity" />
+    <action
+        android:id="@+id/action_global_classSelectionActivity"
+        app:destination="@id/classSelectionActivity" />
 </navigation>

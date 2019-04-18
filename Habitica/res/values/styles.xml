@@ -28,6 +28,17 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
+    <style name="BottomSheetTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="actionBarStyle">@color/transparent</item>
+        <item name="colorPrimary">@color/brand</item>
+        <item name="colorPrimaryDark">@color/brand_50</item>
+        <item name="colorAccent">@color/brand</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="AppTheme.ActionBar" parent="AppTheme">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
@@ -535,6 +546,10 @@
     <style name="ToolbarDarkBackArrow" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@color/gray_50</item>
         <item name="android:actionMenuTextColor">@color/gray_50</item>
+    </style>
+
+    <style name="ReportMessageToolbar">
+        <item name="android:actionMenuTextColor">@color/red_50</item>
     </style>
 
     <color name="taskform_gray">#99edecee</color>

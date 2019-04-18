@@ -30,10 +30,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import io.reactivex.Flowable
@@ -63,8 +60,8 @@ class FullProfileActivity : BaseActivity() {
     private val equipmentTableLayout: TableLayout by bindView(R.id.equipment_table)
     private val costumeTableLayout: TableLayout by bindView(R.id.costume_table)
     private val costumeCard: androidx.cardview.widget.CardView by bindView(R.id.profile_costume_card)
-    private val avatar_with_bars: View by bindView(R.id.avatar_with_bars)
-    private val fullprofile_scrollview: ScrollView by bindView(R.id.fullprofile_scrollview)
+    private val avatarWithStatsView: View by bindView(R.id.avatar_with_bars)
+    private val scrollView: ScrollView by bindView(R.id.fullprofile_scrollview)
     private val petsFoundCount: TextView by bindView(R.id.profile_pets_found_count)
     private val mountsTamedCount: TextView by bindView(R.id.profile_mounts_tamed_count)
     private val currentPetDrawee: SimpleDraweeView by bindView(R.id.current_pet_drawee)
@@ -101,12 +98,12 @@ class FullProfileActivity : BaseActivity() {
 
         avatarWithBars?.valueBarLabelsToBlack()
 
-        avatar_with_bars.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+        avatarWithStatsView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
         attributeRows.clear()
         attributesCardView.setOnClickListener { toggleAttributeDetails() }
 
-        avatarWithBars = AvatarWithBarsViewModel(this, avatar_with_bars)
+        avatarWithBars = AvatarWithBarsViewModel(this, avatarWithStatsView)
     }
 
     override fun onDestroy() {
@@ -144,13 +141,13 @@ class FullProfileActivity : BaseActivity() {
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
                             .subscribe(Consumer {
-                                HabiticaSnackbar.showSnackbar(this@FullProfileActivity.fullprofile_scrollview.getChildAt(0) as ViewGroup,
+                                HabiticaSnackbar.showSnackbar(this@FullProfileActivity.scrollView.getChildAt(0) as ViewGroup,
                                         String.format(getString(R.string.profile_message_sent_to), userName), SnackbarDisplayType.NORMAL)
                             }, RxErrorHandler.handleEmptyError())
 
-                    KeyboardUtil.dismissKeyboard(this)
+                    dismissKeyboard()
                 }
-                .setNegativeButton(android.R.string.cancel) { _, _ -> KeyboardUtil.dismissKeyboard(this) }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> dismissKeyboard() }
 
                 .create()
 
@@ -352,12 +349,10 @@ class FullProfileActivity : BaseActivity() {
         addLevelAttributes(user)
 
         for (row in statsRows) {
-            if (row.javaClass == UserStatComputer.EquipmentRow::class.java) {
-                val equipmentRow = row as UserStatComputer.EquipmentRow
-                addEquipmentRow(equipmentTableLayout, equipmentRow.gearKey, equipmentRow.text, equipmentRow.stats)
-            } else if (row.javaClass == UserStatComputer.AttributeRow::class.java) {
-                val attributeRow2 = row as UserStatComputer.AttributeRow
-                addAttributeRow(getString(attributeRow2.labelId), attributeRow2.strVal, attributeRow2.intVal, attributeRow2.conVal, attributeRow2.perVal, attributeRow2.roundDown, attributeRow2.isSummary)
+            if (row is UserStatComputer.EquipmentRow) {
+                addEquipmentRow(equipmentTableLayout, row.gearKey, row.text, row.stats)
+            } else if (row is UserStatComputer.AttributeRow) {
+                addAttributeRow(getString(row.labelId), row.strVal, row.intVal, row.conVal, row.perVal, row.roundDown, row.isSummary)
             }
         }
 

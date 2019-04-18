@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
@@ -74,7 +75,7 @@ class PartyInviteActivity : BaseActivity() {
 
         if (id == R.id.action_send_invites) {
             setResult(Activity.RESULT_OK, createResultIntent())
-            KeyboardUtil.dismissKeyboard(this)
+            dismissKeyboard()
             finish()
             return true
         }

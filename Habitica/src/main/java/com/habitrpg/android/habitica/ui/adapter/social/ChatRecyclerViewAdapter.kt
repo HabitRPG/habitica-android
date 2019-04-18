@@ -242,7 +242,6 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                 buttonsWrapper.visibility = View.VISIBLE
                 deleteButton.visibility = if (shouldShowDelete()) View.VISIBLE else View.GONE
                 replyButton.visibility = if (chatMessage?.isInboxMessage == true) View.GONE else View.VISIBLE
-                reportButton.visibility = if (chatMessage?.uuid == userId) View.GONE else View.VISIBLE
             } else {
                 buttonsWrapper.visibility = View.GONE
             }

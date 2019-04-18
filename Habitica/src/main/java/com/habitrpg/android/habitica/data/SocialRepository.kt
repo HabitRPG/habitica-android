@@ -20,7 +20,7 @@ interface SocialRepository : BaseRepository {
 
     fun markMessagesSeen(seenGroupId: String)
 
-    fun flagMessage(chatMessage: ChatMessage): Flowable<Void>
+    fun flagMessage(chatMessage: ChatMessage, additionalInfo: String): Flowable<Void>
 
     fun likeMessage(chatMessage: ChatMessage): Flowable<ChatMessage>
 
@@ -79,4 +79,5 @@ interface SocialRepository : BaseRepository {
 
     fun getGroupMembership(id: String): Flowable<GroupMembership>
     fun getGroupMemberships(): Flowable<RealmResults<GroupMembership>>
+    fun getChatmessage(messageID: String): Flowable<ChatMessage>
 }

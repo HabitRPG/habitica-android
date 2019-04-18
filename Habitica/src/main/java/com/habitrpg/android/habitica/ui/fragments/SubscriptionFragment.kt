@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.ui.activities.GiftIAPActivity
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
@@ -293,7 +294,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
                         startActivity(intent)
                     }
                     .setNeutralButton(getString(R.string.action_cancel)) { dialog, _ ->
-                        KeyboardUtil.dismissKeyboard(thisActivity)
+                        thisActivity.dismissKeyboard()
                         dialog.cancel()
                     }
                     .create()

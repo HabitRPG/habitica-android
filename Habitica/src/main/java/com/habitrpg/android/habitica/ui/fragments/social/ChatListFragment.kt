@@ -15,11 +15,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.net.toUri
+import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
@@ -257,22 +259,8 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-        val context = context
-        if (context != null) {
-            val builder = AlertDialog.Builder(context)
-            builder.setMessage(R.string.chat_flag_confirmation)
-                    .setPositiveButton(R.string.flag_confirm) { _, _ ->
-                        socialRepository.flagMessage(chatMessage)
-                                .subscribe(Consumer {
-                                    val activity = activity as? MainActivity
-                                    activity?.floatingMenuWrapper.notNull {
-                                        showSnackbar(it, "Flagged message by " + chatMessage.user, SnackbarDisplayType.NORMAL)
-                                    }
-                                }, RxErrorHandler.handleEmptyError())
-                    }
-                    .setNegativeButton(R.string.action_cancel) { _, _ -> }
-            builder.show()
-        }
+        val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id)
+        MainNavigationController.navigate(directions)
     }
 
     private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {

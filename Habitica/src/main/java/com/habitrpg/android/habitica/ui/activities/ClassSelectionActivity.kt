@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -86,9 +87,9 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val intent = intent
-        val bundle = intent.extras
-        isInitialSelection = bundle?.getBoolean("isInitialSelection") ?: false
+        val args = navArgs<ClassSelectionActivityArgs>().value
+        isInitialSelection = args.isInitialSelection
+        currentClass = args.className
 
         compositeSubscription.add(userRepository.getUser().firstElement().subscribe(Consumer {
             it.preferences?.let {preferences ->
@@ -97,9 +98,6 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
                 setAvatarViews(unmanagedPrefs)
             }
         }, RxErrorHandler.handleEmptyError()))
-        bundle.notNull { thisBundle ->
-            currentClass = thisBundle.getString("currentClass")
-        }
 
         if (!isInitialSelection) {
             compositeSubscription.add(userRepository.changeClass()

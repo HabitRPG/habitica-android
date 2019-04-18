@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
-import io.reactivex.ObservableTransformer
 import retrofit2.HttpException
 
 
@@ -150,7 +149,7 @@ interface ApiClient {
     // Like returns the full chat list
     fun likeMessage(groupId: String, mid: String): Flowable<ChatMessage>
 
-    fun flagMessage(groupId: String, mid: String): Flowable<Void>
+    fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Flowable<Void>
 
     fun seenMessages(groupId: String): Flowable<Void>
 
