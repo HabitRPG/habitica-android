@@ -16,7 +16,7 @@
   <string name="Language_summary">Zmień język Habitici</string>
   <string name="SP_user_qr_code">Twój kod QR</string>
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
-  <string name="unknown_error">Wystąpił błąd...</string>
+  <string name="unknown_error">Wystąpił błąd…</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_first_day_of_the_week_title">Pierwszy Dzień Tygodnia</string>
   <string name="pref_first_day_of_the_week_summary">Pierwszy dzień tygodnia we wszystkich kalendarzach</string>
@@ -351,7 +351,7 @@
   <string name="share_raised">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
   <string name="open_in_store">Otwórz w sklepie Google Play</string>
   <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
-  <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s</string>
+  <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s.</string>
   <string name="leaderMessage">Wiadomość od %1$s</string>
   <string name="leaderName">Lider: %1$s</string>
   <string name="confirm">Potwierdź</string>
@@ -417,7 +417,7 @@
   <string name="hatching_market_info">Nie znajdujesz poszukiwanych prezentów? Sprawdź na Targu!</string>
   <string name="feeding_market_info">Szukasz innego pokarmu? Kup je na Targu!</string>
   <string name="open_market">Otwórz Targ</string>
-  <string name="cds_description">Twoje codzienne zostaną zresotowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu.</string>
+  <string name="cds_description">Twoje codzienne zostaną zresetowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu!</string>
   <string name="AudioTheme_title">Temat dźwiękowy</string>
   <string name="AudioTheme_summary">Zmień temat dźwiękowy Habitiki</string>
   <!--Login Incentives-->
@@ -425,7 +425,7 @@
   <string name="belongs_to_challenge">Należy do wyzwania</string>
   <string name="has_reminder">Ma powiadomienie</string>
   <string name="has_tag">Ma tag</string>
-  <string name="subscribe.title">Subskrypcja wspiera deweloperów i pozwala utrzymać Habitikę.</string>
+  <string name="subscribe.title">Subskrypcja wspiera deweloperów i pozwala utrzymać Habitikę</string>
   <string name="subscribe_prompt">Zostań abonentem i uzyskuj te użyteczne korzyści:</string>
   <string name="subscribe.listitem1">Kup klejnoty za złoto</string>
   <string name="subscribe.listitem2">Ekskluzywne przedmioty miesiąca </string>
@@ -459,7 +459,7 @@
   <string name="subscription_status">Status Subskrypcji</string>
   <string name="byLeader">przez %s</string>
   <string name="challenge_details">Szczegóły wyzwania</string>
-  <string name="challenge_leave_title">Opuść wyzwanie.</string>
+  <string name="challenge_leave_title">Opuść wyzwanie</string>
   <string name="challenge_leave_text">Jesteś pewien, że chcesz opuścić wyzwanie “%s”?</string>
   <string name="challenge_remove_tasks_title">Usuń zadania</string>
   <string name="challenge_remove_tasks_text">Czy chcesz usunąć zadania</string>
@@ -674,4 +674,41 @@
   <string name="questShop_owner_long">Ian Przewodnik Misji</string>
   <string name="seasonalShop_owner_long">Sezonowa Czarodziejka</string>
   <string name="rage_attack">Atak szału:</string>
-</resources>
+<string name="ago_1day">1 dzień temu</string>
+    <string name="ago_days">%d dni temu</string>
+    <string name="ago_1Minute">1 minutę temu</string>
+    <string name="ago_1hour">1 godzinę temu</string>
+    <string name="invite_username_description">Jeśli masz już znajomych, którzy korzystają z Habitiki, zaproś ich, używając ich nazwy użytkownika tutaj.</string>
+    <string name="create_challenge">Stwórz wyzwanie</string>
+    <string name="edit_challenge">Edytuj</string>
+    <string name="loading">Ładowanie</string>
+    <string name="insufficientGold">Musisz najpierw wykonać więcej zadań, zanim będzie Cię stać na ten przedmiot!</string>
+    <string name="change_username">Zmień nazwę użytkownika</string>
+    <string name="id_copied">ID skopiowane do schowka</string>
+    <string name="report">Zaraportuj</string>
+    <string name="like">Lubię to</string>
+    <string name="reply">Odpowiedz</string>
+    <string name="challenge_categories">Kategorie Wyzwań</string>
+    <string name="joined">Dołączono</string>
+    <string name="public_challenge">Wyzwanie Publiczne</string>
+    <string name="next_day_reminder_title">Czy odznaczyłeś swoje zadania dzisiaj\?</string>
+    <string name="moderator">Moderator</string>
+    <string name="expand_notes">Czytaj więcej</string>
+    <string name="collapse_notes">Pokaż mniej</string>
+    <string name="week_reminder_title">Jak Ci idzie z zadaniami\?</string>
+    <string name="two_handed">Dwuręczna</string>
+    <string name="usernamePromptTitle">Czas ustawić Twoją nazwę użytkownika!</string>
+    <string name="confirmUsername">Potwierdź nazwę użytkownika</string>
+    <string name="cancel">Anuluj</string>
+    <string name="confirm_username">Potwierdź nazwę użytkownika</string>
+    <string name="username_not_confirmed">Nazwa użytkownika nie została potwierdzona</string>
+    <string name="username_confirmed">Nazwa użytkownika została potwierdzona</string>
+    <string name="username_copied">Nazwa użytkownika została skopiowana do schowka</string>
+    <string name="setup_task_join_habitica">Dołączyć do Habitiki (Odznacz mnie!)</string>
+    <string name="visit_website">odwiedź stronę</string>
+    <string name="send_gift">Wyślij prezent</string>
+    <string name="server">Serwer</string>
+    <string name="gift_confirmation_title">Twój prezent został wysłany!</string>
+    <string name="discover">Odkryj</string>
+    <string name="preference_push_important_announcements">Ważne Ogłoszenia</string>
+    </resources>
