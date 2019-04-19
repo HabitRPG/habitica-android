@@ -25,12 +25,7 @@ public class RxErrorHandler {
 
     public static Consumer<Throwable> handleEmptyError() {
         //Can't be turned into a lambda, because it then doesn't work for some reason.
-        return new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) {
-                RxErrorHandler.reportError(throwable);
-            }
-        };
+        return RxErrorHandler::reportError;
     }
 
     public static void reportError(Throwable throwable) {
