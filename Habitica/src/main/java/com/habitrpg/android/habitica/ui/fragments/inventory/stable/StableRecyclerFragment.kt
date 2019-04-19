@@ -129,22 +129,19 @@ class StableRecyclerFragment : BaseFragment() {
                 val castedAnimal = animal as? OwnedObject ?: return@forEach
                 animalMap[castedAnimal.key ?: ""] = castedAnimal
             }
-            return@map animalMap
+            animalMap
         }
 
         compositeSubscription.add(observable.zipWith(ownedObservable, BiFunction<RealmResults<out Animal>, Map<String, OwnedObject>, ArrayList<Any>> { unsortedAnimals, ownedAnimals ->
-            return@BiFunction mapAnimals(unsortedAnimals, ownedAnimals)
+            mapAnimals(unsortedAnimals, ownedAnimals)
         }).subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun mapAnimals(unsortedAnimals: RealmResults<out Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
         val items = ArrayList<Any>()
-        if (unsortedAnimals.size == 0) {
-            return items
-        }
+        var lastAnimal: Animal = unsortedAnimals[0] ?: return items
         var lastSectionTitle = ""
 
-        var lastAnimal: Animal = unsortedAnimals[0]!!
         for (animal in unsortedAnimals) {
             val identifier = if (animal.animal.isNotEmpty()) animal.animal else animal.key
             val lastIdentifier = if (lastAnimal.animal.isNotEmpty()) lastAnimal.animal else lastAnimal.key
@@ -161,19 +158,17 @@ class StableRecyclerFragment : BaseFragment() {
                 items.add(animal.type)
                 lastSectionTitle = animal.type
             }
-            if (user != null && user?.items != null) {
-                when (itemType) {
-                    "pets" -> {
-                        val ownedPet = ownedAnimals[animal?.key] as? OwnedPet
-                        if (ownedPet?.trained ?: 0 > 0) {
-                            lastAnimal.numberOwned += 1
-                        }
+            when (itemType) {
+                "pets" -> {
+                    val ownedPet = ownedAnimals[animal?.key] as? OwnedPet
+                    if (ownedPet?.trained ?: 0 > 0) {
+                        lastAnimal.numberOwned += 1
                     }
-                    "mounts" -> {
-                        val ownedMount = ownedAnimals[animal?.key] as? OwnedMount
-                        if (ownedMount?.owned == true) {
-                            lastAnimal.numberOwned = lastAnimal.numberOwned + 1
-                        }
+                }
+                "mounts" -> {
+                    val ownedMount = ownedAnimals[animal?.key] as? OwnedMount
+                    if (ownedMount?.owned == true) {
+                        lastAnimal.numberOwned = lastAnimal.numberOwned + 1
                     }
                 }
             }
