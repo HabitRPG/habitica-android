@@ -890,4 +890,5 @@
     <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
     <string name="report_message_title">Report %s for violation:</string>
     <string name="reason_for_report">Reason for report (optional)</string>
+    <string name="mystery_sets">Mystery Sets</string>
 </resources>

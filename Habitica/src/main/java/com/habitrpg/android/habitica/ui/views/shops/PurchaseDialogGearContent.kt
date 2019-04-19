@@ -34,19 +34,24 @@ internal class PurchaseDialogGearContent : PurchaseDialogContent {
     }
 
     fun setEquipment(equipment: Equipment) {
-        if (equipment.isManaged) {
+        if (equipment.isValid) {
             configureFieldsForValue(strLabel, strValueTextView, equipment.str)
             configureFieldsForValue(perLabel, perValueTextView, equipment.per)
             configureFieldsForValue(conLabel, conValueTextView, equipment.con)
             configureFieldsForValue(intLabel, intValueTextView, equipment._int)
+        } else {
+            configureFieldsForValue(strLabel, strValueTextView, 0)
+            configureFieldsForValue(perLabel, perValueTextView, 0)
+            configureFieldsForValue(conLabel, conValueTextView, 0)
+            configureFieldsForValue(intLabel, intValueTextView, 0)
         }
     }
 
     private fun configureFieldsForValue(labelView: TextView?, valueTextView: TextView?, value: Int) {
-        valueTextView!!.text = "+" + value
+        valueTextView?.text = "+$value"
         if (value == 0) {
-            labelView!!.setTextColor(ContextCompat.getColor(context, R.color.gray_400))
-            valueTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_400))
+            labelView?.setTextColor(ContextCompat.getColor(context, R.color.gray_400))
+            valueTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray_400))
         }
     }
 }
