@@ -212,6 +212,8 @@ interface ApiClient {
 
     // Notifications
     fun readNotification(notificationId: String): Flowable<List<*>>
+    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
+    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
 
     fun getErrorResponse(throwable: HttpException): ErrorResponse
 

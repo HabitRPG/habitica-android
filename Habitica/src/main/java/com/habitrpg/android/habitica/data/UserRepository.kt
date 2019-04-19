@@ -50,6 +50,8 @@ interface UserRepository : BaseRepository {
     fun runCron()
 
     fun readNotification(id: String): Flowable<List<*>>
+    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
+    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
 
     fun changeCustomDayStart(dayStartTime: Int): Flowable<User>
 

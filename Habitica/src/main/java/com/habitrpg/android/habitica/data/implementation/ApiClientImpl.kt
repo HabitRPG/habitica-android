@@ -666,6 +666,14 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.readNotification(notificationId).compose(configureApiCallObserver())
     }
 
+    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
+        return apiService.readNotifications(notificationIds).compose(configureApiCallObserver())
+    }
+
+    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
+        return apiService.seeNotifications(notificationIds).compose(configureApiCallObserver())
+    }
+
     override val content: Flowable<ContentResult>
         get() = apiService.getContent(languageCode).compose(configureApiCallObserver())
 

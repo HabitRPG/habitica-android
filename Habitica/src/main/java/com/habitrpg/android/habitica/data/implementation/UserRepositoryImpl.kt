@@ -170,6 +170,12 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun readNotification(id: String): Flowable<List<*>> = apiClient.readNotification(id)
 
+    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =
+            apiClient.readNotifications(notificationIds)
+
+    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =
+            apiClient.seeNotifications(notificationIds)
+
     override fun changeCustomDayStart(dayStartTime: Int): Flowable<User> {
         val updateObject = HashMap<String, Any>()
         updateObject["dayStart"] = dayStartTime

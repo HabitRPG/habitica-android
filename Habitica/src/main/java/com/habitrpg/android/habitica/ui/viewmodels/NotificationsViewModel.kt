@@ -6,12 +6,11 @@ import com.habitrpg.android.habitica.models.notifications.GlobalNotification
 import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.android.habitica.models.notifications.NotificationType
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.realm.RealmList
-
+import java.util.HashMap
 
 open class NotificationsViewModel : BaseViewModel() {
     var party: UserParty? = null
@@ -56,18 +55,42 @@ open class NotificationsViewModel : BaseViewModel() {
     }
 
     fun dismissNotification(notification: GlobalNotification) {
-        Log.d("NotificationsViewModel.dismissNotification " + notification.type + " " + notification.id)
-        //TODO("not implemented")
+        disposable.add(userRepository.readNotification(notification.id)
+                .subscribe(Consumer {
+                    // TODO better way to handle updates than reload whole user ??
+                    refreshNotifications()
+                }, RxErrorHandler.handleEmptyError()))
     }
 
-    fun dismissAllNotifications() {
-        Log.d("NotificationsViewModel.dismissAllNotifications")
-        //TODO("not implemented")
+    fun dismissAllNotifications(notifications: List<GlobalNotification>) {
+        if (notifications.isEmpty()) {
+            return
+        }
+
+        val notificationIds = HashMap<String, List<String>>()
+        notificationIds["notificationIds"] = notifications.map { notification -> notification.id }
+
+        disposable.add(userRepository.readNotifications(notificationIds)
+                .subscribe(Consumer {
+                    refreshNotifications()
+                }, RxErrorHandler.handleEmptyError()))
     }
 
-    fun markNotificationsAsSeen() {
-        Log.d("NotificationsViewModel.markNotificationsAsSeen")
-        //TODO("not implemented")
+    fun markNotificationsAsSeen(notifications: List<GlobalNotification>) {
+        val unseenIds = notifications.filter { notification -> notification.seen != true }
+                .map { notification -> notification.id }
+
+        if (unseenIds.isEmpty()) {
+            return
+        }
+
+        val notificationIds = HashMap<String, List<String>>()
+        notificationIds["notificationIds"] = unseenIds
+
+        disposable.add(userRepository.seeNotifications(notificationIds)
+                .subscribe(Consumer {
+                    refreshNotifications()
+                }, RxErrorHandler.handleEmptyError()))
     }
 
 }

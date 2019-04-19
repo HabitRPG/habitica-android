@@ -348,6 +348,12 @@ public interface ApiService {
     @POST("notifications/{notificationId}/read")
     Flowable<HabitResponse<List>> readNotification(@Path("notificationId") String notificationId);
 
+    @POST("notifications/read")
+    Flowable<HabitResponse<List>> readNotifications(@Body Map<String, List<String>> notificationIds);
+
+    @POST("notifications/see")
+    Flowable<HabitResponse<List>> seeNotifications(@Body Map<String, List<String>> notificationIds);
+
     @POST("user/open-mystery-item")
     Flowable<HabitResponse<Equipment>> openMysteryItem();
 

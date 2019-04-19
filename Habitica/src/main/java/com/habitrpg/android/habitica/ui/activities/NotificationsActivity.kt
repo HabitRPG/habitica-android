@@ -25,6 +25,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
+    private var notifications: List<GlobalNotification> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,7 +39,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         compositeSubscription.add(viewModel.getNotifications().subscribe(Consumer {
             this.setNotifications(it)
-            viewModel.markNotificationsAsSeen()
+            viewModel.markNotificationsAsSeen(it)
         }, RxErrorHandler.handleEmptyError()))
 
         notifications_refresh_layout?.setOnRefreshListener(this)
@@ -64,6 +66,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun setNotifications(notifications: List<GlobalNotification>) {
+        this.notifications = notifications
+
         if (notification_items == null) {
             return
         }
@@ -108,14 +112,14 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         badge?.text = notificationCount.toString()
 
         val dismissAllButton = header?.findViewById(R.id.dismiss_all_button) as? Button
-        dismissAllButton?.setOnClickListener({ viewModel.dismissAllNotifications() })
+        dismissAllButton?.setOnClickListener { viewModel.dismissAllNotifications(notifications) }
 
         return header
     }
 
     private fun createNewChatMessageNotification(notification: GlobalNotification): View? {
         val data = notification.getData() as? NewChatMessageData
-        val stringId = if (viewModel.isPartyMessage(data)) R.string.new_msg_party else R.string.new_msg_guild;
+        val stringId = if (viewModel.isPartyMessage(data)) R.string.new_msg_party else R.string.new_msg_guild
 
         return createNotificationItem(
                 notification,
@@ -156,7 +160,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val item = inflater.inflate(R.layout.notification_item, notification_items, false)
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
-        dismissButton?.setOnClickListener({ viewModel.dismissNotification(notification) })
+        dismissButton?.setOnClickListener { viewModel.dismissNotification(notification) }
 
         val messageTextView = item?.findViewById(R.id.message_text) as? TextView
         messageTextView?.text = messageText
