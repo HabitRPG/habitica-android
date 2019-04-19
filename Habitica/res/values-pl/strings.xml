@@ -441,7 +441,7 @@
   <string name="subscription">Subskrypcja</string>
   <string name="active">Aktywne</string>
   <string name="cancel_subscription">Anuluj Subskrypcję</string>
-  <string name="cancel_subscription_google.description">Nie chcesz dłużej subskrypcji? Możesz z niej zrezygnować w sekcji \"Moje Aplikacje\" Google Play Store.</string>
+  <string name="cancel_subscription_google.description">Nie chcesz dłużej subskrypcji\? Możesz z niej zrezygnować w sekcji \"Moje Aplikacje\" w Google Play Store.</string>
   <string name="cancel_subscription_notgoogle.description">Nie chcesz dłużej subskrybować? Z powodu twojej metody płatności, możesz anulować subskrypcję tylko poprzez stronę internetową. Kliknij przycisk poniżej, aby otworzyć stronę w twojej przeglądarce!</string>
   <string name="visit_habitica_website">Odwiedź Stronę Habitiki</string>
   <string name="current_bonuses">Obecne Dodatki</string>
@@ -711,4 +711,26 @@
     <string name="gift_confirmation_title">Twój prezent został wysłany!</string>
     <string name="discover">Odkryj</string>
     <string name="preference_push_important_announcements">Ważne Ogłoszenia</string>
+    <string name="faint_penalty_body">Straciłeś poziom, złoto i przedmiot z wyposażenia, ale możesz je odzyskać poprzez ciężką pracę! Powodzenia — uda ci się.</string>
+    <string name="reminder_title">Pamiętaj aby odznaczyć swoje zadanie</string>
+    <string name="ago_minutes">%d minut ago</string>
+    <string name="ago_hours">%d godzin ago</string>
+    <string name="evolved_pet_title">Oswoiłeś %1$s %2$s, idź na przejażdżkę!</string>
+    <string name="opting_out_progress">Wycofywanie się</string>
+    <string name="subscription_duration_norenew">Na %s</string>
+    <string name="subscribe.listitem2.description">Co miesiąc dostaniesz wyjątkowy kosmetyczny przedmiot który możesz założyć na swój awatar!
+\n
+\nDodatkowo, za każde trzy miesiące ciągłej subskrypcji, Tajemniczy Podróżnicy w Czasie zapewnią ci dostęp do historycznych (i futurystycznych!) przedmiotów kosmetycznych.</string>
+    <string name="subscribe.listitem4.description">Podwojone limity łupów pozwolą ci otrzymać więcej przedmiotów każdego dnia, za ukończone zadania, co sprawi że twoja stajnia wypełni się szybciej!</string>
+    <string name="subscribe1month.gemcap">Limit 25 klejnotów</string>
+    <string name="subscribe3month.gemcap">Limit 3 klejnotów</string>
+    <string name="subscribe6month.gemcap">Limit 35 klejnotów</string>
+    <string name="subscribe12month.gemcap">Limit 45 klejnotów</string>
+    <string name="due">Do</string>
+    <string name="join_a_challenge">Dołącz do wyzwania aby dodać wybrany zastaw zadań do twojej listy i rywalizuj z innymi Habitikanami aby zdobyć osiągnięcia a nawet klejnoty!</string>
+    <string name="welcome_text">Oh, musisz byś to nowy. Jestem Justin, będę twoim przewodnikiem po Habitice.
+\n
+\nPo pierwsze, jak się nazywasz\? Śmiało, zmień wszystko co wybrałem. Kiedy skończysz, stworzymy twój awatar!</string>
+    <string name="challenge_create_error_tavern_one_gem">Potrzebujesz przynajmniej jednego klejnotu by stworzyć publiczne wyzwanie.</string>
+    <string name="challenge_create_error_tag">Potrzebujesz krótkiej nazwy aby stworzyć to wyzwanie.</string>
     </resources>
