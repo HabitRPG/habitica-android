@@ -81,7 +81,7 @@
   <string name="text">テキスト</string>
   <string name="difficulty">難易度</string>
   <string name="tags">タグ</string>
-  <string name="trivial">ちょちょい</string>
+  <string name="trivial">ちょろい</string>
   <string name="easy">かんたん</string>
   <string name="medium">ふつう</string>
   <string name="hard">むずかしい</string>
@@ -173,7 +173,7 @@
   <string name="purchase_set_button">%d ジェムでセットをアンロック</string>
   <string name="purchase_button">購入</string>
   <string name="purchase_set_title">%s セットを購入</string>
-  <string name="due_date">締切日</string>
+  <string name="due_date">期限日</string>
   <string name="quest.accept">承認</string>
   <string name="quest.reject">拒否</string>
   <string name="quest.begin">クエストをはじめる</string>
@@ -235,8 +235,8 @@
   <string name="setup_task_creativity_3">創造的なプロジェクトを完了する</string>
   <string name="gem.purchase.support">Habitica の運営を手伝ってくれませんか?　ジェムを買うことでアプリの開発者を支援できます!\n\nジェムはあなたのアカウントの楽しいおまけを買うことができます。おまけの例: \n\n - アバターのカッコいい衣装\n
  - すんごい背景\n - ペットのタマゴがごほうびの楽しいクエスト\n - レベル100になるまでにクラスを変更できる\n\nHabiticaが最高のものになる手助けをしてくれるとうれしいです。あなたの支援は私たちにとって多くの意味があることなんです!</string>
-  <string name="my_guilds">入っているギルド</string>
-  <string name="public_guilds">オープン ギルド</string>
+  <string name="my_guilds">所属ギルド</string>
+  <string name="public_guilds">公共ギルド</string>
   <string name="guild">ギルド</string>
   <string name="leave">辞める</string>
   <string name="join">参加する</string>
@@ -330,12 +330,12 @@
   <string name="mage">魔道士</string>
   <string name="healer">治療師</string>
   <string name="warrior_description">戦士はタスクを完了したときに「会心の一撃」が出やすく、その効果も高いです。「会心の一撃」が出ると、ゴールド、経験値、アイテムドロップの確率にランダムにボーナスがつきます。また、戦士はボスに大きなダメージを与えます。予測できない一攫千金タイプの報酬でやる気が出る、もしくはボス クエストで活躍したいなら、戦士でプレイしましょう！</string>
-  <string name="mage_description">魔道士は、すぐに身に着ける学習能力をもっているよ。経験値の取得とレベルアップが他のクラスより速い。また、魔道士は、スキルを使うためのマナを集めるのがうまい。Habitica の戦術的な面を楽しみたい、レベルアップや拡張機能のアンロックにすごくやる気が出るなら、魔道士でプレーしよう!</string>
+  <string name="mage_description">魔道士は学習スピードが速く、他のクラスよりも多く経験値を得てレベルが早く上がります。また、特殊能力を使うためのマナも大量に獲得できます。Habiticaの戦略ゲーム的な側面を楽しみたいなら、あるいはレベルアップしたり追加要素をアンロックしたりするのがあなたにとって強いやる気になるなら、魔道士でプレイしましょう！</string>
   <string name="rogue_description">盗賊は富を集めることを愛するのです。ほかのどのクラスよりもゴールドを稼ぎ、アイテムを見つける確率が高い。盗賊の特徴、忍びの術をもってすれば、日課をやらなかったとしても、性格的に傷つかない。戦利品や勲章――Habitica では、ごほうびと実績に強く心動かされるなら、盗賊でプレーしよう!</string>
   <string name="healer_description">治療師は痛みに耐え、他人を守るのです。やらなかった日課や悪い習慣にも治療師は動揺せず、失敗から体力を回復させる能力がある。パーティーの他のメンバーを助けることに喜びを感じる、困難な仕事による死をも恐れぬ理想があるのなら、治療師でプレーしよう!</string>
   <string name="select_class">クラスを選ぶ</string>
   <string name="opt_out_class">選ばない</string>
-  <string name="opt_out_description">クラスなんてめんどくさい? 後で選びたい? 選ばなくても構わないよ。スキルのない戦士になります。クラスのしくみについてwiki を参照し、いつでも ユーザー -&gt; ステータス で有効にできる。</string>
+  <string name="opt_out_description">クラスなんてめんどくさい？ 後で選びたい？ 選ばなくても構いません。スキルのない戦士になります。クラスのしくみについて後でwikiを参照して、いつでもクラスを有効にできます。</string>
   <string name="class_confirmation">%s になります。いいですか?</string>
   <string name="class_changed">あなたは%s に転職した！</string>
   <string name="class_changed_description">新たな標準の武装を手に入れました。「装備」で取り換えることもできます！</string>
@@ -451,7 +451,9 @@
 \nアレクサンダーと1ヵ月の間に取り引きできるジェムの数は、最初は25個に限定されていますが、寄付期間によって増えます。
 \n
 \n寄付の継続3カ月ごとにその数が5個ずつ増えていき、最大で月に50個を買うことができます！</string>
-  <string name="subscribe.listitem2.description">毎月、アバターを個性的にメークアップするアイテムが手に入ります！\n\nさらに寄付の継続3カ月ごとに、謎のタイムトラベラーによって、歴史的（そして未来的！）なメークアップ アイテムへのアクセスが許されます。</string>
+  <string name="subscribe.listitem2.description">毎月、アバターを個性的に装飾するアイテムが手に入ります！
+\n
+\nさらに寄付の継続3カ月ごとに、謎のタイムトラベラーによって、歴史的（そして未来的！）な装飾アイテムが入手可能になります。</string>
   <string name="subscribe.listitem3.description">完了した To-Do やタスクの履歴を、より長期間閲覧可能になります。</string>
   <string name="subscribe.listitem4.description">落とし物の上限が2倍になり、毎日の完了したタスクから、より多くのアイテムを獲得することができます。動物小屋のコンプリートも早くなります！</string>
   <string name="subscribe1month.gemcap">上限 25 ジェム</string>
@@ -531,8 +533,9 @@
   <string name="login_btn_fb">Facebookでログイン</string>
   <string name="login_btn_google">Googleでログイン</string>
   <string name="action_back">戻る</string>
-  <string name="welcome_text">やあ、新人さんだね。僕はJustin。Habiticaの案内役だよ。\n\n
-あなたを何と呼べばいいかな？ 僕の選んだものから自由に変更してね。準備が整ったら、自分のアバターを作ってみよう！</string>
+  <string name="welcome_text">おお、あなたは新しくここに来た方ですね。私の名前はJustin。Habiticaの案内人です。
+\n
+\nまず、あなたを何と呼べばいいですか？ 私が選んだものから自由に変更してください。準備が整ったら、自分のアバターを作ってみましょう！</string>
   <string name="randomize">ランダムにする</string>
   <string name="avatar_extras">その他</string>
   <string name="avatar_skin_color">肌の色</string>
@@ -541,8 +544,8 @@
   <string name="avatar_hair_ponytail">ポニーテール</string>
   <string name="avatar_glasses">メガネ</string>
   <string name="avatar_wheelchair">車いす</string>
-  <string name="weak">弱い</string>
-  <string name="strong">強い</string>
+  <string name="weak">ザコ敵</string>
+  <string name="strong">強敵</string>
   <string name="gray">無効</string>
   <string name="dated">予定</string>
   <string name="completed">完了</string>
@@ -555,7 +558,7 @@
   <string name="empty_title_todos">To-Doがありません</string>
   <string name="empty_description_todos">To-Doは一度だけ実行すればいいタスク。チェックリストを加えて忘れないようにしよう。</string>
   <string name="empty_title_rewards">ごほうびがありません</string>
-  <string name="reset_walkthrough">ジャスティンのチュートリアルをリセット</string>
+  <string name="reset_walkthrough">Justinのチュートリアルをリセット</string>
   <string name="read_community_guidelines">投稿する前に、私たちのコミュニティガイドラインを読んでください</string>
   <string name="maintenance">修理</string>
   <string name="reload_content">再度読み込み</string>
@@ -622,9 +625,9 @@
   <string name="int_abbrv">知能</string>
   <string name="con_abbrv">体質</string>
   <string name="reset_account">アカウントをリセット</string>
-  <string name="reset_account_description">注意！この操作によってあなたのアカウントの多くの部分がリセットされます。この操作は非推奨ですが、短期間でやり直すことを有用と考えています。
-
-この操作によってあなたのレベル、ゴールド、経験値はすべて初期化されます。すべてのタスク(チャレンジのものを除く)は永久に削除され、履歴も失われます。すべての装備も失われますが、限定品や寄付者得点アイテムも含めすべての装備は買い直すことができます(ただし再購入するためにはその装備に適した職である必要があります)。職業とペット、乗騎はそのままです。タスクも装備も保存される安全な選択肢である転生のオーブのほうが好ましいかもしれません。</string>
+  <string name="reset_account_description">【注意！】この操作はあなたのアカウントの多くの部分をリセットします。リセットは大変やる気を削ぐことですが、短時間だけサイトを遊んだ始めたばかりの段階にはリセットが役立つこともあるでしょう。
+\n
+\nすべてのレベル、ゴールド、経験値を失います。すべてのタスク（チャレンジ関連のものを除く）は完全に削除され、履歴データもすべて削除されます。すべての装備を失いますが、現在あなたがもっている限定装備や寄付会員向けのミステリーアイテムなども含めて、すべて買い戻すことができます（クラス固有の装備を再度購入するには、該当するクラスにならなくてはいけません）。現在のクラスと、ペットと乗騎は維持されます。あるいは「転生のオーブ」を使った方が良いかもしれません。タスクと所持品も維持される、より安全な選択肢です。</string>
   <string name="delete_account">アカウントを削除</string>
   <string name="delete_account_description">本当によろしいですか？アカウントが永久に削除され、二度と復元できなくなります！Habiticaを再び使うためには、再度登録が必要になります。購入、使用したジェムは返金されません。本当によろしければ、下のテキストボックスにパスワードを入力して下さい。</string>
   <string name="reset_account_confirmation">アカウントをリセット</string>
@@ -673,13 +676,13 @@
   <string name="character_build">キャラクター作成</string>
   <string name="character_build_description">各レベルごとに、自由に割り当てることができるポイントが得られます。手動で割り当てることもできますが、自動割り当てによってゲームに割り当てを任せることも可能です。</string>
   <string name="strength">力</string>
-  <string name="strength_description">タスク完了時のクリティカルヒットの威力と頻度を増やします。また、ボスへ与えるダメージも増やします。</string>
+  <string name="strength_description">タスクを完了した時の会心の一撃のボーナスや発生率が増加します。また、ボスへ与えるダメージも増加します。</string>
   <string name="intelligence">知能</string>
-  <string name="intelligence_description">タスクの完了によって得られる経験値を増やします。また、マナの上限を増やし、マナの時間回復を早めます。</string>
+  <string name="intelligence_description">タスクの完了によって得られる経験値が増加します。また、マナの上限と時間回復の早さが増加します。</string>
   <string name="constitution">体質</string>
-  <string name="constitution_description">タスクの失敗によって受けるダメージを減らします。ボスからのダメージは減少しません。</string>
+  <string name="constitution_description">タスクの失敗によって受けるダメージが減少します。ボスからのダメージは減少しません。</string>
   <string name="perception">知覚</string>
-  <string name="perception_description">タスクの完了時のドロップ確率や、日課のドロップ確率、連続実行ボーナス、タスク報酬ゴールド量などを上昇させます。</string>
+  <string name="perception_description">タスクを完了した時に落とし物を見つける確率、１日ごとの落とし物上限、連続実行ボーナス、タスクから獲得するゴールドの量などが増加します。</string>
   <string name="buffs">バフ</string>
   <string name="allocated">割当済み</string>
   <string name="distribute_evenly">均等に分配する</string>
@@ -718,8 +721,8 @@
   <string name="world_boss_description">ワールドボスの説明</string>
   <string name="rage_strike_count" formatted="false">怒り攻撃 %d/%d</string>
   <string name="pending_strike_description">まだ攻撃はされていません！
-ワールドボスは、怒りゲージがたまるとわたしたちの味方である商人に攻撃してきます。日課をこなし、攻撃されるのを避けましょう！</string>
-  <string name="pending_strike_title">未解決攻撃</string>
+\nワールドボスは怒りゲージがたまる度に、わたしたちの味方である店主たちの一人に激しく攻撃してきます。日課をこなし続けて、攻撃されるのを防ぎましょう！</string>
+  <string name="pending_strike_title">保留中の攻撃</string>
   <string name="strike_description_title">怒り攻撃とは？</string>
   <string name="strike_description_subtitle">怒り攻撃には3種類あります</string>
   <string name="strike_description_description">ゲージはHabiticaの住人が日課を残すと溜まっていきます。満タンになると、DysHeartenerがHabiticaの商人にココロクジキアタックをしてきますので、タスクはしっかりこなしましょう！</string>
@@ -750,7 +753,7 @@
 \nあなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます。キャンプ場でボス戦の進行状況と怒りの一撃をチェックしましょう</string>
   <string name="world_boss_description_intro">ワールドボスは、コミュニティ全体がタスクで強力なモンスターを協力して打ち倒す特別イベントです！</string>
   <string name="world_boss_description_1">タスクを完了してボスにダメージを与えましょう</string>
-  <string name="world_boss_description_2">サボったタスクによってこのボスからダメージを受けることはありませんが、怒りゲージが上昇します。怒りゲージが満タンになるとボスは商人に攻撃をします！</string>
+  <string name="world_boss_description_2">サボったタスクによってこのボスからダメージを受けることはありませんが、怒りメーターが上昇します。怒りメーターが満タンになるとボスは店主たちに攻撃します！</string>
   <string name="world_boss_description_3">あなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます</string>
   <string name="world_boss_description_4">キャンプ場でボス戦の進行状況と怒りの一撃をチェックしましょう</string>
   <string name="world_boss_action_prompt" formatted="false">ボスを倒して%sの脅威からHabiticaを守り、特別なごほうびを手に入れよう！</string>
@@ -809,7 +812,7 @@
   <string name="username_copied">ユーザー名をクリップボードにコピーしました</string>
   <string name="verification_pet">あなたが承認を終えたあとには、百戦練磨のペットのうち１匹があなたを待っていることでしょう！</string>
   <string name="welcomeNameTitle">あなたを何と呼べばいいですか？</string>
-  <string name="display_name_length_error">表示名は1~30文字にしてください</string>
+  <string name="display_name_length_error">表示名は1～30文字以内にしてください</string>
   <string name="setup_task_join_habitica">Habiticaに参加する（チェックして！）</string>
   <string name="setup_task_join_habitica_notes">To-Doは完了したり、編集したり、削除することができます。</string>
   <string name="setup_task_reward">自分自身へごほうびを与える</string>
@@ -829,4 +832,5 @@
   <string name="server">サーバー</string>
   <string name="gift_confirmation_title">プレゼントを贈りました！</string>
   <string name="discover">探す</string>
-</resources>
+<string name="due">期限</string>
+    </resources>
