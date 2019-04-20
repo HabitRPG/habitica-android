@@ -16,7 +16,7 @@
   <string name="Language_summary">Habitica의 언어 바꾸기</string>
   <string name="SP_user_qr_code">당신의 QR코드</string>
   <string name="PS_contact_title">연락처</string>
-  <string name="unknown_error">오류가 발생했습니다...</string>
+  <string name="unknown_error">오류가 발생했습니다…</string>
   <string name="pref_account_header">계정</string>
   <string name="pref_first_day_of_the_week_title">일주일의 첫날</string>
   <string name="pref_first_day_of_the_week_summary">모든 달력에서 일주일의 첫날</string>
@@ -29,7 +29,7 @@
   <string name="push_notifications">푸쉬 알림</string>
   <string name="push_notifications_sum">푸쉬 알림 설정</string>
   <string name="preference_push_you_won_challenge">도전 과제에서 우승하였습니다!</string>
-  <string name="preference_push_received_a_private_message">개인 메시지를 받았습니다.</string>
+  <string name="preference_push_received_a_private_message">개인 메시지를 받았습니다</string>
   <string name="preference_push_gifted_gems">선물받은 보석</string>
   <string name="preference_push_gifted_subscription">선물 받은 구독</string>
   <string name="preference_push_invited_to_party">파티에 초대 받음</string>
@@ -118,7 +118,7 @@
   <string name="levelup_button">만세!</string>
   <string name="faint_subtitle">좌절하지 말아요!</string>
   <string name="faint_header">체력이 모두 떨어졌어요!</string>
-  <string name="faint_button">체력을 채우고 다시 도전하세요.</string>
+  <string name="faint_button">체력을 채우고 다시 도전하세요</string>
   <string name="filter">필터</string>
   <string name="profile_image">프로필 사진</string>
   <string name="mana_price_button">%d MP</string>
@@ -256,7 +256,7 @@
   <string name="post">게시</string>
   <string name="guild_search_hint">길드 검색</string>
   <string name="todo_due">만기: %s</string>
-  <string name="daily_streak">연속 달성: %d</string>
+  <string name="daily_streak">현재 연속 콤보: %d</string>
   <string name="todo_has_duedate">과제가 만기일이 있습니다</string>
   <string name="battle_gear">전투 장비</string>
   <string name="costume">의상</string>
@@ -355,7 +355,7 @@
   <string name="share_hatched">일상생활의 과제들을 달성하여 Habitica에서 %1$s %2$s 펫을 깨웠어요!</string>
   <string name="share_raised">일상생활의 과제들을 달성하여 %1$s %2$s 탈것을 얻었어요!</string>
   <string name="open_in_store">플레이스토어로 열기</string>
-  <string name="change_class_confirmation">보석 3개를 사용하여 직업을 바꾸시겠습니까? </string>
+  <string name="change_class_confirmation">정말로 직업을 바꾸시겠습니까\? 보석 3개가 소모됩니다.</string>
   <string name="change_class_equipment_warning">주의: 더 이상 %s 직업의 장비를 구입할 수 없게됩니다.</string>
   <string name="leaderMessage">%1$s로부터 온 메세지</string>
   <string name="leaderName">리더: %1$s</string>
@@ -389,7 +389,7 @@
   <string name="filter_drawer_filter_tags">태그로 정렬</string>
   <!--QR Strings-->
   <string name="qr_section_title">이 QR 코드로 다른 사람이 초대할 수 있게 하세요</string>
-  <string name="qr_save_message">QR 코드 저장:</string>
+  <string name="qr_save_message">QR 코드 저장 장소</string>
   <string name="qr_dialogue_title">나의 QR 코드</string>
   <string name="download">다운로드</string>
   <string name="send_new_message">새 메시지 보내기</string>
@@ -411,7 +411,7 @@
   <string name="widget_add_task">Habitica 과제 추가</string>
   <string name="google_services_missing">구글 플레이 서비스를 찾을 수 없습니다.</string>
   <string name="gem.purchase.toolbartitle">구매</string>
-  <string name="gem.purchase.title">보석을 구매하시면 개발자를 지원하고 Habitica가 계속될 수 있도록 도울 수 있습니다.</string>
+  <string name="gem.purchase.title">보석을 구매하시면 개발자를 지원하고 Habitica가 계속될 수 있도록 도울 수 있습니다</string>
   <string name="gem.purchase.subtitle">보석들은 당신의 계정에 다양한 요소를 추가해줍니다. 예를들어:</string>
   <string name="gem.purchase.listitem1">아바타를 위한 멋진 의상</string>
   <string name="gem.purchase.listitem2">환상적인 배경들</string>
@@ -439,22 +439,28 @@
   <string name="subscriptions">구독</string>
   <string name="subscription_duration">자동이체: 매 %s</string>
   <string name="subscribe">구독하기</string>
-  <string name="subscribe.listitem1.description">이제부터 상인 알렉산더가 보석을 개당 20골드에 판매합니다!\n\n처음에는 매달 구비량이 한 달에 25개로 제한되어 있지만, 후원 기간에 따라 올라갈 수 있습니다.\n\n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다.</string>
-  <string name="subscribe.listitem2.description">매달 당신의 아바타를 위한 독특한 의상 아이템을 드립니다!\n\n더불어, 정기 후원을 해주시는 매 3달마다 미스터리 시간 여행자가 전통적인 (그리고 미래지향적인!) 꾸미기 아이템을 소개해 줄 겁니다.</string>
+  <string name="subscribe.listitem1.description">이제부터 상인 알렉산더가 보석을 개당 20골드에 판매합니다!
+\n
+\n처음에는 매달 구비량이 한 달에 25개로 제한되어 있지만, 후원 기간에 따라 올라갈 수 있습니다.
+\n
+\n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다!</string>
+  <string name="subscribe.listitem2.description">매달 당신의 아바타를 위한 독특한 의상 아이템을 드립니다!
+\n
+\n더불어, 정기 후원을 해주시는 매 3달마다, 미스터리 시간 여행자가 전통적인 (그리고 미래지향적인!) 꾸미기 아이템을 소개해 줄 겁니다.</string>
   <string name="subscribe.listitem3.description">완료한 할 일과 과제 기록이 더 오래 남습니다.</string>
-  <string name="subscribe.listitem4.description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다.</string>
-  <string name="subscription_hourglasses">신비한 모래시계 +%d</string>
-  <string name="payment_method">지급방법</string>
+  <string name="subscribe.listitem4.description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다!</string>
+  <string name="subscription_hourglasses">신비한 모래시계 +%d개</string>
+  <string name="payment_method">결제수단</string>
   <string name="subscription">정기구독</string>
   <string name="active">활성중</string>
   <string name="cancel_subscription">구독 취소하기</string>
-  <string name="cancel_subscription_google.description">탈퇴하고 싶으신가요? 구글 플레이 스토어의 \"My Apps\"에 탈퇴 옵션이 있습니다.</string>
-  <string name="cancel_subscription_notgoogle.description">더 이상 구독하고 싶지 않으세요? 결제 수단으로 인해 웹 사이트에서만 탈퇴가 가능합니다. 아래 버튼을 클릭면 브라우저에서 사이트를 엽니다!</string>
+  <string name="cancel_subscription_google.description">구독을 취소하고 싶으신가요\? 구글 플레이 스토어의 \"내 애플리케이션\" 메뉴에 구독취소 옵션이 있습니다.</string>
+  <string name="cancel_subscription_notgoogle.description">더 이상 구독하고 싶지 않으세요\? 결제 수단으로 인해 웹사이트에서만 취소가 가능합니다. 아래 버튼을 클릭하면, 브라우저에서 사이트가 열립니다!</string>
   <string name="visit_habitica_website">Habitica 웹사이트 가기</string>
   <string name="current_bonuses">현재 발동중인 보너스</string>
   <string name="months_subscribed">구독한 기간</string>
   <string name="current_hourclasses">보유중인 신비한 모래시계</string>
-  <string name="monthly_gem_cap">월별 보석 제한수량</string>
+  <string name="monthly_gem_cap">이달의 보석 한도</string>
   <string name="inactive">비활성중</string>
   <string name="one_month">1개월</string>
   <string name="months">%d개월</string>
@@ -501,14 +507,14 @@
   <string name="open">열기</string>
   <string name="notification_mystery_item">상자를 열어 %s을/를 찾았습니다!</string>
   <string name="checkInRewardEarned">삶을 증진시키려는 노력의 대가로 %1$s를 얻었습니다.</string>
-  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">다음 보상은 %1$d번 출석 후에 풀립니다.</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">다음 보상은 %1$d번 출석 후에 풀립니다</string>
   <string name="pending_approval">승인 대기 중</string>
   <string name="filters">필터</string>
   <string name="done">완료</string>
-  <string name="group_tasks_edit_description">그룹 할일은 편집할 수 없습니다.</string>
-  <string name="group_tasks_edit_title">이 할일을 편집할 수 없습니다.</string>
+  <string name="group_tasks_edit_description">그룹 과제는 편집할 수 없습니다.</string>
+  <string name="group_tasks_edit_title">이 과제를 편집할 수 없습니다</string>
   <string name="groups">그룹</string>
-  <string name="all">모든</string>
+  <string name="all">전체</string>
   <string name="none">None</string>
   <string name="owned">보유중</string>
   <string name="not_owned">미보유중</string>
@@ -517,24 +523,230 @@
   <string name="action_back">뒤로</string>
   <string name="randomize">무작위</string>
   <string name="avatar_skin_color">피부색</string>
-  <string name="avatar_hair_color">머리카락 색깔</string>
+  <string name="avatar_hair_color">머리색</string>
   <string name="avatar_hair_bangs">앞머리</string>
   <string name="avatar_hair_ponytail">뒷머리</string>
   <string name="avatar_glasses">안경</string>
-  <string name="avatar_wheelchair">바퀴달린 의자</string>
+  <string name="avatar_wheelchair">휠체어</string>
   <string name="weak">약함</string>
   <string name="strong">강함</string>
   <string name="gray">회색</string>
-  <string name="completed">완료됨</string>
+  <string name="completed">완료된 일</string>
   <string name="setuP_group_other">기타</string>
-  <string name="empty_title_habits">습관이 하나도 없어요.</string>
+  <string name="empty_title_habits">습관이 하나도 없습니다</string>
   <string name="empty_description_habits">\'습관\'은 엄격한 일정이 없는 과제입니다. 하루에 여러번 체크할 수도 있고, 아예 체크하지 않아도 됩니다.</string>
-  <string name="empty_title_dailies">일일과제가 하나도 없습니다.</string>
-  <string name="empty_description_dailies">일일과제는 주기적으로 하려고 하는 과제를 말합니다. 자신의 일정에 맞게 설정하세요.</string>
-  <string name="empty_title_todos">할 일이 아직 없습니다.</string>
-  <string name="empty_title_rewards">보상이 없습니다.</string>
+  <string name="empty_title_dailies">일일과제가 하나도 없습니다</string>
+  <string name="empty_description_dailies">일일과제는 주기적으로 반복되는 과제를 말합니다. 자신의 일정에 맞게 설정하세요!</string>
+  <string name="empty_title_todos">할 일이 하나도 없습니다</string>
+  <string name="empty_title_rewards">보상이 하나도 없습니다</string>
   <string name="read_community_guidelines">글을 올리기 전에 커뮤니티 가이드라인을 읽어주세요</string>
   <string name="reload_content">새로 고침</string>
   <string name="start_quest">새로운 퀘스트 시작하기</string>
   <string name="leave_party">파티 떠나기</string>
-</resources>
+<string name="levelup_header">레벨 %1$d이 되었습니다!</string>
+    <string name="levelup_detail">생활의 목표를 달성함으로 레벨이 올라가서 체력이 완전히 회복되었습니다!</string>
+    <string name="faint_penalty_body">레벨 하나, 골드 전부, 그리고 장비 하나를 잃었네요, 하지만 열심히 일하면 모두 다시 얻을 수 있습니다! 화이팅 - 잘 할 수 있어요.</string>
+    <string name="reminder_title">끝낸 과제에 체크하는 걸 잊지 마세요</string>
+    <string name="ago_1day">1일 전</string>
+    <string name="ago_days">%d일 전</string>
+    <string name="ago_1Minute">1분 전</string>
+    <string name="ago_minutes">%d분 전</string>
+    <string name="ago_hours">%d시간 전</string>
+    <string name="ago_1hour">1시간 전</string>
+    <string name="evolved_pet_title">%1$s %2$s를 길들였습니다, 타러 가요!</string>
+    <string name="warrior_description">전사는 치명타를 더 많이 세게 적중시켜서 과제 달성시 보너스 골드, 경험치, 그리고 아이템 획득 확률이 올라갑니다. 보스 몹에도 더 강한 데미지를 입힙니다. 예측하기 힘들지만 대박 보상이나 보스 퀘스트에서 활약하는 것을 좋아하신다면 전사를 추천합니다!</string>
+    <string name="opting_out_progress">선택유예 중</string>
+    <string name="invite_username_description">Habitica를 이용하는 친구가 있다면, 닉네임를 입력하여 초대하세요.</string>
+    <string name="subscription_duration_norenew">%s 에</string>
+    <string name="subscribe1month.gemcap">보석 한도 25개</string>
+    <string name="subscribe3month.gemcap">보석 한도 30개</string>
+    <string name="subscribe6month.gemcap">보석 한도 35개</string>
+    <string name="subscribe12month.gemcap">보석 한도 45개</string>
+    <string name="due">아직 안한 일</string>
+    <string name="new_game">새
+\n게임</string>
+    <string name="welcome_text">아, 새로운 모험가인가 보군요. 저는 저스틴이에요, 당신을 위해 Habitica 가이드가 되어드리죠.
+\n
+\n먼저, 뭐라고 불러야 할까요\? 제가 일단 정해보긴 했는데 원하는대로 바꿔보세요. 준비가 되었으면, 아바타를 꾸며봅시다!</string>
+    <string name="avatar_extras">장신구</string>
+    <string name="dated">마감할 일</string>
+    <string name="clear">비우기</string>
+    <string name="empty_description_todos">해야 할 일은 한 번만 실행하면 되는 과제입니다. 가치를 높이려면 할 일 안에 체크리스트를 더하세요.</string>
+    <string name="reset_walkthrough">저스틴의 튜토리얼 리셋하기</string>
+    <string name="maintenance">점검</string>
+    <string name="dailyDueDefaultView">일일과제를 \'아직 안한 일\'부터 보기</string>
+    <string name="dailyDueDefaultViewDescription">이 옵션을 설정하시면, 일일과제를 볼 때 \'전체\' 대신 \'아직 안한 일\'부터 나타납니다</string>
+    <string name="repeat_summary">%2$s %3$s마다 %1$s %4$s에 반복</string>
+
+    <string name="no_billing_gems">현 기기에 사용 가능한 결제수단이 없습니다. 보석을 구매하시려면 habitica 웹사이트를 이용하세요.</string>
+    <string name="no_billing_subscriptions">현 기기에 사용 가능한 결제수단이 없습니다. 정기후원을 하시려면 habitica 웹사이트를 이용하세요.</string>
+    <string name="save">저장</string>
+    <string name="location">위치</string>
+    <string name="gem_reward">보석 상금</string>
+    <string name="tasks">과제들</string>
+    <string name="create_challenge">도전과제 만들기</string>
+    <string name="edit_challenge">편집</string>
+    <string name="challenge_create_error_tavern_one_gem">공개 도전을 만들려면 적어도 보석 1개가 있어야 합니다.</string>
+    <string name="challenge_create_error_enough_gems">도전과제를 만들기에 충분한 보석이 없습니다.</string>
+    <string name="identify_your_challenge_with_a_tag">당신의 도전에 짧은 이름을 부여하세요</string>
+    <string name="challenge_create_error_tag">도전을 만들려면 짧은 이름이 필요합니다.</string>
+    <string name="challenge_create_error_no_tasks">이 도전을 만들려면 적어도 하나의 과제를 더해야 합니다.</string>
+    <string name="challenge_create_error_title">이 도전을 만들려면 제목이 필요합니다.</string>
+    <string name="description_optional">설명 (선택)</string>
+    <string name="new_challenge_title">새로운 도전 제목</string>
+    <string name="ownership">소유자</string>
+    <string name="inn">여관</string>
+    <string name="system">시스템</string>
+    <string name="party_description">파티 설명</string>
+    <string name="abort_confirmation">정말로 이 퀘스트를 중단하시겠습니까\? 파티 전체가 퀘스트를 중단하게 되고 지금까지 진행했던 것이 다 날아갑니다. 퀘스트 두루마리는 퀘스트 주인에게 돌아갑니다.</string>
+    <string name="leave_quest_confirmation">정말로 진행중인 퀘스트에서 떠나시겠습니까\? 그동안 본인이 퀘스트에서 진행했던 것이 날아갑니다.</string>
+    <string name="number_participants">참여인원 %1$d명</string>
+    <string name="welcome_back">돌아온 것을 환영합니다</string>
+    <string name="yesterdaililes_prompt">어제 일일과제 중 완료한 것이 있나요\?</string>
+    <string name="start_day">오늘 하루 시작하기</string>
+    <string name="leave_party_confirmation">정말로 파티에서 탈퇴하시겠습니까\?</string>
+    <string name="nextPrizeUnlocksIn" formatted="false">다음 보상은 %d째 출석할 때</string>
+    <string name="pending">대기중</string>
+    <string name="accepted">수락함</string>
+    <string name="declined">거절함</string>
+    <string name="participants">참여인원</string>
+    <string name="invitations">초대장</string>
+    <string name="quest_leader_header" formatted="false">%s 이/가 시작</string>
+    <string name="quest_abort_message">정말로 이 퀘스트를 중단하시겠습니까\? 파티 전체가 퀘스트를 중단하게 되고 지금까지 진행했던 것이 다 날아갑니다. 퀘스트 두루마리는 퀘스트 주인에게 돌아갑니다.</string>
+    <string name="loading">로딩중…</string>
+    <string name="reloading_content">재로딩 중</string>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="your_balance">현재 보유 금액:</string>
+    <string name="available_until" formatted="false">%s 까지 유효</string>
+    <string name="gems_left_max" formatted="false">월별 구매 한도: %1$d/%2$d 남음</string>
+    <string name="gems_left_nomax" formatted="false">월별 구매 한도: %d 남음</string>
+    <string name="health">체력</string>
+    <string name="collect">수집</string>
+    <string name="rage_meter">분노 게이지</string>
+    <string name="boss_quest">보스 퀘스트</string>
+    <string name="collection_quest">수집 퀘스트</string>
+    <string name="quest_reward_count" formatted="false">%1$s x%2$d</string>
+    <string name="experience_reward" formatted="false">%d 경험치</string>
+    <string name="gold_reward" formatted="false">%d 골드</string>
+    <string name="quest_owner_rewards">퀘스트 주인 보상</string>
+    <string name="str_abbrv">Str</string>
+    <string name="per_abbrv">Per</string>
+    <string name="int_abbrv">Int</string>
+    <string name="con_abbrv">Con</string>
+    <string name="reset_account">계정 리셋</string>
+    <string name="reset_account_description">경고! 본 계정의 많은 부분이 리셋됩니다. 하지 않는 것을 권장하지만, 일부 유저들은 짧은 시간 앱을 사용해본 후 처음부터 다시 시작하는 것을 유용하게 생각합니다.
+\n
+\n모든 레벨과 골드 그리고 경험치를 잃게 됩니다. 도전을 제외한 모든 과제들이 지워지고 그동안의 기록도 사라집니다. 모든 장비도 잃게 되지만, 한정판 장비 및 이미 보유한 미스터리 아이템을 포함해서 모두 다시 구입할 수 있습니다 (직업 특정 장비를 사려면 그 직업으로 전직해야 합니다). 현재 직업과 펫과 탑승펫들은 유지됩니다. 이 방법 대신 부활의 오브를 사용하는 것이 과제와 장비도 유지할 수 있는 더 안전한 방법입니다.</string>
+    <string name="delete_account">계정 삭제</string>
+    <string name="delete_account_description">정말로 계정을 삭제하시겠습니까\? 본인의 계정이 영구적으로 삭제되며 복구가 불가능합니다! Habitica를 다시 사용하려면 새로운 계정을 등록해야 합니다. 저장하거나 사용한 보석들도 환불되지 않습니다. 정말로 확신하신다면, 아래의 칸에 계정 암호를 적으세요.</string>
+    <string name="delete_oauth_account_description">정말로 계정을 삭제하시겠습니까\? 본인의 계정이 영구적으로 삭제되며 복구가 불가능합니다! Habitica를 다시 사용하려면 새로운 계정을 등록해야 합니다. 저장하거나 사용한 보석들도 환불되지 않습니다. 정말로 확신하신다면, 아래의 칸에 DELETE 라고 적으세요.</string>
+    <string name="reset_account_confirmation">내 계정을 리셋하겠습니다</string>
+    <string name="delete_account_confirmation">내 계정을 삭제하겠습니다</string>
+    <string name="danger_zone">위험 지역</string>
+    <string name="nevermind">아니에요</string>
+    <string name="resetting_account">계정 리셋중</string>
+    <string name="deleting_account">계정 삭제중</string>
+    <string name="insufficientGold">이 아이템을 구입하려면 더 많은 과제를 실행해야 합니다!</string>
+    <string name="insufficientGems">이 아이템을 구입하려면 더 많은 보석이 필요합니다!</string>
+    <string name="purchase_gems">보석 구매하기</string>
+    <string name="insufficientHourglasses">이 아이템을 구입하려면 더 많은 신비한 모래시계가 필요합니다!</string>
+    <string name="get_hourglasses">모래시계 받기</string>
+    <string name="subscribe_for_hourglasses">모래시계를 얻으려면 정기 후원을 해주세요</string>
+    <string name="timetravelers_closed_description">연속 정기후원 3달마다 신비한 모래시계 한 개씩을 얻을 수 있고 그것을 사용해서 과거와... 그리고 미래의 한정판 아이템, 펫, 그리고 탑승펫 등을 열 수 있습니다!</string>
+    <string name="want_to_subscribe">정기후원 하고 싶어요</string>
+    <string name="seasonal_closed_description">그랜드 갈라는 춘분, 하지, 추분 그리고 동지 즈음에 열리니 그 때마다 재미있는 여러 계절별 특별 아이템을 찾으러 오세요!</string>
+    <string name="come_back_soon">어서 다시 만나요!</string>
+    <string name="level">레벨</string>
+    <string name="streak_label">21일 연속 콤보</string>
+    <string name="stats">스탯</string>
+    <string name="fix_character_description">버그나 실수로 인해 캐릭터 수치가 잘못되었다면 여기에서 직접 재조정 하실 수 있습니다.</string>
+    <string name="fix_character_values">캐릭터 수치 조정하기</string>
+    <string name="saving">저장중</string>
+    <string name="forgot_password_title">이메일로 암호 리셋 링크 받기</string>
+    <string name="forgot_password_description">Habitica 계정을 만드실 때 사용한 이메일 주소를 적으세요.</string>
+    <string name="forgot_password_confirmation">등록되어 있는 주소라면, 새로 암호를 지정하는 방법이 지금 이메일로 전송되었습니다.</string>
+    <string name="ok">OK</string>
+    <string name="profile">프로필</string>
+    <string name="profile_summary">공개 프로필 수정하기.</string>
+    <string name="display_name">닉네임</string>
+    <string name="photo_url">사진 URL</string>
+    <string name="login_name">계정 아이디</string>
+    <string name="about">알아보기</string>
+    <string name="app_settings">앱 설정</string>
+    <string name="authentication">인증</string>
+    <string name="authentication_summary">인증 설정을 변경하실 수 있습니다.</string>
+    <string name="change_password">암호 변경</string>
+    <string name="change_email">이메일 변경</string>
+    <string name="change_login_name">로그인 아이디 변경</string>
+    <string name="change_username">닉네임 변경</string>
+    <string name="change">변경</string>
+    <string name="character_level">캐릭터 레벨</string>
+    <string name="auto_allocate_points">스탯 자동 분배</string>
+    <string name="stat_guide">스탯 가이드</string>
+    <string name="character_build">캐릭터 빌드</string>
+    <string name="character_build_description">레벨업을 할 때마다 원하는 스탯에 한 포인트씩 추가할 수 있습니다. 직접 하셔도 되고, 스탯 자동 분배를 통해서 게임이 알아서 하게 맡기셔도 됩니다.</string>
+    <string name="strength">근력</string>
+    <string name="strength_description">치명타 보너스를 높이고 과제를 완료할 때마다 치명타를 낼 확률도 높입니다. 보스에게 주는 데미지 역시 올라갑니다.</string>
+    <string name="intelligence">지력</string>
+    <string name="intelligence_description">과제를 완료할 때 얻는 경험치 양을 높입니다. 마나 한도와 마나 재생력도 높여줍니다.</string>
+    <string name="constitution">생명력</string>
+    <string name="constitution_description">과제를 하지 못했을 때 받는 데미지 양을 줄여줍니다. 보스에게 받는 데미지는 줄지 않습니다.</string>
+    <string name="perception">통찰력</string>
+    <string name="perception_description">과제를 완료할 때 아이템을 찾을 확률, 일일 드롭 한도, 연속 콤보 보너스, 그리고 과제에서 얻는 골드의 양을 높여줍니다.</string>
+    <string name="buffs">버프</string>
+    <string name="allocated">분배된 포인트</string>
+    <string name="distribute_evenly">고르게 분배하기</string>
+    <string name="distribute_class">직업에 맞게 배분하기</string>
+    <string name="distribute_task">과제 성향에 맞게 배분하기</string>
+    <string name="no_points_to_allocate">남은 포인트가 없습니다</string>
+    <string name="points_to_allocate" formatted="false">%d 포인트 배분 가능</string>
+    <string name="distribute_evenly_help">각 스탯에 동등한 수의 포인트를 분배합니다.</string>
+    <string name="distribute_class_help">직업에 중요한 스탯에 더 많은 포인트를 배분합니다.</string>
+    <string name="distribute_task_help">완료한 과제와 연관된 근력, 지력, 생명력, 관찰력 부분에 포인트를 더합니다.</string>
+    <string name="allocating_points">포인트 배분하기</string>
+    <string name="class_equipment">장비</string>
+    <string name="equipment_empty">모든 장비를 이미 보유하고 있습니다! 춘분, 하지, 추분, 동지 즈음에 열리는 그랜드 갈라에서 더 새로운 장비들이 출시될 예정입니다.</string>
+    <string name="classless">무직</string>
+    <string name="class_equipment_shop_dialog">이 아이템은 특정 직업에서만 가능합니다.
+\n설정에 들어가서 직업을 바꾸실 수 있습니다.</string>
+    <string name="class_gear_disclaimer">현재 직업에 맞는 장비만 구입할 수 있습니다</string>
+    <string name="available_stats" formatted="false">%d 포인트</string>
+    <string name="toogle_emojis">이모티콘 표시</string>
+    <string name="tavern_description">여관에 오신 것을 환영합니다! 여기 앉아서 담소를 나누거나, 과제로부터 벗어나 휴식을 취해보세요.</string>
+    <string name="check_into_inn">여관에서 머물기</string>
+    <string name="community_guidelines">커뮤니티 지침서</string>
+    <string name="view_community_guidelines">커뮤니티 지침서 읽어보기</string>
+    <string name="guidelines_description">Habitica는 나이나 배경에 상관없이 모든 유저들이 즐길 수 있는 환경을 제공하기 위해 노력합니다, 특히 주막 같은 공공장소에서는 더욱 그렇죠. 궁금한 점이 있다면 지침서를 참고하시기 바랍니다.</string>
+    <string name="helpful_links">도움되는 링크들</string>
+    <string name="view_faq">자주하는 질문 보기</string>
+    <string name="report_bug">버그 신고하기</string>
+    <string name="player_tiers">유저 등급</string>
+    <string name="staff_moderators">운영자와 관리자</string>
+    <string name="tiers_descriptions">채팅에서 색이 있는 유저 이름은 그 사람의 기여도 등급을 나타냅니다. 그래픽, 코딩, 커뮤니티, 번역 등에 더 많이 기여할 수록 더 높은 등급으로 올라갑니다!</string>
+    <string name="navigation_drawer_open">내비게이션 바 열기</string>
+    <string name="navigation_drawer_close">내비게이션 바 닫기</string>
+    <string name="world_boss">월드 보스</string>
+    <string name="world_boss_art">보스 아트</string>
+    <string name="boss_art">보스 아트</string>
+    <string name="world_boss_description">월드 보스 설명</string>
+    <string name="rage_strike_count" formatted="false">분노의 타격: %d/%d</string>
+    <string name="pending_strike_description">이 타격은 아직 가해지지 않았습니다!
+\n월드 보스의 분노 게이지가 차면 우리의 이웃 상점주인들 중 하나를 공격하게 됩니다. 하루하루 꾸준히 생활해서 불상사가 생기지 않도록 도와주세요!</string>
+    <string name="pending_strike_title">임박한 타격</string>
+    <string name="strike_description_title">분노의 타격이 무엇인가요\?</string>
+    <string name="strike_description_subtitle">분노의 타격은 3번까지 가해질 수 있습니다</string>
+    <string name="strike_description_description">이 게이지는 Habitica 주민들이 일일과제를 수행하지 못했을 때 채워집니다. 게이지가 다 차면 상심보스가 충격의 비통함으로 Habitica의 상점주인들 중 한명을 공격하게 되니, 과제를 꼭 완료해주세요!</string>
+    <string name="pending_strike_subtitle">이 타격은 아직 가해지지 않았습니다!</string>
+    <string name="strike_active_title" formatted="false">%s 이(가) 공격받았습니다!</string>
+    <string name="strike_active_subtitle" formatted="false">%s 이(가) 상심에 빠졌어요!</string>
+    <string name="strike_active_description" formatted="false">우리의 %s는 %s가 %s를 산산조각 내서 엄청난 충격을 받았습니다. 어서 과제를 수행해서 괴물을 물리치고 재건할 수 있게 도와주세요!!</string>
+    <string name="questShop">퀘스트 상점</string>
+    <string name="market_owner_long">상인 알렉스</string>
+    <string name="tavern_owner_long">여관 주인 다니엘</string>
+    <string name="stable_owner_long">농장 주인 맷</string>
+    <string name="hide_boss_art">보스 아트 숨기기</string>
+    <string name="active_world_boss">활성중인 월드 보스</string>
+    <string name="join_party_title">파티에 참여하고 싶으신가요\?</string>
+    </resources>
