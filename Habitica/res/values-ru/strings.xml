@@ -825,4 +825,5 @@
     <string name="gift_confirmation_text_g1g1">Вы отправили %s месячную подписку Habitica %s, и эта же подписка была применена к вашей учетной записи для нашей акции «Подарок один, получите один»!</string>
     <string name="gift_confirmation_text">Вы отправили %s один %s-месячную подписку Habitica.</string>
     <string name="discover">Обнаруживать</string>
+    <string name="due">Сегодня</string>
     </resources>
