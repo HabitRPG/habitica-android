@@ -42,7 +42,7 @@
   <string name="new_reward">Hadiah baru</string>
   <string name="new_daily">Keseharian baru</string>
   <string name="new_habit">Kebiasaan baru</string>
-  <string name="action_edit">Edit</string>
+  <string name="action_edit">Sunting</string>
   <string name="action_delete">Hapus</string>
   <string name="action_cancel">Batal</string>
   <string name="login_btn">Masuk</string>
@@ -81,7 +81,7 @@
   <string name="text">Teks</string>
   <string name="difficulty">Tingkat Kesulitan</string>
   <string name="tags">Label</string>
-  <string name="trivial">Trivial</string>
+  <string name="trivial">Sepele</string>
   <string name="easy">Mudah</string>
   <string name="medium">Sedang</string>
   <string name="hard">Susah</string>
@@ -212,7 +212,7 @@
   <string name="setup_task_work_2">Tugas paling penting</string>
   <string name="setup_task_work_3">Proyek Kerja</string>
   <string name="setup_task_exercise_1">10 menit cardio</string>
-  <string name="setup_task_exercise_2">Stretching</string>
+  <string name="setup_task_exercise_2">Pemanasan</string>
   <string name="setup_task_exercise_3">Atur jadwal olahraga</string>
   <string name="setup_task_healthWellness_1">Makan makanan bergizi / cepat saji</string>
   <string name="setup_task_healthWellness_2">Gunakan Benang Gigi</string>
@@ -441,8 +441,8 @@
   <string name="subscription">Langganan</string>
   <string name="active">Aktif</string>
   <string name="cancel_subscription">Batalkan Langganan</string>
-  <string name="cancel_subscription_google.description">Tidak mau berlangganan lagi? Kamu bisa menemukan opsi untuk berhenti berlangganan di bagin \"Aplikasi Saya\" dari Google Play Store.</string>
-  <string name="cancel_subscription_notgoogle.description">Tidak mau berlangganan lagi? Karena metode pembayaranmu, kamu hanya bisa berhenti berlangganan dari situs Habitica. Klik tombol di bawah, untuk membuka situs Habitica di browsermu!</string>
+  <string name="cancel_subscription_google.description">Tidak ingin berlangganan lagi\? Kamu bisa menemukan opsi untuk berhenti berlangganan di bagian \"Aplikasi Saya\" dari Google Play Store.</string>
+  <string name="cancel_subscription_notgoogle.description">Tidak ingin berlangganan lagi\? Karena metode pembayaranmu, kamu hanya bisa berhenti berlangganan dari situs Habitica. Klik tombol di bawah, untuk membuka situs Habitica di browsermu!</string>
   <string name="visit_habitica_website">Kunjungi Situs Habitica</string>
   <string name="current_bonuses">Bonus Sekarang</string>
   <string name="months_subscribed">Bulan Berlangganan</string>
@@ -702,4 +702,59 @@
   <string name="id_copied">ID tersalin ke clipboard</string>
   <string name="insufficientSubscriberGems">Kamu telah membeli semua Permata yang tersedia bulan ini. Lebih banyak akan ditambahkan dalam tiga hari pertama pada setiap bulan. Terima kasih sudah berlangganan!</string>
   <string name="insufficientSubscriberGemsTitle">Batas Permata Bulanan Telah Tercapai</string>
-</resources>
+<string name="levelup_header">Kamu Telah Mencapai Level %1$d!</string>
+    <string name="levelup_detail">Dengan menyelesaikan tujuan hidupmu, kamu naik level dan sekarang sepenuhnya pulih!</string>
+    <string name="faint_penalty_body">Kamu kehilangan satu level, uangmu, and sebagian perlengkapan, tapi kamu bisa mendapatkannya kembali dengan kerja keras! Semoga beruntung—kamu bisa melakukannya dengan baik.</string>
+    <string name="reminder_title">Ingatlah untuk selalu memeriksa tugas anda</string>
+    <string name="ago_1day">1 hari yang lalu</string>
+    <string name="ago_days">%d hari yang lalu</string>
+    <string name="ago_1Minute">1 menit yang lalu</string>
+    <string name="ago_minutes">%d menit yang lalu</string>
+    <string name="ago_hours">%d jam yang lalu</string>
+    <string name="ago_1hour">1 jam yang lalu</string>
+    <string name="evolved_pet_title">Kamu telah menjinakkan %1$s %2$s, ayo pergi naik!</string>
+    <string name="opting_out_progress">Memilih Keluar</string>
+    <string name="invite_username_description">Jika kamu memiliki teman yang telah menggunakan Habitica, undang mereka dengan mencantumkan nama penggunanya disini.</string>
+    <string name="subscription_duration_norenew">Untuk %s</string>
+    <string name="subscribe1month.gemcap">Batas 25 Gem</string>
+    <string name="subscribe3month.gemcap">Batas 30 Gem</string>
+    <string name="subscribe6month.gemcap">Batas 35 Gem</string>
+    <string name="subscribe12month.gemcap">Batas 45 Gem</string>
+    <string name="due">Tenggat waktu</string>
+    <string name="welcome_text">Wah, kamu pasti orang baru disini. Aku Justin, aku akan menjadi pemandumu di Habitica
+\n
+\nPertama-tama, bagaimana sebaiknya aku memanggilmu\? Jangan ragu untuk mengubah apa yang telah dipilih. Saat Anda siap, mari buat avatar Anda!</string>
+    <string name="gem_reward">Hadiah Permata</string>
+    <string name="create_challenge">Buat Tantangan</string>
+    <string name="edit_challenge">Sunting</string>
+    <string name="challenge_create_error_tavern_one_gem">Kamu butuh setidaknya 1 permata untuk membuat tantangan publik.</string>
+    <string name="identify_your_challenge_with_a_tag">Identifikasi tantanganmu dengan nama yang pendek</string>
+    <string name="challenge_create_error_tag">Kamu butuh nama yang pendek untuk membuat Tantangan ini.</string>
+    <string name="loading">Memuat…</string>
+    <string name="change_username">Ganti Nama Pengguna</string>
+    <string name="chat_message">Pesan Obrolan</string>
+    <string name="world_boss_description_title">Apa itu Boss Dunia\?</string>
+    <string name="world_boss_description_1">Selesaikan tugas-tugas untuk menyerang Boss</string>
+    <string name="world_boss_action_prompt" formatted="false">Kalahkan boss untuk mendapatkan hadiah spesial dan menyelamatkan Habitica dari teror %s!</string>
+    <string name="world_boss_description_subtitle">%s menyerangmu!</string>
+    <string name="questShop_owner_long">Ian sang Pemandu Quest</string>
+    <string name="report">Laporkan</string>
+    <string name="like">Suka</string>
+    <string name="reply">Balas</string>
+    <string name="confirm_username_title">Apakah kamu yakin ingin mengkonfirmasi nama pengguna saat ini\?</string>
+    <string name="cancel">Batalkan</string>
+    <string name="confirm_username">Konfirmasi Nama Pengguna</string>
+    <string name="username_not_confirmed">Nama Pengguna tidak terkonfirmasi</string>
+    <string name="username_confirmed">Nama Pengguna Terkonfirmasi</string>
+    <string name="username_level">\@%s ・Lvl %d</string>
+    <string name="username_copied">Nama Pengguna berhasil disalin ke clipboard</string>
+    <string name="welcomeNameTitle">Bagaimana kami memanggil anda\?</string>
+    <string name="display_name_length_error">Nama Tampilan harus berisikan 1 sampai 20 karakter</string>
+    <string name="setup_task_reward">Beri hadiah untuk dirimu sendiri</string>
+    <string name="setup_task_reward_notes">Menonton TV, memainkan game, makan kue, kalianlah yang menentukan!</string>
+    <string name="visit_website">Kunjungi website</string>
+    <string name="send_gift">Kirim Hadiah</string>
+    <string name="server">Server</string>
+    <string name="gift_confirmation_title">Hadiahmu telah dikirim!</string>
+    <string name="create">Buat</string>
+    </resources>
