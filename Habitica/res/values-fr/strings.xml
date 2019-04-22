@@ -242,7 +242,7 @@
 \n - Des quêtes amusantes où vous gagnez des œufs de familiers
 \n - La possibilité de changer de classe avant le niveau 100
 \n
-\nMerci infiniment de nous aider à faire d\'Habitica le meilleur site possible. Votre soutien signifie beaucoup pour nous!</string>
+\nMerci infiniment de nous aider à faire d\'Habitica le meilleur site possible. Votre soutien signifie beaucoup pour nous !</string>
   <string name="my_guilds">Mes guildes</string>
   <string name="public_guilds">Guildes publiques</string>
   <string name="guild">Guilde</string>
@@ -345,7 +345,7 @@
   <string name="select_class">Sélectionner une classe</string>
   <string name="opt_out_class">Désactiver</string>
   <string name="opt_out_description">Les classes vous ennuient ? Vous voulez choisir plus tard ? Désactivez-les - vous serez un combattant sans capacités spéciales. Vous pouvez vous renseigner plus tard sur le système de classe sur le wiki et activer les classes à tout moment.</string>
-  <string name="class_confirmation">Êtes vous sûr de vouloir devenir un %s?</string>
+  <string name="class_confirmation">Êtes vous sûr de vouloir devenir un %s \?</string>
   <string name="class_changed">Vous êtes maintenant un %s !</string>
   <string name="class_changed_description">Vous avez une nouvelle tenue de combat par défaut que vous pouvez changer dans l\'équipement !</string>
   <string name="choose_class">Choisissez une classe</string>
@@ -368,8 +368,8 @@
   <string name="invite_users">Inviter dans l\'équipe</string>
   <string name="share_using">Partager avec</string>
   <string name="share_levelup">J\'ai atteint le niveau %d à Habitica en améliorant mes habitudes dans le monde réel !</string>
-  <string name="share_hatched">Je viens de faire éclore un familier%1$s %2$s à Habitica en réalisant mes tâches quotidiennes!</string>
-  <string name="share_raised">Je viens de gagner un-e %1$s %2$s monture en réalisant mes tâches quotidiennes!</string>
+  <string name="share_hatched">Je viens de faire éclore un familier%1$s %2$s à Habitica en réalisant mes tâches quotidiennes !</string>
+  <string name="share_raised">Je viens de gagner un-e %1$s %2$s monture en réalisant mes tâches quotidiennes !</string>
   <string name="open_in_store">Ouvrir dans le Play Store</string>
   <string name="change_class_confirmation">Êtes-vous sûr·e de vouloir changer de classe ? Cela vous coûtera 3 gemmes.</string>
   <string name="change_class_equipment_warning">Attention : vous ne pourrez plus acheter l\'équipement de la classe %s.</string>
@@ -379,7 +379,7 @@
   <string name="market">Marché</string>
   <string name="timeTravelers">Voyageurs temporels</string>
   <string name="seasonalShop">Boutique saisonnière</string>
-  <string name="empty_inbox">Vous n\'avez pas de message. Vous pouvez envoyer un nouveau message à quelqu\'un à partir de ses message de discussion publics!</string>
+  <string name="empty_inbox">Vous n\'avez pas de message. Vous pouvez envoyer un nouveau message à quelqu\'un à partir de ses message de discussion publics !</string>
   <string name="party_invite">Débloquer en invitant des ami•e•s</string>
   <string name="login_incentive">Débloquez en vous connectant régulièrement à Habitica</string>
   <string name="create_account">Débloquez en créant un compte</string>
@@ -400,7 +400,7 @@
   <string name="edit_tag_btn_done">Terminé</string>
   <string name="edit_tag_btn_delete">Supprimer</string>
   <string name="confirm_delete_tag_title">Confirmez-vous ?</string>
-  <string name="confirm_delete_tag_message">Voulez-vous vraiment supprimer ceci?</string>
+  <string name="confirm_delete_tag_message">Voulez-vous vraiment supprimer ceci \?</string>
   <string name="filter_drawer_edit_tags">Modifier les étiquettes</string>
   <string name="filter_drawer_filter_tags">Filtrer par étiquette</string>
   <!--QR Strings-->
@@ -538,7 +538,9 @@
   <string name="login_btn_fb">Se connecter via Facebook</string>
   <string name="login_btn_google">Se connecter via Google</string>
   <string name="action_back">Retour</string>
-  <string name="welcome_text">Oh, vous devez débuter. Je m\'appelle Justin et je vais vous guider dans Habitica.\n\nPour commencer, comment devons-nous vous appeler? Sentez-vous libre de changer ce que j\'ai choisi. Quand vous êtes prêt, créons votre avatar!</string>
+  <string name="welcome_text">Oh, vous devez débuter. Je m\'appelle Justin et je vais vous guider dans Habitica.
+\n
+\nPour commencer, comment devons-nous vous appeler\? Sentez-vous libre de changer ce que j\'ai choisi. Quand vous êtes prêt, créons votre avatar !</string>
   <string name="randomize">Aléatoire</string>
   <string name="avatar_extras">Bonus</string>
   <string name="avatar_skin_color">Couleur de peau</string>
@@ -578,8 +580,8 @@
   <string name="edit_challenge">Modifier</string>
   <string name="challenge_create_error_tavern_one_gem">Il vous faut au moins 1 gemme pour créer un défi public.</string>
   <string name="challenge_create_error_enough_gems">Vous ne possédez pas assez de gemmes pour créer un défi.</string>
-  <string name="identify_your_challenge_with_a_tag">Identifiez votre défi avec une étiquette ..</string>
-  <string name="challenge_create_error_tag">Il vous faut un nom nom court pour créer ce défi</string>
+  <string name="identify_your_challenge_with_a_tag">Identifiez votre défi avec une étiquette</string>
+  <string name="challenge_create_error_tag">Il vous faut un nom nom court pour créer ce défi.</string>
   <string name="challenge_create_error_no_tasks">Vous devez ajouter au moins une tâche pour créer ce défi.</string>
   <string name="challenge_create_error_title">Il vous faut un titre pour créer ce défi.</string>
   <string name="description_optional">Description (optionnel)</string>
@@ -605,7 +607,7 @@
   <string name="invitations">Invitations</string>
   <string name="quest_leader_header" formatted="false">Lancé par %s</string>
   <string name="quest_abort_message">Voulez-vous vraiment annuler cette mission ? Cela l\'annulera pour tout le   monde dans l\'équipe et toute avancée sera perdue. Le parchemin de quête retournera à son propriétaire. </string>
-  <string name="loading">Chargement...</string>
+  <string name="loading">Chargement…</string>
   <string name="reloading_content">Recharger le contenu</string>
   <string name="thousand_abbrev">k</string>
   <string name="million_abbrev">mo</string>
@@ -658,7 +660,7 @@
   <string name="forgot_password_confirmation">Si votre email est dans nos bases, les instructions pour définir un nouveau mot de passe vous ont été envoyées à cette adresse.</string>
   <string name="ok">OK</string>
   <string name="profile">Profil</string>
-  <string name="profile_summary">Modifiez votre profil public</string>
+  <string name="profile_summary">Modifiez votre profil public.</string>
   <string name="display_name">Nom affiché</string>
   <string name="photo_url">URL de photo</string>
   <string name="login_name">Nom de connexion</string>
@@ -746,7 +748,11 @@
   <string name="insufficientSubscriberGemsTitle">Limite de gemmes mensuelle atteinte</string>
   <string name="chat_message">Discussion</string>
   <string name="world_boss_description_title">Qu\'est-ce qu\'un boss mondial ?</string>
-  <string name="world_boss_description_description">Un boss mondial est un événement spécial où toute la communauté travaille ensemble pour combattre avec ses tâches un puissant monstre !\nRéalisez vos tâches pour infliger des dégâts au boss.\nLe boss ne vous infligera pas de dégâts pour les tâches non réalisées, mais sa jauge de rage augmentera. Lorsque la barre se remplit, le boss attaquera l\'un des marchands !\nVous pouvez continuer à faire vos quêtes de boss habituelles, vos dégâts s\'appliqueront aux deux.\nVisitez la taverne pour voir l\'avancée du combat et la jauge de rage.</string>
+  <string name="world_boss_description_description">Un boss mondial est un événement spécial où toute la communauté travaille ensemble pour combattre avec ses tâches un puissant monstre !
+\nRéalisez vos tâches pour infliger des dégâts au boss.
+\nLe boss ne vous infligera pas de dégâts pour les tâches non réalisées, mais sa jauge de rage augmentera. Lorsque la barre se remplit, le boss attaquera l\'un des marchands !
+\nVous pouvez continuer à faire vos quêtes de boss habituelles, vos dégâts s\'appliqueront aux deux
+\nVisitez la taverne pour voir l\'avancée du combat et la jauge de rage</string>
   <string name="world_boss_description_intro">Un boss mondial est un événement spécial où toute la communauté travaille ensemble pour combattre avec ses tâches un puissant monstre !</string>
   <string name="world_boss_description_1">Réalisez vos tâches pour infliger des dégâts au boss</string>
   <string name="world_boss_description_2">Le boss ne vous infligera pas de dégâts pour les tâches non réalisées, mais sa jauge de rage augmentera. Si la barre se remplit, le boss attaquera l\'un des marchands !</string>
@@ -773,7 +779,7 @@
   <string name="next_day_reminder_title">Avez-vous validé vos tâches quotidiennes aujourd\'hui ?</string>
   <string name="next_day_reminder_text">Il y a beaucoup à découvrir en gagnant des niveaux, alors continuez avec vos tâches et amusez-vous !</string>
   <string name="daily_tip_0">Vous voulez essayer quelque chose de nouveau ? Rejoignez un défi pour augmenter votre liste de tâches et gagnez des gemmes !</string>
-  <string name="daily_tip_1">Ajoutez des listes de vérifications à vos taches à faire pour augmenter vos récompenses!</string>
+  <string name="daily_tip_1">Ajoutez des listes de vérifications à vos taches à faire pour augmenter vos récompenses !</string>
   <string name="daily_tip_2">Vous pouvez modifier la périodicité des tâches quotidiennes. Même les tâches les moins fréquentes peuvent être planifiées.</string>
   <string name="daily_tip_3">Vous pouvez également planifier des rappels pour vos tâches quotidiennes.</string>
   <string name="daily_tip_4">Refaire occasionnellement le point sur vos tâches vous aidera à rester sur le droit chemin.</string>
@@ -806,17 +812,17 @@
   <string name="username_level">\@%s ・Niv %d</string>
   <string name="enter_recipient_username">Entrez le @ nom d\'utilisateur du destinataire</string>
   <string name="username_copied">Nom d\'utilisateur copié dans le presse papier</string>
-  <string name="verification_pet">Un de ces Familiers Vétérans vous attendra une fois la confirmation effectuée!</string>
-  <string name="welcomeNameTitle">Comment devrions-nous vous appeler?</string>
+  <string name="verification_pet">Un de ces Familiers Vétérans vous attendra une fois la confirmation effectuée !</string>
+  <string name="welcomeNameTitle">Comment devrions-nous vous appeler \?</string>
   <string name="display_name_length_error">Les noms affichés doivent comporter entre 1 et 30 caractères</string>
   <string name="setup_task_join_habitica">Rejoindre Habitica (Cochez-moi!)</string>
   <string name="setup_task_join_habitica_notes">Vous pouvez réaliser cette tâche, l\'éditer ou la supprimer.</string>
   <string name="setup_task_reward">Récompensez-vous</string>
-  <string name="setup_task_reward_notes">Regarder la TV, jouer, manger une friandise, à vous de choisir!</string>
-  <string name="equipment_str">FOR:</string>
-  <string name="equipment_con">CON:</string>
-  <string name="equipment_int">INT: </string>
-  <string name="equipment_per">PER:</string>
+  <string name="setup_task_reward_notes">Regarder la TV, jouer, manger une friandise, à vous de choisir !</string>
+  <string name="equipment_str">FOR :</string>
+  <string name="equipment_con">CON :</string>
+  <string name="equipment_int">INT :</string>
+  <string name="equipment_per">PER :</string>
   <string name="visit_website">Rendez vous sur le site</string>
   <string name="subscribe_gift_description">Vous souhaitez donner les bénéfices de l\'abonnement à quelqu\'un d\'autre ?</string>
   <string name="gift_subscription">Offrez un abonnement</string>
@@ -828,7 +834,7 @@
   <string name="send_gift">Offrir</string>
   <string name="server">Serveur</string>
   <string name="gift_confirmation_title">Votre cadeau a été envoyé !</string>
-  <string name="gift_confirmation_text_g1g1">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte.</string>
+  <string name="gift_confirmation_text_g1g1">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte !</string>
   <string name="gift_confirmation_text">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte.</string>
 <string name="opting_out_progress">Ne pas choisir</string>
     <string name="delete_oauth_account_description">Vraiment \? Cela supprimera votre compte définitivement, et il ne pourra pas être restauré ! Vous aurez besoin d\'enregistrer un nouveau compte pour utiliser Habitica à nouveau. Les gemmes économisées ou dépensées ne seront pas remboursée. Si votre décision est définitive, tapez DELETE dans le champ ci-dessous.</string>
