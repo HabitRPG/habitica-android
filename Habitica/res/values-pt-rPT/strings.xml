@@ -494,4 +494,22 @@
   <string name="collection_quest">Recolha de Missão</string>
   <string name="quest_owner_rewards">Recompensas do Dono de Missão</string>
   <string name="tavern_description">Bem-vindo à Pousada! Puxe uma cadeira para conversar, ou efetue uma pausa das suas tarefas.</string>
-</resources>
+<string name="repeatables_title">Repete</string>
+    <string name="repeatables_on_title">Repete em</string>
+    <string name="levelup_header">Alcançaste o Nível %1$d!</string>
+    <string name="levelup_detail">Por completares os teus objectivos na vida real, subiste de nível e agora estás totalmente curado!</string>
+    <string name="faint_penalty_body">Perdeste um Nível. o teu Ouro, e uma peça de Equipamento, mas podes recuperá-los de volta com trabalho árduo! Boa sorte — Vais-te sair bem.</string>
+    <string name="reminder_title">Lembra-te de marcares as tuas Diárias</string>
+    <string name="intro_2_title">Progresso na vida</string>
+    <string name="intro_2_description">Desbloqueia recursos no jogo ao completares as tuas tarefas da vida real. Ganha armaduras, animais de estimação, e mais como recompensas por atingires os teus objectivos.</string>
+    <string name="intro_3_subtitle">Combate monstros</string>
+    <string name="intro_3_title">Sociabiliza</string>
+    <string name="avatar_setup_description">Então, como te queres parecer\? Não te preocupes, podes mudar isto depois.</string>
+    <string name="task_setup_description">Óptimo! Agora, no que estás interessado em trabalhar durante esta jornada\?</string>
+    <string name="add_tag">Adicionar nova Etiqueta</string>
+    <string name="quest_begin_message">Tens a certeza\? Apenas %1$d dos teus %2$d membros do grupo aceitaram esta missão! As missões iniciam automaticamente quando todos os jogadores tiverem aceite ou rejeitado o convite.</string>
+    <string name="ago_1day">1d atrás</string>
+    <string name="ago_days">%dd atrás</string>
+    <string name="ago_1Minute">1m atrás</string>
+    <string name="evolved_pet_title">Domaste %1$s %2$s, vamos dar um passeio!</string>
+    </resources>
