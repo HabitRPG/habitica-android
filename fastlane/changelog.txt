@@ -1,5 +1,6 @@
 - Redesigned Class selection
 - Redesigned Task Form
+- Redesigned Report message dialog
 - Optimized user and content loading
 - Improved FAQ and settings
-
+- Fixed Time Travelers shop display

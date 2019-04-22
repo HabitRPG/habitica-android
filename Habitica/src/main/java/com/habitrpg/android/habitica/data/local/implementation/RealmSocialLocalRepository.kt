@@ -2,10 +2,8 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.social.ChatMessageLike
-import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.Realm
@@ -211,10 +209,15 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                     messagesToRemove.add(existingMessage)
                 }
             }
+            val idsToRemove = messagesToRemove.map { it.id }
+            val userStylestoRemove = realm.where(UserStyles::class.java).`in`("id", idsToRemove.toTypedArray()).findAll()
+            val contributorToRemove = realm.where(ContributorInfo::class.java).`in`("id", idsToRemove.toTypedArray()).findAll()
             realm.executeTransaction {
                 for (member in messagesToRemove) {
                     member.deleteFromRealm()
                 }
+                userStylestoRemove.deleteAllFromRealm()
+                contributorToRemove.deleteAllFromRealm()
             }
         }
     }
