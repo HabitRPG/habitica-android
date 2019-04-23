@@ -33,56 +33,57 @@
             style="@style/CardContent.Compact"
             android:background="@drawable/layout_rounded_bg"
             android:padding="@dimen/spacing_medium">
-            <LinearLayout
-                android:layout_width="fill_parent"
+            <TableLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="1.0"
                 android:baselineAligned="false"
-                android:gravity="center_vertical">
-                <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-                    android:id="@+id/user_label"
-                    style="@style/ChatMessageUserTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    tools:text="Username"
-                    android:focusable="true" />
-                <TextView
-                    android:id="@+id/mod_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/white"
-                    style="@style/Pill.Purple"
-                    tools:text="Moderator"
-                    android:layout_marginLeft="@dimen/spacing_small"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-                <LinearLayout
-                    android:id="@+id/like_background_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/layout_rounded_bg">
-
-                    <TextView
-                        android:id="@+id/tvLikes"
+                android:gravity="center_vertical"
+                android:shrinkColumns="0"
+                android:stretchColumns="2">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+                        android:id="@+id/user_label"
+                        style="@style/ChatMessageUserTextViewStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_gravity="center_vertical"
                         android:clickable="true"
-                        android:gravity="center_vertical"
+                        tools:text="Username"
                         android:focusable="true" />
-                </LinearLayout>
-            </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/mod_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        style="@style/Pill.Purple"
+                        tools:text="Moderator"
+                        android:layout_marginLeft="@dimen/spacing_small"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"/>
+                    <LinearLayout
+                        android:id="@+id/like_background_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/layout_rounded_bg">
+                        <TextView
+                            android:id="@+id/tvLikes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:clickable="true"
+                            android:gravity="center_vertical"
+                            android:focusable="true" />
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
             <TextView
                 android:id="@+id/subline_textview"
                 android:layout_width="wrap_content"
