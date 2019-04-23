@@ -71,8 +71,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
-        return new TaskRepositoryImpl(localRepository, apiClient, userId);
+    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, AppConfigManager appConfigManager) {
+        return new TaskRepositoryImpl(localRepository, apiClient, userId, appConfigManager);
     }
 
     @Provides

@@ -32,7 +32,6 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
@@ -484,14 +483,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         HabiticaSnackbar.showSnackbar(floatingMenuWrapper, null, snackbarMessage, BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()), ContextCompat.getColor(this, R.color.yellow_10), "-" + event.Reward.value, SnackbarDisplayType.NORMAL)
                     }, RxErrorHandler.handleEmptyError())
         } else {
-            buyRewardUseCase.observable(BuyRewardUseCase.RequestValues(user, event.Reward))
-                    .subscribe(Consumer {
-                        HabiticaSnackbar.showSnackbar(floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
-                                BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
-                                ContextCompat.getColor(this, R.color.yellow_10),
-                                "-" + event.Reward.value.toInt(),
-                                SnackbarDisplayType.DROP)
-                    }, RxErrorHandler.handleEmptyError())
+            buyRewardUseCase.observable(BuyRewardUseCase.RequestValues(user, event.Reward) {
+                HabiticaSnackbar.showSnackbar(floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
+                        BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
+                        ContextCompat.getColor(this, R.color.yellow_10),
+                        "-" + event.Reward.value.toInt(),
+                        SnackbarDisplayType.DROP)
+            }).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -732,12 +730,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     fun onEvent(event: TaskCheckedCommand) {
         when (event.Task.type) {
             Task.TYPE_DAILY -> {
-                dailyCheckUseCase.observable(DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.completed))
-                        .subscribe(Consumer<TaskScoringResult> { this.displayTaskScoringResponse(it) }, RxErrorHandler.handleEmptyError())
+                dailyCheckUseCase.observable(DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.completed) { result -> displayTaskScoringResponse(result)})
+                        .subscribe(Consumer<TaskScoringResult> { }, RxErrorHandler.handleEmptyError())
             }
             Task.TYPE_TODO -> {
-                todoCheckUseCase.observable(TodoCheckUseCase.RequestValues(user, event.Task, !event.Task.completed))
-                        .subscribe(Consumer<TaskScoringResult> { this.displayTaskScoringResponse(it) }, RxErrorHandler.handleEmptyError())
+                todoCheckUseCase.observable(TodoCheckUseCase.RequestValues(user, event.Task, !event.Task.completed) { result -> displayTaskScoringResponse(result)})
+                        .subscribe(Consumer<TaskScoringResult> { }, RxErrorHandler.handleEmptyError())
             }
         }
     }
@@ -749,8 +747,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun onEvent(event: HabitScoreEvent) {
-        habitScoreUseCase.observable(HabitScoreUseCase.RequestValues(user, event.habit, event.Up))
-                .subscribe(Consumer<TaskScoringResult> { this.displayTaskScoringResponse(it) }, RxErrorHandler.handleEmptyError())
+        habitScoreUseCase.observable(HabitScoreUseCase.RequestValues(user, event.habit, event.Up) { result -> displayTaskScoringResponse(result)})
+                .subscribe(Consumer<TaskScoringResult> { }, RxErrorHandler.handleEmptyError())
     }
 
     private fun checkMaintenance() {

@@ -39,7 +39,7 @@ class TaskReceiver : BroadcastReceiver() {
         if (extras != null) {
             val taskTitle = extras.getString(TaskAlarmManager.TASK_NAME_INTENT_KEY)
             val taskId = extras.getString(TaskAlarmManager.TASK_ID_INTENT_KEY)
-            //This will set up the next reminders for dailies
+            //This will set UP the next reminders for dailies
             if (taskId != null) {
                 taskAlarmManager.addAlarmForTaskId(taskId)
             }

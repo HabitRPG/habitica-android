@@ -61,4 +61,8 @@ class AppConfigManager {
     fun testingLevel(): AppTestingLevel {
         return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL)
     }
+
+    fun enableLocalTaskScoring(): Boolean {
+        return remoteConfig.getBoolean("enableLocalTaskScoring")
+    }
 }

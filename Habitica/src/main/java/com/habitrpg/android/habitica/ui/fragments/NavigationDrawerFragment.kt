@@ -245,7 +245,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     /**
-     * Users of this fragment must call this method to set up the navigation drawer interactions.
+     * Users of this fragment must call this method to set UP the navigation drawer interactions.
      *
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
@@ -256,7 +256,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         // set a custom shadow that overlays the main content when the drawer opens
         this.drawerLayout?.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
-        // set up the drawer's list view with items and click listener
+        // set UP the drawer's list view with items and click listener
     }
 
     fun openDrawer() {

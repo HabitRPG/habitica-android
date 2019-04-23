@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.AppTestingLevel
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -129,10 +130,14 @@ class AboutFragment : BaseMainFragment() {
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
         val device = Build.DEVICE
-        var bodyOfEmail = "Device: " + device +
-                " \nAndroid Version: " + version +
-                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
-                " \nUser ID: " + userId
+        var bodyOfEmail = "Device: $device" +
+                " \nAndroid Version: $version"+
+                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode)
+
+        if (appConfigManager.testingLevel() != AppTestingLevel.PRODUCTION) {
+            bodyOfEmail += " ${appConfigManager.testingLevel().name}"
+        }
+        bodyOfEmail += " \nUser ID: $userId"
 
         val user = this.user
         if (user != null) {

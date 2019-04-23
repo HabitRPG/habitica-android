@@ -194,7 +194,7 @@ android {
             dimension "buildType"
         }
 
-        beta {
+        alpha {
             dimension "buildType"
             buildConfigField "String", "TESTING_LEVEL", "\"alpha\""
             resValue "string", "app_name", "Habitica Alpha"

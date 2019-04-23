@@ -267,7 +267,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
         if (tasks.isNotEmpty()) {
             for (task in tasks) {
-                observable = observable.flatMap { taskRepository.taskChecked(null, task, true, true).firstElement() }
+                observable = observable.flatMap { taskRepository.taskChecked(null, task, true, true, null).firstElement() }
             }
         }
         observable.flatMap { apiClient.runCron().firstElement() }
