@@ -3,8 +3,9 @@ package com.habitrpg.android.habitica.helpers
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.habitrpg.android.habitica.BuildConfig
 
-class RemoteConfigManager {
+class AppConfigManager {
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
 
@@ -55,5 +56,9 @@ class RemoteConfigManager {
 
     fun noPartyLinkPartyGuild(): Boolean {
         return remoteConfig.getBoolean("noPartyLinkPartyGuild")
+    }
+
+    fun testingLevel(): AppTestingLevel {
+        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL)
     }
 }

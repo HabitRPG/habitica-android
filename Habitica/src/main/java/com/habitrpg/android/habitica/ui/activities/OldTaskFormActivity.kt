@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.google.android.material.textfield.TextInputLayout
@@ -97,7 +96,7 @@ class OldTaskFormActivity : BaseActivity() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     internal lateinit var userId: String
     @Inject
-    internal lateinit var remoteConfigManager: RemoteConfigManager
+    internal lateinit var appConfigManager: AppConfigManager
     @Inject
     internal lateinit var taskAlarmManager: TaskAlarmManager
 
@@ -318,7 +317,7 @@ class OldTaskFormActivity : BaseActivity() {
     }
 
     private fun enableRepeatables() {
-        if (!remoteConfigManager.repeatablesAreEnabled() || taskType != Task.TYPE_DAILY) {
+        if (!appConfigManager.repeatablesAreEnabled() || taskType != Task.TYPE_DAILY) {
             repeatablesLayout.visibility = View.INVISIBLE
             val repeatablesLayoutParams = repeatablesLayout.layoutParams
             repeatablesLayoutParams.height = 0

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -19,7 +18,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.AvatarView
@@ -40,7 +39,7 @@ class GiftIAPActivity: BaseActivity() {
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
-    lateinit var remoteConfigManager: RemoteConfigManager
+    lateinit var appConfigManager: AppConfigManager
 
     var activityCheckout: ActivityCheckout? = null
         private set
@@ -90,7 +89,7 @@ class GiftIAPActivity: BaseActivity() {
             selectedSubscriptionSku?.notNull { sku -> purchaseSubscription(sku) }
         }
 
-        giftOneGetOneContainer?.isVisible = remoteConfigManager.enableGiftOneGetOne()
+        giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
 
         compositeSubscription.add(socialRepository.getMemberWithUsername(giftedUsername).subscribe(Consumer {
             avatarView.setAvatar(it)
@@ -262,7 +261,7 @@ class GiftIAPActivity: BaseActivity() {
     }
 
     private fun displayConfirmationDialog() {
-        val message = getString(if (remoteConfigManager.enableGiftOneGetOne()){
+        val message = getString(if (appConfigManager.enableGiftOneGetOne()){
             R.string.gift_confirmation_text_g1g1
         } else {
             R.string.gift_confirmation_text

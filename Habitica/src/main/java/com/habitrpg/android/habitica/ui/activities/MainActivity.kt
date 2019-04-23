@@ -47,7 +47,6 @@ import com.habitrpg.android.habitica.interactors.*
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
@@ -127,7 +126,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var taskAlarmManager: TaskAlarmManager
     @Inject
-    internal lateinit var remoteConfigManager: RemoteConfigManager
+    internal lateinit var appConfigManager: AppConfigManager
 
     val floatingMenuWrapper: ViewGroup by bindView(R.id.floating_menu_wrapper)
     internal val bottomNavigation: BottomBar by bindView(R.id.bottom_navigation)

@@ -16,13 +16,12 @@ import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftIAPActivity
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
@@ -43,7 +42,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
-    lateinit var remoteConfigManager: RemoteConfigManager
+    lateinit var appConfigManager: AppConfigManager
 
     private val giftOneGetOneContainer: ViewGroup? by bindView(R.id.gift_subscription_container)
     private val giftOneGetOneButton: Button? by bindView(R.id.gift_subscription_promo_button)
@@ -129,7 +128,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         subscribeButton.setOnClickListener { subscribeUser() }
 
-        giftOneGetOneContainer?.isVisible = remoteConfigManager.enableGiftOneGetOne()
+        giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
     }
 
     private fun toggleDescriptionView(button: ImageView?, descriptionView: TextView?) {

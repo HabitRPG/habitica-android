@@ -16,8 +16,7 @@ import com.facebook.drawee.view.DraweeHolder
 import com.facebook.drawee.view.MultiDraweeHolder
 import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -154,7 +153,7 @@ class AvatarView : View {
     }
 
     private fun getLayerMap(avatar: Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
-        val substitutions = RemoteConfigManager().spriteSubstitutions()
+        val substitutions = AppConfigManager().spriteSubstitutions()
         val layerMap = getAvatarLayerMap(avatar, substitutions)
 
         if (resetHasAttributes) {
