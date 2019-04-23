@@ -7,4 +7,6 @@
   <string name="tutorial_party">Isto é onde você e os seus amigos podem responsabilizar-se mutuamente para os vossos objetivos e lutar contra monstros com as vossas tarefas!</string>
   <string name="tutorial_tavern">Bem-vindo ao Tabern, uma sala de conversação pública para todas as idades! Aqui pode conversar sobre a produtividade e colocar questões. Divirta-se!</string>
   <string name="tutorial_classes">Escolha para se tornar num Guerreiro, Mago, Curandeiro ou Bandido! Cada classe tem equipamento e habilidades únicos. Toque em (?) para saber mais!</string>
-</resources>
+<string name="tutorial_overview">Aqui estamos! Inseri algumas tarefas para ti com base nos teus interesses. Experimenta adicionar algumas por tua conta. Podes editar qualquer tarefa ao tocar o título.</string>
+    <string name="tutorial_habits_1">Primeiro os Hábitos. Podem ser Hábitos positivos que queres melhorar ou Hábitos negativos que queres deixar.</string>
+    </resources>
