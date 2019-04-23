@@ -38,7 +38,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         val guildViewHolder = GuildViewHolder(parent.inflate(R.layout.item_public_guild))
         guildViewHolder.itemView.setOnClickListener { v ->
             val guild = v.tag as? Group ?: return@setOnClickListener
-            val directions =PublicGuildsFragmentDirections.openGuildDetail(guild.id)
+            val directions = PublicGuildsFragmentDirections.openGuildDetail(guild.id)
             directions.isMember = isInGroup(guild)
             MainNavigationController.navigate(directions)
         }

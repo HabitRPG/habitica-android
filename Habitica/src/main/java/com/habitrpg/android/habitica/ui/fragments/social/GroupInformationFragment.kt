@@ -125,11 +125,13 @@ class GroupInformationFragment : BaseFragment() {
                 val width = Math.round(height * aspectRatio)
                 val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
                 drawable.tileModeX = Shader.TileMode.REPEAT
-                Observable.just(drawable)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer {
-                            no_party_background.background = it
-                        }, RxErrorHandler.handleEmptyError())
+                if (drawable != null) {
+                    Observable.just(drawable)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(Consumer {
+                                no_party_background.background = it
+                            }, RxErrorHandler.handleEmptyError())
+                }
             }
         }
 

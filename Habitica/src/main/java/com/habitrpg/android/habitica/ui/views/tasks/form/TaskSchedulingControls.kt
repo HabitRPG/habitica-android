@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import java.lang.NumberFormatException
 import java.text.DateFormat
 import java.text.DateFormatSymbols
 import java.util.*
@@ -76,7 +77,11 @@ class TaskSchedulingControls @JvmOverloads constructor(
     var everyX
         get() = (repeatsEveryEdittext.text ?: "1").toString().toInt()
     set(value) {
-        repeatsEveryEdittext.setText(value.toString())
+        try {
+            repeatsEveryEdittext.setText(value.toString())
+        } catch (e: NumberFormatException) {
+            repeatsEveryEdittext.setText("1")
+        }
     }
     var weeklyRepeat: Days = Days()
     set(value) {
