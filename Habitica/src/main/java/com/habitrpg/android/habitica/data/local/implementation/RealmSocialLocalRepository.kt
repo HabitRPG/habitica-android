@@ -211,7 +211,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             }
             val idsToRemove = messagesToRemove.map { it.id }
             val userStylestoRemove = realm.where(UserStyles::class.java).`in`("id", idsToRemove.toTypedArray()).findAll()
-            val contributorToRemove = realm.where(ContributorInfo::class.java).`in`("id", idsToRemove.toTypedArray()).findAll()
+            val contributorToRemove = realm.where(ContributorInfo::class.java).`in`("userId", idsToRemove.toTypedArray()).findAll()
             realm.executeTransaction {
                 for (member in messagesToRemove) {
                     member.deleteFromRealm()

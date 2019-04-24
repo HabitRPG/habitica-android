@@ -103,15 +103,22 @@ class ReportMessageActivity : BaseActivity() {
 
     @Suppress("ReturnCount")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        when (id) {
+        when (item.itemId) {
             R.id.menu_report -> {
                 reportMessage()
                 return true
             }
+            android.R.id.home -> {
+                finish()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     private fun reportMessage() {

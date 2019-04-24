@@ -105,7 +105,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         }
 
         healerWrapper.setOnClickListener { newClass = "healer" }
-        mageWrapper.setOnClickListener { newClass = "mage" }
+        mageWrapper.setOnClickListener { newClass = "wizard" }
         rogueWrapper.setOnClickListener { newClass = "rogue" }
         warriorWrapper.setOnClickListener { newClass = "warrior" }
         selectedButton.setOnClickListener { displayConfirmationDialogForClass() }
@@ -196,7 +196,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     private fun mageSelected() {
         className = getString(R.string.mage)
         selectedDescriptionTextView.text = getString(R.string.mage_description)
-        selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_100))
+        selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_10))
         selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
@@ -206,17 +206,17 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     private fun rogueSelected() {
         className = getString(R.string.rogue)
         selectedDescriptionTextView.text = getString(R.string.rogue_description)
-        selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.brand_300))
+        selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.brand_200))
         selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
-        selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_brand_100)
+        selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(rogueButton, getDrawable(R.drawable.layout_rounded_bg_brand_700_brand_border))
     }
 
     private fun warriorSelected() {
         className = getString(R.string.warrior)
         selectedDescriptionTextView.text = getString(R.string.warrior_description)
-        selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.red_50))
+        selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.maroon_50))
         selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)

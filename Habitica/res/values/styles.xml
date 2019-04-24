@@ -24,7 +24,7 @@
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-
+        <item name="android:textColorLink">@color/brand_400</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
@@ -393,6 +393,8 @@
 
     <style name="HabiticaButton" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:minHeight">0dp</item>
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
@@ -507,12 +509,24 @@
     </style>
 
     <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:gravity">top</item>
+        <item name="boxBackgroundColor">@color/taskform_gray</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColorHint">@color/gray_300</item>
+        <item name="colorControlNormal">@color/gray_500</item>
+        <item name="colorControlActivated">@color/brand_400</item>
+        <item name="colorControlHighlight">@color/brand_400</item>
+    </style>
+
+    <style name="TextInputEditText">
         <!-- reference our hint & error styles -->
         <item name="android:gravity">top</item>
         <item name="boxBackgroundColor">@color/taskform_gray</item>
         <item name="android:textColor">@color/textColorLight</item>
         <item name="android:textColorHint">@color/gray_300</item>
-        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlNormal">@color/gray_500</item>
+        <item name="colorControlActivated">@color/brand_400</item>
+        <item name="colorControlHighlight">@color/brand_400</item>
     </style>
 
     <style name="TaskFormSectionheader">
@@ -541,6 +555,8 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/layout_rounded_bg_gray_700</item>
+        <item name="android:paddingStart">@dimen/spacing_medium</item>
+        <item name="android:paddingEnd">@dimen/spacing_medium</item>
     </style>
 
     <style name="ToolbarDarkBackArrow" parent="Base.Theme.AppCompat.Light.DarkActionBar">

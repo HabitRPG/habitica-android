@@ -62,17 +62,21 @@
                     android:layout_height="wrap_content"
                     tools:text="Report NAME for violation:"
                     android:textColor="@color/gray_10"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
+                    style="@style/Caption1"
                     android:layout_marginBottom="@dimen/spacing_medium"
-                    android:layout_marginStart="12dp"/>
+                    android:layout_marginStart="13dp"/>
                 <TextView
                     android:id="@+id/message_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_1f000000"
                     android:textColor="@color/gray_300"
-                    android:padding="@dimen/spacing_medium"
+                    style="@style/Body2"
+                    android:lineSpacingExtra="4sp"
+                    android:paddingTop="11dp"
+                    android:paddingBottom="11dp"
+                    android:paddingStart="13dp"
+                    android:paddingEnd="13dp"
                     tools:text="This is the message that is reported" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +91,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/reason_for_report"
-                        android:textColor="@color/gray_50"/>
+                        android:textColor="@color/gray_50"
+                        style="@style/TextInputEditText"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -96,8 +101,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     tools:text="@string/report_explanation"
-                    android:textSize="12sp"
                     android:textColor="@color/gray_200"
+                    style="@style/Caption3"
                     />
             </LinearLayout>
             </androidx.core.widget.NestedScrollView>

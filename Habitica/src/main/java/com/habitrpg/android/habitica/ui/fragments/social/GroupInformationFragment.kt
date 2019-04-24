@@ -224,6 +224,7 @@ class GroupInformationFragment : BaseFragment() {
         groupDescriptionView.visibility = groupItemVisibility
         groupDescriptionWrapper.visibility = groupItemVisibility
 
+        groupNameView.text = group?.name
         groupDescriptionView.text = MarkdownParser.parseMarkdown(group?.description)
         groupSummaryView.text = MarkdownParser.parseMarkdown(group?.summary)
         gemCountWrapper.visibility = if (group?.balance != null && group.balance > 0) View.VISIBLE else View.GONE

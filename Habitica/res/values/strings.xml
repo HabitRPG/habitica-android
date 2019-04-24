@@ -355,10 +355,10 @@
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>
     <string name="healer">Healer</string>
-    <string name="warrior_description">Warriors score more and better \“critical hits\”, which randomly give bonus Gold, Experience, and drop chance for scoring a task. They also deal heavy damage to boss monsters. Play a Warrior if you find motivation from unpredictable jackpot-style rewards, or want to dish out the hurt in boss Quests!</string>
-    <string name="mage_description">Mages learn swiftly, gaining Experience and Levels faster than other classes. They also get a great deal of Mana for using special abilities. Play a Mage if you enjoy the tactical game aspects of Habit, or if you are strongly motivated by leveling up and unlocking advanced features!</string>
-    <string name="rogue_description">Rogues love to accumulate wealth, gaining more Gold than anyone else, and are adept at finding random items. Their iconic Stealth ability lets them duck the consequences of missed Dailies. Play a Rogue if you find strong motivation from Rewards and Achievements, striving for loot and badges!</string>
-    <string name="healer_description">Healers stand impervious against harm, and extend that protection to others. Missed Dailies and bad Habits don\'t faze them much, and they have ways to recover Health from failure. Play a Healer if you enjoy assisting others in your Party, or if the idea of cheating Death through hard work inspires you!</string>
+    <string name="warrior_description">Warriors score more critical hits and deal heavy damage to Bosses. Play a Warrior if you want to defeat monsters easily! Warrior benefit from a high Strength stat.</string>
+    <string name="mage_description">Mages learn Skills that damage Bosses and boost EXP and Mana. Play a Mage if you’re motivated by leveling up quickly! Mages benefit from a high Intelligence stat.</string>
+    <string name="rogue_description">Rogues learn Skills that let them and their Party find more Gold and random drops. Play a Rogue if you want lots of items and Gold! Rogues benefit from a high Perception stat.</string>
+    <string name="healer_description">Healers learn Skills that can heal and protect themselves and their Party. Play a Healer if you enjoy assisting others or avoiding damage! Healers benefit from a high Constitution stat.</string>
     <string name="select_class">Select Class</string>
     <string name="opt_out_class">Opt Out</string>
     <string name="opt_out_description">Can\'t be bothered with classes? Want to choose later? Opt out - you\'ll be a warrior with no special abilities. You can read about the class system later on the wiki and enable classes at any time.</string>

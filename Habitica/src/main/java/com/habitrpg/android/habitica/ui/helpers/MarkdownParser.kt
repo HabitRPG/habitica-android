@@ -47,7 +47,7 @@ object MarkdownParser {
 
         val matcher = regex.matcher(output)
         while (matcher.find()) {
-            val colorSpan = ForegroundColorSpan(Color.parseColor("#6133b4"))
+            val colorSpan = ForegroundColorSpan(Color.parseColor("#9A62FF"))
             output.setSpan(colorSpan, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
 

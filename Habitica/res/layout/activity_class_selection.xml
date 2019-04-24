@@ -167,7 +167,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="@string/healer_description"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                style="@style/Body2"
+                android:lineSpacingExtra="4sp"/>
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -176,7 +178,7 @@
                 android:id="@+id/selected_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:background="@drawable/layout_rounded_bg_yellow_10"
+                style="@style/HabiticaButton"
                 android:textColor="@color/white"
                 tools:text="Becoma a Healer"/>
         </LinearLayout>
