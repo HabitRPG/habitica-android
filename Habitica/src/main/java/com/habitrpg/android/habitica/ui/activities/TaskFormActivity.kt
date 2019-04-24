@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -27,6 +29,7 @@ import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -81,6 +84,7 @@ class TaskFormActivity : BaseActivity() {
     private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
 
     private var isCreating = true
+    private var isChallengeTask = false
     private var usesTaskAttributeStats = false
     private var task: Task? = null
     private var taskType: String = ""
@@ -120,16 +124,10 @@ class TaskFormActivity : BaseActivity() {
 
         val bundle = intent.extras ?: return
 
-        taskType = bundle.getString(OldTaskFormActivity.TASK_TYPE_KEY) ?: Task.TYPE_HABIT
-        val taskId = bundle.getString(OldTaskFormActivity.TASK_ID_KEY)
-        if (taskId != null) {
-            isCreating = false
-            compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(Consumer {
-                task = it
-                //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
-                fillForm(it)
-            }, RxErrorHandler.handleEmptyError()))
-        }
+        isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
+
+        taskType = bundle.getString(TASK_TYPE_KEY) ?: Task.TYPE_HABIT
+        val taskId = bundle.getString(TASK_ID_KEY)
 
         compositeSubscription.add(tagRepository.getTags()
                 .map { tagRepository.getUnmanagedCopy(it) }
@@ -148,6 +146,18 @@ class TaskFormActivity : BaseActivity() {
         statPerceptionButton.setOnClickListener { selectedStat = Stats.PERCEPTION }
 
         configureForm()
+
+        if (taskId != null) {
+            isCreating = false
+            compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(Consumer {
+                task = it
+                //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
+                fillForm(it)
+            }, RxErrorHandler.handleEmptyError()))
+        } else if (bundle.containsKey(PARCELABLE_TASK)) {
+            task = bundle.getParcelable(PARCELABLE_TASK)
+            task?.let { fillForm(it) }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -186,11 +196,11 @@ class TaskFormActivity : BaseActivity() {
 
         val todoDailyViewsVisibility = if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) View.VISIBLE else View.GONE
 
-        checklistTitleView.visibility = todoDailyViewsVisibility
-        checklistContainer.visibility = todoDailyViewsVisibility
+        checklistTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        checklistContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
 
-        remindersTitleView.visibility = todoDailyViewsVisibility
-        remindersContainer.visibility = todoDailyViewsVisibility
+        remindersTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        remindersContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
 
         taskSchedulingTitleView.visibility = todoDailyViewsVisibility
         taskSchedulingControls.visibility = todoDailyViewsVisibility
@@ -203,6 +213,8 @@ class TaskFormActivity : BaseActivity() {
         val rewardViewsVisibility = if (taskType == Task.TYPE_REWARD) View.VISIBLE else View.GONE
         rewardValueTitleView.visibility = rewardViewsVisibility
         rewardValueFormView.visibility = rewardViewsVisibility
+
+        tagsWrapper.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
 
         statWrapper.visibility = if (usesTaskAttributeStats) View.VISIBLE else View.GONE
         if (isCreating) {
@@ -319,25 +331,36 @@ class TaskFormActivity : BaseActivity() {
             thisTask.value = rewardValueFormView.value
         }
 
-        if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
-            thisTask.checklist = checklistContainer.checklistItems
-            thisTask.reminders = remindersContainer.reminders
-        }
-        thisTask.tags = RealmList()
-        tagsWrapper.forEachIndexed { index, view ->
-            val tagView = view as? CheckBox
-            if (tagView?.isChecked == true) {
-                thisTask.tags?.add(tags[index])
+        val resultIntent = Intent()
+        resultIntent.putExtra(TASK_TYPE_KEY, taskType)
+        if (!isChallengeTask) {
+            if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
+                thisTask.checklist = checklistContainer.checklistItems
+                thisTask.reminders = remindersContainer.reminders
             }
+            thisTask.tags = RealmList()
+            tagsWrapper.forEachIndexed { index, view ->
+                val tagView = view as? CheckBox
+                if (tagView?.isChecked == true) {
+                    thisTask.tags?.add(tags[index])
+                }
+            }
+
+            if (isCreating) {
+                taskRepository.createTaskInBackground(thisTask)
+            } else {
+                taskRepository.updateTaskInBackground(thisTask)
+            }
+        } else {
+                resultIntent.putExtra(PARCELABLE_TASK, thisTask)
         }
 
-        if (isCreating) {
-            taskRepository.createTaskInBackground(thisTask)
-        } else {
-            taskRepository.updateTaskInBackground(thisTask)
-        }
-        dismissKeyboard()
-        finish()
+        val mainHandler = Handler(this.mainLooper)
+        mainHandler.postDelayed({
+            setResult(Activity.RESULT_OK, resultIntent)
+            dismissKeyboard()
+            finish()
+        }, 500)
     }
 
     private fun deleteTask() {
@@ -356,8 +379,11 @@ class TaskFormActivity : BaseActivity() {
 
     companion object {
         const val TASK_ID_KEY = "taskId"
+        const val USER_ID_KEY = "userId"
         const val TASK_TYPE_KEY = "type"
-        const val SHOW_TAG_SELECTION = "show_tag_selection"
+        const val IS_CHALLENGE_TASK = "isChallengeTask"
+
+        const val PARCELABLE_TASK = "parcelable_task"
 
         // in order to disable the event handler in MainActivity
         const val SET_IGNORE_FLAG = "ignoreFlag"

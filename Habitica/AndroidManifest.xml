@@ -114,15 +114,6 @@
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.activities.OldTaskFormActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText"
-            android:parentActivityName=".ui.activities.MainActivity"
-            tools:ignore="UnusedAttribute">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.MainActivity" />
-        </activity>
-        <activity
             android:name=".ui.activities.GroupFormActivity"
             android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:parentActivityName=".ui.activities.MainActivity"

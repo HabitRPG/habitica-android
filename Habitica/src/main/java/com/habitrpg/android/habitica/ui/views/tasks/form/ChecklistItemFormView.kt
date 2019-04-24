@@ -1,26 +1,24 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import android.view.animation.LinearInterpolator
-import android.view.animation.Animation
-import android.view.animation.RotateAnimation
-
-
 
 
 class ChecklistItemFormView @JvmOverloads constructor(
@@ -29,7 +27,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
 
 
     private val button: ImageButton by bindView(R.id.button)
-    private val editText: EditText by bindView(R.id.edit_text)
+    private val editText: AppCompatEditText by bindView(R.id.edit_text)
 
     var item: ChecklistItem = ChecklistItem()
     set(value) {
