@@ -400,10 +400,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
         val statsItem = drawerFragment?.getItemWithIdentifier(NavigationDrawerFragment.SIDEBAR_STATS)
         if (statsItem != null) {
-            if (user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0) {
-                statsItem.additionalInfo = user?.stats?.points.toString()
+            if (user?.preferences?.disableClasses != true) {
+                if (user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0) {
+                    statsItem.additionalInfo = user?.stats?.points.toString()
+                } else {
+                    statsItem.additionalInfo = null
+                }
+                statsItem.isVisible = true
             } else {
-                statsItem.additionalInfo = null
+                statsItem.isVisible = false
             }
             drawerFragment?.updateItem(statsItem)
         }
