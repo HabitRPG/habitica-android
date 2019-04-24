@@ -81,6 +81,7 @@ class TaskFormActivity : BaseActivity() {
     private val rewardValueTitleView: TextView by bindView(R.id.reward_value_title)
     private val rewardValueFormView: RewardValueFormView by bindView(R.id.reward_value)
 
+    private val tagsTitleView: TextView by bindView(R.id.tags_title)
     private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
 
     private var isCreating = true
@@ -214,6 +215,7 @@ class TaskFormActivity : BaseActivity() {
         rewardValueTitleView.visibility = rewardViewsVisibility
         rewardValueFormView.visibility = rewardViewsVisibility
 
+        tagsTitleView.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
         tagsWrapper.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
 
         statWrapper.visibility = if (usesTaskAttributeStats) View.VISIBLE else View.GONE
