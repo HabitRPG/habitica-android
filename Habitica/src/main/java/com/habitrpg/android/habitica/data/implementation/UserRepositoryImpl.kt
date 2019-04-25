@@ -130,7 +130,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun disableClasses(): Flowable<User> = apiClient.disableClasses().flatMap { retrieveUser(false, true) }
 
-    override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass)
+    override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass).flatMap { retrieveUser(false) }
 
     override fun unlockPath(user: User, customization: Customization): Flowable<UnlockResponse> {
         return apiClient.unlockPath(customization.path)
