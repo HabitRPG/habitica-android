@@ -55,7 +55,8 @@
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingBottom="25dp"
-                android:layout_marginBottom="0dp">
+                android:layout_marginBottom="0dp"
+                android:focusableInTouchMode="true">
                 <TextView
                     android:id="@+id/title_text_view"
                     android:layout_width="wrap_content"

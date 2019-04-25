@@ -223,7 +223,7 @@
                 android:layout_gravity="center"
                 android:text="@string/visit_habitica_website"
                 android:layout_marginBottom="50dp"
-                style="@style/Button.Purple"
+                style="@style/HabiticaButton.Purple"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -270,7 +270,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
                     android:id="@+id/subscribeButton"
-                    style="@style/Button.Purple.Small"
+                    style="@style/HabiticaButton.Purple.Small"
                     android:textAllCaps="false"
                     android:layout_marginTop="8dp"/>
             </LinearLayout>

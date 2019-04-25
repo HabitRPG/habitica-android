@@ -75,6 +75,7 @@ import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.GuildDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
@@ -314,4 +315,6 @@ public interface AppComponent {
     void inject(@NotNull TaskFormActivity taskFormActivity);
 
     void inject(@NotNull ReportMessageActivity reportMessageActivity);
+
+    void inject(@NotNull GuildDetailFragment guildDetailFragment);
 }

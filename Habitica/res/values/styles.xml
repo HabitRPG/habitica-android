@@ -303,29 +303,12 @@
         <item name="android:layout_marginRight">16dp</item>
     </style>
 
-    <style name="Button">
-        <item name="android:paddingLeft">@dimen/button_padding</item>
-        <item name="android:paddingRight">@dimen/button_padding</item>
-    </style>
-
-    <style name="Button.Purple">
+    <style name="HabiticaButton.Purple" parent="HabiticaButton">
         <item name="android:background">@drawable/rounded_purple_square</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="Button.Purple.Small">
-        <item name="android:paddingLeft">@dimen/button_padding_small</item>
-        <item name="android:paddingRight">@dimen/button_padding_small</item>
-        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
-        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
-    </style>
-
-    <style name="Button.Yellow">
-        <item name="android:background">@drawable/rounded_yellow_10_square</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Button.Yellow.Small">
+    <style name="HabiticaButton.Purple.Small" parent="HabiticaButton.Purple">
         <item name="android:paddingLeft">@dimen/button_padding_small</item>
         <item name="android:paddingRight">@dimen/button_padding_small</item>
         <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
@@ -395,11 +378,10 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@string/font_family_medium</item>
-        <item name="android:minHeight">0dp</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
+        <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:shadowColor">@color/transparent</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:layout_height">@dimen/button_height</item>
     </style>
 
     <style name="HabiticaButton.Gray" parent="HabiticaButton">
@@ -426,6 +408,13 @@
 
     <style name="HabiticaButton.Yellow" parent="HabiticaButton">
         <item name="android:background">@drawable/layout_rounded_bg_yellow</item>
+    </style>
+
+    <style name="HabiticaButton.Yellow.Small" parent="HabiticaButton.Yellow">
+        <item name="android:paddingLeft">@dimen/button_padding_small</item>
+        <item name="android:paddingRight">@dimen/button_padding_small</item>
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
     </style>
 
     <style name="CurrencyTextView">

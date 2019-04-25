@@ -31,9 +31,13 @@ class GuildFragment : BaseMainFragment() {
     internal lateinit var socialRepository: SocialRepository
 
     var isMember: Boolean = false
+    set(value) {
+        field = value
+        guildInformationFragment?.isMember = value
+    }
     private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
     private var guild: Group? = null
-    private var guildInformationFragment: GroupInformationFragment? = null
+    private var guildInformationFragment: GuildDetailFragment? = null
     private var chatListFragment: ChatListFragment? = null
     private var guildId: String? = null
 
@@ -124,13 +128,14 @@ class GuildFragment : BaseMainFragment() {
 
         viewPager?.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+            override fun getItem(position: Int): Fragment {
 
-                val fragment: androidx.fragment.app.Fragment?
+                val fragment: Fragment?
 
                 when (position) {
                     0 -> {
-                        guildInformationFragment = GroupInformationFragment.newInstance(this@GuildFragment.guild, user)
+                        guildInformationFragment = GuildDetailFragment.newInstance(this@GuildFragment.guild, user)
+                        guildInformationFragment?.isMember = isMember
                         fragment = guildInformationFragment
                     }
                     1 -> {
@@ -213,7 +218,7 @@ class GuildFragment : BaseMainFragment() {
 
     private fun setGroup(group: Group?) {
         if (group != null) {
-            guildInformationFragment?.group = group
+            guildInformationFragment?.groupID = group.id
 
             this.chatListFragment?.groupId = group.id
 

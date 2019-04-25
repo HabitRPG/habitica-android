@@ -185,7 +185,7 @@ class AvatarView : View {
         }
 
         if (showSleeping && avatar.sleep) {
-            layerMap[AvatarView.LayerType.ZZZ] = "zzz"
+            layerMap[LayerType.ZZZ] = "zzz"
         }
 
         return layerMap
@@ -201,8 +201,8 @@ class AvatarView : View {
     }
 
     @Suppress("ReturnCount")
-    private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<AvatarView.LayerType, String> {
-        val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
+    private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<LayerType, String> {
+        val layerMap = EnumMap<LayerType, String>(LayerType::class.java)
 
         if (!avatar.isValid) {
             return layerMap
@@ -221,86 +221,86 @@ class AvatarView : View {
             val buffs = avatar.stats?.buffs
 
             if (buffs?.snowball == true) {
-                layerMap[AvatarView.LayerType.VISUAL_BUFF] = "snowman"
+                layerMap[LayerType.VISUAL_BUFF] = "snowman"
                 hasVisualBuffs = true
             }
 
             if (buffs?.seafoam == true) {
-                layerMap[AvatarView.LayerType.VISUAL_BUFF] = "seafoam_star"
+                layerMap[LayerType.VISUAL_BUFF] = "seafoam_star"
                 hasVisualBuffs = true
             }
 
             if (buffs?.shinySeed == true) {
-                layerMap[AvatarView.LayerType.VISUAL_BUFF] = "avatar_floral_" + avatar.stats?.habitClass
+                layerMap[LayerType.VISUAL_BUFF] = "avatar_floral_" + avatar.stats?.habitClass
                 hasVisualBuffs = true
             }
 
             if (buffs?.spookySparkles == true) {
-                layerMap[AvatarView.LayerType.VISUAL_BUFF] = "ghost"
+                layerMap[LayerType.VISUAL_BUFF] = "ghost"
                 hasVisualBuffs = true
             }
         }
 
         val substitutedVisualBuff = substitutions["visualBuff"]?.get("full")
         if (substitutedVisualBuff != null) {
-            layerMap[AvatarView.LayerType.VISUAL_BUFF] = substitutedVisualBuff
+            layerMap[LayerType.VISUAL_BUFF] = substitutedVisualBuff
             hasVisualBuffs = true
         }
 
         if (!hasVisualBuffs) {
             if (!TextUtils.isEmpty(prefs.chair)) {
-                layerMap[AvatarView.LayerType.CHAIR] = prefs.chair
+                layerMap[LayerType.CHAIR] = prefs.chair
             }
 
             if (outfit != null) {
                 if (!TextUtils.isEmpty(outfit.back) && "back_base_0" != outfit.back) {
-                    layerMap[AvatarView.LayerType.BACK] = outfit.back
+                    layerMap[LayerType.BACK] = outfit.back
                 }
                 if (outfit.isAvailable(outfit.armor)) {
-                    layerMap[AvatarView.LayerType.ARMOR] = prefs.size + "_" + outfit.armor
+                    layerMap[LayerType.ARMOR] = prefs.size + "_" + outfit.armor
                 }
                 if (outfit.isAvailable(outfit.body)) {
-                    layerMap[AvatarView.LayerType.BODY] = outfit.body
+                    layerMap[LayerType.BODY] = outfit.body
                 }
                 if (outfit.isAvailable(outfit.eyeWear)) {
-                    layerMap[AvatarView.LayerType.EYEWEAR] = outfit.eyeWear
+                    layerMap[LayerType.EYEWEAR] = outfit.eyeWear
                 }
                 if (outfit.isAvailable(outfit.head)) {
-                    layerMap[AvatarView.LayerType.HEAD] = outfit.head
+                    layerMap[LayerType.HEAD] = outfit.head
                 }
                 if (outfit.isAvailable(outfit.headAccessory)) {
-                    layerMap[AvatarView.LayerType.HEAD_ACCESSORY] = outfit.headAccessory
+                    layerMap[LayerType.HEAD_ACCESSORY] = outfit.headAccessory
                 }
                 if (outfit.isAvailable(outfit.shield)) {
-                    layerMap[AvatarView.LayerType.SHIELD] = outfit.shield
+                    layerMap[LayerType.SHIELD] = outfit.shield
                 }
                 if (outfit.isAvailable(outfit.weapon)) {
-                    layerMap[AvatarView.LayerType.WEAPON] = outfit.weapon
+                    layerMap[LayerType.WEAPON] = outfit.weapon
                 }
             }
 
-            layerMap[AvatarView.LayerType.SKIN] = "skin_" + prefs.skin + if (prefs.sleep) "_sleep" else ""
-            layerMap[AvatarView.LayerType.SHIRT] = prefs.size + "_shirt_" + prefs.shirt
-            layerMap[AvatarView.LayerType.HEAD_0] = "head_0"
+            layerMap[LayerType.SKIN] = "skin_" + prefs.skin + if (prefs.sleep) "_sleep" else ""
+            layerMap[LayerType.SHIRT] = prefs.size + "_shirt_" + prefs.shirt
+            layerMap[LayerType.HEAD_0] = "head_0"
 
             val hair = prefs.hair
             if (hair != null) {
                 val hairColor = hair.color
 
                 if (hair.isAvailable(hair.base)) {
-                    layerMap[AvatarView.LayerType.HAIR_BASE] = "hair_base_" + hair.base + "_" + hairColor
+                    layerMap[LayerType.HAIR_BASE] = "hair_base_" + hair.base + "_" + hairColor
                 }
                 if (hair.isAvailable(hair.bangs)) {
-                    layerMap[AvatarView.LayerType.HAIR_BANGS] = "hair_bangs_" + hair.bangs + "_" + hairColor
+                    layerMap[LayerType.HAIR_BANGS] = "hair_bangs_" + hair.bangs + "_" + hairColor
                 }
                 if (hair.isAvailable(hair.mustache)) {
-                    layerMap[AvatarView.LayerType.HAIR_MUSTACHE] = "hair_mustache_" + hair.mustache + "_" + hairColor
+                    layerMap[LayerType.HAIR_MUSTACHE] = "hair_mustache_" + hair.mustache + "_" + hairColor
                 }
                 if (hair.isAvailable(hair.beard)) {
-                    layerMap[AvatarView.LayerType.HAIR_BEARD] = "hair_beard_" + hair.beard + "_" + hairColor
+                    layerMap[LayerType.HAIR_BEARD] = "hair_beard_" + hair.beard + "_" + hairColor
                 }
                 if (hair.isAvailable(hair.flower)) {
-                    layerMap[AvatarView.LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
+                    layerMap[LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
                 }
             }
         } else {
@@ -308,7 +308,7 @@ class AvatarView : View {
 
             // Show flower all the time!
             if (hair != null && hair.isAvailable(hair.flower)) {
-                layerMap[AvatarView.LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
+                layerMap[LayerType.HAIR_FLOWER] = "hair_flower_" + hair.flower
             }
         }
 
@@ -341,11 +341,11 @@ class AvatarView : View {
         // otherwise lookup default layer type based offset
         if (offset == null) {
             when (layerType) {
-                AvatarView.LayerType.BACKGROUND -> if (!(showMount || showPet)) {
+                LayerType.BACKGROUND -> if (!(showMount || showPet)) {
                     offset = PointF(-25.0f, 0.0f) // compact hero box
                 }
-                AvatarView.LayerType.MOUNT_BODY, AvatarView.LayerType.MOUNT_HEAD -> offset = PointF(25.0f, 18.0f) // full hero box
-                AvatarView.LayerType.CHAIR, AvatarView.LayerType.BACK, AvatarView.LayerType.SKIN, AvatarView.LayerType.SHIRT, AvatarView.LayerType.ARMOR, AvatarView.LayerType.BODY, AvatarView.LayerType.HEAD_0, AvatarView.LayerType.HAIR_BASE, AvatarView.LayerType.HAIR_BANGS, AvatarView.LayerType.HAIR_MUSTACHE, AvatarView.LayerType.HAIR_BEARD, AvatarView.LayerType.EYEWEAR, AvatarView.LayerType.VISUAL_BUFF, AvatarView.LayerType.HEAD, AvatarView.LayerType.HEAD_ACCESSORY, AvatarView.LayerType.HAIR_FLOWER, AvatarView.LayerType.SHIELD, AvatarView.LayerType.WEAPON, AvatarView.LayerType.ZZZ -> if (showMount || showPet) {
+                LayerType.MOUNT_BODY, LayerType.MOUNT_HEAD -> offset = PointF(25.0f, 18.0f) // full hero box
+                LayerType.CHAIR, LayerType.BACK, LayerType.SKIN, LayerType.SHIRT, LayerType.ARMOR, LayerType.BODY, LayerType.HEAD_0, LayerType.HAIR_BASE, LayerType.HAIR_BANGS, LayerType.HAIR_MUSTACHE, LayerType.HAIR_BEARD, LayerType.EYEWEAR, LayerType.VISUAL_BUFF, LayerType.HEAD, LayerType.HEAD_ACCESSORY, LayerType.HAIR_FLOWER, LayerType.SHIELD, LayerType.WEAPON, LayerType.ZZZ -> if (showMount || showPet) {
                     // full hero box
                     offset = when {
                         hasMount -> if (layerMap[LayerType.MOUNT_HEAD]?.contains("Kangaroo") == true) {
@@ -360,7 +360,7 @@ class AvatarView : View {
                     // compact hero box
                     offset = PointF(0.0f, 18.0f)
                 }
-                AvatarView.LayerType.PET -> offset = PointF(0f, (FULL_HERO_RECT.height() - layerImageInfo.height).toFloat())
+                LayerType.PET -> offset = PointF(0f, (FULL_HERO_RECT.height() - layerImageInfo.height).toFloat())
             }
         }
 
@@ -384,12 +384,10 @@ class AvatarView : View {
     }
 
     private fun getFileName(imageName: String): String {
-        val name = if (FILENAME_MAP.containsKey(imageName)) {
-            FILENAME_MAP[imageName]
-        } else if (imageName.startsWith("handleless")) {
-            "chair_$imageName"
-        } else {
-            imageName
+        val name = when {
+            FILENAME_MAP.containsKey(imageName) -> FILENAME_MAP[imageName]
+            imageName.startsWith("handleless") -> "chair_$imageName"
+            else -> imageName
         }
         return name + if (FILEFORMAT_MAP.containsKey(imageName)) {
             "." + FILEFORMAT_MAP[imageName]

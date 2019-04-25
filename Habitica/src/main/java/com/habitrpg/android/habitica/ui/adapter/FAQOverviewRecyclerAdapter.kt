@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -106,7 +107,8 @@ class FAQOverviewRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
         init {
             val textView = itemView.findViewById<TextView>(R.id.text_view)
             textView.text =  MarkdownParser.parseMarkdown(itemView.context.getString(R.string.need_help_header_description, "[Habitica Help Guild](https://habitica.com/groups/guild/5481ccf3-5d2d-48a9-a871-70a7380cee5a)"))
-            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            textView.setOnClickListener { MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "5481ccf3-5d2d-48a9-a871-70a7380cee5a")) }
+            textView.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
