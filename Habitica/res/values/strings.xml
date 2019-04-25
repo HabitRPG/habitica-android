@@ -340,7 +340,7 @@
     <string name="sectiondrop">Standard</string>
     <string name="sectionpremium">Magic Potion</string>
     <string name="sectionquest">Quest</string>
-    <string name="sectionspecial">Rare</string>
+    <string name="sectionspecial">Special</string>
     <string name="sectionwacky">Wacky</string>
     <string name="world_quest">World Quest</string>
     <string name="inn_description">Need a break? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:\n\n
@@ -894,4 +894,5 @@
     <string name="guild_description">Guild Description</string>
     <string name="invite_to_guild">Invite to Guild</string>
     <string name="join_guild">Join Guild</string>
+    <string name="garden">Garden</string>
 </resources>

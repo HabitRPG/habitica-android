@@ -69,6 +69,10 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             pet.key = petObj.getAsString("key")
             pet.text = petObj.getAsString("text")
             pet.type = petObj.getAsString("type")
+            if (pet.type == "special") {
+                pet.animal = pet.key.split("-")[0]
+                pet.color = pet.key.split("-")[1]
+            }
             if (pet.type == "premium") {
                 pet.premium = true
             }
@@ -84,6 +88,10 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             mount.color = mountObj.getAsString("potion")
             mount.key = mountObj.getAsString("key")
             mount.type = mountObj.getAsString("type")
+            if (mount.type == "special") {
+                mount.animal = mount.key.split("-")[0]
+                mount.color = mount.key.split("-")[1]
+            }
             if (mount.type == "premium") {
                 mount.premium = true
             }
