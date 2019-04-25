@@ -44,6 +44,7 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         result.quests = RealmList()
         for (entry in obj.get("quests").asJsonObject.entrySet()) {
             result.quests.add(context.deserialize(entry.value, QuestContent::class.java))
+            result.quests.forEach { it.key = it.key }
         }
         result.eggs = RealmList()
         for (entry in obj.get("eggs").asJsonObject.entrySet()) {
