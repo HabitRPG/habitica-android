@@ -146,8 +146,6 @@ class TaskFormActivity : BaseActivity() {
         statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
         statPerceptionButton.setOnClickListener { selectedStat = Stats.PERCEPTION }
 
-        configureForm()
-
         if (taskId != null) {
             isCreating = false
             compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(Consumer {
@@ -156,9 +154,11 @@ class TaskFormActivity : BaseActivity() {
                 fillForm(it)
             }, RxErrorHandler.handleEmptyError()))
         } else if (bundle.containsKey(PARCELABLE_TASK)) {
+            isCreating = false
             task = bundle.getParcelable(PARCELABLE_TASK)
             task?.let { fillForm(it) }
         }
+        configureForm()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
