@@ -6,14 +6,14 @@
         android:id="@+id/chatBarContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/spacing_medium"
-        android:paddingRight="@dimen/spacing_medium">
+        android:orientation="vertical">
         <LinearLayout
             android:id="@+id/chatBarContent"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/spacing_medium"
+            android:paddingRight="@dimen/spacing_medium">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -70,16 +70,33 @@
                     android:contentDescription="@string/send"/>
             </LinearLayout>
         </LinearLayout>
-        <TextView
+        <LinearLayout
             android:id="@+id/communityGuidelinesView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/read_community_guidelines"
-            style="@style/Caption2"
-            android:gravity="center"
-            android:textColor="@color/brand_300"
+            android:orientation="vertical"
+            android:background="#cc6133b4"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
             android:paddingTop="@dimen/spacing_large"
-            android:paddingBottom="@dimen/spacing_large"/>
+            android:paddingBottom="@dimen/spacing_large">
+            <TextView
+                android:id="@+id/communityGuidelinesReviewView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/read_community_guidelines"
+                style="@style/Caption3"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginBottom="@dimen/spacing_medium"/>
+            <Button
+                android:id="@+id/communityGuidelinesAcceptButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HabiticaButton.Blue"
+                android:text="@string/i_agree_to_follow_the_guidelines"/>
+        </LinearLayout>
+
         <Space
             android:id="@+id/spacing"
             android:layout_width="match_parent"

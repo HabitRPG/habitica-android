@@ -398,6 +398,10 @@
         <item name="android:background">@drawable/layout_rounded_bg_red</item>
     </style>
 
+    <style name="HabiticaButton.Blue" parent="HabiticaButton">
+        <item name="android:background">@drawable/layout_rounded_bg_blue</item>
+    </style>
+
     <style name="SegmentTitle" parent="Headline">
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
     </style>

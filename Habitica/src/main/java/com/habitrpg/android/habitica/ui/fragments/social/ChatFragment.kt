@@ -104,17 +104,23 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
         viewModel?.getChatMessages()?.subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
 
+        communityGuidelinesReviewView.setOnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = "https://habitica.com/static/community-guidelines".toUri()
+            context?.startActivity(i)
+        }
+        communityGuidelinesAcceptButton.setOnClickListener {
+            viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
+        }
+
         viewModel?.getUserData()?.observe(viewLifecycleOwner, Observer {
             chatAdapter?.user = it
             if (it?.flags?.isCommunityGuidelinesAccepted == true) {
                 communityGuidelinesView.visibility = View.GONE
+                chatBarContent.visibility = View.VISIBLE
             } else {
-                communityGuidelinesView.setOnClickListener { _ ->
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = "https://habitica.com/static/community-guidelines".toUri()
-                    context?.startActivity(i)
-                    viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
-                }
+                chatBarContent.visibility = View.GONE
+
             }
         })
     }

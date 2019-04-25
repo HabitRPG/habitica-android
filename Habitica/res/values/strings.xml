@@ -584,7 +584,7 @@
     <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
     <string name="empty_title_rewards">You don\'t have any Rewards</string>
     <string name="reset_walkthrough">Reset Tutorials</string>
-    <string name="read_community_guidelines">Read our Community Guidelines before posting</string>
+    <string name="read_community_guidelines">Review our <u>Community Guidelines</u> before posting</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Reload Content</string>
     <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
@@ -895,4 +895,5 @@
     <string name="invite_to_guild">Invite to Guild</string>
     <string name="join_guild">Join Guild</string>
     <string name="garden">Garden</string>
+    <string name="i_agree_to_follow_the_guidelines">I agree to follow the guidelines</string>
 </resources>
