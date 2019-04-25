@@ -2,8 +2,7 @@ package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
 import android.os.Build
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -41,19 +40,26 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
     }
 
     init {
-        val params = LinearLayout.LayoutParams(
+        val textViewParams = LinearLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT)
-        params.gravity = Gravity.CENTER_VERTICAL
-        addView(textView, params)
+        textViewParams.gravity = Gravity.CENTER_VERTICAL
+        textViewParams.weight = 1.0f
+        addView(textView, textViewParams)
         val padding = context?.resources?.getDimension(R.dimen.spacing_small)?.toInt() ?: 0
         textView.setPadding(0, 0, padding, 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+        textView.maxLines = 1
+        textView.ellipsize = TextUtils.TruncateAt.END
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             textView.setTextAppearance(R.style.Body1)
         } else {
             textView.setTextAppearance(context, R.style.Body1)
         }
-        addView(tierIconView, params)
+        val iconViewParams = LinearLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT)
+        iconViewParams.gravity = Gravity.CENTER_VERTICAL
+        addView(tierIconView, iconViewParams)
     }
 }
