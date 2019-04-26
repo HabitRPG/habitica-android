@@ -1,20 +1,18 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -23,7 +21,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class ChecklistItemFormView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), TextWatcher {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
 
     private val button: ImageButton by bindView(R.id.button)
@@ -71,18 +69,9 @@ class ChecklistItemFormView @JvmOverloads constructor(
         }
         button.drawable.mutate().setTint(tintColor)
 
-        editText.addTextChangedListener(this)
+        editText.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
+            item.text = s.toString()
+            textChangedListener?.let { it(s.toString()) }
+        })
     }
-
-    override fun afterTextChanged(s: Editable?) {
-    }
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        item.text = s.toString()
-        textChangedListener?.let { it(s.toString()) }
-    }
-
 }

@@ -1,13 +1,12 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -16,7 +15,7 @@ import java.text.DecimalFormat
 
 class RewardValueFormView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : RelativeLayout(context, attrs, defStyleAttr), TextWatcher {
+) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private val editText: EditText by bindView(R.id.edit_text)
     private val upButton: ImageButton by bindView(R.id.up_button)
@@ -46,16 +45,8 @@ class RewardValueFormView @JvmOverloads constructor(
             value -= 1
         }
 
-        editText.addTextChangedListener(this)
-    }
-
-    override fun afterTextChanged(s: Editable?) {
-    }
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        value = s.toString().toDoubleOrNull() ?: 0.0
+        editText.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
+            value = s.toString().toDoubleOrNull() ?: 0.0
+        })
     }
 }
