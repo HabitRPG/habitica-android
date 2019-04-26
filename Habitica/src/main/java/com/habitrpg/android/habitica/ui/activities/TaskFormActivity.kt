@@ -323,6 +323,7 @@ class TaskFormActivity : BaseActivity() {
         if (thisTask == null) {
             thisTask = Task()
             thisTask.type = taskType
+            thisTask.dateCreated = Date()
         }
         thisTask.text = textEditText.text.toString()
         thisTask.notes = notesEditText.text.toString()

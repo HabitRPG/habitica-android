@@ -75,7 +75,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         configureViewsForFrequency()
     }
     var everyX
-        get() = (repeatsEveryEdittext.text ?: "1").toString().toInt()
+        get() = (repeatsEveryEdittext.text ?: "1").toString().toIntOrNull() ?: 1
     set(value) {
         try {
             repeatsEveryEdittext.setText(value.toString())
