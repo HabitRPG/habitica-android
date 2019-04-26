@@ -36,12 +36,37 @@
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
                     android:theme="@style/Toolbar"
+                    app:title=""
                     android:background="@color/white"
                     app:layout_scrollFlags="scroll|enterAlways"
-                    app:title="@string/report"
                     app:titleTextColor="@color/gray_50"
                     app:theme="@style/ReportMessageToolbar"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+                    <ImageButton
+                        android:id="@+id/close_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_close"
+                        android:background="@color/transparent"
+                        android:paddingLeft="@dimen/spacing_small"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/report_violation"
+                        android:textSize="20sp"
+                        android:textColor="@color/gray_50"
+                        android:layout_marginLeft="36dp"
+                        android:id="@+id/toolbar_title" />
+                    <Button
+                        android:id="@+id/report_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/report"
+                        android:textColor="@color/red_50"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="end" />
+                </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.AppBarLayout>
             <androidx.core.widget.NestedScrollView
@@ -83,6 +108,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:theme="@style/TextInputLayoutAppearanceTheme"
                     style="@style/TextInputLayoutAppearance"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:layout_marginBottom="@dimen/spacing_large">
@@ -93,7 +119,10 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/reason_for_report"
                         android:textColor="@color/gray_50"
-                        style="@style/TextInputEditText"/>
+                        android:paddingBottom="34dp"
+                        android:paddingTop="16dp"
+                        android:paddingStart="@dimen/spacing_large"
+                        android:paddingEnd="@dimen/spacing_large"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -104,6 +133,7 @@
                     tools:text="@string/report_explanation"
                     android:textColor="@color/gray_200"
                     style="@style/Caption3"
+                    android:textColorLink="@color/brand_400"
                     />
             </LinearLayout>
             </androidx.core.widget.NestedScrollView>

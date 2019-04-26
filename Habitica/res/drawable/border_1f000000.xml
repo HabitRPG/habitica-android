@@ -2,7 +2,7 @@
     android:shape="rectangle">
 
     <solid android:color="@color/transparent" />
-
+    <corners android:radius="@dimen/rounded_button_radius" />
     <stroke
         android:width="0.5dip"
         android:color="#1f000000"/>

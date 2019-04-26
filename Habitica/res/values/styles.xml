@@ -35,7 +35,7 @@
         <item name="actionBarStyle">@color/transparent</item>
         <item name="colorPrimary">@color/brand</item>
         <item name="colorPrimaryDark">@color/brand_50</item>
-        <item name="colorAccent">@color/brand</item>
+        <item name="colorAccent">@color/brand_400</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
@@ -501,25 +501,20 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
-    <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="android:gravity">top</item>
+    <style name="TextInputLayoutAppearanceTheme">
         <item name="boxBackgroundColor">@color/taskform_gray</item>
         <item name="android:textColor">@color/textColorLight</item>
         <item name="android:textColorHint">@color/gray_300</item>
-        <item name="colorControlNormal">@color/gray_500</item>
-        <item name="colorControlActivated">@color/brand_400</item>
-        <item name="colorControlHighlight">@color/brand_400</item>
+        <item name="android:colorControlNormal">@color/gray_400</item>
+        <item name="android:colorControlActivated">@color/brand_400</item>
+        <item name="android:colorControlHighlight">@color/brand_400</item>
+        <item name="android:colorAccent">@color/brand_400</item>
     </style>
 
-    <style name="TextInputEditText">
-        <!-- reference our hint & error styles -->
-        <item name="android:gravity">top</item>
+    <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">@color/taskform_gray</item>
         <item name="android:textColor">@color/textColorLight</item>
         <item name="android:textColorHint">@color/gray_300</item>
-        <item name="colorControlNormal">@color/gray_500</item>
-        <item name="colorControlActivated">@color/brand_400</item>
-        <item name="colorControlHighlight">@color/brand_400</item>
     </style>
 
     <style name="TaskFormSectionheader">

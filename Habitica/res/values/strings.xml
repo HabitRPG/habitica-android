@@ -896,4 +896,5 @@
     <string name="join_guild">Join Guild</string>
     <string name="garden">Garden</string>
     <string name="i_agree_to_follow_the_guidelines">I agree to follow the guidelines</string>
+    <string name="report_violation">Report Violation</string>
 </resources>
