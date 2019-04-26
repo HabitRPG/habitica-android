@@ -3,8 +3,6 @@ package com.habitrpg.android.habitica.helpers
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import androidx.navigation.NavOptions
-import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragmentDirections
 import java.lang.ref.WeakReference
 
 object MainNavigationController {

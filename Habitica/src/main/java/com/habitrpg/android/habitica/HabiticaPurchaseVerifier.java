@@ -123,9 +123,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
                     apiClient.validateNoRenewSubscription(validationRequest).subscribe(purchaseValidationResult -> {
                         purchasedOrderList.add(purchase.orderId);
-                        if (pendingGifts.containsKey(purchase.sku)) {
-                            pendingGifts.remove(purchase.sku);
-                        }
+                        pendingGifts.remove(purchase.sku);
                         requestListener.onSuccess(verifiedPurchases);
                         EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
                     }, throwable -> {

@@ -1,9 +1,6 @@
 package com.habitrpg.android.habitica.extensions
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.os.Build
-import androidx.annotation.IdRes
 import android.view.View
 
 

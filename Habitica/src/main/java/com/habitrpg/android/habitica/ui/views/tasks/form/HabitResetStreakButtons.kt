@@ -34,7 +34,7 @@ class HabitResetStreakButtons @JvmOverloads constructor(
         val height = 28.dpToPx(context)
         for (resetOption in HabitResetOption.values()) {
             val button = createButton(resetOption)
-            val layoutParams = LinearLayout.LayoutParams(0, height)
+            val layoutParams = LayoutParams(0, height)
             layoutParams.weight = 1f
             if (resetOption != lastResetOption) {
                 layoutParams.marginEnd = margin

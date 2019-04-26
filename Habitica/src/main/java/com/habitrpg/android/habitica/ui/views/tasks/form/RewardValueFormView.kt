@@ -35,7 +35,7 @@ class RewardValueFormView @JvmOverloads constructor(
         downButton.isEnabled = field > 0
     }
 
-    var valueString = ""
+    private var valueString = ""
     set(value) {
         field = value
 

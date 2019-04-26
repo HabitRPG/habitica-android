@@ -22,7 +22,7 @@ import java.util.*
 import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskType: String, private val taskFilterHelper: TaskFilterHelper?, private val layoutResource: Int,
-                                                                     newContext: Context, private val userID: String?) : androidx.recyclerview.widget.RecyclerView.Adapter<VH>() {
+                                                                     newContext: Context, private val userID: String?) : RecyclerView.Adapter<VH>() {
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
     @Inject

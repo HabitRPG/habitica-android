@@ -39,7 +39,7 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             if (requestValues.hasLeveledUp == true) {
                 return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.context))
                         .flatMap<User> { userRepository.retrieveUser(true) }
-                        .map({ it.stats })
+                        .map { it.stats }
             } else {
                 val pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.questDamage, requestValues.user)
                 val view = pair.first

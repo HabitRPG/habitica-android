@@ -16,7 +16,7 @@ class TodoCheckUseCase @Inject
 constructor(private val taskRepository: TaskRepository, private val soundManager: SoundManager,
             threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread) : UseCase<TodoCheckUseCase.RequestValues, TaskScoringResult>(threadExecutor, postExecutionThread) {
 
-    override fun buildUseCaseObservable(requestValues: TodoCheckUseCase.RequestValues): Flowable<TaskScoringResult?> {
+    override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<TaskScoringResult?> {
         return taskRepository.taskChecked(requestValues.user, requestValues.task, requestValues.up, false, requestValues.notifyFunc).doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundTodo) }
     }
 

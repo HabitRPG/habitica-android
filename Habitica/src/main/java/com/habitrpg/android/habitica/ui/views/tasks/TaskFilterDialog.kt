@@ -72,7 +72,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
 
         taskFilters.setOnCheckedChangeListener(this)
 
-        this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.done)) { _, _ ->
+        this.setButton(BUTTON_POSITIVE, context.getString(R.string.done)) { _, _ ->
             if (isEditing) {
                 stopEditing()
             }
@@ -80,14 +80,14 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
             this.dismiss()
         }
 
-        setButton(AlertDialog.BUTTON_NEUTRAL, getContext().getString(R.string.clear)) { _, _ -> }
+        setButton(BUTTON_NEUTRAL, getContext().getString(R.string.clear)) { _, _ -> }
 
         tagsEditButton.setOnClickListener { editButtonClicked() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val clearButton = getButton(AlertDialog.BUTTON_NEUTRAL)
+        val clearButton = getButton(BUTTON_NEUTRAL)
         if (clearButton != null) {
             clearButton.setOnClickListener {
                 if (isEditing) {
@@ -333,7 +333,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
     }
 
     private fun filtersChanged() {
-        val clearButton = getButton(AlertDialog.BUTTON_NEUTRAL)
+        val clearButton = getButton(BUTTON_NEUTRAL)
         if (clearButton != null) {
             clearButton.isEnabled = hasActiveFilters()
         }

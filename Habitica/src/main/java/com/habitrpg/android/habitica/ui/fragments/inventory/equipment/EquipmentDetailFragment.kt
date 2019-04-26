@@ -57,8 +57,8 @@ class EquipmentDetailFragment : BaseMainFragment() {
         }
 
         recyclerView.adapter = this.adapter
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        recyclerView.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(getActivity(), androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL))
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
         type?.let { type -> inventoryRepository.getOwnedEquipment(type).firstElement().subscribe(Consumer<RealmResults<Equipment>> { this.adapter.updateData(it) }, RxErrorHandler.handleEmptyError()) }

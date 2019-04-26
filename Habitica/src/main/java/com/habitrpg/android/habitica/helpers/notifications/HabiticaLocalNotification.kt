@@ -77,7 +77,7 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-public fun NotificationManager.createOrUpdateHabiticaChannel() {
+fun NotificationManager.createOrUpdateHabiticaChannel() {
     var hasChannel = false
     for (channel in notificationChannels) {
         if (channel.id == "default") {

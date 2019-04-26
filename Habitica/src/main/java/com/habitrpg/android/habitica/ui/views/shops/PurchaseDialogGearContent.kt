@@ -24,9 +24,9 @@ internal class PurchaseDialogGearContent : PurchaseDialogContent {
     override val viewId: Int
         get() = R.layout.dialog_purchase_content_gear
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     override fun setItem(item: ShopItem) {
         super.setItem(item)

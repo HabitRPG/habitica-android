@@ -17,7 +17,7 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
 class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, layoutResource: Int,
-                                        newContext: Context, userID: String, sortCallback: SortableTasksRecyclerViewAdapter.SortTasksCallback?,
+                                        newContext: Context, userID: String, sortCallback: SortTasksCallback?,
                                         private val openTaskDisabled: Boolean, private val taskActionsDisabled: Boolean) : SortableTasksRecyclerViewAdapter<BaseTaskViewHolder>("", taskFilterHelper, layoutResource, newContext, userID, sortCallback) {
 
     private val addItemSubject = PublishSubject.create<Task>()

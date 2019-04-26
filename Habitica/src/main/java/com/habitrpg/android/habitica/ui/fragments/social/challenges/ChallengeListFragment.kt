@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.core.view.MenuItemCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -18,7 +16,6 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport

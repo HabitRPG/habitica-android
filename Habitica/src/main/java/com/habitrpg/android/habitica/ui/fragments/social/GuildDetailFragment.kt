@@ -127,7 +127,7 @@ class GuildDetailFragment : BaseFragment() {
     }
 
     private fun updateGuild(guild: Group?) {
-        guildTitleView?.text = guild?.name
+        guildTitleView.text = guild?.name
         guildDescriptionView.text = MarkdownParser.parseMarkdown(guild?.description)
         //gemCountWrapper.visibility = if (group?.balance != null && group.balance > 0) View.VISIBLE else View.GONE
         //gemCountTextView.text = (group?.balance ?: 0 * 4.0).toInt().toString()

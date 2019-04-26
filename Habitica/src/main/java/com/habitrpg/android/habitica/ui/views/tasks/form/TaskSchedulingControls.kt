@@ -8,17 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import java.lang.NumberFormatException
 import java.text.DateFormat
 import java.text.DateFormatSymbols
 import java.util.*
@@ -157,7 +153,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             daysOfMonth = null
         }
 
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
         configureViewsForType()
         configureViewsForFrequency()
     }
@@ -226,7 +222,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         val lastWeekday = weekdayOrder.last()
         for (weekdayCode in weekdayOrder) {
             val button = TextView(context, null, 0, R.style.TaskFormWeekdayButton)
-            val layoutParams = LinearLayout.LayoutParams(size, size)
+            val layoutParams = LayoutParams(size, size)
             button.layoutParams = layoutParams
             button.text = weekdays[weekdayCode].first().toUpperCase().toString()
             val isActive = isWeekdayActive(weekdayCode)
@@ -244,7 +240,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             weeklyRepeatWrapper.addView(button)
             if (weekdayCode != lastWeekday) {
                 val space = Space(context)
-                val spaceLayoutParams = LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT)
+                val spaceLayoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT)
                 spaceLayoutParams.weight = 1f
                 space.layoutParams = spaceLayoutParams
                 weeklyRepeatWrapper.addView(space)

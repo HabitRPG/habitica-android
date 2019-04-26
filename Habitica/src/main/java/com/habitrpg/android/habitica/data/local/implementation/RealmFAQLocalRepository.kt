@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.data.local.FAQLocalRepository
 import com.habitrpg.android.habitica.models.FAQArticle
 import io.reactivex.Flowable
 import io.realm.Realm
-import io.realm.RealmObject.asFlowable
 import io.realm.RealmResults
 
 class RealmFAQLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), FAQLocalRepository {

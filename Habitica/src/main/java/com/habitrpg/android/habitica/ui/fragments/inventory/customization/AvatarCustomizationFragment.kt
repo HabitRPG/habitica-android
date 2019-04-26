@@ -33,7 +33,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     private var activeCustomization: String? = null
 
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
-    internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
+    internal var layoutManager: GridLayoutManager = GridLayoutManager(activity, 2)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -82,8 +82,8 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
         setGridSpanCount(view.width)
         if (recyclerView.layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
-            layoutManager.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
+            layoutManager = GridLayoutManager(activity, 2)
+            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter.getItemViewType(position) == 0) {
                         layoutManager.spanCount

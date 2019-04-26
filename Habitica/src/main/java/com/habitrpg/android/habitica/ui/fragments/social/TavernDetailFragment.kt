@@ -113,7 +113,7 @@ class TavernDetailFragment : BaseFragment() {
     }
 
     private fun bindButtons() {
-        innButton.setOnClickListener { _ ->
+        innButton.setOnClickListener {
             user?.notNull { user -> userRepository.sleep(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
         }
         guidelinesButton.setOnClickListener {

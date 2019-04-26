@@ -9,10 +9,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
-import androidx.preference.PreferenceManager
 import android.text.InputType
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -23,7 +19,10 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -31,7 +30,11 @@ import com.google.android.gms.auth.GoogleAuthException
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
 import com.google.android.gms.auth.UserRecoverableAuthException
-import com.google.android.gms.common.*
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.common.GooglePlayServicesUtil
+import com.google.android.gms.common.Scopes
+import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
@@ -42,7 +45,6 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
@@ -433,7 +435,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             @Suppress("DEPRECATION")
             GooglePlayServicesUtil.showErrorDialogFragment(statusCode,
                     this@LoginActivity,
-                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) { _ ->
+                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
 
             }
         } else if (e is UserRecoverableAuthException) {

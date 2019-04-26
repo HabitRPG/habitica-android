@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.Realm
 import io.realm.RealmResults
-import io.realm.Sort
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
 

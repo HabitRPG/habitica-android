@@ -3,9 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
-import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

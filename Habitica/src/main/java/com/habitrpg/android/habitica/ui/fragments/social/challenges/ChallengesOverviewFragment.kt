@@ -8,17 +8,13 @@ import android.widget.TextView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
-import com.habitrpg.android.habitica.utils.Action1
-
 import javax.inject.Inject
 
 class ChallengesOverviewFragment : BaseMainFragment() {
@@ -27,7 +23,7 @@ class ChallengesOverviewFragment : BaseMainFragment() {
     internal lateinit var challengeRepository: ChallengeRepository
 
     private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
-    var statePagerAdapter: androidx.fragment.app.FragmentStatePagerAdapter? = null
+    var statePagerAdapter: FragmentStatePagerAdapter? = null
     private var userChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
     private var availableChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
 
@@ -113,7 +109,7 @@ class ChallengesOverviewFragment : BaseMainFragment() {
 
         statePagerAdapter = object : FragmentStatePagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+            override fun getItem(position: Int): Fragment {
                 return if (position == 0) {
                     userChallengesFragment
                 } else {

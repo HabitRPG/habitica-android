@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup

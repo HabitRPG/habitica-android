@@ -243,7 +243,7 @@ class GiftIAPActivity: BaseActivity() {
 
 
     @Subscribe
-    public fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
+    fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         consumePurchase(event.purchase)
         runOnUiThread {
             displayConfirmationDialog()

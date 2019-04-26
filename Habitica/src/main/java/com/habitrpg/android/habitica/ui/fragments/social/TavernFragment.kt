@@ -58,7 +58,7 @@ class TavernFragment : BaseMainFragment() {
         }
 
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+            override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> {
                         tavernDetailFragment

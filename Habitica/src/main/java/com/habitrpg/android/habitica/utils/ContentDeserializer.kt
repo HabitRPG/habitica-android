@@ -6,27 +6,15 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
-import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.ContentGear
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.FAQArticle
 import com.habitrpg.android.habitica.models.Skill
-import com.habitrpg.android.habitica.models.inventory.Customization
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.inventory.Food
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.models.inventory.QuestContent
-
-import java.lang.reflect.Type
-
-import javax.inject.Inject
-
+import com.habitrpg.android.habitica.models.inventory.*
 import io.realm.RealmList
-import java.util.ArrayList
+import java.lang.reflect.Type
+import java.util.*
 
 class ContentDeserializer : JsonDeserializer<ContentResult> {
 

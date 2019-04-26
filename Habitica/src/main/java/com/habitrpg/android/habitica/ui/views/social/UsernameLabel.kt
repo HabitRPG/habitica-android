@@ -2,8 +2,6 @@ package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
 import android.os.Build
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -41,7 +39,7 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
     }
 
     init {
-        val params = LinearLayout.LayoutParams(
+        val params = LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT)
         params.gravity = Gravity.CENTER_VERTICAL

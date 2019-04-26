@@ -99,10 +99,6 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         AmplitudeManager.sendEvent("widgets", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_CREATE_WIDGET, additionalData)
     }
 
-    override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
-    }
-
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         val additionalData = HashMap<String, Any>()
         additionalData["identifier"] = this.javaClass.simpleName

@@ -30,9 +30,9 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     private val blinkDuration: Int
         get() = random.nextInt(30) * 800 + 4
 
-    private val starParams: RelativeLayout.LayoutParams
+    private val starParams: LayoutParams
         get() {
-            val params = RelativeLayout.LayoutParams(STAR_SIZE, STAR_SIZE)
+            val params = LayoutParams(STAR_SIZE, STAR_SIZE)
             params.leftMargin = random.nextInt(viewWidth)
             params.topMargin = random.nextInt(viewHeight)
             return params
@@ -64,7 +64,7 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        this.viewWidth = View.MeasureSpec.getSize(widthMeasureSpec)
+        this.viewWidth = MeasureSpec.getSize(widthMeasureSpec)
         this.setMeasuredDimension(viewWidth, viewHeight)
         params.width = viewWidth
         params.height = viewHeight

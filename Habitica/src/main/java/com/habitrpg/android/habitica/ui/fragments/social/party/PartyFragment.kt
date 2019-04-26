@@ -33,7 +33,7 @@ class PartyFragment : BaseMainFragment() {
     private var firstFragment: Fragment? = null
     private var partyMemberListFragment: PartyMemberListFragment? = null
     private var chatFragment: ChatFragment? = null
-    private var viewPagerAdapter: androidx.fragment.app.FragmentPagerAdapter? = null
+    private var viewPagerAdapter: FragmentPagerAdapter? = null
 
     internal lateinit var viewModel: PartyViewModel
 
@@ -232,7 +232,7 @@ class PartyFragment : BaseMainFragment() {
 
         viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+            override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> {
                         firstFragment = if (user?.hasParty() == true) {
@@ -293,7 +293,7 @@ class PartyFragment : BaseMainFragment() {
         }
         this.viewPager?.adapter = viewPagerAdapter
 
-        viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1) {
                     chatFragment?.setNavigatedToFragment()

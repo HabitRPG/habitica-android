@@ -49,7 +49,7 @@ class OldQuestProgressView : LinearLayout {
         setWillNotDraw(false)
         inflate(R.layout.quest_progress_old, true)
 
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
 
         setScaledPadding(context, 16, 16, 16, 16)
 

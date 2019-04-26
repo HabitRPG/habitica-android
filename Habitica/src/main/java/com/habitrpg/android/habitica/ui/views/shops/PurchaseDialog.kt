@@ -147,7 +147,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
 
         closeButton.setOnClickListener { dismiss() }
         buyButton.setOnClickListener { onBuyButtonClicked() }
-        pinButton.setOnClickListener { _-> inventoryRepository.togglePinnedItem(shopItem).subscribe(Consumer { isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
+        pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe(Consumer { isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
     }
 
     private fun setUser(user: User) {

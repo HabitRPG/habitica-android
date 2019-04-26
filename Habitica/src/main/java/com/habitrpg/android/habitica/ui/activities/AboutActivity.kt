@@ -16,7 +16,7 @@ import com.mikepenz.aboutlibraries.LibsBuilder
 
 class AboutActivity : BaseActivity() {
 
-    private val pager: androidx.viewpager.widget.ViewPager by bindView(R.id.pager)
+    private val pager: ViewPager by bindView(R.id.pager)
     private val tabLayout: TabLayout by bindView(R.id.tab_layout)
 
     override fun getLayoutResId(): Int {
@@ -80,9 +80,9 @@ class AboutActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private inner class PagerAdapter(fm: androidx.fragment.app.FragmentManager, internal var mNumOfTabs: Int) : FragmentStatePagerAdapter(fm) {
+    private inner class PagerAdapter(fm: FragmentManager, internal var mNumOfTabs: Int) : FragmentStatePagerAdapter(fm) {
 
-        override fun getItem(position: Int): androidx.fragment.app.Fragment {
+        override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> AboutFragment()
                 1 -> LibsBuilder()

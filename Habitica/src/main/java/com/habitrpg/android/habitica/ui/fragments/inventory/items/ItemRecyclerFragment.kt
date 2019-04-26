@@ -23,7 +23,6 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.functions.Consumer
-import io.realm.OrderedRealmCollection
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment() {

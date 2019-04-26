@@ -92,13 +92,13 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
 
     override fun getFilter(): Filter {
         return object : Filter() {
-            override fun performFiltering(constraint: CharSequence): Filter.FilterResults {
-                val results = Filter.FilterResults()
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+                val results = FilterResults()
                 results.values = constraint
-                return Filter.FilterResults()
+                return FilterResults()
             }
 
-            override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
+            override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 unfilteredData.notNull {
                     if (constraint.isNotEmpty()) {
                         updateData(it.where()
@@ -110,7 +110,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         }
     }
 
-    class GuildViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    class GuildViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val nameTextView: TextView by bindView(R.id.nameTextView)
         private val memberCountTextView: TextView by bindView(R.id.memberCountTextView)

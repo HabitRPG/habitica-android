@@ -1,13 +1,8 @@
 package com.habitrpg.android.habitica.interactors
 
-import android.app.Activity
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import android.view.View
-import android.widget.TextView
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.ShareEvent
 import com.habitrpg.android.habitica.executors.PostExecutionThread
@@ -15,16 +10,12 @@ import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.models.user.SuppressedModals
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
-
-import org.greenrobot.eventbus.EventBus
-
-import javax.inject.Inject
-
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
+import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 
 class LevelUpUseCase @Inject
 constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread,

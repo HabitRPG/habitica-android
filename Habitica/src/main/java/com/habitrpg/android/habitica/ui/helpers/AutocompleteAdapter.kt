@@ -11,18 +11,16 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import io.reactivex.functions.Consumer
 import net.pherth.android.emoji_library.EmojiMap
 import net.pherth.android.emoji_library.EmojiParser
 import net.pherth.android.emoji_library.EmojiTextView
-import java.util.Date
+import java.util.*
 
 class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepository? = null, var autocompleteContext: String? = null, var groupID: String? = null, val remoteAutocomplete: Boolean = false) : BaseAdapter(), Filterable {
     var chatMessages: List<ChatMessage> = arrayListOf()

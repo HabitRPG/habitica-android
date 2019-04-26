@@ -3,31 +3,31 @@ package com.habitrpg.android.habitica.models.inventory;
 
 public interface Animal {
 
-    public String getKey();
+    String getKey();
 
-    public void setKey(String key);
+    void setKey(String key);
 
-    public String getText();
+    String getText();
 
-    public void setText(String text);
+    void setText(String text);
 
-    public String getType();
+    String getType();
 
-    public void setType(String type);
+    void setType(String type);
 
-    public String getAnimal();
+    String getAnimal();
 
-    public void setAnimal(String animal);
+    void setAnimal(String animal);
 
-    public String getColor();
+    String getColor();
 
-    public void setColor(String color);
+    void setColor(String color);
 
-    public boolean getPremium();
+    boolean getPremium();
 
-    public void setPremium(boolean premium);
+    void setPremium(boolean premium);
 
-    public Integer getNumberOwned();
+    Integer getNumberOwned();
 
-    public void setNumberOwned(Integer numberOwned);
+    void setNumberOwned(Integer numberOwned);
 }

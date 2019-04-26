@@ -29,7 +29,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    internal val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.recyclerView)
+    internal val recyclerView: RecyclerView by bindView(R.id.recyclerView)
     private var widgetId: Int = 0
     private var adapter: SkillTasksRecyclerViewAdapter? = null
 
@@ -56,10 +56,10 @@ class HabitButtonWidgetActivity : BaseActivity() {
             finish()
         }
 
-        var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+        var layoutManager: LinearLayoutManager? = recyclerView.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+            layoutManager = LinearLayoutManager(this)
 
             recyclerView.layoutManager = layoutManager
         }

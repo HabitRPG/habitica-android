@@ -21,7 +21,7 @@ import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 
-abstract class BaseTaskViewHolder constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+abstract class BaseTaskViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
 
     var task: Task? = null

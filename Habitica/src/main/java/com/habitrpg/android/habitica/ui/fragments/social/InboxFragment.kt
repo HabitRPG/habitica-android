@@ -65,11 +65,6 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        //this.activity?.menuInflater?.inflate(R.menu.inbox, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 

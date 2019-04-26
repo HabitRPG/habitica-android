@@ -16,7 +16,7 @@ class BuyRewardUseCase @Inject
 constructor(private val taskRepository: TaskRepository, private val soundManager: SoundManager,
             threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread) : UseCase<BuyRewardUseCase.RequestValues, TaskScoringResult>(threadExecutor, postExecutionThread) {
 
-    override fun buildUseCaseObservable(requestValues: BuyRewardUseCase.RequestValues): Flowable<TaskScoringResult?> {
+    override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<TaskScoringResult?> {
         return taskRepository
                 .taskChecked(requestValues.user, requestValues.task, false, false, requestValues.notifyFunc)
                 .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundReward) }
