@@ -897,4 +897,5 @@
     <string name="garden">Garden</string>
     <string name="i_agree_to_follow_the_guidelines">I agree to follow the guidelines</string>
     <string name="report_violation">Report Violation</string>
+    <string name="trillion_abbrev">t</string>
 </resources>
