@@ -35,7 +35,7 @@ open class Task : RealmObject, Parcelable {
     var value: Double = 0.0
     var tags: RealmList<Tag>? = RealmList()
     var dateCreated: Date? = null
-    var position: Int? = 0
+    var position: Int = 0
     var group: TaskGroupPlan? = null
     //Habits
     var up: Boolean? = false

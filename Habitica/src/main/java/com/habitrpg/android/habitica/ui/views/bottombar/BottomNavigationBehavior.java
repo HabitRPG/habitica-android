@@ -28,7 +28,7 @@ class BottomNavigationBehavior<V extends View> extends VerticalScrollingBehavior
     private ViewPropertyAnimatorCompat mTranslationAnimator;
     private boolean hidden = false;
     private int mSnackbarHeight = -1;
-    private final BottomNavigationWithSnackbar mWithSnackBarImpl = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? new LollipopBottomNavWithSnackBarImpl() : new PreLollipopBottomNavWithSnackBarImpl();
+    private final BottomNavigationWithSnackbar mWithSnackBarImpl = new LollipopBottomNavWithSnackBarImpl();
     private boolean mScrollingEnabled = true;
 
     BottomNavigationBehavior(int bottomNavHeight, int defaultOffset, boolean tablet) {
@@ -133,30 +133,6 @@ class BottomNavigationBehavior<V extends View> extends VerticalScrollingBehavior
 
     private interface BottomNavigationWithSnackbar {
         void updateSnackbar(CoordinatorLayout parent, View dependency, View child);
-    }
-
-
-    private class PreLollipopBottomNavWithSnackBarImpl implements BottomNavigationWithSnackbar {
-
-        @Override
-        public void updateSnackbar(CoordinatorLayout parent, View dependency, View child) {
-            if (!isTablet && dependency instanceof Snackbar.SnackbarLayout) {
-                if (mSnackbarHeight == -1) {
-                    mSnackbarHeight = dependency.getHeight();
-                }
-                if (ViewCompat.getTranslationY(child) != 0) return;
-                int targetPadding = bottomNavHeight + mSnackbarHeight - defaultOffset;
-
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) dependency.getLayoutParams();
-                layoutParams.bottomMargin = targetPadding;
-                child.bringToFront();
-                child.getParent().requestLayout();
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                    ((View) child.getParent()).invalidate();
-                }
-
-            }
-        }
     }
 
     private class LollipopBottomNavWithSnackBarImpl implements BottomNavigationWithSnackbar {
