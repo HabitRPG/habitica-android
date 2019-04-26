@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -234,6 +234,8 @@ class ShopFragment : BaseFragment() {
     fun onItemPurchased(event: GearPurchasedEvent) {
         if (Shop.MARKET == shopIdentifier) {
             loadMarketGear()
+        } else if (Shop.TIME_TRAVELERS_SHOP == shopIdentifier) {
+            loadShopInventory()
         }
     }
 

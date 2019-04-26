@@ -13,22 +13,22 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.tabs.TabLayout
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.content.edit
 import androidx.navigation.findNavController
 import com.facebook.drawee.view.SimpleDraweeView
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -52,7 +52,6 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
@@ -62,13 +61,13 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.ValueBar
+import com.habitrpg.android.habitica.ui.views.bottombar.BottomBar
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import com.habitrpg.android.habitica.ui.views.bottombar.BottomBar
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
@@ -77,7 +76,6 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.lang.ref.WeakReference
 import java.util.*
 import javax.inject.Inject
 
@@ -141,7 +139,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     var user: User? = null
 
-    private var activeFragment: WeakReference<BaseMainFragment>? = null
     private var avatarInHeader: AvatarWithBarsViewModel? = null
     private var faintDialog: AlertDialog? = null
     private var sideAvatarView: AvatarView? = null
@@ -354,7 +351,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             preferences?.sound.notNull { soundManager.soundTheme = it }
             runOnUiThread {
                 updateSidebar()
-                activeFragment?.get()?.updateUserData(user)
             }
 
             displayDeathDialogIfNeeded()
@@ -425,7 +421,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 super.onBackPressed()
             } catch (ignored: Exception) {
             }
-             this.activeFragment?.get()?.updateUserData(user)
         }
     }
 

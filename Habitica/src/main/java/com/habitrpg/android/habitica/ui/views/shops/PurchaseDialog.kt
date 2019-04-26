@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views.shops
 
 import android.app.AlertDialog
 import android.content.Context
-import androidx.core.content.ContextCompat
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -10,21 +9,22 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
-import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper

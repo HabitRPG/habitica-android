@@ -36,10 +36,6 @@ abstract class BaseMainFragment : BaseFragment() {
     var usesBottomNavigation = false
     open var user: User? = null
 
-    open fun updateUserData(user: User?) {
-        this.user = user
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 

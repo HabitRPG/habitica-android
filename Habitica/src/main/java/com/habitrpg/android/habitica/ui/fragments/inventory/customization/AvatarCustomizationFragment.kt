@@ -1,14 +1,15 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
@@ -100,12 +101,9 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         this.loadCustomizations()
 
-        this.updateActiveCustomization()
-        if (this.user != null) {
-            this.adapter.userSize = this.user?.preferences?.size
-            this.adapter.hairColor = this.user?.preferences?.hair?.color
-            this.adapter.gemBalance = user?.gemCount ?: 0
-        }
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler(Consumer {
+            updateUser(it)
+        }))
     }
 
     override fun onDestroy() {
@@ -142,21 +140,23 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         layoutManager.spanCount = spanCount
     }
 
-    override fun updateUserData(user: User?) {
-        super.updateUserData(user)
-        this.adapter.gemBalance = user?.gemCount ?: 0
-        this.updateActiveCustomization()
+    fun updateUser(user: User) {
+        this.updateActiveCustomization(user)
         if (adapter.customizationList.size != 0) {
             val ownedCustomizations = ArrayList<String>()
-            user?.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
+            user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
             adapter.updateOwnership(ownedCustomizations)
         } else {
             this.loadCustomizations()
         }
+        this.adapter.userSize = this.user?.preferences?.size
+        this.adapter.hairColor = this.user?.preferences?.hair?.color
+        this.adapter.gemBalance = user.gemCount
+        adapter.notifyDataSetChanged()
     }
 
-    private fun updateActiveCustomization() {
-        if (this.type == null || user?.preferences == null) {
+    private fun updateActiveCustomization(user: User) {
+        if (this.type == null || user.preferences == null) {
             return
         }
         val prefs = this.user?.preferences
@@ -181,3 +181,4 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         }
     }
 }
+
