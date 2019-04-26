@@ -21,21 +21,40 @@ class RewardValueFormView @JvmOverloads constructor(
     private val upButton: ImageButton by bindView(R.id.up_button)
     private val downButton: ImageButton by bindView(R.id.down_button)
 
-    private val decimalFormat = DecimalFormat("0.#")
+    private val decimalFormat = DecimalFormat("0.###")
+    private var editTextIsFocused = false
 
     var value = 0.0
     set(value) {
-        field = if (value >= 0) value else 0.0
-        val stringValue = decimalFormat.format(field)
-        if (editText.text.toString() != stringValue) {
-            editText.setText(stringValue)
+        val newValue = if (value >= 0) value else 0.0
+        val oldValue = field
+        field = newValue
+        if (oldValue != newValue) {
+            valueString = decimalFormat.format(newValue)
         }
         downButton.isEnabled = field > 0
     }
 
+    var valueString = ""
+    set(value) {
+        field = value
+
+        if (editText.text.toString() != field) {
+            editText.setText(field)
+            if (editTextIsFocused) {
+                editText.setSelection(field.length)
+            }
+        }
+        val newValue = field.toDoubleOrNull() ?: 0.0
+        if (this.value != newValue) {
+            this.value = newValue
+        }
+    }
+
     init {
         inflate(R.layout.task_form_reward_value, true)
-
+        //set value here, so that the setter is called and everything is set up correctly
+        value = 10.0
         editText.setCompoundDrawablesWithIntrinsicBounds(HabiticaIconsHelper.imageOfGold().asDrawable(context.resources), null, null, null)
 
         upButton.setOnClickListener {
@@ -46,7 +65,8 @@ class RewardValueFormView @JvmOverloads constructor(
         }
 
         editText.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
-            value = s.toString().toDoubleOrNull() ?: 0.0
+            valueString = s.toString()
         })
+        editText.setOnFocusChangeListener { _, hasFocus -> editTextIsFocused = hasFocus }
     }
 }

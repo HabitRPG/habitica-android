@@ -3,43 +3,42 @@ package com.habitrpg.android.habitica.ui.activities
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
+import androidx.core.view.forEachIndexed
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import io.reactivex.functions.Consumer
-import javax.inject.Inject
-import android.content.res.ColorStateList
-import android.graphics.drawable.ColorDrawable
-import android.os.Handler
-import android.view.MenuItem
-import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.widget.AppCompatCheckBox
-import androidx.core.view.children
-import androidx.core.view.forEach
-import androidx.core.view.forEachIndexed
-import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.ui.views.tasks.form.*
+import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import java.util.*
+import javax.inject.Inject
 
 
 class TaskFormActivity : BaseActivity() {
@@ -96,6 +95,8 @@ class TaskFormActivity : BaseActivity() {
         setSelectedAttribute(value)
     }
 
+    private var canSave: Boolean = false
+
     private var tintColor: Int = 0
     set(value) {
         field = value
@@ -141,6 +142,10 @@ class TaskFormActivity : BaseActivity() {
             configureForm()
         }, RxErrorHandler.handleEmptyError()))
 
+
+        textEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
+            checkCanSave()
+        })
         statStrengthButton.setOnClickListener { selectedStat = Stats.STRENGTH }
         statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
         statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
@@ -167,16 +172,24 @@ class TaskFormActivity : BaseActivity() {
         } else {
             menuInflater.inflate(R.menu.menu_task_edit, menu)
         }
+        menu.findItem(R.id.action_save).isEnabled = canSave
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_create -> saveTask()
-            R.id.action_save_changes -> saveTask()
+            R.id.action_save -> saveTask()
             R.id.action_delete -> deleteTask()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkCanSave() {
+        val newCanSave = textEditText.text.isNotBlank()
+        if (newCanSave != canSave) {
+            invalidateOptionsMenu()
+        }
+        canSave = newCanSave
     }
 
     private fun configureForm() {
@@ -246,6 +259,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun fillForm(task: Task) {
+        canSave = true
         textEditText.setText(task.text)
         notesEditText.setText(task.notes)
         taskDifficultyButtons.selectedDifficulty = task.priority

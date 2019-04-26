@@ -220,7 +220,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                 val observable: Flowable<Any>
                 if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType) {
                     observable = if (shopItem.purchaseType == "gear") {
-                        inventoryRepository.purchaseMysterySet(shopItem.categoryIdentifier)
+                        inventoryRepository.purchaseMysterySet(shopItem.key)
                     } else {
                         inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key)
                     }

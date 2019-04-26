@@ -108,7 +108,8 @@
         <activity
             android:name=".ui.activities.TaskFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
