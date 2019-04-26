@@ -108,12 +108,12 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : androidx.recycle
         task = newTask
         itemView.setBackgroundResource(R.color.white)
 
+        expandNotesButton?.visibility = View.GONE
         if (newTask.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
         } else {
             notesTextView?.visibility = View.GONE
-            expandNotesButton?.visibility = View.GONE
         }
 
         if (canContainMarkdown()) {
