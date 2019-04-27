@@ -749,4 +749,42 @@
     <string name="hide_boss_art">보스 아트 숨기기</string>
     <string name="active_world_boss">활성중인 월드 보스</string>
     <string name="join_party_title">파티에 참여하고 싶으신가요\?</string>
-    </resources>
+    <string name="no_party_title">파티에 참여해서 해비티카를 이용하세요</string>
+    <string name="join_party_description">파티 구성원이 당신을 초대할 수 있도록 아래에 있는 당신의 닉네임을 그들에게 보내주세요</string>
+    <string name="create_party_website">파티를 만들려면 웹사이트에 접속하세요</string>
+    <string name="world_boss_description_title">월드 보스가 무엇인가요\?</string>
+    <string name="world_boss_description_intro">월드보스는 모든 구성원들이 다같이 자신의 할 일들로 강력한 몬스터를 쓰러뜨리는 특별 이벤트 입니다!</string>
+    <string name="world_boss_description_1">보스 몬스터에게 피해를 주기 위해 할 일들을 완료하세요</string>
+    <string name="world_boss_description_2">보스 몬스터는 놓친 할 일들에 대해서는 당신에게 피해를 주지 않습니다. 그러나 분노 미터가 오릅니다. 분노 바가 다 차면, 보스 몬스터가 상점 주인들 중 한명을 공격할 것입니다!</string>
+    <string name="challenge_categories">챌린지 카테고리</string>
+    <string name="created_challenge">만들어진 챌린지</string>
+    <string name="joined">참여한</string>
+    <string name="same_day_reminder_text">당신이 더 많이 추가할 수록, 보상을 더 많이 받을 것입니다. 작은 습관도 모이면 큰 변화가 됩니다.</string>
+    <string name="daily_tip_0">새로운 것에 도전하고 싶네요\? 챌린지에 참여해서 당신의 할 일 목록을 늘리고 보석을 받아가세요!</string>
+    <string name="daily_tip_1">당신의 할 일에 체크리스트를 추가하면 보상이 증가합니다!</string>
+    <string name="daily_tip_2">일일 과제를 얼마나 반복할지 설정할 수 있습니다. 드문 할 일도 가능합니다.</string>
+    <string name="daily_tip_8">힘든 할 일에 대해선 더 많은 보상을 받을 수 있도록 할 일의 어려운 정도를 변경할 수 있습니다!</string>
+    <string name="daily_tip_9">해내기 어렵다면, 할 일을 더 작은 부분으로 나눠보세요.</string>
+    <string name="expand_notes">더 보기</string>
+    <string name="collapse_notes">접기</string>
+    <string name="last_login">최근 접속</string>
+    <string name="total_checkins">전체 접속 수</string>
+    <string name="two_handed">양 손</string>
+    <string name="usernamePromptTitle">당신의 유저네임을 설정할 차례입니다!</string>
+    <string name="usernamePromptWiki">이 수정에 대해 더 알고 싶다면, <a href="https://habitica.wikia.com/wiki/Player_Names"> 저희 위키백과로 방문해주세요.</a></string>
+    <string name="confirmUsername">유저네임 저장</string>
+    <string name="confirm_username_title">정말로 현재 유저네임을 저장하시겠습니까\?</string>
+    <string name="cancel">취소</string>
+    <string name="confirm_username">유저네임 저장</string>
+    <string name="username_not_confirmed">유저네임 미확인</string>
+    <string name="username_confirmed">유저네임 확인</string>
+    <string name="username_level">\@%s ・레벨 %d</string>
+    <string name="username_copied">유저네임이 클립보드에 복사되었습니다</string>
+    <string name="welcomeNameTitle">당신을 어떻게 불러드릴까요\?</string>
+    <string name="display_name_length_error">이름은 1~30글자 사이로 만들어주세요</string>
+    <string name="setup_task_reward">스스로에게 보상을 주세요</string>
+    <string name="setup_task_reward_notes">TV 보기, 게임하기, 군것질 하기, 당신에게 달려있어요!</string>
+    <string name="visit_website">웹사이트 방문하기</string>
+    <string name="create_party">파티 만들기</string>
+
+</resources>
