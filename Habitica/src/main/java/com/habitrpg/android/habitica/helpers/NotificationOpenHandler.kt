@@ -51,7 +51,7 @@ class NotificationOpenHandler {
             if (groupID.isEmpty()) {
                 return
             }
-            MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupId" to groupID))
+            MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
 
         }
 
