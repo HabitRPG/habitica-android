@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:lineHeight="20dp"
+                android:lineSpacingExtra="5dp"
                 android:paddingTop="16dp"
                 android:text="@string/no_notifications_text" />
         </LinearLayout>
