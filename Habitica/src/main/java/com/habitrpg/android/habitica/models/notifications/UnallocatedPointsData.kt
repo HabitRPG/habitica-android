@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models.notifications
 
-import io.realm.RealmObject
-
-open class UnallocatedPointsData : RealmObject(), GlobalNotificationData {
+open class UnallocatedPointsData : NotificationData {
     var points: Int? = null
 }

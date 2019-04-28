@@ -4,13 +4,13 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.habitrpg.android.habitica.models.notifications.*
+import com.habitrpg.android.habitica.models.Notification
 import java.lang.reflect.Type
 
-class NotificationDeserializer : JsonDeserializer<GlobalNotification> {
+class NotificationDeserializer : JsonDeserializer<Notification> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): GlobalNotification {
-        val notification = GlobalNotification()
+    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Notification {
+        val notification = Notification()
         val obj = json.asJsonObject
 
         if (obj.has("id")) {
@@ -27,9 +27,7 @@ class NotificationDeserializer : JsonDeserializer<GlobalNotification> {
 
         val dataType = notification.getDataType()
         if (obj.has("data") && dataType != null) {
-            notification.setData(
-                    context.deserialize(obj.getAsJsonObject("data"), dataType)
-            )
+            notification.data = context.deserialize(obj.getAsJsonObject("data"), dataType)
         }
 
         return notification

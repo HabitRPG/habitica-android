@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.*
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import io.reactivex.functions.Consumer
@@ -25,7 +26,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
-    private var notifications: List<GlobalNotification> = emptyList()
+    private var notifications: List<Notification> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +66,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun setNotifications(notifications: List<GlobalNotification>) {
+    private fun setNotifications(notifications: List<Notification>) {
         this.notifications = notifications
 
         if (notification_items == null) {
@@ -86,17 +87,17 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private fun displayNotificationsListView(notifications: List<GlobalNotification>) {
+    private fun displayNotificationsListView(notifications: List<Notification>) {
         notification_items.addView(
                 createNotificationsHeaderView(notifications.count())
         )
 
         notifications.map {
             val item: View? = when (it.type) {
-                NotificationType.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
-                NotificationType.NEW_STUFF.type -> createNewStuffNotification(it)
-                NotificationType.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
-                NotificationType.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
+                Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
+                Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
+                Notification.Type.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
+                Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
                 //TODO rest of the notification types
                 else -> null
             }
@@ -117,8 +118,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return header
     }
 
-    private fun createNewChatMessageNotification(notification: GlobalNotification): View? {
-        val data = notification.getData() as? NewChatMessageData
+    private fun createNewChatMessageNotification(notification: Notification): View? {
+        val data = notification.data as? NewChatMessageData
         val stringId = if (viewModel.isPartyMessage(data)) R.string.new_msg_party else R.string.new_msg_guild
 
         return createNotificationItem(
@@ -127,8 +128,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private fun createNewStuffNotification(notification: GlobalNotification): View? {
-        val data = notification.getData() as? NewStuffData
+    private fun createNewStuffNotification(notification: Notification): View? {
+        val data = notification.data as? NewStuffData
         val text = fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data?.title)
 
         return createNotificationItem(
@@ -138,8 +139,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private fun createUnallocatedStatsNotification(notification: GlobalNotification): View? {
-        val data = notification.getData() as? UnallocatedPointsData
+    private fun createUnallocatedStatsNotification(notification: Notification): View? {
+        val data = notification.data as? UnallocatedPointsData
 
         return createNotificationItem(
                 notification,
@@ -148,7 +149,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private fun createMysteryItemsNotification(notification: GlobalNotification): View? {
+    private fun createMysteryItemsNotification(notification: Notification): View? {
         return createNotificationItem(
                 notification,
                 fromHtml(getString(R.string.new_subscriber_item)),
@@ -156,7 +157,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private fun createNotificationItem(notification: GlobalNotification, messageText: CharSequence, imageResourceId: Int? = null): View? {
+    private fun createNotificationItem(notification: Notification, messageText: CharSequence, imageResourceId: Int? = null): View? {
         val item = inflater.inflate(R.layout.notification_item, notification_items, false)
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView

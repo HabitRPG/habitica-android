@@ -46,6 +46,7 @@ import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.interactors.*
 import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -827,19 +828,20 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showCheckinDialog(event: ShowCheckinDialog) {
-        val title = event.notification.data.message
+        val notificationData = event.notification.data as LoginIncentiveData
+        val title = notificationData.message
 
         val factory = LayoutInflater.from(this)
         val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
         val imageView = view.findViewById<View>(R.id.imageView) as? SimpleDraweeView
-        var imageKey = event.notification.data.rewardKey[0]
+        var imageKey = notificationData.rewardKey!!.get(0)
         if (imageKey.contains("armor")) {
             imageKey = "slim_$imageKey"
         }
         DataBindingUtils.loadImage(imageView, imageKey)
 
-        val youEarnedMessage = this.getString(R.string.checkInRewardEarned, event.notification.data.rewardText)
+        val youEarnedMessage = this.getString(R.string.checkInRewardEarned, notificationData.rewardText)
 
         val titleTextView = TextView(this)
         titleTextView.setBackgroundResource(R.color.blue_100)

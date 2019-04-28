@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models.notifications
 
-import io.realm.RealmObject
-
-open class NewChatMessageData : RealmObject(), GlobalNotificationData {
+open class NewChatMessageData : NotificationData {
     var group: NotificationGroup? = null
 }

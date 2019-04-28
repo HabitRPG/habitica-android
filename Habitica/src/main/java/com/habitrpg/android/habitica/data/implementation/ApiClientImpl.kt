@@ -73,11 +73,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         observable
                 .filter { it.data != null }
                 .map { habitResponse ->
-            if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
-            }
-            habitResponse.data
-        }
+                    if (habitResponse.notifications != null) {
+                        popupNotificationsManager.setNotifications(habitResponse.notifications)
+                    }
+                    habitResponse.data
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(this)

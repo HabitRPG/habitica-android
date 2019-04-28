@@ -1,28 +1,53 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.helpers.PopupNotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.notifications.GlobalNotification
+import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
-import com.habitrpg.android.habitica.models.notifications.NotificationType
 import com.habitrpg.android.habitica.models.social.UserParty
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
-import io.realm.RealmList
 import java.util.HashMap
+import javax.inject.Inject
 
 open class NotificationsViewModel : BaseViewModel() {
-    var party: UserParty? = null
+    @Inject
+    lateinit var notificationsManager: PopupNotificationsManager
+
+    /**
+     * A list of notification types handled by this component.
+     * NOTE: Those not listed here won't be shown in the notification panel
+     */
+    private val supportedNotificationTypes = listOf(
+            Notification.Type.NEW_STUFF.type,
+            Notification.Type.NEW_CHAT_MESSAGE.type,
+            Notification.Type.NEW_MYSTERY_ITEMS.type,
+            Notification.Type.UNALLOCATED_STATS_POINTS.type
+    )
+
+    /**
+     * Keep track of users party so we can determine which chat notifications are party chat
+     * instead of guild chat notifications.
+     */
+    private var party: UserParty? = null
 
     override fun inject(component: AppComponent) {
         component.inject(this)
     }
 
-    fun getNotifications(): Flowable<List<GlobalNotification>> {
-        return userRepository.getUser()
-                .doOnEach { party = it.value?.party }
-                .map { filterSupportedTypes(it.notifications) }
+    init {
+        disposable.add(userRepository.getUser()
+                .subscribe(Consumer {
+                    party = it.party
+                }, RxErrorHandler.handleEmptyError()))
+    }
+
+
+    fun getNotifications(): Flowable<List<Notification>> {
+        return notificationsManager.notifications
+                .map { filterSupportedTypes(it) }
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
@@ -38,12 +63,12 @@ open class NotificationsViewModel : BaseViewModel() {
                 .distinctUntilChanged()
     }
 
-    fun refreshNotifications(): Flowable<RealmList<GlobalNotification>> {
-        return userRepository.retrieveUser(withTasks = false, forced = true).map { it.notifications }
+    fun refreshNotifications(): Flowable<*> {
+        return userRepository.retrieveUser(withTasks = false, forced = true)
     }
 
-    private fun filterSupportedTypes(notifications: List<GlobalNotification>): List<GlobalNotification> {
-        return notifications.filter { NotificationType.contains(it.type) }
+    private fun filterSupportedTypes(notifications: List<Notification>): List<Notification> {
+        return notifications.filter { supportedNotificationTypes.contains(it.type) }
     }
 
     fun isPartyMessage(data: NewChatMessageData?): Boolean {
@@ -54,15 +79,12 @@ open class NotificationsViewModel : BaseViewModel() {
         return party?.id == data.group?.id
     }
 
-    fun dismissNotification(notification: GlobalNotification) {
+    fun dismissNotification(notification: Notification) {
         disposable.add(userRepository.readNotification(notification.id)
-                .subscribe(Consumer {
-                    // TODO better way to handle updates than reload whole user ??
-                    refreshNotifications()
-                }, RxErrorHandler.handleEmptyError()))
+                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
     }
 
-    fun dismissAllNotifications(notifications: List<GlobalNotification>) {
+    fun dismissAllNotifications(notifications: List<Notification>) {
         if (notifications.isEmpty()) {
             return
         }
@@ -71,12 +93,10 @@ open class NotificationsViewModel : BaseViewModel() {
         notificationIds["notificationIds"] = notifications.map { notification -> notification.id }
 
         disposable.add(userRepository.readNotifications(notificationIds)
-                .subscribe(Consumer {
-                    refreshNotifications()
-                }, RxErrorHandler.handleEmptyError()))
+                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
     }
 
-    fun markNotificationsAsSeen(notifications: List<GlobalNotification>) {
+    fun markNotificationsAsSeen(notifications: List<Notification>) {
         val unseenIds = notifications.filter { notification -> notification.seen != true }
                 .map { notification -> notification.id }
 
@@ -88,9 +108,7 @@ open class NotificationsViewModel : BaseViewModel() {
         notificationIds["notificationIds"] = unseenIds
 
         disposable.add(userRepository.seeNotifications(notificationIds)
-                .subscribe(Consumer {
-                    refreshNotifications()
-                }, RxErrorHandler.handleEmptyError()))
+                .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
     }
 
 }

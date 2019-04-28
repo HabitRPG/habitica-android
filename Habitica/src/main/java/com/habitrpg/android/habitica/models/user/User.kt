@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.invitations.Invitations
-import com.habitrpg.android.habitica.models.notifications.GlobalNotification
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.tasks.TaskList
@@ -122,8 +121,6 @@ open class User : RealmObject(), Avatar {
 
     @Ignore
     var pushDevices: List<PushDevice>? = null
-
-    var notifications = RealmList<GlobalNotification>()
 
     var purchased: Purchases? = null
         set(purchased) {

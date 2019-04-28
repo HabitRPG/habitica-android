@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.invitations.Invitations
-import com.habitrpg.android.habitica.models.notifications.GlobalNotification
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
@@ -108,11 +107,6 @@ class UserDeserializer : JsonDeserializer<User> {
             obj.getAsJsonArray("pushDevices")
                     .map { context.deserialize<PushDevice>(it, PushDevice::class.java) }
                     .forEach { (user.pushDevices as? ArrayList<PushDevice>)?.add(it) }
-        }
-
-        if (obj.has("notifications")) {
-            user.notifications = context.deserialize(obj.get("notifications"), object: TypeToken<RealmList<GlobalNotification>>() {
-            }.type)
         }
 
         if (obj.has("lastCron")) {
