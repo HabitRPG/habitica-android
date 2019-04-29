@@ -294,11 +294,11 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun sendChatMessage(chatText: String) {
         groupId.notNull {id ->
-            socialRepository.postGroupChat(id, chatText).subscribe(Consumer {
+            socialRepository.postGroupChat(id, chatText).subscribe({
                 recyclerView?.scrollToPosition(0)
-            }, RxErrorHandler.handleEmptyError())
+            }, { throwable ->
+                chatEditText.setText(chatText)
+            RxErrorHandler.reportError(throwable)})
         }
     }
-
-
 }
