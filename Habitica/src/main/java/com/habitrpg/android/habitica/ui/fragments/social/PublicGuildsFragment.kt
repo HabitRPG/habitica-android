@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.widget.SearchView
 import android.view.*
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -47,8 +47,8 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
         recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
         recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(getActivity()!!, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
-        viewAdapter.setMemberGuildIDs(this.memberGuildIDs?.toMutableList() ?: mutableListOf<String>())
-        viewAdapter.apiClient = this.apiClient
+        viewAdapter.setMemberGuildIDs(this.memberGuildIDs?.toMutableList() ?: mutableListOf())
+        viewAdapter.socialRepository = socialRepository
         recyclerView?.adapter = viewAdapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.fetchGuilds()

@@ -91,7 +91,7 @@ class PartyFragment : BaseMainFragment() {
         this.tutorialText = getString(R.string.tutorial_party)
     }
 
-    fun setFragments() {
+    private fun setFragments() {
         val fragments = childFragmentManager.fragments
         for (childFragment in fragments) {
             if (childFragment is ChatFragment) {
@@ -144,9 +144,7 @@ class PartyFragment : BaseMainFragment() {
 
     @Suppress("ReturnCount")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        when (id) {
+        when (item.itemId) {
             R.id.menu_invite_item -> {
                 val intent = Intent(activity, PartyInviteActivity::class.java)
                 startActivityForResult(intent, PartyInviteActivity.RESULT_SEND_INVITES)

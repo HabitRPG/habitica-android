@@ -3,47 +3,27 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import io.reactivex.functions.Consumer
-
-import javax.inject.Inject
+import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 
 class GuildFragment : BaseMainFragment() {
 
-    @Inject
-    internal lateinit var socialRepository: SocialRepository
-
-    var isMember: Boolean = false
-    set(value) {
-        field = value
-        guildInformationFragment?.isMember = value
-    }
     private val viewPager: androidx.viewpager.widget.ViewPager? by bindView(R.id.viewPager)
-    private var guild: Group? = null
+    internal lateinit var viewModel: GroupViewModel
     private var guildInformationFragment: GuildDetailFragment? = null
-    private var chatListFragment: ChatListFragment? = null
-    private var guildId: String? = null
-
-    fun setGuildId(guildId: String) {
-        this.guildId = guildId
-    }
+    private var chatFragment: ChatFragment? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -53,10 +33,6 @@ class GuildFragment : BaseMainFragment() {
         return inflater.inflate(R.layout.fragment_viewpager, container, false)
     }
 
-    override fun onDestroy() {
-        socialRepository.close()
-        super.onDestroy()
-    }
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
@@ -64,28 +40,44 @@ class GuildFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        resetViews()
+
+        viewModel = ViewModelProviders.of(this).get(GroupViewModel::class.java)
+        viewModel.groupViewType = GroupViewType.GUILD
+        viewModel.getGroupData().observe(viewLifecycleOwner, Observer { setGroup(it) })
+        viewModel.getIsMemberData().observe(viewLifecycleOwner, Observer { activity?.invalidateOptionsMenu() })
+
         val newArguments = arguments
         if (newArguments != null) {
             val args = GuildFragmentArgs.fromBundle(newArguments)
-            guildId = args.groupID
-            isMember = args.isMember
+            viewModel.setGroupID(args.groupID)
         }
 
         viewPager?.currentItem = 0
 
         setViewPagerAdapter()
+        setFragments()
+    }
 
-        guildId.notNull { guildId ->
-            compositeSubscription.add(socialRepository.getGroup(guildId).subscribe(Consumer { this.setGroup(it) }, RxErrorHandler.handleEmptyError()))
-            socialRepository.retrieveGroup(guildId).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-            socialRepository.getGroup(guildId).subscribe(Consumer<Group> { this.setGroup(it) }, RxErrorHandler.handleEmptyError())
+    private fun setFragments() {
+        val fragments = childFragmentManager.fragments
+        for (childFragment in fragments) {
+            if (childFragment is ChatFragment) {
+                chatFragment = childFragment
+                chatFragment?.viewModel = viewModel
+            }
+            if (childFragment is GuildDetailFragment) {
+                guildInformationFragment = childFragment
+                childFragment.viewModel = viewModel
+            }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (this.activity != null && this.guild != null) {
-            if (this.isMember) {
-                if (this.user != null && this.user?.id == this.guild?.leaderID) {
+        val guild = viewModel.getGroupData().value
+        if (this.activity != null && guild != null) {
+            if (viewModel.isMember) {
+                if (this.user != null && this.user?.id == guild.leaderID) {
                     this.activity?.menuInflater?.inflate(R.menu.guild_admin, menu)
                 } else {
                     this.activity?.menuInflater?.inflate(R.menu.guild_member, menu)
@@ -99,20 +91,13 @@ class GuildFragment : BaseMainFragment() {
 
     @Suppress("ReturnCount")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        when (id) {
+        when (item.itemId) {
             R.id.menu_guild_join -> {
-                this.socialRepository.joinGroup(this.guild?.id).subscribe(Consumer { this.setGroup(it) }, RxErrorHandler.handleEmptyError())
-                this.isMember = true
+                viewModel.joinGroup()
                 return true
             }
             R.id.menu_guild_leave -> {
-                this.socialRepository.leaveGroup(this.guild?.id)
-                        .subscribe(Consumer {
-                            fragmentManager?.popBackStack()
-                        }, RxErrorHandler.handleEmptyError())
-                this.isMember = false
+                viewModel.leaveGroup { fragmentManager?.popBackStack() }
                 return true
             }
             R.id.menu_guild_edit -> {
@@ -134,14 +119,13 @@ class GuildFragment : BaseMainFragment() {
 
                 when (position) {
                     0 -> {
-                        guildInformationFragment = GuildDetailFragment.newInstance(this@GuildFragment.guild, user)
-                        guildInformationFragment?.isMember = isMember
+                        guildInformationFragment = GuildDetailFragment.newInstance(viewModel, user)
                         fragment = guildInformationFragment
                     }
                     1 -> {
-                        chatListFragment = ChatListFragment()
-                        chatListFragment?.configure(this@GuildFragment.guildId ?: "", user, false, "guild")
-                        fragment = chatListFragment
+                        chatFragment = ChatFragment()
+                        chatFragment?.viewModel = viewModel
+                        fragment = chatFragment
                     }
                     else -> fragment = Fragment()
                 }
@@ -164,14 +148,14 @@ class GuildFragment : BaseMainFragment() {
 
         viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                if (position == 1 && this@GuildFragment.guild != null) {
-                    chatListFragment?.setNavigatedToFragment()
+                if (position == 1) {
+                    chatFragment?.setNavigatedToFragment()
                 }
             }
 
             override fun onPageSelected(position: Int) {
-                if (position == 1 && this@GuildFragment.guild != null && chatListFragment != null) {
-                    chatListFragment?.setNavigatedToFragment()
+                if (position == 1) {
+                    chatFragment?.setNavigatedToFragment()
                 }
             }
 
@@ -185,6 +169,7 @@ class GuildFragment : BaseMainFragment() {
 
     private fun displayEditForm() {
         val bundle = Bundle()
+        val guild = viewModel.getGroupData().value
         bundle.putString("groupID", guild?.id)
         bundle.putString("name", guild?.name)
         bundle.putString("description", guild?.description)
@@ -205,31 +190,19 @@ class GuildFragment : BaseMainFragment() {
             GroupFormActivity.GROUP_FORM_ACTIVITY -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val bundle = data?.extras
-                    this.socialRepository.updateGroup(this.guild,
-                            bundle?.getString("name"),
-                            bundle?.getString("description"),
-                            bundle?.getString("leader"),
-                            bundle?.getBoolean("leaderCreateChallenge"))
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    viewModel.updateGroup(bundle)
                 }
             }
         }
     }
 
     private fun setGroup(group: Group?) {
-        if (group != null) {
-            guildInformationFragment?.groupID = group.id
-
-            this.chatListFragment?.groupId = group.id
-
-            this.guild = group
-        }
         this.activity?.invalidateOptionsMenu()
 
         if (group?.privacy == "public") {
-            chatListFragment?.autocompleteContext = "publicGuild"
+            chatFragment?.autocompleteContext = "publicGuild"
         } else {
-            chatListFragment?.autocompleteContext = "privateGuild"
+            chatFragment?.autocompleteContext = "privateGuild"
         }
     }
 

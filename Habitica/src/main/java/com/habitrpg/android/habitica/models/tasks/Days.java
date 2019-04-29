@@ -117,7 +117,13 @@ public class Days extends RealmObject implements Parcelable {
     }
 
     public Days() {
-
+        m = true;
+        t = true;
+        w = true;
+        th = true;
+        f = true;
+        s = true;
+        su = true;
     }
 
     public static final Parcelable.Creator<Days> CREATOR = new Parcelable.Creator<Days>() {

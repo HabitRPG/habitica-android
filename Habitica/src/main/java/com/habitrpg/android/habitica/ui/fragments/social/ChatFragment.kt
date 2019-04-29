@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -27,7 +27,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import io.reactivex.Observable
@@ -42,7 +42,7 @@ import javax.inject.Inject
 
 class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    var viewModel: PartyViewModel? = null
+    var viewModel: GroupViewModel? = null
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -52,6 +52,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private var navigatedOnceToFragment = false
     private var isScrolledToTop = true
     private var refreshDisposable: Disposable? = null
+    var autocompleteContext: String = ""
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)

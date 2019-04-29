@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.text.DateFormat
 import java.text.DateFormatSymbols
@@ -39,8 +40,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private val summaryTextView: TextView by bindView(R.id.summary_textview)
 
     private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
-    private val frequencyAdapter = ArrayAdapter.createFromResource(context,
-            R.array.repeatables_frequencies, android.R.layout.simple_spinner_item)
+    private val frequencyAdapter = SimpleSpinnerAdapter(context, R.array.repeatables_frequencies)
 
     var taskType = Task.TYPE_DAILY
     set(value) {
@@ -108,6 +108,11 @@ class TaskSchedulingControls @JvmOverloads constructor(
     init {
         inflate(R.layout.task_form_task_scheduling, true)
         repeatsEverySpinner.adapter = frequencyAdapter
+
+        frequency = Task.FREQUENCY_WEEKLY
+        startDate = Date()
+        everyX = 1
+        weeklyRepeat = Days()
 
         repeatsEverySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {

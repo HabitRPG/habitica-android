@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
+import androidx.core.widget.NestedScrollView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TagRepository
@@ -51,6 +52,7 @@ class TaskFormActivity : BaseActivity() {
     lateinit var tagRepository: TagRepository
 
     private val toolbar: Toolbar by bindView(R.id.toolbar)
+    private val scrollView: NestedScrollView by bindView(R.id.scroll_view)
     private val upperTextWrapper: LinearLayout by bindView(R.id.upper_text_wrapper)
     private val textEditText: EditText by bindView(R.id.text_edit_text)
     private val notesEditText: EditText by bindView(R.id.notes_edit_text)
@@ -150,6 +152,9 @@ class TaskFormActivity : BaseActivity() {
         statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
         statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
         statPerceptionButton.setOnClickListener { selectedStat = Stats.PERCEPTION }
+        scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->
+            dismissKeyboard()
+        }
 
         if (taskId != null) {
             isCreating = false

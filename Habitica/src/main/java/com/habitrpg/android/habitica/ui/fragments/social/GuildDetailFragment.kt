@@ -9,33 +9,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class GuildDetailFragment : BaseFragment() {
 
-    var isMember: Boolean = false
-    @Inject
-    lateinit var socialRepository: SocialRepository
-    @Inject
-    lateinit var userRepository: UserRepository
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -50,9 +45,7 @@ class GuildDetailFragment : BaseFragment() {
     private val joinGuildButton: Button by bindView(R.id.join_button)
     private val leaveGuildButton: Button by bindView(R.id.leave_button)
 
-    var groupID: String? = null
-    var guild: Group? = null
-    private var user: User? = null
+    var viewModel: GroupViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_guild_detail, container, false)
@@ -64,35 +57,43 @@ class GuildDetailFragment : BaseFragment() {
 
         refreshLayout.setOnRefreshListener { this.refresh() }
 
-        compositeSubscription.add(socialRepository.getGroup(groupID ?: "")
-                .doOnNext {
-                    guild = it
-                    updateGuild(it)
-                }
-                .distinctUntilChanged { group1, group2 -> group1.id == group2.id }
-                .flatMap { socialRepository.getMember(it.leaderID) }
-                .subscribe(Consumer {
-                setLeader(it)
-        }, RxErrorHandler.handleEmptyError()))
+        viewModel?.getGroupData()?.observe(viewLifecycleOwner, Observer { updateGuild(it) })
+        viewModel?.getLeaderData()?.observe(viewLifecycleOwner, Observer { setLeader(it) })
+        viewModel?.getIsMemberData()?.observe(viewLifecycleOwner, Observer { updateMembership(it) })
 
         guildDescriptionView.movementMethod = LinkMovementMethod.getInstance()
 
         leaveGuildButton.setOnClickListener {
-            compositeSubscription.add(socialRepository.leaveGroup(groupID).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+            viewModel?.leaveGroup {
+                val activity = activity as? MainActivity
+                if (activity != null) {
+                    HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.left_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                }
+            }
         }
         joinGuildButton.setOnClickListener {
-            compositeSubscription.add(socialRepository.joinGroup(groupID).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+            viewModel?.joinGroup {
+                val activity = activity as? MainActivity
+                if (activity != null) {
+                    HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.joined_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                }
+            }
         }
-
-        joinGuildButton.visibility = if (isMember) View.GONE else View.VISIBLE
-        leaveGuildButton.visibility = if (isMember) View.VISIBLE else View.GONE
     }
 
-    private fun setLeader(leader: Member) {
+    private fun setLeader(leader: Member?) {
+        if (leader == null) {
+            return
+        }
         leaderAvatarView.setAvatar(leader)
         leaderProfileNameView.username = leader.profile?.name
         leaderProfileNameView.tier = leader.contributor?.level ?: 0
         leaderUsernameView.text = leader.formattedUsername
+    }
+
+    private fun updateMembership(isMember: Boolean?) {
+        joinGuildButton.visibility = if (isMember == true) View.GONE else View.VISIBLE
+        leaveGuildButton.visibility = if (isMember == true) View.VISIBLE else View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -100,26 +101,16 @@ class GuildDetailFragment : BaseFragment() {
         when (requestCode) {
             GroupFormActivity.GROUP_FORM_ACTIVITY -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val bundle = data?.extras
-                    this.socialRepository.updateGroup(this.guild,
-                            bundle?.getString("name"),
-                            bundle?.getString("description"),
-                            bundle?.getString("leader"),
-                            bundle?.getBoolean("leaderCreateChallenge"))
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    viewModel?.updateGroup(data?.extras)
                 }
             }
         }
     }
 
     private fun refresh() {
-        compositeSubscription.add(socialRepository.retrieveGroup(guild?.id ?: "").subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
-    }
-
-    override fun onDestroy() {
-        userRepository.close()
-        socialRepository.close()
-        super.onDestroy()
+        viewModel?.retrieveGroup {
+            refreshLayout.isRefreshing = false
+        }
     }
 
     override fun injectFragment(component: AppComponent) {
@@ -129,21 +120,16 @@ class GuildDetailFragment : BaseFragment() {
     private fun updateGuild(guild: Group?) {
         guildTitleView.text = guild?.name
         guildDescriptionView.text = MarkdownParser.parseMarkdown(guild?.description)
-        //gemCountWrapper.visibility = if (group?.balance != null && group.balance > 0) View.VISIBLE else View.GONE
-        //gemCountTextView.text = (group?.balance ?: 0 * 4.0).toInt().toString()
     }
 
     companion object {
-
-        fun newInstance(group: Group?, user: User?): GuildDetailFragment {
+        fun newInstance(viewModel: GroupViewModel?, user: User?): GuildDetailFragment {
             val args = Bundle()
 
             val fragment = GuildDetailFragment()
             fragment.arguments = args
-            fragment.groupID = group?.id
-            fragment.user = user
+            fragment.viewModel = viewModel
             return fragment
         }
     }
-
 }

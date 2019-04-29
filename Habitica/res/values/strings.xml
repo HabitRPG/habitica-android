@@ -898,4 +898,8 @@
     <string name="i_agree_to_follow_the_guidelines">I agree to follow the guidelines</string>
     <string name="report_violation">Report Violation</string>
     <string name="trillion_abbrev">t</string>
+    <string name="leave_guild">Leave Guild</string>
+    <string name="left_guild">You left the guild</string>
+    <string name="joined_guild">You joined the guild</string>
+    <string name="cost">Cost</string>
 </resources>
