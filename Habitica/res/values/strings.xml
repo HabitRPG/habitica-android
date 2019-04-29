@@ -902,4 +902,8 @@
     <string name="left_guild">You left the guild</string>
     <string name="joined_guild">You joined the guild</string>
     <string name="cost">Cost</string>
+    <string name="setup_task_habit_1">Add a task to Habitica</string>
+    <string name="setup_task_habit_1_notes">Either a Habit, a Daily or a To-Do</string>
+    <string name="setup_task_habit_2">Tap here to edit this into a bad habit you\'d like to quit</string>
+    <string name="setup_task_habit_2_notes">Or delete it from the edit screen</string>
 </resources>
