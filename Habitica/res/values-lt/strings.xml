@@ -267,7 +267,7 @@
   <string name="healer">Gydytojas</string>
   <string name="mage_description">Magai greitaisi mokosi ir greičiau renka Patirtį ir Lygius nei kitos klasės. Jie taip pat turi daugiausia magijos taškų specialiems sugebėjimams. Pasirink Magą, jei tau patinka taktinė Habitica pusė arba jei tave labiausiai motyvuoja veikėjo lygio kilimas!</string>
   <string name="rogue_description">Sukčiai mėgsta kaupti turtus gaunami daugiausia Aukso ir rasdami daugiausia lobių. Jie taip pat gali pasislėpti nuo praleistų kasdienių Užduočių. Pasirink sukčių, jei tave labiausiai motyvuoja Atlygiai ir Pasiekimai ir nori kuo greičiau užpildyti savo kolekcijas!</string>
-  <string name="healer_description">Gydytojai yra labai sunkiai sužeidžiami - savybė kuria jie dalinasis su aplinkiniais. Praleistos užduotys ir blogi įpročiai jų taip stipriai neveikia ir jie sugeba atstayti savo gyvybes po nesėkmių. Pasirink Gydytoją, jei nori padėti kitiems savo grupėje ir jei tave įkvepia Mirties apgaudinėjimas.</string>
+  <string name="healer_description">Gydytojai yra labai sunkiai sužeidžiami - savybė kuria jie dalinasis su aplinkiniais. Praleistos užduotys ir blogi įpročiai jų taip stipriai neveikia ir jie sugeba atstayti savo gyvybes po nesėkmių. Pasirink Gydytoją, jei nori padėti kitiems savo grupėje ir jei tave įkvepia Mirties apgaudinėjimas!</string>
   <string name="select_class">Pasirinkti Klasę</string>
   <string name="opt_out_class">Atsisakyti</string>
   <string name="opt_out_description">Tingi gilintis į klases? Nori pasirinkti vėliau? Atsisakyk. Liksi kariu be specialių sugebėjimų. Galėsi vėliau lengvai ją įjungti, kai pasiskaitysi daugiau apie klases wiki puslapyje.</string>
@@ -352,9 +352,148 @@
   <string name="hatching_market_info">Negaunate reikiamų lašiukų? Patikrinkite turguje!</string>
   <string name="feeding_market_info">Reikia kitokio maisto? Nusipirkite daugiau iš turgaus!</string>
   <string name="open_market">Atviras turgus</string>
-  <string name="cds_description">Jūsų kasdienės užduotys iš naujo nusistatys po %1$s. Įsitikinkite, kad atlikote savo kasdienes užduotis iki šio laiko.</string>
+  <string name="cds_description">Jūsų kasdienės užduotys iš naujo nusistatys po %1$s. Įsitikinkite, kad atlikote savo kasdienes užduotis iki šio laiko!</string>
   <string name="AudioTheme_title">Garsinė tema</string>
   <string name="AudioTheme_summary">Pakeiskite Habitica garsinę temą</string>
   <!--Login Incentives-->
   <string name="see_you_tomorrow">Pasimatysime rytoj!</string>
-</resources>
+<string name="unknown_error">Įvyko klaida…</string>
+    <string name="new_todo">Naujas darbas</string>
+    <string name="new_reward">Naujas apdovanojimas</string>
+    <string name="new_daily">Naujas „Daily“</string>
+    <string name="new_habit">Naujas prigimtis</string>
+    <string name="repeatEvery">Pakartokite kiekvieną</string>
+
+
+    <string name="physical">Jėga</string>
+    <string name="mental">Žvalgyba</string>
+    <string name="social">Konstitucija</string>
+    <string name="other">Įžvalga</string>
+
+    <string name="repeatables_summary_title">Santrauka</string>
+    <string name="repeatables_title">Pakartojama</string>
+    <string name="repeatables_on_title">Kartojasi</string>
+    <string name="repeatables_frequency_daily">Kasdien</string>
+    <string name="repeatables_frequency_weekly">Savaitės</string>
+    <string name="repeatables_frequency_monthly">Mėnesio</string>
+    <string name="repeatables_frequency_yearly">Kasmet</string>
+    <string name="repeatables_frequency_day_of_month">Mėnesio diena</string>
+    <string name="repeatables_frequency_day_of_week">Savaitės diena</string>
+
+
+    <string name="levelup_header">Jūs pasiekėte lygį %1$d!</string>
+    <string name="levelup_detail">Atlikdami savo realaus gyvenimo tikslus, jūs išlyginote ir visiškai išgydėte!</string>
+    <string name="faint_penalty_body">Praradote lygį, auksą ir įrangą, bet juos visus galite sugrąžinti sunkiu darbu! Sėkmės.</string>
+    <string name="reminder_title">Nepamirškite patikrinti savo užduočių</string>
+    <string name="todos">Daryti</string>
+    <string name="intro_1_subtitle">Sveiki atvykę į</string>
+    <string name="intro_1_title">Habitica</string>
+    <string name="intro_1_description">Atėjo laikas pasilinksminti, kol gausite dalykų. Prisijunkite prie % s kitų, gerindami savo gyvenimą vienu metu.</string>
+    <string name="intro_2_subtitle">Pažanga žaidime</string>
+    <string name="intro_2_title">Pažanga gyvenime</string>
+    <string name="intro_2_description">Atrakinkite žaidimo funkcijas, patikrindami savo realaus gyvenimo užduotis. Uždirbkite šarvus, augintinius ir daugiau, kaip atlygį už savo tikslų pasiekimą.</string>
+    <string name="intro_3_subtitle">Kova su monstrais</string>
+    <string name="intro_3_title">Gaukite socialinę</string>
+    <string name="intro_finish_button">Pradėkime!</string>
+    <string name="avatar_setup_description">Taigi, kaip norėtumėte ieškoti\? Nesijaudinkite, vėliau galite tai pakeisti.</string>
+    <string name="task_setup_description">Puikus! Dabar, ką domitės dirbti visą šią kelionę\?</string>
+    <string name="setup_group_health">Sveikata</string>
+    <string name="copy_as_todo">Kopijuoti kaip darbus</string>
+    <string name="add_tag">Pridėti naują žymę</string>
+    <string name="quest_begin_message">Ar tu tuo tikras\? Tik% 1 $ d jūsų% 2 $ d partijos narių prisijungė prie šio Quest! Užklausos prasideda automatiškai, kai visi žaidėjai prisijungė arba atmetė kvietimą.</string>
+    <string name="ago_1day">Prieš 1 dieną</string>
+    <string name="ago_days">prieš %d dienas</string>
+    <string name="ago_1Minute">Prieš 1 minutę</string>
+    <string name="ago_minutes">Prieš %d minutes</string>
+    <string name="ago_hours">prieš %d valandas</string>
+    <string name="ago_1hour">Prieš 1 valandą</string>
+    <string name="evolved_pet_title">Prakeikėte %1$s %2$s, eikime į kelionę!</string>
+    <string name="notification_purchase">Įsigijote %s</string>
+    <string name="notification_purchase_reward">Jūs įsigijote atlygį</string>
+    <string name="sectionpets">Standartinis</string>
+    <string name="sectionpremiumPets">magija potion</string>
+    <string name="sectionquestPets">ieškojimas</string>
+    <string name="sectionspecialPets">Reti</string>
+    <string name="sectionmounts">Standartinis</string>
+    <string name="sectionpremiumMounts">magija potion</string>
+    <string name="sectionquestMounts">ieškojimas</string>
+    <string name="sectionspecialMounts">Reti</string>
+    <string name="inn_description">Reikia pertraukos\? Patikrinkite „Daniel\'s Inn“, kad pristabdytumėte sudėtingesnius „Habitica“ žaidimų mechanikus:
+\n
+\n • Praleisti dienraščiai jums nepažeis
+\n • Užduotys nepraranda raštų ar spalva
+\n • Bosai nepadarys žalos jūsų praleistiems dienraščiams
+\n • Jūsų boso pažeidimas ar surinkimo ieškojimo elementai lieka laukiami iki išsiregistravimo</string>
+    <string name="user_level">Lygis %d</string>
+    <string name="user_level_with_class">Lygis %1$d %2$s</string>
+    <string name="warrior_description">Warriors surinko daugiau ir geresnių kritinių paspaudimų, kurie atsitiktinai suteikia premiją „Gold“, „Experience“ ir „drop“ šansams atlikti užduotį. Jie taip pat susiduria su sunkia boso monstrų žala. Žaisti Warrior, jei radote motyvaciją iš neprognozuojamų jackpoto stiliaus apdovanojimų, arba norėsite išvalyti skausmą bosas Quests!</string>
+    <string name="opting_out_progress">Atsisakymas</string>
+    <string name="class_changed">Dabar esate %s!</string>
+    <string name="class_changed_description">Turite naują numatytąjį „Battle Gear“, kurį galite keisti pagal „Įranga“!</string>
+    <string name="change_class_description">Pakeiskite savo klasę ir grąžinkite savo statistinius taškus už 3 brangakmenius.</string>
+    <string name="invite_username_description">Jei turite draugų, kurie jau naudojasi Habitica, pakvieskite juos pagal vartotojo vardą.</string>
+    <string name="share_levelup">Habiticoje pasiekiau %d lygį, gerindamas savo tikrojo gyvenimo įpročius!</string>
+    <string name="change_class_equipment_warning">Įspėjimas: nebegalėsite pirkti įrangos iš %s klasės.</string>
+    <string name="leaderName">Lyderis: %1$s</string>
+    <string name="empty_inbox">Jūs neturite jokių pranešimų. Galite siųsti vartotojui naują pranešimą iš savo viešųjų pokalbių pranešimų!</string>
+    <string name="login_incentive">Atrakinkite reguliariai prisijungdami prie Habitica</string>
+    <string name="create_account">Atrakinkite paskyrą</string>
+    <string name="successful_purchase">Įsigyta %1$s</string>
+    <string name="widget_todo_list">Habitica darbų sąrašas</string>
+    <string name="belongs_to_challenge">Priklauso iššūkiui</string>
+    <string name="has_reminder">Turi priminimą</string>
+    <string name="has_tag">Turi žymę</string>
+    <string name="subscribe.title">Prenumerata palaiko kūrėjus ir padeda išlaikyti Habitica veikimą</string>
+    <string name="subscribe_prompt">Tapkite abonentu ir gausite šiuos naudingus privalumus:</string>
+    <string name="subscribe.listitem1">Pirkti brangakmenius su auksu</string>
+    <string name="subscribe.listitem2">Išskirtiniai mėnesiniai straipsniai</string>
+    <string name="subscribe.listitem3">Išsaugokite papildomus istorijos įrašus</string>
+    <string name="subscribe.listitem4">Dvigubai padidėjo kasdienių lašų</string>
+    <string name="subscriptions">Prenumeratos</string>
+    <string name="subscription_duration">Pasikartojantis kiekvienas %s</string>
+    <string name="subscription_duration_norenew">Dėl %s</string>
+    <string name="subscribe">Prenumeruoti</string>
+    <string name="subscribe.listitem1.description">Aleksandras Prekybininkas dabar parduos jums brangakmenius po 20 aukso!
+\n
+\nJo mėnesinės siuntos iš pradžių yra ribojamos per 25 brangakmenius per mėnesį, tačiau jos gali padidėti pagal jūsų prenumeratos ilgį.
+\n
+\nViršutinė prenumerata kas tris mėnesius iš eilės padidėja 5 brangakmeniais, ne daugiau kaip 50 brangakmenių per mėnesį!</string>
+    <string name="subscribe.listitem2.description">Kiekvieną mėnesį gausite unikalų kosmetikos elementą savo avatarui!
+\n
+\nBe to, kas tris mėnesius iš eilės prenumeratos, paslaptingas laikas keliautojai suteiks jums prieigą prie istorinių (ir futuristinių!) Kosmetikos gaminių.</string>
+    <string name="subscribe.listitem3.description">Padaro užbaigtą darbų atlikimą ir užduočių istoriją ilgiau.</string>
+    <string name="subscribe.listitem4.description">Dukart lašų dangteliai leis jums kiekvieną dieną gauti daugiau elementų iš jūsų atliktų užduočių, o tai padės greičiau atlikti savo stabilumą!</string>
+    <string name="subscribe1month.gemcap">25 perlas riba</string>
+    <string name="subscribe3month.gemcap">30 perlas riba</string>
+    <string name="subscribe6month.gemcap">35 perlas riba</string>
+    <string name="subscribe12month.gemcap">45 perlas riba</string>
+    <string name="subscription_hourglasses">+%d mistikas smėlio laikrodis</string>
+    <string name="payment_method">Mokėjimo būdas</string>
+    <string name="subscription">Prenumerata</string>
+    <string name="active">Aktyvus</string>
+    <string name="due">Mokėti</string>
+    <string name="cancel_subscription">Atšaukti prenumeratą</string>
+    <string name="cancel_subscription_google.description">Nenorite prenumeruoti\? Galite atsisakyti prenumeratos „Google Play“ parduotuvės skyriuje „Mano programos“.</string>
+    <string name="cancel_subscription_notgoogle.description">Nenorite prenumeruoti\? Dėl mokėjimo būdo galite atsisakyti tik per svetainę. Spustelėkite žemiau esantį mygtuką, kad atidarytumėte svetainę naršyklėje!</string>
+    <string name="visit_habitica_website">Aplankykite „Habitica“ svetainę</string>
+    <string name="current_bonuses">Dabartinės premijos</string>
+    <string name="months_subscribed">Užregistruoti mėnesiai</string>
+    <string name="current_hourclasses">Dabartinis mistikas valandiniai stiklai</string>
+    <string name="monthly_gem_cap">Mėnesio perlas riba</string>
+    <string name="inactive">Neaktyvus</string>
+    <string name="one_month">1 mėnesį</string>
+    <string name="months">%d mėnesių</string>
+    <string name="month">mėnesį</string>
+    <string name="three_months">3 mėnesių</string>
+    <string name="six_months">6 mėnesių</string>
+    <string name="twelve_months">12 mėnesių</string>
+    <string name="subscribe_prompt_thanks">Užsisakydami gaunate šias naudingas išmokas:</string>
+    <string name="subscription_status">Prenumeratos būsena</string>
+
+    <string name="byLeader">iki %s</string>
+    <string name="challenge_details">Išsami informacija apie iššūkius</string>
+    <string name="challenge_leave_title">Palikite iššūkį</string>
+    <string name="challenge_leave_text">Ar tikrai norite palikti iššūkį „%s“\?</string>
+    <string name="challenge_remove_tasks_title">Pašalinkite užduotis</string>
+    <string name="challenge_remove_tasks_text">Ar norite pašalinti užduotis\?</string>
+    </resources>
