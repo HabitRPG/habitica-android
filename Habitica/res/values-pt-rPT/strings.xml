@@ -16,7 +16,7 @@
   <string name="Language_summary">Mudar a língua do Habitica</string>
   <string name="SP_user_qr_code">O Seu Código QR</string>
   <string name="PS_contact_title">Contactar-me</string>
-  <string name="unknown_error">Ocorreu um erro...</string>
+  <string name="unknown_error">Ocorreu um erro…</string>
   <string name="pref_account_header">Conta</string>
   <string name="pref_first_day_of_the_week_title">Primeiro Dia da Semana</string>
   <string name="pref_first_day_of_the_week_summary">Primeiro dia da semana em todos os calendários </string>
