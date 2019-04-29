@@ -909,4 +909,5 @@
     <string name="guild_summary">Guild Summary</string>
     <string name="guild_members">Guild Members</string>
     <string name="guild_bank">Guild Bank</string>
+    <string name="invite_to_party">Invite to Party</string>
 </resources>

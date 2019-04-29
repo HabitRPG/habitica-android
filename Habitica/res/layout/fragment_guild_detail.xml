@@ -101,9 +101,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/white"
-                android:showDividers="beginning|end|middle"
-                android:divider="@drawable/vertical_divider">
+                android:background="@color/white">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_500" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -128,6 +130,11 @@
                         style="@style/HabiticaButton.Green"
                         android:layout_marginStart="@dimen/spacing_large"/>
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_500" />
                 <LinearLayout
                     android:id="@+id/leader_wrapper"
                     android:layout_width="match_parent"
@@ -189,6 +196,12 @@
                         tools:text="@string/inn_description"
                         android:layout_marginTop="@dimen/spacing_large" />
                 </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_500"
+                    android:layout_marginTop="@dimen/spacing_medium"/>
             </LinearLayout>
             <Button
                 android:id="@+id/leave_button"

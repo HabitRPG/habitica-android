@@ -28,7 +28,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class PartyInviteActivity : BaseActivity() {
+class GroupInviteActivity : BaseActivity() {
 
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
@@ -51,13 +51,18 @@ class PartyInviteActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         viewPager.currentItem = 0
 
+        if (intent.getStringExtra("groupType") == "party") {
+            supportActionBar?.title = getString(R.string.invite_to_party)
+        } else {
+            supportActionBar?.title = getString(R.string.invite_to_guild)
+        }
+
         setViewPagerAdapter()
     }
 
     override fun injectActivity(component: AppComponent?) {
         component?.inject(this)
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -66,11 +71,7 @@ class PartyInviteActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-
 
         if (id == R.id.action_send_invites) {
             setResult(Activity.RESULT_OK, createResultIntent())

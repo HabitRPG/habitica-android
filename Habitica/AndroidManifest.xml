@@ -133,10 +133,9 @@
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.activities.PartyInviteActivity"
+            android:name=".ui.activities.GroupInviteActivity"
             android:theme="@style/AppThemeWithActionBarBlackText"
-            tools:ignore="UnusedAttribute"
-            android:label="@string/invite_users">
+            tools:ignore="UnusedAttribute">
         </activity>
         <activity
             android:name=".ui.activities.FullProfileActivity"

@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -32,6 +33,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+import java.util.*
 import javax.inject.Inject
 
 class GuildDetailFragment : BaseFragment() {
@@ -90,6 +92,10 @@ class GuildDetailFragment : BaseFragment() {
                 }
             }
         }
+        inviteToGuildButton.setOnClickListener {
+            val intent = Intent(activity, GroupInviteActivity::class.java)
+            startActivityForResult(intent, GroupInviteActivity.RESULT_SEND_INVITES)
+        }
         leaderWrapperView.setOnClickListener {
             viewModel?.getGroupData()?.value?.leaderID?.let {leaderID ->
                 val profileDirections = MainNavDirections.openProfileActivity(leaderID)
@@ -119,6 +125,29 @@ class GuildDetailFragment : BaseFragment() {
             GroupFormActivity.GROUP_FORM_ACTIVITY -> {
                 if (resultCode == Activity.RESULT_OK) {
                     viewModel?.updateGroup(data?.extras)
+                }
+            }
+            GroupInviteActivity.RESULT_SEND_INVITES -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val inviteData = HashMap<String, Any>()
+                    inviteData["inviter"] = viewModel?.getUserData()?.value?.profile?.name ?: ""
+                    if (data?.getBooleanExtra(GroupInviteActivity.IS_EMAIL_KEY, false) == true) {
+                        val emails = data.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
+                        val invites = ArrayList<HashMap<String, String>>()
+                        for (email in emails) {
+                            val invite = HashMap<String, String>()
+                            invite["name"] = ""
+                            invite["email"] = email
+                            invites.add(invite)
+                        }
+                        inviteData["emails"] = invites
+                    } else {
+                        val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
+                        val invites = ArrayList<String>()
+                        Collections.addAll(invites, *userIDs)
+                        inviteData["usernames"] = invites
+                    }
+                    viewModel?.inviteToGroup(inviteData)
                 }
             }
         }
