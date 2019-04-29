@@ -109,7 +109,7 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
         context.notNull {
             caretColor = ContextCompat.getColor(it, R.color.black_50_alpha)
         }
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
         titleView.setOnClickListener {
             isCollapsed = !isCollapsed
         }

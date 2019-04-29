@@ -6,11 +6,9 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
-import androidx.appcompat.widget.AppCompatImageView
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
-
+import androidx.appcompat.widget.AppCompatImageView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class StarView : AppCompatImageView {
@@ -22,7 +20,7 @@ class StarView : AppCompatImageView {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     constructor(context: Context) : super(context) {
-        this.scaleType = ImageView.ScaleType.CENTER
+        this.scaleType = ScaleType.CENTER
     }
 
     fun setStarSize(size: Int) {

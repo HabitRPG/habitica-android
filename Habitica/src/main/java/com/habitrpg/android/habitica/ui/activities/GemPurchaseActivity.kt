@@ -271,7 +271,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     }
 
     @Subscribe
-    public fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
+    fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         if (isActive) {
             consumePurchase(event.purchase)
         }

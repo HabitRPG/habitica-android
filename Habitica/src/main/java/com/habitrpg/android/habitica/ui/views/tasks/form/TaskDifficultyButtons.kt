@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
@@ -9,7 +8,6 @@ import android.widget.LinearLayout
 import android.widget.Space
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.children
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.extensions.inflate
@@ -39,7 +37,7 @@ class TaskDifficultyButtons @JvmOverloads constructor(
             addView(button)
             if (difficulty != lastDifficulty) {
                 val space = Space(context)
-                val layoutParams = LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT)
+                val layoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT)
                 layoutParams.weight = 1f
                 space.layoutParams = layoutParams
                 addView(space)

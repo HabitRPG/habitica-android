@@ -11,11 +11,11 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.util.*
 
-class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : androidx.recyclerview.widget.RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
+class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
 
 
     private val entries: List<Group>
-    private val holderList: MutableList<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>
+    private val holderList: MutableList<ChallengeViewHolder>
     val checkedEntries: List<Group>
         get() {
             val result = ArrayList<Group>()
@@ -35,7 +35,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : androidx
         this.holderList = ArrayList()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.dialog_challenge_filter_group_item, parent, false)
 
@@ -45,7 +45,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : androidx
         return challengeViewHolder
     }
 
-    override fun onBindViewHolder(holder: ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChallengeViewHolder, position: Int) {
         holder.bind(entries[position])
     }
 
@@ -71,7 +71,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : androidx
         }
     }
 
-    class ChallengeViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val checkbox: CheckBox by bindView(itemView, R.id.challenge_filter_group_checkbox)
 
         var group: Group? = null

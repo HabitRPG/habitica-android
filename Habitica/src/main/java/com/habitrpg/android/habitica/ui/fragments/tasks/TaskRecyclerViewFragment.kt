@@ -138,7 +138,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
             //defines the enabled move directions in each state (idle, swiping, dragging).
             override fun getMovementFlags(recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): Int {
-                return ItemTouchHelper.Callback.makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
                         ItemTouchHelper.DOWN or ItemTouchHelper.UP)
             }
 

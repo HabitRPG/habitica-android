@@ -16,10 +16,9 @@ import androidx.core.net.toUri
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.AppTestingLevel
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -35,7 +34,7 @@ class AboutFragment : BaseMainFragment() {
     lateinit var userId: String
 
     @Inject
-    lateinit var remoteConfigManager: RemoteConfigManager
+    lateinit var appConfigManager: AppConfigManager
 
     private val updateAvailableWrapper: ViewGroup by bindView(R.id.update_available_wrapper)
     private val updateAvailableTextView: TextView by bindView(R.id.update_available_textview)
@@ -106,9 +105,9 @@ class AboutFragment : BaseMainFragment() {
 
         versionInfo.text = getString(R.string.version_info, versionName, versionCode)
 
-        if (remoteConfigManager.lastVersionCode() > versionCode) {
+        if (appConfigManager.lastVersionCode() > versionCode) {
             updateAvailableWrapper.visibility = View.VISIBLE
-            updateAvailableTextView.text = getString(R.string.update_available, remoteConfigManager.lastVersionNumber(), remoteConfigManager.lastVersionCode())
+            updateAvailableTextView.text = getString(R.string.update_available, appConfigManager.lastVersionNumber(), appConfigManager.lastVersionCode())
         } else {
             updateAvailableWrapper.visibility = View.GONE
         }
@@ -131,10 +130,14 @@ class AboutFragment : BaseMainFragment() {
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
         val device = Build.DEVICE
-        var bodyOfEmail = "Device: " + device +
-                " \nAndroid Version: " + version +
-                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
-                " \nUser ID: " + userId
+        var bodyOfEmail = "Device: $device" +
+                " \nAndroid Version: $version"+
+                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode)
+
+        if (appConfigManager.testingLevel() != AppTestingLevel.PRODUCTION) {
+            bodyOfEmail += " ${appConfigManager.testingLevel().name}"
+        }
+        bodyOfEmail += " \nUser ID: $userId"
 
         val user = this.user
         if (user != null) {
@@ -149,7 +152,7 @@ class AboutFragment : BaseMainFragment() {
         bodyOfEmail += " \nDetails: "
 
         val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto", remoteConfigManager.supportEmail(), null))
+                "mailto", appConfigManager.supportEmail(), null))
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
         emailIntent.putExtra(Intent.EXTRA_TEXT, bodyOfEmail)
         startActivity(Intent.createChooser(emailIntent, "Send email..."))

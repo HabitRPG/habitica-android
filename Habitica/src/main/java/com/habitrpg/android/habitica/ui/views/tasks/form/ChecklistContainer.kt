@@ -44,7 +44,7 @@ class ChecklistContainer @JvmOverloads constructor(
         }
 
     init {
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
 
         addChecklistViewAt(0)
     }
@@ -77,7 +77,7 @@ class ChecklistContainer @JvmOverloads constructor(
         } else {
             addView(view, indexToUse)
         }
-        val layoutParams = view.layoutParams as? LinearLayout.LayoutParams
+        val layoutParams = view.layoutParams as? LayoutParams
         layoutParams?.updateMargins(bottom = 8.dpToPx(context))
         view.layoutParams = layoutParams
     }

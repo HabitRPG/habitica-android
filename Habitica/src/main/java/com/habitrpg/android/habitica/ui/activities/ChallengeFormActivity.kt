@@ -156,7 +156,7 @@ class ChallengeFormActivity : BaseActivity() {
 
         if (requestCode == 1000) {
             if (resultCode == Activity.RESULT_OK) {
-                val task = data?.getParcelableExtra<Task>(OldTaskFormActivity.PARCELABLE_TASK)
+                val task = data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
                 if (task != null) {
                     addOrUpdateTaskInList(task)
                 }
@@ -186,7 +186,7 @@ class ChallengeFormActivity : BaseActivity() {
 
         val prizeError = checkPrizeAndMinimumForTavern()
 
-        if (!prizeError.isEmpty()) {
+        if (prizeError.isNotEmpty()) {
             errorMessages.add(prizeError)
         }
 
@@ -413,22 +413,16 @@ class ChallengeFormActivity : BaseActivity() {
     private fun openNewTaskActivity(type: String?, task: Task?) {
         val bundle = Bundle()
 
-        bundle.putString(OldTaskFormActivity.TASK_TYPE_KEY, type)
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
         if (task != null) {
-            bundle.putParcelable(OldTaskFormActivity.PARCELABLE_TASK, task)
+            bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task)
         }
 
-        bundle.putBoolean(OldTaskFormActivity.SAVE_TO_DB, false)
-        bundle.putBoolean(OldTaskFormActivity.SET_IGNORE_FLAG, true)
-        bundle.putBoolean(OldTaskFormActivity.SHOW_TAG_SELECTION, false)
-        bundle.putBoolean(OldTaskFormActivity.SHOW_CHECKLIST, false)
+        bundle.putBoolean(TaskFormActivity.SET_IGNORE_FLAG, true)
+        bundle.putBoolean(TaskFormActivity.IS_CHALLENGE_TASK, true)
+        bundle.putString(TaskFormActivity.USER_ID_KEY, user?.id)
 
-        val allocationMode = user?.preferences?.hasTaskBasedAllocation()
-
-        bundle.putString(OldTaskFormActivity.USER_ID_KEY, user?.id)
-        bundle.putBoolean(OldTaskFormActivity.ALLOCATION_MODE_KEY, allocationMode ?: false)
-
-        val intent = Intent(this, OldTaskFormActivity::class.java)
+        val intent = Intent(this, TaskFormActivity::class.java)
         intent.putExtras(bundle)
 
         startActivityForResult(intent, 1000)

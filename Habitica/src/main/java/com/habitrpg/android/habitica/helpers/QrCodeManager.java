@@ -65,11 +65,11 @@ public class QrCodeManager {
         if (qrLayout == null) {
             return;
         }
-        this.qrCodeImageView = (ImageView) qrLayout.findViewById(R.id.QRImageView);
-        this.qrCodeDownloadButton = (Button) qrLayout.findViewById(R.id.QRDownloadButton);
-        AvatarView avatarView = (AvatarView) qrLayout.findViewById(R.id.avatarView);
+        this.qrCodeImageView = qrLayout.findViewById(R.id.QRImageView);
+        this.qrCodeDownloadButton = qrLayout.findViewById(R.id.QRDownloadButton);
+        AvatarView avatarView = qrLayout.findViewById(R.id.avatarView);
         avatarView.configureView(false, false, false);
-        this.qrCodeWrapper = (FrameLayout) qrLayout.findViewById(R.id.qrCodeWrapper);
+        this.qrCodeWrapper = qrLayout.findViewById(R.id.qrCodeWrapper);
 
         if (userRepository != null) {
             userRepository.getUser(userId).firstElement().subscribe(avatarView::setAvatar, RxErrorHandler.handleEmptyError());
@@ -144,9 +144,9 @@ public class QrCodeManager {
         dialog.setContentView(R.layout.qr_dialogue);
         dialog.setTitle(R.string.qr_dialogue_title);
 
-        LinearLayout qrLayout = (LinearLayout) dialog.findViewById(R.id.qrLayout);
+        LinearLayout qrLayout = dialog.findViewById(R.id.qrLayout);
         this.setUpView(qrLayout);
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+        Button dialogButton = dialog.findViewById(R.id.dialogButtonOK);
 
         dialogButton.setOnClickListener(v -> dialog.dismiss());
 

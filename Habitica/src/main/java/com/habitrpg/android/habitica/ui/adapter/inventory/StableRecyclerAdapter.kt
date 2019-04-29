@@ -87,7 +87,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
                 "Mount_Icon_" + item.key
             }
             this.ownedTextView.text = animal?.numberOwned?.toString()
-            ownedTextView.visibility = View.GONE
+            ownedTextView.visibility = if (animal?.numberOwned == 0 || animal?.type == "special") View.GONE else View.VISIBLE
             imageView.background = null
             DataBindingUtils.loadImage(imageName) {
                 val drawable = BitmapDrawable(context?.resources, if (item.numberOwned > 0) it else it.extractAlpha())

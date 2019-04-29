@@ -2,8 +2,6 @@ package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
 import android.os.Build
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +11,8 @@ import androidx.core.view.updateLayoutParams
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
@@ -28,7 +27,7 @@ class ChatBarView : FrameLayout {
     lateinit var socialRepository: SocialRepository
 
     @Inject
-    lateinit var remoteConfig: RemoteConfigManager
+    lateinit var appConfigManager: AppConfigManager
 
     private val sendButton: ImageButton by bindView(R.id.sendButton)
     private val chatEditText: MultiAutoCompleteTextView by bindView(R.id.chatEditText)
@@ -74,22 +73,16 @@ class ChatBarView : FrameLayout {
 
         HabiticaBaseApplication.component?.inject(this)
 
-        chatEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        chatEditText.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
                 setSendButtonEnabled(chatEditText.text.isNotEmpty() && chatEditText.text.length <= maxChatLength)
                 updateTextIndicator(chatEditText.text.toString())
-            }
         })
 
         sendButton.setOnClickListener { sendButtonPressed() }
 
         resizeForDrawingUnderNavbar()
 
-        autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID, remoteConfig.enableUsernameAutocomplete())
+        autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID, appConfigManager.enableUsernameAutocomplete())
         chatEditText.setAdapter(autocompleteAdapter)
         chatEditText.threshold = 2
 

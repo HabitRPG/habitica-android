@@ -3,27 +3,24 @@ package com.habitrpg.android.habitica.ui.fragments.setup
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.SpeechBubbleView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.BackpressureStrategy
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -74,27 +71,11 @@ class WelcomeFragment : BaseFragment() {
 
         super.onCreate(savedInstanceState)
 
-        displayNameEditText.addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        displayNameEditText.addTextChangedListener(OnChangeTextWatcher { p0, _, _, _ ->
                 displayNameVerificationEvents.onNext(p0.toString())
-            }
         })
-        usernameEditText.addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        usernameEditText.addTextChangedListener(OnChangeTextWatcher { p0, _, _, _ ->
                 usernameVerificationEvents.onNext(p0.toString())
-            }
         })
 
         compositeSubscription.add(displayNameVerificationEvents.toFlowable(BackpressureStrategy.DROP)

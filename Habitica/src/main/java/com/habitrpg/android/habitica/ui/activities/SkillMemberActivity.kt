@@ -16,7 +16,7 @@ import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 class SkillMemberActivity : BaseActivity() {
-    private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.recyclerView)
+    private val recyclerView: RecyclerView by bindView(R.id.recyclerView)
 
     private var viewAdapter: PartyMemberRecyclerViewAdapter? = null
 
@@ -39,7 +39,7 @@ class SkillMemberActivity : BaseActivity() {
     }
 
     private fun loadMemberList() {
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         viewAdapter = PartyMemberRecyclerViewAdapter(null, true)
         viewAdapter?.getUserClickedEvents()?.subscribe(Consumer { userId ->
             val resultIntent = Intent()

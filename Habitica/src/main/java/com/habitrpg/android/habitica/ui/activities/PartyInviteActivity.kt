@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import io.reactivex.functions.Consumer
@@ -87,11 +86,11 @@ class PartyInviteActivity : BaseActivity() {
         val intent = Intent()
         val fragment = fragments[viewPager.currentItem]
         if (viewPager.currentItem == 1) {
-            intent.putExtra(PartyInviteActivity.IS_EMAIL_KEY, true)
-            intent.putExtra(PartyInviteActivity.EMAILS_KEY, fragment.values)
+            intent.putExtra(IS_EMAIL_KEY, true)
+            intent.putExtra(EMAILS_KEY, fragment.values)
         } else {
-            intent.putExtra(PartyInviteActivity.IS_EMAIL_KEY, false)
-            intent.putExtra(PartyInviteActivity.USER_IDS_KEY, fragment.values)
+            intent.putExtra(IS_EMAIL_KEY, false)
+            intent.putExtra(USER_IDS_KEY, fragment.values)
         }
         return intent
     }

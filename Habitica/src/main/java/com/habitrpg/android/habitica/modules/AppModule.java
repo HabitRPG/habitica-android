@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.executors.JobExecutor;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.executors.UIThread;
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
+import com.habitrpg.android.habitica.helpers.AppConfigManager;
 import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
@@ -105,7 +105,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    RemoteConfigManager providesRemoteConfiigManager() {
-        return new RemoteConfigManager();
+    AppConfigManager providesRemoteConfiigManager() {
+        return new AppConfigManager();
     }
 }

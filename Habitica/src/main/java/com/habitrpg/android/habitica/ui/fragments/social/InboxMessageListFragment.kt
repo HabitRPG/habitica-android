@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -38,7 +38,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var chatRoomUser: String? = null

@@ -35,7 +35,7 @@ open class Task : RealmObject, Parcelable {
     var value: Double = 0.0
     var tags: RealmList<Tag>? = RealmList()
     var dateCreated: Date? = null
-    var position: Int? = 0
+    var position: Int = 0
     var group: TaskGroupPlan? = null
     //Habits
     var up: Boolean? = false
@@ -258,7 +258,7 @@ open class Task : RealmObject, Parcelable {
         dest.writeDouble(this.value)
         dest.writeList(this.tags)
         dest.writeLong(this.dateCreated?.time ?: -1)
-        dest.writeInt(this.position ?: 0)
+        dest.writeInt(this.position)
         dest.writeValue(this.up)
         dest.writeValue(this.down)
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())

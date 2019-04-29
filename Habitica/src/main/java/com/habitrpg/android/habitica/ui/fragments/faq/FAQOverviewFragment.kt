@@ -57,7 +57,7 @@ class FAQOverviewFragment : BaseMainFragment() {
     }
 
     private fun loadArticles() {
-        if (user == null || adapter == null) {
+        if (adapter == null) {
             return
         }
         compositeSubscription.add(faqRepository.getArticles().subscribe(Consumer { adapter?.setArticles(it) }, RxErrorHandler.handleEmptyError()))

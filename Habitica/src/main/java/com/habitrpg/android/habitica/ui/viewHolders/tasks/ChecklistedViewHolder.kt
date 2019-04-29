@@ -116,8 +116,8 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
     private fun onChecklistIndicatorClicked() {
         expandedChecklistRow = if (this.shouldDisplayExpandedChecklist()) null else adapterPosition
         if (this.shouldDisplayExpandedChecklist()) {
-            val recyclerView = this.checklistView.parent.parent as? androidx.recyclerview.widget.RecyclerView
-            val layoutManager = recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+            val recyclerView = this.checklistView.parent.parent as? RecyclerView
+            val layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
             layoutManager?.scrollToPositionWithOffset(this.adapterPosition, 15)
         }
         updateChecklistDisplay()

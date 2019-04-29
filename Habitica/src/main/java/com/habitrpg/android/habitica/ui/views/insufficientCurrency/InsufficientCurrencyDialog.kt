@@ -1,12 +1,11 @@
 package com.habitrpg.android.habitica.ui.views.insufficientCurrency
 
 import android.content.Context
-import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 
 /**
  * Created by phillip on 27.09.17.
@@ -26,7 +25,7 @@ abstract class InsufficientCurrencyDialog(context: Context) : AlertDialog(contex
         imageView = view.findViewById(R.id.imageView)
         textView = view.findViewById(R.id.textView)
 
-        this.setButton(AlertDialog.BUTTON_NEUTRAL, context.getString(R.string.close)) { _, _ -> this.dismiss() }
+        this.setButton(BUTTON_NEUTRAL, context.getString(R.string.close)) { _, _ -> this.dismiss() }
     }
 
 }

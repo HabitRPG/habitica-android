@@ -30,10 +30,11 @@ class NotificationOpenHandler {
         }
 
         private fun openPrivateMessageScreen(userID: String?) {
-            if (userID?.isNotEmpty() == true) {
-                return
+            if (userID != null) {
+                MainNavigationController.navigate(R.id.inboxMessageListFragment, bundleOf("userID" to userID))
+            } else {
+                MainNavigationController.navigate(R.id.inboxFragment)
             }
-            MainNavigationController.navigate(R.id.inboxMessageListFragment, bundleOf("userID" to userID))
         }
 
         private fun openPartyScreen() {
@@ -41,7 +42,7 @@ class NotificationOpenHandler {
         }
 
         private fun openQuestDetailSCreen(partyId: String?, questKey: String?) {
-            if (partyId?.isNotEmpty() == true || questKey?.isNotEmpty() == true) {
+            if (partyId == null || questKey == null ||partyId.isNotEmpty() || questKey.isNotEmpty()) {
                 return
             }
             MainNavigationController.navigate(R.id.questDetailFragment, bundleOf("partyID" to partyId, "questKey" to questKey))

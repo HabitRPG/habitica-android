@@ -63,10 +63,10 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
         val view = inflater.inflate(R.layout.dialog_bulk_allocate, null)
 
         setView(view)
-        this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.save)) { _, _ ->
+        this.setButton(BUTTON_POSITIVE, context.getString(R.string.save)) { _, _ ->
             saveChanges()
         }
-        this.setButton(AlertDialog.BUTTON_NEUTRAL, context.getString(R.string.action_cancel)) { _, _ ->
+        this.setButton(BUTTON_NEUTRAL, context.getString(R.string.action_cancel)) { _, _ ->
             this.dismiss()
         }
     }
@@ -145,13 +145,13 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
     }
 
     private fun updateTitle() {
-        allocatedTitle.text = allocatedPoints.toString() + "/" + pointsToAllocate.toString()
+        allocatedTitle.text = "$allocatedPoints/$pointsToAllocate"
         if (allocatedPoints > 0) {
             titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_400))
         } else {
             titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_400))
         }
 
-        getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = allocatedPoints > 0
+        getButton(BUTTON_POSITIVE).isEnabled = allocatedPoints > 0
     }
 }

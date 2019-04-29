@@ -23,6 +23,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -78,7 +79,7 @@
                     android:id="@+id/reward_value_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/checklist"
+                    android:text="@string/cost"
                     style="@style/TaskFormSectionheader"/>
                 <com.habitrpg.android.habitica.ui.views.tasks.form.RewardValueFormView
                     android:id="@+id/reward_value"
@@ -225,6 +226,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tags_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tags"

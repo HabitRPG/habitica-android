@@ -39,7 +39,7 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
     }
 
     init {
-        val textViewParams = LinearLayout.LayoutParams(
+        val textViewParams = LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT)
         textViewParams.gravity = Gravity.CENTER_VERTICAL

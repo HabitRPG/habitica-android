@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
@@ -9,7 +10,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
@@ -35,6 +38,9 @@ class ReportMessageActivity : BaseActivity() {
     lateinit var socialRepository: SocialRepository
 
     private val toolbar: Toolbar by bindView(R.id.toolbar)
+    private val toolbarTextView: TextView by bindView(R.id.toolbar_title)
+    private val closeButton: ImageButton by bindView(R.id.close_button)
+    private val reportButton: Button by bindView(R.id.report_button)
     private val appBar: AppBarLayout by bindView(R.id.app_bar)
     private val bottomSheetView: View by bindView(R.id.bottom_sheet)
     private val contentContainer: ViewGroup by bindView(R.id.content_container)
@@ -61,6 +67,7 @@ class ReportMessageActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
         raisedElevation = appBar.elevation
         setStatusBarDim(true)
 
@@ -94,24 +101,14 @@ class ReportMessageActivity : BaseActivity() {
                 chatMessage = it
             }, RxErrorHandler.handleEmptyError()))
         }
+
+        reportButton.setOnClickListener { reportMessage() }
+        closeButton.setOnClickListener { finish() }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.report_message, menu)
-        return true
-    }
-
-    @Suppress("ReturnCount")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        when (id) {
-            R.id.menu_report -> {
-                reportMessage()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     private fun reportMessage() {
@@ -132,13 +129,13 @@ class ReportMessageActivity : BaseActivity() {
         if (dim) {
             appBar.elevation = 0f
             window.statusBarColor = Color.TRANSPARENT
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            supportActionBar?.setHomeAsUpIndicator(null)
+            closeButton.visibility = View.GONE
+            toolbarTextView.setTypeface(null, Typeface.BOLD)
         } else {
             appBar.elevation = 8f
             window.statusBarColor = ContextCompat.getColor(this, R.color.gray_600)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
+            closeButton.visibility = View.VISIBLE
+            toolbarTextView.setTypeface(null, Typeface.NORMAL)
         }
 
         if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {
@@ -151,7 +148,7 @@ class ReportMessageActivity : BaseActivity() {
         super.finish()
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @RequiresApi(api = VERSION_CODES.M)
     fun setSystemBarTheme(isDark: Boolean) {
         // Fetch the current flags.
         val lFlags = window.decorView.systemUiVisibility

@@ -1,17 +1,9 @@
 package com.habitrpg.android.habitica.models.user
 
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.Food
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.models.inventory.QuestContent
-
-import java.util.Date
-
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 open class Items : RealmObject {
 

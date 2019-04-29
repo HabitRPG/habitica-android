@@ -1,17 +1,19 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_viewpager.*
 import javax.inject.Inject
 
@@ -36,7 +38,8 @@ class ShopsFragment : BaseMainFragment() {
         viewPager.currentItem = 0
         setViewPagerAdapter()
         toolbarAccessoryContainer?.addView(currencyView)
-        updateCurrencyView()
+
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { updateCurrencyView(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onDestroyView() {
@@ -92,18 +95,9 @@ class ShopsFragment : BaseMainFragment() {
         }
     }
 
-
-    override fun updateUserData(user: User?) {
-        super.updateUserData(user)
-        updateCurrencyView()
-    }
-
-    private fun updateCurrencyView() {
-        if (user == null) {
-            return
-        }
-        currencyView.gold = user?.stats?.gp ?: 0.0
-        currencyView.gems = user?.gemCount?.toDouble() ?: 0.0
-        currencyView.hourglasses = user?.hourglassCount?.toDouble() ?: 0.0
+    private fun updateCurrencyView(user: User) {
+        currencyView.gold = user.stats?.gp ?: 0.0
+        currencyView.gems = user.gemCount.toDouble()
+        currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
     }
 }

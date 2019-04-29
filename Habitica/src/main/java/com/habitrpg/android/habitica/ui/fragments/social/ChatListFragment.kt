@@ -4,25 +4,23 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -33,7 +31,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -51,7 +48,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
     private var isTavern: Boolean = false
     internal var autocompleteContext: String = ""
@@ -117,10 +114,10 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
         refreshLayout.setOnRefreshListener(this)
 
-        layoutManager = recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+        layoutManager = recyclerView.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             recyclerView.layoutManager = layoutManager
         }
 
@@ -149,19 +146,22 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
                     .subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())
         }
 
+        communityGuidelinesReviewView.setOnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = "https://habitica.com/static/community-guidelines".toUri()
+            context?.startActivity(i)
+        }
+        communityGuidelinesAcceptButton.setOnClickListener {
+            userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+        }
+
         compositeSubscription.add(userRepository.getUser().subscribe {user ->
             if (user?.flags?.isCommunityGuidelinesAccepted == true) {
                 communityGuidelinesView.visibility = View.GONE
                 chatBarContent.visibility = View.VISIBLE
             } else {
                 chatBarContent.visibility = View.GONE
-                communityGuidelinesView.setOnClickListener {
-                    userRepository.updateUser(user, "flags.communityGuidelinesAccepted", true).subscribe(Consumer {
-                        val i = Intent(Intent.ACTION_VIEW)
-                        i.data = "https://habitica.com/static/community-guidelines".toUri()
-                        context?.startActivity(i)
-                    }, RxErrorHandler.handleEmptyError())
-                }
+                communityGuidelinesView.visibility = View.VISIBLE
             }
         })
 

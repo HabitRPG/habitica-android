@@ -87,20 +87,22 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                     if (obj.has("checklist")) {
                         task.checklist = RealmList()
                         for (checklistElement in obj.getAsJsonArray("checklist")) {
+                            val checklistObject = checklistElement.asJsonObject
                             task.checklist?.add(ChecklistItem(
-                                    obj.getAsString("id"),
-                                    obj.getAsString("text"),
-                                    obj.get("completed").asBoolean
+                                    checklistObject.getAsString("id"),
+                                    checklistObject.getAsString("text"),
+                                    checklistObject.get("completed").asBoolean
                             ))
                         }
                     }
                     if (obj.has("reminders")) {
                         task.reminders = RealmList()
                         for (reminderElement in obj.getAsJsonArray("reminders")) {
+                            val remindersObject = reminderElement.asJsonObject
                             val reminder = RemindersItem()
-                            reminder.id = obj.getAsString("id")
-                            reminder.startDate = ctx.deserialize(obj.get("startDate"), Date::class.java)
-                            reminder.time = ctx.deserialize(obj.get("time"), Date::class.java)
+                            reminder.id = remindersObject.getAsString("id")
+                            reminder.startDate = ctx.deserialize(remindersObject.get("startDate"), Date::class.java)
+                            reminder.time = ctx.deserialize(remindersObject.get("time"), Date::class.java)
                             task.reminders?.add(reminder)
                         }
                     }

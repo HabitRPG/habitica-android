@@ -42,7 +42,7 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmTagLocalRepo
 import com.habitrpg.android.habitica.data.local.implementation.RealmTaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRepository;
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager;
+import com.habitrpg.android.habitica.helpers.AppConfigManager;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -71,8 +71,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId) {
-        return new TaskRepositoryImpl(localRepository, apiClient, userId);
+    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, AppConfigManager appConfigManager) {
+        return new TaskRepositoryImpl(localRepository, apiClient, userId, appConfigManager);
     }
 
     @Provides
@@ -101,8 +101,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, TaskRepository taskRepository, RemoteConfigManager remoteConfigManager) {
-        return new UserRepositoryImpl(localRepository, apiClient, userId, taskRepository, remoteConfigManager);
+    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, TaskRepository taskRepository, AppConfigManager appConfigManager) {
+        return new UserRepositoryImpl(localRepository, apiClient, userId, taskRepository, appConfigManager);
     }
 
     @Provides
@@ -121,7 +121,7 @@ public class RepositoryModule {
     }
 
     @Provides
-    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, RemoteConfigManager remoteConfig) {
+    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient, @Named(AppModule.NAMED_USER_ID) String userId, AppConfigManager remoteConfig) {
         return new InventoryRepositoryImpl(localRepository, apiClient, userId, remoteConfig);
     }
 

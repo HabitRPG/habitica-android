@@ -15,7 +15,7 @@ class APIPreferenceFragment: BasePreferencesFragment() {
     private val apiPreferences: List<String>
         get() = Arrays.asList(getString(R.string.SP_APIToken), getString(R.string.SP_userID))
 
-    lateinit private var qrCodeManager: QrCodeManager
+    private lateinit var qrCodeManager: QrCodeManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -26,6 +26,7 @@ object NumberAbbreviator {
         1 -> context.getString(R.string.thousand_abbrev)
         2 -> context.getString(R.string.million_abbrev)
         3 -> context.getString(R.string.billion_abbrev)
+        4 -> context.getString(R.string.trillion_abbrev)
         else -> ""
     }
 }

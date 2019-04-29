@@ -150,9 +150,10 @@ android {
         applicationId "com.habitrpg.android.habitica"
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STORE", "\"google\""
+        buildConfigField "String", "TESTING_LEVEL", "\"production\""
         multiDexEnabled true
 
-        versionCode 2093
+        versionCode 2105
         versionName "1.9"
     }
 
@@ -193,12 +194,19 @@ android {
             dimension "buildType"
         }
 
-        beta {
+        alpha {
             dimension "buildType"
-            resValue "string", "app_name", "Habitica Beta"
+            buildConfigField "String", "TESTING_LEVEL", "\"alpha\""
+            resValue "string", "app_name", "Habitica Alpha"
+        }
+
+        beta {
+            buildConfigField "String", "TESTING_LEVEL", "\"beta\""
+            dimension "buildType"
         }
 
         prod {
+            buildConfigField "String", "TESTING_LEVEL", "\"production\""
             dimension "buildType"
         }
 

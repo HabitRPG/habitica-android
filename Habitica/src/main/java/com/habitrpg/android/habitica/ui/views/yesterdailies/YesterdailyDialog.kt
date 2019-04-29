@@ -35,7 +35,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         val view = inflater?.inflate(R.layout.dialog_yesterdaily, null)
         this.setView(view)
-        this.setButton(AlertDialog.BUTTON_POSITIVE,
+        this.setButton(BUTTON_POSITIVE,
                 context.getString(R.string.start_day)
         ) { _, _ -> }
 

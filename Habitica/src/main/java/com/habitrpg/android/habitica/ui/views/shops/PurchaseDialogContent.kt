@@ -27,7 +27,7 @@ abstract class PurchaseDialogContent : LinearLayout {
     }
 
     private fun setupView() {
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
         gravity = Gravity.CENTER_HORIZONTAL
 
         inflate(context, viewId, this)

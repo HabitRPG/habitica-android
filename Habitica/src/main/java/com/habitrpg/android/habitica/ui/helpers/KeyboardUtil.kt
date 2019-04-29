@@ -18,10 +18,9 @@ package com.habitrpg.android.habitica.ui.helpers
 
 import android.app.Activity
 import android.graphics.Rect
-import android.os.Build
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.view.ViewTreeObserver
+import android.view.inputmethod.InputMethodManager
 
 /**
  * Created by mikepenz on 14.03.15.

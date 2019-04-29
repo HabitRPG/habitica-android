@@ -52,7 +52,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         this.uuid = user?.id ?: ""
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0) {
             SystemChatMessageViewHolder(parent.inflate(R.layout.system_chat_message))
         } else {
@@ -60,7 +60,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         }
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         data.notNull {
             if (it[position].isSystemMessage) {
                 (holder as? SystemChatMessageViewHolder)?.bind(it[position])
@@ -98,7 +98,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         return copyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    inner class SystemChatMessageViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView by bindView(R.id.text_view)
 
         fun bind(chatMessage: ChatMessage?) {
@@ -107,7 +107,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
 
     }
 
-    inner class ChatRecyclerViewHolder(itemView: View, private var userId: String, private val isTavern: Boolean) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class ChatRecyclerViewHolder(itemView: View, private var userId: String, private val isTavern: Boolean) : RecyclerView.ViewHolder(itemView) {
 
         private val messageWrapper: ViewGroup by bindView(R.id.message_wrapper)
         private val avatarView: AvatarView by bindView(R.id.avatar_view)
@@ -231,7 +231,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             }
 
             val username = user?.formattedUsername
-            messageWrapper.background = if ((name != null && msg.text?.contains(name) == true) || (username != null && msg.text?.contains(username) == true)) {
+            messageWrapper.background = if ((name != null && msg.text?.contains("@$name") == true) || (username != null && msg.text?.contains(username) == true)) {
                 ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_700)
             } else {
                 ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)

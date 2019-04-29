@@ -84,7 +84,7 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
-        ViewGroup fabContainer = (ViewGroup) child.findViewById(R.id.floating_menu_wrapper);
+        ViewGroup fabContainer = child.findViewById(R.id.floating_menu_wrapper);
         if (fabContainer.getChildCount() > 0) {
             if (fabContainer.getChildAt(0).getClass().equals(FloatingActionMenu.class)) {
                 fab = (FloatingActionMenu) fabContainer.getChildAt(0);

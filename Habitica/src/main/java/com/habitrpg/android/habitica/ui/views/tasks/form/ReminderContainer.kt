@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import androidx.core.view.children
 import androidx.core.view.updateMargins
 import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import io.realm.RealmList
 
@@ -45,7 +44,7 @@ class ReminderContainer @JvmOverloads constructor(
         }
 
     init {
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
 
         addReminderViewAt(0)
     }
@@ -74,7 +73,7 @@ class ReminderContainer @JvmOverloads constructor(
         } else {
             addView(view, indexToUse)
         }
-        val layoutParams = view.layoutParams as? LinearLayout.LayoutParams
+        val layoutParams = view.layoutParams as? LayoutParams
         layoutParams?.updateMargins(bottom = 8.dpToPx(context))
         view.layoutParams = layoutParams
     }

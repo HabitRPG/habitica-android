@@ -6,17 +6,12 @@ import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.Optional
-import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.BackpressureStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
-import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
 abstract class BaseViewModel: ViewModel() {

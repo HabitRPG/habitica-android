@@ -246,10 +246,6 @@
             app:argType="string" />
     </fragment>
     <activity
-        android:id="@+id/taskFormActivity"
-        android:name="com.habitrpg.android.habitica.ui.activities.OldTaskFormActivity"
-        android:label="TaskFormActivity" />
-    <activity
         android:id="@+id/fullProfileActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.FullProfileActivity"
         android:label="FullProfileActivity">
@@ -294,4 +290,7 @@
     <action
         android:id="@+id/action_global_classSelectionActivity"
         app:destination="@id/classSelectionActivity" />
+    <action
+        android:id="@+id/openProfileActivity"
+        app:destination="@id/fullProfileActivity" />
 </navigation>

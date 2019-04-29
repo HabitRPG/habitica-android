@@ -15,7 +15,11 @@ class OwnedMountListDeserializer : JsonDeserializer<List<OwnedMount>> {
             for (entry in entrySet) {
                 val item = OwnedMount()
                 item.key = entry.key
-                item.owned = entry.value.asBoolean
+                if (entry.value.isJsonNull) {
+                    item.owned = false
+                } else {
+                    item.owned = entry.value.asBoolean
+                }
                 ownedItems.add(item)
             }
         }
