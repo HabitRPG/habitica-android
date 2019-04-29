@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
 import android.os.Build
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -49,8 +48,6 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
         val padding = context?.resources?.getDimension(R.dimen.spacing_small)?.toInt() ?: 0
         textView.setPadding(0, 0, padding, 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-        textView.maxLines = 1
-        textView.ellipsize = TextUtils.TruncateAt.END
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             textView.setTextAppearance(R.style.Body1)
         } else {
