@@ -906,4 +906,7 @@
     <string name="setup_task_habit_1_notes">Either a Habit, a Daily or a To-Do</string>
     <string name="setup_task_habit_2">Tap here to edit this into a bad habit you\'d like to quit</string>
     <string name="setup_task_habit_2_notes">Or delete it from the edit screen</string>
+    <string name="guild_summary">Guild Summary</string>
+    <string name="guild_members">Guild Members</string>
+    <string name="guild_bank">Guild Bank</string>
 </resources>

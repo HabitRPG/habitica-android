@@ -290,4 +290,7 @@
     <action
         android:id="@+id/action_global_classSelectionActivity"
         app:destination="@id/classSelectionActivity" />
+    <action
+        android:id="@+id/openProfileActivity"
+        app:destination="@id/fullProfileActivity" />
 </navigation>

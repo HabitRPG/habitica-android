@@ -8,12 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
@@ -25,6 +28,8 @@ import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaIcons
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import javax.inject.Inject
@@ -36,7 +41,13 @@ class GuildDetailFragment : BaseFragment() {
 
     val refreshLayout: SwipeRefreshLayout by bindView(R.id.refreshLayout)
     private val guildTitleView: TextView by bindView(R.id.title_view)
+    private val guildMembersIconView: ImageView by bindView(R.id.guild_members_icon)
+    private val guildMembersTextView: TextView by bindView(R.id.guild_members_text)
+    private val guildBankIconView: ImageView by bindView(R.id.guild_bank_icon)
+    private val guildBankTextView: TextView by bindView(R.id.guild_bank_text)
+    private val guildSummaryView: TextView by bindView(R.id.guild_summary)
     private val guildDescriptionView: TextView by bindView(R.id.guild_description)
+    private val leaderWrapperView: ViewGroup by bindView(R.id.leader_wrapper)
     private val leaderAvatarView: AvatarView by bindView(R.id.leader_avatar_view)
     private val leaderProfileNameView: UsernameLabel by bindView(R.id.leader_profile_name)
     private val leaderUsernameView: TextView by bindView(R.id.leader_username)
@@ -62,7 +73,7 @@ class GuildDetailFragment : BaseFragment() {
         viewModel?.getIsMemberData()?.observe(viewLifecycleOwner, Observer { updateMembership(it) })
 
         guildDescriptionView.movementMethod = LinkMovementMethod.getInstance()
-
+        guildBankIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())
         leaveGuildButton.setOnClickListener {
             viewModel?.leaveGroup {
                 val activity = activity as? MainActivity
@@ -77,6 +88,12 @@ class GuildDetailFragment : BaseFragment() {
                 if (activity != null) {
                     HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.joined_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
                 }
+            }
+        }
+        leaderWrapperView.setOnClickListener {
+            viewModel?.getGroupData()?.value?.leaderID?.let {leaderID ->
+                val profileDirections = MainNavDirections.openProfileActivity(leaderID)
+                MainNavigationController.navigate(profileDirections)
             }
         }
     }
@@ -119,6 +136,10 @@ class GuildDetailFragment : BaseFragment() {
 
     private fun updateGuild(guild: Group?) {
         guildTitleView.text = guild?.name
+        guildMembersIconView.setImageBitmap(HabiticaIcons.imageOfGuildCrestMedium((guild?.memberCount ?: 0).toFloat()))
+        guildMembersTextView.text = guild?.memberCount.toString()
+        guildBankTextView.text = guild?.gemCount.toString()
+        guildSummaryView.text = MarkdownParser.parseMarkdown(guild?.summary)
         guildDescriptionView.text = MarkdownParser.parseMarkdown(guild?.description)
     }
 
