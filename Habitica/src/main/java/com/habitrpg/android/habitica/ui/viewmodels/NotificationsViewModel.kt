@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.helpers.PopupNotificationsManager
+import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 open class NotificationsViewModel : BaseViewModel() {
     @Inject
-    lateinit var notificationsManager: PopupNotificationsManager
+    lateinit var notificationsManager: NotificationsManager
 
     /**
      * A list of notification types handled by this component.
