@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         field = value
         startDateTextView.text = dateFormatter.format(value)
         startDateCalendar.time = value
+        generateSummary()
     }
     private var startDateCalendar = Calendar.getInstance()
     var dueDate: Date? = null
@@ -69,6 +71,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             else -> 0
         })
         configureViewsForFrequency()
+        generateSummary()
     }
     var everyX
         get() = (repeatsEveryEdittext.text ?: "1").toString().toIntOrNull() ?: 1
@@ -78,22 +81,26 @@ class TaskSchedulingControls @JvmOverloads constructor(
         } catch (e: NumberFormatException) {
             repeatsEveryEdittext.setText("1")
         }
+        generateSummary()
     }
     var weeklyRepeat: Days = Days()
     set(value) {
         field = value
         createWeeklyRepeatViews()
+        generateSummary()
     }
 
     var daysOfMonth: List<Int>? = null
     set(value) {
         field = value
         configureMonthlyRepeatViews()
+        generateSummary()
     }
     var weeksOfMonth: List<Int>? = null
     set(value) {
         field = value
         configureMonthlyRepeatViews()
+        generateSummary()
     }
 
     private val weekdays: Array<String> by lazy {
@@ -152,10 +159,12 @@ class TaskSchedulingControls @JvmOverloads constructor(
         monthlyRepeatDaysButton.setOnClickListener {
             daysOfMonth = mutableListOf(startDateCalendar.get(Calendar.DATE))
             weeksOfMonth = null
+            generateSummary()
         }
         monthlyRepeatWeeksButton.setOnClickListener {
             weeksOfMonth = mutableListOf(startDateCalendar.get(Calendar.WEEK_OF_MONTH))
             daysOfMonth = null
+            generateSummary()
         }
 
         orientation = VERTICAL
@@ -166,6 +175,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private fun configureViewsForType() {
         startDateTitleView.text = context.getString(if (taskType == Task.TYPE_DAILY) R.string.start_date else R.string.due_date)
         repeatsEveryWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        summaryTextView.visibility =  if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -271,5 +281,58 @@ class TaskSchedulingControls @JvmOverloads constructor(
             monthlyRepeatWeeksButton.setTextColor(unselectedText)
             monthlyRepeatWeeksButton.background.mutate().setTint(unselectedBackground)
         }
+    }
+
+    private fun generateSummary() {
+        var frequencyQualifier = ""
+
+        when (frequency) {
+            "daily" -> frequencyQualifier = "day(s)"
+            "weekly" -> frequencyQualifier = "week(s)"
+            "monthly" -> frequencyQualifier = "month(s)"
+            "yearly" -> frequencyQualifier = "year(s)"
+        }
+
+        var weekdays: String
+        val weekdayStrings = ArrayList<String>()
+        if (weeklyRepeat.m) {
+            weekdayStrings.add("Monday")
+        }
+        if (weeklyRepeat.t) {
+            weekdayStrings.add("Tuesday")
+        }
+        if (weeklyRepeat.w) {
+            weekdayStrings.add("Wednesday")
+        }
+        if (weeklyRepeat.th) {
+            weekdayStrings.add("Thursday")
+        }
+        if (weeklyRepeat.f) {
+            weekdayStrings.add("Friday")
+        }
+        if (weeklyRepeat.s) {
+            weekdayStrings.add("Saturday")
+        }
+        if (weeklyRepeat.su) {
+            weekdayStrings.add("Sunday")
+        }
+        weekdays = " on " + TextUtils.join(", ", weekdayStrings)
+        if (frequency != "weekly") {
+            weekdays = ""
+        }
+
+        if (frequency == "monthly") {
+            weekdays = if (daysOfMonth != null) {
+                val date = startDateCalendar.get(Calendar.DATE)
+                " on the $date"
+            } else {
+                val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
+                val dayLongName = startDateCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+                " on the $week week on $dayLongName"
+            }
+        }
+
+        val summary = resources.getString(R.string.repeat_summary, frequency, everyX.toString(), frequencyQualifier, weekdays)
+        summaryTextView.text = summary
     }
 }

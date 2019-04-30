@@ -130,7 +130,7 @@
             android:layout_weight="1"
             android:layout_height="28dp"
             android:text="@string/repeatables_frequency_day_of_month"
-            android:layout_marginRight="@dimen/spacing_medium"/>
+            android:layout_marginEnd="@dimen/spacing_medium"/>
         <TextView
             android:id="@+id/monthly_repeat_weeks"
             style="@style/TaskFormToggle"
@@ -138,12 +138,13 @@
             android:layout_weight="1"
             android:layout_height="28dp"
             android:text="@string/repeatables_frequency_day_of_week"
-            android:layout_marginLeft="@dimen/spacing_medium"/>
+            android:layout_marginStart="@dimen/spacing_medium"/>
     </LinearLayout>
     <TextView
         android:id="@+id/summary_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/gray_300"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_marginTop="@dimen/spacing_medium"/>
 </merge>

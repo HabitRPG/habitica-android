@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -23,8 +24,6 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
 
     @Inject
     lateinit var socialRepository: SocialRepository
-
-    var memberGuildIDs: List<String>? = null
 
     private val recyclerView: androidx.recyclerview.widget.RecyclerView? by bindView(R.id.recyclerView)
 
@@ -44,10 +43,12 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
 
         resetViews()
 
-        recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
-        recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(getActivity()!!, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
+        recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
         viewAdapter = PublicGuildsRecyclerViewAdapter(null, true)
-        viewAdapter.setMemberGuildIDs(this.memberGuildIDs?.toMutableList() ?: mutableListOf())
+        compositeSubscription.add(socialRepository.getGroupMemberships()
+                .map { it.map { membership -> membership.groupID } }
+                .subscribeWithErrorHandler(Consumer { viewAdapter.setMemberGuildIDs(it) }))
         viewAdapter.socialRepository = socialRepository
         recyclerView?.adapter = viewAdapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()

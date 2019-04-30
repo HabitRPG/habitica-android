@@ -1,22 +1,19 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment
-import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -24,14 +21,13 @@ import io.reactivex.functions.Consumer
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import org.greenrobot.eventbus.EventBus
 
 class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Group, PublicGuildsRecyclerViewAdapter.GuildViewHolder>(data, autoUpdate), Filterable {
 
     var socialRepository: SocialRepository? = null
-    private var memberGuildIDs: MutableList<String> = mutableListOf()
+    private var memberGuildIDs: List<String> = listOf()
 
-    fun setMemberGuildIDs(memberGuildIDs: MutableList<String>) {
+    fun setMemberGuildIDs(memberGuildIDs: List<String>) {
         this.memberGuildIDs = memberGuildIDs
     }
 
@@ -49,7 +45,6 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             if (isMember) {
                 this@PublicGuildsRecyclerViewAdapter.socialRepository?.leaveGroup(guild.id)
                         ?.subscribe(Consumer {
-                            memberGuildIDs.remove(guild.id)
                             if (data != null) {
                                 val indexOfGroup = data?.indexOf(guild)
                                 notifyItemChanged(indexOfGroup ?: 0)
@@ -58,7 +53,6 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             } else {
                 this@PublicGuildsRecyclerViewAdapter.socialRepository?.joinGroup(guild.id)
                         ?.subscribe(Consumer { group ->
-                            memberGuildIDs.add(group.id)
                             if (data != null) {
                                 val indexOfGroup = data?.indexOf(group)
                                 notifyItemChanged(indexOfGroup ?: 0)
