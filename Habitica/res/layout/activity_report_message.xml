@@ -46,7 +46,7 @@
                         android:id="@+id/close_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_close"
+                        android:src="@drawable/ic_close_grey_800_24dp"
                         android:background="@color/transparent"
                         android:paddingLeft="@dimen/spacing_small"/>
                     <TextView

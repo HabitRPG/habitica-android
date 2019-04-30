@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.os.Bundle
-import android.view.MotionEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -10,7 +9,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
-import com.instabug.library.InstabugTrackingDelegate
 import io.reactivex.disposables.CompositeDisposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -28,11 +26,6 @@ abstract class BaseActivity : AppCompatActivity() {
         get() = application as HabiticaApplication
 
     var isActivityVisible = false
-
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        InstabugTrackingDelegate.notifyActivityGotTouchEvent(ev, this)
-        return super.dispatchTouchEvent(ev)
-    }
 
     override fun isDestroyed(): Boolean {
         return destroyed

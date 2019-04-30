@@ -95,7 +95,6 @@ dependencies {
 
     //Analytics
     implementation 'com.amplitude:android-sdk:2.22.1'
-    implementation 'com.instabug.library:instabug:8.0.11'
     // Fresco Image Management Library
     implementation('com.facebook.fresco:fresco:1.13.0') {
         exclude module: 'bolts-android'

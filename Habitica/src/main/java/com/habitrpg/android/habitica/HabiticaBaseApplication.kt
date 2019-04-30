@@ -30,12 +30,6 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.instabug.bug.BugReporting
-import com.instabug.bug.PromptOption
-import com.instabug.library.Instabug
-import com.instabug.library.invocation.InstabugInvocationEvent
-import com.instabug.library.ui.onboarding.WelcomeMessage
-import com.instabug.library.visualusersteps.State
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.reactivex.functions.Consumer
@@ -85,7 +79,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         setupRemoteConfig()
         setupNotifications()
         refWatcher = LeakCanary.install(this)
-        setupInstabug()
         createBillingAndCheckout()
         HabiticaIconsHelper.init(this)
 
@@ -108,17 +101,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         RxErrorHandler.init(crashlyticsProxy)
 
         checkIfNewVersion()
-    }
-
-    private fun setupInstabug() {
-        Instabug.Builder(this, getString(R.string.instabug_key))
-                .setInvocationEvents(InstabugInvocationEvent.SHAKE)
-                .setReproStepsState(State.ENABLED_WITH_NO_SCREENSHOTS)
-                .build()
-        Instabug.setWelcomeMessageState(WelcomeMessage.State.DISABLED)
-        Instabug.setUserAttribute("", lazyApiHelper.hostConfig.user)
-        BugReporting.setShakingThreshold(900)
-        BugReporting.setPromptOptionsEnabled(PromptOption.BUG, PromptOption.FEEDBACK)
     }
 
     protected open fun setupRealm() {
@@ -213,9 +195,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         remoteConfig.setConfigSettings(configSettings)
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
         remoteConfig.fetch(if (BuildConfig.DEBUG) 0 else 3600)
-                .addOnCompleteListener {
-                    remoteConfig.activateFetched()
-                }
     }
 
     private fun setupNotifications() {
