@@ -3,5 +3,4 @@
     android:shape="oval" >
     <solid android:color="@color/white"/>
     <stroke android:color="@color/gem_icon_color" android:width="2dp" />
-
 </shape>
