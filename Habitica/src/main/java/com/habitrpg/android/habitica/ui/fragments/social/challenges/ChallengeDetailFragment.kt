@@ -12,11 +12,10 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import android.text.method.LinkMovementMethod
+import android.widget.*
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.appcompat.widget.ShareActionProvider
+import androidx.core.view.MenuItemCompat
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -69,6 +68,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     var challengeID: String? = null
     var challenge: Challenge? = null
     var isCreator = false
+    var shareActionProvider: ShareActionProvider? = null
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
@@ -159,6 +159,15 @@ class ChallengeDetailFragment: BaseMainFragment() {
         inflater.inflate(R.menu.menu_challenge_details, menu)
         val editMenuItem = menu.findItem(R.id.action_edit)
         editMenuItem?.isVisible = isCreator
+
+        val shareMenuItem = menu.findItem(R.id.action_share)
+        shareActionProvider = MenuItemCompat.getActionProvider(shareMenuItem) as? ShareActionProvider
+        val shareGuildIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "${BuildConfig.BASE_URL}/challenges/$challengeID")
+            type = "text/plain"
+        }
+        shareActionProvider?.setShareIntent(shareGuildIntent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -169,16 +178,6 @@ class ChallengeDetailFragment: BaseMainFragment() {
             intent.putExtras(bundle)
             startActivity(intent)
             return true
-        }
-        else if (item.itemId == R.id.action_share) {
-            val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-            val challengeUri = Uri.parse("${BuildConfig.BASE_URL}/challenges/$challengeID")
-            val clip = ClipData.newUri(activity?.contentResolver, "challenge uri", challengeUri)
-            clipMan?.primaryClip = clip
-            val act = activity
-            if (act != null) {
-                //showSnackbar(act.floatingMenuWrapper, getString(R.string.challenge_url_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
-            }
         }
 
         return super.onOptionsItemSelected(item)

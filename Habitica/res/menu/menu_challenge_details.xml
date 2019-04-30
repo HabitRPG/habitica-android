@@ -7,5 +7,6 @@
         android:title="@string/action_edit" />
     <item
         android:id="@+id/action_share"
-        android:title="@string/share" />
+        android:title="@string/share"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
 </menu>
