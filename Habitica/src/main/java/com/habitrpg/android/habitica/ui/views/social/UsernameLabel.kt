@@ -53,7 +53,7 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
         } else {
             textView.setTextAppearance(context, R.style.Body1)
         }
-        val iconViewParams = LinearLayout.LayoutParams(
+        val iconViewParams = LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT)
         iconViewParams.gravity = Gravity.CENTER_VERTICAL
