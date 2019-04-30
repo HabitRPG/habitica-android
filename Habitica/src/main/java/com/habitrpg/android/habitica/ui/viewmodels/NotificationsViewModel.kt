@@ -46,7 +46,7 @@ open class NotificationsViewModel : BaseViewModel() {
 
 
     fun getNotifications(): Flowable<List<Notification>> {
-        return notificationsManager.notifications
+        return notificationsManager.getNotifications()
                 .map { filterSupportedTypes(it) }
                 .observeOn(AndroidSchedulers.mainThread())
     }
