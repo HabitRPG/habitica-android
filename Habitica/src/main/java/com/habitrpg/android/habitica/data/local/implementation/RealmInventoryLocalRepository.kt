@@ -175,7 +175,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     }
 
     override fun changeOwnedCount(type: String, key: String, userID: String, amountToAdd: Int) {
-        getOwnedItem(type, key, userID).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
+        getOwnedItem(userID, type, key).firstElement().subscribe( Consumer { changeOwnedCount(it, amountToAdd)}, RxErrorHandler.handleEmptyError())
     }
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {
@@ -184,7 +184,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
         }
     }
 
-    fun getOwnedItem(type: String, key: String, userID: String): Flowable<OwnedItem> {
+    override fun getOwnedItem(userID: String, type: String, key: String): Flowable<OwnedItem> {
         return realm.where(OwnedItem::class.java)
                 .equalTo("itemType", type)
                 .equalTo("key", key)

@@ -2,10 +2,10 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
 import android.content.res.Resources
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.OpenMysteryItemEvent
@@ -45,10 +45,10 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
         notifyDataSetChanged()
     }
 
-    private val sellItemEvents = PublishSubject.create<Item>()
+    private val sellItemEvents = PublishSubject.create<OwnedItem>()
     private val questInvitationEvents = PublishSubject.create<QuestContent>()
 
-    fun getSellItemFlowable(): Flowable<Item> {
+    fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
@@ -160,7 +160,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                 menu.setSelectionRunnable { index ->
                     item.notNull { selectedItem ->
                         if (!(selectedItem is QuestContent || selectedItem is SpecialItem) && index == 0) {
-                            sellItemEvents.onNext(selectedItem)
+                            ownedItem?.let { selectedOwnedItem -> sellItemEvents.onNext(selectedOwnedItem) }
                             return@notNull
                         }
                         when (selectedItem) {

@@ -104,11 +104,22 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun sellItem(user: User?, type: String, key: String): Flowable<User> {
-        return localRepository.getItem(type, key)
+        return localRepository.getOwnedItem(userID, type, key)
                 .flatMap { item -> sellItem(user, item) }
     }
 
-    override fun sellItem(user: User?, item: Item): Flowable<User> {
+    override fun sellItem(user: User?, ownedItem: OwnedItem): Flowable<User> {
+        return localRepository.getItem(ownedItem.itemType ?: "", ownedItem.key ?: "")
+                .flatMap { item -> sellItem(user, item, ownedItem) }
+    }
+
+    private fun sellItem(user: User?, item: Item, ownedItem: OwnedItem): Flowable<User> {
+        if (user != null && appConfigManager.enableLocalChanges()) {
+            localRepository.executeTransaction {
+                ownedItem.numberOwned -= 1
+                user.stats?.gp = (user.stats?.gp ?: 0.0) + item.value
+            }
+        }
         return apiClient.sellItem(item.type, item.key)
                 .map { user1 ->
                     localRepository.executeTransaction { realm ->
@@ -118,8 +129,6 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                                 items.userId = user.id
                                 val newItems = realm.copyToRealmOrUpdate(items)
                                 user.items = newItems
-                            } else {
-                                //item.owned = item.owned - 1
                             }
                             val stats = user1.stats
                             if (stats != null) {
