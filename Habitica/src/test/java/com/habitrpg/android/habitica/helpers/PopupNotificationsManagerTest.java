@@ -83,11 +83,11 @@ public class PopupNotificationsManagerTest {
         List<Notification> notifications = new ArrayList<>();
 
         LoginIncentiveData notificationData = new LoginIncentiveData();
-        notificationData.message = testTitle;
+        notificationData.setMessage(testTitle);
 
         Notification notification = new Notification();
         notification.setType("LOGIN_INCENTIVE");
-        notification.data = notificationData;
+        notification.setData(notificationData);
 
         notifications.add(notification);
 
@@ -107,11 +107,11 @@ public class PopupNotificationsManagerTest {
         List<Notification> notifications = new ArrayList<>();
 
         LoginIncentiveData notificationData = new LoginIncentiveData();
-        notificationData.message = testTitle;
+        notificationData.setMessage(testTitle);
 
         Notification notification = new Notification();
         notification.setType("LOGIN_INCENTIVE");
-        notification.data = notificationData;
+        notification.setData(notificationData);
 
         notifications.add(notification);
         notifications.add(notification);
