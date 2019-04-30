@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.ui.SpeechBubbleView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -21,6 +22,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.BackpressureStrategy
+import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -80,7 +82,7 @@ class WelcomeFragment : BaseFragment() {
 
         compositeSubscription.add(displayNameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
                 .map { it.length in 1..30 }
-                .subscribe {
+                .subscribeWithErrorHandler(Consumer {
                     if (it) {
                         displayNameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
                         issuesTextView.visibility = View.GONE
@@ -89,11 +91,12 @@ class WelcomeFragment : BaseFragment() {
                         issuesTextView.visibility = View.VISIBLE
                         issuesTextView.text = context?.getString(R.string.display_name_length_error)
                     }
-                })
+                }))
         compositeSubscription.add(usernameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
+                .filter { it.length in 1..30 }
                 .throttleLast(1, TimeUnit.SECONDS)
                 .flatMap { userRepository.verifyUsername(usernameEditText.text.toString()) }
-                .subscribe {
+                .subscribeWithErrorHandler(Consumer {
                     if (it.isUsable) {
                         usernameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
                         issuesTextView.visibility = View.GONE
@@ -103,7 +106,7 @@ class WelcomeFragment : BaseFragment() {
                         issuesTextView.text = it.issues.joinToString("\n")
                     }
                     nameValidEvents.onNext(it.isUsable)
-                })
+                }))
 
         compositeSubscription.add(userRepository.getUser().firstElement().subscribe {
             displayNameEditText.setText(it.profile?.name)

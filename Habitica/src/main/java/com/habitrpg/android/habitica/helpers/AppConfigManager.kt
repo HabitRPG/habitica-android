@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.BuildConfig
 class AppConfigManager {
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
-    
+
     fun newShopsEnabled(): Boolean {
         return true
     }
