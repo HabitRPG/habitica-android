@@ -188,10 +188,18 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 }
     }
 
-    override fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion): Flowable<Items> {
+    override fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion, successFunction: () -> Unit): Flowable<Items> {
+        if (appConfigManager.enableLocalChanges()) {
+            localRepository.hatchPet(egg.key, hatchingPotion.key, userID)
+            successFunction()
+        }
         return apiClient.hatchPet(egg.key, hatchingPotion.key)
                 .doOnNext {
-                    localRepository.hatchPet(egg.key, hatchingPotion.key, userID)
+                    it.userId = userID
+                    localRepository.save(it)
+                    if (!appConfigManager.enableLocalChanges()) {
+                        successFunction()
+                    }
                 }
     }
 

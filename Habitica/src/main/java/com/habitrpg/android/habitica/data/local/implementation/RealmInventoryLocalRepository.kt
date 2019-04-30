@@ -247,25 +247,41 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
         newPet.key = "$eggKey-$potionKey"
         newPet.userID = userID
         newPet.trained = 5
-
         val egg = realm.where(OwnedItem::class.java)
                 .equalTo("itemType", "eggs")
                 .equalTo("key", eggKey)
                 .equalTo("userID", userID)
                 .greaterThan("numberOwned", 0)
                 .findFirst() ?: return
-
         val hatchingPotion = realm.where(OwnedItem::class.java)
                 .equalTo("itemType", "hatchingPotions")
                 .equalTo("key", potionKey)
                 .equalTo("userID", userID)
                 .greaterThan("numberOwned", 0)
                 .findFirst() ?: return
-
         executeTransaction {
             egg.numberOwned -= 1
             hatchingPotion.numberOwned -= 1
             it.insertOrUpdate(newPet)
+        }
+    }
+
+    override fun unhatchPet(eggKey: String, potionKey: String, userID: String) {
+        val pet = realm.where(OwnedPet::class.java).equalTo("key", "$eggKey-$potionKey").findFirst()
+        val egg = realm.where(OwnedItem::class.java)
+                .equalTo("itemType", "eggs")
+                .equalTo("key", eggKey)
+                .equalTo("userID", userID)
+                .findFirst() ?: return
+        val hatchingPotion = realm.where(OwnedItem::class.java)
+                .equalTo("itemType", "hatchingPotions")
+                .equalTo("key", potionKey)
+                .equalTo("userID", userID)
+                .findFirst() ?: return
+        executeTransaction {
+            egg.numberOwned += 1
+            hatchingPotion.numberOwned += 1
+            pet?.deleteFromRealm()
         }
     }
 

@@ -49,5 +49,6 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun changePetFeedStatus(key: String?, userID: String, feedStatus: Int)
     fun hatchPet(eggKey: String, potionKey: String, userID: String)
+    fun unhatchPet(eggKey: String, potionKey: String, userID: String)
     fun feedPet(foodKey: String, petKey: String, feedValue: Int, userID: String)
 }

@@ -514,32 +514,31 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (event.usingEgg == null || event.usingHatchingPotion == null) {
             return
         }
-        this.inventoryRepository.hatchPet(event.usingEgg, event.usingHatchingPotion)
-                .subscribe(Consumer {
-                    val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
-                    val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
+        this.inventoryRepository.hatchPet(event.usingEgg, event.usingHatchingPotion) {
+            val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
+            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
 
-                    DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.key + "-" + event.usingHatchingPotion.key)
-                    val potionName = event.usingHatchingPotion.text
-                    val eggName = event.usingEgg.text
-                    val dialog = AlertDialog.Builder(this@MainActivity)
-                            .setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
-                            .setView(petWrapper)
-                            .setPositiveButton(R.string.close) { hatchingDialog, _ -> hatchingDialog.dismiss() }
-                            .setNeutralButton(R.string.share) { hatchingDialog, _ ->
-                                val event1 = ShareEvent()
-                                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
-                                val sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888)
-                                val canvas = Canvas(sharedImage)
-                                canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
-                                petImageView?.drawable?.draw(canvas)
-                                event1.shareImage = sharedImage
-                                EventBus.getDefault().post(event1)
-                                hatchingDialog.dismiss()
-                            }
-                            .create()
-                    dialog.show()
-                }, RxErrorHandler.handleEmptyError())
+            DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.key + "-" + event.usingHatchingPotion.key)
+            val potionName = event.usingHatchingPotion.text
+            val eggName = event.usingEgg.text
+            val dialog = AlertDialog.Builder(this@MainActivity)
+                    .setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
+                    .setView(petWrapper)
+                    .setPositiveButton(R.string.close) { hatchingDialog, _ -> hatchingDialog.dismiss() }
+                    .setNeutralButton(R.string.share) { hatchingDialog, _ ->
+                        val event1 = ShareEvent()
+                        event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
+                        val sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888)
+                        val canvas = Canvas(sharedImage)
+                        canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
+                        petImageView?.drawable?.draw(canvas)
+                        event1.shareImage = sharedImage
+                        EventBus.getDefault().post(event1)
+                        hatchingDialog.dismiss()
+                    }
+                    .create()
+            dialog.show()
+        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     @Subscribe

@@ -63,7 +63,7 @@ interface InventoryRepository : ContentRepository {
 
     fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse>
 
-    fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion): Flowable<Items>
+    fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion, successFunction: () -> Unit): Flowable<Items>
 
     fun inviteToQuest(quest: QuestContent): Flowable<Quest>
 
