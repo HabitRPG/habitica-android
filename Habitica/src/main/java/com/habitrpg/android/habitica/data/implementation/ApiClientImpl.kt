@@ -337,7 +337,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {
         return apiService.validateSubscription(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                notificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }
@@ -346,7 +346,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any> {
         return apiService.validateNoRenewSubscription(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                notificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }
@@ -571,7 +571,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validatePurchase(request: PurchaseValidationRequest): Flowable<PurchaseValidationResult> {
         return apiService.validatePurchase(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                notificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }

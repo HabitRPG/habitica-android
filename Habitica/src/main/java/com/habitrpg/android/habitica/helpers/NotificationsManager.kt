@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.functions.Consumer
 
 import org.greenrobot.eventbus.EventBus
@@ -26,7 +25,7 @@ import java.util.HashMap
 class NotificationsManager (private val context: Context) {
     // @TODO: A queue for displaying alert dialogues
 
-    private var seenNotifications: MutableMap<String, Boolean>? = null
+    private val seenNotifications: MutableMap<String, Boolean>
     private var apiClient: ApiClient? = null
 
     private val notifications: BehaviorSubject<List<Notification>>
@@ -38,9 +37,8 @@ class NotificationsManager (private val context: Context) {
 
     fun setNotifications(current: List<Notification>) {
         this.notifications.onNext(current)
-current.map { Log.d("NotificationsManager.setNotifications." + it.type) }
 
-        this.showNotificationDialog(current)
+        this.handlePopupNotifications(current)
     }
 
     fun getNotifications(): Flowable<List<Notification>> {
@@ -51,7 +49,24 @@ current.map { Log.d("NotificationsManager.setNotifications." + it.type) }
         this.apiClient = apiClient
     }
 
-    fun displayNotification(notification: Notification): Boolean? {
+    fun handlePopupNotifications(notifications: List<Notification>): Boolean? {
+        notifications
+                .filter { !this.seenNotifications.containsKey(it.id) }
+                .map {
+                    val notificationDisplayed = when (it.type) {
+                        Notification.Type.LOGIN_INCENTIVE.type -> displayLoginIncentiveNotification(it)
+                        else -> false
+                    }
+
+                    if (notificationDisplayed == true) {
+                        this.seenNotifications[it.id] = true
+                    }
+                }
+
+        return true
+    }
+
+    fun displayLoginIncentiveNotification(notification: Notification): Boolean? {
         val notificationData = notification.data as LoginIncentiveData?
         val nextUnlockText = context.getString(R.string.nextPrizeUnlocks, notificationData!!.nextRewardAt)
         if (notificationData.rewardKey != null) {
@@ -71,31 +86,6 @@ current.map { Log.d("NotificationsManager.setNotifications." + it.type) }
                         .subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
             }
         }
-        return true
-    }
-
-    fun showNotificationDialog(notifications: List<Notification>?): Boolean? {
-        if (notifications == null || notifications.size == 0) {
-            return false
-        }
-
-        if (this.seenNotifications == null) {
-            this.seenNotifications = HashMap()
-        }
-
-        for (notification in notifications) {
-            if (this.seenNotifications!![notification.id] != null) {
-                continue
-            }
-
-            if (notification.type != "LOGIN_INCENTIVE") {
-                continue
-            }
-
-            this.displayNotification(notification)
-            this.seenNotifications!![notification.id] = true
-        }
-
         return true
     }
 }
