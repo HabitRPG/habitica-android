@@ -1,9 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +17,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -151,9 +156,6 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (!isCreator) {
-            return
-        }
         inflater.inflate(R.menu.menu_challenge_details, menu)
         val editMenuItem = menu.findItem(R.id.action_edit)
         editMenuItem?.isVisible = isCreator
@@ -167,6 +169,16 @@ class ChallengeDetailFragment: BaseMainFragment() {
             intent.putExtras(bundle)
             startActivity(intent)
             return true
+        }
+        else if (item.itemId == R.id.action_share) {
+            val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+            val challengeUri = Uri.parse("${BuildConfig.BASE_URL}/challenges/$challengeID")
+            val clip = ClipData.newUri(activity?.contentResolver, "challenge uri", challengeUri)
+            clipMan?.primaryClip = clip
+            val act = activity
+            if (act != null) {
+                //showSnackbar(act.floatingMenuWrapper, getString(R.string.challenge_url_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+            }
         }
 
         return super.onOptionsItemSelected(item)
