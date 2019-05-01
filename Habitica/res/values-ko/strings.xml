@@ -47,8 +47,8 @@
   <string name="action_cancel">취소</string>
   <string name="login_btn">로그인</string>
   <string name="register_btn">등록</string>
-  <string name="username">유저이름</string>
-  <string name="email_username">이메일 혹은 유저이름</string>
+  <string name="username">유저아이디</string>
+  <string name="email_username">이메일 혹은 유저아이디</string>
   <string name="password">암호</string>
   <string name="emailAddress">이메일 주소</string>
   <string name="confirmpassword">암호 확인</string>
@@ -72,7 +72,7 @@
   <string name="network_error_no_network_body">인터넷에 연결되어 있지 않습니다.</string>
   <string name="internal_error_api">서버에 문제가 발생한 것 같습니다. 다시 시도해 주세요.</string>
   <string name="authentication_error_title">인증 오류</string>
-  <string name="authentication_error_body">당신의 유저이름 혹은 암호가 틀렸습니다.</string>
+  <string name="authentication_error_body">당신의 유저아이디 혹은 암호가 틀렸습니다.</string>
   <string name="login_validation_error_title">검증 오류</string>
   <string name="login_validation_error_fieldsmissing">모든 항목을 채워주셔야 합니다.</string>
   <string name="save_changes">저장</string>
@@ -312,11 +312,12 @@
   <string name="sectionquestMounts">퀘스트 탑승펫</string>
   <string name="sectionspecialMounts">희귀 탑승펫</string>
   <string name="world_quest">세계 퀘스트</string>
-  <string name="inn_description">쉬고 싶으세요? Daniel의 여관에 묵으면 Habitica를 일부 멈추어둘 수 있습니다:\n\n
-• 미완료 일일과제 때문에 데미지를 입지 않습니다\n
-• 과제의 연속 기록을 잃거나 색이 변하지 않습니다\n
-• 보스가 미완료 일일과제에 따라 공격하지 않습니다\n
-• 당신이 보스에게 주는 데미지나 수집 퀘스트에서 수집한 아이템은 체크아웃하면 적용됩니다</string>
+  <string name="inn_description">쉬고 싶으세요\? 다니엘의 여관에 묵으면 Habitica를 일부 멈추어둘 수 있습니다:
+\n
+\n • 미완료 일일과제로 인한 피해를 입지 않습니다
+\n • 과제의 연속 콤보 기록을 잃거나 색이 변하지 않습니다
+\n • 일일과제를 걸러도 보스에게 피해를 입지 않습니다
+\n • 당신이 보스에게 주는 피해나 수집 퀘스트에서 수집한 아이템은 보류되었다가 체크아웃하면 적용됩니다</string>
   <string name="empty_items">%s 가 하나도 없습니다</string>
   <string name="user_level">Lvl %d</string>
   <string name="user_level_with_class">Lvl %1$d %2$s</string>
@@ -554,9 +555,9 @@
     <string name="ago_hours">%d시간 전</string>
     <string name="ago_1hour">1시간 전</string>
     <string name="evolved_pet_title">%1$s %2$s를 길들였습니다, 타러 가요!</string>
-    <string name="warrior_description">전사는 치명타를 더 많이 세게 적중시켜서 과제 달성시 보너스 골드, 경험치, 그리고 아이템 획득 확률이 올라갑니다. 보스 몹에도 더 강한 데미지를 입힙니다. 예측하기 힘들지만 대박 보상이나 보스 퀘스트에서 활약하는 것을 좋아하신다면 전사를 추천합니다!</string>
+    <string name="warrior_description">전사는 치명타를 더 많이 세게 적중시켜서 과제 달성시 보너스 골드, 경험치, 그리고 아이템 획득 확률이 올라갑니다. 보스 몬스터에게도 더 강한 피해를 줍니다. 예측하기 힘들지만 대박 보상이나 보스 퀘스트에서 활약하는 것을 좋아하신다면 전사를 추천합니다!</string>
     <string name="opting_out_progress">선택유예 중</string>
-    <string name="invite_username_description">Habitica를 이용하는 친구가 있다면, 닉네임를 입력하여 초대하세요.</string>
+    <string name="invite_username_description">Habitica를 이용하는 친구가 있다면, 유저아이디를 입력하여 초대하세요.</string>
     <string name="subscription_duration_norenew">%s 에</string>
     <string name="subscribe1month.gemcap">보석 한도 25개</string>
     <string name="subscribe3month.gemcap">보석 한도 30개</string>
@@ -588,8 +589,8 @@
     <string name="edit_challenge">편집</string>
     <string name="challenge_create_error_tavern_one_gem">공개 도전을 만들려면 적어도 보석 1개가 있어야 합니다.</string>
     <string name="challenge_create_error_enough_gems">도전과제를 만들기에 충분한 보석이 없습니다.</string>
-    <string name="identify_your_challenge_with_a_tag">당신의 도전에 짧은 이름을 부여하세요</string>
-    <string name="challenge_create_error_tag">도전을 만들려면 짧은 이름이 필요합니다.</string>
+    <string name="identify_your_challenge_with_a_tag">당신의 도전에 간략한 제목을 부여하세요</string>
+    <string name="challenge_create_error_tag">도전을 만들려면 간략한 제목이 필요합니다.</string>
     <string name="challenge_create_error_no_tasks">이 도전을 만들려면 적어도 하나의 과제를 더해야 합니다.</string>
     <string name="challenge_create_error_title">이 도전을 만들려면 제목이 필요합니다.</string>
     <string name="description_optional">설명 (선택)</string>
@@ -680,7 +681,7 @@
     <string name="change_password">암호 변경</string>
     <string name="change_email">이메일 변경</string>
     <string name="change_login_name">로그인 아이디 변경</string>
-    <string name="change_username">닉네임 변경</string>
+    <string name="change_username">유저아이디 변경</string>
     <string name="change">변경</string>
     <string name="character_level">캐릭터 레벨</string>
     <string name="auto_allocate_points">스탯 자동 분배</string>
@@ -688,11 +689,11 @@
     <string name="character_build">캐릭터 빌드</string>
     <string name="character_build_description">레벨업을 할 때마다 원하는 스탯에 한 포인트씩 추가할 수 있습니다. 직접 하셔도 되고, 스탯 자동 분배를 통해서 게임이 알아서 하게 맡기셔도 됩니다.</string>
     <string name="strength">근력</string>
-    <string name="strength_description">치명타 보너스를 높이고 과제를 완료할 때마다 치명타를 낼 확률도 높입니다. 보스에게 주는 데미지 역시 올라갑니다.</string>
+    <string name="strength_description">치명타 보너스를 높이고 과제를 완료할 때마다 치명타를 낼 확률도 높입니다. 보스에게 주는 피해 역시 올라갑니다.</string>
     <string name="intelligence">지력</string>
     <string name="intelligence_description">과제를 완료할 때 얻는 경험치 양을 높입니다. 마나 한도와 마나 재생력도 높여줍니다.</string>
     <string name="constitution">생명력</string>
-    <string name="constitution_description">과제를 하지 못했을 때 받는 데미지 양을 줄여줍니다. 보스에게 받는 데미지는 줄지 않습니다.</string>
+    <string name="constitution_description">과제를 하지 못했을 때 받는 피해량을 줄여줍니다. 보스에게 받는 피해는 줄지 않습니다.</string>
     <string name="perception">통찰력</string>
     <string name="perception_description">과제를 완료할 때 아이템을 찾을 확률, 일일 드롭 한도, 연속 콤보 보너스, 그리고 과제에서 얻는 골드의 양을 높여줍니다.</string>
     <string name="buffs">버프</string>
@@ -750,12 +751,12 @@
     <string name="active_world_boss">활성중인 월드 보스</string>
     <string name="join_party_title">파티에 참여하고 싶으신가요\?</string>
     <string name="no_party_title">파티에 참여해서 해비티카를 이용하세요</string>
-    <string name="join_party_description">파티 구성원이 당신을 초대할 수 있도록 아래에 있는 당신의 닉네임을 그들에게 보내주세요</string>
+    <string name="join_party_description">파티 구성원이 당신을 초대할 수 있도록 아래에 있는 당신의 유저아이디를 그들에게 보내주세요</string>
     <string name="create_party_website">파티를 만들려면 웹사이트에 접속하세요</string>
     <string name="world_boss_description_title">월드 보스가 무엇인가요\?</string>
-    <string name="world_boss_description_intro">월드보스는 모든 구성원들이 다같이 자신의 할 일들로 강력한 몬스터를 쓰러뜨리는 특별 이벤트 입니다!</string>
+    <string name="world_boss_description_intro">월드보스는 해비티카 구성원 전체가 참여하여 자신의 할 일들로 강력한 몬스터를 쓰러뜨리는 특별 이벤트입니다!</string>
     <string name="world_boss_description_1">보스 몬스터에게 피해를 주기 위해 할 일들을 완료하세요</string>
-    <string name="world_boss_description_2">보스 몬스터는 놓친 할 일들에 대해서는 당신에게 피해를 주지 않습니다. 그러나 분노 미터가 오릅니다. 분노 바가 다 차면, 보스 몬스터가 상점 주인들 중 한명을 공격할 것입니다!</string>
+    <string name="world_boss_description_2">과제를 거르면 보스가 당신에게 직접 피해를 주지는 않지만 분노 게이지가 올라갑니다. 게이지가 다 차면 보스 몬스터가 상점 주인들 중 한명을 공격할 것입니다!</string>
     <string name="challenge_categories">챌린지 카테고리</string>
     <string name="created_challenge">만들어진 챌린지</string>
     <string name="joined">참여한</string>
@@ -770,16 +771,16 @@
     <string name="last_login">최근 접속</string>
     <string name="total_checkins">전체 접속 수</string>
     <string name="two_handed">양 손</string>
-    <string name="usernamePromptTitle">당신의 유저네임을 설정할 차례입니다!</string>
-    <string name="usernamePromptWiki">이 수정에 대해 더 알고 싶다면, <a href="https://habitica.wikia.com/wiki/Player_Names"> 저희 위키백과로 방문해주세요.</a></string>
-    <string name="confirmUsername">유저네임 저장</string>
-    <string name="confirm_username_title">정말로 현재 유저네임을 저장하시겠습니까\?</string>
+    <string name="usernamePromptTitle">당신의 유저아이디를 설정할 차례입니다!</string>
+    <string name="usernamePromptWiki">이 변경된 사항에 대해 더 알고 싶다면, <a href="https://habitica.wikia.com/wiki/Player_Names">저희 위키백과를 참고해 주세요.</a></string>
+    <string name="confirmUsername">유저아이디 저장</string>
+    <string name="confirm_username_title">정말로 현재 유저아이디를 저장하시겠습니까\?</string>
     <string name="cancel">취소</string>
-    <string name="confirm_username">유저네임 저장</string>
-    <string name="username_not_confirmed">유저네임 미확인</string>
-    <string name="username_confirmed">유저네임 확인</string>
+    <string name="confirm_username">유저아이디 저장</string>
+    <string name="username_not_confirmed">유저아이디가 저장되지 않았습니다</string>
+    <string name="username_confirmed">유저아이디가 저장되었습니다</string>
     <string name="username_level">\@%s ・레벨 %d</string>
-    <string name="username_copied">유저네임이 클립보드에 복사되었습니다</string>
+    <string name="username_copied">유저아이디가 클립보드에 복사되었습니다</string>
     <string name="welcomeNameTitle">당신을 어떻게 불러드릴까요\?</string>
     <string name="display_name_length_error">이름은 1~30글자 사이로 만들어주세요</string>
     <string name="setup_task_reward">스스로에게 보상을 주세요</string>
@@ -787,4 +788,70 @@
     <string name="visit_website">웹사이트 방문하기</string>
     <string name="create_party">파티 만들기</string>
 
-</resources>
+<string name="no_party_description">친구들과 함께 혹은 혼자 퀘스트 수행을 해봐요. 파티를 통해 몬스터와 싸우고, 도전을 시작하고, 책임감을 유지할 수 있게 스스로를 도와주세요.</string>
+    <string name="join_party_description_id">파티에 초대를 할 때 유저 ID를 알려주거나 QR코드를 스캔하게 해주세요</string>
+    <string name="id_copied">ID가 복사되었습니다</string>
+    <string name="insufficientSubscriberGems">이번 달에 살 수 있는 보석을 모두 구입했습니다. 매달 첫 3일 안에 더 구입할 수 있도록 재충전이 됩니다. 후원해주셔서 감사해요!</string>
+    <string name="insufficientSubscriberGemsTitle">월별 보석 한도에 도달했습니다</string>
+    <string name="chat_message">채팅 메세지</string>
+    <string name="world_boss_description_description">월드보스는 해비티카 구성원 전체가 참여하여 자신의 할 일들로 강력한 몬스터를 쓰러뜨리는 특별 이벤트입니다!
+\n보스 몬스터에게 피해를 주기 위해 할 일들을 완료하세요.
+\n과제를 거르면 보스가 당신에게 직접 피해를 주지는 않지만, 분노 게이지가 올라갑니다. 게이지가 다 차면, 보스 몬스터가 상점 주인들 중 한명을 공격할 것입니다!
+\n주막에서 보스와 분노 공격 현황을 확인하세요</string>
+    <string name="world_boss_description_3">평소의 퀘스트 보스도 함께 피해를 입기 때문에 동시에 진행할 수 있습니다</string>
+    <string name="world_boss_description_4">주막에서 보스와 분노 공격 현황을 확인하세요</string>
+    <string name="world_boss_action_prompt" formatted="false">보스를 쓰러뜨려 특별 보상을 받고 %s의 공포로부터 Habitica를 구해주세요!</string>
+    <string name="world_boss_description_subtitle">%s가 공격합니다!</string>
+    <string name="questShop_owner_long">퀘스트 안내자 이안</string>
+    <string name="seasonalShop_owner_long">계절의 여마법사</string>
+    <string name="rage_attack">분노의 공격:</string>
+    <string name="tavern_description_world_boss">어흠, 아래에 있는 몬스터에게 관심갖지 말게나 - 쉬는 시간에 이야기를 나눌 수 있을 만큼 이곳은 아직 안전하다네.</string>
+    <string name="report">신고하기</string>
+    <string name="like">좋아요</string>
+    <string name="reply">답하기</string>
+    <string name="challenge_prize">도전 보상</string>
+    <string name="public_challenge">공개 도전</string>
+    <string name="short_name">간략한 제목</string>
+    <string name="unlock_attribute_points">레벨 10이 되면 스탯 포인트를 분배할 수 있습니다</string>
+    <string name="same_day_reminder_title">과제를 등록하셨나요\?</string>
+    <string name="next_day_reminder_title">오늘 할 일을 체크하셨나요\?</string>
+    <string name="next_day_reminder_text">레벨이 올라갈 때 마다 더 새로운 것들이 열리게 됩니다, 열심히 과제를 수행하시며 게임을 즐기세요!</string>
+    <string name="daily_tip_3">일일과제에는 세부적으로 알람 설정을 할 수도 있습니다.</string>
+    <string name="daily_tip_4">가끔씩 할 일들을 다시 되짚어보는 것도 온전히 나아가는 데에 도움이 됩니다.</string>
+    <string name="daily_tip_5">집중을 도우기 위해서 천천히 깊이 숨을 쉬어보세요. 할 수 있어요!</string>
+    <string name="daily_tip_6">10분간 타이머 설정을 해놓고 그동안 얼마나 많은 것을 할 수 있는지 테스트 해보세요!</string>
+    <string name="daily_tip_7">동기 부여를 위해 상점에서 원하는 아이템에 핀을 꼽아 보상란에서 볼 수 있게 해보세요!</string>
+    <string name="moderator">관리자</string>
+    <string name="staff">운영자</string>
+    <string name="reset_streak">연속 콤보 리셋하기</string>
+    <string name="week_reminder_title">과제 실행은 잘 되고 있나요\?</string>
+    <string name="week_reminder_text">휴식은 당연히 몸에 좋지만, 간단한 활동도 병행하면 포인트를 벌어 레벨업을 하고 멋진 장비를 얻을 수 있습니다!</string>
+    <string name="usernamePromptBody">이제 로그인 네임은 본인의 유일한 유저아이디로써 닉네임 옆에 표시되며, 초대할 때나 채팅에서 @로 언급할 때, 그리고 메세지를 보낼 때에 사용됩니다.</string>
+    <string name="usernamePromptDisclaimer">유저아이디는 <a href="https://habitica.com/static/terms">이용 약관</a>과 <a href="https://habitica.com/static/community-guidelines">커뮤니티 방침</a>에 따라야 합니다. 전에 로그인 네임을 따로 설정한 적이 없다면 자동으로 생성됩니다.</string>
+    <string name="confirm_username_description">유저아이디를 저장하면 초대, @언급 그리고 메세지를 주고 받을 때 공개적으로 사용하게 됩니다. 언제든디 설정에서 유저아이디를 바꾸실 수 있습니다.</string>
+    <string name="enter_recipient_username">받는 사람의 @ 유저아이디를 입력하세요</string>
+    <string name="verification_pet">확인 절차를 마치고나면 여기 베테랑 펫 중 하나가 당신을 기다리고 있을 겁니다!</string>
+    <string name="setup_task_join_habitica">Habitica에 가입하기 (체크해주세요!)</string>
+    <string name="setup_task_join_habitica_notes">이 할 일을 완료하거나 편집하거나 삭제하실 수 있습니다.</string>
+    <string name="equipment_str">STR:</string>
+    <string name="equipment_con">CON:</string>
+    <string name="equipment_int">INT:</string>
+    <string name="equipment_per">PER:</string>
+    <string name="subscribe_gift_description">정기구독 혜택을 다른 사람에게 선물하고 싶으신가요\?</string>
+    <string name="gift_subscription">정기구독 선물하기</string>
+    <string name="gift_one_get_one_description">정기구독 선물을 하면 본인도 같은 혜택을 받을 수 있는 이벤트가 진행중입니다!</string>
+    <string name="gift_title">누구에게 선물할까요\?</string>
+    <string name="gift_one_get_one">하나 주고 하나 받기!</string>
+    <string name="gift_one_get_one_detailed_description">이 이벤트가 진행중인 동안은 선물을 했을 때 본인에게도 자동으로 같은 기간의 정기구독이 됩니다.</string>
+    <string name="gift_subscription_subtitle">선물하고 싶은 정기구독 서비스를 선택하세요! 이 구매는 자동으로 연장되지 않습니다.</string>
+    <string name="send_gift">선물하기</string>
+    <string name="server">서버</string>
+    <string name="gift_confirmation_title">선물이 전달되었습니다!</string>
+    <string name="gift_confirmation_text_g1g1">하나 주고 하나 받기 이벤트를 통해 %s에게 %s-개월 Habitica 정기구독을 선물하였고 같은 기간의 구독 혜택이 본인에게도 적용되었습니다!</string>
+    <string name="gift_confirmation_text">%s에게 %s-개월 Habitica 구독서비스가 전달되었습니다.</string>
+    <string name="discover">찾아보기</string>
+    <string name="damage_paused">피해 동결 중</string>
+    <string name="preference_push_important_announcements">중대 발표</string>
+    <string name="create">생성하기</string>
+    <string name="only_leader_create_challenge">리더만 도전 과제를 생성할 수 있습니다</string>
+    </resources>
