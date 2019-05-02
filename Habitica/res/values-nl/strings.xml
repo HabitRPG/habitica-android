@@ -359,7 +359,7 @@
   <string name="share_using">Deel door</string>
   <string name="share_levelup">Ik ben in Habitica tot niveau %d gekomen door mijn gewoontes in het echte leven te verbeteren!</string>
   <string name="share_hatched">Ik heb net een %1$s %2$s huisdier in Habitica laten uitkomen door mijn echte taken uit te voeren!</string>
-  <string name="share_raised">Ik heb net een %1$s %2$s rijdier gekregen in Habitica door mijn echte taken uit te voeren!</string>
+  <string name="share_raised">Ik heb net een %1$s rijdier gekregen in Habitica door mijn echte taken uit te voeren!</string>
   <string name="open_in_store">Open in de play store</string>
   <string name="change_class_confirmation">Weet je zeker dat je van klasse wilt veranderen? Dit kost 3 edelstenen.</string>
   <string name="change_class_equipment_warning">Waarschuwing: Je zult niet langer in staat zijn om uitrusting te kopen van de %s klasse.</string>

@@ -346,7 +346,7 @@
   <string name="share_using">Bagikan dengan</string>
   <string name="share_levelup">Aku mencapai level %d di Habitica dengan memperbaiki kebiasaanku di kehidupan nyata!</string>
   <string name="share_hatched">Saya menetaskan peliharaan seekor %2$s %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya! </string>
-  <string name="share_raised">Saya baru mendapatkan tunggangan seekor %2$s %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
+  <string name="share_raised">Saya baru mendapatkan tunggangan seekor %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
   <string name="open_in_store">Buka di Play Store</string>
   <string name="change_class_confirmation">Apa kamu yakin untuk mengubah kelas? Ini akan membutuhkan 3 permata.</string>
   <string name="change_class_equipment_warning">Peringatan: Kamu tidak akan dapat membeli perlengkapan untuk profesi %s. </string>

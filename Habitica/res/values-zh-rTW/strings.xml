@@ -351,7 +351,7 @@
   <string name="share_using">分享使用</string>
   <string name="share_levelup">我在Habitica中通過改善我現實生活中的習慣到達了%d級！</string>
   <string name="share_hatched">我剛剛在Habitica中通完成我現實生活中的任務孵化了一隻寵物%1$s %2$s！</string>
-  <string name="share_raised">我剛剛在Habitica中通完成我現實生活中的任務得到了一匹坐騎%1$s %2$s！</string>
+  <string name="share_raised">我剛剛在Habitica中通完成我現實生活中的任務得到了一匹坐騎%1$s！</string>
   <string name="open_in_store">開啟Play sotre</string>
   <string name="change_class_confirmation">你確定要變更職業嗎？這會花費3寶石。</string>
   <string name="change_class_equipment_warning">提示：你無法再購買%s職業的裝備了（已頂級）。</string>

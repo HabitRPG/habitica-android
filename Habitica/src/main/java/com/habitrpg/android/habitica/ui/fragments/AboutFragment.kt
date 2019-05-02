@@ -134,7 +134,7 @@ class AboutFragment : BaseMainFragment() {
                 " \nAndroid Version: $version"+
                 " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode)
 
-        if (appConfigManager.testingLevel() != AppTestingLevel.PRODUCTION) {
+        if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
             bodyOfEmail += " ${appConfigManager.testingLevel().name}"
         }
         bodyOfEmail += " \nUser ID: $userId"

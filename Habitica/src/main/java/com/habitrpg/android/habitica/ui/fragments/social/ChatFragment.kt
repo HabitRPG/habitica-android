@@ -176,7 +176,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
          }
         viewModel?.retrieveGroupChat {
             refreshLayout?.isRefreshing = false
-            if (isScrolledToTop) {
+            if (isScrolledToTop && recyclerView != null) {
                 recyclerView.scrollToPosition(0)
             }
         }

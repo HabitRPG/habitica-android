@@ -359,7 +359,7 @@
   <string name="share_using">Compartir con</string>
   <string name="share_levelup">¡He subido al nivel %d en Habitica mejorando mis hábitos en el mundo real!</string>
   <string name="share_hatched">¡He criado un %1$s %2$s de mascota en Habitica realizando tareas en mi vida real!</string>
-  <string name="share_raised">¡He conseguido una montura de %1$s %2$s en Habitica realizando tareas en mi vida real!</string>
+  <string name="share_raised">¡He conseguido una montura de %1$s en Habitica realizando tareas en mi vida real!</string>
   <string name="open_in_store">Abrir en Play Store</string>
   <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase? Te costará 3 gemas.</string>
   <string name="change_class_equipment_warning">Aviso: Ya no podrás comprar equipamiento para la clase %s</string>

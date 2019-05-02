@@ -95,7 +95,7 @@ class WelcomeFragment : BaseFragment() {
         compositeSubscription.add(usernameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
                 .filter { it.length in 1..30 }
                 .throttleLast(1, TimeUnit.SECONDS)
-                .flatMap { userRepository.verifyUsername(usernameEditText.text.toString()) }
+                .flatMap { userRepository.verifyUsername(it) }
                 .subscribeWithErrorHandler(Consumer {
                     if (it.isUsable) {
                         usernameEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)

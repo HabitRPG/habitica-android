@@ -360,7 +360,7 @@
   <string name="share_using">共有 ( シェア ) : </string>
   <string name="share_levelup">生活を改善して、Habitica でのレベルが %d になった!</string>
   <string name="share_hatched">実生活でのタスクをこなして、Habitica で %1$s%2$s のペットを飼いはじめた。</string>
-  <string name="share_raised">実生活でのタスクをこなして、%1$s%2$s のペットが乗れるほど大きな乗騎まで成長した。</string>
+  <string name="share_raised">実生活でのタスクをこなして、%1$s のペットが乗れるほど大きな乗騎まで成長した。</string>
   <string name="open_in_store">Play ストアで開く</string>
   <string name="change_class_confirmation">クラスを変更します。いいですか? 3 ジェムかかります。</string>
   <string name="change_class_equipment_warning">注意 : %s クラスの装備を買うことはできなくなります。</string>

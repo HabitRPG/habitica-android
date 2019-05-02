@@ -227,7 +227,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         groupId.notNull {id ->
             socialRepository.retrieveGroupChat(id)
                     .doOnEvent { _, _ -> refreshLayout?.isRefreshing = false }.subscribe(Consumer {
-                        if (isScrolledToTop) {
+                        if (isScrolledToTop && recyclerView != null) {
                             recyclerView.scrollToPosition(0)
                         }
                     }, RxErrorHandler.handleEmptyError())

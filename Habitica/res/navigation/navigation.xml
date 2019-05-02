@@ -78,11 +78,7 @@
         <deepLink app:uri="habitica.com/groups/myGuilds" />
         <action
             android:id="@+id/openGuildDetail"
-            app:destination="@id/guildFragment" >
-            <argument
-                android:name="isMember"
-                android:defaultValue="true" />
-        </action>
+            app:destination="@id/guildFragment" />
         <action
             android:id="@+id/openPublicGuilds"
             app:destination="@id/publicGuildsFragment" />

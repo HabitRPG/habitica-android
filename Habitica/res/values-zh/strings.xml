@@ -360,7 +360,7 @@
   <string name="share_using">分享使用</string>
   <string name="share_levelup">我在Habitica中通过改善我现实生活中的习惯到达了%d级！</string>
   <string name="share_hatched">我刚刚在Habitica中通完成我现实生活中的任务孵化了一只宠物%1$s %2$s！</string>
-  <string name="share_raised">我刚刚在Habitica中通完成我现实生活中的任务得到了一匹坐骑%1$s %2$s！</string>
+  <string name="share_raised">我刚刚在Habitica中通完成我现实生活中的任务得到了一匹坐骑%1$s！</string>
   <string name="open_in_store">在应用商店中打开</string>
   <string name="change_class_confirmation">你确定想要转变职业吗？这将花费3颗宝石。</string>
   <string name="change_class_equipment_warning">提示：你无法再购买%s职业的装备了。</string>

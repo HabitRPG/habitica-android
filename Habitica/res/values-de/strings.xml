@@ -359,7 +359,7 @@
   <string name="share_using">Teilen via</string>
   <string name="share_levelup">Ich habe durch das Verbessern meiner realen Lebensgewohnheiten Level %d in Habitica erreicht!</string>
   <string name="share_hatched">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Haustier in Habitica ausgebrütet!</string>
-  <string name="share_raised">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
+  <string name="share_raised">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s Reittier in Habitica erhalten!</string>
   <string name="open_in_store">Im Play Store öffnen</string>
   <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
   <string name="change_class_equipment_warning">Warnung: Du wirst nicht mehr Ausrüstung für die %s Klasse kaufen können.</string>

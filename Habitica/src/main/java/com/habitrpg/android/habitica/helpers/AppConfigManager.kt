@@ -4,6 +4,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.BuildConfig
+import java.util.*
 
 class AppConfigManager {
 
@@ -55,7 +56,7 @@ class AppConfigManager {
     }
 
     fun testingLevel(): AppTestingLevel {
-        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL)
+        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.toUpperCase(Locale.US))
     }
 
     fun enableLocalTaskScoring(): Boolean {

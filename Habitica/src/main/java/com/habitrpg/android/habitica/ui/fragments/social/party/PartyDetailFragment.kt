@@ -22,10 +22,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
@@ -51,7 +48,7 @@ class PartyDetailFragment : BaseFragment() {
     private val newQuestButton: Button? by bindView(R.id.new_quest_button)
     private val questDetailButton: ViewGroup? by bindView(R.id.quest_detail_button)
     private val questScrollImageView: SimpleDraweeView? by bindView(R.id.quest_scroll_image_view)
-    private val questTitleView: TextView? by bindView(R.id.quest_title_view)
+    private val questTitleView: TextView? by bindOptionalView(R.id.quest_title_view)
     private val questParticipationView: TextView? by bindView(R.id.quest_participation_view)
     private val questImageWrapper: ViewGroup? by bindView(R.id.quest_image_wrapper)
     private val questImageView: SimpleDraweeView? by bindView(R.id.quest_image_view)
@@ -172,7 +169,7 @@ class PartyDetailFragment : BaseFragment() {
             questProgressView?.visibility = View.VISIBLE
             questProgressView?.setData(questContent, viewModel?.getGroupData()?.value?.quest?.progress)
 
-            questParticipationView?.text = getString(R.string.number_participants, viewModel?.getGroupData()?.value?.quest?.members?.size)
+            questParticipationView?.text = context?.getString(R.string.number_participants, viewModel?.getGroupData()?.value?.quest?.members?.size)
         } else {
             questProgressView?.visibility = View.GONE
         }

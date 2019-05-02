@@ -16,6 +16,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -44,6 +45,7 @@ import javax.inject.Inject
 
 class TaskFormActivity : BaseActivity() {
 
+    private var isSaving: Boolean = false
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
@@ -272,7 +274,7 @@ class TaskFormActivity : BaseActivity() {
             Task.TYPE_HABIT -> {
                 habitScoringButtons.isPositive = task.up ?: false
                 habitScoringButtons.isNegative = task.down ?: false
-                task.frequency?.let { habitResetStreakButtons.selectedResetOption = HabitResetOption.valueOf(it.toUpperCase()) }
+                task.frequency?.let { habitResetStreakButtons.selectedResetOption = HabitResetOption.valueOf(it.toUpperCase(Locale.US)) }
                 habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
                 habitAdjustNegativeStreakView.setText((task.counterDown ?: 0).toString())
             }
@@ -324,6 +326,10 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun saveTask() {
+        if (isSaving) {
+            return
+        }
+        isSaving = true
         var thisTask = task
         if (thisTask == null) {
             thisTask = Task()
@@ -386,9 +392,14 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun deleteTask() {
-        task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
-        dismissKeyboard()
-        finish()
+        AlertDialog.Builder(this)
+                .setTitle(R.string.are_you_sure)
+                .setPositiveButton(R.string.delete_task) { _, _ ->
+                    task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
+                    dismissKeyboard()
+                    finish()
+                }
+                .setNegativeButton(android.R.string.cancel, null).show()
     }
 
     private fun dismissKeyboard() {
