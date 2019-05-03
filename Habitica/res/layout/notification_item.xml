@@ -30,11 +30,11 @@
         android:id="@+id/dismiss_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@color/transparent"
         android:clickable="true"
         android:focusable="true"
+        android:padding="10dp"
         android:src="@drawable/notification_close" />
 
 </LinearLayout>
