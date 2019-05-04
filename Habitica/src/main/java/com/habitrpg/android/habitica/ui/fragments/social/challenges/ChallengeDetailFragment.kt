@@ -68,7 +68,6 @@ class ChallengeDetailFragment: BaseMainFragment() {
     var challengeID: String? = null
     var challenge: Challenge? = null
     var isCreator = false
-    var shareActionProvider: ShareActionProvider? = null
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
@@ -159,15 +158,6 @@ class ChallengeDetailFragment: BaseMainFragment() {
         inflater.inflate(R.menu.menu_challenge_details, menu)
         val editMenuItem = menu.findItem(R.id.action_edit)
         editMenuItem?.isVisible = isCreator
-
-        val shareMenuItem = menu.findItem(R.id.action_share)
-        shareActionProvider = MenuItemCompat.getActionProvider(shareMenuItem) as? ShareActionProvider
-        val shareGuildIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "${BuildConfig.BASE_URL}/challenges/$challengeID")
-            type = "text/plain"
-        }
-        shareActionProvider?.setShareIntent(shareGuildIntent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -178,6 +168,14 @@ class ChallengeDetailFragment: BaseMainFragment() {
             intent.putExtras(bundle)
             startActivity(intent)
             return true
+        }
+        else if (item.itemId == R.id.action_share) {
+            val shareGuildIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "${BuildConfig.BASE_URL}/challenges/$challengeID")
+                type = "text/plain"
+            }
+            startActivity(shareGuildIntent)
         }
 
         return super.onOptionsItemSelected(item)
