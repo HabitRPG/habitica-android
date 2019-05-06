@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import java.lang.ref.WeakReference
+import java.util.*
 
 object MainNavigationController {
+    var lastNavigation: Date? = null
 
     var navController: WeakReference<NavController>? = null
 
@@ -14,10 +16,16 @@ object MainNavigationController {
     }
 
     fun navigate(transactionId: Int, args: Bundle? = null) {
-        navController?.get()?.navigate(transactionId, args)
+        if (Math.abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
+            lastNavigation = Date()
+            navController?.get()?.navigate(transactionId, args)
+        }
     }
 
     fun navigate(directions: NavDirections) {
-        navController?.get()?.navigate(directions)
+        if (Math.abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
+            lastNavigation = Date()
+            navController?.get()?.navigate(directions)
+        }
     }
 }
