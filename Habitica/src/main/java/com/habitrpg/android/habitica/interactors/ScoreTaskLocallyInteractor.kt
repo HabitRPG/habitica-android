@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import java.util.ArrayList
+import java.util.*
 
 class ScoreTaskLocallyInteractor {
     companion object {
@@ -25,7 +25,7 @@ class ScoreTaskLocallyInteractor {
 
             if (task.checklist?.size ?: 0 > 0) {
                 if (task.type == Task.TYPE_TODO) {
-                    nextDelta *= 1 + (task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { acc, i -> 0 }
+                    nextDelta *= 1 + (task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
                             ?: 0)
                 }
             }

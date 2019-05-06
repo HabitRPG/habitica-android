@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -9,9 +11,11 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
+import com.habitrpg.android.habitica.helpers.LanguageHelper
 import io.reactivex.disposables.CompositeDisposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.util.*
 
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -32,6 +36,13 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
+        Locale.setDefault(languageHelper.locale)
+        val configuration = Configuration()
+        configuration.setLocale(languageHelper.locale)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+
         super.onCreate(savedInstanceState)
         habiticaApplication
         injectActivity(HabiticaBaseApplication.component)

@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.ui.views.stats
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -23,7 +23,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
 
     var subscription: Disposable? = null
 
-    private var allocatedPoints: Int
+    private val allocatedPoints: Int
         get() {
         var value = 0
         value += strengthSliderView.currentValue
@@ -31,9 +31,6 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
         value += constitutionSliderView.currentValue
         value += perceptionSliderView.currentValue
         return value
-    }
-    set(value) {
-        return
     }
 
     private var pointsToAllocate = 0

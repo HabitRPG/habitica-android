@@ -277,12 +277,12 @@ open class Task : RealmObject, Parcelable {
     constructor()
 
     protected constructor(`in`: Parcel) {
-        this.userId = `in`.readString()
+        this.userId = `in`.readString() ?: ""
         this.priority = `in`.readValue(Float::class.java.classLoader) as? Float ?: 0f
-        this.text = `in`.readString()
+        this.text = `in`.readString() ?: ""
         this.notes = `in`.readString()
         this.attribute = `in`.readString()
-        this.type = `in`.readString()
+        this.type = `in`.readString() ?: ""
         this.value = `in`.readDouble()
         this.tags = RealmList()
         `in`.readList(this.tags, TaskTag::class.java.classLoader)

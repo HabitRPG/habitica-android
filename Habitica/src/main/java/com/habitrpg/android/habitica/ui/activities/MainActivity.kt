@@ -175,11 +175,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     public override fun onCreate(savedInstanceState: Bundle?) {
         launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         launchTrace?.start()
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
-        Locale.setDefault(languageHelper.locale)
-        val configuration = Configuration()
-        configuration.setLocale(languageHelper.locale)
         super.onCreate(savedInstanceState)
 
         if (!HabiticaBaseApplication.checkUserAuthentication(this, hostConfig)) {
