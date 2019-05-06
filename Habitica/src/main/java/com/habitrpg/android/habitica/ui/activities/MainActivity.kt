@@ -12,7 +12,6 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -39,6 +38,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.*
+import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -273,7 +273,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         resumeFromActivity = false
 
 
-        if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < Date().time - 86400000) {
+        if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < Date().time - DateUtils.hoursInMs(2)) {
             try {
                 taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
             } catch (e: Exception) {

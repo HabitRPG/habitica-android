@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -52,6 +53,8 @@ class TaskFormActivity : BaseActivity() {
     lateinit var taskRepository: TaskRepository
     @Inject
     lateinit var tagRepository: TagRepository
+    @Inject
+    lateinit var taskAlarmManager: TaskAlarmManager
 
     private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val scrollView: NestedScrollView by bindView(R.id.scroll_view)
@@ -385,6 +388,10 @@ class TaskFormActivity : BaseActivity() {
                 taskRepository.createTaskInBackground(thisTask)
             } else {
                 taskRepository.updateTaskInBackground(thisTask)
+            }
+
+            if (thisTask.type == Task.TYPE_DAILY || thisTask.type == Task.TYPE_TODO) {
+                taskAlarmManager.scheduleAlarmsForTask(thisTask)
             }
         } else {
                 resultIntent.putExtra(PARCELABLE_TASK, thisTask)
