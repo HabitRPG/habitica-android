@@ -153,10 +153,8 @@ class ShopFragment : BaseFragment() {
 
 
 
-        user.notNull { user ->
-            compositeSubscription.add(this.inventoryRepository.getOwnedItems(user)
-                    .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(this.inventoryRepository.getOwnedItems()
+                .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(this.inventoryRepository.getInAppRewards()
                 .map<List<String>> { rewards -> rewards.map { it.key } }
                 .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))

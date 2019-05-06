@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
-import io.reactivex.functions.Function4
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
@@ -67,7 +66,6 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>> {
         return realm.where(OwnedItem::class.java)
-                .greaterThan("numberOwned", 0)
                 .equalTo("itemType", itemType)
                 .equalTo("userID", userID)
                 .sort("key")
@@ -81,29 +79,19 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
                 .filter { it.isLoaded }
     }
 
-    override fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>> {
-        return Flowable.combineLatest(
-                getOwnedItems("eggs", user.id ?: ""),
-                getOwnedItems("hatchingPotions", user.id ?: ""),
-                getOwnedItems("food", user.id ?: ""),
-                getOwnedItems("questContent", user.id ?: ""),
-                Function4 { eggs, hatchingPotions, food, quests ->
+    override fun getOwnedItems(userID: String): Flowable<Map<String, OwnedItem>> {
+        return realm.where(OwnedItem::class.java)
+                .greaterThan("numberOwned", 0)
+                .equalTo("userID", userID)
+                .findAll()
+                .asFlowable()
+                .map {
                     val items = HashMap<String, OwnedItem>()
-                    for (item in eggs) {
-                        items[item.key + "-" + item.itemType] = item
-                    }
-                    for (item in hatchingPotions) {
-                        items[item.key + "-" + item.itemType] = item
-                    }
-                    for (item in food) {
-                        items[item.key + "-" + item.itemType] = item
-                    }
-                    for (item in quests) {
+                    for (item in it) {
                         items[item.key + "-" + item.itemType] = item
                     }
                     items
                 }
-        )
     }
 
     override fun getEquipment(key: String): Flowable<Equipment> {

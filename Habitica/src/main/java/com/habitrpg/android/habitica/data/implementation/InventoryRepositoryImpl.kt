@@ -47,8 +47,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getOwnedItems(itemType, userID)
     }
 
-    override fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>> {
-        return localRepository.getOwnedItems(user)
+    override fun getOwnedItems(): Flowable<Map<String, OwnedItem>> {
+        return localRepository.getOwnedItems(userID)
     }
 
     override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {

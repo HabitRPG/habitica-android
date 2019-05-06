@@ -41,7 +41,7 @@ interface InventoryRepository : ContentRepository {
     fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
 
     fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>>
-    fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>>
+    fun getOwnedItems(): Flowable<Map<String, OwnedItem>>
 
     fun getEquipment(key: String): Flowable<Equipment>
 
