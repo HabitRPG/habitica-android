@@ -218,13 +218,13 @@ class StatsFragment: BaseMainFragment() {
         constitutionStatsView.buffValue = currentUser.stats?.buffs?.getCon()?.toInt() ?: 0
         perceptionStatsView.buffValue = currentUser.stats?.buffs?.getPer()?.toInt() ?: 0
 
-        totalStrength += currentUser.stats?.str ?: 0
-        totalIntelligence += currentUser.stats?._int ?: 0
-        totalConstitution += currentUser.stats?.con ?: 0
+        totalStrength += currentUser.stats?.strength ?: 0
+        totalIntelligence += currentUser.stats?.intelligence ?: 0
+        totalConstitution += currentUser.stats?.constitution ?: 0
         totalPerception += currentUser.stats?.per ?: 0
-        strengthStatsView.allocatedValue = currentUser.stats?.str ?: 0
-        intelligenceStatsView.allocatedValue = currentUser.stats?._int ?: 0
-        constitutionStatsView.allocatedValue = currentUser.stats?.con ?: 0
+        strengthStatsView.allocatedValue = currentUser.stats?.strength ?: 0
+        intelligenceStatsView.allocatedValue = currentUser.stats?.intelligence ?: 0
+        constitutionStatsView.allocatedValue = currentUser.stats?.constitution ?: 0
         perceptionStatsView.allocatedValue = currentUser.stats?.per ?: 0
 
         val outfit = currentUser.items?.gear?.equipped

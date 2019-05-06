@@ -738,9 +738,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> {
         val body = HashMap<String, Map<String, Int>>()
         val stats = HashMap<String, Int>()
-        stats["str"] = strength
+        stats["strength"] = strength
         stats["int"] = intelligence
-        stats["con"] = constitution
+        stats["constitution"] = constitution
         stats["per"] = perception
         body["stats"] = stats
         return apiService.bulkAllocatePoints(body).compose(configureApiCallObserver())

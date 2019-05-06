@@ -218,9 +218,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (user != null && user.isManaged) {
             localRepository.executeTransaction {
                 when (stat) {
-                    Stats.STRENGTH -> user.stats?.str = user.stats?.str?.inc()
-                    Stats.INTELLIGENCE -> user.stats?._int = user.stats?._int?.inc()
-                    Stats.CONSTITUTION -> user.stats?.con= user.stats?.con?.inc()
+                    Stats.STRENGTH -> user.stats?.strength = user.stats?.strength?.inc()
+                    Stats.INTELLIGENCE -> user.stats?.intelligence = user.stats?.intelligence?.inc()
+                    Stats.CONSTITUTION -> user.stats?.constitution= user.stats?.constitution?.inc()
                     Stats.PERCEPTION -> user.stats?.per = user.stats?.per?.inc()
                 }
                 user.stats?.points = user.stats?.points?.dec()
@@ -230,10 +230,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 .doOnNext { stats ->
                     if (user != null && user.isManaged) {
                         localRepository.executeTransaction {
-                            user.stats?.str = stats.str
-                            user.stats?.con = stats.con
+                            user.stats?.strength = stats.strength
+                            user.stats?.constitution = stats.constitution
                             user.stats?.per = stats.per
-                            user.stats?._int = stats._int
+                            user.stats?.intelligence = stats.intelligence
                             user.stats?.points = stats.points
                             user.stats?.mp = stats.mp
                         }
@@ -246,10 +246,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     .doOnNext { stats ->
                         if (user != null && user.isManaged) {
                             localRepository.executeTransaction {
-                                user.stats?.str = stats.str
-                                user.stats?.con = stats.con
+                                user.stats?.strength = stats.strength
+                                user.stats?.constitution = stats.constitution
                                 user.stats?.per = stats.per
-                                user.stats?._int = stats._int
+                                user.stats?.intelligence = stats.intelligence
                                 user.stats?.points = stats.points
                                 user.stats?.mp = stats.mp
                             }

@@ -50,9 +50,9 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
     set(value) {
         field = value
         pointsToAllocate = user?.stats?.points ?: 0
-        strengthSliderView.previousValue = user?.stats?.str ?: 0
-        intelligenceSliderView.previousValue = user?.stats?._int ?: 0
-        constitutionSliderView.previousValue = user?.stats?.con ?: 0
+        strengthSliderView.previousValue = user?.stats?.strength ?: 0
+        intelligenceSliderView.previousValue = user?.stats?.intelligence ?: 0
+        constitutionSliderView.previousValue = user?.stats?.constitution ?: 0
         perceptionSliderView.previousValue = user?.stats?.per ?: 0
     }
 
