@@ -112,7 +112,7 @@
                     style="@style/TextInputLayoutAppearance"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:layout_marginBottom="@dimen/spacing_large">
-                    <com.google.android.material.textfield.TextInputEditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/additional_info_edittext"
                         android:overScrollMode="always"
                         android:layout_width="match_parent"

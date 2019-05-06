@@ -266,6 +266,9 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun fillForm(task: Task) {
+        if (!task.isValid) {
+            return
+        }
         canSave = true
         textEditText.setText(task.text)
         notesEditText.setText(task.notes)
@@ -274,7 +277,11 @@ class TaskFormActivity : BaseActivity() {
             Task.TYPE_HABIT -> {
                 habitScoringButtons.isPositive = task.up ?: false
                 habitScoringButtons.isNegative = task.down ?: false
-                task.frequency?.let { habitResetStreakButtons.selectedResetOption = HabitResetOption.valueOf(it.toUpperCase(Locale.US)) }
+                task.frequency?.let {
+                    if (it.isNotBlank()) {
+                        habitResetStreakButtons.selectedResetOption = HabitResetOption.valueOf(it.toUpperCase(Locale.US))
+                    }
+                }
                 habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
                 habitAdjustNegativeStreakView.setText((task.counterDown ?: 0).toString())
             }
