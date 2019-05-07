@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -98,6 +99,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
                 Notification.Type.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
                 Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
+                Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
+                Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
                 //TODO rest of the notification types
                 else -> null
             }
@@ -157,7 +160,49 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private fun createNotificationItem(notification: Notification, messageText: CharSequence, imageResourceId: Int? = null): View? {
+    private fun createGroupTaskNeedsWorkNotification(notification: Notification): View? {
+        val data = notification.data as? GroupTaskNeedsWorkData
+        val message = convertGroupMessageHtml(data?.message ?: "")
+
+        return createNotificationItem(
+                notification,
+                fromHtml(message),
+                null,
+                R.color.yellow_5
+        )
+    }
+
+    private fun createGroupTaskApprovedNotification(notification: Notification): View? {
+        val data = notification.data as? GroupTaskApprovedData
+        val message = convertGroupMessageHtml(data?.message ?: "")
+
+        return createNotificationItem(
+                notification,
+                fromHtml(message),
+                null,
+                R.color.green_10
+        )
+    }
+
+    /**
+     * Group task notifications have the message text in the notification data as HTML
+     * with <span class="notification-bold"> tags around emphasized words. So we just
+     * convert the span-tags to strong-tags to display correct parts as bold, since
+     * Html.fromHtml does not support CSS.
+     */
+    private fun convertGroupMessageHtml(message: String): String {
+        // Using positive lookbehind to make sure "span" is preceded by "<" or "</"
+        val pattern = "(?<=</?)span".toRegex()
+
+        return message.replace(pattern, "strong")
+    }
+
+    private fun createNotificationItem(
+            notification: Notification,
+            messageText: CharSequence,
+            imageResourceId: Int? = null,
+            textColor: Int? = null
+    ): View? {
         val item = inflater.inflate(R.layout.notification_item, notification_items, false)
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
@@ -170,6 +215,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             val notificationImage = item?.findViewById(R.id.notification_image) as? ImageView
             notificationImage?.setImageResource(imageResourceId)
             notificationImage?.visibility = View.VISIBLE
+        }
+
+        if (textColor != null) {
+            messageTextView?.setTextColor(ContextCompat.getColor(this, textColor))
         }
 
         return item

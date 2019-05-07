@@ -24,6 +24,8 @@ open class NotificationsViewModel : BaseViewModel() {
             Notification.Type.NEW_STUFF.type,
             Notification.Type.NEW_CHAT_MESSAGE.type,
             Notification.Type.NEW_MYSTERY_ITEMS.type,
+            Notification.Type.GROUP_TASK_NEEDS_WORK.type,
+            Notification.Type.GROUP_TASK_APPROVED.type,
             Notification.Type.UNALLOCATED_STATS_POINTS.type
     )
 
