@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import androidx.appcompat.app.AlertDialog
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import com.amplitude.api.Amplitude
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
@@ -738,9 +738,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats> {
         val body = HashMap<String, Map<String, Int>>()
         val stats = HashMap<String, Int>()
-        stats["strength"] = strength
+        stats["str"] = strength
         stats["int"] = intelligence
-        stats["constitution"] = constitution
+        stats["con"] = constitution
         stats["per"] = perception
         body["stats"] = stats
         return apiService.bulkAllocatePoints(body).compose(configureApiCallObserver())
