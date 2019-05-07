@@ -66,6 +66,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getOwnedItems(itemType: String, userID: String): Flowable<RealmResults<OwnedItem>> {
         return realm.where(OwnedItem::class.java)
+                .greaterThan("numberOwned", 0)
                 .equalTo("itemType", itemType)
                 .equalTo("userID", userID)
                 .sort("key")
