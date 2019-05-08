@@ -814,12 +814,12 @@
     <string name="enter_recipient_username">Введите @ имя получателя</string>
     <string name="visit_website">посетите сайт</string>
     <string name="subscribe_gift_description">Хотите дать преимущества подписки кому-то еще\?</string>
-    <string name="gift_subscription">Подарить Подписку</string>
+    <string name="gift_subscription">Подарить подписку</string>
     <string name="gift_title">Кому бы вы хотели дать\?</string>
     <string name="gift_one_get_one">Если вы подаришь кому-то один, тогда вы получишь один!</string>
     <string name="gift_one_get_one_detailed_description">Пока эта акция активна, вы получите соответствующую подписку автоматически после отправки подарка.</string>
     <string name="gift_subscription_subtitle">Выберите подписку, которую вы хотите подарить в низу! Эта покупка не будет автоматически продлена.</string>
-    <string name="send_gift">Посылай подарок</string>
+    <string name="send_gift">Отправить подарок</string>
     <string name="server">Сервер</string>
     <string name="gift_confirmation_title">Ваш подарок отправлен!</string>
     <string name="gift_confirmation_text_g1g1">Вы отправили %s месячную подписку Habitica %s, и эта же подписка была применена к вашей учетной записи для нашей акции «Подарок один, получите один»!</string>
@@ -828,4 +828,9 @@
     <string name="due">Сегодня</string>
     <string name="gift_one_get_one_description">Подарите подписку и получите такую же бесплатно прямо сейчас!</string>
     <string name="damage_paused">Урон остановлен</string>
-    </resources>
+    <string name="preference_push_important_announcements">Важные объявления</string>
+    <string name="create">Создать</string>
+    <string name="only_leader_create_challenge">Только лидер может создавать испытания</string>
+    <string name="create_party">Создать команду</string>
+
+</resources>
