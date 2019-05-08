@@ -826,4 +826,6 @@
     <string name="gift_confirmation_text">Вы отправили %s один %s-месячную подписку Habitica.</string>
     <string name="discover">Обнаруживать</string>
     <string name="due">Сегодня</string>
+    <string name="gift_one_get_one_description">Подарите подписку и получите такую же бесплатно прямо сейчас!</string>
+    <string name="damage_paused">Урон остановлен</string>
     </resources>
