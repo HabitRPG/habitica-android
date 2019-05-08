@@ -1,21 +1,15 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import android.text.method.LinkMovementMethod
 import android.widget.*
 import android.view.*
-import androidx.appcompat.widget.ShareActionProvider
-import androidx.core.view.MenuItemCompat
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
