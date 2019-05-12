@@ -526,6 +526,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         val sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888)
                         val canvas = Canvas(sharedImage)
                         canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
+                        petImageView?.drawable?.setBounds(0, 0, 140, 140)
                         petImageView?.drawable?.draw(canvas)
                         event1.shareImage = sharedImage
                         EventBus.getDefault().post(event1)
@@ -560,6 +561,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                     val sharedImage = Bitmap.createBitmap(99, 99, Bitmap.Config.ARGB_8888)
                                     val canvas = Canvas(sharedImage)
                                     canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
+                                    mountImageView.drawable.setBounds(0, 0, 99, 99)
                                     mountImageView.drawable.draw(canvas)
                                     event1.shareImage = sharedImage
                                     EventBus.getDefault().post(event1)
