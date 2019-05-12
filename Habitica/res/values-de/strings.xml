@@ -626,6 +626,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
   <string name="resetting_account">Konto zurücksetzen</string>
   <string name="deleting_account">Konto löschen</string>
   <string name="insufficientGold">Du musst mehr Aufgaben erledigen bevor du Dir dieses Item leisten kannst!</string>
+  <string name="insufficientGoldTitle">Nicht genug Gold</string>
   <string name="insufficientGems">Du wirst mehr Edelsteine benötigen um dieses Item zu kaufen!</string>
   <string name="purchase_gems">Kaufe Edelsteine</string>
   <string name="insufficientHourglasses">Du wirst mehr mystische Sanduhren benötigen um dieses Item zu kaufen!</string>

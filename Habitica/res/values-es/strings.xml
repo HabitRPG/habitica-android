@@ -628,6 +628,7 @@
   <string name="resetting_account">Reestableciendo cuenta</string>
   <string name="deleting_account">Borrando cuenta</string>
   <string name="insufficientGold">¡Debes completar más tareas antes de poder pagar este artículo!</string>
+  <string name="insufficientGoldTitle">Insuficiente oro</string>
   <string name="insufficientGems">¡Necesitarás más gemas para comprar este objeto!</string>
   <string name="purchase_gems">Comprar gemas</string>
   <string name="insufficientHourglasses">¡Necesitarás más Relojes de Arena Místicos para comprar este objeto!</string>

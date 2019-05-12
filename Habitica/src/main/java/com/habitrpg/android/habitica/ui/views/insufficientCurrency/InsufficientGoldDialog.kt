@@ -10,6 +10,6 @@ class InsufficientGoldDialog(context: Context) : InsufficientCurrencyDialog(cont
 
         imageView.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
         textView.text = context.getString(R.string.insufficientGold)
-        setTitle(R.string.insufficientSubscriberGemsTitle)
+        setTitle(R.string.insufficientGoldTitle)
     }
 }
