@@ -523,10 +523,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     .setNeutralButton(R.string.share) { hatchingDialog, _ ->
                         val event1 = ShareEvent()
                         event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
-                        val sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888)
+                        val petImageSideLength = 140
+                        val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
                         val canvas = Canvas(sharedImage)
                         canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
-                        petImageView?.drawable?.setBounds(0, 0, 140, 140)
+                        petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
                         petImageView?.drawable?.draw(canvas)
                         event1.shareImage = sharedImage
                         EventBus.getDefault().post(event1)
@@ -558,10 +559,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                 .setNeutralButton(R.string.share) { hatchingDialog, _ ->
                                     val event1 = ShareEvent()
                                     event1.sharedMessage = getString(R.string.share_raised, pet.text) + " https://habitica.com/social/raise-pet"
-                                    val sharedImage = Bitmap.createBitmap(99, 99, Bitmap.Config.ARGB_8888)
+                                    val mountImageSideLength = 99
+                                    val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
                                     val canvas = Canvas(sharedImage)
                                     canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
-                                    mountImageView.drawable.setBounds(0, 0, 99, 99)
+                                    mountImageView.drawable.setBounds(0, 0, mountImageSideLength, mountImageSideLength)
                                     mountImageView.drawable.draw(canvas)
                                     event1.shareImage = sharedImage
                                     EventBus.getDefault().post(event1)
