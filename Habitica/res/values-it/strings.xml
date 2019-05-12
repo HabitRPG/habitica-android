@@ -360,7 +360,7 @@ Le Dailies mancate e le cattive Abitudini non li danneggiano molto, e hanno semp
   <string name="share_using">Condividi con</string>
   <string name="share_levelup">Ho raggiunto il livello %d su Habitica migliorando le mie abitudini nella vita reale!</string>
   <string name="share_hatched">Ho appena schiuso un %1$s %2$s in Habitica completando le mie attività nella vita reale!</string>
-  <string name="share_raised">Ho appena ottenuto un %1$s %2$s in Habitica completando le mie attività nella vita reale!</string>
+  <string name="share_raised">Ho appena ottenuto un %1$s in Habitica completando le mie attività nella vita reale!</string>
   <string name="open_in_store">Apri nel Play Store</string>
   <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
   <string name="change_class_equipment_warning">Attenzione: non potrai più comprare equipaggiamento per la classe %s.</string>

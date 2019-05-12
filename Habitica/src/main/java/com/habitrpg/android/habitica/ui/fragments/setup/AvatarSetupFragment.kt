@@ -41,7 +41,7 @@ class AvatarSetupFragment : BaseFragment() {
     var activity: SetupActivity? = null
     var width: Int = 0
     private val avatarView: AvatarView? by bindOptionalView(R.id.avatarView)
-    private val customizationList: androidx.recyclerview.widget.RecyclerView? by bindOptionalView(R.id.customization_list)
+    private val customizationList: RecyclerView? by bindOptionalView(R.id.customization_list)
     private val subCategoryTabs: TabLayout? by bindOptionalView(R.id.subcategory_tabs)
     private val bodyButton: AvatarCategoryView? by bindOptionalView(R.id.body_button)
     private val skinButton: AvatarCategoryView? by bindOptionalView(R.id.skin_button)
@@ -52,7 +52,7 @@ class AvatarSetupFragment : BaseFragment() {
     private val randomizeButton: Button? by bindOptionalView(R.id.randomize_button)
 
     internal var adapter: CustomizationSetupAdapter? = null
-    internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+    internal var layoutManager: LinearLayoutManager = LinearLayoutManager(activity)
 
     private var user: User? = null
     private var subcategories: List<String> = emptyList()
@@ -80,8 +80,8 @@ class AvatarSetupFragment : BaseFragment() {
         this.adapter?.userSize = this.user?.preferences?.size ?: "slim"
 
         this.adapter?.user = this.user
-        this.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        this.layoutManager.orientation = androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
+        this.layoutManager = LinearLayoutManager(activity)
+        this.layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         this.customizationList?.layoutManager = this.layoutManager
 
         this.customizationList?.adapter = this.adapter

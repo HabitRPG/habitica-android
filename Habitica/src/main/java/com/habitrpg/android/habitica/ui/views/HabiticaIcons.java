@@ -13166,25 +13166,25 @@ public class HabiticaIcons {
 
 class PaintCodeColor extends Color {
     private static float[] ColorToHSV(int originalColor) {
-        float hsv[] = new float[3];
+        float[] hsv = new float[3];
         RGBToHSV(red(originalColor), green(originalColor), blue(originalColor), hsv);
         return hsv;
     }
     
     public static int colorByChangingHue(int originalColor, float newHue) {
-        float hsv[] = ColorToHSV(originalColor);
+        float[] hsv = ColorToHSV(originalColor);
         hsv[0] = newHue;
         return HSVToColor(alpha(originalColor), hsv);
     }
     
     public static int colorByChangingSaturation(int originalColor, float newSaturation) {
-        float hsv[] = ColorToHSV(originalColor);
+        float[] hsv = ColorToHSV(originalColor);
         hsv[1] = newSaturation;
         return HSVToColor(alpha(originalColor), hsv);
     }
     
     public static int colorByChangingValue(int originalColor, float newValue) {
-        float hsv[] = ColorToHSV(originalColor);
+        float[] hsv = ColorToHSV(originalColor);
         hsv[2] = newValue;
         return HSVToColor(alpha(originalColor), hsv);
     }

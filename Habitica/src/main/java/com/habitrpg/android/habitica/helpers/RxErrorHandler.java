@@ -9,6 +9,7 @@ import java.io.EOFException;
 import java.io.IOException;
 
 import io.reactivex.functions.Consumer;
+import okhttp3.internal.http2.ConnectionShutdownException;
 import retrofit2.HttpException;
 
 public class RxErrorHandler {
@@ -37,7 +38,8 @@ public class RxErrorHandler {
             if (!IOException.class.isAssignableFrom(throwable.getClass())
                     && !HttpException.class.isAssignableFrom(throwable.getClass())
                     && !retrofit2.HttpException.class.isAssignableFrom(throwable.getClass())
-                    && !EOFException.class.isAssignableFrom(throwable.getClass())) {
+                    && !EOFException.class.isAssignableFrom(throwable.getClass())
+            && !ConnectionShutdownException.class.isAssignableFrom(throwable.getClass())) {
                 instance.crashlyticsProxy.logException(throwable);
             }
         }

@@ -82,22 +82,24 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun getPublicGuilds(): Flowable<RealmResults<Group>> = realm.where(Group::class.java)
-                .equalTo("type", "guild")
-                .equalTo("privacy", "public")
-                .sort("memberCount", Sort.DESCENDING)
+            .equalTo("type", "guild")
+            .equalTo("privacy", "public")
+            .notEqualTo("id", Group.TAVERN_ID)
+            .sort("memberCount", Sort.DESCENDING)
             .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
+            .asFlowable()
+            .filter { it.isLoaded }
 
     override fun getUserGroups(userID: String): Flowable<RealmResults<Group>> = realm.where(GroupMembership::class.java)
             .equalTo("userID", userID)
             .findAll()
             .asFlowable()
             .filter { it.isLoaded }
-            .flatMap {
+            .flatMap {memberships ->
                 realm.where(Group::class.java)
                         .equalTo("type", "guild")
-                        .`in`("id", it.map {
+                        .notEqualTo("id", Group.TAVERN_ID)
+                        .`in`("id", memberships.map {
                             return@map it.groupID
                         }.toTypedArray())
                         .sort("memberCount", Sort.DESCENDING)
@@ -211,7 +213,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             }
             val idsToRemove = messagesToRemove.map { it.id }
             val userStylestoRemove = realm.where(UserStyles::class.java).`in`("id", idsToRemove.toTypedArray()).findAll()
-            val contributorToRemove = realm.where(ContributorInfo::class.java).`in`("id", idsToRemove.toTypedArray()).findAll()
+            val contributorToRemove = realm.where(ContributorInfo::class.java).`in`("userId", idsToRemove.toTypedArray()).findAll()
             realm.executeTransaction {
                 for (member in messagesToRemove) {
                     member.deleteFromRealm()

@@ -123,7 +123,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             return Flowable.empty()
         }
         return apiClient.leaveGroup(id)
-                .doOnNext { _ -> localRepository.updateMembership(userID, id, false) }
+                .doOnNext { localRepository.updateMembership(userID, id, false) }
                 .flatMapMaybe { localRepository.getGroup(id).firstElement() }
     }
 

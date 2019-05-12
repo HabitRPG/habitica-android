@@ -96,6 +96,7 @@
     <!-- dialog -->
     <color name="primary_text_light">#000000</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent_white">#00FFFFFF</color>
 
     <!--  clock styled weekdays -->
     <color name="days_gray">#ffb5b5b5</color>

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.subscriptions
 
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri

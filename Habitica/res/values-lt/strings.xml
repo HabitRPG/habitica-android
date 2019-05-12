@@ -290,7 +290,7 @@
   <string name="invite_users">Pakviesk į Grupę</string>
   <string name="share_using">Pasidalinti su</string>
   <string name="share_hatched">Kątik gavau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
-  <string name="share_raised">Kątik užauginau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
+  <string name="share_raised">Kątik užauginau %1$s Habitica augintinį atliekant kasdienes užduotis!</string>
   <string name="open_in_store">Atidaryti play parduotuvėje</string>
   <string name="change_class_confirmation">Ar tikrai nori pasikeisti savo klasę? Tai kainuos 3 brangakmenius.</string>
   <string name="leaderMessage">Žinutė nuo %1$s</string>

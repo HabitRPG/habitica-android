@@ -37,7 +37,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     @Inject
     lateinit  var pushNotificationManager: PushNotificationManager
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
     @Inject
     lateinit var apiClient: ApiClient
 

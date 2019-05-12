@@ -359,7 +359,7 @@
   <string name="share_using">Partager avec</string>
   <string name="share_levelup">J\'ai atteint le niveau %d à Habitica en améliorant mes habitudes dans le monde réel !</string>
   <string name="share_hatched">Je viens de faire éclore un familier%1$s %2$s à Habitica en réalisant mes tâches quotidiennes</string>
-  <string name="share_raised">Je viens de gagner un-e %1$s %2$s monture en réalisant mes tâches quotidiennes!</string>
+  <string name="share_raised">Je viens de gagner un-e %1$s monture en réalisant mes tâches quotidiennes!</string>
   <string name="open_in_store">Ouvrir dans le Play Store</string>
   <string name="change_class_confirmation">Êtes-vous sûr·e de vouloir changer de classe ? Cela vous coûtera 3 gemmes.</string>
   <string name="change_class_equipment_warning">Attention : vous ne pourrez plus acheter l\'équipement de la classe %s.</string>

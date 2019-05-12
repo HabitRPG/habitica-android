@@ -23,6 +23,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -45,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TaskFormTextInputLayoutAppearance">
-                    <com.google.android.material.textfield.TextInputEditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/text_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -55,7 +56,7 @@
                     style="@style/TaskFormTextInputLayoutAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputEditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/notes_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -78,7 +79,7 @@
                     android:id="@+id/reward_value_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/checklist"
+                    android:text="@string/cost"
                     style="@style/TaskFormSectionheader"/>
                 <com.habitrpg.android.habitica.ui.views.tasks.form.RewardValueFormView
                     android:id="@+id/reward_value"
@@ -139,7 +140,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
-                        <com.google.android.material.textfield.TextInputEditText
+                        <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/habit_adjust_positive_streak"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -154,7 +155,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
-                        <com.google.android.material.textfield.TextInputEditText
+                        <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/habit_adjust_negative_streak"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -225,6 +226,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tags_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tags"

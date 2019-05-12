@@ -10,15 +10,11 @@ import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.WorldState;
 import com.habitrpg.android.habitica.models.inventory.Customization;
-import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
-import com.habitrpg.android.habitica.models.inventory.Food;
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
-import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
@@ -47,13 +43,9 @@ import com.habitrpg.android.habitica.utils.FeedResponseDeserializer;
 import com.habitrpg.android.habitica.utils.FindUsernameResultDeserializer;
 import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.MemberSerialization;
-import com.habitrpg.android.habitica.utils.MountListDeserializer;
-import com.habitrpg.android.habitica.utils.MountMapDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedItemListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedMountListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedPetListDeserializer;
-import com.habitrpg.android.habitica.utils.PetListDeserializer;
-import com.habitrpg.android.habitica.utils.PetMapDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
 import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDeserializer;
@@ -83,10 +75,6 @@ public class GSonFactoryCreator {
         Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {}.getType();
         Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {}.getType();
         Type itemDataListType = new TypeToken<RealmList<Equipment>>() {}.getType();
-        Type petMapType = new TypeToken<Map<String, Pet>>() {}.getType();
-        Type mountMapType = new TypeToken<Map<String, Mount>>() {}.getType();
-        Type petListType = new TypeToken<RealmList<Pet>>() {}.getType();
-        Type mountListType = new TypeToken<RealmList<Mount>>() {}.getType();
         Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {}.getType();
         Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {}.getType();
         Type challengeListType = new TypeToken<List<Challenge>>() {}.getType();
@@ -111,10 +99,6 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(Group.class, new GroupSerialization())
                 .registerTypeAdapter(Date.class, new DateDeserializer())
                 .registerTypeAdapter(itemDataListType, new EquipmentListDeserializer())
-                .registerTypeAdapter(petListType, new PetListDeserializer())
-                .registerTypeAdapter(mountListType, new MountListDeserializer())
-                .registerTypeAdapter(petMapType, new PetMapDeserializer())
-                .registerTypeAdapter(mountMapType, new MountMapDeserializer())
                 .registerTypeAdapter(ChatMessage.class, new ChatMessageDeserializer())
                 .registerTypeAdapter(Task.class, new TaskSerializer())
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())

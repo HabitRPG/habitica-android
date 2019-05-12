@@ -1,6 +1,3 @@
-- Redesigned Class selection
-- Redesigned Task Form
-- Redesigned Report message dialog
-- Optimized user and content loading
-- Improved FAQ and settings
-- Fixed Time Travelers shop display
+In this update, we've made improvements in many areas of the app and smashed some bugs. Highlights include changes to Settings including easier language selection, fixes for the class selection screen, improvements to the Time Travelers’ Shop, and fixes for Challenge loading, To-Do reminders, and the Record Yesterday’s Activity modal. We’ve also made it easier to find the Habitica Help Guild and the Party Wanted Guild.
+
+Be sure to download this update now for a better Habitica experience!

@@ -6,8 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +14,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -27,6 +26,7 @@ import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -81,8 +81,8 @@ class QuestProgressView : LinearLayout {
 
     private fun setupView(context: Context) {
         setWillNotDraw(false)
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.quest_progress, this)
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
+        inflater?.inflate(R.layout.quest_progress, this)
 
         questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), true))
         questImageTitle.setOnClickListener {
@@ -115,9 +115,7 @@ class QuestProgressView : LinearLayout {
         if (quest?.isValid == true) {
             val colors = quest?.colors
             if (colors != null) {
-                rect.set(0.0f, 0.0f, (canvas?.width?.toFloat()
-                        ?: 1.0f) / displayDensity, (canvas?.height?.toFloat()
-                        ?: 1.0f) / displayDensity)
+                rect.set(0.0f, 0.0f, width.toFloat() / displayDensity, height.toFloat() / displayDensity)
                 canvas?.scale(displayDensity, displayDensity)
                 HabiticaIcons.drawQuestBackground(canvas, rect, colors.darkColor, colors.mediumColor, colors.extraLightColor)
                 canvas?.scale(1.0f / displayDensity, 1.0f / displayDensity)
@@ -200,11 +198,11 @@ class QuestProgressView : LinearLayout {
                 DataBindingUtils.loadImage("rage_strike_${strike.key}") {
                     Observable.just(it)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer {
+                            .subscribe(Consumer { bitmap ->
                                 val displayDensity = resources.displayMetrics.density
-                                val width = it.width * displayDensity
-                                val height = it.height * displayDensity
-                                val scaledImage = Bitmap.createScaledBitmap(it, width.toInt(), height.toInt(), false)
+                                val width = bitmap.width * displayDensity
+                                val height = bitmap.height * displayDensity
+                                val scaledImage = Bitmap.createScaledBitmap(bitmap, width.toInt(), height.toInt(), false)
                                 iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
                                 iconView.setOnClickListener {
                                     showActiveStrikeAlert(strike.key)
@@ -234,9 +232,9 @@ class QuestProgressView : LinearLayout {
         npcBannerView.identifier = key
         alert.setAdditionalContentView(npcBannerView, 1)
 
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
-        })
+        }
         alert.show()
     }
 
@@ -246,9 +244,9 @@ class QuestProgressView : LinearLayout {
         alert.setTitleBackground(R.color.orange_10)
         alert.setSubtitle(R.string.pending_strike_subtitle)
         alert.setMessage(R.string.pending_strike_description)
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
-        })
+        }
         alert.show()
     }
 
@@ -258,9 +256,9 @@ class QuestProgressView : LinearLayout {
         alert.setTitleBackground(R.color.orange_10)
         alert.setSubtitle(R.string.strike_description_subtitle)
         alert.setMessage(R.string.strike_description_description)
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
-        })
+        }
         alert.show()
     }
 

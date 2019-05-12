@@ -28,13 +28,12 @@ import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.MaintenanceActivity;
-import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
+import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.activities.ReportMessageActivity;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
-import com.habitrpg.android.habitica.ui.activities.OldTaskFormActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.activities.VerifyUsernameActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
@@ -76,6 +75,7 @@ import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.GuildDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
@@ -130,7 +130,7 @@ public interface AppComponent {
 
     void inject(MaintenanceActivity maintenanceActivity);
 
-    void inject(PartyInviteActivity partyInviteActivity);
+    void inject(GroupInviteActivity groupInviteActivity);
 
     void inject(PrefsActivity prefsActivity);
 
@@ -139,8 +139,6 @@ public interface AppComponent {
     void inject(SkillTasksActivity skillTasksActivity);
 
     void inject(SkillMemberActivity skillMembersActivity);
-
-    void inject(OldTaskFormActivity taskFormActivity);
 
     void inject(TasksFragment tasksFragment);
 
@@ -317,4 +315,6 @@ public interface AppComponent {
     void inject(@NotNull TaskFormActivity taskFormActivity);
 
     void inject(@NotNull ReportMessageActivity reportMessageActivity);
+
+    void inject(@NotNull GuildDetailFragment guildDetailFragment);
 }

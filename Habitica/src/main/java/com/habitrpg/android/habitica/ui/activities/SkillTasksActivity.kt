@@ -27,7 +27,7 @@ class SkillTasksActivity : BaseActivity() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    private val viewPager: androidx.viewpager.widget.ViewPager by bindView(R.id.viewPager)
+    private val viewPager: ViewPager by bindView(R.id.viewPager)
     private val tabLayout: TabLayout by bindView(R.id.tab_layout)
 
     internal var viewFragmentsDictionary = SparseArray<SkillTasksRecyclerViewFragment>()
@@ -50,7 +50,7 @@ class SkillTasksActivity : BaseActivity() {
 
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+            override fun getItem(position: Int): Fragment {
                 val fragment = SkillTasksRecyclerViewFragment()
                 when (position) {
                     0 -> fragment.taskType = Task.TYPE_HABIT

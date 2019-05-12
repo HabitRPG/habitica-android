@@ -84,7 +84,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         return openChallengeFragmentEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : RecyclerView.ViewHolder(itemView) {
 
         private val challengeName: EmojiTextView by bindView(R.id.challenge_name)
         private val challengeDescription: TextView by bindView(R.id.challenge_shorttext)

@@ -36,9 +36,6 @@ public class BitmapUtils {
     public static void saveToFile(String filename, Bitmap bmp) {
         try {
             createNomedia();
-            File myDir = new File(getSavePath());
-            boolean res = myDir.mkdirs();
-
             filename = getSavePath() + "/" + filename;
 
             FileOutputStream out = new FileOutputStream(filename);
@@ -51,9 +48,6 @@ public class BitmapUtils {
 
     public static File saveToShareableFile(String directory, String filename, Bitmap bmp) {
         try {
-            File myDir = new File(directory);
-            boolean res = myDir.mkdirs();
-
             filename = directory + "/" + filename;
 
             FileOutputStream out = new FileOutputStream(filename);
@@ -61,7 +55,7 @@ public class BitmapUtils {
             out.flush();
             out.close();
             return new File(filename);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return null;
     }
@@ -78,7 +72,7 @@ public class BitmapUtils {
             cacheDir.mkdirs();
             File nomediaFile = new File(getSavePath() + "/.nomedia");
             if (!nomediaFile.isFile()) return nomediaFile.createNewFile();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         return false;
     }

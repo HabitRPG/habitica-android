@@ -4,15 +4,14 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Build
-import androidx.core.content.ContextCompat
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.AfterChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.styledAttributes
 import kotlinx.android.synthetic.main.stats_slider_view.view.*
 
@@ -62,12 +61,7 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             statsSeekBar.thumb = thumbDrawable
         }
 
-        valueEditText.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable?) {
+        valueEditText.addTextChangedListener(AfterChangeTextWatcher {s ->
                 val newValue = try {
                     s.toString().toInt()
                 } catch (e: NumberFormatException) {
@@ -80,11 +74,9 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                     valueEditText.setText(currentValue.toString())
                     valueEditText.setSelection(valueEditText.length())
                 }
-            }
-
         })
 
-        statsSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        statsSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 currentValue = progress
                 if (fromUser) {

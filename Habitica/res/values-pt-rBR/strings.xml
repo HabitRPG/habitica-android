@@ -360,7 +360,7 @@
   <string name="share_using">Compartilhar via</string>
   <string name="share_levelup">Eu cheguei ao nível %d em Habitica, melhorando meus hábitos da vida real!</string>
   <string name="share_hatched">Eu acabei de ganhar um filhote de %1$s %2$s no Habitica por completar minhas tarefas da vida real!</string>
-  <string name="share_raised">Eu acabei de ganhar um %1$s %2$s de montaria no Habitica por completar minhas tarefas da vida real!</string>
+  <string name="share_raised">Eu acabei de ganhar um %1$s de montaria no Habitica por completar minhas tarefas da vida real!</string>
   <string name="open_in_store">Abra na Play Store</string>
   <string name="change_class_confirmation">Você tem certeza que quer mudar sua classe? Isso irá custar 3 gemas.</string>
   <string name="change_class_equipment_warning">Aviso: Você não poderá mais comprar equipamentos da classe %s.</string>

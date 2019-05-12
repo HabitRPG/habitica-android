@@ -9,7 +9,7 @@
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/days_gray"/>
+        android:background="@color/gray_500"/>
     <LinearLayout
         android:id="@+id/title_view"
         android:layout_width="match_parent"

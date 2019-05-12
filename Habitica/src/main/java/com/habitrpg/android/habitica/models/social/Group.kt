@@ -51,4 +51,9 @@ open class Group : RealmObject() {
     get() {
         return quest?.active ?: false
     }
+
+    val gemCount: Int
+    get() {
+        return (balance * 4.0).toInt()
+    }
 }

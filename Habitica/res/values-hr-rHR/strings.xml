@@ -361,7 +361,7 @@
   <string name="share_using">Podijeli koristeći</string>
   <string name="share_levelup">Došao/la sam do levela %d u Habitici poboljšavajući svoje navike u stvarnom životu! </string>
   <string name="share_hatched">Upravo sam izlegao/la %1$s %2$s ljubimca u Habitici izvršavajući svoje zadatke u stvarnom životu!</string>
-  <string name="share_raised">Upravo sam dobio/la %1$s %2$s životinju za jahanje u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
+  <string name="share_raised">Upravo sam dobio/la %1$s životinju za jahanje u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
   <string name="open_in_store">Otvori u Google Play trgovini</string>
   <string name="change_class_confirmation">Jesi li siguran/na da želiš promijeniti svoju klasu? Ovo će te koštati 3 dragulja.</string>
   <string name="change_class_equipment_warning">Upozorenje: više nećeš moći kupovati opremu iz klase %s.</string>

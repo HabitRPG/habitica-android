@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
@@ -29,7 +29,7 @@ import javax.inject.Inject
 class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -184,7 +184,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                     }
                     .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
                     .create()
-            dialog.setOnShowListener { _ -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
+            dialog.setOnShowListener { dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
             dialog.setView(input)
             dialog.show()
         }
@@ -240,7 +240,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
                     }
                     .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
                     .create()
-            dialog.setOnShowListener { _ -> dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
+            dialog.setOnShowListener { dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
             dialog.show()
         }
     }
@@ -264,7 +264,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     private fun resetAccount() {
         @Suppress("DEPRECATION")
         val dialog = ProgressDialog.show(context, context?.getString(R.string.resetting_account), null, true)
-        userRepository.resetAccount().subscribe({ _ -> dialog.dismiss() }) { throwable ->
+        userRepository.resetAccount().subscribe({ dialog.dismiss() }) { throwable ->
             dialog.dismiss()
             RxErrorHandler.reportError(throwable)
         }

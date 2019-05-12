@@ -3,20 +3,19 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.text.DateFormat
 import java.text.DateFormatSymbols
@@ -42,8 +41,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private val summaryTextView: TextView by bindView(R.id.summary_textview)
 
     private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
-    private val frequencyAdapter = ArrayAdapter.createFromResource(context,
-            R.array.repeatables_frequencies, android.R.layout.simple_spinner_item)
+    private val frequencyAdapter = SimpleSpinnerAdapter(context, R.array.repeatables_frequencies)
 
     var taskType = Task.TYPE_DAILY
     set(value) {
@@ -55,6 +53,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         field = value
         startDateTextView.text = dateFormatter.format(value)
         startDateCalendar.time = value
+        generateSummary()
     }
     private var startDateCalendar = Calendar.getInstance()
     var dueDate: Date? = null
@@ -72,27 +71,36 @@ class TaskSchedulingControls @JvmOverloads constructor(
             else -> 0
         })
         configureViewsForFrequency()
+        generateSummary()
     }
     var everyX
-        get() = (repeatsEveryEdittext.text ?: "1").toString().toInt()
+        get() = (repeatsEveryEdittext.text ?: "1").toString().toIntOrNull() ?: 1
     set(value) {
-        repeatsEveryEdittext.setText(value.toString())
+        try {
+            repeatsEveryEdittext.setText(value.toString())
+        } catch (e: NumberFormatException) {
+            repeatsEveryEdittext.setText("1")
+        }
+        generateSummary()
     }
     var weeklyRepeat: Days = Days()
     set(value) {
         field = value
         createWeeklyRepeatViews()
+        generateSummary()
     }
 
     var daysOfMonth: List<Int>? = null
     set(value) {
         field = value
         configureMonthlyRepeatViews()
+        generateSummary()
     }
     var weeksOfMonth: List<Int>? = null
     set(value) {
         field = value
         configureMonthlyRepeatViews()
+        generateSummary()
     }
 
     private val weekdays: Array<String> by lazy {
@@ -107,6 +115,11 @@ class TaskSchedulingControls @JvmOverloads constructor(
     init {
         inflate(R.layout.task_form_task_scheduling, true)
         repeatsEverySpinner.adapter = frequencyAdapter
+
+        frequency = Task.FREQUENCY_WEEKLY
+        startDate = Date()
+        everyX = 1
+        weeklyRepeat = Days()
 
         repeatsEverySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -146,13 +159,15 @@ class TaskSchedulingControls @JvmOverloads constructor(
         monthlyRepeatDaysButton.setOnClickListener {
             daysOfMonth = mutableListOf(startDateCalendar.get(Calendar.DATE))
             weeksOfMonth = null
+            generateSummary()
         }
         monthlyRepeatWeeksButton.setOnClickListener {
             weeksOfMonth = mutableListOf(startDateCalendar.get(Calendar.WEEK_OF_MONTH))
             daysOfMonth = null
+            generateSummary()
         }
 
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
         configureViewsForType()
         configureViewsForFrequency()
     }
@@ -160,6 +175,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private fun configureViewsForType() {
         startDateTitleView.text = context.getString(if (taskType == Task.TYPE_DAILY) R.string.start_date else R.string.due_date)
         repeatsEveryWrapper.visibility = if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
+        summaryTextView.visibility =  if (taskType == Task.TYPE_DAILY) View.VISIBLE else View.GONE
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -221,7 +237,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
         val lastWeekday = weekdayOrder.last()
         for (weekdayCode in weekdayOrder) {
             val button = TextView(context, null, 0, R.style.TaskFormWeekdayButton)
-            val layoutParams = LinearLayout.LayoutParams(size, size)
+            val layoutParams = LayoutParams(size, size)
             button.layoutParams = layoutParams
             button.text = weekdays[weekdayCode].first().toUpperCase().toString()
             val isActive = isWeekdayActive(weekdayCode)
@@ -239,7 +255,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             weeklyRepeatWrapper.addView(button)
             if (weekdayCode != lastWeekday) {
                 val space = Space(context)
-                val spaceLayoutParams = LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT)
+                val spaceLayoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT)
                 spaceLayoutParams.weight = 1f
                 space.layoutParams = spaceLayoutParams
                 weeklyRepeatWrapper.addView(space)
@@ -265,5 +281,58 @@ class TaskSchedulingControls @JvmOverloads constructor(
             monthlyRepeatWeeksButton.setTextColor(unselectedText)
             monthlyRepeatWeeksButton.background.mutate().setTint(unselectedBackground)
         }
+    }
+
+    private fun generateSummary() {
+        var frequencyQualifier = ""
+
+        when (frequency) {
+            "daily" -> frequencyQualifier = "day(s)"
+            "weekly" -> frequencyQualifier = "week(s)"
+            "monthly" -> frequencyQualifier = "month(s)"
+            "yearly" -> frequencyQualifier = "year(s)"
+        }
+
+        var weekdays: String
+        val weekdayStrings = ArrayList<String>()
+        if (weeklyRepeat.m) {
+            weekdayStrings.add("Monday")
+        }
+        if (weeklyRepeat.t) {
+            weekdayStrings.add("Tuesday")
+        }
+        if (weeklyRepeat.w) {
+            weekdayStrings.add("Wednesday")
+        }
+        if (weeklyRepeat.th) {
+            weekdayStrings.add("Thursday")
+        }
+        if (weeklyRepeat.f) {
+            weekdayStrings.add("Friday")
+        }
+        if (weeklyRepeat.s) {
+            weekdayStrings.add("Saturday")
+        }
+        if (weeklyRepeat.su) {
+            weekdayStrings.add("Sunday")
+        }
+        weekdays = " on " + TextUtils.join(", ", weekdayStrings)
+        if (frequency != "weekly") {
+            weekdays = ""
+        }
+
+        if (frequency == "monthly") {
+            weekdays = if (daysOfMonth != null) {
+                val date = startDateCalendar.get(Calendar.DATE)
+                " on the $date"
+            } else {
+                val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
+                val dayLongName = startDateCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+                " on the $week week on $dayLongName"
+            }
+        }
+
+        val summary = resources.getString(R.string.repeat_summary, frequency, everyX.toString(), frequencyQualifier, weekdays)
+        summaryTextView.text = summary
     }
 }

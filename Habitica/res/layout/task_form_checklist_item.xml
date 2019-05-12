@@ -22,7 +22,7 @@
         android:src="@drawable/plus_taskform"
         android:scaleType="center"
         android:layout_marginEnd="@dimen/spacing_large"/>
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

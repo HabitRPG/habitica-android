@@ -149,10 +149,10 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                     .setRightDiff(rightIcon, rightTextColor, rightText)
 
             when (displayType) {
-                HabiticaSnackbar.SnackbarDisplayType.FAILURE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_red)
-                HabiticaSnackbar.SnackbarDisplayType.FAILURE_BLUE, HabiticaSnackbar.SnackbarDisplayType.BLUE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_blue)
-                HabiticaSnackbar.SnackbarDisplayType.DROP, HabiticaSnackbar.SnackbarDisplayType.NORMAL -> snackbar.setBackgroundResource(R.drawable.snackbar_background_gray)
-                HabiticaSnackbar.SnackbarDisplayType.SUCCESS -> snackbar.setBackgroundResource(R.drawable.snackbar_background_green)
+                SnackbarDisplayType.FAILURE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_red)
+                SnackbarDisplayType.FAILURE_BLUE, SnackbarDisplayType.BLUE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_blue)
+                SnackbarDisplayType.DROP, SnackbarDisplayType.NORMAL -> snackbar.setBackgroundResource(R.drawable.snackbar_background_gray)
+                SnackbarDisplayType.SUCCESS -> snackbar.setBackgroundResource(R.drawable.snackbar_background_green)
             }
 
             snackbar.show()

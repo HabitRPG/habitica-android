@@ -102,7 +102,7 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 preferenceFragment: PreferenceFragmentCompat, key: String): DayStartPreferenceDialogFragment {
             val fragment = DayStartPreferenceDialogFragment()
             val arguments = Bundle(1)
-            arguments.putString(PreferenceDialogFragmentCompat.ARG_KEY, key)
+            arguments.putString(ARG_KEY, key)
             fragment.arguments = arguments
             fragment.setTargetFragment(preferenceFragment, 0)
             return fragment

@@ -73,9 +73,9 @@ public class RemindersManager {
             dialog.setContentView(R.layout.custom_date_time_dialogue);
             dialog.setTitle("Select Date and Time");
 
-            Button dialogConfirmButton = (Button) dialog.findViewById(R.id.customDialogConfirmButton);
-            TimePicker dialogTimePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
-            DatePicker dialogDatePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
+            Button dialogConfirmButton = dialog.findViewById(R.id.customDialogConfirmButton);
+            TimePicker dialogTimePicker = dialog.findViewById(R.id.timePicker);
+            DatePicker dialogDatePicker = dialog.findViewById(R.id.datePicker);
 
             dialogTimePicker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context));
 

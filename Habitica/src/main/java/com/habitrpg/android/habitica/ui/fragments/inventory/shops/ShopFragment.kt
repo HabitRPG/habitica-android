@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
@@ -41,7 +41,7 @@ class ShopFragment : BaseFragment() {
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
     private var layoutManager: GridLayoutManager? = null
 
@@ -153,10 +153,8 @@ class ShopFragment : BaseFragment() {
 
 
 
-        user.notNull { user ->
-            compositeSubscription.add(this.inventoryRepository.getOwnedItems(user)
-                    .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(this.inventoryRepository.getOwnedItems()
+                .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(this.inventoryRepository.getInAppRewards()
                 .map<List<String>> { rewards -> rewards.map { it.key } }
                 .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
@@ -234,6 +232,8 @@ class ShopFragment : BaseFragment() {
     fun onItemPurchased(event: GearPurchasedEvent) {
         if (Shop.MARKET == shopIdentifier) {
             loadMarketGear()
+        } else if (Shop.TIME_TRAVELERS_SHOP == shopIdentifier) {
+            loadShopInventory()
         }
     }
 

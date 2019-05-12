@@ -269,8 +269,8 @@ public class BottomBar extends LinearLayout implements View.OnClickListener, Vie
         rootView.setLayoutParams(params);
 
         backgroundOverlay = rootView.findViewById(R.id.bb_bottom_bar_background_overlay);
-        outerContainer = (ViewGroup) rootView.findViewById(R.id.bb_bottom_bar_outer_container);
-        tabContainer = (ViewGroup) rootView.findViewById(R.id.bb_bottom_bar_item_container);
+        outerContainer = rootView.findViewById(R.id.bb_bottom_bar_outer_container);
+        tabContainer = rootView.findViewById(R.id.bb_bottom_bar_item_container);
         shadowView = findViewById(R.id.bb_bottom_bar_shadow);
     }
 

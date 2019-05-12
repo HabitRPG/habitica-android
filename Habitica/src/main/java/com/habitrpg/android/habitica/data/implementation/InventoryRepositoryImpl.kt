@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.models.user.*
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
-class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String, var remoteConfigManager: RemoteConfigManager) : ContentRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
+class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClient: ApiClient, userID: String, var appConfigManager: AppConfigManager) : ContentRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
 
     override fun getQuestContent(key: String): Flowable<QuestContent> {
         return localRepository.getQuestContent(key)
@@ -47,8 +47,8 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
         return localRepository.getOwnedItems(itemType, userID)
     }
 
-    override fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>> {
-        return localRepository.getOwnedItems(user)
+    override fun getOwnedItems(): Flowable<Map<String, OwnedItem>> {
+        return localRepository.getOwnedItems(userID)
     }
 
     override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {
@@ -104,11 +104,22 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun sellItem(user: User?, type: String, key: String): Flowable<User> {
-        return localRepository.getItem(type, key)
+        return localRepository.getOwnedItem(userID, type, key)
                 .flatMap { item -> sellItem(user, item) }
     }
 
-    override fun sellItem(user: User?, item: Item): Flowable<User> {
+    override fun sellItem(user: User?, ownedItem: OwnedItem): Flowable<User> {
+        return localRepository.getItem(ownedItem.itemType ?: "", ownedItem.key ?: "")
+                .flatMap { item -> sellItem(user, item, ownedItem) }
+    }
+
+    private fun sellItem(user: User?, item: Item, ownedItem: OwnedItem): Flowable<User> {
+        if (user != null && appConfigManager.enableLocalChanges()) {
+            localRepository.executeTransaction {
+                ownedItem.numberOwned -= 1
+                user.stats?.gp = (user.stats?.gp ?: 0.0) + item.value
+            }
+        }
         return apiClient.sellItem(item.type, item.key)
                 .map { user1 ->
                     localRepository.executeTransaction { realm ->
@@ -118,8 +129,6 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                                 items.userId = user.id
                                 val newItems = realm.copyToRealmOrUpdate(items)
                                 user.items = newItems
-                            } else {
-                                //item.owned = item.owned - 1
                             }
                             val stats = user1.stats
                             if (stats != null) {
@@ -138,7 +147,7 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
     }
 
     override fun equip(user: User?, type: String, key: String): Flowable<Items> {
-        if (user != null && remoteConfigManager.enableLocalChanges()) {
+        if (user != null && appConfigManager.enableLocalChanges()) {
             localRepository.executeTransaction {
                 if (type == "mount") {
                     user.items?.currentMount = key
@@ -188,10 +197,18 @@ class InventoryRepositoryImpl(localRepository: InventoryLocalRepository, apiClie
                 }
     }
 
-    override fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion): Flowable<Items> {
+    override fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion, successFunction: () -> Unit): Flowable<Items> {
+        if (appConfigManager.enableLocalChanges()) {
+            localRepository.hatchPet(egg.key, hatchingPotion.key, userID)
+            successFunction()
+        }
         return apiClient.hatchPet(egg.key, hatchingPotion.key)
                 .doOnNext {
-                    localRepository.hatchPet(egg.key, hatchingPotion.key, userID)
+                    it.userId = userID
+                    localRepository.save(it)
+                    if (!appConfigManager.enableLocalChanges()) {
+                        successFunction()
+                    }
                 }
     }
 

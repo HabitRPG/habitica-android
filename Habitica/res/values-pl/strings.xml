@@ -348,7 +348,7 @@
   <string name="share_using">Udostępnij używanie</string>
   <string name="share_levelup">Uzyskałem poziom %d w Habitice dzięki poprawie moich życiowych nawyków!</string>
   <string name="share_hatched">Właśnie wyklułem chowańca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
-  <string name="share_raised">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
+  <string name="share_raised">Właśnie zyskałem wierzchowca %1$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
   <string name="open_in_store">Otwórz w sklepie Google Play</string>
   <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
   <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s</string>

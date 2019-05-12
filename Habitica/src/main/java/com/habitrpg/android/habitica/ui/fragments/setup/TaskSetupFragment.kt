@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.setup
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.inflate
@@ -119,6 +119,8 @@ class TaskSetupFragment : BaseFragment() {
                 tasks.add(taskObject)
             }
         }
+        tasks.add(makeTaskObject(Task.TYPE_HABIT, getString(R.string.setup_task_habit_1), true, false, getString(R.string.setup_task_habit_1_notes)))
+        tasks.add(makeTaskObject(Task.TYPE_HABIT, getString(R.string.setup_task_habit_2), false, true, getString(R.string.setup_task_habit_2_notes)))
         tasks.add(makeTaskObject(Task.TYPE_REWARD, getString(R.string.setup_task_reward), null, null, getString(R.string.setup_task_reward_notes)))
         tasks.add(makeTaskObject(Task.TYPE_TODO, getString(R.string.setup_task_join_habitica), null, null, getString(R.string.setup_task_join_habitica_notes)))
         return tasks

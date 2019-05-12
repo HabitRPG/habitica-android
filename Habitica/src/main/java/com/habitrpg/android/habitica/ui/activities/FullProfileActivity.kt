@@ -370,7 +370,7 @@ class FullProfileActivity : BaseActivity() {
     private fun addNormalAddBuffAttributes(stats: Stats) {
         val buffs = stats.buffs
 
-        addAttributeRow(getString(R.string.profile_allocated), stats.str?.toFloat() ?: 0f, stats._int?.toFloat() ?: 0f, stats.con?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
+        addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
         addAttributeRow(getString(R.string.buffs), buffs?.getStr() ?: 0f, buffs?.get_int() ?: 0f, buffs?.getCon() ?: 0f, buffs?.getPer() ?: 0f, true, false)
 
         // Summary row

@@ -22,11 +22,15 @@
     </entry>
     <entry>
         <key>enableLocalChanges</key>
-        <value>true</value>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>enableLocalTaskScoring</key>
+        <value>false</value>
     </entry>
     <entry>
         <key>lastVersionNumber</key>
-        <value></value>
+        <value>1.0</value>
     </entry>
     <entry>
         <key>lastVersionCode</key>

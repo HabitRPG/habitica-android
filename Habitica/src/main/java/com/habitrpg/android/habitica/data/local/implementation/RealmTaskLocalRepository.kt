@@ -7,6 +7,7 @@ import io.reactivex.Maybe
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
+import io.realm.Sort
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
@@ -14,7 +15,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         return realm.where(Task::class.java)
                 .equalTo("type", taskType)
                 .equalTo("userId", userID)
-                .sort("position")
+                .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
@@ -23,7 +24,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getTasks(userId: String): Flowable<RealmResults<Task>> {
         return realm.where(Task::class.java).equalTo("userId", userId)
-                .sort("position")
+                .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }

@@ -2,8 +2,6 @@ package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject

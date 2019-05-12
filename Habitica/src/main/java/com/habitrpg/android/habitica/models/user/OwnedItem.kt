@@ -10,14 +10,18 @@ open class OwnedItem : RealmObject(), OwnedObject {
     override var userID: String? = null
     set(value) {
         field = value
-        combinedKey = field + key
+        combinedKey = field + itemType + key
     }
     override var key: String? = null
     set(value) {
         field = value
-        combinedKey = field + key
+        combinedKey = userID + itemType + field
     }
 
     var itemType: String? = null
+        set(value) {
+            field = value
+            combinedKey = userID + field + key
+        }
     var numberOwned = 0
 }

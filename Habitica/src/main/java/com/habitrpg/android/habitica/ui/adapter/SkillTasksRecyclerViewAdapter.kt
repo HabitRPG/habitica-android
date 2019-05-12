@@ -47,7 +47,7 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
         return taskSelectionEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    inner class TaskViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         var task: Task? = null
 

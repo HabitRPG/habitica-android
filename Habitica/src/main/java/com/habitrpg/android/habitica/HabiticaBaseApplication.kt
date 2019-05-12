@@ -17,6 +17,7 @@ import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -30,12 +31,6 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.instabug.bug.BugReporting
-import com.instabug.bug.PromptOption
-import com.instabug.library.Instabug
-import com.instabug.library.invocation.InstabugInvocationEvent
-import com.instabug.library.ui.onboarding.WelcomeMessage
-import com.instabug.library.visualusersteps.State
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import io.reactivex.functions.Consumer
@@ -85,7 +80,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         setupRemoteConfig()
         setupNotifications()
         refWatcher = LeakCanary.install(this)
-        setupInstabug()
         createBillingAndCheckout()
         HabiticaIconsHelper.init(this)
 
@@ -107,18 +101,9 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
 
         RxErrorHandler.init(crashlyticsProxy)
 
-        checkIfNewVersion()
-    }
+        FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
-    private fun setupInstabug() {
-        Instabug.Builder(this, getString(R.string.instabug_key))
-                .setInvocationEvents(InstabugInvocationEvent.SHAKE)
-                .setReproStepsState(State.ENABLED_WITH_NO_SCREENSHOTS)
-                .build()
-        Instabug.setWelcomeMessageState(WelcomeMessage.State.DISABLED)
-        Instabug.setUserAttribute("", lazyApiHelper.hostConfig.user)
-        BugReporting.setShakingThreshold(900)
-        BugReporting.setPromptOptionsEnabled(PromptOption.BUG, PromptOption.FEEDBACK)
+        checkIfNewVersion()
     }
 
     protected open fun setupRealm() {
@@ -213,9 +198,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         remoteConfig.setConfigSettings(configSettings)
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
         remoteConfig.fetch(if (BuildConfig.DEBUG) 0 else 3600)
-                .addOnCompleteListener {
-                    remoteConfig.activateFetched()
-                }
     }
 
     private fun setupNotifications() {

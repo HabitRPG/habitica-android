@@ -353,7 +353,7 @@
   <string name="share_using">올리기</string>
   <string name="share_levelup">일상생활의 습관을 개선하여 Habitica에서 레벨 %d가 되었어요!</string>
   <string name="share_hatched">일상생활의 과제들을 달성하여 Habitica에서 %1$s %2$s 펫을 깨웠어요!</string>
-  <string name="share_raised">일상생활의 과제들을 달성하여 %1$s %2$s 탈것을 얻었어요!</string>
+  <string name="share_raised">일상생활의 과제들을 달성하여 %1$s 탈것을 얻었어요!</string>
   <string name="open_in_store">플레이스토어로 열기</string>
   <string name="change_class_confirmation">보석 3개를 사용하여 직업을 바꾸시겠습니까? </string>
   <string name="change_class_equipment_warning">주의: 더 이상 %s 직업의 장비를 구입할 수 없게됩니다.</string>

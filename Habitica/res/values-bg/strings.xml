@@ -359,7 +359,7 @@
   <string name="share_using">Споделяне чрез</string>
   <string name="share_levelup">Достигнах ниво %d в Хабитика, като подобрявам навиците си в истинския живот!</string>
   <string name="share_hatched">Току-що излюпих любимец — %1$s %2$s в Хабитика, като изпълнявах задачите си в истинския живот!</string>
-  <string name="share_raised">Току-що се сдобих с превоз — %1$s %2$s в Хабитика като изпълнявах задачите си в истинския живот!</string>
+  <string name="share_raised">Току-що се сдобих с превоз — %1$s в Хабитика като изпълнявах задачите си в истинския живот!</string>
   <string name="open_in_store">Отваряне в магазина</string>
   <string name="change_class_confirmation">Наистина ли искате да промените класа си? Това ще Ви струва 3 диаманта.</string>
   <string name="change_class_equipment_warning">Внимание: Повече няма да можете да купувате екипировка за класа „%s“.</string>

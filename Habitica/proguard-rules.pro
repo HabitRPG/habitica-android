@@ -179,4 +179,14 @@
 #-ignorewarnings
 
 -keep class com.google.firebase.provider.FirebaseInitProvider
--keep class com.example.instabug.**
+
+#keep all enums
+-keepclassmembers enum * { *; }
+-keep class Type {
+    public *;
+}
+-keepclassmembers class * extends java.lang.Enum {
+    <fields>;
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}

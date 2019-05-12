@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.activities.OldTaskFormActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
@@ -287,8 +286,7 @@ class TasksFragment : BaseMainFragment() {
         }
 
         val bundle = Bundle()
-        bundle.putString(OldTaskFormActivity.TASK_TYPE_KEY, type)
-        bundle.putBoolean(OldTaskFormActivity.SAVE_TO_DB, true)
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
@@ -306,8 +304,8 @@ class TasksFragment : BaseMainFragment() {
         }
 
         val bundle = Bundle()
-        bundle.putString(OldTaskFormActivity.TASK_TYPE_KEY, event.Task.type)
-        bundle.putString(OldTaskFormActivity.TASK_ID_KEY, event.Task.id)
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.type)
+        bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.id)
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
@@ -334,7 +332,7 @@ class TasksFragment : BaseMainFragment() {
 
     private fun onTaskCreatedResult(resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            val taskType = data?.getStringExtra(OldTaskFormActivity.TASK_TYPE_KEY)
+            val taskType = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
             if (taskType != null) {
                 switchToTaskTab(taskType)
             }

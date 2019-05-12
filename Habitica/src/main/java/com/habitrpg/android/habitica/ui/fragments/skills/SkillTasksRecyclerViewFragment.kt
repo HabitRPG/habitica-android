@@ -31,10 +31,10 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    private val recyclerView: androidx.recyclerview.widget.RecyclerView? by bindView(R.id.recyclerView)
+    private val recyclerView: RecyclerView? by bindView(R.id.recyclerView)
 
     var adapter: SkillTasksRecyclerViewAdapter = SkillTasksRecyclerViewAdapter(null, true)
-    internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
+    internal var layoutManager: LinearLayoutManager? = null
     var taskType: String? = null
 
     val taskSelectionEvents: Flowable<Task>
@@ -55,10 +55,10 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         compositeSubscription.add(taskRepository.getTasks(taskType ?: "", userId).firstElement().subscribe(Consumer { tasks -> adapter.updateData(tasks) }, RxErrorHandler.handleEmptyError()))
         recyclerView?.adapter = adapter
 
-        layoutManager = recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+        layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
 
             recyclerView?.layoutManager = layoutManager
         }

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.LinearLayout
@@ -52,11 +51,8 @@ class CurrencyViews : LinearLayout {
 
     private fun setupView(view: CurrencyView, margin: Int) {
         this.addView(view)
-        val params = view.layoutParams as LayoutParams
-        params.setMargins(margin, 0, 0, 0)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            params.marginStart = margin
-        }
+        val params = view.layoutParams as? LayoutParams
+        params?.marginStart = margin
         view.layoutParams = params
     }
 }

@@ -148,7 +148,7 @@
             android:layout_height="32dp"
             android:text="@string/visit_website"
             android:layout_gravity="center"
-            style="@style/Button.Purple.Small"/>
+            style="@style/HabiticaButton.Purple.Small"/>
     </LinearLayout>
 
 </LinearLayout>

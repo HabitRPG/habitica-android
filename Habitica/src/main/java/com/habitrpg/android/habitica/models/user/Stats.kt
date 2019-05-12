@@ -23,11 +23,14 @@ open class Stats : RealmObject() {
         }
 
     internal var user: User? = null
-    var con: Int? = null
-    var str: Int? = null
+    @SerializedName("con")
+    var constitution: Int? = null
+    @SerializedName("str")
+    var strength: Int? = null
+    @SerializedName("per")
     var per: Int? = null
     @SerializedName("int")
-    var _int: Int? = null
+    var intelligence: Int? = null
     var training: Training? = null
     var buffs: Buffs? = null
     var points: Int? = null
@@ -81,10 +84,10 @@ open class Stats : RealmObject() {
         if (stats == null) {
             return
         }
-        this.con = if (stats.con != null) stats.con else this.con
-        this.str = if (stats.str != null) stats.str else this.str
+        this.constitution = if (stats.constitution != null) stats.constitution else this.constitution
+        this.strength = if (stats.strength != null) stats.strength else this.strength
         this.per = if (stats.per != null) stats.per else this.per
-        this._int = if (stats._int != null) stats._int else this._int
+        this.intelligence = if (stats.intelligence != null) stats.intelligence else this.intelligence
         this.training?.merge(stats.training)
         this.buffs?.merge(stats.buffs)
         this.points = if (stats.points != null) stats.points else this.points

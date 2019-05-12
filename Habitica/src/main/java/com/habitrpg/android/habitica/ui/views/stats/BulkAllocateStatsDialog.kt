@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.ui.views.stats
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -23,7 +23,7 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
 
     var subscription: Disposable? = null
 
-    private var allocatedPoints: Int
+    private val allocatedPoints: Int
         get() {
         var value = 0
         value += strengthSliderView.currentValue
@@ -31,9 +31,6 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
         value += constitutionSliderView.currentValue
         value += perceptionSliderView.currentValue
         return value
-    }
-    set(value) {
-        return
     }
 
     private var pointsToAllocate = 0
@@ -50,9 +47,9 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
     set(value) {
         field = value
         pointsToAllocate = user?.stats?.points ?: 0
-        strengthSliderView.previousValue = user?.stats?.str ?: 0
-        intelligenceSliderView.previousValue = user?.stats?._int ?: 0
-        constitutionSliderView.previousValue = user?.stats?.con ?: 0
+        strengthSliderView.previousValue = user?.stats?.strength ?: 0
+        intelligenceSliderView.previousValue = user?.stats?.intelligence ?: 0
+        constitutionSliderView.previousValue = user?.stats?.constitution ?: 0
         perceptionSliderView.previousValue = user?.stats?.per ?: 0
     }
 
@@ -63,10 +60,10 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
         val view = inflater.inflate(R.layout.dialog_bulk_allocate, null)
 
         setView(view)
-        this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.save)) { _, _ ->
+        this.setButton(BUTTON_POSITIVE, context.getString(R.string.save)) { _, _ ->
             saveChanges()
         }
-        this.setButton(AlertDialog.BUTTON_NEUTRAL, context.getString(R.string.action_cancel)) { _, _ ->
+        this.setButton(BUTTON_NEUTRAL, context.getString(R.string.action_cancel)) { _, _ ->
             this.dismiss()
         }
     }
@@ -145,13 +142,13 @@ class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : Aler
     }
 
     private fun updateTitle() {
-        allocatedTitle.text = allocatedPoints.toString() + "/" + pointsToAllocate.toString()
+        allocatedTitle.text = "$allocatedPoints/$pointsToAllocate"
         if (allocatedPoints > 0) {
             titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_400))
         } else {
             titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_400))
         }
 
-        getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = allocatedPoints > 0
+        getButton(BUTTON_POSITIVE).isEnabled = allocatedPoints > 0
     }
 }

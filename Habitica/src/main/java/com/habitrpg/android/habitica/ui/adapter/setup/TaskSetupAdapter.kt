@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.util.*
 
-class TaskSetupAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>() {
+class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>() {
 
     var checkedList: MutableList<Boolean> = mutableListOf()
     private var taskList: List<List<String>> = emptyList()
@@ -40,7 +40,7 @@ class TaskSetupAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<TaskS
         return this.taskList.size
     }
 
-    inner class TaskViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val icon: Drawable?
         private val textView: TextView by bindView(R.id.textView)

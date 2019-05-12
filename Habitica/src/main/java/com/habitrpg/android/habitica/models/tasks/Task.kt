@@ -35,7 +35,7 @@ open class Task : RealmObject, Parcelable {
     var value: Double = 0.0
     var tags: RealmList<Tag>? = RealmList()
     var dateCreated: Date? = null
-    var position: Int? = 0
+    var position: Int = 0
     var group: TaskGroupPlan? = null
     //Habits
     var up: Boolean? = false
@@ -258,7 +258,7 @@ open class Task : RealmObject, Parcelable {
         dest.writeDouble(this.value)
         dest.writeList(this.tags)
         dest.writeLong(this.dateCreated?.time ?: -1)
-        dest.writeInt(this.position ?: 0)
+        dest.writeInt(this.position)
         dest.writeValue(this.up)
         dest.writeValue(this.down)
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())
@@ -277,12 +277,12 @@ open class Task : RealmObject, Parcelable {
     constructor()
 
     protected constructor(`in`: Parcel) {
-        this.userId = `in`.readString()
+        this.userId = `in`.readString() ?: ""
         this.priority = `in`.readValue(Float::class.java.classLoader) as? Float ?: 0f
-        this.text = `in`.readString()
+        this.text = `in`.readString() ?: ""
         this.notes = `in`.readString()
         this.attribute = `in`.readString()
-        this.type = `in`.readString()
+        this.type = `in`.readString() ?: ""
         this.value = `in`.readDouble()
         this.tags = RealmList()
         `in`.readList(this.tags, TaskTag::class.java.classLoader)

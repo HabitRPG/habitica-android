@@ -2,21 +2,17 @@ package com.habitrpg.android.habitica.ui.helpers
 
 import android.graphics.Color
 import android.text.Html
-
-import com.commonsware.cwac.anddown.AndDown
-
-import net.pherth.android.emoji_library.EmojiParser
-
 import android.text.Html.FROM_HTML_MODE_LEGACY
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
+import com.commonsware.cwac.anddown.AndDown
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import net.pherth.android.emoji_library.EmojiParser
 import java.util.regex.Pattern
 
 /**
@@ -47,7 +43,7 @@ object MarkdownParser {
 
         val matcher = regex.matcher(output)
         while (matcher.find()) {
-            val colorSpan = ForegroundColorSpan(Color.parseColor("#6133b4"))
+            val colorSpan = ForegroundColorSpan(Color.parseColor("#9A62FF"))
             output.setSpan(colorSpan, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
 

@@ -98,7 +98,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Body1"
+                        style="@style/Body2"
                         android:text="@string/no_party_description"
                         android:textColor="@color/gray_300"
                         android:gravity="center"
@@ -114,10 +114,6 @@
                         android:text="@string/create_party"
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_500"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -135,7 +131,7 @@
                         android:id="@+id/join_party_description_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Body1"
+                        style="@style/Body2"
                         android:text="@string/join_party_description"
                         android:textColor="@color/gray_300"
                         android:gravity="center"

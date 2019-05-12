@@ -9,12 +9,10 @@ import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
@@ -22,8 +20,8 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
@@ -49,7 +47,7 @@ class GroupInformationFragment : BaseFragment() {
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
     var group: Group? = null
     set(value) {
@@ -125,11 +123,15 @@ class GroupInformationFragment : BaseFragment() {
                 val width = Math.round(height * aspectRatio)
                 val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
                 drawable.tileModeX = Shader.TileMode.REPEAT
-                Observable.just(drawable)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(Consumer {
-                            no_party_background.background = it
-                        }, RxErrorHandler.handleEmptyError())
+                if (drawable != null) {
+                    Observable.just(drawable)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(Consumer {
+                                if (no_party_background != null) {
+                                    no_party_background.background = it
+                                }
+                            }, RxErrorHandler.handleEmptyError())
+                }
             }
         }
 
@@ -224,6 +226,7 @@ class GroupInformationFragment : BaseFragment() {
         groupDescriptionView.visibility = groupItemVisibility
         groupDescriptionWrapper.visibility = groupItemVisibility
 
+        groupNameView.text = group?.name
         groupDescriptionView.text = MarkdownParser.parseMarkdown(group?.description)
         groupSummaryView.text = MarkdownParser.parseMarkdown(group?.summary)
         gemCountWrapper.visibility = if (group?.balance != null && group.balance > 0) View.VISIBLE else View.GONE

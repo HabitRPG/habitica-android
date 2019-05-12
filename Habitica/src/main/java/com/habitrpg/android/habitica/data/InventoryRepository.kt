@@ -41,7 +41,7 @@ interface InventoryRepository : ContentRepository {
     fun getOwnedEquipment(type: String): Flowable<RealmResults<Equipment>>
 
     fun getOwnedItems(itemType: String): Flowable<RealmResults<OwnedItem>>
-    fun getOwnedItems(user: User): Flowable<Map<String, OwnedItem>>
+    fun getOwnedItems(): Flowable<Map<String, OwnedItem>>
 
     fun getEquipment(key: String): Flowable<Equipment>
 
@@ -56,14 +56,14 @@ interface InventoryRepository : ContentRepository {
     fun changeOwnedCount(type: String, key: String, amountToAdd: Int)
 
     fun sellItem(user: User?, type: String, key: String): Flowable<User>
-    fun sellItem(user: User?, item: Item): Flowable<User>
+    fun sellItem(user: User?, item: OwnedItem): Flowable<User>
 
     fun equipGear(user: User?, equipment: String, asCostume: Boolean): Flowable<Items>
     fun equip(user: User?, type: String, key: String): Flowable<Items>
 
     fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse>
 
-    fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion): Flowable<Items>
+    fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion, successFunction: () -> Unit): Flowable<Items>
 
     fun inviteToQuest(quest: QuestContent): Flowable<Quest>
 

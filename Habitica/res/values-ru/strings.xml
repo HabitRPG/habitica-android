@@ -357,7 +357,7 @@
   <string name="share_using">Поделиться с помощью</string>
   <string name="share_levelup">Я достиг %d уровня в Habitica, улучшая привычки в реальной жизни!</string>
   <string name="share_hatched">У меня только что вылупился питомец %1$s %2$s в Habitica, потому что я выполнял задачи в реальной жизни!</string>
-  <string name="share_raised">Я только что получил скакуна %1$s %2$s в Habitica, выполняя задачи в реальной жизни!</string>
+  <string name="share_raised">Я только что получил скакуна %1$s в Habitica, выполняя задачи в реальной жизни!</string>
   <string name="open_in_store">Откройте в Play маркет</string>
   <string name="change_class_confirmation">Вы уверены что хотите поменять класс? Это стоит 3 самоцвета.</string>
   <string name="change_class_equipment_warning">Внимание: вы больше не можете покупать снаряжение класса %s.</string>

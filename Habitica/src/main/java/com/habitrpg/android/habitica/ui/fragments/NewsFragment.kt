@@ -28,9 +28,6 @@ class NewsFragment : BaseMainFragment() {
         webSettings.javaScriptEnabled = true
         webSettings.domStorageEnabled = true
         newsWebview.webChromeClient = object : WebChromeClient() {
-            override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
-                return super.onConsoleMessage(consoleMessage)
-            }
         }
         newsWebview.loadUrl("$address/static/new-stuff")
     }

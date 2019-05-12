@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
-import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -19,18 +18,16 @@ import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import io.reactivex.Observable
@@ -45,16 +42,17 @@ import javax.inject.Inject
 
 class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    var viewModel: PartyViewModel? = null
+    var viewModel: GroupViewModel? = null
 
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
     internal var layoutManager: LinearLayoutManager? = null
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var isScrolledToTop = true
     private var refreshDisposable: Disposable? = null
+    var autocompleteContext: String = ""
 
     override fun injectFragment(component: AppComponent) {
         component.inject(this)
@@ -107,17 +105,23 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
         viewModel?.getChatMessages()?.subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
 
+        communityGuidelinesReviewView.setOnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = "https://habitica.com/static/community-guidelines".toUri()
+            context?.startActivity(i)
+        }
+        communityGuidelinesAcceptButton.setOnClickListener {
+            viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
+        }
+
         viewModel?.getUserData()?.observe(viewLifecycleOwner, Observer {
             chatAdapter?.user = it
             if (it?.flags?.isCommunityGuidelinesAccepted == true) {
                 communityGuidelinesView.visibility = View.GONE
+                chatBarContent.visibility = View.VISIBLE
             } else {
-                communityGuidelinesView.setOnClickListener { _ ->
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = "https://habitica.com/static/community-guidelines".toUri()
-                    context?.startActivity(i)
-                    viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
-                }
+                chatBarContent.visibility = View.GONE
+
             }
         })
     }
@@ -172,7 +176,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
          }
         viewModel?.retrieveGroupChat {
             refreshLayout?.isRefreshing = false
-            if (isScrolledToTop) {
+            if (isScrolledToTop && recyclerView != null) {
                 recyclerView.scrollToPosition(0)
             }
         }
