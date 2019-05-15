@@ -8,11 +8,9 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import android.text.method.LinkMovementMethod
+import android.widget.*
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -151,9 +149,6 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (!isCreator) {
-            return
-        }
         inflater.inflate(R.menu.menu_challenge_details, menu)
         val editMenuItem = menu.findItem(R.id.action_edit)
         editMenuItem?.isVisible = isCreator
@@ -167,6 +162,14 @@ class ChallengeDetailFragment: BaseMainFragment() {
             intent.putExtras(bundle)
             startActivity(intent)
             return true
+        }
+        else if (item.itemId == R.id.action_share) {
+            val shareGuildIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "${BuildConfig.BASE_URL}/challenges/$challengeID")
+                type = "text/plain"
+            }
+            startActivity(shareGuildIntent)
         }
 
         return super.onOptionsItemSelected(item)
