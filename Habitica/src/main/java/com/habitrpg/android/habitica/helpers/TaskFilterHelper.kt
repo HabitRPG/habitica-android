@@ -67,8 +67,8 @@ class TaskFilterHelper {
                     !task.completed
                 }
                 Task.FILTER_GRAY -> task.completed || !task.isDisplayedActive
-                Task.FILTER_WEAK -> task.value < 0
-                Task.FILTER_STRONG -> task.value >= 0
+                Task.FILTER_WEAK -> task.value < 1
+                Task.FILTER_STRONG -> task.value >= 1
                 Task.FILTER_DATED -> task.dueDate != null
                 Task.FILTER_COMPLETED -> task.completed
                 else -> true
@@ -107,8 +107,8 @@ class TaskFilterHelper {
                     query.equalTo("completed", false)
                 }
                 Task.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
-                Task.FILTER_WEAK -> query = query.lessThan("value", 0.0)
-                Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 0.0)
+                Task.FILTER_WEAK -> query = query.lessThan("value", 1.0)
+                Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
                 Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false)
                 Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
             }
