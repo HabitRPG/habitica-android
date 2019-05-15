@@ -592,6 +592,8 @@
   <string name="nevermind">Nieważne</string>
   <string name="resetting_account">Resetowanie konta</string>
   <string name="deleting_account">Usuwanie konta</string>
+  <string name="insufficientGold">Musisz wykonać więcej zadań, zanim będzie Cię stać na ten przedmiot!</string>
+  <string name="insufficientGoldTitle">Za mało złota</string>
   <string name="insufficientGems">Potrzebujesz więcej klejnotów by kupić ten przedmiot!</string>
   <string name="purchase_gems">Kup klejnoty</string>
   <string name="insufficientHourglasses">Potrzebujesz więcej Mistycznych Klepsydr, żeby kupić ten przedmiot!</string>
