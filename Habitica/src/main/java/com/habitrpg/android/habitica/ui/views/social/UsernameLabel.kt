@@ -39,11 +39,12 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
     }
 
     init {
-        val params = LayoutParams(
+        val textViewParams = LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT)
-        params.gravity = Gravity.CENTER_VERTICAL
-        addView(textView, params)
+        textViewParams.gravity = Gravity.CENTER_VERTICAL
+        textViewParams.weight = 1.0f
+        addView(textView, textViewParams)
         val padding = context?.resources?.getDimension(R.dimen.spacing_small)?.toInt() ?: 0
         textView.setPadding(0, 0, padding, 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
@@ -52,6 +53,10 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
         } else {
             textView.setTextAppearance(context, R.style.Body1)
         }
-        addView(tierIconView, params)
+        val iconViewParams = LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT)
+        iconViewParams.gravity = Gravity.CENTER_VERTICAL
+        addView(tierIconView, iconViewParams)
     }
 }
