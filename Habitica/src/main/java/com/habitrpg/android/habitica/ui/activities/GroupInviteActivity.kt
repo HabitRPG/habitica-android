@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.runDelayed
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
@@ -23,8 +24,11 @@ import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.functions.Consumer
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -39,6 +43,7 @@ class GroupInviteActivity : BaseActivity() {
 
     internal val tabLayout: TabLayout by bindView(R.id.tab_layout)
     internal val viewPager: ViewPager by bindView(R.id.viewPager)
+    private val snackbarView: ViewGroup by bindView(R.id.snackbar_view)
 
     internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
     private var userIdToInvite: String? = null
@@ -75,8 +80,9 @@ class GroupInviteActivity : BaseActivity() {
 
         if (id == R.id.action_send_invites) {
             setResult(Activity.RESULT_OK, createResultIntent())
+            showSnackbar(snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
             dismissKeyboard()
-            finish()
+            runDelayed(1, TimeUnit.SECONDS, this::finish)
             return true
         }
 
@@ -151,10 +157,6 @@ class GroupInviteActivity : BaseActivity() {
         if (this.userIdToInvite == null) {
             return
         }
-
-        val toast = Toast.makeText(applicationContext,
-                "Invited: $userIdToInvite", Toast.LENGTH_LONG)
-        toast.show()
 
         val inviteData = HashMap<String, Any>()
         val invites = ArrayList<String>()
