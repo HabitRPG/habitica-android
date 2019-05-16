@@ -80,9 +80,13 @@ class GroupInviteActivity : BaseActivity() {
 
         if (id == R.id.action_send_invites) {
             setResult(Activity.RESULT_OK, createResultIntent())
-            showSnackbar(snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
             dismissKeyboard()
-            runDelayed(1, TimeUnit.SECONDS, this::finish)
+            if (!fragments[viewPager.currentItem].values.isEmpty()) {
+                showSnackbar(snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
+                runDelayed(1, TimeUnit.SECONDS, this::finish)
+            } else {
+                finish()
+            }
             return true
         }
 
