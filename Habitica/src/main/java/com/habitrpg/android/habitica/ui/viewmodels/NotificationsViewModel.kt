@@ -126,6 +126,9 @@ open class NotificationsViewModel : BaseViewModel() {
             Notification.Type.NEW_CHAT_MESSAGE.type -> clickNewChatMessage(notification, navController)
             Notification.Type.NEW_MYSTERY_ITEMS.type -> navController.navigate(R.id.itemsFragment)
             Notification.Type.UNALLOCATED_STATS_POINTS.type -> navController.navigate(R.id.statsFragment)
+            // Group tasks should go to Group tasks view if that is added to this app at some point
+            Notification.Type.GROUP_TASK_APPROVED.type -> navController.navigate(R.id.tasksFragment)
+            Notification.Type.GROUP_TASK_NEEDS_WORK.type -> navController.navigate(R.id.tasksFragment)
         }
     }
 
