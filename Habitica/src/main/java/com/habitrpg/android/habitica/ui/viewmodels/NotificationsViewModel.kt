@@ -1,6 +1,9 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
+import android.os.Bundle
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
@@ -111,6 +114,31 @@ open class NotificationsViewModel : BaseViewModel() {
 
         disposable.add(userRepository.seeNotifications(notificationIds)
                 .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+    }
+
+    fun click(notificationId: String, navController: MainNavigationController) {
+        val notification = notificationsManager.getNotification(notificationId) ?: return
+
+        dismissNotification(notification)
+
+        when (notification.type) {
+            Notification.Type.NEW_STUFF.type -> navController.navigate(R.id.newsFragment)
+            Notification.Type.NEW_CHAT_MESSAGE.type -> clickNewChatMessage(notification, navController)
+            Notification.Type.NEW_MYSTERY_ITEMS.type -> navController.navigate(R.id.itemsFragment)
+            Notification.Type.UNALLOCATED_STATS_POINTS.type -> navController.navigate(R.id.statsFragment)
+        }
+    }
+
+    private fun clickNewChatMessage(notification: Notification, navController: MainNavigationController) {
+        val data = notification.data as? NewChatMessageData
+        if (isPartyMessage(data)) {
+            navController.navigate(R.id.partyFragment)
+        } else {
+            val bundle = Bundle()
+            bundle.putString("groupID", data?.group?.id)
+            bundle.putBoolean("isMember", true) // safe to assume user is member since they got the notification
+            navController.navigate(R.id.guildFragment, bundle)
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.*
+import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_notifications.*
@@ -204,6 +206,14 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             textColor: Int? = null
     ): View? {
         val item = inflater.inflate(R.layout.notification_item, notification_items, false)
+
+        val container = item?.findViewById(R.id.notification_item) as? View
+        container?.setOnClickListener {
+            val resultIntent = Intent()
+            resultIntent.putExtra("notificationId", notification.id)
+            setResult(NOTIFICATION_CLICK, resultIntent)
+            finish()
+        }
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
         dismissButton?.setOnClickListener { viewModel.dismissNotification(notification) }

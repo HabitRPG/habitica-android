@@ -45,6 +45,10 @@ class NotificationsManager (private val context: Context) {
         return this.notifications.toFlowable(BackpressureStrategy.LATEST)
     }
 
+    fun getNotification(id: String): Notification? {
+        return this.notifications.value?.find { it.id == id }
+    }
+
     fun setApiClient(apiClient: ApiClient?) {
         this.apiClient = apiClient
     }

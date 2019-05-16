@@ -145,6 +145,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     var user: User? = null
 
     private var avatarInHeader: AvatarWithBarsViewModel? = null
+    private var notificationsViewModel: NotificationsViewModel? = null
     private var faintDialog: HabiticaAlertDialog? = null
     private var sideAvatarView: AvatarView? = null
     private var activeTutorialView: TutorialView? = null
@@ -215,6 +216,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val viewModel = ViewModelProviders.of(this)
                 .get(NotificationsViewModel::class.java)
+        notificationsViewModel = viewModel
 
         compositeSubscription.add(viewModel.getNotificationCount().subscribe(Consumer {
             drawerFragment?.setNotificationsCount(it)
@@ -462,6 +464,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             retrieveUser()
         }
         super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == NOTIFICATION_CLICK && data?.hasExtra("notificationId") == true) {
+            notificationsViewModel?.click(
+                    data.getStringExtra("notificationId"),
+                    MainNavigationController
+            )
+        }
     }
 
     // region Events
@@ -880,5 +889,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         const val SELECT_CLASS_RESULT = 11
         const val GEM_PURCHASE_REQUEST = 111
+        const val NOTIFICATION_CLICK = 222
     }
 }
