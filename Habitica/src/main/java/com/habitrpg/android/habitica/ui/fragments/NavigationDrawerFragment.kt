@@ -7,7 +7,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -15,6 +14,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
@@ -78,8 +78,8 @@ class NavigationDrawerFragment : DialogFragment() {
         if (quest == null || questContent == null || !quest.active) {
             questMenuView.visibility = View.GONE
             context.notNull {
-                adapter.tintColor = ContextCompat.getColor(it, R.color.brand_300)
-                adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.brand_200)
+                adapter.tintColor = it.getThemeColor(R.attr.colorPrimary)
+                adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimaryOffset)
             }
             adapter.items.filter { it.identifier == SIDEBAR_TAVERN }.forEach {
                 it.additionalInfo = null
@@ -125,7 +125,7 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val context = context
         adapter = if (context != null) {
-            NavigationDrawerAdapter(ContextCompat.getColor(context, R.color.brand_300), ContextCompat.getColor(context, R.color.brand_200))
+            NavigationDrawerAdapter(context.getThemeColor(R.attr.colorPrimary), context.getThemeColor(R.attr.colorPrimaryOffset))
         } else {
             NavigationDrawerAdapter(0, 0)
         }

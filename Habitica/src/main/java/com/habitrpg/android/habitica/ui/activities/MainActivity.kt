@@ -12,6 +12,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -175,6 +176,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     public override fun onCreate(savedInstanceState: Bundle?) {
         launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         launchTrace?.start()
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val themeID = sharedPreferences.getInt("theme", R.style.AppTheme_NoActionBar)
+        setTheme(themeID)
+        sharedPreferences.edit {
+            this.putInt("theme", R.style.AppTheme_NoActionBar_Blue)
+        }
         super.onCreate(savedInstanceState)
 
         if (!HabiticaBaseApplication.checkUserAuthentication(this, hostConfig)) {

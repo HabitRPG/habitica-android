@@ -1,4 +1,14 @@
 <resources>
+    <attr name="colorPrimaryOffset" format="color" />
+    <attr name="colorPrimaryDistinct" format="color" />
+    <attr name="colorBadgeBackground" format="color" />
+    <attr name="colorContentBackground" format="color" />
+    <attr name="colorContentBackgroundOffset" format="color" />
+    <attr name="colorWindowBackground" format="color" />
+    <attr name="textColorPrimary" format="color" />
+    <attr name="textColorSecondary" format="color" />
+    <attr name="textColorPrimaryDark" format="color" />
+    <attr name="textColorSecondaryDark" format="color" />
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />
     <attr name="title" format="string" />

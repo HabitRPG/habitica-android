@@ -3,17 +3,19 @@ package com.habitrpg.android.habitica.ui.views
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.math.RoundingMode
 import java.text.NumberFormat
+
 
 class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
@@ -147,8 +149,8 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
             textColor = ContextCompat.getColor(context, R.color.gray_10)
             progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
         } else {
-            textColor = ContextCompat.getColor(context, R.color.brand_500)
-            progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_brand)
+            textColor = context.getThemeColor(R.attr.textColorPrimaryDark)
+            progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_primary)
         }
         valueTextView.setTextColor(textColor)
         descriptionTextView.setTextColor(textColor)

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
 
         <item name="android:elevation" tools:targetApi="21">0dp</item>
@@ -19,6 +19,17 @@
         <item name="colorPrimary">@color/brand</item>
         <item name="colorPrimaryDark">@color/brand_50</item>
         <item name="colorAccent">@color/brand</item>
+        <item name="colorPrimaryOffset">@color/brand_200</item>
+        <item name="colorPrimaryDistinct">@color/brand_500</item>
+        <item name="colorBadgeBackground">@color/brand_400</item>
+
+        <item name="textColorPrimary">@color/gray_50</item>
+        <item name="textColorSecondary">@color/gray_200</item>
+        <item name="textColorPrimaryDark">@color/white</item>
+        <item name="textColorSecondaryDark">@color/brand_500</item>
+
+        <item name="colorContentBackground">@color/white</item>
+        <item name="colorWindowBackground">@color/gray_700</item>
 
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
@@ -46,6 +57,13 @@
 
     <style name="AppTheme.ActionBar.Transparent" parent="AppTheme.ActionBar">
         <item name="actionBarStyle">@style/ActionBarTransparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBarOverlay">true</item>
     </style>
 
     <style name="ActionBarTransparent">
@@ -55,9 +73,33 @@
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.Transparent">
+    <style name="AppTheme.NoActionBar.Green">
+        <item name="colorPrimary">@color/green_10</item>
+        <item name="colorPrimaryDark">@color/green_5</item>
+        <item name="colorAccent">@color/green_100</item>
+        <item name="colorPrimaryOffset">@color/green_50</item>
+        <item name="colorPrimaryDistinct">@color/green_500</item>
+        <item name="colorBadgeBackground">@color/green_100</item>
+        <item name="textColorSecondaryDark">@color/green_500</item>
+        <item name="android:textColorLink">@color/green_100</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Blue">
+        <item name="colorPrimary">@color/blue_10</item>
+        <item name="colorPrimaryDark">@color/blue_5</item>
+        <item name="colorAccent">@color/blue_100</item>
+        <item name="colorPrimaryOffset">@color/blue_50</item>
+        <item name="colorPrimaryDistinct">@color/blue_500</item>
+        <item name="colorBadgeBackground">@color/blue_100</item>
+        <item name="textColorSecondaryDark">@color/blue_500</item>
+        <item name="android:textColorLink">@color/blue_100</item>
     </style>
 
     <style name="AppThemeWithActionBarBlackText" parent="AppTheme.ActionBar">
@@ -204,9 +246,9 @@
         <item name="android:textColor">@color/brand_300</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:drawableLeft">@drawable/ic_check_purple_24dp</item>
+        <item name="android:drawableLeft">@drawable/ic_check_purple</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
     </style>
 
     <style name="SubscriptionListTitle" parent="GemPurchaseListItem">

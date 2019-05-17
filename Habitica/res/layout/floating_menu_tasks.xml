@@ -12,8 +12,8 @@
     android:layout_marginBottom="16dp"
     android:layout_marginRight="8dp"
     fab:menu_fab_size="normal"
-    fab:menu_colorNormal="@color/brand_400"
-    fab:menu_colorPressed="@color/brand_500"
+    fab:menu_colorNormal="?colorPrimaryOffset"
+    fab:menu_colorPressed="?colorPrimaryOffset"
     fab:menu_colorRipple="#FFFFFF"
     fab:menu_animationDelayPerItem="50"
     fab:menu_icon="@drawable/fab_add"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
 
         fab:fab_colorNormal="@color/white"
-        fab:fab_colorPressed="@color/brand_500"
+        fab:fab_colorPressed="?colorPrimaryDistinct"
         fab:fab_colorRipple="#FFFFFF"
 
         fab:fab_shadowColor="#000"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
 
         fab:fab_colorNormal="@color/white"
-        fab:fab_colorPressed="@color/brand_500"
+        fab:fab_colorPressed="?colorPrimaryDistinct"
         fab:fab_colorRipple="#FFFFFF"
 
         fab:fab_shadowColor="#000"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
 
         fab:fab_colorNormal="@color/white"
-        fab:fab_colorPressed="@color/brand_500"
+        fab:fab_colorPressed="?colorPrimaryDistinct"
         fab:fab_colorRipple="#FFFFFF"
 
         fab:fab_shadowColor="#000"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
 
         fab:fab_colorNormal="@color/white"
-        fab:fab_colorPressed="@color/brand_500"
+        fab:fab_colorPressed="?colorPrimaryDistinct"
         fab:fab_colorRipple="#FFFFFF"
 
         fab:fab_shadowColor="#000"

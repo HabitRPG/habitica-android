@@ -36,6 +36,7 @@
     <color name="green_100">#24CC8F</color>
     <color name="green_50">#20B780</color>
     <color name="green_10">#1CA372</color>
+    <color name="green_5">#168059</color>
 
     <color name="teal_500">#8eedf6</color>
     <color name="teal_100">#3BCAD7</color>
@@ -46,6 +47,7 @@
     <color name="blue_100">#50B5E9</color>
     <color name="blue_50">#46A7D9</color>
     <color name="blue_10">#2995cd</color>
+    <color name="blue_5">#217AA6</color>
 
 
     <color name="gray_10">#34313a</color>

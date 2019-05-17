@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.FragmentPagerAdapter
 import android.view.*
+import androidx.fragment.app.FragmentPagerAdapter
 import com.github.clans.fab.FloatingActionButton
 import com.github.clans.fab.FloatingActionMenu
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.events.TaskTappedEvent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -117,25 +116,22 @@ class TasksFragment : BaseMainFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        when (id) {
+        return when (item.itemId) {
             R.id.action_search -> {
                 showFilterDialog()
-                return true
+                true
             }
             R.id.action_reload -> {
                 refreshItem = item
                 refresh()
-                return true
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     private fun showFilterDialog() {
-        context.notNull {
+        context?.let {
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.component)
             if (user != null) {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())

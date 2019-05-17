@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/brand_200"
+                    android:background="?colorPrimaryOffset"
                     android:elevation="0dp"
                     android:fillViewport="false"
 
@@ -101,7 +101,7 @@
 
                     app:layout_collapseMode="pin"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="@android:color/white"
+                    app:tabIndicatorColor="?colorContentBackground"
                     app:tabMode="fixed" />
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -125,13 +125,13 @@
                     android:id="@+id/bottom_navigation"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:background="@color/brand_100"
+                    android:background="?colorPrimary"
                     app:bb_tabXmlResource="@xml/main_menu_tasks"
-                    app:bb_inActiveTabColor="@color/brand_500"
+                    app:bb_inActiveTabColor="?colorPrimaryDistinct"
                     app:bb_activeTabColor="@color/white"
                     app:bb_behavior="underNavbar"
                     app:bb_badgesHideWhenActive="true"
-                    app:bb_badgeBackgroundColor="@color/brand_400"
+                    app:bb_badgeBackgroundColor="?colorBadgeBackground"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="-5dp"
                     />

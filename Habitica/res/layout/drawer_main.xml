@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/brand_200"
+    android:background="?colorPrimaryOffset"
     android:orientation="vertical"
     tools:context="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment">
 

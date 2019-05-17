@@ -7,7 +7,7 @@
               android:layout_height="wrap_content"
               android:layout_centerHorizontal="true"
               android:adjustViewBounds="true"
-              android:background="@color/brand"
+              android:background="?colorPrimary"
               android:focusable="true"
               android:focusableInTouchMode="true"
               android:orientation="vertical"
@@ -79,7 +79,7 @@
                 android:layout_height="36dp"
                 android:drawablePadding="6dp"
                 android:gravity="center"
-                android:textColor="@color/textColorSecondaryDark"
+                android:textColor="?textColorSecondaryDark"
                 android:textSize="14sp"
                 tools:text="Lvl 12 Warrior"/>
 

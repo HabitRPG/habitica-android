@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -43,6 +44,7 @@ abstract class BaseActivity : AppCompatActivity() {
         configuration.setLocale(languageHelper.locale)
         resources.updateConfiguration(configuration, resources.displayMetrics)
 
+        delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         habiticaApplication
         injectActivity(HabiticaBaseApplication.component)
