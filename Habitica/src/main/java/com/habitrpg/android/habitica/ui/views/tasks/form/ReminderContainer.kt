@@ -9,11 +9,21 @@ import androidx.core.view.children
 import androidx.core.view.updateMargins
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
+import com.habitrpg.android.habitica.models.tasks.Task
 import io.realm.RealmList
 
 class ReminderContainer @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
+    var taskType = Task.TYPE_DAILY
+    set(value) {
+        field = value
+        for (view in children) {
+            if (view is ReminderItemFormView) {
+                view.taskType = taskType
+            }
+        }
+    }
     var reminders: RealmList<RemindersItem>
         get() {
             val list = RealmList<RemindersItem>()
@@ -51,6 +61,7 @@ class ReminderContainer @JvmOverloads constructor(
 
     private fun addReminderViewAt(index: Int, item: RemindersItem? = null) {
         val view = ReminderItemFormView(context)
+        view.taskType = taskType
         item?.let {
             view.item = it
             view.isAddButton = false

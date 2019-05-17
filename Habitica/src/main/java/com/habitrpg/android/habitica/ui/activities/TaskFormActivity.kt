@@ -225,6 +225,7 @@ class TaskFormActivity : BaseActivity() {
 
         remindersTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
         remindersContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        remindersContainer.taskType = taskType
 
         taskSchedulingTitleView.visibility = todoDailyViewsVisibility
         taskSchedulingControls.visibility = todoDailyViewsVisibility
@@ -302,6 +303,7 @@ class TaskFormActivity : BaseActivity() {
         }
         if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
             task.checklist?.let { checklistContainer.checklistItems = it }
+            remindersContainer.taskType = taskType
             task.reminders?.let { remindersContainer.reminders = it }
         }
         task.attribute?.let { setSelectedAttribute(it) }
