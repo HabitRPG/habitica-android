@@ -58,6 +58,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
@@ -181,7 +182,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val themeID = sharedPreferences.getInt("theme", R.style.AppTheme_NoActionBar)
         setTheme(themeID)
         sharedPreferences.edit {
-            this.putInt("theme", R.style.AppTheme_NoActionBar_Blue)
+            this.putInt("theme", R.style.AppTheme_NoActionBar)
         }
         super.onCreate(savedInstanceState)
 
@@ -269,6 +270,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     override fun injectActivity(component: AppComponent?) {
         component?.inject(this)
+        component?.inject(this)
     }
 
     override fun onResume() {
@@ -305,6 +307,22 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         launchTrace?.stop()
         launchTrace = null
+
+        val customView = layoutInflater.inflate(R.layout.dialog_levelup, null)
+        if (customView != null) {
+            val dialogAvatarView = customView.findViewById<AvatarView>(R.id.avatarView)
+            user?.let { dialogAvatarView.setAvatar(it) }
+        }
+
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(getString(R.string.levelup_header, 5))
+        alert.setAdditionalContentView(customView)
+        alert.addButton(R.string.levelup_button, true) { dialog -> dialog.dismiss() }
+        alert.addButton(R.string.share, false) {
+
+        }
+
+        alert.show()
     }
 
     override fun onPause() {

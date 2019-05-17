@@ -223,14 +223,13 @@ class QuestProgressView : LinearLayout {
     private fun showActiveStrikeAlert(key: String) {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(context.getString(R.string.strike_active_title, getLocationName(key)))
-        alert.setTitleBackground(R.color.orange_10)
-        alert.setSubtitle(context.getString(R.string.strike_active_subtitle, getNpcName(key)))
+//        alert.setSubtitle(context.getString(R.string.strike_active_subtitle, getNpcName(key)))
         alert.setMessage(context.getString(R.string.strike_active_description, getLongNPCName(key), quest?.boss?.name ?: "", getLocationName(key)))
 
         val npcBannerView = NPCBannerView(context, null)
         npcBannerView.shopSpriteSuffix = quest?.key ?: ""
         npcBannerView.identifier = key
-        alert.setAdditionalContentView(npcBannerView, 1)
+        alert.setAdditionalContentView(npcBannerView)
 
         alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
@@ -241,9 +240,8 @@ class QuestProgressView : LinearLayout {
     private fun showPendingStrikeAlert() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.pending_strike_title)
-        alert.setTitleBackground(R.color.orange_10)
-        alert.setSubtitle(R.string.pending_strike_subtitle)
-        alert.setMessage(R.string.pending_strike_description)
+//        alert.setSubtitle(R.string.pending_strike_subtitle)
+        //alert.setMessage(R.string.pending_strike_description)
         alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
         }
@@ -253,9 +251,8 @@ class QuestProgressView : LinearLayout {
     private fun showStrikeDescriptionAlert() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.strike_description_title)
-        alert.setTitleBackground(R.color.orange_10)
-        alert.setSubtitle(R.string.strike_description_subtitle)
-        alert.setMessage(R.string.strike_description_description)
+//        alert.setSubtitle(R.string.strike_description_subtitle)
+        //alert.setMessage(R.string.strike_description_description)
         alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
         }

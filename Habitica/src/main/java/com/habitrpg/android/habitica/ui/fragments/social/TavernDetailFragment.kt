@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -19,8 +19,8 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.PlayerTier
@@ -180,8 +180,7 @@ class TavernDetailFragment : BaseFragment() {
             val alert = HabiticaAlertDialog(context)
             val bossName = quest.boss?.name ?: ""
             alert.setTitle(R.string.world_boss_description_title)
-            alert.setTitleBackgroundColor(quest.colors?.lightColor ?: 0)
-            alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))
+            //alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))
             alert.setAdditionalContentView(R.layout.world_boss_description_view)
 
             val descriptionView = alert.getContentView()

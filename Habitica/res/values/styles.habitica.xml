@@ -12,15 +12,16 @@
     <style name="Title1">
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:letterSpacing">0.051</item>
+        <item name="android:letterSpacing">0.07</item>
+        <item name="android:textColor">?textColorPrimary</item>
     </style>
 
     <style name="Title1_WideLetterSpacing"  parent="@style/Title1">
         <item name="android:letterSpacing">0.133</item>
     </style>
 
-    <style name="Title2">
-        <item name="android:fontFamily">@string/font_family_condensed</item>
+    <style name="Title2"  parent="@style/Title1">
+        <item name="android:fontFamily">@string/font_family_regular</item>
         <item name="android:textSize">28sp</item>
         <item name="android:letterSpacing">0.05</item>
     </style>
@@ -28,27 +29,37 @@
     <!-- Headline -->
 
     <style name="Headline">
-        <item name="android:fontFamily">@string/font_family_condensed</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <style name="Headline6">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">?textColorPrimary</item>
     </style>
 
     <!-- Subheader -->
     <style name="Subheader1">
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?textColorSecondary</item>
     </style>
 
     <style name="Subheader2">
         <item name="android:fontFamily">@string/font_family_regular</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.08</item>
+        <item name="android:textColor">?textColorSecondary</item>
     </style>
 
     <style name="Subheader3">
-        <item name="android:fontFamily">@string/font_family_condensed</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.04</item>
+        <item name="android:textColor">?textColorSecondary</item>
     </style>
 
     <!-- Body -->
@@ -65,9 +76,10 @@
     </style>
 
     <style name="Body2">
-        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">0.035</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:lineSpacingExtra">6sp</item>
     </style>
 
     <style name="Body2_Wide" parent="Body2">
@@ -75,7 +87,7 @@
     </style>
 
     <style name="Body3">
-        <item name="android:fontFamily">@string/font_family_condensed</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.035</item>
     </style>
@@ -105,7 +117,7 @@
     </style>
 
     <style name="Caption4">
-        <item name="android:fontFamily">@string/font_family_condensed</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.035</item>
     </style>

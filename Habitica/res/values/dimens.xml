@@ -139,4 +139,5 @@
     <dimen name="bb_default_elevation">8dp</dimen>
     <dimen name="bb_fake_shadow_height">4dp</dimen>
     <dimen name="button_height">38dp</dimen>
+    <dimen name="button_text_size">16sp</dimen>
 </resources>
