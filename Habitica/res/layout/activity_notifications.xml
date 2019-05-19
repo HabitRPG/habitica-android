@@ -38,16 +38,15 @@
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="?attr/actionBarSize">
+                android:layout_height="match_parent">
 
-                <com.habitrpg.android.habitica.ui.views.PaddedLinearLayout
+                <LinearLayout
                     android:id="@+id/notification_items"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="?android:listDivider"
                     android:orientation="vertical"
-                    android:showDividers="middle"></com.habitrpg.android.habitica.ui.views.PaddedLinearLayout>
+                    android:showDividers="middle" />
             </androidx.core.widget.NestedScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </FrameLayout>

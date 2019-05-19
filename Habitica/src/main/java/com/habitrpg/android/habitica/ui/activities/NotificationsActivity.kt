@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
@@ -79,18 +80,22 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         notification_items.removeAllViewsInLayout()
 
         when {
-            notifications.isEmpty() -> displayNoNotificationsVew()
+            notifications.isEmpty() -> displayNoNotificationsView()
             else -> displayNotificationsListView(notifications)
         }
     }
 
-    private fun displayNoNotificationsVew() {
+    private fun displayNoNotificationsView() {
+        notification_items.showDividers = LinearLayout.SHOW_DIVIDER_NONE
+
         notification_items.addView(
                 inflater.inflate(R.layout.no_notifications, notification_items, false)
         )
     }
 
     private fun displayNotificationsListView(notifications: List<Notification>) {
+        notification_items.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
+
         notification_items.addView(
                 createNotificationsHeaderView(notifications.count())
         )

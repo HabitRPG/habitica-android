@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="horizontal"
     android:paddingLeft="20dp"
-    android:paddingTop="14dp"
+    android:paddingTop="10dp"
     android:paddingRight="20dp">
 
     <LinearLayout
