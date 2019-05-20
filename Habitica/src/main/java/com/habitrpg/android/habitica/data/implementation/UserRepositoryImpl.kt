@@ -126,9 +126,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun changeClass(): Flowable<User> = apiClient.changeClass().flatMap { retrieveUser(false, true) }
+    override fun changeClass(): Flowable<User> = apiClient.changeClass().flatMap { retrieveUser(withTasks = false, forced = true) }
 
-    override fun disableClasses(): Flowable<User> = apiClient.disableClasses().flatMap { retrieveUser(false, true) }
+    override fun disableClasses(): Flowable<User> = apiClient.disableClasses().flatMap { retrieveUser(withTasks = false, forced = true) }
 
     override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass).flatMap { retrieveUser(false) }
 
@@ -182,7 +182,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun resetAccount(): Flowable<User> {
-        return apiClient.resetAccount().flatMap { retrieveUser(true, true) }
+        return apiClient.resetAccount().flatMap { retrieveUser(withTasks = true, forced = true) }
     }
 
     override fun deleteAccount(password: String): Flowable<Void> =
@@ -193,9 +193,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun updateLoginName(newLoginName: String, password: String?): Maybe<User> {
         return (if (password != null && password.isNotEmpty()) {
-            apiClient.updateLoginName(newLoginName, password)
+            apiClient.updateLoginName(newLoginName.trim(), password.trim())
         } else {
-            apiClient.updateUsername(newLoginName)
+            apiClient.updateUsername(newLoginName.trim())
         }).flatMapMaybe { localRepository.getUser(userID).firstElement() }
                 .doOnNext { user ->
                     localRepository.executeTransaction {
@@ -206,13 +206,13 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 .firstElement()
     }
 
-    override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> = apiClient.verifyUsername(username)
+    override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> = apiClient.verifyUsername(username.trim())
 
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
-            apiClient.updateEmail(newEmail, password)
+            apiClient.updateEmail(newEmail.trim(), password)
 
     override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> =
-            apiClient.updatePassword(oldPassword, newPassword, newPasswordConfirmation)
+            apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override fun allocatePoint(user: User?, stat: String): Flowable<Stats> {
         if (user != null && user.isManaged) {
@@ -271,7 +271,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             }
         }
         observable.flatMap { apiClient.runCron().firstElement() }
-                .flatMap { this.retrieveUser(true, true).firstElement() }
+                .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
