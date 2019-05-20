@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.models.social.Group
@@ -57,6 +58,10 @@ class GuildFragment : BaseMainFragment() {
 
         setViewPagerAdapter()
         setFragments()
+
+        if (viewModel.groupID == "f2db2a7f-13c5-454d-b3ee-ea1f5089e601") {
+            context?.let { FirebaseAnalytics.getInstance(it).logEvent("opened_no_party_guild", null) }
+        }
     }
 
     private fun setFragments() {
