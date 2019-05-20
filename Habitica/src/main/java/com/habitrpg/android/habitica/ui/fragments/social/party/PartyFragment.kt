@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -23,6 +22,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import io.reactivex.functions.Consumer
 import java.util.*
 
@@ -156,16 +156,18 @@ class PartyFragment : BaseMainFragment() {
                 return true
             }
             R.id.menu_guild_leave -> {
-                AlertDialog.Builder(context)
-                        .setTitle(context?.getString(R.string.leave_party))
-                        .setMessage(context?.getString(R.string.leave_party_confirmation))
-                        .setPositiveButton(context?.getString(R.string.yes)) { _, _ ->
-                            viewModel.leaveGroup {
-                                fragmentManager?.popBackStack()
-                            }
+                context?.let {
+                    val alert = HabiticaAlertDialog(it)
+                    alert.setTitle(context?.getString(R.string.leave_party))
+                    alert.setMessage(context?.getString(R.string.leave_party_confirmation))
+                    alert.addButton(R.string.yes, true) { _, _ ->
+                        viewModel.leaveGroup {
+                            fragmentManager?.popBackStack()
                         }
-                        .setNegativeButton(context?.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
-                        .show()
+                    }
+                    alert.addButton(R.string.no, false)
+                    alert.show()
+                }
                 return true
             }
         }

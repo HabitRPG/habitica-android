@@ -117,7 +117,7 @@
   <string name="sunday">Воскресенье</string>
   <string name="levelup_header">Вы достигли %1$d уровня!</string>
   <string name="levelup_detail">Благодаря выполнению своих целей в реальной жизни вы получили уровень и восполнили полностью здоровье!</string>
-  <string name="levelup_button">Ура!</string>
+  <string name="onwards">Ура!</string>
   <string name="faint_subtitle">Не отчаивайтесь!</string>
   <string name="faint_penalty_body">Вы потеряли Уровень, Золото и предмет Экипировки, но вы  сможете все вернуть, если продолжите выполнять задачи! Удачи! Вы справитесь!</string>
   <string name="faint_header">У вас закончилось здоровье!</string>

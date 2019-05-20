@@ -1,20 +1,20 @@
 package com.habitrpg.android.habitica.ui.adapter
 
 import android.content.Context
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -174,20 +174,20 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
                 (dialogContent.findViewById<View>(R.id.gem_icon) as ImageView).setImageBitmap(HabiticaIconsHelper.imageOfGem())
 
-                val dialog = AlertDialog.Builder(itemView.context)
-                        .setPositiveButton(R.string.purchase_button) { _, _ ->
+                val dialog = HabiticaAlertDialog(itemView.context)
+                dialog.addButton(R.string.purchase_button, true) { _, _ ->
                             if (customization?.price ?: 0 > gemBalance) {
                                 MainNavigationController.navigate(R.id.gemPurchaseActivity)
-                                return@setPositiveButton
+                                return@addButton
                             }
 
                             customization.notNull {
                                 unlockCustomizationEvents.onNext(it)
                             }
                         }
-                        .setTitle(itemView.context.getString(R.string.purchase_customization))
-                        .setView(dialogContent)
-                        .setNegativeButton(R.string.reward_dialog_dismiss) { dialog, _ -> dialog.dismiss() }.create()
+                dialog.setTitle(itemView.context.getString(R.string.purchase_customization))
+                dialog.setAdditionalContentView(dialogContent)
+                dialog.addButton(R.string.reward_dialog_dismiss, false)
                 dialog.show()
                 return
             }
@@ -230,11 +230,11 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
             val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
             priceLabel.text = set?.price.toString()
 
-            val dialog = AlertDialog.Builder(context)
-                    .setPositiveButton(R.string.purchase_button) { _, _ ->
+            val dialog = HabiticaAlertDialog(context)
+            dialog.addButton(R.string.purchase_button, true) { _, _ ->
                         if (set?.price ?: 0 > gemBalance) {
                             MainNavigationController.navigate(R.id.gemPurchaseActivity)
-                            return@setPositiveButton
+                            return@addButton
                         }
                         set?.customizations = ArrayList()
                         customizationList
@@ -251,9 +251,9 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                             unlockSetEvents.onNext(it)
                         }
                     }
-                    .setTitle(context.getString(R.string.purchase_set_title, set?.text))
-                    .setView(dialogContent)
-                    .setNegativeButton(R.string.reward_dialog_dismiss) { dialog1, _ -> dialog1.dismiss() }.create()
+            dialog.setTitle(context.getString(R.string.purchase_set_title, set?.text))
+            dialog.setAdditionalContentView(dialogContent)
+            dialog.addButton(R.string.reward_dialog_dismiss, false)
             dialog.show()
         }
     }

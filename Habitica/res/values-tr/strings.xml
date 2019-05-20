@@ -117,7 +117,7 @@
   <string name="sunday">Pazar</string>
   <string name="levelup_header">%1$d. Seviyeye Yükseldin!</string>
   <string name="levelup_detail">Gerçek hayattaki hedeflerini gerçekleştirerek seviye atladın ve sağlığın yenilendi!</string>
-  <string name="levelup_button">Yaşasın!</string>
+  <string name="onwards">Yaşasın!</string>
   <string name="faint_subtitle">Umudunu kaybetme!</string>
   <string name="faint_penalty_body">Bir Seviye, Altınlarını ve bir parça Ekipman kaybettin, ama çok çalışarak hepsini yeniden kazanabilirsin! İyi şanslar—bu işi becereceksin.</string>
   <string name="faint_header">Sağlığın tükendi!</string>

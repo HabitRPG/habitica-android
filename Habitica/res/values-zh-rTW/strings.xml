@@ -115,7 +115,7 @@
   <string name="friday">星期五</string>
   <string name="saturday">星期六</string>
   <string name="sunday">星期日</string>
-  <string name="levelup_button">吼啊~！</string>
+  <string name="onwards">吼啊~！</string>
   <string name="faint_subtitle">別失望！</string>
   <string name="faint_header">你沒有生命值了！</string>
   <string name="faint_button">補全生命值 &amp; 请重試</string>

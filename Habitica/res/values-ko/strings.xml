@@ -115,7 +115,7 @@
   <string name="friday">금요일</string>
   <string name="saturday">토요일</string>
   <string name="sunday">일요일</string>
-  <string name="levelup_button">만세!</string>
+  <string name="onwards">만세!</string>
   <string name="faint_subtitle">좌절하지 말아요!</string>
   <string name="faint_header">체력이 모두 떨어졌어요!</string>
   <string name="faint_button">체력을 채우고 다시 도전하세요.</string>

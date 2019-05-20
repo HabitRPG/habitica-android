@@ -5,11 +5,13 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.text.method.LinkMovementMethod
-import android.widget.*
 import android.view.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -27,6 +29,7 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.functions.Action
@@ -349,10 +352,10 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
     private fun showChallengeLeaveDialog() {
         context.notNull { context ->
-            AlertDialog.Builder(context)
-                    .setTitle(this.getString(R.string.challenge_leave_title))
-                    .setMessage(this.getString(R.string.challenge_leave_text, challenge?.name ?: ""))
-                    .setPositiveButton(R.string.yes) { dialog, _ ->
+            val alert = HabiticaAlertDialog(context)
+            alert.setTitle(this.getString(R.string.challenge_leave_title))
+            alert.setMessage(this.getString(R.string.challenge_leave_text, challenge?.name ?: ""))
+            alert.addButton(R.string.yes, true) { dialog, _ ->
                         dialog.dismiss()
                         challenge.notNull { challenge ->
                             showRemoveTasksDialog(Consumer { keepTasks ->
@@ -360,27 +363,27 @@ class ChallengeDetailFragment: BaseMainFragment() {
                             })
                         }
                     }
-                    .setNegativeButton(R.string.no) { dialog, _ ->
+            alert.addButton(R.string.no, false) { dialog, _ ->
                         dialog.dismiss()
                     }
-                    .show()
+            alert.show()
         }
     }
 
     private fun showRemoveTasksDialog(callback: Consumer<String>) {
         context.notNull {
-            AlertDialog.Builder(it)
-                    .setTitle(this.getString(R.string.challenge_remove_tasks_title))
-                    .setMessage(this.getString(R.string.challenge_remove_tasks_text))
-                    .setPositiveButton(R.string.remove_tasks) { dialog, _ ->
+            val alert = HabiticaAlertDialog(it)
+            alert.setTitle(this.getString(R.string.challenge_remove_tasks_title))
+            alert.setMessage(this.getString(R.string.challenge_remove_tasks_text))
+            alert.addButton(R.string.remove_tasks, false) { dialog, _ ->
                         callback.accept("remove-all")
                         dialog.dismiss()
                     }
-                    .setNegativeButton(R.string.keep_tasks) { dialog, _ ->
+            alert.addButton(R.string.keep_tasks, false) { dialog, _ ->
                         callback.accept("keep-all")
                         dialog.dismiss()
                     }
-                    .show()
+            alert.show()
         }
     }
 }

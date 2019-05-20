@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -24,6 +23,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -183,12 +183,15 @@ class PartyDetailFragment : BaseFragment() {
     }
 
     private fun leaveParty() {
-        val builder = AlertDialog.Builder(activity)
-                .setMessage(R.string.leave_party_confirmation)
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    viewModel?.leaveGroup { }
-                }.setNegativeButton(R.string.no) { _, _ -> }
-        builder.show()
+        activity?.let {
+            val alert = HabiticaAlertDialog(it)
+            alert.setMessage(R.string.leave_party_confirmation)
+            alert.addButton(R.string.yes, true) { _, _ ->
+                viewModel?.leaveGroup { }
+            }
+            alert.addButton(R.string.no, false)
+            alert.show()
+        }
     }
 
     private fun onQuestAccept() {

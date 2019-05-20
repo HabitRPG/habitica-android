@@ -76,11 +76,15 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
 
     fun getContentView(): View? = additionalContentView
 
-    fun addButton(stringRes: Int, isPrimary: Boolean, function: (HabiticaAlertDialog) -> Unit) {
+    fun addButton(stringRes: Int, isPrimary: Boolean, function: ((HabiticaAlertDialog, Int) -> Unit)? = null) {
+        addButton(context.getString(stringRes), isPrimary, function)
+    }
+
+    fun addButton(string: String, isPrimary: Boolean, function: ((HabiticaAlertDialog, Int) -> Unit)? = null) {
         val button = Button(context)
-        button.text = context.getString(stringRes)
+        button.text = string
         button.transformationMethod = null
-        button.textSize = context.resources.getDimension(R.dimen.button_text_size)
+        button.textSize = 16f
         if (isPrimary) {
             button.background = context.getDrawable(R.drawable.button_background_primary)
             button.setTextColor(context.getThemeColor(R.attr.textColorPrimaryDark))
@@ -89,7 +93,13 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
             button.setTextColor(ContextCompat.getColor(context, R.color.brand_400))
         }
         val weakThis = WeakReference<HabiticaAlertDialog>(this)
-        button.setOnClickListener { weakThis.get()?.let { it1 -> function(it1) } }
+        val buttonIndex = buttonsWrapper.childCount
+        button.setOnClickListener {
+            weakThis.get()?.let { it1 ->
+                function?.invoke(it1, buttonIndex)
+                dismiss()
+            }
+        }
         val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 38.dpToPx(context))
         button.setScaledPadding(context, 26, 0, 26, 0)
         button.minWidth = 147.dpToPx(context)

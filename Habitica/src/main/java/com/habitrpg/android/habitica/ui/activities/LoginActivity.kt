@@ -40,6 +40,9 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -47,6 +50,7 @@ import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
 import io.reactivex.Flowable
@@ -347,12 +351,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun showValidationError(resourceMessageString: Int) {
         mProgressBar.visibility = View.GONE
-        androidx.appcompat.app.AlertDialog.Builder(this)
-                .setTitle(R.string.login_validation_error_title)
-                .setMessage(resourceMessageString)
-                .setNeutralButton(android.R.string.ok) { _, _ -> }
-                .setIcon(R.drawable.ic_warning_black)
-                .show()
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.login_validation_error_title)
+        alert.setMessage(resourceMessageString)
+        alert.addOkButton()
+        alert.show()
     }
 
     override fun accept(userAuthResponse: UserAuthResponse) {
@@ -387,12 +390,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         try {
             startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT)
         } catch (e: ActivityNotFoundException) {
-            val dialog = AlertDialog.Builder(this)
-                    .setTitle(R.string.authentication_error_title)
-                    .setMessage(R.string.google_services_missing)
-                    .setNegativeButton(R.string.close) { dialogInterface, _ -> dialogInterface.dismiss() }
-                    .create()
-            dialog.show()
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(R.string.authentication_error_title)
+            alert.setMessage(R.string.google_services_missing)
+            alert.addCloseButton()
+            alert.show()
         }
 
     }
@@ -571,23 +573,22 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT)
         input.layoutParams = lp
-        val alertDialog = AlertDialog.Builder(this)
-                .setTitle(R.string.forgot_password_title)
-                .setMessage(R.string.forgot_password_description)
-                .setView(input)
-                .setPositiveButton(R.string.send) { dialog, _ ->
-                    dialog.dismiss()
+        val alertDialog = HabiticaAlertDialog(this)
+        alertDialog.setTitle(R.string.forgot_password_title)
+        alertDialog.setMessage(R.string.forgot_password_description)
+        alertDialog.setView(input)
+        alertDialog.addButton(R.string.send, true) { _, _ ->
                     userRepository.sendPasswordResetEmail(input.text.toString()).subscribe(Consumer { showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
-                }.setNegativeButton(R.string.action_cancel) { dialog, _ -> dialog.dismiss() }
-
+                }
+        alertDialog.addCancelButton()
         alertDialog.show()
     }
 
     private fun showPasswordEmailConfirmation() {
-        AlertDialog.Builder(this)
-                .setMessage(R.string.forgot_password_confirmation)
-                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
-                .show()
+        val alert = HabiticaAlertDialog(this)
+        alert.setMessage(R.string.forgot_password_confirmation)
+        alert.addOkButton()
+        alert.show()
     }
 
     companion object {

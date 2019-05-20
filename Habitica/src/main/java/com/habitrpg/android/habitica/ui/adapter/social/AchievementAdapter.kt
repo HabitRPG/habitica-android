@@ -1,23 +1,24 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 
 class AchievementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -94,23 +95,23 @@ class AchievementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun onClick(view: View) {
             val context = itemView.context
-            val b = AlertDialog.Builder(context)
+            val alert = HabiticaAlertDialog(context)
 
             val customView = LayoutInflater.from(context)
                     .inflate(R.layout.dialog_achievement_details, null)
-            val achievementImage = customView.findViewById<View>(R.id.achievement_image) as ImageView?
+            val achievementImage = customView.findViewById<View>(R.id.achievement_image) as? ImageView
             achievementImage?.setImageDrawable(draweeView.drawable)
 
-            val titleView = customView.findViewById<View>(R.id.achievement_title) as TextView?
+            val titleView = customView.findViewById<View>(R.id.achievement_title) as? TextView
             titleView?.text = achievement?.title
 
-            val textView = customView.findViewById<View>(R.id.achievement_text) as TextView?
+            val textView = customView.findViewById<View>(R.id.achievement_text) as? TextView
             textView?.text = achievement?.text
 
-            b.setView(customView)
-            b.setPositiveButton(R.string.profile_achievement_ok) { _, _ -> }
+            alert.setAdditionalContentView(customView)
+            alert.addOkButton()
 
-            b.show()
+            alert.show()
         }
     }
 }

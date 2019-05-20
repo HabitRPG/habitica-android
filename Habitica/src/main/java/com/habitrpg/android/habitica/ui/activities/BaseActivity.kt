@@ -3,16 +3,15 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.helpers.LanguageHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import io.reactivex.disposables.CompositeDisposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -102,15 +101,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @Subscribe
     fun onEvent(event: ShowConnectionProblemEvent) {
-        val builder = AlertDialog.Builder(this)
-                .setTitle(event.title)
-                .setMessage(event.message)
-                .setNeutralButton(android.R.string.ok) { _, _ -> }
-
-        if (!event.title.isEmpty()) {
-            builder.setIcon(R.drawable.ic_warning_black)
-        }
-
-        builder.show()
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(event.title)
+        alert.setMessage(event.message)
+        alert.addButton(android.R.string.ok, true, null)
+        alert.show()
     }
 }

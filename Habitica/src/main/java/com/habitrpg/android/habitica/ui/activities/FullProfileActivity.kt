@@ -3,11 +3,10 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatImageView
 import android.view.*
 import android.widget.*
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.view.SimpleDraweeView
@@ -30,7 +29,11 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter
-import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import io.reactivex.Flowable
@@ -137,8 +140,8 @@ class FullProfileActivity : BaseActivity() {
         val newMessageTitle = newMessageView.findViewById<TextView>(R.id.new_message_title)
         newMessageTitle.text = String.format(getString(R.string.profile_send_message_to), userName)
 
-        val addMessageDialog = AlertDialog.Builder(this)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
+        val addMessageDialog = HabiticaAlertDialog(this)
+        addMessageDialog.addButton(android.R.string.ok, true) { _, _ ->
                     socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
                             .subscribe(Consumer {
                                 HabiticaSnackbar.showSnackbar(this@FullProfileActivity.scrollView.getChildAt(0) as ViewGroup,
@@ -147,12 +150,8 @@ class FullProfileActivity : BaseActivity() {
 
                     dismissKeyboard()
                 }
-                .setNegativeButton(android.R.string.cancel) { _, _ -> dismissKeyboard() }
-
-                .create()
-
-        addMessageDialog.setView(newMessageView)
-
+        addMessageDialog.addButton(android.R.string.cancel, false) { _, _ -> dismissKeyboard() }
+        addMessageDialog.setAdditionalContentView(newMessageView)
         addMessageDialog.show()
     }
 

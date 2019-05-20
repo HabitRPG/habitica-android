@@ -117,7 +117,7 @@
   <string name="sunday">日</string>
   <string name="levelup_header">レベル%1$dになった！</string>
   <string name="levelup_detail">実生活での目標を達成してレベルが上がり、体力が全回復した！</string>
-  <string name="levelup_button">イエーイ!</string>
+  <string name="onwards">イエーイ!</string>
   <string name="faint_subtitle">がっかりしないで!</string>
   <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失いました。だけど、がんばればすべてを取り返せます！  幸あらんことを。——あなたなら、きっとできます。</string>
   <string name="faint_header">体力がなくなった!</string>

@@ -117,7 +117,7 @@
   <string name="sunday">Niedziela</string>
   <string name="levelup_header">Udało Ci się osiągnąć poziom 1%1$d!</string>
   <string name="levelup_detail">Wypełniając swoje cele życiowe, udało Ci się zyskać kolejny poziom i pełne uzdrowienie postaci!</string>
-  <string name="levelup_button">Hurra!</string>
+  <string name="onwards">Hurra!</string>
   <string name="faint_subtitle">Nie rozpaczaj!</string>
   <string name="faint_header">Możesz stracić całe Zdrowie!</string>
   <string name="faint_button">Uzupełnij Zdrowie &amp; Spróbuj jeszcze raz</string>

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +9,16 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.extensions.setOkButton
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
 import io.reactivex.functions.Consumer
@@ -143,8 +143,10 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun showHelpAlert(resourceId: Int) {
-        val builder = AlertDialog.Builder(context).setMessage(resourceId).setOkButton()
-        builder.show()
+        val alert = context?.let { HabiticaAlertDialog(it) }
+        alert?.setMessage(resourceId)
+        alert?.addOkButton()
+        alert?.show()
     }
 
     private fun allocatePoint(stat: String) {

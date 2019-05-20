@@ -117,7 +117,7 @@
   <string name="sunday">Domingo</string>
   <string name="levelup_header">¡Has llegado al Nivel %1$d!</string>
   <string name="levelup_detail">¡Cumpliendo tus metas en la vida real, has subido de nivel y tu salud está restaurada!</string>
-  <string name="levelup_button">¡Hurra!</string>
+  <string name="onwards">¡Hurra!</string>
   <string name="faint_subtitle">¡No desesperes!</string>
   <string name="faint_penalty_body">Has perdido un Nivel, todo tu Oro y una pieza de tu Equipamiento, ¡pero puedes recuperarlo todo con tu esfuerzo! Buena suerte, lo harás genial.</string>
   <string name="faint_header">¡Te has quedado sin salud!</string>

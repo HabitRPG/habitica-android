@@ -6,13 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import com.google.android.material.textfield.TextInputLayout
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatCheckedTextView
-import androidx.appcompat.widget.AppCompatTextView
 import android.view.*
 import android.widget.*
+import androidx.appcompat.widget.AppCompatCheckedTextView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -28,6 +27,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
@@ -198,10 +198,8 @@ class ChallengeFormActivity : BaseActivity() {
             createChallengeTaskError.visibility = View.GONE
         }
         if (errorMessages.count() > 0) {
-            val builder = AlertDialog.Builder(this)
-                    .setMessage(errorMessages.joinToString("\n"))
-
-            val alert = builder.create()
+            val alert = HabiticaAlertDialog(this)
+            alert.setMessage(errorMessages.joinToString("\n"))
             alert.show()
         }
         return errorMessages.size == 0

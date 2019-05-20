@@ -3,13 +3,13 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
@@ -23,7 +23,11 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
+import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
@@ -228,29 +232,34 @@ class QuestDetailFragment : BaseMainFragment() {
     }
 
     private fun onQuestBegin() {
-        val builder = AlertDialog.Builder(getActivity())
-                .setMessage(beginQuestMessage)
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    party.notNull { party ->
-                        socialRepository.forceStartQuest(party)
-                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        context?.let {
+            val alert = HabiticaAlertDialog(it)
+            alert.setMessage(beginQuestMessage)
+            alert.addButton(R.string.yes, true) { _, _ ->
+                        party.notNull { party ->
+                            socialRepository.forceStartQuest(party)
+                                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                        }
                     }
-                }
-                .setNegativeButton(R.string.no) { _, _ -> }
-        builder.show()
+            alert.addButton(R.string.no, false)
+            alert.show()
+        }
     }
 
     private fun onQuestCancel() {
-        val builder = AlertDialog.Builder(getActivity())
-                .setMessage(R.string.quest_cancel_message)
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    partyId.notNull { partyID ->
-                        @Suppress("DEPRECATION")
-                        socialRepository.cancelQuest(partyID)
-                                .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
-                    }
-                }.setNegativeButton(R.string.no) { _, _ -> }
-        builder.show()
+        context?.let {
+            val alert = HabiticaAlertDialog(it)
+            alert.setMessage(R.string.quest_cancel_message)
+            alert.addButton(R.string.yes, true) { _, _ ->
+                partyId.notNull { partyID ->
+                    @Suppress("DEPRECATION")
+                    socialRepository.cancelQuest(partyID)
+                            .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                }
+            }
+            alert.addButton(R.string.no, false)
+            alert.show()
+        }
     }
 
     private fun onQuestAbort() {

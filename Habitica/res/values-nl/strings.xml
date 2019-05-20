@@ -117,7 +117,7 @@
   <string name="sunday">Zondag</string>
   <string name="levelup_header">Je hebt niveau %1$d bereikt!</string>
   <string name="levelup_detail">Door het verwezelijken van je \'real life\' doelen ben je een niveau gestegen en ben je nu volledig geheeld.</string>
-  <string name="levelup_button">Hoera!</string>
+  <string name="onwards">Hoera!</string>
   <string name="faint_subtitle">Wanhoop niet!</string>
   <string name="faint_penalty_body">Je verliest een niveau, je goud en een stuk uitrusting, maar je kunt ze allemaal terug krijgen door hard te werken! Succes—je zult het geweldig doen.</string>
   <string name="faint_header">Je hebt geen Levenspunten meer!</string>

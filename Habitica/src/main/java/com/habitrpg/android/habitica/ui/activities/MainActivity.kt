@@ -142,7 +142,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     var user: User? = null
 
     private var avatarInHeader: AvatarWithBarsViewModel? = null
-    private var faintDialog: AlertDialog? = null
+    private var faintDialog: HabiticaAlertDialog? = null
     private var sideAvatarView: AvatarView? = null
     private var activeTutorialView: TutorialView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
@@ -270,7 +270,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     override fun injectActivity(component: AppComponent?) {
         component?.inject(this)
-        component?.inject(this)
     }
 
     override fun onResume() {
@@ -317,10 +316,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.levelup_header, 5))
         alert.setAdditionalContentView(customView)
-        alert.addButton(R.string.levelup_button, true) { dialog -> dialog.dismiss() }
-        alert.addButton(R.string.share, false) {
-
-        }
+        alert.addButton(R.string.onwards, true)
+        alert.addButton(R.string.share, false)
 
         alert.show()
     }
@@ -542,11 +539,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.key + "-" + event.usingHatchingPotion.key)
             val potionName = event.usingHatchingPotion.text
             val eggName = event.usingEgg.text
-            val dialog = AlertDialog.Builder(this@MainActivity)
-                    .setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
-                    .setView(petWrapper)
-                    .setPositiveButton(R.string.close) { hatchingDialog, _ -> hatchingDialog.dismiss() }
-                    .setNeutralButton(R.string.share) { hatchingDialog, _ ->
+            val dialog = HabiticaAlertDialog(this@MainActivity)
+            dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
+            dialog.setAdditionalContentView(petWrapper)
+            dialog.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
+            dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                         val event1 = ShareEvent()
                         event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
                         val petImageSideLength = 140
@@ -559,7 +556,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         EventBus.getDefault().post(event1)
                         hatchingDialog.dismiss()
                     }
-                    .create()
             dialog.show()
         }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
@@ -578,11 +574,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         val mountImageView = mountWrapper.findViewById<View>(R.id.pet_imageview) as SimpleDraweeView
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.key)
-                        val dialog = AlertDialog.Builder(this@MainActivity)
-                                .setTitle(getString(R.string.evolved_pet_title, pet.text))
-                                .setView(mountWrapper)
-                                .setPositiveButton(R.string.close) { hatchingDialog, _ -> hatchingDialog.dismiss() }
-                                .setNeutralButton(R.string.share) { hatchingDialog, _ ->
+                        val dialog = HabiticaAlertDialog(this@MainActivity)
+                        dialog.setTitle(getString(R.string.evolved_pet_title, pet.text))
+                        dialog.setAdditionalContentView(mountWrapper)
+                        dialog.addButton(R.string.onwards, true)
+                        dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                                     val event1 = ShareEvent()
                                     event1.sharedMessage = getString(R.string.share_raised, pet.text) + " https://habitica.com/social/raise-pet"
                                     val mountImageSideLength = 99
@@ -595,7 +591,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                     EventBus.getDefault().post(event1)
                                     hatchingDialog.dismiss()
                                 }
-                                .create()
                         dialog.show()
                     }
                 }, RxErrorHandler.handleEmptyError())
@@ -634,17 +629,15 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 user.notNull { dialogAvatarView?.setAvatar(it) }
             }
 
-            this.faintDialog = AlertDialog.Builder(this)
-                    .setTitle(R.string.faint_header)
-                    .setView(customView)
-                    .setPositiveButton(R.string.faint_button) { _, _ ->
+            this.faintDialog = HabiticaAlertDialog(this)
+            faintDialog?.setTitle(R.string.faint_header)
+            faintDialog?.setAdditionalContentView(customView)
+            faintDialog?.addButton(R.string.faint_button, true) { _, _ ->
                         faintDialog = null
                         user.notNull {
                             userRepository.revive(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                         }
                     }
-                    .create()
-
             soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
             this.faintDialog?.show()
         }

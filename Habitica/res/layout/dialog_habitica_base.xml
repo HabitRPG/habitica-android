@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/alert_dialog_background"
-        android:paddingBottom="28dp"
+        android:paddingBottom="24dp"
         android:paddingTop="44dp"
         android:paddingEnd="26dp"
         android:paddingStart="26dp"

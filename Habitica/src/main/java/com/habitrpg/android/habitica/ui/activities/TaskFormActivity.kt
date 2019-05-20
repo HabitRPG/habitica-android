@@ -16,7 +16,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -29,6 +28,7 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
+import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
@@ -37,6 +37,7 @@ import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.*
 import io.reactivex.functions.Consumer
 import io.realm.RealmList
@@ -408,14 +409,15 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun deleteTask() {
-        AlertDialog.Builder(this)
-                .setTitle(R.string.are_you_sure)
-                .setPositiveButton(R.string.delete_task) { _, _ ->
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.are_you_sure)
+        alert.addButton(R.string.delete_task, true) { _, _ ->
                     task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
                     dismissKeyboard()
                     finish()
                 }
-                .setNegativeButton(android.R.string.cancel, null).show()
+        alert.addCancelButton()
+        alert.show()
     }
 
     private fun dismissKeyboard() {

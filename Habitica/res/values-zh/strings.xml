@@ -117,7 +117,7 @@
   <string name="sunday">星期日</string>
   <string name="levelup_header">你达到%1$d级！</string>
   <string name="levelup_detail">通过完成您现实生活中的目标，你提升等级并恢复满血状态了！</string>
-  <string name="levelup_button">吼啊~！</string>
+  <string name="onwards">吼啊~！</string>
   <string name="faint_subtitle">别失望！</string>
   <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你就可以把他们都拿回来！加油，你会更棒的！</string>
   <string name="faint_header">你失去了所有的生命值</string>

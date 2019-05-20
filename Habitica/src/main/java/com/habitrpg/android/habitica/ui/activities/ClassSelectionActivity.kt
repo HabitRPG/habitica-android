@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.navigation.navArgs
@@ -21,6 +20,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -232,42 +232,39 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         if (!this.isInitialSelection && this.classWasUnset == false) {
             return
         }
-        val alert = AlertDialog.Builder(this)
-                .setTitle(getString(R.string.opt_out_confirmation))
-                .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
-                .setPositiveButton(getString(R.string.opt_out_class)) { _, _ -> optOutOfClasses() }.create()
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(getString(R.string.opt_out_confirmation))
+        alert.addButton(R.string.opt_out_class, true) { _, _ -> optOutOfClasses() }
+        alert.addButton(R.string.dialog_go_back, false)
         alert.show()
     }
 
     private fun displayConfirmationDialogForClass() {
         if (!this.isInitialSelection && this.classWasUnset == false) {
-            val builder = AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.change_class_confirmation))
-                    .setMessage(getString(R.string.change_class_equipment_warning, currentClass))
-                    .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
-                    .setPositiveButton(getString(R.string.choose_class)) { _, _ ->
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(getString(R.string.change_class_confirmation))
+            alert.setMessage(getString(R.string.change_class_equipment_warning, currentClass))
+            alert.addButton(R.string.choose_class, true) { _, _ ->
                         selectClass(newClass)
                         displayClassChanged()
                     }
-            val alert = builder.create()
+            alert.addButton(R.string.dialog_go_back, false)
             alert.show()
         } else {
-            val builder = AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.class_confirmation, className))
-                    .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
-                    .setPositiveButton(getString(R.string.choose_class)) { _, _ -> selectClass(newClass) }
-            val alert = builder.create()
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(getString(R.string.class_confirmation, className))
+            alert.addButton(R.string.choose_class, true) { _, _ -> selectClass(newClass) }
+            alert.addButton(R.string.dialog_go_back, false)
             alert.show()
         }
     }
 
     private fun displayClassChanged() {
-        val changeConfirmedBuilder = AlertDialog.Builder(this)
-                .setTitle(getString(R.string.class_changed, className))
-                .setMessage(getString(R.string.class_changed_description))
-                .setPositiveButton(getString(R.string.complete_tutorial)) { dialog, _ -> dialog.dismiss() }
-        val changeDoneAlert = changeConfirmedBuilder.create()
-        changeDoneAlert.show()
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(getString(R.string.class_changed, className))
+        alert.setMessage(getString(R.string.class_changed_description))
+        alert.addButton(getString(R.string.complete_tutorial), true)
+        alert.show()
     }
 
     private fun optOutOfClasses() {

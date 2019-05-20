@@ -117,7 +117,7 @@
   <string name="sunday">Sonntag</string>
   <string name="levelup_header">Du hast Level %1$d erreicht!</string>
   <string name="levelup_detail">Durch das Erfüllen Deiner Lebensziele bist du ein Level aufgestiegen und bist nun vollständig geheilt!</string>
-  <string name="levelup_button">Hurra!</string>
+  <string name="onwards">Hurra!</string>
   <string name="faint_subtitle">Nicht verzweifeln!</string>
   <string name="faint_penalty_body">Du hast ein Level, dein Gold und ein Teil deiner Ausrüstung verloren, aber du kannst, mit harter Arbeit alles wieder zurückbekommen! Viel Glück - Du schaffst das.</string>
   <string name="faint_header">Du hast alle Deine Lebenspunkte verloren!</string>

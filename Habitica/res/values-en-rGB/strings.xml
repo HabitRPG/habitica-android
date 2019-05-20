@@ -115,7 +115,7 @@
   <string name="friday">Friday</string>
   <string name="saturday">Saturday</string>
   <string name="sunday">Sunday</string>
-  <string name="levelup_button">Huzzah!</string>
+  <string name="onwards">Huzzah!</string>
   <string name="faint_subtitle">Don\'t despair!</string>
   <string name="faint_header">You ran out of Health!</string>
   <string name="faint_button">Refill Health &amp; Try Again</string>

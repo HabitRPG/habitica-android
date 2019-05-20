@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.interactors
 
 import android.graphics.Bitmap
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.ShareEvent
@@ -12,6 +11,7 @@ import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
@@ -47,17 +47,15 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 }
             })
 
-            val alert = AlertDialog.Builder(requestValues.activity)
-                    .setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
-                    .setView(customView)
-                    .setPositiveButton(R.string.levelup_button) { _, _ ->
-                        showClassSelection(requestValues)
-                    }
-                    .setNeutralButton(R.string.share) { dialog, _ ->
-                        EventBus.getDefault().post(event)
-                        dialog.dismiss()
-                    }
-                    .create()
+            val alert = HabiticaAlertDialog(requestValues.activity)
+            alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
+            alert.setAdditionalContentView(customView)
+            alert.addButton(R.string.onwards, true) { _, _ ->
+                showClassSelection(requestValues)
+            }
+            alert.addButton(R.string.share, false) { _, _ ->
+                EventBus.getDefault().post(event)
+            }
 
             if (!requestValues.activity.isFinishing) {
                 alert.show()

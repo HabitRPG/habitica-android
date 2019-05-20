@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -16,14 +15,16 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import io.reactivex.functions.Consumer
@@ -266,14 +267,14 @@ class GiftIAPActivity: BaseActivity() {
         } else {
             R.string.gift_confirmation_text
         }, giftedUsername, selectedDurationString())
-        AlertDialog.Builder(this)
-                .setTitle(R.string.gift_confirmation_title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok) { dialog, _ ->
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.gift_confirmation_title)
+        alert.setMessage(message)
+        alert.addOkButton { dialog, _ ->
                     dialog.dismiss()
                     finish()
                 }
-                .show()
+        alert.show()
     }
 
     private fun consumePurchase(purchase: Purchase) {
