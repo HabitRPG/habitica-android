@@ -17,7 +17,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.28.1'
+        classpath 'io.fabric.tools:gradle:1.29.0'
         classpath('com.noveogroup.android:check:1.2.5') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
@@ -116,10 +116,10 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     //Push Notifications
-    implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-messaging:17.6.0'
-    implementation 'com.google.firebase:firebase-config:16.5.0'
-    implementation 'com.google.firebase:firebase-perf:16.2.5'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-config:17.0.0'
+    implementation 'com.google.firebase:firebase-perf:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'io.realm:android-adapters:3.1.0'
     implementation(project(':seeds-sdk')) {
@@ -130,7 +130,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.nex3z:flow-layout:1.2.2'
 
-    implementation 'androidx.core:core-ktx:1.0.1'
+    implementation 'androidx.core:core-ktx:1.0.2'
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     kapt "androidx.lifecycle:lifecycle-compiler:2.0.0"
     implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0'
