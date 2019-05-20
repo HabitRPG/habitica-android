@@ -194,10 +194,11 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
                 .build()
         remoteConfig.setConfigSettings(configSettings)
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
-        remoteConfig.fetch(if (BuildConfig.DEBUG) 0 else 3600)
+        remoteConfig.fetchAndActivate()
     }
 
     private fun setupNotifications() {
