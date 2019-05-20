@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseInstanceIDService;
 import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseMessagingService;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.modules.ApiModule;
@@ -261,8 +260,6 @@ public interface AppComponent {
     void inject(TaskReceiver taskReceiver);
 
     void inject(TaskAlarmBootReceiver taskAlarmBootReceiver);
-
-    void inject(HabiticaFirebaseInstanceIDService habiticaFirebaseInstanceIDService);
 
     void inject(HabiticaFirebaseMessagingService habiticaFirebaseMessagingService);
 
