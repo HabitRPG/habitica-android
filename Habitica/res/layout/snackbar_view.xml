@@ -43,7 +43,7 @@
                 android:textSize="18sp"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:textColor="@color/white_75_alpha"/>
+                android:textColor="@color/white"/>
             <TextView
                 android:id="@+id/snackbar_text"
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                 android:textSize="13sp"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:textColor="@color/white_75_alpha"/>
+                android:textColor="@color/white"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/rightView"
