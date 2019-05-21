@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -20,7 +21,6 @@ import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import net.pherth.android.emoji_library.EmojiParser
-import net.pherth.android.emoji_library.EmojiTextView
 
 class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUpdate: Boolean, private val viewUserChallengesOnly: Boolean, private val userId: String) : RealmRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>(data, autoUpdate) {
     private var unfilteredData: OrderedRealmCollection<Challenge>? = null
@@ -86,7 +86,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
 
     class ChallengeViewHolder internal constructor(itemView: View, private val viewUserChallengesOnly: Boolean) : RecyclerView.ViewHolder(itemView) {
 
-        private val challengeName: EmojiTextView by bindView(R.id.challenge_name)
+        private val challengeName: HabiticaEmojiTextView by bindView(R.id.challenge_name)
         private val challengeDescription: TextView by bindView(R.id.challenge_shorttext)
         private val participantCount: TextView by bindView(R.id.participantCount)
         private val officialChallengeLayout: TextView by bindView(R.id.official_challenge_view)

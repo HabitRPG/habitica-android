@@ -1,19 +1,19 @@
 package com.habitrpg.android.habitica.ui.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import net.pherth.android.emoji_library.EmojiTextView
 import java.util.*
 
 
@@ -51,8 +51,8 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
         var task: Task? = null
 
-        private val titleTextView: EmojiTextView by bindView(R.id.titleTextView)
-        private val notesTextView: EmojiTextView by bindView(R.id.notesTextView)
+        private val titleTextView: HabiticaEmojiTextView by bindView(R.id.titleTextView)
+        private val notesTextView: HabiticaEmojiTextView by bindView(R.id.notesTextView)
         private val rightBorderView: View by bindView(R.id.rightBorderView)
 
         init {

@@ -30,12 +30,12 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import net.pherth.android.emoji_library.EmojiParser
-import net.pherth.android.emoji_library.EmojiTextView
 import java.util.*
 import javax.inject.Inject
 
@@ -51,8 +51,8 @@ class ChallengeDetailFragment: BaseMainFragment() {
     private val joinButton: Button? by bindView(R.id.join_button)
     private val leaveButonWrapper: ViewGroup? by bindView(R.id.leave_button_wrapper)
     private val leaveButton: Button? by bindView(R.id.leave_button)
-    private val challengeName: EmojiTextView? by bindView(R.id.challenge_name)
-    private val challengeDescription: EmojiTextView? by bindView(R.id.challenge_description)
+    private val challengeName: HabiticaEmojiTextView? by bindView(R.id.challenge_name)
+    private val challengeDescription: HabiticaEmojiTextView? by bindView(R.id.challenge_description)
     private val challengeLeaderWrapper: ViewGroup? by bindView(R.id.challenge_creator_wrapper)
     private val challengeLeaderAvatarView: AvatarView? by bindView(R.id.creator_avatarview)
     private val challengeLeaderLabel: UsernameLabel? by bindView(R.id.creator_label)

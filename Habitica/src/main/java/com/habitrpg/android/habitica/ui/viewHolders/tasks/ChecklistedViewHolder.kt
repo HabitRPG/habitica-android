@@ -2,8 +2,6 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.graphics.Rect
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.TouchDelegate
 import android.view.View
@@ -12,6 +10,8 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand
@@ -20,11 +20,11 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import net.pherth.android.emoji_library.EmojiTextView
 import org.greenrobot.eventbus.EventBus
 
 abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemView), CompoundButton.OnCheckedChangeListener {
@@ -82,7 +82,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
                 for (item in this.task?.checklist ?: emptyList<ChecklistItem>()) {
                     val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false) as? LinearLayout
                     val checkbox = itemView?.findViewById<CheckBox>(R.id.checkBox)
-                    val textView = itemView?.findViewById<EmojiTextView>(R.id.checkedTextView)
+                    val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
                     if (item.text != null) {

@@ -4,22 +4,26 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.*
+import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.BackpressureStrategy
@@ -30,7 +34,6 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import net.pherth.android.emoji_library.EmojiTextView
 
 class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUpdate: Boolean, user: User?, private val isTavern: Boolean) : RealmRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>(data, autoUpdate) {
     internal var user = user
@@ -112,7 +115,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
         private val messageWrapper: ViewGroup by bindView(R.id.message_wrapper)
         private val avatarView: AvatarView by bindView(R.id.avatar_view)
         private val userLabel: UsernameLabel by bindView(R.id.user_label)
-        private val messageText: EmojiTextView by bindView(R.id.message_text)
+        private val messageText: HabiticaEmojiTextView by bindView(R.id.message_text)
         private val sublineTextView: TextView by bindView(R.id.subline_textview)
         private val likeBackground: LinearLayout by bindView(R.id.like_background_layout)
         private val tvLikes: TextView by bindView(R.id.tvLikes)
