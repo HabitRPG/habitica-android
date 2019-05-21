@@ -19,7 +19,6 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -576,7 +575,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         val alertDialog = HabiticaAlertDialog(this)
         alertDialog.setTitle(R.string.forgot_password_title)
         alertDialog.setMessage(R.string.forgot_password_description)
-        alertDialog.setView(input)
+        alertDialog.setAdditionalContentView(input)
         alertDialog.addButton(R.string.send, true) { _, _ ->
                     userRepository.sendPasswordResetEmail(input.text.toString()).subscribe(Consumer { showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
                 }

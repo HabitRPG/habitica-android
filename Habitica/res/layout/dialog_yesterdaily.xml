@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/alert_dialog_background"
+    android:paddingTop="26dp"
+    android:paddingBottom="26dp">
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
@@ -10,8 +12,13 @@
         android:text="@string/welcome_back"
         android:gravity="center"
         android:padding="12dp"
-        style="@style/Title1"
-        android:background="@color/gray_700"/>
+        style="@style/Title1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yesterdaililes_prompt"
+        android:layout_gravity="center"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -22,17 +29,17 @@
             android:padding="8dp"
             android:background="@color/gray_700"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/yesterdaililes_prompt" />
             <LinearLayout
                 android:id="@+id/yesterdailies_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp"/>
+                android:orientation="vertical"/>
         </LinearLayout>
     </ScrollView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        style="@style/HabiticaButton.Primary"
+        android:text="@string/start_day"/>
 
 </LinearLayout>

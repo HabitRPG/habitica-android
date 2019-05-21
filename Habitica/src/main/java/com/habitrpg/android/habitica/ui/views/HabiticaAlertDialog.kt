@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,14 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import java.lang.ref.WeakReference
 
-open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
+open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
 
     private val view: LinearLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as LinearLayout
     private var titleTextView: TextView
@@ -36,6 +34,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
     }
 
     override fun setTitle(title: CharSequence?) {
+        if (title != null) {
+            titleTextView.visibility = View.VISIBLE
+        } else {
+            titleTextView.visibility = View.GONE
+        }
         titleTextView.text = title
     }
 
@@ -72,8 +75,6 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
         contentView.forceLayout()
     }
 
-
-
     fun getContentView(): View? = additionalContentView
 
     fun addButton(stringRes: Int, isPrimary: Boolean, function: ((HabiticaAlertDialog, Int) -> Unit)? = null) {
@@ -81,17 +82,12 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context) {
     }
 
     fun addButton(string: String, isPrimary: Boolean, function: ((HabiticaAlertDialog, Int) -> Unit)? = null) {
-        val button = Button(context)
-        button.text = string
-        button.transformationMethod = null
-        button.textSize = 16f
-        if (isPrimary) {
-            button.background = context.getDrawable(R.drawable.button_background_primary)
-            button.setTextColor(context.getThemeColor(R.attr.textColorPrimaryDark))
+        val button: Button = if (isPrimary) {
+            buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as Button
         } else {
-            button.background = ColorDrawable(ContextCompat.getColor(context, R.color.transparent))
-            button.setTextColor(ContextCompat.getColor(context, R.color.brand_400))
+            buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as Button
         }
+        button.text = string
         val weakThis = WeakReference<HabiticaAlertDialog>(this)
         val buttonIndex = buttonsWrapper.childCount
         button.setOnClickListener {

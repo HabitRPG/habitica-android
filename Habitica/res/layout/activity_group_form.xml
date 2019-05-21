@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/create"
-                style="@style/HabiticaButton"
+                style="@style/HabiticaButton.Borderless"
                 android:textColor="@color/brand_400"
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingStart="@dimen/spacing_large"

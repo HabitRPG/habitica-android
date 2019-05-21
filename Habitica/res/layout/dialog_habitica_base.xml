@@ -27,6 +27,8 @@
             android:paddingBottom="@dimen/spacing_large"
             style="@style/Headline6"
             tools:text="This is the title"
+            android:visibility="gone"
+            tools:visibility="visible"
             />
 
         <TextView

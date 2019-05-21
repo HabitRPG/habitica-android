@@ -617,7 +617,7 @@
     <string name="leave_quest_confirmation">Are you sure you want to leave the active quest? All your quest progress will be lost.</string>
     <string name="number_participants">%1$d Participants</string>
     <string name="welcome_back">Welcome Back</string>
-    <string name="yesterdaililes_prompt">Did you do any of these Dailies yesterday?</string>
+    <string name="yesterdaililes_prompt">Check off any Dailies you did yesterday:</string>
     <string name="start_day">Start My Day</string>
     <string name="leave_party_confirmation">Are you sure you want to leave the Party?</string>
     <string name="nextPrizeUnlocksIn" formatted="false">Next Prize in %d Check-ins</string>

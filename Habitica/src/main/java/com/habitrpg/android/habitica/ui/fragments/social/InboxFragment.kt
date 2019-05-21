@@ -2,22 +2,25 @@ package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
@@ -82,18 +85,16 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
         this.chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
 
         this.activity.notNull { thisActivity ->
-            val alert = AlertDialog.Builder(thisActivity)
-            .setTitle(getString(R.string.choose_recipient_title))
-                .setPositiveButton(getString(R.string.action_continue)) { _, _ ->
+            val alert = HabiticaAlertDialog(thisActivity)
+            alert.setTitle(getString(R.string.choose_recipient_title))
+            alert.addButton(getString(R.string.action_continue), true) { _, _ ->
                     val uuidEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
                     openInboxMessages(uuidEditText?.text?.toString() ?: "", "")
                 }
-                .setNeutralButton(getString(R.string.action_cancel)) { dialog, _ ->
+            alert.addButton(getString(R.string.action_cancel), false) { dialog, _ ->
                     thisActivity.dismissKeyboard()
-                    dialog.cancel()
                 }
-                .create()
-            alert.setView(chooseRecipientDialogView)
+            alert.setAdditionalContentView(chooseRecipientDialogView)
             alert.show()
         }
 
