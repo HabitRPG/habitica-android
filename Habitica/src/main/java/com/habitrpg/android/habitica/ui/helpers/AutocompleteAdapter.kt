@@ -98,7 +98,7 @@ class AutocompleteAdapter(val context: Context, val socialRepository: SocialRepo
             val view = parent?.inflate(R.layout.autocomplete_emoji)
             val result = getItem(position) as? String
             val emojiTextView = view?.findViewById<HabiticaEmojiTextView>(R.id.emoji_textview)
-            emojiTextView?.setEmojiconSize(24.dpToPx(context))
+            //emojiTextView?.setEmojiconSize(24.dpToPx(context))
             emojiTextView?.text = EmojiParser.parseEmojis(result)
             view?.findViewById<TextView>(R.id.label)?.text = result
             view

@@ -140,4 +140,5 @@
     <dimen name="bb_fake_shadow_height">4dp</dimen>
     <dimen name="button_height">38dp</dimen>
     <dimen name="button_text_size">16sp</dimen>
+    <dimen name="alert_side_padding">26dp</dimen>
 </resources>

@@ -22,6 +22,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     private var messageTextView: TextView
     private var contentView: ViewGroup
     private var buttonsWrapper: LinearLayout
+    private var noticeTextView: TextView
 
     private var additionalContentView: View? = null
 
@@ -31,6 +32,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         messageTextView = view.findViewById(R.id.messageTextView)
         contentView = view.findViewById(R.id.content_view)
         buttonsWrapper = view.findViewById(R.id.buttons_wrapper)
+        noticeTextView = view.findViewById(R.id.notice_text_view)
     }
 
     override fun setTitle(title: CharSequence?) {
@@ -59,6 +61,19 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         setMessage(context.getString(messageId))
     }
 
+    fun setNotice(notice: CharSequence?) {
+        if (notice != null) {
+            noticeTextView.visibility = View.VISIBLE
+        } else {
+            noticeTextView.visibility = View.GONE
+        }
+        noticeTextView.text = notice
+    }
+
+    fun setNotice(noticeID: Int) {
+        setNotice(context.getString(noticeID))
+    }
+
     fun setAdditionalContentView(layoutResID: Int) {
         val inflater = context.layoutInflater
         setAdditionalContentView(inflater.inflate(layoutResID, view, false))
@@ -73,6 +88,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         layoutParams?.height = ViewGroup.LayoutParams.WRAP_CONTENT
         view?.layoutParams = layoutParams
         contentView.forceLayout()
+    }
+
+    fun setAdditionalContentSidePadding(padding: Int) {
+        contentView.setPadding(padding, 0, padding, 0)
+        contentView.requestLayout()
     }
 
     fun getContentView(): View? = additionalContentView

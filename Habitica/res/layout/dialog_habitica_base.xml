@@ -7,7 +7,9 @@
     tools:background="@color/black"
     android:minWidth="300dp"
     android:gravity="center_horizontal"
-    android:layout_gravity="center_horizontal">
+    android:layout_gravity="center_horizontal"
+    android:paddingTop="@dimen/spacing_medium"
+    android:paddingBottom="@dimen/spacing_medium">
     <LinearLayout
         android:minWidth="300dp"
         android:layout_width="320dp"
@@ -15,9 +17,7 @@
         android:orientation="vertical"
         android:background="@drawable/alert_dialog_background"
         android:paddingBottom="24dp"
-        android:paddingTop="44dp"
-        android:paddingEnd="26dp"
-        android:paddingStart="26dp"
+        android:paddingTop="40dp"
         android:gravity="center_horizontal">
         <TextView
             android:id="@+id/titleTextView"
@@ -29,6 +29,8 @@
             tools:text="This is the title"
             android:visibility="gone"
             tools:visibility="visible"
+            android:layout_marginStart="@dimen/alert_side_padding"
+            android:layout_marginEnd="@dimen/alert_side_padding"
             />
 
         <TextView
@@ -41,20 +43,45 @@
             android:textColor="?textColorSecondary"
             style="@style/Body2"
             tools:text="This is the message"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:layout_marginStart="@dimen/alert_side_padding"
+            android:layout_marginEnd="@dimen/alert_side_padding"
             />
-        <FrameLayout
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/content_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/alert_side_padding"
+            android:paddingEnd="@dimen/alert_side_padding"/>
         <LinearLayout
             android:id="@+id/buttons_wrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:divider="@drawable/alert_dialog_button_divider"
-            android:showDividers="middle"/>
+            android:showDividers="middle"
+            android:layout_marginStart="@dimen/alert_side_padding"
+            android:layout_marginEnd="@dimen/alert_side_padding"/>
+        <TextView
+            android:id="@+id/notice_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/alert_side_padding"
+            android:layout_marginEnd="@dimen/alert_side_padding"
+            android:paddingTop="@dimen/spacing_medium"
+            android:paddingBottom="@dimen/spacing_medium"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
+            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:visibility="gone"
+            android:gravity="center"
+            style="@style/Caption3"
+            android:textColor="@color/gray_100"
+            tools:text="This is a small label"
+            tools:visibility="visible"/>
     </LinearLayout>
     <Button
         android:id="@+id/close_button"

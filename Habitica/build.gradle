@@ -46,8 +46,8 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //Networking
-    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
     //REST API handling
     implementation('com.squareup.retrofit2:retrofit:2.5.0') {
         exclude module: 'okhttp'
@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     //Crash Logging
-    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
+    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.10.0@aar') {
         transitive = true
     }
     //Dependency Injection
@@ -150,8 +150,8 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         multiDexEnabled true
 
-        versionCode 2130
-        versionName "1.9.1"
+        versionCode 2140
+        versionName "1.10"
     }
 
     lintOptions {

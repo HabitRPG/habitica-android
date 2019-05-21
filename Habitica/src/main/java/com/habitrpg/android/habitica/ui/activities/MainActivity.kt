@@ -307,19 +307,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         launchTrace?.stop()
         launchTrace = null
 
-        val customView = layoutInflater.inflate(R.layout.dialog_levelup, null)
-        if (customView != null) {
-            val dialogAvatarView = customView.findViewById<AvatarView>(R.id.avatarView)
-            user?.let { dialogAvatarView.setAvatar(it) }
-        }
 
-        val alert = HabiticaAlertDialog(this)
-        alert.setTitle(getString(R.string.levelup_header, 5))
-        alert.setAdditionalContentView(customView)
-        alert.addButton(R.string.onwards, true)
-        alert.addButton(R.string.share, false)
-
-        alert.show()
+        notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
+                user, 0.0, 0.0, 0.0, 0.0, 0.0, true))
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     override fun onPause() {

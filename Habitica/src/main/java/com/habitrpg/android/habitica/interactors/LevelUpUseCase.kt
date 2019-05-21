@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.interactors
 
 import android.graphics.Bitmap
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.ShareEvent
@@ -12,6 +13,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
@@ -31,34 +33,56 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 return@defer Flowable.just<Stats>(requestValues.user.stats)
             }
 
-            val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup, null)
-            if (customView != null) {
-                val dialogAvatarView = customView.findViewById<AvatarView>(R.id.avatarView)
-                dialogAvatarView.setAvatar(requestValues.user)
-            }
-
-            val event = ShareEvent()
-            event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel) + " https://habitica.com/social/level-UP"
-            val avatarView = AvatarView(requestValues.activity, true, true, true)
-            avatarView.setAvatar(requestValues.user)
-            avatarView.onAvatarImageReady(object : AvatarView.Consumer<Bitmap?> {
-                override fun accept(t: Bitmap?) {
-                     event.shareImage = t
+            if (requestValues.newLevel == 10) {
+                val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup_10, null)
+                if (customView != null) {
+                    customView.findViewById<ImageView>(R.id.healer_icon_view).setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
+                    customView.findViewById<ImageView>(R.id.mage_icon_view).setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
+                    customView.findViewById<ImageView>(R.id.rogue_icon_view).setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
+                    customView.findViewById<ImageView>(R.id.warrior_icon_view).setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
                 }
-            })
 
-            val alert = HabiticaAlertDialog(requestValues.activity)
-            alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
-            alert.setAdditionalContentView(customView)
-            alert.addButton(R.string.onwards, true) { _, _ ->
-                showClassSelection(requestValues)
-            }
-            alert.addButton(R.string.share, false) { _, _ ->
-                EventBus.getDefault().post(event)
-            }
+                val alert = HabiticaAlertDialog(requestValues.activity)
+                alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
+                alert.setAdditionalContentView(customView)
+                alert.addButton(R.string.select_class, true) { _, _ ->
+                    showClassSelection(requestValues)
+                }
+                alert.addButton(R.string.not_now, false)
 
-            if (!requestValues.activity.isFinishing) {
-                alert.show()
+                if (!requestValues.activity.isFinishing) {
+                    alert.show()
+                }
+            } else {
+                val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup, null)
+                if (customView != null) {
+                    val dialogAvatarView = customView.findViewById<AvatarView>(R.id.avatarView)
+                    dialogAvatarView.setAvatar(requestValues.user)
+                }
+
+                val event = ShareEvent()
+                event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel) + " https://habitica.com/social/level-UP"
+                val avatarView = AvatarView(requestValues.activity, true, true, true)
+                avatarView.setAvatar(requestValues.user)
+                avatarView.onAvatarImageReady(object : AvatarView.Consumer<Bitmap?> {
+                    override fun accept(t: Bitmap?) {
+                        event.shareImage = t
+                    }
+                })
+
+                val alert = HabiticaAlertDialog(requestValues.activity)
+                alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
+                alert.setAdditionalContentView(customView)
+                alert.addButton(R.string.onwards, true) { _, _ ->
+                    showClassSelection(requestValues)
+                }
+                alert.addButton(R.string.share, false) { _, _ ->
+                    EventBus.getDefault().post(event)
+                }
+
+                if (!requestValues.activity.isFinishing) {
+                    alert.show()
+                }
             }
 
             Flowable.just(requestValues.user.stats!!)
