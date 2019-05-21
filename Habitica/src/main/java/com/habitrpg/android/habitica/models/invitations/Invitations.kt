@@ -12,13 +12,9 @@ open class Invitations : RealmObject() {
     var userId: String? = null
 
     internal var user: User? = null
-    /**
-     * @return The party invite
-     */
-    /**
-     * @param party The party
-     */
+
     var party: PartyInvite? = null
+    var parties: RealmList<PartyInvite>? = null
     private var guilds: RealmList<GuildInvite>? = null
 
     /**
@@ -38,10 +34,14 @@ open class Invitations : RealmObject() {
     fun removeInvitation(groupID: String) {
         if (party?.id == groupID) {
             party = null
-        } else {
-            guilds?.removeAll {
-                it.id == groupID
-            }
+        }
+
+        guilds?.removeAll {
+            it.id == groupID
+        }
+
+        parties?.removeAll {
+            it.id == groupID
         }
     }
 }
