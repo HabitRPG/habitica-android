@@ -306,11 +306,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         launchTrace?.stop()
         launchTrace = null
-
-
-        notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
-                user, 0.0, 0.0, 0.0, 0.0, 0.0, true))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
     override fun onPause() {

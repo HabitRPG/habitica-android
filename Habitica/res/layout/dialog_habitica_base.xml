@@ -11,6 +11,7 @@
     android:paddingTop="@dimen/spacing_medium"
     android:paddingBottom="@dimen/spacing_medium">
     <LinearLayout
+        android:id="@+id/dialog_container"
         android:minWidth="300dp"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
@@ -48,23 +49,33 @@
             android:layout_marginEnd="@dimen/alert_side_padding"
             />
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/content_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingStart="@dimen/alert_side_padding"
-            android:paddingEnd="@dimen/alert_side_padding"/>
+            android:layout_weight="1">
+            <FrameLayout
+                android:id="@+id/content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="@dimen/alert_side_padding"
+                android:paddingEnd="@dimen/alert_side_padding"/>
+        </androidx.core.widget.NestedScrollView>
+        <View
+            android:id="@+id/scrolling_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_600" />
         <LinearLayout
             android:id="@+id/buttons_wrapper"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:paddingTop="20dp"
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:divider="@drawable/alert_dialog_button_divider"
             android:showDividers="middle"
-            android:layout_marginStart="@dimen/alert_side_padding"
-            android:layout_marginEnd="@dimen/alert_side_padding"/>
+            android:paddingStart="@dimen/alert_side_padding"
+            android:paddingEnd="@dimen/alert_side_padding"/>
         <TextView
             android:id="@+id/notice_text_view"
             android:layout_width="match_parent"

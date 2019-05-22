@@ -916,4 +916,6 @@
     <string name="not_now">Not right now</string>
     <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armor to help you on your journey</string>
     <string name="levelup_title_10">Class System unlocked!</string>
+    <string name="pin">Pin</string>
+    <string name="unpin">Unpin</string>
 </resources>
