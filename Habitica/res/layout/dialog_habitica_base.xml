@@ -64,7 +64,8 @@
             android:id="@+id/scrolling_separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_600" />
+            android:background="@color/gray_600"
+            android:visibility="gone"/>
         <LinearLayout
             android:id="@+id/buttons_wrapper"
             android:layout_width="match_parent"

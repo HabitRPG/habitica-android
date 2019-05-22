@@ -1,9 +1,8 @@
 package com.habitrpg.android.habitica.ui.views.insufficientCurrency
 
-import android.app.AlertDialog
 import android.content.Context
-
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 
 /**
@@ -13,10 +12,10 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(context) {
 
     init {
-
         imageView.setImageResource(R.drawable.gems_84)
         textView.setText(R.string.insufficientGems)
 
-        setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.purchase_gems)) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity) }
+        addButton(R.string.purchase_gems, true) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity) }
+        addCloseButton()
     }
 }

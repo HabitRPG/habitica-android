@@ -54,7 +54,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         } else if ("gems" == currency) {
             icon = HabiticaIconsHelper.imageOfGem()
             if (lightBackground) {
-                setTextColor(ContextCompat.getColor(context, R.color.green_100))
+                setTextColor(ContextCompat.getColor(context, R.color.green_10))
             } else {
                 setTextColor(ContextCompat.getColor(context, R.color.green_50))
             }
