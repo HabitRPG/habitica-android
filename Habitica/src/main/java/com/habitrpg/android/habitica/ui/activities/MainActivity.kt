@@ -19,7 +19,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -815,36 +814,23 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val youEarnedMessage = this.getString(R.string.checkInRewardEarned, event.notification.data.rewardText)
 
-        val titleTextView = TextView(this)
-        titleTextView.setBackgroundResource(R.color.blue_100)
-        titleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
-        val density = this.resources.displayMetrics.density
-        val paddingDp = (16 * density).toInt()
-        titleTextView.setPadding(paddingDp, paddingDp, paddingDp, paddingDp)
-        titleTextView.textSize = 18f
-        titleTextView.gravity = Gravity.CENTER_HORIZONTAL
-        titleTextView.text = title
-
         val youEarnedTexView = view.findViewById<View>(R.id.you_earned_message) as? TextView
         youEarnedTexView?.text = youEarnedMessage
 
         val nextUnlockTextView = view.findViewById<View>(R.id.next_unlock_message) as? TextView
         nextUnlockTextView?.text = event.nextUnlockText
 
-        val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                .setView(view)
-                .setCustomTitle(titleTextView)
-                .setPositiveButton(R.string.start_day) { _, _ ->
-                    apiClient.readNotification(event.notification.id)
-                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-                }
-                .setMessage("")
-
         Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
-                    val dialog = builder.create()
-                    dialog.show()
+                    val alert = HabiticaAlertDialog(this)
+                    alert.setAdditionalContentView(view)
+                    alert.setTitle(title)
+                    alert.addButton(R.string.see_you_tomorrow, true) { _, _ ->
+                        apiClient.readNotification(event.notification.id)
+                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    }
+                    alert.show()
                 }, RxErrorHandler.handleEmptyError())
     }
 

@@ -545,7 +545,7 @@
     <string name="open">Open</string>
     <string name="notification_mystery_item">You open the box and find %s!</string>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
-    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Your next prize unlocks at %1$d Check-Ins</string>
+    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Next prize in %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
     <string name="filters">Filters</string>
     <string name="done">Done</string>

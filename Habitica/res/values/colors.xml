@@ -5,7 +5,7 @@
     <color name="brand_100">#432874</color>
     <color name="brand_200">#4f2a93</color>
     <color name="brand_300">#6133B4</color>
-    <color name="brand_400">#9A62FF</color>
+    <color name="brand_400">#925CF3</color>
     <color name="brand_500">#bda8ff</color>
     <color name="brand_700">#ede7f6</color>
     <color name="brand">@color/brand_100</color>
