@@ -124,7 +124,7 @@
   <string name="filter">Filtr</string>
   <string name="profile_image">Obrazek profilowy</string>
   <string name="mana_price_button">%d PM</string>
-  <string name="used_skill">Użyłeś %1$s za %2$d pkt. many.</string>
+  <string name="used_skill">Użyłeś %1$s za %2$d pkt many.</string>
   <string name="used_skill_without_mana">Użyto %1$s.</string>
   <string name="new_checklist_item">nowa część zadania</string>
   <string name="add_checklist_item">Dodaj</string>
@@ -162,7 +162,7 @@
   <string name="avatar_mustache">Wąsy</string>
   <string name="avatar_flower">Kwiatek</string>
   <string name="avatar_bangs">Grzywka</string>
-  <string name="avatar_nothing">Niewybrano</string>
+  <string name="avatar_nothing">Nie wybrano</string>
   <string name="avatar_size">Rozmiar</string>
   <string name="avatar_size_slim">Szczupła</string>
   <string name="avatar_size_broad">Krzepka</string>
@@ -534,8 +534,8 @@
   <string name="read_community_guidelines">Prosimy, przeczytaj Wytyczne Społeczności zanim umieścisz posta</string>
   <string name="maintenance">Utrzymanie</string>
   <string name="reload_content">Odśwież zawartość</string>
-  <string name="dailyDueDefaultView">Ustaw codzienne domyślnie w zakładce \'do\'</string>
-  <string name="repeat_summary">Powtarzaj %1$sco %2$s%3$s%4$s</string>
+  <string name="dailyDueDefaultView">Ustaw codzienne ‘dzisiejsze’ jako domyślne</string>
+  <string name="repeat_summary">Powtarzaj %1$s co %2$s %3$s %4$s</string>
   <string name="no_billing_gems">Twoje urządzenie nie posiada żadnych wspieranych metod płatności. Aby kupić klejnoty, użyj strony internetowej Habitiki.</string>
   <string name="no_billing_subscriptions">Twoje urządzenie nie posiada żadnych wspieranych metod płatności. Aby wykupić subskrypcję, użyj strony internetowej Habitiki.</string>
   <string name="save">Zapisz</string>
@@ -733,4 +733,5 @@
 \nPo pierwsze, jak się nazywasz\? Śmiało, zmień wszystko co wybrałem. Kiedy skończysz, stworzymy twój awatar!</string>
     <string name="challenge_create_error_tavern_one_gem">Potrzebujesz przynajmniej jednego klejnotu by stworzyć publiczne wyzwanie.</string>
     <string name="challenge_create_error_tag">Potrzebujesz krótkiej nazwy aby stworzyć to wyzwanie.</string>
+    <string name="dailyDueDefaultViewDescription">Włączenie opcji powoduje wyświetlanie zadań ‘dzisiejszych’ zamiast ‘wszystkich’</string>
     </resources>
