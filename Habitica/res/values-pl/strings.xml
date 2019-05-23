@@ -266,7 +266,7 @@
   <string name="wear_costume">Użyj kostiumu</string>
   <string name="equipped">W użyciu</string>
   <string name="quest_cancel_message">Jesteś pewien że chcesz przerwać quest? Quest zostanie przerwany dla wszystkich uczestników. Zwołujący quest odzyska skrypt (quest scroll).</string>
-  <string name="quest.invitation">Zaproszenie do questa.</string>
+  <string name="quest.invitation">Zaproszenie do misji</string>
   <string name="quest_begin_message">Jesteś pewien? Tylko %1$d z %2$d członków twojej drużyny dołączyło do tej misji! Misje zaczynają się automatycznie kiedy wszyscy członkowie dołączą bądź odrzucą zaproszenie.</string>
   <string name="quest.invitation.text">Zostałeś zaproszony do udziału w misji!</string>
   <string name="today">Dzisiaj</string>
@@ -288,7 +288,7 @@
   <string name="feed_to_pet">Nakarm chowańca</string>
   <string name="hatch_egg">Wykluj za pomocą jaja</string>
   <string name="invite_party">Zaproś drużynę</string>
-  <string name="dialog_feeding">Nakarm %1$s %2$s</string>
+  <string name="dialog_feeding">Nakarm %1$s %2$s:</string>
   <string name="use_animal">Użyj</string>
   <string name="feed">Nakarm</string>
   <string name="hatch_with">Wykluj za pomocą %s</string>
@@ -383,7 +383,7 @@
   <string name="filter_drawer_edit_tags">Edytuj tagi</string>
   <string name="filter_drawer_filter_tags">Filtruj po tagach</string>
   <!--QR Strings-->
-  <string name="qr_section_title">Czy ktoś zaprosił Cię przy pomocy tego kodu QR?</string>
+  <string name="qr_section_title">Ktoś może zaprosić cię przy pomocy tego kodu QR</string>
   <string name="qr_save_message">Kod QR zapisany w</string>
   <string name="qr_dialogue_title">Twój kod QR</string>
   <string name="download">Pobierz</string>
@@ -421,7 +421,7 @@
   <string name="AudioTheme_title">Temat dźwiękowy</string>
   <string name="AudioTheme_summary">Zmień temat dźwiękowy Habitiki</string>
   <!--Login Incentives-->
-  <string name="see_you_tomorrow">Do zobaczenia jutro </string>
+  <string name="see_you_tomorrow">Do zobaczenia jutro!</string>
   <string name="belongs_to_challenge">Należy do wyzwania</string>
   <string name="has_reminder">Ma powiadomienie</string>
   <string name="has_tag">Ma tag</string>
@@ -462,7 +462,7 @@
   <string name="challenge_leave_title">Opuść wyzwanie</string>
   <string name="challenge_leave_text">Jesteś pewien, że chcesz opuścić wyzwanie “%s”?</string>
   <string name="challenge_remove_tasks_title">Usuń zadania</string>
-  <string name="challenge_remove_tasks_text">Czy chcesz usunąć zadania</string>
+  <string name="challenge_remove_tasks_text">Czy chcesz usunąć zadania\?</string>
   <string name="remove_tasks">Usuń</string>
   <string name="keep_tasks">Zachowaj</string>
   <string name="my_challenges">Moje wyzwania</string>
@@ -517,12 +517,12 @@
   <string name="avatar_glasses">Okulary</string>
   <string name="avatar_wheelchair">Wózek</string>
   <string name="weak">Słaby</string>
-  <string name="strong">Silny</string>
-  <string name="gray">Szary</string>
-  <string name="dated">Zaplanowany</string>
+  <string name="strong">Silne</string>
+  <string name="gray">Szare</string>
+  <string name="dated">Zaplanowane</string>
   <string name="completed">Ukończone</string>
   <string name="setuP_group_other">Pozostałe</string>
-  <string name="clear">Jasny</string>
+  <string name="clear">Czyść</string>
   <string name="empty_title_habits">Nie posiadasz żadnych nawyków</string>
   <string name="empty_description_habits">Nawyki są zadaniami nie posiadającymi sztywnego harmonogramu. Możesz je odhaczać wiele razy dziennie, lub w ogóle.</string>
   <string name="empty_title_dailies">Nie posiadasz żadnych codziennych</string>
@@ -552,10 +552,10 @@
   <string name="start_quest">Rozpocznij nową misję</string>
   <string name="leave_party">Opuść drużynę</string>
   <string name="party_description">Opis drużyny</string>
-  <string name="number_participants">%1$dUczestników</string>
+  <string name="number_participants">%1$d Uczestników</string>
   <string name="welcome_back">Witaj ponownie</string>
   <string name="yesterdaililes_prompt">Czy wykonałeś wczoraj któreś z tych Codziennych?</string>
-  <string name="start_day">Rozpocznij nowy dzień!</string>
+  <string name="start_day">Rozpocznij mój dzień</string>
   <string name="leave_party_confirmation">Jesteś pewien, że chcesz opuścić drużynę ?</string>
   <string name="nextPrizeUnlocksIn" formatted="false">Następna nagroda za %d wizyt</string>
   <string name="pending">Oczekujące</string>
@@ -564,13 +564,13 @@
   <string name="participants">Uczestnicy</string>
   <string name="invitations">Zaproszenia</string>
   <string name="quest_leader_header" formatted="false">Rozpoczęta przez %s</string>
-  <string name="reloading_content">Przeładowuję...</string>
+  <string name="reloading_content">Odświeżanie zawartości</string>
   <string name="thousand_abbrev">k</string>
   <string name="million_abbrev">m</string>
   <string name="billion_abbrev">b</string>
   <string name="your_balance">Twoje saldo:</string>
   <string name="available_until" formatted="false">Dostępne do %s</string>
-  <string name="gems_left_nomax" formatted="false">Miesięczne Klejnoty: %d pozostało</string>
+  <string name="gems_left_nomax" formatted="false">Miesięczne Klejnoty: pozostało %d</string>
   <string name="health">Zdrowie</string>
   <string name="collect">Zbierz</string>
   <string name="rage_meter">Wskaźnik szału</string>
@@ -681,7 +681,7 @@
     <string name="invite_username_description">Jeśli masz już znajomych, którzy korzystają z Habitiki, zaproś ich, używając ich nazwy użytkownika tutaj.</string>
     <string name="create_challenge">Stwórz wyzwanie</string>
     <string name="edit_challenge">Edytuj</string>
-    <string name="loading">Ładowanie</string>
+    <string name="loading">Ładowanie…</string>
     <string name="insufficientGold">Musisz najpierw wykonać więcej zadań, zanim będzie Cię stać na ten przedmiot!</string>
     <string name="change_username">Zmień nazwę użytkownika</string>
     <string name="id_copied">ID skopiowane do schowka</string>
@@ -713,8 +713,8 @@
     <string name="preference_push_important_announcements">Ważne Ogłoszenia</string>
     <string name="faint_penalty_body">Straciłeś poziom, złoto i przedmiot z wyposażenia, ale możesz je odzyskać poprzez ciężką pracę! Powodzenia — uda ci się.</string>
     <string name="reminder_title">Pamiętaj aby odznaczyć swoje zadanie</string>
-    <string name="ago_minutes">%d minut ago</string>
-    <string name="ago_hours">%d godzin ago</string>
+    <string name="ago_minutes">%d minut temu</string>
+    <string name="ago_hours">%d godzin temu</string>
     <string name="evolved_pet_title">Oswoiłeś %1$s %2$s, idź na przejażdżkę!</string>
     <string name="opting_out_progress">Wycofywanie się</string>
     <string name="subscription_duration_norenew">Na %s</string>
@@ -734,4 +734,15 @@
     <string name="challenge_create_error_tavern_one_gem">Potrzebujesz przynajmniej jednego klejnotu by stworzyć publiczne wyzwanie.</string>
     <string name="challenge_create_error_tag">Potrzebujesz krótkiej nazwy aby stworzyć to wyzwanie.</string>
     <string name="dailyDueDefaultViewDescription">Włączenie opcji powoduje wyświetlanie zadań ‘dzisiejszych’ zamiast ‘wszystkich’</string>
+    <string name="gem_reward">Nagroda w klejnotach</string>
+    <string name="identify_your_challenge_with_a_tag">Określ wyzwanie krótką nazwą</string>
+    <string name="abort_confirmation">Czy na pewno chcesz przerwać tę misję\? Zostanie ona przerwana u wszystkich uczestników z twojej drużyny a cały postęp zostanie utracony. Zwój misji zostanie zwrócony do właściciela.</string>
+    <string name="leave_quest_confirmation">Czy na pewno chcesz opuścić trwającą misję\? Cały twój postęp w misji zostanie utracony.</string>
+    <string name="gems_left_max" formatted="false">Miesięczne Klejnoty: pozostało %1$d/%2$d</string>
+    <string name="forgot_password_confirmation">Instrukcja dotyczącą ustawiania nowego hasła zostanie wysłana na e-mail, o ile został on ustawiony w profilu.</string>
+    <string name="strike_active_description" formatted="false">Nasz ukochany %s został zdewastowany, gdy %s roztrzaskał %s. Szybko, kończ swoje zadania, żeby pokonać potwora i pomóc w odbudowie!!</string>
+    <string name="equipment_str">SIŁ:</string>
+    <string name="equipment_con">KON:</string>
+    <string name="equipment_int">INT:</string>
+    <string name="equipment_per">PER:</string>
     </resources>
