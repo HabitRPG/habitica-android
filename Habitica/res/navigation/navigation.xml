@@ -289,4 +289,13 @@
     <action
         android:id="@+id/openProfileActivity"
         app:destination="@id/fullProfileActivity" />
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.AchievementsFragment"
+        android:label="@string/sidebar_achievements" >
+        <argument
+            android:name="userID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

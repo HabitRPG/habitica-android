@@ -19,6 +19,13 @@ import io.realm.Sort
 
 
 class RealmInventoryLocalRepository(realm: Realm, private val context: Context) : RealmContentLocalRepository(realm), InventoryLocalRepository {
+    override fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>> {
+        return realm.where(QuestContent::class.java)
+                .`in`("key", keys.toTypedArray())
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+    }
 
     override fun getQuestContent(key: String): Flowable<QuestContent> {
         return realm.where(QuestContent::class.java).equalTo("key", key)

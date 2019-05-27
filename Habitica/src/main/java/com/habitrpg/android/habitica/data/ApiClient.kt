@@ -179,7 +179,7 @@ interface ApiClient {
     fun getMember(memberId: String): Flowable<Member>
     fun getMemberWithUsername(username: String): Flowable<Member>
 
-    fun getMemberAchievements(memberId: String): Flowable<AchievementResult>
+    fun getMemberAchievements(memberId: String): Flowable<List<Achievement>>
 
     fun postPrivateMessage(messageDetails: Map<String, String>): Flowable<PostChatMessageResult>
 

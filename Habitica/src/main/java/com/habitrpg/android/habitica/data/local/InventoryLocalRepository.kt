@@ -24,6 +24,7 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getInAppRewards(): Flowable<RealmResults<ShopItem>>
     fun getQuestContent(key: String): Flowable<QuestContent>
+    fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>>
 
     fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>>
 

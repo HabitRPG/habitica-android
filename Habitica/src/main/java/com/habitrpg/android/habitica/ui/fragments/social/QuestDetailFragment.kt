@@ -232,15 +232,17 @@ class QuestDetailFragment : BaseMainFragment() {
     }
 
     private fun onQuestBegin() {
-        context?.let {
-            val alert = HabiticaAlertDialog(it)
+        val context = context
+        if (context != null) {
+            val alert = HabiticaAlertDialog(context)
             alert.setMessage(beginQuestMessage)
             alert.addButton(R.string.yes, true) { _, _ ->
-                        party.notNull { party ->
-                            socialRepository.forceStartQuest(party)
-                                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-                        }
-                    }
+                val party = party
+                if (party != null) {
+                    socialRepository.forceStartQuest(party)
+                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }
+            }
             alert.addButton(R.string.no, false)
             alert.show()
         }

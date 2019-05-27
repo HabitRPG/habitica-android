@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
-import com.habitrpg.android.habitica.models.Skill
-import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -12,6 +10,21 @@ import io.realm.Realm
 import io.realm.RealmResults
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
+    override fun getAchievements(): Flowable<RealmResults<Achievement>> {
+        return realm.where(Achievement::class.java)
+                .sort("index")
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+    }
+
+    override fun getQuestAchievements(userID: String): Flowable<RealmResults<QuestAchievement>> {
+        return realm.where(QuestAchievement::class.java)
+                .equalTo("userID", userID)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+    }
 
     override fun getTutorialSteps(): Flowable<RealmResults<TutorialStep>> = realm.where(TutorialStep::class.java).findAll().asFlowable()
                 .filter { it.isLoaded }

@@ -121,4 +121,9 @@
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.035</item>
     </style>
+    <style name="Overline">
+        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 </resources>

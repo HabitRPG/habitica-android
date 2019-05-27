@@ -6,6 +6,8 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
@@ -301,6 +303,20 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
             updatePath = "$updatePath.$category"
         }
         return updateUser(user, updatePath, identifier)
+    }
+
+    override fun retrieveAchievements(): Flowable<List<Achievement>> {
+        return apiClient.getMemberAchievements(userID).doOnNext {
+            localRepository.save(it)
+        }
+    }
+
+    override fun getAchievements(): Flowable<RealmResults<Achievement>> {
+        return localRepository.getAchievements()
+    }
+
+    override fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>> {
+        return localRepository.getQuestAchievements(userID)
     }
 
     private fun mergeUser(oldUser: User?, newUser: User): User {

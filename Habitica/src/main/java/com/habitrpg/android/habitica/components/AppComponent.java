@@ -41,6 +41,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
+import com.habitrpg.android.habitica.ui.fragments.AchievementsFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
@@ -314,4 +315,6 @@ public interface AppComponent {
     void inject(@NotNull ReportMessageActivity reportMessageActivity);
 
     void inject(@NotNull GuildDetailFragment guildDetailFragment);
+
+    void inject(@NotNull AchievementsFragment achievementsFragment);
 }

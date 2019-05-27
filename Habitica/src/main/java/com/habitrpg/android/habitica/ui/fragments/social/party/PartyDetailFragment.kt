@@ -183,8 +183,9 @@ class PartyDetailFragment : BaseFragment() {
     }
 
     private fun leaveParty() {
-        activity?.let {
-            val alert = HabiticaAlertDialog(it)
+        val context = context
+        if (context != null) {
+            val alert = HabiticaAlertDialog(context)
             alert.setMessage(R.string.leave_party_confirmation)
             alert.addButton(R.string.yes, true) { _, _ ->
                 viewModel?.leaveGroup { }

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.models.user
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.PushDevice
+import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
@@ -118,6 +119,11 @@ open class User : RealmObject(), Avatar {
         }
 
     var tags = RealmList<Tag>()
+    var questAchievements = RealmList<QuestAchievement>()
+        set(value) {
+            field = value
+            field.forEach { it.userID = id }
+        }
 
     @Ignore
     var pushDevices: List<PushDevice>? = null

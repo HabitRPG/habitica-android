@@ -589,7 +589,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.getMemberWithUsername(username).compose(configureApiCallObserver())
     }
 
-    override fun getMemberAchievements(memberId: String): Flowable<AchievementResult> {
+    override fun getMemberAchievements(memberId: String): Flowable<List<Achievement>> {
         return apiService.getMemberAchievements(memberId).compose(configureApiCallObserver())
     }
 

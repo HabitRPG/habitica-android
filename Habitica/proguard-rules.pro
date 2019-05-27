@@ -63,8 +63,8 @@
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
 
-#keep models
--keep class com.habitrpg.android.habitica.models.** { *; }
+#keep Habitica code
+-keep class com.habitrpg.android.habitica.** { *; }
 
 #realm
 -keep class io.realm.annotations.RealmModule

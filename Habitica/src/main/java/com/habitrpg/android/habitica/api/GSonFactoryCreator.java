@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
 import com.habitrpg.android.habitica.models.Skill;
@@ -11,8 +12,6 @@ import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.WorldState;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
-import com.habitrpg.android.habitica.models.inventory.Mount;
-import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
@@ -29,6 +28,7 @@ import com.habitrpg.android.habitica.models.user.OwnedMount;
 import com.habitrpg.android.habitica.models.user.OwnedPet;
 import com.habitrpg.android.habitica.models.user.Purchases;
 import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.utils.AchievementListDeserializer;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
 import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
 import com.habitrpg.android.habitica.utils.ChallengeListDeserializer;
@@ -53,15 +53,14 @@ import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskSerializer;
-import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
+import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
 import com.habitrpg.android.habitica.utils.UserDeserializer;
 import com.habitrpg.android.habitica.utils.WorldStateSerialization;
 
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import io.realm.RealmList;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -83,6 +82,7 @@ public class GSonFactoryCreator {
         Type ownedItemListType = new TypeToken<RealmList<OwnedItem>>() {}.getType();
         Type ownedPetListType = new TypeToken<RealmList<OwnedPet>>() {}.getType();
         Type ownedMountListType = new TypeToken<RealmList<OwnedMount>>() {}.getType();
+        Type achievementsListType = new TypeToken<List<Achievement>>() {}.getType();
 
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
@@ -113,6 +113,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(ownedItemListType, new OwnedItemListDeserializer())
                 .registerTypeAdapter(ownedPetListType, new OwnedPetListDeserializer())
                 .registerTypeAdapter(ownedMountListType, new OwnedMountListDeserializer())
+                .registerTypeAdapter(achievementsListType, new AchievementListDeserializer())
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())

@@ -208,6 +208,7 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.tasksFragment, SIDEBAR_TASKS, context.getString(R.string.sidebar_tasks)))
             items.add(HabiticaDrawerItem(R.id.skillsFragment, SIDEBAR_SKILLS, context.getString(R.string.sidebar_skills)))
             items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
+            items.add(HabiticaDrawerItem(R.id.achievementsFragment, SIDEBAR_ACHIEVEMENTS, context.getString(R.string.sidebar_achievements)))
             items.add(HabiticaDrawerItem(0, SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
             items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern), false, false))
             items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
@@ -327,6 +328,7 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_TASKS = "tasks"
         const val SIDEBAR_SKILLS = "skills"
         const val SIDEBAR_STATS = "stats"
+        const val SIDEBAR_ACHIEVEMENTS = "achievements"
         const val SIDEBAR_SOCIAL = "social"
         const val SIDEBAR_INBOX = "inbox"
         const val SIDEBAR_TAVERN = "tavern"

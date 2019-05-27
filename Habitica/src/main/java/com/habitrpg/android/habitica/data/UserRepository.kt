@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data
 
+import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
@@ -69,4 +71,7 @@ interface UserRepository : BaseRepository {
 
     fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
     fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User>
+    fun retrieveAchievements(): Flowable<List<Achievement>>
+    fun getAchievements(): Flowable<RealmResults<Achievement>>
+    fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>>
 }

@@ -20,15 +20,14 @@ import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
-import com.habitrpg.android.habitica.models.AchievementGroup
-import com.habitrpg.android.habitica.models.AchievementResult
+import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
-import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter
+import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -208,7 +207,7 @@ class FullProfileActivity : BaseActivity() {
 
 
         // Load the members achievements now
-        compositeSubscription.add(socialRepository.getMemberAchievements(this.userID).subscribe(Consumer<AchievementResult> { this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getMemberAchievements(this.userID).subscribe(Consumer { this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun updatePetsMountsView(user: Member) {
@@ -223,17 +222,17 @@ class FullProfileActivity : BaseActivity() {
 
     // region Attributes
 
-    private fun fillAchievements(achievements: AchievementResult?) {
+    private fun fillAchievements(achievements: List<Achievement>?) {
         if (achievements == null) {
             return
         }
         val items = ArrayList<Any>()
 
-        fillAchievements(achievements.basic, items)
-        fillAchievements(achievements.seasonal, items)
-        fillAchievements(achievements.special, items)
+        fillAchievements(R.string.basic_achievements, achievements.filter { it.category == "basic" }, items)
+        fillAchievements(R.string.seasonal_achievements, achievements.filter { it.category == "seasonal" }, items)
+        fillAchievements(R.string.special_achievements, achievements.filter { it.category == "special" }, items)
 
-        val adapter = AchievementAdapter()
+        val adapter = AchievementProfileAdapter()
         adapter.setItemList(items)
 
         val layoutManager = androidx.recyclerview.widget.GridLayoutManager(this, 3)
@@ -252,12 +251,12 @@ class FullProfileActivity : BaseActivity() {
         stopAndHideProgress(achievementProgress)
     }
 
-    private fun fillAchievements(achievementGroup: AchievementGroup, targetList: MutableList<Any>) {
+    private fun fillAchievements(labelID: Int, achievements: List<Achievement>, targetList: MutableList<Any>) {
         // Order by ID first
-        val achievementList = ArrayList(achievementGroup.achievements.values)
+        val achievementList = ArrayList(achievements)
         achievementList.sortWith(Comparator { achievement, t1 -> java.lang.Double.compare(achievement.index.toDouble(), t1.index.toDouble()) })
 
-        targetList.add(achievementGroup.label)
+        targetList.add(getString(labelID))
         targetList.addAll(achievementList)
     }
 

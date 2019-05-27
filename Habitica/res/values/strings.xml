@@ -919,4 +919,10 @@
     <string name="pin">Pin</string>
     <string name="unpin">Unpin</string>
     <string name="take_me_back">Take me Back</string>
+    <string name="sidebar_achievements">Achievements</string>
+    <string name="basic_achievements">Basic Achievements</string>
+    <string name="seasonal_achievements">Seasonal Achievements</string>
+    <string name="special_achievements">Special Achievements</string>
+    <string name="switch_to_list_view">Switch to list view</string>
+    <string name="switch_to_grid_view">Switch to grid view</string>
 </resources>

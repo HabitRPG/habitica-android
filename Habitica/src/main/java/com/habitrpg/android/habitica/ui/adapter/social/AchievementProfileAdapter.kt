@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
 
-class AchievementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var itemType: String? = null
     var activity: MainActivity? = null

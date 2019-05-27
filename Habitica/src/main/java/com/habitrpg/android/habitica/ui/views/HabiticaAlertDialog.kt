@@ -166,7 +166,9 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         val buttonIndex = buttonsWrapper.childCount
         buttonView.setOnClickListener {
             weakThis.get()?.let { it1 ->
-                function?.invoke(it1, buttonIndex)
+                if (function != null) {
+                    function(it1, buttonIndex)
+                }
                 dismiss()
             }
         }

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.api;
 
-import com.habitrpg.android.habitica.models.AchievementResult;
+import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
@@ -284,7 +284,7 @@ public interface ApiService {
     Flowable<HabitResponse<Member>> getMemberWithUsername(@Path("username") String username);
 
     @GET("members/{mid}/achievements")
-    Flowable<HabitResponse<AchievementResult>> getMemberAchievements(@Path("mid") String memberId);
+    Flowable<HabitResponse<List<Achievement>>> getMemberAchievements(@Path("mid") String memberId);
 
     @POST("members/send-private-message")
     Flowable<HabitResponse<PostChatMessageResult>> postPrivateMessage(@Body Map<String, String> messageDetails);

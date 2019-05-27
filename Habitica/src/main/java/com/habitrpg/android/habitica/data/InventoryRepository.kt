@@ -1,20 +1,11 @@
 package com.habitrpg.android.habitica.data
 
-import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.inventory.Food
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.Item
-import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.*
-
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
@@ -34,6 +25,7 @@ interface InventoryRepository : ContentRepository {
 
     fun getOwnedPets(): Flowable<RealmResults<OwnedPet>>
     fun getQuestContent(key: String): Flowable<QuestContent>
+    fun getQuestContent(keys: List<String>): Flowable<RealmResults<QuestContent>>
 
     fun getEquipment(searchedKeys: List<String>): Flowable<RealmResults<Equipment>>
     fun retrieveInAppRewards(): Flowable<List<ShopItem>>
