@@ -7,10 +7,7 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.EditText
@@ -47,6 +44,7 @@ import javax.inject.Inject
 
 class TaskFormActivity : BaseActivity() {
 
+    private var userScrolled: Boolean = false
     private var isSaving: Boolean = false
     @Inject
     lateinit var userRepository: UserRepository
@@ -158,8 +156,18 @@ class TaskFormActivity : BaseActivity() {
         statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
         statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
         statPerceptionButton.setOnClickListener { selectedStat = Stats.PERCEPTION }
+        scrollView.setOnTouchListener { view, event ->
+            if(view == scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)) {
+                userScrolled = true
+            } else {
+                userScrolled = false
+            }
+            return@setOnTouchListener false
+        }
         scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->
-            dismissKeyboard()
+            if (userScrolled) {
+                dismissKeyboard()
+            }
         }
 
         if (taskId != null) {
