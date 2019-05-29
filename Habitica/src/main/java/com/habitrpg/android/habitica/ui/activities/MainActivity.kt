@@ -747,5 +747,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         const val SELECT_CLASS_RESULT = 11
         const val GEM_PURCHASE_REQUEST = 111
         const val NOTIFICATION_CLICK = 222
+        const val NOTIFICATION_ACCEPT = 223
+        const val NOTIFICATION_REJECT = 224
     }
 }

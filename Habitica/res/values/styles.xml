@@ -480,12 +480,22 @@
         <item name="android:background">@drawable/layout_rounded_bg_blue</item>
     </style>
 
+    <style name="HabiticaButton.Red.Small" parent="HabiticaButton.Red">
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
+    </style>
+
     <style name="SegmentTitle" parent="Headline">
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
     </style>
 
     <style name="HabiticaButton.Green" parent="HabiticaButton">
         <item name="android:background">@drawable/layout_rounded_bg_green</item>
+    </style>
+
+    <style name="HabiticaButton.Green.Small" parent="HabiticaButton.Green">
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
     </style>
 
     <style name="HabiticaButton.Yellow" parent="HabiticaButton">

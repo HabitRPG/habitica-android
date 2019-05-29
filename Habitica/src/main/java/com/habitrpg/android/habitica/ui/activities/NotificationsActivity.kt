@@ -17,7 +17,9 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.*
+import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_ACCEPT
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
+import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_REJECT
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_notifications.*
@@ -108,11 +110,15 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
                 Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
                 Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
-                //TODO rest of the notification types
+                Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
+                Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
+                Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
                 else -> null
             }
 
-            notification_items.addView(item)
+            if (item != null) {
+                notification_items.addView(item)
+            }
         }
     }
 
@@ -132,7 +138,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val data = notification.data as? NewChatMessageData
         val stringId = if (viewModel.isPartyMessage(data)) R.string.new_msg_party else R.string.new_msg_guild
 
-        return createNotificationItem(
+        return createDismissableNotificationItem(
                 notification,
                 fromHtml(getString(stringId, data?.group?.name))
         )
@@ -142,7 +148,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val data = notification.data as? NewStuffData
         val text = fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data?.title)
 
-        return createNotificationItem(
+        return createDismissableNotificationItem(
                 notification,
                 text,
                 R.drawable.notifications_bailey
@@ -152,7 +158,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     private fun createUnallocatedStatsNotification(notification: Notification): View? {
         val data = notification.data as? UnallocatedPointsData
 
-        return createNotificationItem(
+        return createDismissableNotificationItem(
                 notification,
                 fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
                 R.drawable.notification_stat_sparkles
@@ -160,7 +166,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun createMysteryItemsNotification(notification: Notification): View? {
-        return createNotificationItem(
+        return createDismissableNotificationItem(
                 notification,
                 fromHtml(getString(R.string.new_subscriber_item)),
                 R.drawable.notification_mystery_item
@@ -171,7 +177,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val data = notification.data as? GroupTaskNeedsWorkData
         val message = convertGroupMessageHtml(data?.message ?: "")
 
-        return createNotificationItem(
+        return createDismissableNotificationItem(
                 notification,
                 fromHtml(message),
                 null,
@@ -183,7 +189,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val data = notification.data as? GroupTaskApprovedData
         val message = convertGroupMessageHtml(data?.message ?: "")
 
-        return createNotificationItem(
+        return createDismissableNotificationItem(
                 notification,
                 fromHtml(message),
                 null,
@@ -204,7 +210,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return message.replace(pattern, "strong")
     }
 
-    private fun createNotificationItem(
+    private fun createDismissableNotificationItem(
             notification: Notification,
             messageText: CharSequence,
             imageResourceId: Int? = null,
@@ -235,6 +241,63 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         if (textColor != null) {
             messageTextView?.setTextColor(ContextCompat.getColor(this, textColor))
         }
+
+        return item
+    }
+
+    private fun createPartyInvitationNotification(notification: Notification): View? {
+        val data = notification.data as? PartyInvitationData
+
+        return createActionableNotificationItem(
+                notification,
+                fromHtml(getString(R.string.invited_to_party_notification, data?.invitation?.name))
+        )
+    }
+
+    private fun createGuildInvitationNotification(notification: Notification): View? {
+        val data = notification.data as? GuildInvitationData
+        val stringId = if (data?.invitation?.publicGuild == false) R.string.invited_to_private_guild else R.string.invited_to_public_guild
+
+        return createActionableNotificationItem(
+                notification,
+                fromHtml(getString(stringId, data?.invitation?.name))
+        )
+    }
+
+    private fun createQuestInvitationNotification(notification: Notification): View? {
+        val data = notification.data as? QuestInvitationData
+
+        // TODO quest data
+        return createActionableNotificationItem(
+                notification,
+                fromHtml(getString(R.string.invited_to_quest, data?.questKey))
+        )
+    }
+
+    private fun createActionableNotificationItem(
+            notification: Notification,
+            messageText: CharSequence
+    ): View {
+        val item = inflater.inflate(R.layout.notification_item_actionable, notification_items, false)
+
+        val acceptButton = item.findViewById(R.id.accept_button) as? Button
+        acceptButton?.setOnClickListener {
+            val resultIntent = Intent()
+            resultIntent.putExtra("notificationId", notification.id)
+            setResult(NOTIFICATION_ACCEPT, resultIntent)
+            finish()
+        }
+
+        val rejectButton = item.findViewById(R.id.reject_button) as? Button
+        rejectButton?.setOnClickListener {
+            val resultIntent = Intent()
+            resultIntent.putExtra("notificationId", notification.id)
+            setResult(NOTIFICATION_REJECT, resultIntent)
+            finish()
+        }
+
+        val messageTextView = item.findViewById(R.id.message_text) as? TextView
+        messageTextView?.text = messageText
 
         return item
     }
