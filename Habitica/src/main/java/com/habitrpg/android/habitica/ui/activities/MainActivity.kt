@@ -399,6 +399,18 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     MainNavigationController
             )
         }
+
+        if (resultCode == NOTIFICATION_ACCEPT && data?.hasExtra("notificationId") == true) {
+            notificationsViewModel?.accept(
+                    data.getStringExtra("notificationId")
+            )
+        }
+
+        if (resultCode == NOTIFICATION_REJECT && data?.hasExtra("notificationId") == true) {
+            notificationsViewModel?.reject(
+                    data.getStringExtra("notificationId")
+            )
+        }
     }
 
     // region Events

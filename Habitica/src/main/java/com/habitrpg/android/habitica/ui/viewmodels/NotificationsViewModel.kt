@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import android.os.Bundle
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -22,6 +24,9 @@ import javax.inject.Inject
 open class NotificationsViewModel : BaseViewModel() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
+
+    @Inject
+    lateinit var socialRepository: SocialRepository
 
     /**
      * A list of notification types handled by this component.
@@ -233,4 +238,71 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
+    fun accept(notificationId: String) {
+        val notification = customNotifications.value?.find { it.id == notificationId } ?: return
+
+        when (notification.type) {
+            Notification.Type.GUILD_INVITATION.type -> {
+                val data = notification.data as GuildInvitationData
+                acceptGroupInvitation(data.invitation?.id)
+            }
+            Notification.Type.PARTY_INVITATION.type -> {
+                val data = notification.data as PartyInvitationData
+                acceptGroupInvitation(data.invitation?.id)
+            }
+            Notification.Type.QUEST_INVITATION.type -> acceptQuestInvitation()
+        }
+    }
+
+    fun reject(notificationId: String) {
+        val notification = customNotifications.value?.find { it.id == notificationId } ?: return
+
+        when (notification.type) {
+            Notification.Type.GUILD_INVITATION.type -> {
+                val data = notification.data as GuildInvitationData
+                rejectGroupInvite(data.invitation?.id)
+            }
+            Notification.Type.PARTY_INVITATION.type -> {
+                val data = notification.data as PartyInvitationData
+                rejectGroupInvite(data.invitation?.id)
+            }
+            Notification.Type.QUEST_INVITATION.type -> rejectQuestInvitation()
+        }
+    }
+
+    fun acceptGroupInvitation(groupId: String?) {
+        groupId.notNull {
+            disposable.add(socialRepository.joinGroup(it)
+                    .subscribe(Consumer {
+                        refreshNotifications()
+                    }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    fun rejectGroupInvite(groupId: String?) {
+        groupId.notNull {
+            disposable.add(socialRepository.rejectGroupInvite(it)
+                    .subscribe(Consumer {
+                        refreshNotifications()
+                    }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    private fun acceptQuestInvitation() {
+        party?.id.notNull {
+            disposable.add(socialRepository.acceptQuest(null, it)
+                    .subscribe(Consumer {
+                        refreshNotifications()
+                    }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    private fun rejectQuestInvitation() {
+        party?.id.notNull {
+            disposable.add(socialRepository.rejectQuest(null, it)
+                    .subscribe(Consumer {
+                        refreshNotifications()
+                    }, RxErrorHandler.handleEmptyError()))
+        }
+    }
 }
