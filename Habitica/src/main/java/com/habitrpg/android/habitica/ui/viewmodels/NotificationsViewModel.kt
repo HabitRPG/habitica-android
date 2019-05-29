@@ -15,9 +15,12 @@ import com.habitrpg.android.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.android.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
+import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 import javax.inject.Inject
 
@@ -58,28 +61,37 @@ open class NotificationsViewModel : BaseViewModel() {
 
     /**
      * Custom notification types created by this class (from user data).
-     * Will be added to the notifications coming from server.
+     * Will be combined with the notifications coming from server.
      */
-    private var customNotifications: List<Notification> = emptyList()
+    private val customNotifications: BehaviorSubject<List<Notification>>
 
     override fun inject(component: UserComponent) {
         component.inject(this)
     }
 
     init {
+        customNotifications = BehaviorSubject.create()
+        customNotifications.onNext(emptyList())
+
         disposable.add(userRepository.getUser()
                 .subscribe(Consumer {
                     party = it.party
-                    customNotifications = convertInvitationsToNotifications(it)
+                    customNotifications.onNext(convertInvitationsToNotifications(it))
                 }, RxErrorHandler.handleEmptyError()))
     }
 
 
     fun getNotifications(): Flowable<List<Notification>> {
-        return notificationsManager.getNotifications()
+        val serverNotifications = notificationsManager.getNotifications()
                 .map { filterSupportedTypes(it) }
-                .map { it.plus(customNotifications) }
-                .observeOn(AndroidSchedulers.mainThread())
+
+        return Flowable.combineLatest(
+                serverNotifications,
+                customNotifications.toFlowable(BackpressureStrategy.LATEST),
+                BiFunction<List<Notification>, List<Notification>, List<Notification>> {
+                    serverNotificationsList, customNotificationsList -> serverNotificationsList + customNotificationsList
+                }
+        ).observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getNotificationCount(): Flowable<Int> {
