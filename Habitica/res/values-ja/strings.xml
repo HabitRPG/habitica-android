@@ -296,8 +296,8 @@
   <string name="hatch_with_potion">たまごがえしの薬を使う</string>
   <string name="feed_to_pet">ペットにえさをやる</string>
   <string name="hatch_egg">たまごをかえす</string>
-  <string name="invite_party">パーティーに招待する</string>
-  <string name="dialog_feeding">%1$s%2$s にえさをやる :</string>
+  <string name="invite_party">パーティーを招待する</string>
+  <string name="dialog_feeding">%1$s%2$s にえさをやる：</string>
   <string name="use_animal">連れていく</string>
   <string name="feed">えさをやる</string>
   <string name="hatch_with">%s でペットをかえす</string>
@@ -418,7 +418,7 @@
   <string name="widget_add_task">Habitica のタスク追加</string>
   <string name="google_services_missing">Google Play サービスが見つかりません。</string>
   <string name="gem.purchase.toolbartitle">購入</string>
-  <string name="gem.purchase.title">ジェムの購入で、開発者を支援し、Habitica の運営に協力します</string>
+  <string name="gem.purchase.title">ジェムを購入することで、開発者を支援し、Habitica の運営を維持する手助けができます</string>
   <string name="gem.purchase.subtitle">ジェムで、楽しいおまけを買うことができます : </string>
   <string name="gem.purchase.listitem1">アバター用のクールなファッション</string>
   <string name="gem.purchase.listitem2">すんごい背景</string>
@@ -442,9 +442,9 @@
   <string name="subscribe.listitem1">ゴールドでジェムを購入</string>
   <string name="subscribe.listitem2">毎月の限定アイテム</string>
   <string name="subscribe.listitem3">詳細な履歴の保存</string>
-  <string name="subscribe.listitem4">毎日の落とし物の定数が2倍</string>
+  <string name="subscribe.listitem4">毎日の落とし物の上限が２倍に</string>
   <string name="subscriptions">寄付</string>
-  <string name="subscription_duration">毎%sに起こる</string>
+  <string name="subscription_duration">%sごとに繰り返す</string>
   <string name="subscribe">寄付する</string>
   <string name="subscribe.listitem1.description">商人・アレクサンダーが、ジェム1個を20ゴールドで売ってくれます！
 \n
@@ -564,7 +564,7 @@
   <string name="reload_content">再度読み込み</string>
   <string name="dailyDueDefaultView">日課を標準で「期限」タブに入れる</string>
   <string name="dailyDueDefaultViewDescription">この設定にチェックを入れると、日課は標準で「すべて」タブではなく「期限」タブに入ります</string>
-  <string name="repeat_summary">%1$sを%2$s%3$s%4$sごとに繰り返し行おう</string>
+  <string name="repeat_summary">%1$sを%2$s%3$s%4$sごとにくり返し</string>
   <string name="no_billing_gems">あなたのデバイスは、サポートされている支払方法に対応していません。ジェムを購入したい場合は、Habiticaのウェブサイトをご利用ください。</string>
   <string name="no_billing_subscriptions">あなたのデバイスは、サポートされている支払方法に対応していません。寄付を購入したい場合は、Habiticaのウェブサイトをご利用ください。</string>
   <string name="save">保存</string>
@@ -673,7 +673,7 @@
   <string name="character_level">キャラクターのレベル</string>
   <string name="auto_allocate_points">ポイントの自動割り当て</string>
   <string name="stat_guide">案内を開始する</string>
-  <string name="character_build">キャラクター作成</string>
+  <string name="character_build">キャラクターの設定</string>
   <string name="character_build_description">各レベルごとに、自由に割り当てることができるポイントが得られます。手動で割り当てることもできますが、自動割り当てによってゲームに割り当てを任せることも可能です。</string>
   <string name="strength">力</string>
   <string name="strength_description">タスクを完了した時の会心の一撃のボーナスや発生率が増加します。また、ボスへ与えるダメージも増加します。</string>
@@ -724,12 +724,12 @@
 \nワールドボスは怒りゲージがたまる度に、わたしたちの味方である店主たちの一人に激しく攻撃してきます。日課をこなし続けて、攻撃されるのを防ぎましょう！</string>
   <string name="pending_strike_title">保留中の攻撃</string>
   <string name="strike_description_title">怒り攻撃とは？</string>
-  <string name="strike_description_subtitle">怒り攻撃には3種類あります</string>
-  <string name="strike_description_description">ゲージはHabiticaの住人が日課を残すと溜まっていきます。満タンになると、DysHeartenerがHabiticaの商人にココロクジキアタックをしてきますので、タスクはしっかりこなしましょう！</string>
+  <string name="strike_description_subtitle">怒り攻撃が３回まで起こる可能性があります</string>
+  <string name="strike_description_description">このゲージはHabiticaの住人たちが日課を逃すとたまっていきます。ゲージが一杯になると、心蝕のディスハートナーはその強烈なハートブレイクをHabiticaの店主のうち一人に食らわせます。ですから必ずタスクを実行しましょう！</string>
   <string name="pending_strike_subtitle">まだ攻撃はされていません！</string>
   <string name="strike_active_title" formatted="false">%s が襲撃を受けました！</string>
   <string name="strike_active_subtitle" formatted="false">%sは悲しみに打ちひしがれています！</string>
-  <string name="strike_active_description" formatted="false">%sの攻撃で%sが破壊されたので、愛すべき%sは打ちのめされてしまいました。急いで！　タスクを片付けてこの怪物を倒し、再建の手助けをするのです！</string>
+  <string name="strike_active_description" formatted="false">愛すべき%sは%sの攻撃で%sが破壊されてしまい途方に暮れています。急いでタスクに取り組んで、あの怪物を倒して再建の手助けをしましょう！</string>
   <string name="questShop">クエスト ショップ</string>
   <string name="market_owner_long">商人のAlex</string>
   <string name="tavern_owner_long">キャンプ場の支配人・Daniel</string>
@@ -750,12 +750,12 @@
   <string name="world_boss_description_description">ワールドボスは、Habiticaのコミュニティが一緒になってタスクをこなすことで、強力なモンスターを倒す特別なイベントです！
 \nタスクを完了してボスにダメージを与えましょう
 \nワールドボスからサボったタスクの分のダメージを食らうことはありませんが、そのかわりに怒りメーターが上昇してゆきます。もしメーターが一杯になると、ボスはHabiticaの店主の誰か一人を攻撃してしまいます！
-\nあなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます。キャンプ場でボス戦の進行状況と怒りの一撃をチェックしましょう</string>
+\nあなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます。キャンプ場でボス戦の進行状況と怒りの攻撃をチェックしましょう</string>
   <string name="world_boss_description_intro">ワールドボスは、コミュニティ全体がタスクで強力なモンスターを協力して打ち倒す特別イベントです！</string>
   <string name="world_boss_description_1">タスクを完了してボスにダメージを与えましょう</string>
   <string name="world_boss_description_2">サボったタスクによってこのボスからダメージを受けることはありませんが、怒りメーターが上昇します。怒りメーターが満タンになるとボスは店主たちに攻撃します！</string>
   <string name="world_boss_description_3">あなたは通常のクエストボスへもこれまで通り挑戦し続けることができます。ダメージはどちらのボスにも適用されます</string>
-  <string name="world_boss_description_4">キャンプ場でボス戦の進行状況と怒りの一撃をチェックしましょう</string>
+  <string name="world_boss_description_4">キャンプ場でボス戦の進行状況と怒りの攻撃をチェックしましょう</string>
   <string name="world_boss_action_prompt" formatted="false">ボスを倒して%sの脅威からHabiticaを守り、特別なごほうびを手に入れよう！</string>
   <string name="world_boss_description_subtitle">%sの攻撃！</string>
   <string name="questShop_owner_long">クエストガイドのイアン</string>
@@ -833,4 +833,16 @@
   <string name="gift_confirmation_title">プレゼントを贈りました！</string>
   <string name="discover">探す</string>
 <string name="due">期限</string>
-    </resources>
+    <string name="opting_out_progress">選ばない</string>
+    <string name="subscription_duration_norenew">%sの間</string>
+    <string name="delete_oauth_account_description">本当にいいのですか？ この操作であなたのアカウントは完全に削除され、決して復元はできません！ もう一度 Habitica を使うには、新しいアカウントを登録する必要があります。貯めているジェム、使ったジェムは、返金できません。本当にアカウントを削除するのなら、下のテキストボックスにDELETEと入力してください。</string>
+    <string name="gift_one_get_one_detailed_description">このプロモーションが開催されている間は、贈り物を送った後に自動的に同じ寄付会員特典を受けることができます。</string>
+    <string name="gift_confirmation_text_g1g1">%s に %sヶ月分のHabitica寄付会員特典を送りました。そして、１つ贈って１つ無料で手に入れようキャンペーンによって、あなたのアカウントにも同じ寄付会員特典が適用されました！</string>
+    <string name="gift_confirmation_text">%s に %sヶ月分のHabitica寄付会員特典を送りました。</string>
+    <string name="damage_paused">ダメージを一時停止する</string>
+    <string name="preference_push_important_announcements">大切なお知らせ</string>
+    <string name="create">作成する</string>
+    <string name="only_leader_create_challenge">リーダーだけが、チャレンジを作成できます</string>
+    <string name="create_party">パーティーを作成する</string>
+
+</resources>
