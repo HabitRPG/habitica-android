@@ -423,7 +423,7 @@ class TaskFormActivity : BaseActivity() {
     private fun dismissKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         val currentFocus = currentFocus
-        if (currentFocus != null) {
+        if (currentFocus != null && !habitAdjustPositiveStreakView.isFocused && !habitAdjustNegativeStreakView.isFocused) {
             imm?.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }
     }

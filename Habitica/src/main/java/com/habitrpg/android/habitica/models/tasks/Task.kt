@@ -272,6 +272,8 @@ open class Task : RealmObject, Parcelable {
         dest.writeLong(this.dueDate?.time ?: -1)
         dest.writeString(this.specialTag)
         dest.writeString(this.id)
+        dest.writeInt(this.counterUp ?: 0)
+        dest.writeInt(this.counterDown ?: 0)
     }
 
     constructor()
@@ -306,6 +308,8 @@ open class Task : RealmObject, Parcelable {
         this.dueDate = if (tmpDuedate == -1L) null else Date(tmpDuedate)
         this.specialTag = `in`.readString()
         this.id = `in`.readString()
+        this.counterUp = `in`.readInt()
+        this.counterDown = `in`.readInt()
     }
 
 
