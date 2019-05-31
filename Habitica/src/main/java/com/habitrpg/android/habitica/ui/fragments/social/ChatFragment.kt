@@ -3,14 +3,12 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -106,9 +104,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         viewModel?.getChatMessages()?.subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
 
         communityGuidelinesReviewView.setOnClickListener {
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = "https://habitica.com/static/community-guidelines".toUri()
-            context?.startActivity(i)
+            MainNavigationController.navigate(R.id.guidelinesActivity)
         }
         communityGuidelinesAcceptButton.setOnClickListener {
             viewModel?.updateUser("flags.communityGuidelinesAccepted", true)

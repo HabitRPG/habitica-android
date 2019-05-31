@@ -250,6 +250,9 @@
             app:argType="string" />
     </activity>
     <activity
+        android:id="@+id/guidelinesActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.GuidelinesActivity" />
+    <activity
         android:id="@+id/groupFormActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GroupFormActivity"
         android:label="GroupFormActivity" />

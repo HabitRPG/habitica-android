@@ -97,6 +97,10 @@
             android:name=".ui.activities.GiftIAPActivity"
             android:label="@string/gift_subscription">
         </activity>
+        <activity
+            android:name=".ui.activities.GuidelinesActivity"
+            android:label="@string/community_guidelines">
+        </activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data
