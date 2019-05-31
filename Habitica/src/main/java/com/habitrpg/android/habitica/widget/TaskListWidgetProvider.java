@@ -62,7 +62,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
                             taskRepository.markTaskCompleted(taskId, true);
                             showToastForTaskDirection(context, taskDirectionData, userId);
                             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
-                        }, RxErrorHandler.handleEmptyError());
+                        }, RxErrorHandler.Companion.handleEmptyError());
             }
         }
         super.onReceive(context, intent);

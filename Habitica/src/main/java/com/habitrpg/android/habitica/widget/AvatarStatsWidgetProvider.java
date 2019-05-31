@@ -7,9 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import androidx.annotation.NonNull;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
@@ -58,7 +59,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         this.appWidgetManager = appWidgetManager;
         this.setContext(context);
 
-        userRepository.getUser(userId).firstElement().subscribe(this::updateData, RxErrorHandler.handleEmptyError());
+        userRepository.getUser(userId).firstElement().subscribe(this::updateData, RxErrorHandler.Companion.handleEmptyError());
     }
 
     @NonNull

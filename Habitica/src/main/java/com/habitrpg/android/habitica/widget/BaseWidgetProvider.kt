@@ -6,30 +6,21 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import androidx.core.util.Pair
-import android.text.SpannableStringBuilder
 import android.widget.RemoteViews
 import android.widget.Toast
-
-import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import java.util.HashMap
-
-import java.util.Objects
-
+import java.util.*
 import javax.inject.Inject
 
 
 abstract class BaseWidgetProvider : AppWidgetProvider() {
 
     @Inject
-    lateinit var userRepository: UserRepository
+    var userRepository: UserRepository? = null
 
     protected var context: Context? = null
 
@@ -48,7 +39,6 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         return n - 1
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int, newOptions: Bundle) {
         this.context = context
         val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
@@ -61,8 +51,7 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    fun sizeRemoteViews(context: Context, options: Bundle, widgetId: Int): RemoteViews {
+    fun sizeRemoteViews(context: Context?, options: Bundle, widgetId: Int): RemoteViews {
         this.context = context
         val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
         val minHeight = options
