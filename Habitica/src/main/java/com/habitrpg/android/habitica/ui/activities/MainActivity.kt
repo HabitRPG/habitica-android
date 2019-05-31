@@ -12,6 +12,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
 import android.util.TypedValue
@@ -137,6 +138,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     internal val detailTabs: TabLayout? by bindOptionalView(R.id.detail_tabs)
     val avatarWithBars: View by bindView(R.id.avatar_with_bars)
     private val overlayLayout: ViewGroup by bindView(R.id.overlayFrameLayout)
+    private val connectionIssueTextView: TextView by bindView(R.id.connection_issue_textview)
 
     var user: User? = null
 
@@ -148,6 +150,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var keyboardUtil: KeyboardUtil? = null
     private var resumeFromActivity = false
+    private var connectionIssueHandler: Handler? = null
 
     private val statusBarHeight: Int
         get() {
@@ -832,6 +835,20 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     }
                     alert.show()
                 }, RxErrorHandler.handleEmptyError())
+    }
+
+    override fun onEvent(event: ShowConnectionProblemEvent) {
+        if (event.title != null) {
+            super.onEvent(event)
+        } else {
+            connectionIssueHandler?.removeCallbacksAndMessages(null)
+            connectionIssueTextView.visibility = View.VISIBLE
+            connectionIssueTextView.text = event.message
+            connectionIssueHandler = Handler()
+            connectionIssueHandler?.postDelayed({
+                connectionIssueTextView.visibility = View.GONE
+            }, 5000)
+        }
     }
 
     companion object {

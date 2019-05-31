@@ -1,14 +1,11 @@
 package com.habitrpg.android.habitica.widget
 
-import android.annotation.TargetApi
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.widget.RemoteViews
 import android.widget.Toast
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
@@ -20,7 +17,7 @@ import javax.inject.Inject
 abstract class BaseWidgetProvider : AppWidgetProvider() {
 
     @Inject
-    var userRepository: UserRepository? = null
+    lateinit var userRepository: UserRepository
 
     protected var context: Context? = null
 
@@ -60,16 +57,12 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         // First find out rows and columns based on width provided.
         val rows = getCellsForSize(minHeight)
         val columns = getCellsForSize(minWidth)
-        val remoteViews = RemoteViews(context.packageName,
-                layoutResourceId())
+        val remoteViews = RemoteViews(context?.packageName, layoutResourceId())
 
         return configureRemoteViews(remoteViews, widgetId, columns, rows)
     }
 
     protected fun showToastForTaskDirection(context: Context, data: TaskScoringResult?, userID: String) {
-        if (userRepository == null) {
-            HabiticaBaseApplication.component?.inject(this)
-        }
         if (data != null) {
             val pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(context, data.experienceDelta!!, data.healthDelta!!, data.goldDelta!!, data.manaDelta!!)
             val toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG)

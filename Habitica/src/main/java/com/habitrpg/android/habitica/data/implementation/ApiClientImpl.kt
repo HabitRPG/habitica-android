@@ -260,19 +260,16 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     private fun showConnectionProblemDialog(resourceMessageString: Int) {
-        showConnectionProblemDialog(R.string.network_error_title, resourceMessageString)
+        showConnectionProblemDialog(null, context.getString(resourceMessageString))
     }
 
     private fun showConnectionProblemDialog(resourceTitleString: Int, resourceMessageString: Int) {
         showConnectionProblemDialog(context.getString(resourceTitleString), context.getString(resourceMessageString))
     }
 
-    private fun showConnectionProblemDialog(resourceTitleString: String, resourceMessageString: String) {
+    private fun showConnectionProblemDialog(resourceTitleString: String?, resourceMessageString: String) {
         val event = ShowConnectionProblemEvent(resourceTitleString, resourceMessageString)
         EventBus.getDefault().post(event)
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "showConnectionProblemDialog: $resourceTitleString $resourceMessageString")
-        }
     }
 
     /*

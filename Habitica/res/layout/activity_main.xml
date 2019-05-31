@@ -103,6 +103,17 @@
                     app:tabGravity="fill"
                     app:tabIndicatorColor="?colorContentBackground"
                     app:tabMode="fixed" />
+                <TextView
+                    android:id="@+id/connection_issue_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:background="@color/gray_50"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/spacing_small"
+                    android:text="@string/internal_error_api"
+                    android:visibility="gone"/>
             </com.google.android.material.appbar.AppBarLayout>
 
             <LinearLayout

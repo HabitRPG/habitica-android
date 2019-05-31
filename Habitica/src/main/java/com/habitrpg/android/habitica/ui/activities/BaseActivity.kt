@@ -100,7 +100,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     @Subscribe
-    fun onEvent(event: ShowConnectionProblemEvent) {
+    open fun onEvent(event: ShowConnectionProblemEvent) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(event.title)
         alert.setMessage(event.message)

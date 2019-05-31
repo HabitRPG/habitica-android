@@ -81,9 +81,8 @@
 
 
     <!-- Network Errors -->
-    <string name="network_error_title">Connection Error</string>
     <string name="network_error_no_network_body">You are not connected to the internet.</string>
-    <string name="internal_error_api">There seems to be a problem with the server. Try again later.</string>
+    <string name="internal_error_api">Server connection lost</string>
 
     <string name="authentication_error_title">Authentication Error</string>
     <string name="authentication_error_body">Your Username and/or Password was incorrect.</string>
