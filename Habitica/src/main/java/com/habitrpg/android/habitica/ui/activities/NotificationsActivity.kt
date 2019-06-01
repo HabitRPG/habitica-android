@@ -4,18 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.notifications.*
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_ACCEPT
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
@@ -23,8 +23,12 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFI
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_notifications.*
+import javax.inject.Inject
 
 class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
 
     lateinit var viewModel: NotificationsViewModel
 
@@ -267,11 +271,48 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     private fun createQuestInvitationNotification(notification: Notification): View? {
         val data = notification.data as? QuestInvitationData
 
-        // TODO quest data
-        return createActionableNotificationItem(
-                notification,
-                fromHtml(getString(R.string.invited_to_quest, data?.questKey))
-        )
+        val view = createActionableNotificationItem(notification, "")
+
+        // hide view until we have loaded quest data and populated the values
+        view.visibility = View.GONE
+
+        compositeSubscription.add(inventoryRepository.getQuestContent(data?.questKey ?: "")
+                .firstElement()
+                .subscribe(Consumer {
+                    updateQuestInvitationView(view, it)
+                }, RxErrorHandler.handleEmptyError()))
+
+        return view
+    }
+
+    private fun updateQuestInvitationView(view: View, questContent: QuestContent) {
+        val messageTextView = view.findViewById(R.id.message_text) as? TextView
+        messageTextView?.text = fromHtml(getString(R.string.invited_to_quest, questContent.text))
+
+        val questObjectiveLabelView = view.findViewById(R.id.quest_objective_label) as? TextView
+        val questObjectiveTextView = view.findViewById(R.id.quest_objective_text) as? TextView
+        val questDifficultyLabelView = view.findViewById(R.id.difficulty_label) as? TextView
+        questDifficultyLabelView?.text = getText(R.string.difficulty)
+        questDifficultyLabelView?.append(":")
+        val questDifficultyView = view.findViewById(R.id.quest_difficulty) as? RatingBar
+
+        if (questContent.isBossQuest) {
+            questObjectiveLabelView?.text = getString(R.string.defeat)
+            questObjectiveTextView?.text = questContent.boss?.name
+
+            questDifficultyView?.rating = questContent.boss?.str ?: 1f
+        } else {
+            questObjectiveLabelView?.text = getString(R.string.collect)
+            val collectionList = questContent.collect?.map { it.count.toString() + " " + it.text }
+            questObjectiveTextView?.text = TextUtils.join(", ", collectionList)
+
+            questDifficultyView?.rating = 1f
+        }
+
+        questObjectiveLabelView?.append(":")
+        val questDetailView = view.findViewById(R.id.quest_detail_view) as? View
+        questDetailView?.visibility = View.VISIBLE
+        view.visibility = View.VISIBLE
     }
 
     private fun createActionableNotificationItem(

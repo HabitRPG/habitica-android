@@ -871,6 +871,7 @@
     <string name="invited_to_private_guild"><![CDATA[You were invited to join the private Guild <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[You were invited to join the Guild <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[You were invited to the Quest <b>%1$s</b>]]></string>
+    <string name="defeat">Defeat</string>
     <string name="create">Create</string>
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>
     <string name="create_party">Create Party</string>
