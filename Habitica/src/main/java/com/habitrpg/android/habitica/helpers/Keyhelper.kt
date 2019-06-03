@@ -28,7 +28,6 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
     private val aesKeyFromKS: Key?
         @Throws(NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class, UnrecoverableKeyException::class)
         get() {
-            keyStore.load(null)
             return keyStore.getKey(KEY_ALIAS, null) as? SecretKey
         }
 
@@ -36,7 +35,6 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             this.generateEncryptKey(ctx)
         }
-        this.generateRandomIV(sharedPreferences)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             try {
                 this.generateAESKey()
@@ -139,7 +137,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
     @Throws(NoSuchAlgorithmException::class, NoSuchPaddingException::class, NoSuchProviderException::class, BadPaddingException::class, IllegalBlockSizeException::class, UnsupportedEncodingException::class)
     fun encrypt(input: String): String {
         val c: Cipher
-        val publicIV = sharedPreferences.getString(PUBLIC_IV, null)
+        val publicIV = getRandomIV()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             c = Cipher.getInstance(AES_MODE_M)
@@ -165,7 +163,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
     @Throws(NoSuchAlgorithmException::class, NoSuchPaddingException::class, NoSuchProviderException::class, BadPaddingException::class, IllegalBlockSizeException::class, UnsupportedEncodingException::class)
     fun decrypt(encrypted: String): String {
         val c: Cipher
-        val publicIV = sharedPreferences.getString(PUBLIC_IV, null)
+        val publicIV = getRandomIV()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             c = Cipher.getInstance(AES_MODE_M)
@@ -189,17 +187,18 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         return String(decryptedVal)
     }
 
-    private fun generateRandomIV(sharedPreferences: SharedPreferences) {
-        val publicIV = sharedPreferences.getString(PUBLIC_IV, null)
+    private fun getRandomIV(): String {
+        var publicIV = sharedPreferences.getString(PUBLIC_IV, null)
 
         if (publicIV == null) {
             val random = SecureRandom()
             val generated = random.generateSeed(12)
-            val generatedIVstr = Base64.encodeToString(generated, Base64.DEFAULT)
+            publicIV = Base64.encodeToString(generated, Base64.DEFAULT)
             sharedPreferences.edit {
-                putString(PUBLIC_IV, generatedIVstr)
+                putString(PUBLIC_IV, publicIV)
             }
         }
+        return publicIV
     }
 
     private fun getStringFromSharedPrefs(key: String): String? {

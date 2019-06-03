@@ -6,13 +6,11 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
@@ -33,7 +31,6 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.Scopes
-import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
@@ -47,7 +44,6 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -57,8 +53,6 @@ import io.reactivex.Flowable
 import io.reactivex.exceptions.Exceptions
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import org.json.JSONException
-import org.json.JSONObject
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
@@ -117,7 +111,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 return@OnClickListener
             }
             apiClient.registerUser(username, email, password, confirmPassword)
-                    .subscribe(this@LoginActivity, Consumer { hideProgress() })
+                    .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
         } else {
             val username: String = mUsernameET.text.toString().trim { it <= ' ' }
             val password: String = mPasswordET.text.toString()
@@ -126,7 +120,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 return@OnClickListener
             }
             apiClient.connectUser(username, password)
-                    .subscribe(this@LoginActivity, Consumer { hideProgress() })
+                    .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -180,14 +174,12 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         loginManager.registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(loginResult: LoginResult) {
-                        Log.e("Login", "SUCCESS")
                         val accessToken = AccessToken.getCurrentAccessToken()
                         apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                                .subscribe(this@LoginActivity, Consumer { hideProgress() })
+                                .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
                     }
 
                     override fun onCancel() {
-                        Log.e("Login", "CANCEL")
                     }
 
                     override fun onError(exception: FacebookException) {
@@ -262,16 +254,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)
-        val scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (scanResult != null) {
-            try {
-                Log.d("scanresult", scanResult.contents)
-                this.parse(scanResult.contents)
-            } catch (e: Exception) {
-                Log.e("scanresult", "Could not parse scanResult", e)
-            }
-
-        }
 
         if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
             if (resultCode == Activity.RESULT_OK) {
@@ -293,47 +275,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
     }
 
-    private fun parse(contents: String) {
-        val adr: String
-        val user: String
-        val key: String
-        try {
-            val obj = JSONObject(contents)
-
-            adr = obj.getString(TAG_ADDRESS)
-            user = obj.getString(TAG_USERID)
-            key = obj.getString(TAG_APIKEY)
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-            prefs.edit {
-                putString(getString(R.string.SP_address), adr)
-                if (keyHelper != null) {
-                    putString(user, keyHelper?.encrypt(key))
-                } else {
-                    putString(getString(R.string.SP_APIToken), key)
-                }
-                putString(getString(R.string.SP_userID), user)
-            }
-            startMainActivity()
-        } catch (e: JSONException) {
-            showSnackbar(getString(R.string.ERR_pb_barcode))
-            e.printStackTrace()
-        } catch (e: Exception) {
-            if ("PB_string_commit" == e.message) {
-                showSnackbar(getString(R.string.ERR_pb_barcode))
-            }
-        }
-
-    }
-
-    private fun showSnackbar(content: String) {
-        val snackbar = Snackbar
-                .make(this.findViewById(R.id.login_linear_layout), content, Snackbar.LENGTH_LONG)
-
-        val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(Color.RED)//change Snackbar's background color;
-        snackbar.show() // Don’t forget to show!
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_toggleRegistering -> toggleRegistering()
@@ -345,12 +286,12 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     private fun saveTokens(api: String, user: String) {
         this.apiClient.updateAuthenticationCredentials(user, api)
         sharedPrefs.edit {
+            putString(getString(R.string.SP_userID), user)
             if (keyHelper != null) {
                 putString(user, keyHelper?.encrypt(api))
             } else {
                 putString(getString(R.string.SP_APIToken), api)
             }
-            putString(getString(R.string.SP_userID), user)
         }
     }
 
