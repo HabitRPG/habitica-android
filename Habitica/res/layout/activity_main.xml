@@ -16,8 +16,7 @@
             android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.activities.MainActivity"
-            android:fitsSystemWindows="false">
+            tools:context=".ui.activities.MainActivity">
             <fragment
                 android:id="@+id/nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
@@ -140,7 +139,6 @@
                     app:bb_tabXmlResource="@xml/main_menu_tasks"
                     app:bb_inActiveTabColor="?colorPrimaryDistinct"
                     app:bb_activeTabColor="@color/white"
-                    app:bb_behavior="underNavbar"
                     app:bb_badgesHideWhenActive="true"
                     app:bb_badgeBackgroundColor="?colorBadgeBackground"
                     android:layout_gravity="bottom"
@@ -154,7 +152,6 @@
             android:layout_height="match_parent"
             android:id="@+id/overlayFrameLayout"
             android:clickable="false"
-            android:fitsSystemWindows="true"
             />
     </FrameLayout>
 

@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
-    android:fitsSystemWindows="true"
-    android:id="@+id/background">
+        android:id="@+id/background">
     <View android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:background="@android:color/black"
@@ -17,8 +16,7 @@
         android:paddingRight="16dp"
         android:paddingBottom="24dp"
         android:layout_alignParentBottom="true"
-        android:fitsSystemWindows="true"
-        android:layout_marginBottom="?actionBarSize">
+                android:layout_marginBottom="?actionBarSize">
         <com.habitrpg.android.habitica.ui.SpeechBubbleView
             android:id="@+id/speech_bubble"
             android:layout_width="match_parent"

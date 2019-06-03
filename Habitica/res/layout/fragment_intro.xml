@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:background="@color/brand_300"
-    android:id="@+id/container_view"
-    android:fitsSystemWindows="true">
+    android:id="@+id/container_view">
 
     <TextView
         android:layout_width="wrap_content"

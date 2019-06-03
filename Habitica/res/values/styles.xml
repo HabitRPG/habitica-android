@@ -42,6 +42,7 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
+
     <style name="BottomSheetTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -60,9 +61,7 @@
 
     <style name="AppTheme.ActionBar.Transparent" parent="AppTheme.ActionBar">
         <item name="actionBarStyle">@style/ActionBarTransparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:navigationBarColor">@color/brand_50</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowNoTitle">true</item>
@@ -76,11 +75,13 @@
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:navigationBarColor">@color/brand_50</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="MainAppTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/activity_launch_background</item>
     </style>
 
     <style name="AppTheme.NoActionBar.Green">

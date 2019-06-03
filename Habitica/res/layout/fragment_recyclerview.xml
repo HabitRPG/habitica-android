@@ -13,7 +13,6 @@
         android:scrollbarThumbVertical="@color/scrollbarThumb"
         android:scrollbars="vertical"
         android:clipToPadding="false"
-        android:paddingBottom="?attr/actionBarSize"
         android:background="@color/white"/>
 
     <TextView

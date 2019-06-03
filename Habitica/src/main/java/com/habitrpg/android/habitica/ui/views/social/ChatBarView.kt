@@ -1,13 +1,14 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.MultiAutoCompleteTextView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.updateLayoutParams
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -16,12 +17,11 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
-import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import javax.inject.Inject
 
 
-class ChatBarView : FrameLayout {
+class ChatBarView : LinearLayout {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -33,8 +33,6 @@ class ChatBarView : FrameLayout {
     private val chatEditText: MultiAutoCompleteTextView by bindView(R.id.chatEditText)
     private val textIndicator: TextView by bindView(R.id.text_indicator)
     private val indicatorSpacing: View by bindView(R.id.indicator_spacing)
-    private val spacing: Space by bindView(R.id.spacing)
-    private var navBarAccountedHeightCalculated = false
 
     var chatMessages: List<ChatMessage>
         get() = autocompleteAdapter?.chatMessages ?: listOf()
@@ -67,6 +65,7 @@ class ChatBarView : FrameLayout {
     private var autocompleteAdapter: AutocompleteAdapter? = null
 
     private fun setupView(context: Context) {
+        orientation = LinearLayout.VERTICAL
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         inflater?.inflate(R.layout.tavern_chat_new_entry_item, this)
         this.setBackgroundResource(R.color.white)
@@ -79,8 +78,6 @@ class ChatBarView : FrameLayout {
         })
 
         sendButton.setOnClickListener { sendButtonPressed() }
-
-        resizeForDrawingUnderNavbar()
 
         autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID, appConfigManager.enableUsernameAutocomplete())
         chatEditText.setAdapter(autocompleteAdapter)
@@ -103,29 +100,6 @@ class ChatBarView : FrameLayout {
         } else {
             textIndicator.visibility = View.GONE
             indicatorSpacing.visibility = View.GONE
-        }
-    }
-
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        if (changed) {
-            resizeForDrawingUnderNavbar()
-        }
-    }
-
-    //https://github.com/roughike/BottomBar/blob/master/bottom-bar/src/main/java/com/roughike/bottombar/BottomBar.java#L834
-    private fun resizeForDrawingUnderNavbar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val currentHeight = height
-
-            if (currentHeight != 0 && !navBarAccountedHeightCalculated) {
-                navBarAccountedHeightCalculated = true
-
-                val navbarHeight = NavbarUtils.getNavbarHeight(context)
-                spacing.updateLayoutParams<LinearLayout.LayoutParams> {
-                    height = navbarHeight
-                }
-            }
         }
     }
 

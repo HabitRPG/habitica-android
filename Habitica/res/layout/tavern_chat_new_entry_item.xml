@@ -2,11 +2,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
-        android:id="@+id/chatBarContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
         <LinearLayout
             android:id="@+id/chatBarContent"
             android:layout_width="match_parent"
@@ -96,10 +91,4 @@
                 style="@style/HabiticaButton.Blue"
                 android:text="@string/i_agree_to_follow_the_guidelines"/>
         </LinearLayout>
-
-        <Space
-            android:id="@+id/spacing"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
 </merge>

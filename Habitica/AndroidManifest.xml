@@ -34,7 +34,7 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/MainAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
