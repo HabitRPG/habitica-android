@@ -7,9 +7,7 @@ import android.content.res.Resources;
 
 import androidx.preference.PreferenceManager;
 
-import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.executors.JobExecutor;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
@@ -18,7 +16,6 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager;
 import com.habitrpg.android.habitica.helpers.KeyHelper;
 import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 
@@ -29,7 +26,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
 import javax.annotation.Nullable;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -38,7 +34,6 @@ import dagger.Provides;
 @Module
 public class AppModule {
     public static final String NAMED_USER_ID = "userId";
-
 
     private Application application;
 
@@ -87,12 +82,6 @@ public class AppModule {
     }
 
     @Provides
-    @Named(NAMED_USER_ID)
-    public String providesUserID(SharedPreferences sharedPreferences) {
-        return sharedPreferences.getString(application.getString(R.string.SP_userID), "");
-    }
-
-    @Provides
     @Singleton
     public TaskFilterHelper providesTagsHelper() {
         return new TaskFilterHelper();
@@ -128,11 +117,6 @@ public class AppModule {
         return uiThread;
     }
 
-    @Provides
-    @Singleton
-    TaskAlarmManager providesTaskAlarmManager(Context context, TaskRepository taskRepository, @Named(NAMED_USER_ID) String userId) {
-        return new TaskAlarmManager(context, taskRepository, userId);
-    }
 
     @Provides
     @Singleton
@@ -142,7 +126,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    AppConfigManager providesRemoteConfiigManager() {
+    AppConfigManager providesRemoteConfigManager() {
         return new AppConfigManager();
     }
 }

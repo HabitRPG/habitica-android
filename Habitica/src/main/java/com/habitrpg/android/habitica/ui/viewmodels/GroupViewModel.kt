@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.extensions.Optional
@@ -52,7 +52,7 @@ open class GroupViewModel : BaseViewModel() {
     protected val groupIDSubject = BehaviorSubject.create<Optional<String>>()
     var gotNewMessages: Boolean = false
 
-    override fun inject(component: AppComponent) {
+    override fun inject(component: UserComponent) {
         component.inject(this)
     }
 

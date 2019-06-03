@@ -13,7 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand
 import com.habitrpg.android.habitica.extensions.inflate
@@ -124,7 +124,7 @@ class AvatarSetupFragment : BaseFragment() {
         }
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

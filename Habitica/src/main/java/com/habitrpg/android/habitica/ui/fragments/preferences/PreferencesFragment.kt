@@ -14,7 +14,7 @@ import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -31,7 +31,7 @@ import javax.inject.Inject
 class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
-    lateinit var inventoryRepository: InventoryRepository
+    lateinit var contentRepository: ContentRepository
     @Inject
     lateinit var soundManager: SoundManager
     @Inject
@@ -47,7 +47,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     private var serverUrlPreference: ListPreference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
     }
@@ -112,7 +112,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "reload_content" -> {
                 @Suppress("DEPRECATION")
                 val dialog = ProgressDialog.show(context, context?.getString(R.string.reloading_content), null, true)
-                inventoryRepository.retrieveContent(true).subscribe({
+                contentRepository.retrieveContent(true).subscribe({
                     if (dialog.isShowing) {
                         dialog.dismiss()
                     }
@@ -179,7 +179,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
                 userRepository.updateLanguage(user, languageHelper.languageCode)
-                        .flatMap<ContentResult> { inventoryRepository.retrieveContent(true) }
+                        .flatMap<ContentResult> { contentRepository.retrieveContent(true) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {

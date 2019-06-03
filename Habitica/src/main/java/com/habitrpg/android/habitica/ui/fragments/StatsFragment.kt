@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.inflate
@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_stats.*
@@ -129,7 +129,7 @@ class StatsFragment: BaseMainFragment() {
 
     private fun showBulkAllocateDialog() {
         context.notNull { context ->
-            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.component)
+            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.userComponent)
             dialog.show()
         }
     }
@@ -194,7 +194,7 @@ class StatsFragment: BaseMainFragment() {
         numberOfPointsTextView.setScaledPadding(context, 18, 4, 18, 4)
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

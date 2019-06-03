@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import io.reactivex.functions.Consumer
@@ -14,7 +14,7 @@ class PartyViewModel: GroupViewModel() {
         groupViewType = GroupViewType.PARTY
     }
 
-    override fun inject(component: AppComponent) {
+    override fun inject(component: UserComponent) {
         component.inject(this)
     }
 

@@ -31,9 +31,10 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.Scopes
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
@@ -197,7 +198,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
@@ -316,6 +317,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        HabiticaBaseApplication.reloadUserComponent()
 
         compositeSubscription.add(userRepository.retrieveUser(true)
                 .subscribe(Consumer {

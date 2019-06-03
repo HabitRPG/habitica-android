@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.inflate
@@ -116,7 +116,7 @@ class WelcomeFragment : BaseFragment() {
         })
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 }

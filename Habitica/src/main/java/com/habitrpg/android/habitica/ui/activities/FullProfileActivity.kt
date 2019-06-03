@@ -12,7 +12,7 @@ import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -446,7 +446,7 @@ class FullProfileActivity : BaseActivity() {
         return R.layout.activity_full_profile
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

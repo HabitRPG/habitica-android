@@ -33,7 +33,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
     private void setUp() {
         if (taskRepository == null) {
-            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getUserComponent()).inject(this);
         }
     }
 

@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.models.WorldState
 
 import io.reactivex.Flowable
 
-interface ContentRepository : BaseRepository {
+interface ContentRepository {
 
     fun retrieveContent(): Flowable<ContentResult>
     fun retrieveContent(forced: Boolean): Flowable<ContentResult>

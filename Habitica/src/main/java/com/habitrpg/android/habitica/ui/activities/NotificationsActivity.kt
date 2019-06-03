@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.*
@@ -50,7 +50,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         notifications_refresh_layout?.setOnRefreshListener(this)
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

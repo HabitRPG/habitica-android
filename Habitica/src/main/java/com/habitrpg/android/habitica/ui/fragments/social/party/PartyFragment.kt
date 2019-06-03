@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
@@ -109,7 +109,7 @@ class PartyFragment : BaseMainFragment() {
         }
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

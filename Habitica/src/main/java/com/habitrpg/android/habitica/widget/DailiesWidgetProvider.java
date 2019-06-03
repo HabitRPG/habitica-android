@@ -24,7 +24,7 @@ public class DailiesWidgetProvider extends TaskListWidgetProvider {
 
     private void setUp(Context context) {
         if (apiClient == null) {
-            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getUserComponent()).inject(this);
         }
     }
 

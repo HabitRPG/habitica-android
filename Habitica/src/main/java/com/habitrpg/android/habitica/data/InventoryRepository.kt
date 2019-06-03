@@ -10,7 +10,7 @@ import io.reactivex.Flowable
 import io.realm.RealmResults
 
 
-interface InventoryRepository : ContentRepository {
+interface InventoryRepository : BaseRepository {
 
     fun getArmoireRemainingCount(): Long
 

@@ -48,7 +48,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
     private void setUp() {
         if (userRepository == null) {
-            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getUserComponent()).inject(this);
         }
     }
 

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
@@ -49,7 +49,7 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         return container?.inflate(R.layout.fragment_gem_purchase)
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

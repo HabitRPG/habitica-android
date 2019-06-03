@@ -70,7 +70,7 @@ class ChatBarView : LinearLayout {
         inflater?.inflate(R.layout.tavern_chat_new_entry_item, this)
         this.setBackgroundResource(R.color.white)
 
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
 
         chatEditText.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
                 setSendButtonEnabled(chatEditText.text.isNotEmpty() && chatEditText.text.length <= maxChatLength)

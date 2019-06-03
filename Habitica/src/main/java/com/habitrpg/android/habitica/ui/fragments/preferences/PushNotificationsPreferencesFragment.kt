@@ -14,7 +14,7 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
     private var isSettingUser: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
     }
 

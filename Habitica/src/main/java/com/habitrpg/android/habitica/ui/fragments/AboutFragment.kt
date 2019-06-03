@@ -15,7 +15,7 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.AppTestingLevel
@@ -39,7 +39,7 @@ class AboutFragment : BaseMainFragment() {
     private val updateAvailableWrapper: ViewGroup by bindView(R.id.update_available_wrapper)
     private val updateAvailableTextView: TextView by bindView(R.id.update_available_textview)
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

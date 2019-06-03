@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
@@ -142,7 +142,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         }
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

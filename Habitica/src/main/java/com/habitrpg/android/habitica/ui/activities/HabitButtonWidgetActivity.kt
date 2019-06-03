@@ -9,7 +9,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -37,7 +37,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
         return R.layout.widget_configure_habit_button
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
@@ -37,7 +37,7 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
-class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
+class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
     @Inject
     lateinit var userRepository: UserRepository

@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -29,7 +29,7 @@ class SkillMemberActivity : BaseActivity() {
         return R.layout.activity_skill_members
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

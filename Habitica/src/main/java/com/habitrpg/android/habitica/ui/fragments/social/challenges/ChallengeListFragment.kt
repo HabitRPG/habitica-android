@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
@@ -109,7 +109,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
         MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeID))
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

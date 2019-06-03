@@ -16,7 +16,7 @@ import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import androidx.core.widget.CompoundButtonCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -27,7 +27,7 @@ import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialog(context), RadioGroup.OnCheckedChangeListener {
 
     @Inject
     lateinit var repository: TagRepository

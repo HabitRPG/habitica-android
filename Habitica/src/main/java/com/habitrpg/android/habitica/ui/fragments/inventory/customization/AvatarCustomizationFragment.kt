@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -111,7 +111,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

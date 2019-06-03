@@ -12,7 +12,7 @@ import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.addOkButton
@@ -71,7 +71,7 @@ class GiftIAPActivity: BaseActivity() {
         return R.layout.activity_gift_iap
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

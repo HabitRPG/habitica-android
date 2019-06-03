@@ -89,7 +89,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     init {
         this.notificationsManager.setApiClient(this)
 
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
         crashlyticsProxy.setUserName(this.hostConfig.userID)
         Amplitude.getInstance().userId = this.hostConfig.userID

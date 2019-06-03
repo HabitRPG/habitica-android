@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -35,14 +35,14 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
         this.setHasStableIds(true)
         this.context = newContext.applicationContext
         this.filteredContent = ArrayList()
-        HabiticaBaseApplication.component.notNull { injectThis(it) }
+        HabiticaBaseApplication.userComponent.notNull { injectThis(it) }
 
         if (loadFromDatabase()) {
             this.loadContent(true)
         }
     }
 
-    protected abstract fun injectThis(component: AppComponent)
+    protected abstract fun injectThis(component: UserComponent)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = filteredContent?.get(position)

@@ -23,17 +23,18 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.modules.UserModule
+import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
-import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import org.solovyev.android.checkout.Billing
@@ -47,8 +48,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
     var refWatcher: RefWatcher? = null
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
-    @Inject
-    internal lateinit var inventoryRepository: InventoryRepository
     @Inject
     internal lateinit var sharedPrefs: SharedPreferences
     @Inject
@@ -138,12 +137,12 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
             sharedPrefs.edit {
                 putInt("last_installed_version", info.versionCode)
             }
-            inventoryRepository.retrieveContent().subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
     private fun setupDagger() {
         component = initDagger()
+        reloadUserComponent()
         component?.inject(this)
     }
 
@@ -223,6 +222,8 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         var component: AppComponent? = null
             private set
 
+        var userComponent: UserComponent? = null
+
         fun getInstance(context: Context): HabiticaBaseApplication? {
             return context.applicationContext as? HabiticaBaseApplication
         }
@@ -239,8 +240,13 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
                 putBoolean("use_reminder", useReminder)
                 putString("reminder_time", reminderTime)
             }
+            reloadUserComponent()
             getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
             startActivity(LoginActivity::class.java, context)
+        }
+
+        fun reloadUserComponent() {
+            userComponent = component?.plus(UserModule(), UserRepositoryModule())
         }
 
         fun checkUserAuthentication(context: Context, hostConfig: HostConfig?): Boolean {

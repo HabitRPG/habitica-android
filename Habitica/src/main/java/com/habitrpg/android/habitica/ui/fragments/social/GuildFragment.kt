@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -35,7 +35,7 @@ class GuildFragment : BaseMainFragment() {
     }
 
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

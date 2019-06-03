@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent
 import com.habitrpg.android.habitica.extensions.notNull
@@ -41,7 +41,7 @@ abstract class BaseFragment : DialogFragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.component.notNull {
+        HabiticaBaseApplication.userComponent.notNull {
             injectFragment(it)
         }
         this.showsDialog = false
@@ -61,7 +61,7 @@ abstract class BaseFragment : DialogFragment() {
         return null
     }
 
-    abstract fun injectFragment(component: AppComponent)
+    abstract fun injectFragment(component: UserComponent)
 
     override fun onResume() {
         super.onResume()

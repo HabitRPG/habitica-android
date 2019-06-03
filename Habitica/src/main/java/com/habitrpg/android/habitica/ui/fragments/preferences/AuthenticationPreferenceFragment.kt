@@ -42,7 +42,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
         findPreference("login_name").title = context?.getString(R.string.username)

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -40,7 +40,7 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
     private val recyclerView: RecyclerView by bindView(R.id.recyclerView)
     private val refreshLayout: SwipeRefreshLayout by bindView(R.id.refreshLayout)
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

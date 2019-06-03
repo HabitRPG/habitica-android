@@ -5,7 +5,7 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
@@ -34,7 +34,7 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
         return container?.inflate(R.layout.fragment_recyclerview)
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.os.Bundle
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.models.social.UserParty
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
-import java.util.HashMap
+import java.util.*
 import javax.inject.Inject
 
 open class NotificationsViewModel : BaseViewModel() {
@@ -38,7 +38,7 @@ open class NotificationsViewModel : BaseViewModel() {
      */
     private var party: UserParty? = null
 
-    override fun inject(component: AppComponent) {
+    override fun inject(component: UserComponent) {
         component.inject(this)
     }
 

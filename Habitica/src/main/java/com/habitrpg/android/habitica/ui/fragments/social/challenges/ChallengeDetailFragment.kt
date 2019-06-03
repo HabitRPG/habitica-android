@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
@@ -66,7 +66,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     var challenge: Challenge? = null
     var isCreator = false
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

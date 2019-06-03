@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.notNull
@@ -49,7 +49,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         return R.layout.activity_gem_purchase
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

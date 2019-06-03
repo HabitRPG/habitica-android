@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
@@ -64,7 +64,7 @@ class GuildsOverviewFragment : BaseMainFragment(), View.OnClickListener, android
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

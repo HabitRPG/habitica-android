@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -46,7 +46,7 @@ abstract class BaseActivity : AppCompatActivity() {
         delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         habiticaApplication
-        injectActivity(HabiticaBaseApplication.component)
+        injectActivity(HabiticaBaseApplication.userComponent)
         setContentView(getLayoutResId())
         compositeSubscription = CompositeDisposable()
     }
@@ -73,7 +73,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onStop()
     }
 
-    protected abstract fun injectActivity(component: AppComponent?)
+    protected abstract fun injectActivity(component: UserComponent?)
 
     protected fun setupToolbar(toolbar: Toolbar?) {
         if (toolbar != null) {

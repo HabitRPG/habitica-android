@@ -9,7 +9,7 @@ import com.github.clans.fab.FloatingActionButton
 import com.github.clans.fab.FloatingActionMenu
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.events.TaskTappedEvent
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -104,7 +104,7 @@ class TasksFragment : BaseMainFragment() {
         return true
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -132,7 +132,7 @@ class TasksFragment : BaseMainFragment() {
 
     private fun showFilterDialog() {
         context?.let {
-            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.component)
+            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
             if (user != null) {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
             }

@@ -9,7 +9,7 @@ import io.reactivex.Flowable
 import io.realm.RealmResults
 
 
-class FAQRepositoryImpl(localRepository: FAQLocalRepository, apiClient: ApiClient, userID: String) : ContentRepositoryImpl<FAQLocalRepository>(localRepository, apiClient, userID), FAQRepository {
+class FAQRepositoryImpl(localRepository: FAQLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<FAQLocalRepository>(localRepository, apiClient, userID), FAQRepository {
     override fun getArticle(position: Int): Flowable<FAQArticle> {
         return localRepository.getArticle(position)
     }

@@ -47,7 +47,7 @@ class NotificationPublisher : BroadcastReceiver() {
         this.context = context
         if (!wasInjected) {
             wasInjected = true
-            HabiticaBaseApplication.component?.inject(this)
+            HabiticaBaseApplication.userComponent?.inject(this)
         }
 
         val additionalData = HashMap<String, Any>()

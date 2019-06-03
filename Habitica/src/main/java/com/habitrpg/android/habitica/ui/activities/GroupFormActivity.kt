@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
@@ -78,7 +78,7 @@ class GroupFormActivity : BaseActivity() {
     }
 
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

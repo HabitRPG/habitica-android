@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -16,7 +16,7 @@ import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.dialog_bulk_allocate.*
 import javax.inject.Inject
 
-class BulkAllocateStatsDialog(context: Context, component: AppComponent?) : AlertDialog(context) {
+class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : AlertDialog(context) {
 
     @Inject
     lateinit var userRepository: UserRepository

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -43,7 +43,7 @@ class AvatarOverviewFragment : BaseMainFragment(), AdapterView.OnItemSelectedLis
         }))
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.webkit.WebView
 import com.commonsware.cwac.anddown.AndDown
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import okhttp3.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -16,7 +16,7 @@ class GuidelinesActivity: BaseActivity() {
 
     override fun getLayoutResId(): Int = R.layout.activity_guidelines
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

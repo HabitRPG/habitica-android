@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -25,7 +25,7 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
     val taskList: MutableList<Task>
         get() = content?.map { t -> t }?.toMutableList() ?: mutableListOf()
 
-    override fun injectThis(component: AppComponent) {
+    override fun injectThis(component: UserComponent) {
         component.inject(this)
     }
 

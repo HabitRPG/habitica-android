@@ -30,7 +30,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     private var context: Context? = null
 
     override fun onReceive(context: Context, intent: Intent) {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         this.resources = context.resources
 
         this.action = intent.action

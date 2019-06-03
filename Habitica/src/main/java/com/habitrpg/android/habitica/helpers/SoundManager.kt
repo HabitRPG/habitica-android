@@ -15,7 +15,7 @@ class SoundManager {
     private val loadedSoundFiles: MutableMap<String, SoundFile> = HashMap()
 
     init {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
     }
 
     fun preloadAllFiles(): Maybe<List<SoundFile>> {

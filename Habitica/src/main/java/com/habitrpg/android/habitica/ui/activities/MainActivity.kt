@@ -36,7 +36,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.*
@@ -122,9 +122,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var socialRepository: SocialRepository
     @Inject
-    internal lateinit var tagRepository: TagRepository
-    @Inject
     internal lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    internal lateinit var contentRepository: ContentRepository
     @Inject
     internal lateinit var taskAlarmManager: TaskAlarmManager
     @Inject
@@ -211,7 +211,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
         avatarWithBars.setPadding(px.toInt(), statusBarHeight, px.toInt(), 0)
 
-        compositeSubscription.add(userRepository.getUser(hostConfig.userID)
+        compositeSubscription.add(userRepository.getUser()
                 .subscribe(Consumer { newUser ->
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
@@ -286,7 +286,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         } else super.onOptionsItemSelected(item)
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
@@ -466,7 +466,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     public override fun onDestroy() {
         userRepository.close()
-        tagRepository.close()
         inventoryRepository.close()
         keyboardUtil?.disable()
         super.onDestroy()
@@ -672,8 +671,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         pushNotificationManager.setUser(user1)
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
-                    .flatMap { inventoryRepository.retrieveContent(false) }
-                    .flatMap { inventoryRepository.retrieveWorldState() }
+                    .flatMap { contentRepository.retrieveContent(false) }
+                    .flatMap { contentRepository.retrieveWorldState() }
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }

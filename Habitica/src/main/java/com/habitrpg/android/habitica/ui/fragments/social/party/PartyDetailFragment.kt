@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -58,7 +58,7 @@ class PartyDetailFragment : BaseFragment() {
     private val questProgressView: OldQuestProgressView? by bindView(R.id.quest_progress_view)
     private val leaveButton: Button? by bindView(R.id.leave_button)
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

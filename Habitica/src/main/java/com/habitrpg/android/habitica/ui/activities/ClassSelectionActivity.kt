@@ -14,7 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.*
@@ -167,7 +167,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         warriorButton.setCompoundDrawablesWithIntrinsicBounds(warriorIcon, null, null, null)
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

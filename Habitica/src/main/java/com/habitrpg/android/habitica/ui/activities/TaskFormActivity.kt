@@ -20,7 +20,7 @@ import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.widget.NestedScrollView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -118,7 +118,7 @@ class TaskFormActivity : BaseActivity() {
         return R.layout.activity_task_form
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

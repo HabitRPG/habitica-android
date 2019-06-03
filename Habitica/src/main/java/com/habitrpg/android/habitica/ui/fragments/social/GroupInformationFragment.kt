@@ -16,7 +16,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
@@ -210,7 +210,7 @@ class GroupInformationFragment : BaseFragment() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

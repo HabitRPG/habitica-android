@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -25,10 +25,10 @@ abstract class BaseViewModel: ViewModel() {
     }
 
     init {
-        HabiticaBaseApplication.component.notNull { inject(it) }
+        HabiticaBaseApplication.userComponent.notNull { inject(it) }
     }
 
-    abstract fun inject(component: AppComponent)
+    abstract fun inject(component: UserComponent)
 
     override fun onCleared() {
         userRepository.close()

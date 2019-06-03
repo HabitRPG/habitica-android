@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.events.commands.HatchingCommand
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -36,7 +36,7 @@ class ItemsFragment : BaseMainFragment() {
         setViewPagerAdapter()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

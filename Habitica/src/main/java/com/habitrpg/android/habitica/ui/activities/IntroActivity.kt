@@ -13,8 +13,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
 
     @Inject
-    lateinit var contentRepository: InventoryRepository
+    lateinit var contentRepository: ContentRepository
 
     private val pager: ViewPager by bindView(R.id.viewPager)
     private val indicator: IconPageIndicator by bindView(R.id.view_pager_indicator)
@@ -58,7 +58,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
 
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

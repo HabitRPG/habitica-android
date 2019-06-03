@@ -31,7 +31,7 @@ class TaskReceiver : BroadcastReceiver() {
     lateinit var taskRepository: TaskRepository
 
     override fun onReceive(context: Context, intent: Intent) {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         val extras = intent.extras
         if (extras != null) {
             val taskTitle = extras.getString(TaskAlarmManager.TASK_NAME_INTENT_KEY)

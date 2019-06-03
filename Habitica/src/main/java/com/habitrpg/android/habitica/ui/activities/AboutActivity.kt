@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import android.view.MenuItem
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.ui.fragments.AboutFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.mikepenz.aboutlibraries.Libs
@@ -61,7 +61,7 @@ class AboutActivity : BaseActivity() {
         tabLayout.setupWithViewPager(pager)
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

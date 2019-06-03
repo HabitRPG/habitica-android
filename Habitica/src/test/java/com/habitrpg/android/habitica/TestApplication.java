@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica;
 
-import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.components.UserComponent;
 import com.habitrpg.android.habitica.components.DaggerAppComponent;
 import com.habitrpg.android.habitica.modules.AppModule;
 

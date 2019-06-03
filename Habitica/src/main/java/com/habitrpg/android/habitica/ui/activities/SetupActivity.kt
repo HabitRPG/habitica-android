@@ -18,7 +18,7 @@ import android.widget.Button
 import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -107,7 +107,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         nextButton.setOnClickListener { nextClicked() }
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

@@ -9,7 +9,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -52,7 +52,7 @@ class ChallengesOverviewFragment : BaseMainFragment() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

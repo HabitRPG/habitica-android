@@ -11,7 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.runDelayed
@@ -54,7 +54,7 @@ class VerifyUsernameActivity: BaseActivity() {
         return R.layout.activity_verify_username
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

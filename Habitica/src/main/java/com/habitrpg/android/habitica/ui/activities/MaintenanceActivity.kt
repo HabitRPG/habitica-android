@@ -10,7 +10,7 @@ import androidx.core.net.toUri
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.MaintenanceApiService
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -61,7 +61,7 @@ class MaintenanceActivity : BaseActivity() {
         playStoreButton.setOnClickListener { openInPlayStore() }
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

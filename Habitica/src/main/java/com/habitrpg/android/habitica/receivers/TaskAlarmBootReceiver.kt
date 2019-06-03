@@ -16,7 +16,7 @@ class TaskAlarmBootReceiver : BroadcastReceiver() {
     lateinit var sharedPreferences: SharedPreferences
 
     override fun onReceive(context: Context, arg1: Intent) {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
     }
 
