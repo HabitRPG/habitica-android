@@ -157,11 +157,7 @@ class TaskFormActivity : BaseActivity() {
         statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
         statPerceptionButton.setOnClickListener { selectedStat = Stats.PERCEPTION }
         scrollView.setOnTouchListener { view, event ->
-            if(view == scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)) {
-                userScrolled = true
-            } else {
-                userScrolled = false
-            }
+            userScrolled = view == scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
             return@setOnTouchListener false
         }
         scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->
@@ -223,6 +219,12 @@ class TaskFormActivity : BaseActivity() {
         adjustStreakWrapper.visibility = habitDailyVisibility
         if (taskType == Task.TYPE_HABIT) {
             habitAdjustPositiveStreakView.hint = getString(R.string.positive_habit_form)
+            habitAdjustPositiveStreakView.visibility = if (task?.up == true) View.VISIBLE else View.GONE
+            habitAdjustNegativeStreakView.visibility = if (task?.down == true) View.VISIBLE else View.GONE
+            if (task?.up != true && task?.down != true) {
+                adjustStreakTitleView.visibility = View.GONE
+                adjustStreakWrapper.visibility = View.GONE
+            }
         } else {
             habitAdjustPositiveStreakView.hint = getString(R.string.streak)
         }
