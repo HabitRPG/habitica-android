@@ -30,7 +30,7 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
     private var menuID: Int = 0
     private lateinit var adapter: AchievementsAdapter
     private val layoutManager = GridLayoutManager(activity, 2)
-    private var useGridLayout = true
+    private var useGridLayout = false
     set(value) {
         field = value
         adapter.useGridLayout = value
@@ -48,6 +48,9 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
         hidesToolbar = true
         super.onCreateView(inflater, container, savedInstanceState)
         adapter = AchievementsAdapter()
+
+        onRefresh()
+
         return inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false)
     }
 

@@ -90,9 +90,9 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         this.popupNotificationsManager.setApiClient(this)
 
         HabiticaBaseApplication.component?.inject(this)
-        crashlyticsProxy.setUserIdentifier(this.hostConfig.user)
-        crashlyticsProxy.setUserName(this.hostConfig.user)
-        Amplitude.getInstance().userId = this.hostConfig.user
+        crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
+        crashlyticsProxy.setUserName(this.hostConfig.userID)
+        Amplitude.getInstance().userId = this.hostConfig.userID
         buildRetrofit()
     }
 
@@ -115,8 +115,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     var builder: Request.Builder = original.newBuilder()
                     if (this.hostConfig.hasAuthentication()) {
                         builder = builder
-                                .header("x-api-key", this.hostConfig.api)
-                                .header("x-api-user", this.hostConfig.user)
+                                .header("x-api-key", this.hostConfig.apiKey)
+                                .header("x-api-user", this.hostConfig.userID)
                     }
                     builder = builder.header("x-client", "habitica-android")
                             .header("x-user-timezoneOffset", timezoneOffset.toString())
@@ -256,7 +256,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun hasAuthenticationKeys(): Boolean {
-        return this.hostConfig.user.isNotEmpty() && hostConfig.api.isNotEmpty()
+        return this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
     }
 
     private fun showConnectionProblemDialog(resourceMessageString: Int) {
@@ -282,11 +282,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
-        this.hostConfig.user = userID ?: ""
-        this.hostConfig.api = apiToken ?: ""
-        crashlyticsProxy.setUserIdentifier(this.hostConfig.user)
-        crashlyticsProxy.setUserName(this.hostConfig.user)
-        Amplitude.getInstance().userId = this.hostConfig.user
+        this.hostConfig.userID = userID ?: ""
+        this.hostConfig.apiKey = apiToken ?: ""
+        crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
+        crashlyticsProxy.setUserName(this.hostConfig.userID)
+        Amplitude.getInstance().userId = this.hostConfig.userID
     }
 
     override fun setLanguageCode(languageCode: String) {

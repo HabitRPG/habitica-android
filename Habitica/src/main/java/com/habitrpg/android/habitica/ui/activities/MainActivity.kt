@@ -58,7 +58,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
@@ -206,7 +206,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
         avatarWithBars.setPadding(px.toInt(), statusBarHeight, px.toInt(), 0)
 
-        compositeSubscription.add(userRepository.getUser(hostConfig.user)
+        compositeSubscription.add(userRepository.getUser(hostConfig.userID)
                 .subscribe(Consumer { newUser ->
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()

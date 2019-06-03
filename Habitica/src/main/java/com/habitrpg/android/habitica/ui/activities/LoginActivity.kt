@@ -44,12 +44,13 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
 import io.reactivex.Flowable
@@ -75,6 +76,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     lateinit var hostConfig: HostConfig
     @Inject
     internal lateinit var userRepository: UserRepository
+    @Inject
+    @JvmField
+    var keyHelper: KeyHelper? = null
 
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
@@ -302,7 +306,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
             prefs.edit {
                 putString(getString(R.string.SP_address), adr)
-                putString(getString(R.string.SP_APIToken), key)
+                if (keyHelper != null) {
+                    putString(user, keyHelper?.encrypt(key))
+                } else {
+                    putString(getString(R.string.SP_APIToken), key)
+                }
                 putString(getString(R.string.SP_userID), user)
             }
             startMainActivity()
@@ -337,7 +345,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     private fun saveTokens(api: String, user: String) {
         this.apiClient.updateAuthenticationCredentials(user, api)
         sharedPrefs.edit {
-            putString(getString(R.string.SP_APIToken), api)
+            if (keyHelper != null) {
+                putString(user, keyHelper?.encrypt(api))
+            } else {
+                putString(getString(R.string.SP_APIToken), api)
+            }
             putString(getString(R.string.SP_userID), user)
         }
     }

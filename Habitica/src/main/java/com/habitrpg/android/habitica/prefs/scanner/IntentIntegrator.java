@@ -28,7 +28,7 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
-import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog;
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog;
 
 import java.util.Arrays;
 import java.util.Collection;

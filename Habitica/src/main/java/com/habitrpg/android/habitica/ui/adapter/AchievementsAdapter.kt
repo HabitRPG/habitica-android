@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 
 class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -71,7 +72,7 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class AchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class AchievementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var achievement: Achievement? = null
 
         private val achievementContainer: ViewGroup? by bindOptionalView(R.id.achievement_container)
@@ -79,6 +80,10 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val achievementCountView: TextView by bindView(R.id.achievement_count_label)
         private val achievementTitleView: TextView by bindView(R.id.achievement_title)
         private val achievementDescriptionView: TextView? by bindOptionalView(R.id.achievement_description)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bind(achievement: Achievement) {
             this.achievement = achievement
@@ -97,6 +102,12 @@ class AchievementsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 achievementCountView.visibility = View.GONE
             }
             achievementContainer?.clipToOutline = true
+        }
+
+        override fun onClick(v: View?) {
+            achievement?.let {
+                AchievementDetailDialog(it, itemView.context).show()
+            }
         }
     }
 

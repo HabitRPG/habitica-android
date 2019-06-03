@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+
 import androidx.preference.PreferenceManager;
 
 import com.habitrpg.android.habitica.R;
@@ -14,12 +15,17 @@ import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.executors.UIThread;
 import com.habitrpg.android.habitica.helpers.AppConfigManager;
+import com.habitrpg.android.habitica.helpers.KeyHelper;
 import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+
+import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -47,6 +53,26 @@ public class AppModule {
     @Singleton
     public SharedPreferences provideSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    @Provides
+    @Nullable
+    KeyStore provideKeyStore() {
+        try {
+            return KeyStore.getInstance("AndroidKeyStore");
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Provides
+    @Nullable
+    KeyHelper provideKeyHelper(Context context, SharedPreferences sharedPreferences, @Nullable KeyStore keyStore) {
+        if (keyStore == null) {
+            return null;
+        }
+        return KeyHelper.Companion.getInstance(context, sharedPreferences, keyStore);
     }
 
     @Provides

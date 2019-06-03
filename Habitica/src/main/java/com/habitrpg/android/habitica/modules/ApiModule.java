@@ -7,9 +7,11 @@ import com.habitrpg.android.habitica.api.HostConfig;
 import com.habitrpg.android.habitica.api.MaintenanceApiService;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
+import com.habitrpg.android.habitica.helpers.KeyHelper;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 
+import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -23,8 +25,8 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public HostConfig providesHostConfig(SharedPreferences sharedPreferences, Context context) {
-        return new HostConfig(sharedPreferences, context);
+    public HostConfig providesHostConfig(SharedPreferences sharedPreferences, @Nullable KeyHelper keyHelper, Context context) {
+        return new HostConfig(sharedPreferences, keyHelper, context);
     }
 
     @Provides

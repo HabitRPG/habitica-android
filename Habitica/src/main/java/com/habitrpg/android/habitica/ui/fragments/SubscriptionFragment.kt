@@ -25,7 +25,7 @@ import com.habitrpg.android.habitica.ui.activities.GiftIAPActivity
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
