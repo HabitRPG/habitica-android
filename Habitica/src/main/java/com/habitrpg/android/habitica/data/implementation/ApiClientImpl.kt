@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
-import com.habitrpg.android.habitica.helpers.PopupNotificationsManager
+import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.auth.UserAuth
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
@@ -61,7 +61,7 @@ import javax.net.ssl.SSLException
 
 class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 //private HostConfig mConfig;
-(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val popupNotificationsManager: PopupNotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
+(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val notificationsManager: NotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
 
 
     private lateinit var retrofitAdapter: Retrofit
@@ -73,11 +73,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         observable
                 .filter { it.data != null }
                 .map { habitResponse ->
-            if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
-            }
-            habitResponse.data
-        }
+                    if (habitResponse.notifications != null) {
+                        notificationsManager.setNotifications(habitResponse.notifications)
+                    }
+                    habitResponse.data
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(this)
@@ -87,7 +87,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     private var lastAPICallURL: String? = null
 
     init {
-        this.popupNotificationsManager.setApiClient(this)
+        this.notificationsManager.setApiClient(this)
 
         HabiticaBaseApplication.component?.inject(this)
         crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
@@ -334,7 +334,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {
         return apiService.validateSubscription(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }
@@ -343,7 +343,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any> {
         return apiService.validateNoRenewSubscription(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }
@@ -568,7 +568,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validatePurchase(request: PurchaseValidationRequest): Flowable<PurchaseValidationResult> {
         return apiService.validatePurchase(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }
@@ -661,6 +661,14 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 
     override fun readNotification(notificationId: String): Flowable<List<*>> {
         return apiService.readNotification(notificationId).compose(configureApiCallObserver())
+    }
+
+    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
+        return apiService.readNotifications(notificationIds).compose(configureApiCallObserver())
+    }
+
+    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
+        return apiService.seeNotifications(notificationIds).compose(configureApiCallObserver())
     }
 
     override val content: Flowable<ContentResult>

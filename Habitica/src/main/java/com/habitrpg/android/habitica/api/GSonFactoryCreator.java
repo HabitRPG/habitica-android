@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
+import com.habitrpg.android.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
@@ -45,6 +46,7 @@ import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.MemberSerialization;
 import com.habitrpg.android.habitica.utils.OwnedItemListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedMountListDeserializer;
+import com.habitrpg.android.habitica.utils.NotificationDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedPetListDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
 import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;
@@ -118,6 +120,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())
                 .registerTypeAdapter(FindUsernameResult.class, new FindUsernameResultDeserializer())
+                .registerTypeAdapter(Notification.class, new NotificationDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

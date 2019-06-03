@@ -2,11 +2,15 @@ package com.habitrpg.android.habitica.ui.fragments
 
 
 import android.app.ActionBar
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -21,6 +25,8 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
+import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
 import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
@@ -97,6 +103,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         messagesBadge.visibility = View.GONE
         settingsBadge.visibility = View.GONE
+        notificationsBadge.visibility = View.GONE
 
         /* Reenable this once the boss art can be displayed correctly.
 
@@ -192,6 +199,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         messagesButtonWrapper.setOnClickListener { setSelection(R.id.inboxFragment) }
         settingsButtonWrapper.setOnClickListener { setSelection(R.id.prefsActivity) }
+        notificationsButtonWrapper.setOnClickListener { startNotificationsActivity() }
     }
 
     override fun onDestroy() {
@@ -242,6 +250,18 @@ class NavigationDrawerFragment : DialogFragment() {
             if (transitionId != null) {
                 activity.navigate(transitionId)
             }
+        }
+    }
+
+    fun startNotificationsActivity() {
+        closeDrawer()
+
+        val activity = activity as? MainActivity
+        if (activity != null) {
+            // NotificationsActivity will return a result intent with a notificationId if a
+            // notification item was clicked
+            val intent = Intent(activity, NotificationsActivity::class.java)
+            activity.startActivityForResult(intent, NOTIFICATION_CLICK)
         }
     }
 
@@ -303,6 +323,24 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition)
+    }
+
+    fun setNotificationsCount(unreadNotifications: Int) {
+        if (unreadNotifications == 0) {
+            notificationsBadge.visibility = View.GONE
+        } else {
+            notificationsBadge.visibility = View.VISIBLE
+            notificationsBadge.text = unreadNotifications.toString()
+        }
+    }
+
+    fun setNotificationsSeen(allSeen: Boolean) {
+        context.notNull {
+            val colorId = if (allSeen) R.color.gray_200 else R.color.brand_400
+
+            val bg = notificationsBadge.background as GradientDrawable
+            bg.color = ColorStateList.valueOf(ContextCompat.getColor(it, colorId))
+        }
     }
 
     fun setMessagesCount(unreadMessages: Int) {
