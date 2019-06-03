@@ -1,10 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.subjects.BehaviorSubject
-
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.ShowCheckinDialog
@@ -12,11 +8,12 @@ import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
-
+import io.reactivex.subjects.BehaviorSubject
 import org.greenrobot.eventbus.EventBus
-
-import java.util.HashMap
+import java.util.*
 
 /**
  * Created by krh12 on 12/9/2016.
@@ -71,23 +68,23 @@ class NotificationsManager (private val context: Context) {
     }
 
     fun displayLoginIncentiveNotification(notification: Notification): Boolean? {
-        val notificationData = notification.data as LoginIncentiveData?
-        val nextUnlockText = context.getString(R.string.nextPrizeUnlocks, notificationData!!.nextRewardAt)
-        if (notificationData.rewardKey != null) {
+        val notificationData = notification.data as? LoginIncentiveData
+        val nextUnlockText = context.getString(R.string.nextPrizeUnlocks, notificationData?.nextRewardAt)
+        if (notificationData?.rewardKey != null) {
             val event = ShowCheckinDialog()
             event.notification = notification
             event.nextUnlockText = nextUnlockText
             EventBus.getDefault().post(event)
         } else {
             val event = ShowSnackbarEvent()
-            event.title = notificationData.message
+            event.title = notificationData?.message
             event.text = nextUnlockText
             event.type = HabiticaSnackbar.SnackbarDisplayType.BLUE
             EventBus.getDefault().post(event)
             if (apiClient != null) {
                 // @TODO: This should be handled somewhere else? MAybe we notifiy via event
-                apiClient!!.readNotification(notification.id)
-                        .subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                apiClient?.readNotification(notification.id)
+                        ?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
             }
         }
         return true

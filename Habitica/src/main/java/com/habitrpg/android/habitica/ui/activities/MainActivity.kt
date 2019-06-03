@@ -61,12 +61,12 @@ import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.bottombar.BottomBar
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
@@ -846,7 +846,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val nextUnlockTextView = view.findViewById<View>(R.id.next_unlock_message) as? TextView
         nextUnlockTextView?.text = event.nextUnlockText
 
-        val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
+        Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
                     val alert = HabiticaAlertDialog(this)
@@ -857,8 +857,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                     }
                     alert.show()
-
-        Completable.complete()
+                }, RxErrorHandler.handleEmptyError())
     }
 
     override fun onEvent(event: ShowConnectionProblemEvent) {
