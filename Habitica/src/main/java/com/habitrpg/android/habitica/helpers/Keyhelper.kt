@@ -21,7 +21,7 @@ import javax.crypto.spec.SecretKeySpec
 import javax.security.auth.x500.X500Principal
 import javax.security.cert.CertificateException
 
-
+// https://stackoverflow.com/a/42716982
 class KeyHelper @Throws(NoSuchPaddingException::class, NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class)
 constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore: KeyStore) {
 

@@ -1,3 +1,5 @@
-In this update, we've made improvements in many areas of the app and smashed some bugs. Highlights include changes to Settings including easier language selection, fixes for the class selection screen, improvements to the Time Travelers’ Shop, and fixes for Challenge loading, To-Do reminders, and the Record Yesterday’s Activity modal. We’ve also made it easier to find the Habitica Help Guild and the Party Wanted Guild.
+This beta update stores the apps authentication credentials more securely. The app should automatically update to the new storage method without you having to log in again. If you experience any issues with this, please report them through the in-app-reporting option or to admin@habitica.com
+We updated the app with a new modal design
+
 
 Be sure to download this update now for a better Habitica experience!
