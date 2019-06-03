@@ -65,6 +65,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.activities.NotificationsActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:label="@string/notifications"
+            android:screenOrientation="portrait"
+            tools:ignore="UnusedAttribute">
+        </activity>
+        <activity
             android:name=".ui.activities.FixCharacterValuesActivity"
             android:parentActivityName=".ui.activities.PrefsActivity"
             android:label="@string/PS_settings_title"

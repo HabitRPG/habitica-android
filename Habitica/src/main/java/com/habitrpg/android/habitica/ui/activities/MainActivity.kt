@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.facebook.drawee.view.SimpleDraweeView
 import com.google.android.material.appbar.AppBarLayout
@@ -45,6 +46,7 @@ import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.interactors.*
 import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -58,6 +60,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -138,11 +141,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     internal val detailTabs: TabLayout? by bindOptionalView(R.id.detail_tabs)
     val avatarWithBars: View by bindView(R.id.avatar_with_bars)
     private val overlayLayout: ViewGroup by bindView(R.id.overlayFrameLayout)
-    private val connectionIssueTextView: TextView by bindView(R.id.connection_issue_textview)
 
+    private val connectionIssueTextView: TextView by bindView(R.id.connection_issue_textview)
     var user: User? = null
 
     private var avatarInHeader: AvatarWithBarsViewModel? = null
+    private var notificationsViewModel: NotificationsViewModel? = null
     private var faintDialog: HabiticaAlertDialog? = null
     private var sideAvatarView: AvatarView? = null
     private var activeTutorialView: TutorialView? = null
@@ -150,6 +154,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var keyboardUtil: KeyboardUtil? = null
     private var resumeFromActivity = false
+
     private var connectionIssueHandler: Handler? = null
 
     private val statusBarHeight: Int
@@ -211,6 +216,17 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
                 }, RxErrorHandler.handleEmptyError()))
+
+        val viewModel = ViewModelProviders.of(this)
+                .get(NotificationsViewModel::class.java)
+        notificationsViewModel = viewModel
+
+        compositeSubscription.add(viewModel.getNotificationCount().subscribe(Consumer {
+            drawerFragment?.setNotificationsCount(it)
+        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(viewModel.allNotificationsSeen().subscribe(Consumer {
+            drawerFragment?.setNotificationsSeen(it)
+        }, RxErrorHandler.handleEmptyError()))
 
         val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
 
@@ -437,6 +453,13 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             retrieveUser()
         }
         super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == NOTIFICATION_CLICK && data?.hasExtra("notificationId") == true) {
+            notificationsViewModel?.click(
+                    data.getStringExtra("notificationId"),
+                    MainNavigationController
+            )
+        }
     }
 
     // region Events
@@ -803,27 +826,27 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showCheckinDialog(event: ShowCheckinDialog) {
-        val title = event.notification.data.message
+        val notificationData = event.notification.data as LoginIncentiveData
+        val title = notificationData.message
 
         val factory = LayoutInflater.from(this)
         val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
         val imageView = view.findViewById<View>(R.id.imageView) as? SimpleDraweeView
-        var imageKey = event.notification.data.rewardKey[0]
+        var imageKey = notificationData.rewardKey!!.get(0)
         if (imageKey.contains("armor")) {
             imageKey = "slim_$imageKey"
         }
         DataBindingUtils.loadImage(imageView, imageKey)
 
-        val youEarnedMessage = this.getString(R.string.checkInRewardEarned, event.notification.data.rewardText)
-
+        val youEarnedMessage = this.getString(R.string.checkInRewardEarned, notificationData.rewardText)
         val youEarnedTexView = view.findViewById<View>(R.id.you_earned_message) as? TextView
         youEarnedTexView?.text = youEarnedMessage
 
         val nextUnlockTextView = view.findViewById<View>(R.id.next_unlock_message) as? TextView
         nextUnlockTextView?.text = event.nextUnlockText
 
-        Completable.complete()
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
                     val alert = HabiticaAlertDialog(this)
@@ -834,7 +857,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                     }
                     alert.show()
-                }, RxErrorHandler.handleEmptyError())
+
+        Completable.complete()
     }
 
     override fun onEvent(event: ShowConnectionProblemEvent) {
@@ -855,5 +879,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         const val SELECT_CLASS_RESULT = 11
         const val GEM_PURCHASE_REQUEST = 111
+        const val NOTIFICATION_CLICK = 222
     }
 }

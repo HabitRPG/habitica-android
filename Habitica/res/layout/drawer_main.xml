@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingRight="1dp"
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -58,10 +58,42 @@
         </LinearLayout>
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/messagesButtonWrapper"
-            android:layout_width="45dp"
+            android:id="@+id/notificationsButtonWrapper"
+            android:layout_width="33dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp">
+            <ImageView
+                android:id="@+id/notificationsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:src="@drawable/menu_notifications"
+                android:layout_centerVertical="true"
+                android:clickable="false" />
+
+            <TextView
+                android:id="@+id/notificationsBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignLeft="@id/notificationsButton"
+                android:layout_alignTop="@id/notificationsButton"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="-13dp"
+                android:background="@drawable/badge_circle"
+                android:gravity="center"
+                android:minWidth="20dp"
+                android:paddingTop="0dp"
+                android:textColor="#FFF"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:text="1"
+                tools:visibility="visible" />
+        </RelativeLayout>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/messagesButtonWrapper"
+            android:layout_width="33dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp">
             <ImageView
                 android:id="@+id/messagesButton"
                 android:layout_width="wrap_content"
@@ -70,21 +102,24 @@
                 android:src="@drawable/menu_messages"
                 android:layout_centerVertical="true"
                 android:clickable="false" />
+
             <TextView
                 android:id="@+id/messagesBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:paddingTop="0dp"
-                android:layout_alignTop="@id/messagesButton"
                 android:layout_alignLeft="@id/messagesButton"
-                tools:text="1"
+                android:layout_alignTop="@id/messagesButton"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="-12dp"
+                android:background="@drawable/badge_circle"
+                android:gravity="center"
+                android:minWidth="20dp"
+                android:paddingTop="0dp"
                 android:textColor="#FFF"
                 android:textSize="12sp"
-                android:background="@drawable/badge_circle"
-                android:layout_marginTop="-12dp"
-                android:layout_marginLeft="13dp"
                 android:visibility="gone"
-                tools:visibility="visible"/>
+                tools:text="1"
+                tools:visibility="visible" />
         </RelativeLayout>
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/settingsButtonWrapper"
@@ -98,21 +133,25 @@
                 android:background="@color/transparent"
                 android:src="@drawable/menu_settings"
                 android:layout_centerVertical="true"/>
+
             <TextView
                 android:id="@+id/settingsBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:paddingTop="0dp"
-                android:layout_alignTop="@id/settingsButton"
                 android:layout_alignLeft="@id/settingsButton"
-                tools:text="1"
+                android:layout_alignTop="@id/settingsButton"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="-12dp"
+                android:background="@drawable/badge_circle"
+                android:gravity="center"
+                android:minWidth="20dp"
+                android:paddingTop="0dp"
                 android:textColor="#FFF"
                 android:textSize="12sp"
-                android:background="@drawable/badge_circle"
-                android:layout_marginTop="-12dp"
-                android:layout_marginLeft="13dp"
                 android:visibility="gone"
-                tools:visibility="visible"/>
+                tools:text="1"
+                tools:visibility="visible" />
         </RelativeLayout>
 
     </LinearLayout>
