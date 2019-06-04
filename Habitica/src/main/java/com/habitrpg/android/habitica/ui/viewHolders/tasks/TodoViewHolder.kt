@@ -1,23 +1,24 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 
 import com.habitrpg.android.habitica.models.tasks.Task
 
 import java.text.DateFormat
 
-class TodoViewHolder(itemView: View) : ChecklistedViewHolder(itemView) {
+class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc) {
 
     private val dateFormatter: DateFormat = android.text.format.DateFormat.getDateFormat(context)
 
-    override fun bindHolder(newTask: Task, position: Int) {
+    override fun bind(newTask: Task, position: Int) {
         this.task = newTask
         if (newTask.completed) {
             checklistIndicatorWrapper.setBackgroundColor(taskGray)
         } else {
             checklistIndicatorWrapper.setBackgroundColor(newTask.lightTaskColor)
         }
-        super.bindHolder(newTask, position)
+        super.bind(newTask, position)
     }
 
     override fun configureSpecialTaskTextView(task: Task) {

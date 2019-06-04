@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -39,17 +38,20 @@ import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.events.*
-import com.habitrpg.android.habitica.events.commands.*
+import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand
+import com.habitrpg.android.habitica.events.commands.FeedCommand
+import com.habitrpg.android.habitica.events.commands.HatchingCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
-import com.habitrpg.android.habitica.interactors.*
+import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
+import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
+import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.AvatarView
@@ -100,16 +102,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
     @Inject
-    internal lateinit var habitScoreUseCase: HabitScoreUseCase
-    @Inject
-    internal lateinit var dailyCheckUseCase: DailyCheckUseCase
-    @Inject
-    internal lateinit var todoCheckUseCase: TodoCheckUseCase
-    @Inject
-    internal lateinit var buyRewardUseCase: BuyRewardUseCase
-    @Inject
-    internal lateinit var checklistCheckUseCase: ChecklistCheckUseCase
-    @Inject
     internal lateinit var checkClassSelectionUseCase: CheckClassSelectionUseCase
     @Inject
     internal lateinit var displayItemDropUseCase: DisplayItemDropUseCase
@@ -119,8 +111,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     internal lateinit var taskRepository: TaskRepository
     @Inject
     internal lateinit var userRepository: UserRepository
-    @Inject
-    internal lateinit var socialRepository: SocialRepository
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
     @Inject
@@ -472,60 +462,10 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     @Subscribe
-    @Suppress("ReturnCount")
-    fun onEvent(event: BuyRewardCommand) {
-        val rewardKey = event.Reward.id
-
-        if (user?.stats?.gp ?: 0.toDouble() < event.Reward.value) {
-            HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.no_gold), SnackbarDisplayType.FAILURE)
-            return
-        }
-
-        if ("potion" == rewardKey) {
-            val currentHp = user?.stats?.gp?.toInt()
-            val maxHp = user?.stats?.maxHealth
-
-            if (currentHp == maxHp) {
-                HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.no_potion), SnackbarDisplayType.FAILURE_BLUE)
-                return
-            }
-        }
-
-        if (event.Reward.specialTag != null && event.Reward.specialTag == "item") {
-            val id = event.Reward.id ?: return
-            inventoryRepository.buyItem(user, id, event.Reward.value)
-                    .subscribe(Consumer { buyResponse ->
-                        var snackbarMessage = getString(R.string.successful_purchase, event.Reward.text)
-                        if (event.Reward.id == "armoire") {
-                            var dropArticle = buyResponse.armoire["dropArticle"]
-                            if (buyResponse.armoire["dropArticle"] == null || buyResponse.armoire["dropArticle"].equals("null",true)) {
-                                dropArticle = ""
-                            }
-                            snackbarMessage = when {
-                                buyResponse.armoire["type"] == "gear" -> applicationContext.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
-                                buyResponse.armoire["type"] == "food" -> applicationContext.getString(R.string.armoireFood, dropArticle, buyResponse.armoire["dropText"])
-                                else -> applicationContext.getString(R.string.armoireExp)
-                            }
-                            soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop)
-                        }
-                        HabiticaSnackbar.showSnackbar(floatingMenuWrapper, null, snackbarMessage, BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()), ContextCompat.getColor(this, R.color.yellow_10), "-" + event.Reward.value, SnackbarDisplayType.NORMAL)
-                    }, RxErrorHandler.handleEmptyError())
-        } else {
-            buyRewardUseCase.observable(BuyRewardUseCase.RequestValues(user, event.Reward) {
-                HabiticaSnackbar.showSnackbar(floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
-                        BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
-                        ContextCompat.getColor(this, R.color.yellow_10),
-                        "-" + event.Reward.value.toInt(),
-                        SnackbarDisplayType.DROP)
-            }).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-        }
-    }
-
-    @Subscribe
     fun openMysteryItem(event: OpenMysteryItemEvent) {
-        inventoryRepository.openMysteryItem(user)
+        compositeSubscription.add(inventoryRepository.openMysteryItem(user)
                 .flatMap { userRepository.retrieveUser(false) }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
@@ -542,7 +482,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (event.usingEgg == null || event.usingHatchingPotion == null) {
             return
         }
-        this.inventoryRepository.hatchPet(event.usingEgg, event.usingHatchingPotion) {
+        compositeSubscription.add(this.inventoryRepository.hatchPet(event.usingEgg, event.usingHatchingPotion) {
             val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
             val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
 
@@ -567,7 +507,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         hatchingDialog.dismiss()
                     }
             dialog.show()
-        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
@@ -576,12 +516,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             return
         }
         val pet = event.usingPet
-        this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
+        compositeSubscription.add(this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
                 .subscribe(Consumer { feedResponse ->
                     HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.text), SnackbarDisplayType.NORMAL)
                     if (feedResponse.value == -1) {
-                        val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as FrameLayout
-                        val mountImageView = mountWrapper.findViewById<View>(R.id.pet_imageview) as SimpleDraweeView
+                        val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
+                        val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.key)
                         val dialog = HabiticaAlertDialog(this@MainActivity)
@@ -595,28 +535,28 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                     val sharedImage = Bitmap.createBitmap(mountImageSideLength, mountImageSideLength, Bitmap.Config.ARGB_8888)
                                     val canvas = Canvas(sharedImage)
                                     canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
-                                    mountImageView.drawable.setBounds(0, 0, mountImageSideLength, mountImageSideLength)
-                                    mountImageView.drawable.draw(canvas)
+                                    mountImageView?.drawable?.setBounds(0, 0, mountImageSideLength, mountImageSideLength)
+                                    mountImageView?.drawable?.draw(canvas)
                                     event1.shareImage = sharedImage
                                     EventBus.getDefault().post(event1)
                                     hatchingDialog.dismiss()
                                 }
                         dialog.show()
                     }
-                }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
     }
 
     // endregion
 
-    private fun displayTaskScoringResponse(data: TaskScoringResult?) {
+    internal fun displayTaskScoringResponse(data: TaskScoringResult?) {
         if (user != null && data != null) {
-            notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
+            compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
                     user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.questDamage, data.hasLeveledUp))
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
 
-        displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
 
@@ -665,7 +605,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     protected fun retrieveUser() {
         if (hostConfig.hasAuthentication()) {
-            this.userRepository.retrieveUser(true)
+            compositeSubscription.add(this.userRepository.retrieveUser(true)
                     .doOnNext { user1 ->
                         FirebaseAnalytics.getInstance(this).setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
                         pushNotificationManager.setUser(user1)
@@ -673,7 +613,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     }
                     .flatMap { contentRepository.retrieveContent(false) }
                     .flatMap { contentRepository.retrieveWorldState() }
-                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
     }
 
@@ -713,8 +653,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val path = "flags.tutorial." + step.tutorialGroup + "." + step.identifier
         val updateData = HashMap<String, Any>()
         updateData[path] = true
-        userRepository.updateUser(user, updateData)
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(userRepository.updateUser(user, updateData)
+                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         this.overlayLayout.removeView(this.activeTutorialView)
         this.removeActiveTutorialView()
 
@@ -754,32 +694,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     @Subscribe
-    fun onEvent(event: TaskCheckedCommand) {
-        when (event.Task.type) {
-            Task.TYPE_DAILY -> {
-                dailyCheckUseCase.observable(DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.completed) { result -> displayTaskScoringResponse(result)})
-                        .subscribe(Consumer<TaskScoringResult> { }, RxErrorHandler.handleEmptyError())
-            }
-            Task.TYPE_TODO -> {
-                todoCheckUseCase.observable(TodoCheckUseCase.RequestValues(user, event.Task, !event.Task.completed) { result -> displayTaskScoringResponse(result)})
-                        .subscribe(Consumer<TaskScoringResult> { }, RxErrorHandler.handleEmptyError())
-            }
-        }
-    }
-
-    @Subscribe
     fun onEvent(event: ChecklistCheckedCommand) {
-        checklistCheckUseCase.observable(ChecklistCheckUseCase.RequestValues(event.task.id, event.item.id)).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-    }
-
-    @Subscribe
-    fun onEvent(event: HabitScoreEvent) {
-        habitScoreUseCase.observable(HabitScoreUseCase.RequestValues(user, event.habit, event.Up) { result -> displayTaskScoringResponse(result)})
-                .subscribe(Consumer<TaskScoringResult> { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(taskRepository.scoreChecklistItem(event.task.id ?: "", event.item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun checkMaintenance() {
-        this.maintenanceService.maintenanceStatus
+        compositeSubscription.add(this.maintenanceService.maintenanceStatus
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Consumer { maintenanceResponse ->
@@ -804,7 +724,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
                         }
                     }
-                }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun createMaintenanceIntent(maintenanceResponse: MaintenanceResponse, isDeprecationNotice: Boolean): Intent {
@@ -825,27 +745,27 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showCheckinDialog(event: ShowCheckinDialog) {
-        val notificationData = event.notification.data as LoginIncentiveData
-        val title = notificationData.message
+        val notificationData = event.notification.data as? LoginIncentiveData
+        val title = notificationData?.message
 
         val factory = LayoutInflater.from(this)
         val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
-        val imageView = view.findViewById<View>(R.id.imageView) as? SimpleDraweeView
-        var imageKey = notificationData.rewardKey!!.get(0)
-        if (imageKey.contains("armor")) {
+        val imageView = view.findViewById(R.id.imageView) as? SimpleDraweeView
+        var imageKey = notificationData?.rewardKey?.get(0)
+        if (imageKey?.contains("armor") == true) {
             imageKey = "slim_$imageKey"
         }
         DataBindingUtils.loadImage(imageView, imageKey)
 
-        val youEarnedMessage = this.getString(R.string.checkInRewardEarned, notificationData.rewardText)
-        val youEarnedTexView = view.findViewById<View>(R.id.you_earned_message) as? TextView
+        val youEarnedMessage = this.getString(R.string.checkInRewardEarned, notificationData?.rewardText)
+        val youEarnedTexView = view.findViewById(R.id.you_earned_message) as? TextView
         youEarnedTexView?.text = youEarnedMessage
 
-        val nextUnlockTextView = view.findViewById<View>(R.id.next_unlock_message) as? TextView
+        val nextUnlockTextView = view.findViewById(R.id.next_unlock_message) as? TextView
         nextUnlockTextView?.text = event.nextUnlockText
 
-        Completable.complete()
+        compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Action {
                     val alert = HabiticaAlertDialog(this)
@@ -856,7 +776,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                     }
                     alert.show()
-                }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onEvent(event: ShowConnectionProblemEvent) {

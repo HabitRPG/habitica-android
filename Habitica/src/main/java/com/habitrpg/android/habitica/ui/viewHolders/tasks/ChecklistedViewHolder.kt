@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -27,7 +27,7 @@ import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 
-abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemView), CompoundButton.OnCheckedChangeListener {
+abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc), CompoundButton.OnCheckedChangeListener {
 
     private val checkboxHolder: ViewGroup by bindView(itemView, R.id.checkBoxHolder)
     internal val checkbox: CheckBox by bindView(itemView, R.id.checkBox)
@@ -44,7 +44,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
         expandCheckboxTouchArea(checkboxHolder, checkbox)
     }
 
-    override fun bindHolder(newTask: Task, position: Int) {
+    override fun bind(newTask: Task, position: Int) {
         var completed = newTask.completed
         if (newTask.isPendingApproval) {
             completed = false
@@ -68,7 +68,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
         } else {
             this.rightBorderView?.setBackgroundColor(this.taskGray)
         }
-        super.bindHolder(newTask, position)
+        super.bind(newTask, position)
     }
 
     abstract fun shouldDisplayAsActive(newTask: Task): Boolean
@@ -142,13 +142,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
                 return
             }
             if (isChecked != task?.completed) {
-                val event = TaskCheckedCommand()
-                event.Task = task
-                event.completed = task?.completed == false
-
-                // it needs to be changed after the event is send -> to the server
-                // maybe a refactor is needed here
-                EventBus.getDefault().post(event)
+                task?.let { scoreTaskFunc(it, if (task?.completed == false) TaskDirection.UP else TaskDirection.DOWN) }
             }
         }
     }

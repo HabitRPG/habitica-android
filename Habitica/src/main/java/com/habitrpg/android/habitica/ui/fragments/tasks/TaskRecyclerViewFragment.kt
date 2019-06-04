@@ -2,12 +2,14 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import androidx.recyclerview.widget.ItemTouchHelper
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -15,8 +17,11 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
@@ -25,6 +30,8 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
@@ -47,6 +54,8 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var taskRepository: TaskRepository
+    @Inject
+    lateinit var soundManager: SoundManager
 
     internal var layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager? = null
 
@@ -61,19 +70,48 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     private fun setInnerAdapter() {
         val adapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>? = when (this.classType) {
             Task.TYPE_HABIT -> {
-                HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
+                val adapter = HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
+                compositeSubscription.add(adapter.taskScoreEvents
+                        .doOnNext { soundManager.loadAndPlayAudio(if (it.second == TaskDirection.UP) SoundManager.SoundPlusHabit else SoundManager.SoundMinusHabit) }
+                        .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { result -> (activity as? MainActivity)?.displayTaskScoringResponse(result)} }
+                        .subscribeWithErrorHandler(Consumer {}))
+                adapter
             }
             Task.TYPE_DAILY -> {
-                DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, taskFilterHelper)
+                val adapter = DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, taskFilterHelper)
+                compositeSubscription.add(adapter.taskScoreEvents
+                        .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundDaily) }
+                        .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false){ result -> (activity as? MainActivity)?.displayTaskScoringResponse(result)} }
+                    .subscribeWithErrorHandler(Consumer {}))
+                adapter
             }
             Task.TYPE_TODO -> {
-                TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
+                val adapter = TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
+                compositeSubscription.add(adapter.taskScoreEvents
+                        .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundTodo) }
+                        .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false){ result -> (activity as? MainActivity)?.displayTaskScoringResponse(result)} }
+                        .subscribeWithErrorHandler(Consumer {}))
+                adapter
             }
             Task.TYPE_REWARD -> {
-                RewardsRecyclerViewAdapter(null, context, R.layout.reward_item_card, user)
+                val adapter = RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user)
+                compositeSubscription.add(adapter.taskScoreEvents
+                        .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundTodo) }
+                        .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { _ ->
+                            (activity as? MainActivity)?.let { activity ->
+                                HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
+                                BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
+                                ContextCompat.getColor(activity, R.color.yellow_10),
+                                "-" + it.first.value.toInt(),
+                                HabiticaSnackbar.SnackbarDisplayType.DROP)
+                            }
+                        } }
+                        .subscribeWithErrorHandler(Consumer {}))
+                adapter
             }
             else -> null
         }
+        compositeSubscription
 
         if (classType != Task.TYPE_REWARD) {
             allowReordering()

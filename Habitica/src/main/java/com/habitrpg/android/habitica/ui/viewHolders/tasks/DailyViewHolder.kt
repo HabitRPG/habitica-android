@@ -3,10 +3,11 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 import android.view.View
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.ui.helpers.bindView
 
-class DailyViewHolder(itemView: View) : ChecklistedViewHolder(itemView) {
+class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc) {
 
     private val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
 
@@ -19,14 +20,14 @@ class DailyViewHolder(itemView: View) : ChecklistedViewHolder(itemView) {
             return isVisible
         }
 
-    override fun bindHolder(newTask: Task, position: Int) {
+    override fun bind(newTask: Task, position: Int) {
         this.task = newTask
         if (newTask.isChecklistDisplayActive) {
             this.checklistIndicatorWrapper.setBackgroundResource(newTask.lightTaskColor)
         } else {
             this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray)
         }
-        super.bindHolder(newTask, position)
+        super.bind(newTask, position)
     }
 
     override fun shouldDisplayAsActive(newTask: Task): Boolean {

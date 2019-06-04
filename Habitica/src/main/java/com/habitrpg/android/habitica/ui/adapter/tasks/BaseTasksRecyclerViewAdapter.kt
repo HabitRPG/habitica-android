@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
-abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskType: String, private val taskFilterHelper: TaskFilterHelper?, private val layoutResource: Int,
+abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(var taskType: String, private val taskFilterHelper: TaskFilterHelper?, private val layoutResource: Int,
                                                                      newContext: Context, private val userID: String?) : RecyclerView.Adapter<VH>() {
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
@@ -47,7 +47,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(var taskTyp
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = filteredContent?.get(position)
         if (item != null) {
-            holder.bindHolder(item, position)
+            holder.bind(item, position)
         }
         /*if (this.displayedChecklist != null && ChecklistedViewHolder.class.isAssignableFrom(holder.getClass())) {
             ChecklistedViewHolder checklistedHolder = (ChecklistedViewHolder) holder;

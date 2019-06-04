@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import io.reactivex.BackpressureStrategy
@@ -49,6 +50,9 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         private set
 
     private var errorButtonEventsSubject = PublishSubject.create<String>()
+
+    protected var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
+    val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
 
     private val isDataValid: Boolean
         get() = data?.isValid ?: false
@@ -134,7 +138,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = getItem(position)
         if (item != null) {
-            holder.bindHolder(item, position)
+            holder.bind(item, position)
             holder.errorButtonClicked = Action {
                 errorButtonEventsSubject.onNext("")
             }
