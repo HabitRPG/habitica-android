@@ -75,13 +75,11 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
                         .setStartDate(start.time)
                         .setEndDate(end.time)
                         .build()
-                val kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, AndroidKeyStore)
+                val kpg = KeyPairGenerator.getInstance("RSA", AndroidKeyStore)
                 kpg.initialize(spec)
                 kpg.generateKeyPair()
             }
         }
-
-
     }
 
     @Throws(Exception::class)
@@ -201,13 +199,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         return publicIV
     }
 
-    private fun getStringFromSharedPrefs(key: String): String? {
-        return sharedPreferences.getString(key, null)
-    }
-
     companion object {
-
-
         private const val RSA_MODE = "RSA/ECB/PKCS1Padding"
         private const val AES_MODE_M = "AES/GCM/NoPadding"
 
