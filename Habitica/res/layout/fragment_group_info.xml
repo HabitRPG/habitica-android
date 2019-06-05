@@ -110,7 +110,6 @@
                         android:layout_height="wrap_content"
                         style="@style/HabiticaButton.Gray.600"
                         android:background="@drawable/layout_rounded_bg_gray_700"
-                        android:textSize="16sp"
                         android:text="@string/create_party"
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
@@ -145,8 +144,6 @@
                         android:textColor="@color/brand_400"
                         style="@style/HabiticaButton.Gray.600"
                         android:background="@drawable/layout_rounded_bg_gray_700"
-                        android:gravity="center"
-                        android:textSize="16sp"
                         android:layout_marginTop="@dimen/spacing_large"
                         android:layout_marginBottom="@dimen/spacing_large"/>
 

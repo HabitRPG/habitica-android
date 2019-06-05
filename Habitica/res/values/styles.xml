@@ -440,6 +440,7 @@
         <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:paddingStart">@dimen/spacing_large</item>
         <item name="android:paddingEnd">@dimen/spacing_large</item>
+        <item name="android:elevation">0dp</item>
         <item name="android:minWidth">147dp</item>
     </style>
 

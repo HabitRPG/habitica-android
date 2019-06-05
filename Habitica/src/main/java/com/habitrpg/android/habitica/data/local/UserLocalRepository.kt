@@ -24,4 +24,5 @@ interface UserLocalRepository : BaseLocalRepository {
     fun getSpecialItems(user: User): Flowable<RealmResults<Skill>>
     fun getAchievements(): Flowable<RealmResults<Achievement>>
     fun getQuestAchievements(userID: String): Flowable<RealmResults<QuestAchievement>>
+    fun getIsUserOnQuest(userID: String): Flowable<Boolean>
 }

@@ -171,6 +171,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun readNotification(id: String): Flowable<List<*>> = apiClient.readNotification(id)
+    override fun getIsUserOnQuest(): Flowable<Boolean> {
+        return localRepository.getIsUserOnQuest(userID)
+    }
 
     override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =
             apiClient.readNotifications(notificationIds)

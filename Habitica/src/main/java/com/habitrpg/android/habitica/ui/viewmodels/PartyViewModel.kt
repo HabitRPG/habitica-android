@@ -10,6 +10,9 @@ class PartyViewModel: GroupViewModel() {
     internal val isQuestActive: Boolean
         get() = getGroupData().value?.quest?.active == true
 
+    internal val isUserOnQuest: Boolean
+        get() = getGroupData().value?.quest?.members?.filter { it.key == getUserData().value?.id } != null
+
     init {
         groupViewType = GroupViewType.PARTY
     }

@@ -43,6 +43,7 @@ import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.events.commands.HatchingCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
@@ -144,6 +145,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var keyboardUtil: KeyboardUtil? = null
     private var resumeFromActivity = false
+    private var userIsOnQuest = false
 
     private var connectionIssueHandler: Handler? = null
 
@@ -206,6 +208,9 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     this@MainActivity.user = newUser
                     this@MainActivity.setUserData()
                 }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getIsUserOnQuest().subscribeWithErrorHandler(Consumer {
+            userIsOnQuest = it
+        }))
 
         val viewModel = ViewModelProviders.of(this)
                 .get(NotificationsViewModel::class.java)
@@ -495,7 +500,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     internal fun displayTaskScoringResponse(data: TaskScoringResult?) {
         if (user != null && data != null) {
             compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
-                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.questDamage, data.hasLeveledUp))
+                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, if (userIsOnQuest) data.questDamage else 0.0, data.hasLeveledUp))
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
 

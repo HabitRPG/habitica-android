@@ -147,7 +147,7 @@ class PartyDetailFragment : BaseFragment() {
             }
         }
 
-        questProgressView?.configure(user)
+        questProgressView?.configure(user, viewModel?.isUserOnQuest)
     }
 
     private fun showParticipantButtons(): Boolean {

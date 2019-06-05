@@ -76,4 +76,6 @@ interface UserRepository : BaseRepository {
     fun retrieveAchievements(): Flowable<List<Achievement>>
     fun getAchievements(): Flowable<RealmResults<Achievement>>
     fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>>
+
+    fun getIsUserOnQuest(): Flowable<Boolean>
 }
