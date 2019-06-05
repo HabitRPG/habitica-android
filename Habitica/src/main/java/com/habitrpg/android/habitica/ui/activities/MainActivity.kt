@@ -361,64 +361,14 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
             preferences?.language.notNull { apiClient.setLanguageCode(it) }
             preferences?.sound.notNull { soundManager.soundTheme = it }
-            runOnUiThread {
-                updateSidebar()
-            }
 
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user?.id, userRepository, taskRepository)
-
-            drawerFragment?.setMessagesCount(this.user?.inbox?.newMessages ?: 0)
-            drawerFragment?.setSettingsCount(if (this.user?.flags?.isVerifiedUsername != true) 1 else 0 )
 
             if (user?.flags?.isVerifiedUsername == false && isActivityVisible) {
                 val intent = Intent(this, VerifyUsernameActivity::class.java)
                 startActivity(intent)
             }
-        }
-    }
-
-
-    private fun updateSidebar() {
-        drawerFragment?.setDisplayName(user?.profile?.name)
-        drawerFragment?.setUsername(user?.formattedUsername)
-
-        if (user?.preferences == null || user?.flags == null) {
-            return
-        }
-
-        val specialItems = user?.items?.special
-        var hasSpecialItems = false
-        if (specialItems != null) {
-            hasSpecialItems = specialItems.hasSpecialItems()
-        }
-        val item = drawerFragment?.getItemWithIdentifier(NavigationDrawerFragment.SIDEBAR_SKILLS)
-        if (item != null) {
-            if (user?.hasClass() == false && (!hasSpecialItems)) {
-                item.isVisible = false
-            } else {
-                if (user?.stats?.lvl ?: 0 < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)) {
-                    item.additionalInfo = getString(R.string.unlock_lvl_11)
-                } else {
-                    item.additionalInfo = null
-                }
-                item.isVisible = true
-            }
-            drawerFragment?.updateItem(item)
-        }
-        val statsItem = drawerFragment?.getItemWithIdentifier(NavigationDrawerFragment.SIDEBAR_STATS)
-        if (statsItem != null) {
-            if (user?.preferences?.disableClasses != true) {
-                if (user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0) {
-                    statsItem.additionalInfo = user?.stats?.points.toString()
-                } else {
-                    statsItem.additionalInfo = null
-                }
-                statsItem.isVisible = true
-            } else {
-                statsItem.isVisible = false
-            }
-            drawerFragment?.updateItem(statsItem)
         }
     }
 

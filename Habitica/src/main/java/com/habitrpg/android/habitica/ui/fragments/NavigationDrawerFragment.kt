@@ -1,12 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 
-import android.app.ActionBar
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +22,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
@@ -31,6 +30,7 @@ import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.drawer_main.*
@@ -62,10 +62,7 @@ class NavigationDrawerFragment : DialogFragment() {
     private var subscriptions: CompositeDisposable? = null
 
     val isDrawerOpen: Boolean
-        get() = drawerLayout?.isDrawerOpen(Gravity.LEFT) ?: false
-
-    private val actionBar: ActionBar?
-        get() = activity?.actionBar
+        get() = drawerLayout?.isDrawerOpen(GravityCompat.START) ?: false
 
     private var questContent: QuestContent? = null
     set(value) {
@@ -186,20 +183,65 @@ class NavigationDrawerFragment : DialogFragment() {
                 }, RxErrorHandler.handleEmptyError()))
 
         subscriptions?.add(userRepository.getUser().subscribe(Consumer {
-            setDisplayName(it.profile?.name)
-            avatarView.setAvatar(it)
-            questMenuView.configure(it)
-            val tavernItem = adapter.items.find { item -> item.identifier == SIDEBAR_TAVERN }
-            if (it.preferences?.sleep == true) {
-                tavernItem?.additionalInfo = context?.getString(R.string.damage_paused)
-            } else {
-                tavernItem?.additionalInfo = null
-            }
+            updateUser(it)
         }, RxErrorHandler.handleEmptyError()))
 
         messagesButtonWrapper.setOnClickListener { setSelection(R.id.inboxFragment) }
         settingsButtonWrapper.setOnClickListener { setSelection(R.id.prefsActivity) }
         notificationsButtonWrapper.setOnClickListener { startNotificationsActivity() }
+    }
+
+    private fun updateUser(user: User) {
+        setMessagesCount(user.inbox?.newMessages ?: 0)
+        setSettingsCount(if (user.flags?.isVerifiedUsername != true) 1 else 0 )
+        setDisplayName(user.profile?.name)
+        setUsername(user.username)
+        avatarView.setAvatar(user)
+        questMenuView.configure(user)
+        val tavernItem = adapter.items.find { item -> item.identifier == SIDEBAR_TAVERN }
+        if (user.preferences?.sleep == true) {
+            tavernItem?.additionalInfo = context?.getString(R.string.damage_paused)
+        } else {
+            tavernItem?.additionalInfo = null
+        }
+
+        if (user.preferences == null || user.flags == null) {
+            return
+        }
+
+        val specialItems = user.items?.special
+        var hasSpecialItems = false
+        if (specialItems != null) {
+            hasSpecialItems = specialItems.hasSpecialItems()
+        }
+        val item = getItemWithIdentifier(SIDEBAR_SKILLS)
+        if (item != null) {
+            if (!user.hasClass() && !hasSpecialItems) {
+                item.isVisible = false
+            } else {
+                if (user.stats?.lvl ?: 0 < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)) {
+                    item.additionalInfo = getString(R.string.unlock_lvl_11)
+                } else {
+                    item.additionalInfo = null
+                }
+                item.isVisible = true
+            }
+            updateItem(item)
+        }
+        val statsItem = getItemWithIdentifier(SIDEBAR_STATS)
+        if (statsItem != null) {
+            if (user.preferences?.disableClasses != true) {
+                if (user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0) {
+                    statsItem.additionalInfo = user.stats?.points.toString()
+                } else {
+                    statsItem.additionalInfo = null
+                }
+                statsItem.isVisible = true
+            } else {
+                statsItem.isVisible = false
+            }
+            updateItem(statsItem)
+        }
     }
 
     override fun onDestroy() {
@@ -218,7 +260,7 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
             items.add(HabiticaDrawerItem(R.id.achievementsFragment, SIDEBAR_ACHIEVEMENTS, context.getString(R.string.sidebar_achievements)))
             items.add(HabiticaDrawerItem(0, SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
-            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern), false, false))
+            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern), isHeader = false, additionalInfoAsPill = false))
             items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
             items.add(HabiticaDrawerItem(R.id.guildsOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
             items.add(HabiticaDrawerItem(R.id.challengesOverviewFragment, SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
@@ -253,7 +295,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    fun startNotificationsActivity() {
+    private fun startNotificationsActivity() {
         closeDrawer()
 
         val activity = activity as? MainActivity
@@ -294,24 +336,24 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
+    private fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
             adapter.getItemWithIdentifier(identifier)
 
-    fun updateItem(item: HabiticaDrawerItem) {
+    private fun updateItem(item: HabiticaDrawerItem) {
         adapter.updateItem(item)
     }
 
-    fun setDisplayName(name: String?) {
+    private fun setDisplayName(name: String?) {
         if (toolbarTitle != null) {
             if (name != null && name.isNotEmpty()) {
                 toolbarTitle.text = name
             } else {
-                toolbarTitle.text = "Habitica"
+                toolbarTitle.text = context?.getString(R.string.app_name)
             }
         }
     }
 
-    fun setUsername(name: String?) {
+    private fun setUsername(name: String?) {
         if (usernameTextView != null) {
             usernameTextView.text = name
             usernameTextView.visibility = View.VISIBLE
@@ -338,12 +380,12 @@ class NavigationDrawerFragment : DialogFragment() {
         context.notNull {
             val colorId = if (allSeen) R.color.gray_200 else R.color.brand_400
 
-            val bg = notificationsBadge.background as GradientDrawable
-            bg.color = ColorStateList.valueOf(ContextCompat.getColor(it, colorId))
+            val bg = notificationsBadge.background as? GradientDrawable
+            bg?.color = ColorStateList.valueOf(ContextCompat.getColor(it, colorId))
         }
     }
 
-    fun setMessagesCount(unreadMessages: Int) {
+    private fun setMessagesCount(unreadMessages: Int) {
         if (unreadMessages == 0) {
             messagesBadge.visibility = View.GONE
         } else {
@@ -352,7 +394,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    fun setSettingsCount(count: Int) {
+    private fun setSettingsCount(count: Int) {
         if (count == 0) {
             settingsBadge.visibility = View.GONE
         } else {
@@ -368,7 +410,6 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_STATS = "stats"
         const val SIDEBAR_ACHIEVEMENTS = "achievements"
         const val SIDEBAR_SOCIAL = "social"
-        const val SIDEBAR_INBOX = "inbox"
         const val SIDEBAR_TAVERN = "tavern"
         const val SIDEBAR_PARTY = "party"
         const val SIDEBAR_GUILDS = "guilds"
@@ -382,19 +423,9 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_PURCHASE = "purchase"
         const val SIDEBAR_ABOUT_HEADER = "about_header"
         const val SIDEBAR_NEWS = "news"
-        const val SIDEBAR_SETTINGS = "settings"
         const val SIDEBAR_HELP = "help"
         const val SIDEBAR_ABOUT = "about"
 
-        /**
-         * Remember the position of the selected item.
-         */
-        private val STATE_SELECTED_POSITION = "selected_navigation_drawer_position"
-
-        /**
-         * Per the design guidelines, you should show the drawer on launch until the user manually
-         * expands it. This shared preference tracks this.
-         */
-        private val PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned"
+        private const val STATE_SELECTED_POSITION = "selected_navigation_drawer_position"
     }
 }
