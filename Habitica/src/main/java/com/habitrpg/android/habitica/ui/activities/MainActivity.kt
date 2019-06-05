@@ -211,18 +211,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 .get(NotificationsViewModel::class.java)
         notificationsViewModel = viewModel
 
-        compositeSubscription.add(viewModel.getNotificationCount().subscribe(Consumer {
-            drawerFragment?.setNotificationsCount(it)
-        }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(viewModel.allNotificationsSeen().subscribe(Consumer {
-            drawerFragment?.setNotificationsSeen(it)
-        }, RxErrorHandler.handleEmptyError()))
 
         val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
 
         drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
 
-        drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout)
+        drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout, viewModel)
 
         drawerToggle = object : ActionBarDrawerToggle(
                 this, /* host Activity */

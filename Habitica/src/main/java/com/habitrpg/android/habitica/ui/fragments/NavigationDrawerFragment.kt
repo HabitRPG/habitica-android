@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -30,6 +31,7 @@ import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
@@ -198,15 +200,12 @@ class NavigationDrawerFragment : DialogFragment() {
         setUsername(user.username)
         avatarView.setAvatar(user)
         questMenuView.configure(user)
-        val tavernItem = adapter.items.find { item -> item.identifier == SIDEBAR_TAVERN }
+
+        val tavernItem = getItemWithIdentifier(SIDEBAR_TAVERN)
         if (user.preferences?.sleep == true) {
             tavernItem?.additionalInfo = context?.getString(R.string.damage_paused)
         } else {
             tavernItem?.additionalInfo = null
-        }
-
-        if (user.preferences == null || user.flags == null) {
-            return
         }
 
         val specialItems = user.items?.special
@@ -313,13 +312,28 @@ class NavigationDrawerFragment : DialogFragment() {
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    fun setUp(fragmentId: Int, drawerLayout: androidx.drawerlayout.widget.DrawerLayout) {
+    fun setUp(fragmentId: Int, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, viewModel: NotificationsViewModel) {
         fragmentContainerView = activity?.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
 
         // set a custom shadow that overlays the main content when the drawer opens
         this.drawerLayout?.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // set UP the drawer's list view with items and click listener
+
+        subscriptions?.add(viewModel.getNotificationCount().subscribeWithErrorHandler(Consumer {
+            setNotificationsCount(it)
+        }))
+        subscriptions?.add(viewModel.allNotificationsSeen().subscribeWithErrorHandler(Consumer {
+            setNotificationsSeen(it)
+        }))
+        subscriptions?.add(viewModel.getHasPartyNotification().subscribeWithErrorHandler(Consumer {
+            val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
+            if (it) {
+                partyMenuItem?.additionalInfo = ""
+            } else {
+                partyMenuItem?.additionalInfo = null
+            }
+        }))
     }
 
     fun openDrawer() {
@@ -367,7 +381,7 @@ class NavigationDrawerFragment : DialogFragment() {
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition)
     }
 
-    fun setNotificationsCount(unreadNotifications: Int) {
+    private fun setNotificationsCount(unreadNotifications: Int) {
         if (unreadNotifications == 0) {
             notificationsBadge.visibility = View.GONE
         } else {
@@ -376,7 +390,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    fun setNotificationsSeen(allSeen: Boolean) {
+    private fun setNotificationsSeen(allSeen: Boolean) {
         context.notNull {
             val colorId = if (allSeen) R.color.gray_200 else R.color.brand_400
 

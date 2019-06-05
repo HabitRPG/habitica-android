@@ -68,6 +68,17 @@ open class NotificationsViewModel : BaseViewModel() {
                 .distinctUntilChanged()
     }
 
+    fun getHasPartyNotification(): Flowable<Boolean> {
+        return getNotifications()
+                .map {
+                    it.find { notification ->
+                        val data = notification.data as? NewChatMessageData
+                        isPartyMessage(data)
+                    } != null
+                }
+                .distinctUntilChanged()
+    }
+
     fun refreshNotifications(): Flowable<*> {
         return userRepository.retrieveUser(withTasks = false, forced = true)
     }

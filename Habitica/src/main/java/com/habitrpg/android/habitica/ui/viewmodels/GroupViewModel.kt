@@ -7,8 +7,10 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.extensions.Optional
+import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import io.reactivex.BackpressureStrategy
@@ -31,6 +33,8 @@ open class GroupViewModel : BaseViewModel() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var notificationsManager: NotificationsManager
 
     var groupViewType: GroupViewType? = null
 
@@ -63,6 +67,15 @@ open class GroupViewModel : BaseViewModel() {
 
     fun setGroupID(groupID: String) {
         groupIDSubject.onNext(groupID.asOptional())
+
+        disposable.add(notificationsManager.getNotifications().firstElement().map { it.filter { notification ->
+            val data = notification.data as? NewChatMessageData
+            data?.group?.id == groupID
+        } }
+                .filter { it.isNotEmpty() }
+                .flatMapPublisher { userRepository.readNotification(it.first().id) }
+                .subscribe(Consumer {
+                }, RxErrorHandler.handleEmptyError()))
     }
 
     val groupID: String?
