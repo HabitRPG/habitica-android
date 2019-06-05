@@ -104,7 +104,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(event.title)
         alert.setMessage(event.message)
-        alert.addButton(android.R.string.ok, true, null)
+        alert.addButton(android.R.string.ok, true, false, null)
         alert.show()
     }
 }

@@ -368,7 +368,7 @@ public class IntentIntegrator {
         HabiticaAlertDialog downloadDialog = new HabiticaAlertDialog(activity);
         downloadDialog.setTitle(title);
         downloadDialog.setMessage(message);
-        downloadDialog.addButton(buttonYes, true, (dialogInterface, i) -> {
+        downloadDialog.addButton(buttonYes, true, false, (dialogInterface, i) -> {
             String packageName = targetApplications.get(0);
             Uri uri = Uri.parse("market://details?id=" + packageName);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -380,7 +380,7 @@ public class IntentIntegrator {
             }
             return null;
         });
-        downloadDialog.addButton(buttonNo, false, null);
+        downloadDialog.addButton(buttonNo, false, false, null);
         downloadDialog.show();
         return downloadDialog;
     }

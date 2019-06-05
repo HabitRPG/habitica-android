@@ -4,24 +4,21 @@ import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
-import androidx.preference.Preference
 import android.text.InputType
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.preference.Preference
+import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
@@ -101,18 +98,17 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
         val passwordRepeatEditText = view?.findViewById<EditText>(R.id.passwordRepeatEditText)
         context.notNull { context ->
-            val dialog = AlertDialog.Builder(context)
-                    .setTitle(R.string.change_password)
-                    .setPositiveButton(R.string.change) { thisDialog, _ ->
-                        thisDialog.dismiss()
-                        userRepository.updatePassword(oldPasswordEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
-                                .subscribe(Consumer {
-                                    Toast.makeText(activity, R.string.password_changed, Toast.LENGTH_SHORT).show()
-                                }, RxErrorHandler.handleEmptyError())
-                    }
-                    .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
-                    .create()
-            dialog.setView(view)
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.change_password)
+            dialog.addButton(R.string.change, true) { _, _ ->
+                userRepository.updatePassword(oldPasswordEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
+                        .subscribe(Consumer {
+                            Toast.makeText(activity, R.string.password_changed, Toast.LENGTH_SHORT).show()
+                        }, RxErrorHandler.handleEmptyError())
+            }
+            dialog.addCancelButton()
+            dialog.setAdditionalContentView(view)
+            dialog.setAdditionalContentSidePadding(12)
             dialog.show()
         }
     }
@@ -122,20 +118,20 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val view = inflater?.inflate(R.layout.dialog_edittext_confirm_pw, null)
         val emailEditText = view?.findViewById<EditText>(R.id.editText)
         emailEditText?.setText(user?.authentication?.localAuthentication?.email)
+        view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.email)
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
         context.notNull { context ->
-            val dialog = AlertDialog.Builder(context)
-                    .setTitle(R.string.change_email)
-                    .setPositiveButton(R.string.change) { thisDialog, _ ->
-                        thisDialog.dismiss()
-                        userRepository.updateEmail(emailEditText?.text.toString(), passwordEditText?.text.toString())
-                                .subscribe(Consumer {
-                                    configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
-                                }, RxErrorHandler.handleEmptyError())
-                    }
-                    .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
-                    .create()
-            dialog.setView(view)
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.change_email)
+            dialog.addButton(R.string.change, true) { _, _ ->
+                userRepository.updateEmail(emailEditText?.text.toString(), passwordEditText?.text.toString())
+                        .subscribe(Consumer {
+                            configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
+                        }, RxErrorHandler.handleEmptyError())
+            }
+            dialog.addCancelButton()
+            dialog.setAdditionalContentView(view)
+            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
             dialog.show()
         }
     }
@@ -145,47 +141,44 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val view = inflater?.inflate(R.layout.dialog_edittext, null)
         val loginNameEditText = view?.findViewById<EditText>(R.id.editText)
         loginNameEditText?.setText(user?.authentication?.localAuthentication?.username)
+        view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.username)
         context.notNull { context ->
-            val builder = AlertDialog.Builder(context).setTitle(R.string.change_username)
-            val dialog = builder.setPositiveButton(R.string.save) { thisDialog, _ ->
-                        thisDialog.dismiss()
-                        userRepository.updateLoginName(loginNameEditText?.text.toString())
-                                .subscribe(Consumer {
-                                    configurePreference(findPreference("login_name"), loginNameEditText?.text.toString(), true)
-                                }, RxErrorHandler.handleEmptyError())
-                    }
-                    .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
-                    .create()
-            dialog.setView(view)
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.change_username)
+            dialog.addButton(R.string.save, true) { _, _ ->
+                userRepository.updateLoginName(loginNameEditText?.text.toString())
+                        .subscribe(Consumer {
+                            configurePreference(findPreference("login_name"), loginNameEditText?.text.toString(), true)
+                        }, RxErrorHandler.handleEmptyError())
+            }
+            dialog.addCancelButton()
+            dialog.setAdditionalContentView(view)
+            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
             dialog.show()
         }
     }
 
     private fun showAccountDeleteConfirmation() {
-        val input = EditText(context)
+        val view = context?.layoutInflater?.inflate(R.layout.dialog_edittext, null)
         var deleteMessage = getString(R.string.delete_account_description)
+        val editText = view?.findViewById<EditText>(R.id.editText)
         if (user?.authentication?.localAuthentication != null) {
-            input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            editText?.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         } else {
             deleteMessage = getString(R.string.delete_oauth_account_description)
-            input.inputType = InputType.TYPE_CLASS_TEXT
+            editText?.inputType = InputType.TYPE_CLASS_TEXT
         }
-        val lp = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT)
-        input.layoutParams = lp
+        view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.confirm_deletion)
         context.notNull { context ->
-            val dialog = AlertDialog.Builder(context)
-                    .setTitle(R.string.delete_account)
-                    .setMessage(deleteMessage)
-                    .setPositiveButton(R.string.delete_account_confirmation) { thisDialog, _ ->
-                        thisDialog.dismiss()
-                        deleteAccount(input.text.toString())
-                    }
-                    .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
-                    .create()
-            dialog.setOnShowListener { dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
-            dialog.setView(input)
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.delete_account)
+            dialog.setMessage(deleteMessage)
+            dialog.addButton(R.string.delete_account_confirmation, true, true) { _, _ ->
+                deleteAccount(editText?.text?.toString() ?: "")
+            }
+            dialog.addCancelButton()
+            dialog.setAdditionalContentView(view)
+            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
             dialog.show()
         }
     }
@@ -197,22 +190,22 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
         val passwordRepeatEditText = view?.findViewById<EditText>(R.id.passwordRepeatEditText)
         context.notNull { context ->
-            val dialog = AlertDialog.Builder(context)
-                    .setTitle(R.string.add_local_authentication)
-                    .setPositiveButton(R.string.save) { thisDialog, _ ->
-                        if (passwordEditText?.text == passwordRepeatEditText?.text) {
-                            return@setPositiveButton
-                        }
-                        thisDialog.dismiss()
-                        apiClient.registerUser(user?.username ?: "", emailEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
-                                .flatMap { userRepository.retrieveUser(false) }
-                                .subscribe(Consumer {
-                                    configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
-                                }, RxErrorHandler.handleEmptyError())
-                    }
-                    .setNegativeButton(R.string.action_cancel) { thisDialog, _ -> thisDialog.dismiss() }
-                    .create()
-            dialog.setView(view)
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.add_local_authentication)
+            dialog.addButton(R.string.save, true) { thisDialog, _ ->
+                if (passwordEditText?.text == passwordRepeatEditText?.text) {
+                    return@addButton
+                }
+                thisDialog.dismiss()
+                apiClient.registerUser(user?.username ?: "", emailEditText?.text.toString(), passwordEditText?.text.toString(), passwordRepeatEditText?.text.toString())
+                        .flatMap { userRepository.retrieveUser(false) }
+                        .subscribe(Consumer {
+                            configurePreference(findPreference("email"), emailEditText?.text.toString(), true)
+                        }, RxErrorHandler.handleEmptyError())
+            }
+            dialog.addCancelButton()
+            dialog.setAdditionalContentView(view)
+            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
             dialog.show()
         }
     }
@@ -220,43 +213,39 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     private fun deleteAccount(password: String) {
         @Suppress("DEPRECATION")
         val dialog = ProgressDialog.show(context, context?.getString(R.string.deleting_account), null, true)
-        userRepository.deleteAccount(password).subscribe({ _ ->
+        compositeSubscription.add(userRepository.deleteAccount(password).subscribe({ _ ->
             context.notNull { HabiticaBaseApplication.logout(it) }
             activity?.finish()
         }) { throwable ->
             dialog.dismiss()
             RxErrorHandler.reportError(throwable)
-        }
+        })
     }
 
     private fun showAccountResetConfirmation() {
         context.notNull { context ->
-            val dialog = AlertDialog.Builder(context)
-                    .setTitle(R.string.reset_account)
-                    .setMessage(R.string.reset_account_description)
-                    .setPositiveButton(R.string.reset_account_confirmation) { thisDialog, _ ->
-                        thisDialog.dismiss()
-                        resetAccount()
-                    }
-                    .setNegativeButton(R.string.nevermind) { thisDialog, _ -> thisDialog.dismiss() }
-                    .create()
-            dialog.setOnShowListener { dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.red_10)) }
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.reset_account)
+            dialog.setMessage(R.string.reset_account_description)
+            dialog.addButton(R.string.reset_account_confirmation, true, true) { _, _ ->
+                resetAccount()
+            }
+            dialog.addCancelButton()
+            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
             dialog.show()
         }
     }
 
     private fun showConfirmUsernameDialog() {
         context.notNull { context ->
-            val dialog = AlertDialog.Builder(context)
-                    .setTitle(R.string.confirm_username_title)
-                    .setMessage(R.string.confirm_username_description)
-                    .setPositiveButton(R.string.confirm) { thisDialog, _ ->
-                        thisDialog.dismiss()
-                        userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
-                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-                    }
-                    .setNegativeButton(R.string.cancel) { thisDialog, _ -> thisDialog.dismiss() }
-                    .create()
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.confirm_username_title)
+            dialog.setMessage(R.string.confirm_username_description)
+            dialog.addButton(R.string.confirm, true) { _, _ ->
+                userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
+                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            }
+            dialog.addCancelButton()
             dialog.show()
         }
     }
@@ -264,10 +253,10 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     private fun resetAccount() {
         @Suppress("DEPRECATION")
         val dialog = ProgressDialog.show(context, context?.getString(R.string.resetting_account), null, true)
-        userRepository.resetAccount().subscribe({ dialog.dismiss() }) { throwable ->
+        compositeSubscription.add(userRepository.resetAccount().subscribe({ dialog.dismiss() }) { throwable ->
             dialog.dismiss()
             RxErrorHandler.reportError(throwable)
-        }
+        })
     }
 
     private fun showSubscriptionStatusDialog() {
@@ -276,10 +265,10 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             user?.purchased?.plan?.notNull {
                 view.setPlan(it)
             }
-            val dialog = AlertDialog.Builder(context)
-                    .setView(view)
-                    .setTitle(R.string.subscription_status)
-                    .setPositiveButton(R.string.close) { dialogInterface, _ -> dialogInterface.dismiss() }.create()
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setAdditionalContentView(view)
+            dialog.setTitle(R.string.subscription_status)
+            dialog.addCloseButton()
             dialog.show()
         }
     }

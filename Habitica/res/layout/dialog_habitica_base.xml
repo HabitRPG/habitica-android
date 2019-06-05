@@ -44,9 +44,9 @@
             android:textColor="?textColorSecondary"
             style="@style/Body2"
             tools:text="This is the message"
-            android:layout_marginBottom="@dimen/spacing_medium"
-            android:layout_marginStart="@dimen/alert_side_padding"
-            android:layout_marginEnd="@dimen/alert_side_padding"
+            android:paddingBottom="@dimen/spacing_medium"
+            android:paddingStart="@dimen/alert_side_padding"
+            android:paddingEnd="@dimen/alert_side_padding"
             />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

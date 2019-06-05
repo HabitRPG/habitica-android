@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
@@ -120,7 +121,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
     fun setAdditionalContentSidePadding(padding: Int) {
         contentView.setPadding(padding, 0, padding, contentView.paddingBottom)
-        contentView.requestLayout()
+        messageTextView.setPadding(padding, messageTextView.paddingTop, padding, messageTextView.paddingBottom)
     }
 
     private fun updateButtonLayout() {
@@ -144,15 +145,23 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
     fun getContentView(): View? = additionalContentView
 
-    fun addButton(stringRes: Int, isPrimary: Boolean, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
-        return addButton(context.getString(stringRes), isPrimary, function)
+    fun addButton(stringRes: Int, isPrimary: Boolean, isDestructive: Boolean = false, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
+        return addButton(context.getString(stringRes), isPrimary, isDestructive, function)
     }
 
-    fun addButton(string: String, isPrimary: Boolean, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
+    fun addButton(string: String, isPrimary: Boolean, isDestructive: Boolean = false, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
         val button: Button = if (isPrimary) {
-            buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as Button
+            if (isDestructive) {
+                buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as Button
+            } else {
+                buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as Button
+            }
         } else {
-            buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as Button
+            val button = buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as Button
+            if (isDestructive) {
+                button.setTextColor(ContextCompat.getColor(context, R.color.red_100))
+            }
+            button
         }
         button.text = string
         button.minWidth = 147.dpToPx(context)

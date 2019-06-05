@@ -655,8 +655,8 @@
     <string name="delete_account">Delete Account</string>
     <string name="delete_account_description">Are you sure? This will delete your account forever, and it can never be restored! You will need to register a new account to use Habitica again. Banked or spent Gems will not be refunded. If you\'re absolutely certain, type your password into the text box below.</string>
     <string name="delete_oauth_account_description">Are you sure? This will delete your account forever, and it can never be restored! You will need to register a new account to use Habitica again. Banked or spent Gems will not be refunded. If you\'re absolutely certain, type DELETE into the text box below.</string>
-    <string name="reset_account_confirmation">reset my account</string>
-    <string name="delete_account_confirmation">delete my account</string>
+    <string name="reset_account_confirmation">Reset my Account</string>
+    <string name="delete_account_confirmation">Delete my Account</string>
     <string name="danger_zone">Danger Zone</string>
     <string name="nevermind">Nevermind</string>
     <string name="resetting_account">Resetting Account</string>
@@ -933,4 +933,5 @@
     <string name="special_achievements">Special Achievements</string>
     <string name="switch_to_list_view">Switch to list view</string>
     <string name="switch_to_grid_view">Switch to grid view</string>
+    <string name="confirm_deletion">Confirm deletion</string>
 </resources>
