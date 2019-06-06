@@ -44,5 +44,9 @@
         <key>supportEmail</key>
         <value>admin@habitica.com</value>
     </entry>
+    <entry>
+        <key>flipAddTaskBehaviour</key>
+        <value>true</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

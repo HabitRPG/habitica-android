@@ -123,7 +123,6 @@
                 android:orientation="vertical"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_alignParentBottom="true"
-                app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
                 android:padding="0dp"
                 android:layout_margin="0dp">
                 <FrameLayout

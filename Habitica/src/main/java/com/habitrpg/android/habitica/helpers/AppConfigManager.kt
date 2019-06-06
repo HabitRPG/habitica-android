@@ -62,4 +62,8 @@ class AppConfigManager {
     fun enableLocalTaskScoring(): Boolean {
         return remoteConfig.getBoolean("enableLocalTaskScoring")
     }
+
+    fun flipAddTaskBehaviour(): Boolean {
+        return remoteConfig.getBoolean("flipAddTaskBehaviour")
+    }
 }

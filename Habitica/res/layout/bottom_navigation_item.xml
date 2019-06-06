@@ -20,6 +20,8 @@
         tools:text="@string/habits"
         android:layout_gravity="center"
         android:textSize="12sp"
+        android:letterSpacing="0.05"
+        android:fontFamily="@string/font_family_regular"
         android:paddingStart="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing_small"
         />
@@ -31,6 +33,7 @@
         tools:text="@string/habits"
         android:layout_gravity="center"
         android:textSize="12sp"
+        android:letterSpacing="0.05"
         android:fontFamily="@string/font_family_medium"
         android:paddingStart="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing_small"

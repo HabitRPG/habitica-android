@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.events.TaskTappedEvent
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -30,6 +31,8 @@ class TasksFragment : BaseMainFragment() {
     lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
     lateinit var tagRepository: TagRepository
+    @Inject
+    lateinit var appConfigManager: AppConfigManager
 
     private var refreshItem: MenuItem? = null
     private var floatingMenu: FloatingActionMenu? = null
@@ -70,6 +73,7 @@ class TasksFragment : BaseMainFragment() {
         bottomNavigation?.onAddListener = {
             openNewTaskActivity(it)
         }
+        bottomNavigation?.flipAddBehaviour = appConfigManager.flipAddTaskBehaviour()
     }
 
     override fun onDestroy() {
