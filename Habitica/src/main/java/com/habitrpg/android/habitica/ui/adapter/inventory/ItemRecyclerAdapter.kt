@@ -28,6 +28,8 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import org.greenrobot.eventbus.EventBus
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>(data, autoUpdate) {
 
@@ -113,7 +115,9 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
             if (item is QuestContent) {
                 imageName = "inventory_quest_scroll_" + item.getKey()
             } else if (item is SpecialItem) {
-                imageName = item.getKey()
+                val sdf = SimpleDateFormat("MM", Locale.getDefault())
+                val month = sdf.format(Date())
+                imageName = "inventory_present_$month"
             } else {
                 val type = when (item) {
                     is Egg -> "Egg"
@@ -127,7 +131,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                     disabled = !this.canHatch
                 }
             }
-            DataBindingUtils.loadImage(imageView, imageName ?: "head_0")
+            DataBindingUtils.loadImage(imageView, imageName)
 
             var alpha = 1.0f
             if (disabled) {

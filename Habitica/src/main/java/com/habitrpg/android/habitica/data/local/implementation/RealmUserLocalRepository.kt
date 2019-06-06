@@ -20,6 +20,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                             .equalTo("id", it)
                             .findAll()
                             .asFlowable()
+                            .filter { groups -> groups.size > 0 }
                             .map { groups -> groups.first() }
                 }
                 .map { it.quest?.members?.find { questMember -> questMember.key == userID } != null }

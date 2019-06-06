@@ -208,10 +208,10 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
         if (user == null) {
             return
         }
-        val item = realm.where(SpecialItem::class.java).equalTo("isMysteryItem", true).findFirst()
+        val item = realm.where(OwnedItem::class.java).equalTo("combinedKey", "${user.id}specialinventory_present").findFirst()
         realm.executeTransaction {
             if (item != null && item.isValid) {
-                //item.owned = item.owned - 1
+                item.numberOwned = item.numberOwned - 1
             }
             if (user.isValid) {
                 user.purchased?.plan?.mysteryItemCount = (user.purchased?.plan?.mysteryItemCount ?: 0) - 1

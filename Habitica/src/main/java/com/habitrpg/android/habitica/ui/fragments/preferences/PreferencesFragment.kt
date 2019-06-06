@@ -112,7 +112,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "reload_content" -> {
                 @Suppress("DEPRECATION")
                 val dialog = ProgressDialog.show(context, context?.getString(R.string.reloading_content), null, true)
-                contentRepository.retrieveContent(true).subscribe({
+                contentRepository.retrieveContent(context,true).subscribe({
                     if (dialog.isShowing) {
                         dialog.dismiss()
                     }
@@ -179,7 +179,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
                 userRepository.updateLanguage(user, languageHelper.languageCode)
-                        .flatMap<ContentResult> { contentRepository.retrieveContent(true) }
+                        .flatMap<ContentResult> { contentRepository.retrieveContent(context,true) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {

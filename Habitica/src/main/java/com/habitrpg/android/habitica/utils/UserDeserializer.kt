@@ -60,9 +60,23 @@ class UserDeserializer : JsonDeserializer<User> {
                 }
             }
         }
-
+        if (obj.has("purchased")) {
+            user.purchased = context.deserialize(obj.get("purchased"), Purchases::class.java)
+            if (obj.getAsJsonObject("purchased").has("plan")) {
+                if (obj.getAsJsonObject("purchased").getAsJsonObject("plan").has("mysteryItems")) {
+                    user.purchased?.plan?.mysteryItemCount = obj.getAsJsonObject("purchased").getAsJsonObject("plan").getAsJsonArray("mysteryItems").size()
+                }
+            }
+        }
         if (obj.has("items")) {
             user.items = context.deserialize(obj.get("items"), Items::class.java)
+            val item = OwnedItem()
+            item.itemType = "special"
+            item.key = "inventory_present"
+            item.userID = user.id
+            item.numberOwned = user.purchased?.plan?.mysteryItemCount ?: 0
+            user.items?.special?.ownedItems = RealmList()
+            user.items?.special?.ownedItems?.add(item)
         }
         if (obj.has("auth")) {
             user.authentication = context.deserialize(obj.get("auth"), Authentication::class.java)
@@ -91,14 +105,6 @@ class UserDeserializer : JsonDeserializer<User> {
             user.challenges = RealmList()
             obj.getAsJsonArray("challenges").forEach {
                 user.challenges?.add(ChallengeMembership(user.id ?: "", it.asString))
-            }
-        }
-        if (obj.has("purchased")) {
-            user.purchased = context.deserialize(obj.get("purchased"), Purchases::class.java)
-            if (obj.getAsJsonObject("purchased").has("plan")) {
-                if (obj.getAsJsonObject("purchased").getAsJsonObject("plan").has("mysteryItems")) {
-                    user.purchased?.plan?.mysteryItemCount = obj.getAsJsonObject("purchased").getAsJsonObject("plan").getAsJsonArray("mysteryItems").size()
-                }
             }
         }
 

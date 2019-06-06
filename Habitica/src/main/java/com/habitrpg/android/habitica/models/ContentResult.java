@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 
 import java.util.List;
 
@@ -39,5 +40,6 @@ public class ContentResult {
     public RealmList<Customization> backgrounds;
 
     public RealmList<FAQArticle> faq;
+    public RealmList<SpecialItem> special;
 }
 

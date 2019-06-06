@@ -46,16 +46,13 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         this.skipButton.setOnClickListener(this)
         this.finishButton.setOnClickListener(this)
 
-        contentRepository.retrieveContent().subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(contentRepository.retrieveContent(this).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val window = window
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-            }
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        val window = window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
         }
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
     }
 
     override fun injectActivity(component: UserComponent?) {
