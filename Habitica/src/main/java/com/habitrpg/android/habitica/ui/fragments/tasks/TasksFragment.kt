@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.events.TaskTappedEvent
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -280,6 +281,17 @@ class TasksFragment : BaseMainFragment() {
         if (this.displayingTaskForm) {
             return
         }
+
+        val additionalData = HashMap<String, Any>()
+        additionalData["created task type"] = type
+        additionalData["viewed task type"] = when (viewPager?.currentItem) {
+            0 -> Task.TYPE_HABIT
+            1 -> Task.TYPE_DAILY
+            2 -> Task.TYPE_TODO
+            3 -> Task.TYPE_REWARD
+            else -> ""
+        }
+        AmplitudeManager.sendEvent("open create task form", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
