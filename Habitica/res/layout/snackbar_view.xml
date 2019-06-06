@@ -13,7 +13,7 @@
         android:paddingStart="6dp"
         android:gravity="center"
         tools:background="@drawable/snackbar_background_green"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:layout_gravity="center_horizontal"
         android:elevation="24dp">
         <ImageView

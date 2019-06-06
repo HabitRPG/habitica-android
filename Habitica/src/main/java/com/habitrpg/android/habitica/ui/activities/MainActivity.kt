@@ -68,8 +68,8 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.ValueBar
-import com.habitrpg.android.habitica.ui.views.bottombar.BottomBar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationView
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
@@ -121,8 +121,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
 
-    val floatingMenuWrapper: ViewGroup by bindView(R.id.floating_menu_wrapper)
-    internal val bottomNavigation: BottomBar by bindView(R.id.bottom_navigation)
+    val snackbarContainer: ViewGroup by bindView(R.id.snackbar_container)
+    internal val bottomNavigation: HabiticaBottomNavigationView by bindView(R.id.bottom_navigation)
 
     private val appBar: AppBarLayout by bindView(R.id.appbar)
     internal val toolbar: Toolbar by bindView(R.id.toolbar)
@@ -467,7 +467,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val pet = event.usingPet
         compositeSubscription.add(this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
                 .subscribe(Consumer { feedResponse ->
-                    HabiticaSnackbar.showSnackbar(floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.text), SnackbarDisplayType.NORMAL)
+                    HabiticaSnackbar.showSnackbar(snackbarContainer, getString(R.string.notification_pet_fed, pet.text), SnackbarDisplayType.NORMAL)
                     if (feedResponse.value == -1) {
                         val mountWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
                         val mountImageView = mountWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
@@ -499,12 +499,12 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     internal fun displayTaskScoringResponse(data: TaskScoringResult?) {
         if (user != null && data != null) {
-            compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
+            compositeSubscription.add(notifyUserUseCase.observable(NotifyUserUseCase.RequestValues(this, snackbarContainer,
                     user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, if (userIsOnQuest) data.questDamage else 0.0, data.hasLeveledUp))
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
 
-        compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
+        compositeSubscription.add(displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer))
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -689,7 +689,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     @Subscribe
     fun showSnackBarEvent(event: ShowSnackbarEvent) {
-        HabiticaSnackbar.showSnackbar(floatingMenuWrapper, event.leftImage, event.title, event.text, event.specialView, event.rightIcon, event.rightTextColor, event.rightText, event.type)
+        HabiticaSnackbar.showSnackbar(snackbarContainer, event.leftImage, event.title, event.text, event.specialView, event.rightIcon, event.rightTextColor, event.rightText, event.type)
     }
 
     @Subscribe

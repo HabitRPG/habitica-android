@@ -102,7 +102,7 @@ class GroupInformationFragment : BaseFragment() {
             clipboard?.primaryClip = clip
             val activity = activity as? MainActivity
             if (activity != null) {
-                HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.username_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.username_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
             }
         }
 

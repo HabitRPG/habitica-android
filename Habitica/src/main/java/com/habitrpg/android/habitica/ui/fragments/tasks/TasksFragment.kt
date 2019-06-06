@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.FragmentPagerAdapter
-import com.github.clans.fab.FloatingActionButton
 import com.github.clans.fab.FloatingActionMenu
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -44,32 +43,13 @@ class TasksFragment : BaseMainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         this.usesTabLayout = false
         this.usesBottomNavigation = true
         this.displayingTaskForm = false
         super.onCreateView(inflater, container, savedInstanceState)
         val v = inflater.inflate(R.layout.fragment_viewpager, container, false)
 
-
         viewPager = v.findViewById(R.id.viewPager)
-        val view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true)
-        floatingMenu = if (FloatingActionMenu::class.java == view.javaClass) {
-            view as? FloatingActionMenu
-        } else {
-            val frame = view as? ViewGroup
-            frame?.findViewById(R.id.fab_menu)
-        }
-        val habitFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_habit)
-        habitFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_HABIT) }
-        val dailyFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_daily)
-        dailyFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_DAILY) }
-        val todoFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_todo)
-        todoFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_TODO) }
-        val rewardFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_reward)
-        rewardFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_REWARD) }
-        floatingMenu?.setOnMenuButtonLongClickListener { this.onFloatingMenuLongClicked() }
-
         loadTaskLists()
 
         return v
@@ -78,31 +58,23 @@ class TasksFragment : BaseMainFragment() {
     override fun onResume() {
         super.onResume()
 
-        bottomNavigation?.setBadgesHideWhenActive(true)
-        bottomNavigation?.setOnTabSelectListener { tabId ->
-            when (tabId) {
-                R.id.tab_habits -> viewPager?.currentItem = 0
-                R.id.tab_dailies -> viewPager?.currentItem = 1
-                R.id.tab_todos -> viewPager?.currentItem = 2
-                R.id.tab_rewards -> viewPager?.currentItem = 3
+        bottomNavigation?.onTabSelectedListener = {
+            when (it) {
+                Task.TYPE_HABIT -> viewPager?.currentItem = 0
+                Task.TYPE_DAILY -> viewPager?.currentItem = 1
+                Task.TYPE_TODO -> viewPager?.currentItem = 2
+                Task.TYPE_REWARD -> viewPager?.currentItem = 3
             }
             updateBottomBarBadges()
+        }
+        bottomNavigation?.onAddListener = {
+            openNewTaskActivity(it)
         }
     }
 
     override fun onDestroy() {
         tagRepository.close()
-        bottomNavigation?.removeOnTabSelectListener()
         super.onDestroy()
-    }
-
-    private fun onFloatingMenuLongClicked(): Boolean {
-        val currentFragment = activeFragment
-        if (currentFragment != null) {
-            val className = currentFragment.className
-            openNewTaskActivity(className)
-        }
-        return true
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -145,7 +117,6 @@ class TasksFragment : BaseMainFragment() {
                 }
             }
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
-
                 override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {
                     if (viewFragmentsDictionary == null) {
                         return
@@ -204,7 +175,7 @@ class TasksFragment : BaseMainFragment() {
             }
 
             override fun onPageSelected(position: Int) {
-                bottomNavigation?.selectTabAtPosition(position)
+                bottomNavigation?.selectedPosition = position
                 updateFilterIcon()
             }
 
@@ -233,7 +204,7 @@ class TasksFragment : BaseMainFragment() {
         if (bottomNavigation == null) {
             return
         }
-        tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
+        compositeSubscription.add(tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
             val activeTutorialFragments = ArrayList<String>()
             for (step in tutorialSteps) {
                 var id = -1
@@ -256,13 +227,13 @@ class TasksFragment : BaseMainFragment() {
                     }
                     else -> ""
                 }
-                val tab = bottomNavigation?.getTabWithId(id)
+                /*val tab = bottomNavigation?.id(id)
                 if (step.shouldDisplay()) {
                     tab?.setBadgeCount(1)
                     activeTutorialFragments.add(taskType)
                 } else {
                     tab?.removeBadge()
-                }
+                }*/
             }
             if (activeTutorialFragments.size == 1) {
                 val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
@@ -273,7 +244,7 @@ class TasksFragment : BaseMainFragment() {
                     }
                 }
             }
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
     }
     // endregion
 

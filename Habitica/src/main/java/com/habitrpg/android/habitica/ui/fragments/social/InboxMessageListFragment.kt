@@ -143,7 +143,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         clipMan?.primaryClip = messageText
         val activity = getActivity() as? MainActivity
         if (activity != null) {
-            showSnackbar(activity.floatingMenuWrapper, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+            showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
         }
     }
 

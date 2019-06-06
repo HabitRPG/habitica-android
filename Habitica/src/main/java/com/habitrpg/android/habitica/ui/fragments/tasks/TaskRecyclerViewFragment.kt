@@ -99,7 +99,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                         .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundTodo) }
                         .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { _ ->
                             (activity as? MainActivity)?.let { activity ->
-                                HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, null, getString(R.string.notification_purchase_reward),
+                                HabiticaSnackbar.showSnackbar(activity.snackbarContainer, null, getString(R.string.notification_purchase_reward),
                                 BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
                                 ContextCompat.getColor(activity, R.color.yellow_10),
                                 "-" + it.first.value.toInt(),

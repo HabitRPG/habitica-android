@@ -110,10 +110,10 @@ class SkillsFragment : BaseMainFragment() {
         adapter?.mana = response.user.stats?.mp ?: 0.0
         val activity = activity ?: return
         if ("special" == usedSkill?.habitClass) {
-            showSnackbar(activity.floatingMenuWrapper, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
+            showSnackbar(activity.snackbarContainer, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
         } else {
             context.notNull {
-                showSnackbar(activity.floatingMenuWrapper, null,
+                showSnackbar(activity.snackbarContainer, null,
                         context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
                         BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
                         ContextCompat.getColor(it, R.color.blue_10), "-" + usedSkill?.mana,

@@ -30,7 +30,7 @@ abstract class BaseMainFragment : BaseFragment() {
     val collapsingToolbar get() = activity?.toolbar
     val toolbarAccessoryContainer get() = activity?.toolbarAccessoryContainer
     val bottomNavigation get() = activity?.bottomNavigation
-    val floatingMenuWrapper get() = activity?.floatingMenuWrapper
+    val floatingMenuWrapper get() = activity?.snackbarContainer
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
@@ -56,8 +56,6 @@ abstract class BaseMainFragment : BaseFragment() {
         }
 
         if (this.usesBottomNavigation) {
-            bottomNavigation?.removeOnTabSelectListener()
-            bottomNavigation?.removeOnTabReselectListener()
             bottomNavigation?.visibility = View.VISIBLE
         } else {
             bottomNavigation?.visibility = View.GONE

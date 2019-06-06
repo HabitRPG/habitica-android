@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/tab_habits"
+        android:title="@string/habits"
+        android:icon="@drawable/icon_habits_selected" />
+    <item android:id="@+id/tab_dailies"
+        android:title="@string/dailies"
+        android:icon="@drawable/icon_dailies_selected" />
+    <item android:id="@+id/add"
+        android:icon="@drawable/md_transparent"
+        />
+    <item android:id="@+id/tab_todos"
+        android:title="@string/todos"
+        android:icon="@drawable/icon_todos_selected" />
+    <item android:id="@+id/tab_rewards"
+        android:title="@string/rewards"
+        android:icon="@drawable/icon_rewards_selected" />
+</menu>

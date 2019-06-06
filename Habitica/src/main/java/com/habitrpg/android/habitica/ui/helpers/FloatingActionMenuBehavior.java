@@ -3,15 +3,16 @@ package com.habitrpg.android.habitica.ui.helpers;
 // https://gist.github.com/lodlock/e3cd12130bad70a098db
 
 import android.content.Context;
-import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
+
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.material.snackbar.Snackbar;
 import com.habitrpg.android.habitica.R;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
                         .translationY(translationY)
                         .setListener(null);
             } else {
-                ViewCompat.setTranslationY(child, translationY);
+                child.setTranslationY(translationY);
             }
 
             this.mTranslationY = translationY;
@@ -75,7 +76,7 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
         for (int z = dependencies.size(); i < z; ++i) {
             View view = (View) dependencies.get(i);
             if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(child, view)) {
-                minOffset = Math.min(minOffset, ViewCompat.getTranslationY(view) - (float) view.getHeight());
+                minOffset = Math.min(minOffset, view.getTranslationY() - (float) view.getHeight());
             }
         }
 
@@ -84,7 +85,7 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
-        ViewGroup fabContainer = child.findViewById(R.id.floating_menu_wrapper);
+        ViewGroup fabContainer = child.findViewById(R.id.snackbar_container);
         if (fabContainer.getChildCount() > 0) {
             if (fabContainer.getChildAt(0).getClass().equals(FloatingActionMenu.class)) {
                 fab = (FloatingActionMenu) fabContainer.getChildAt(0);

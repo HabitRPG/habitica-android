@@ -179,7 +179,7 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <FrameLayout
-                android:id="@+id/floating_menu_wrapper"
+                android:id="@+id/snackbar_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

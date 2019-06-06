@@ -80,7 +80,7 @@ class GuildDetailFragment : BaseFragment() {
             viewModel?.leaveGroup {
                 val activity = activity as? MainActivity
                 if (activity != null) {
-                    HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.left_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                    HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.left_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
                 }
             }
         }
@@ -88,7 +88,7 @@ class GuildDetailFragment : BaseFragment() {
             viewModel?.joinGroup {
                 val activity = activity as? MainActivity
                 if (activity != null) {
-                    HabiticaSnackbar.showSnackbar(activity.floatingMenuWrapper, getString(R.string.joined_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                    HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.joined_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
                 }
             }
         }
