@@ -14,6 +14,7 @@
         tools:text="@string/habit"
         android:textAllCaps="true"
         android:textSize="10sp"
+        android:fontFamily="@string/font_family_medium"
         android:letterSpacing="0.15"
         android:textColor="@color/brand_300"
         android:layout_marginStart="36dp"
@@ -31,5 +32,7 @@
     tools:src="@drawable/add_habit"
     android:scaleType="center"
     android:layout_centerInParent="true"
-    android:background="@drawable/fab_submenu_background"/>
+    android:background="@drawable/fab_submenu_background"
+    android:layout_marginTop="-4dp"
+    android:layout_marginBottom="-4dp"/>
 </merge>

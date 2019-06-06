@@ -86,7 +86,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         isShowingSubmenu = true
 
         val rotate = RotateAnimation(0f, 135f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        rotate.duration = 300
+        rotate.duration = 250
         rotate.interpolator = LinearInterpolator()
         rotate.fillAfter = true
         addButton.startAnimation(rotate)
@@ -143,6 +143,13 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     private fun hideSubmenu() {
         isShowingSubmenu = false
         var pos = 0
+
+        val rotate = RotateAnimation(135f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        rotate.duration = 250
+        rotate.interpolator = LinearInterpolator()
+        rotate.fillAfter = true
+        addButton.startAnimation(rotate)
+
         for (view in submenuWrapper.children) {
             view.alpha = 1f
             view.scaleY = 1f

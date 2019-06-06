@@ -67,21 +67,27 @@
             app:iconDrawable="@drawable/icon_rewards_selected"/>
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/add"
+    <FrameLayout
+        android:id="@+id/add_wrapper"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/fab_plus"
         android:layout_centerHorizontal="true"
         android:layout_alignBottom="@id/bottom_navigation_background"
         android:layout_marginBottom="21dp"
-        android:background="@drawable/fab_background"
-        android:contentDescription="@string/new_task" />
+        android:background="@drawable/fab_background">
+        <ImageButton
+            android:id="@+id/add"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/fab_plus"
+            android:background="@color/transparent"
+            android:contentDescription="@string/new_task" />
+    </FrameLayout>
     <LinearLayout
         android:id="@+id/submenu_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/add"
+        android:layout_above="@id/add_wrapper"
         android:orientation="vertical"
         android:gravity="center_horizontal"/>
 </merge>
