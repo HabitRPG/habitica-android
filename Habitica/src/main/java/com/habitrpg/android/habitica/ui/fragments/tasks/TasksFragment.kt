@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.FragmentPagerAdapter
-import com.github.clans.fab.FloatingActionMenu
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -35,7 +34,6 @@ class TasksFragment : BaseMainFragment() {
     lateinit var appConfigManager: AppConfigManager
 
     private var refreshItem: MenuItem? = null
-    private var floatingMenu: FloatingActionMenu? = null
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
 
     private var displayingTaskForm: Boolean = false
@@ -310,7 +308,6 @@ class TasksFragment : BaseMainFragment() {
             }
             TASK_UPDATED_RESULT -> this.displayingTaskForm = false
         }
-        floatingMenu?.close(true)
     }
 
     private fun onTaskCreatedResult(resultCode: Int, data: Intent?) {

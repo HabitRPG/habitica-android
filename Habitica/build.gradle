@@ -75,8 +75,6 @@ dependencies {
     implementation('com.mikepenz:aboutlibraries:5.9.4@aar') {
         transitive = true
     }
-    // a better fab alternative
-    implementation 'com.github.clans:fab:1.6.4'
     //Eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
     // IAP Handling / Verification
@@ -150,7 +148,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         multiDexEnabled true
 
-        versionCode 2146
+        versionCode 2149
         versionName "1.10"
     }
 

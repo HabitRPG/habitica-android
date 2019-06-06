@@ -5,9 +5,9 @@
     android:gravity="center_horizontal">
 <ImageView
     android:id="@+id/add_task_icon"
-    android:layout_width="35dp"
-    android:layout_height="35dp"
-    android:src="@drawable/fab_add"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:src="@drawable/fab_plus"
     android:background="@drawable/widget_add_habit_background"
     android:scaleType="center" />
     <TextView

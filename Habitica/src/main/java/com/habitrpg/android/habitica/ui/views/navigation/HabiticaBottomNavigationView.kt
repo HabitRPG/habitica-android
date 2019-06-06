@@ -2,6 +2,9 @@ package com.habitrpg.android.habitica.ui.views.navigation
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -81,6 +84,13 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
 
     private fun showSubmenu() {
         isShowingSubmenu = true
+
+        val rotate = RotateAnimation(0f, 135f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        rotate.duration = 300
+        rotate.interpolator = LinearInterpolator()
+        rotate.fillAfter = true
+        addButton.startAnimation(rotate)
+
         var pos = 4
         submenuWrapper.removeAllViews()
         for (taskType in listOf(Task.TYPE_HABIT, Task.TYPE_DAILY, Task.TYPE_TODO, Task.TYPE_REWARD)) {
