@@ -288,7 +288,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         this.apiClient.updateAuthenticationCredentials(user, api)
         sharedPrefs.edit {
             putString(getString(R.string.SP_userID), user)
-            if (keyHelper != null) {
+            if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 putString(user, keyHelper?.encrypt(api))
             } else {
                 putString(getString(R.string.SP_APIToken), api)

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.api
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.core.content.edit
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -47,7 +48,7 @@ class HostConfig {
             }
         } else {
             val key = sharedPreferences.getString("APIToken", null)
-            if (key?.isNotBlank() == true) {
+            if (key?.isNotBlank() == true && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val encryptedKey = keyHelper?.encrypt(key)
                 sharedPreferences.edit {
                     putString(userID, encryptedKey)
