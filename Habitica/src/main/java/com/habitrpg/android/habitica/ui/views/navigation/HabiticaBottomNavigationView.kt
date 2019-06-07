@@ -79,6 +79,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             }
             true
         }
+        submenuWrapper.setOnClickListener { hideSubmenu() }
         updateItemSelection()
     }
 
@@ -113,7 +114,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
                     view.title = context.getString(R.string.reward)
                 }
             }
-            view.setOnClickListener {
+            view.onAddListener = {
                 onAddListener?.invoke(taskType)
                 hideSubmenu()
             }
