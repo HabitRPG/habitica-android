@@ -24,7 +24,10 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.*
+import com.habitrpg.android.habitica.ui.views.CurrencyView
+import com.habitrpg.android.habitica.ui.views.CurrencyViews
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
@@ -236,11 +239,15 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                             }
                             event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
                             event.rightIcon = priceLabel.compoundDrawables[0]
-                            event.rightTextColor = priceLabel.currentTextColor
+                            when {
+                                "gold" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.yellow_5)
+                                "gems" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.green_10)
+                                "hourglasses" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.brand_300)
+                            }
                             event.rightText = "-" + priceLabel.text
                             EventBus.getDefault().post(event)
                         }
-                        .flatMap { userRepository.retrieveUser(false, true) }
+                        .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                         .flatMap { inventoryRepository.retrieveInAppRewards() }
                         .subscribe({
                             if (item.isTypeGear) {
