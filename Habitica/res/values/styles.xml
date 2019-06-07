@@ -28,7 +28,7 @@
 
         <item name="textColorPrimary">@color/gray_50</item>
         <item name="textColorSecondary">@color/gray_200</item>
-        <item name="textColorPrimaryDark">@color/white</item>
+        <item name="textColorPrimaryDark">#D5C8FF</item>
         <item name="textColorSecondaryDark">@color/brand_500</item>
 
         <item name="colorContentBackground">@color/white</item>
