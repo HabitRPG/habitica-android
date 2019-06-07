@@ -127,7 +127,6 @@ class TaskFormActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        title = ""
         tintColor = ContextCompat.getColor(this, R.color.brand_300)
 
         val bundle = intent.extras ?: return
@@ -166,17 +165,27 @@ class TaskFormActivity : BaseActivity() {
             }
         }
 
-        if (taskId != null) {
-            isCreating = false
-            compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(Consumer {
-                task = it
-                //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
-                fillForm(it)
-            }, RxErrorHandler.handleEmptyError()))
-        } else if (bundle.containsKey(PARCELABLE_TASK)) {
-            isCreating = false
-            task = bundle.getParcelable(PARCELABLE_TASK)
-            task?.let { fillForm(it) }
+        title = ""
+        when {
+            taskId != null -> {
+                isCreating = false
+                compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(Consumer {
+                    task = it
+                    //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
+                    fillForm(it)
+                }, RxErrorHandler.handleEmptyError()))
+            }
+            bundle.containsKey(PARCELABLE_TASK) -> {
+                isCreating = false
+                task = bundle.getParcelable(PARCELABLE_TASK)
+                task?.let { fillForm(it) }
+            }
+            else -> title = getString(R.string.create_task, getString(when (taskType) {
+                Task.TYPE_DAILY -> R.string.daily
+                Task.TYPE_TODO -> R.string.todo
+                Task.TYPE_REWARD -> R.string.reward
+                else -> R.string.habit
+            }))
         }
         configureForm()
     }
