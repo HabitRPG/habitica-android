@@ -729,4 +729,17 @@
   <string name="next_day_reminder_title">今天完成任务了么？</string>
   <string name="next_day_reminder_text">升级后有许多可解锁和发现的，所以继续你的任务。祝玩得愉快！</string>
   <string name="two_handed">双手握持</string>
+  <string name="notifications">通知</string>
+  <string name="no_notifications_title">您全部都完成了！</string>
+  <string name="no_notifications_text">小信使仙女们围着你欢快得鼓起了热烈的掌声！恭喜，做得太棒了！</string>
+  <string name="dismiss_all">关闭全部</string>
+  <string name="new_bailey_update">新的贝利更新！</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> 有新消息]]></string>
+  <string name="new_msg_party"><![CDATA[您的队伍 <b>%1$s</b> 有新消息]]></string>
+  <string name="unallocated_stats_points"><![CDATA[你有<b>%1$s没分配的属性点</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[你有新的<b>神秘物品</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[你被邀请加入队伍<b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[你被邀请加入一个私人工会<b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[你被邀请加入一个工会<b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[你被邀请加入任务<b>%1$s</b>]]></string>
 </resources>

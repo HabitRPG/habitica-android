@@ -798,4 +798,17 @@
   <string name="equipment_con">ТЕЛ:</string>
   <string name="equipment_int">ИНТ:</string>
   <string name="equipment_per">ВОС:</string>
+  <string name="notifications">Уведомления</string>
+  <string name="no_notifications_title">Вы все вспомнили!</string>
+  <string name="no_notifications_text">Феи уведомлений вам тихо рукоплещут! Отлично сработано!</string>
+  <string name="dismiss_all">Сбросить все уведомления</string>
+  <string name="new_bailey_update">Обновление от Бэйли!</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b>, есть новые сообщения]]></string>
+  <string name="new_msg_party"><![CDATA[В команде <b>%1$s</b> есть новые сообщения]]></string>
+  <string name="unallocated_stats_points"><![CDATA[Вы не распределили <b>%1$s очков</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[У вас новый <b>Таинственный предмет</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[Вас пригласили в команду <b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[Вас пригласили присоединиться к частной гильдии <b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[Вас пригласили в гильдию <b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[Вас пригласили на квест <b>%1$s</b>]]></string>
 </resources>

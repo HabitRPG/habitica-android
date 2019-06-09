@@ -574,4 +574,17 @@
   <string name="nevermind">Never mind</string>
   <string name="resetting_account">Resetting Account</string>
   <string name="deleting_account">Deleting Account</string>
+  <string name="notifications">Notifications</string>
+  <string name="no_notifications_title">You’re all caught up!</string>
+  <string name="no_notifications_text">The notification fairies give you a raucous round of applause! Well done!</string>
+  <string name="dismiss_all">Dismiss All</string>
+  <string name="new_bailey_update">New Bailey Update!</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> has new posts]]></string>
+  <string name="new_msg_party"><![CDATA[Your Party, <b>%1$s</b>, has new posts]]></string>
+  <string name="unallocated_stats_points"><![CDATA[You have <b>%1$s unallocated Stat Points</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[You have new <b>Mystery Items</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[You were invited to join the Party <b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[You were invited to join the private Guild <b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[You were invited to join the Guild <b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[You were invited to the Quest <b>%1$s</b>]]></string>
 </resources>

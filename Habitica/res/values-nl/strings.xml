@@ -804,4 +804,17 @@
   <string name="send_gift">Verzend geschenk</string>
   <string name="server">server</string>
   <string name="gift_confirmation_title">Je geschenk is verzonden!</string>
+  <string name="notifications">Meldingen</string>
+  <string name="no_notifications_title">Je bent volledig klaar</string>
+  <string name="no_notifications_text">De meldingsfeeën geven je een staande ovatie! Goed gedaan!</string>
+  <string name="dismiss_all">Allen afwijzen</string>
+  <string name="new_bailey_update">Nieuwe update van Bailey</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> heeft nieuwe berichten]]></string>
+  <string name="new_msg_party"><![CDATA[Je Gezelschap, <b>%1$s</b>, heeft nieuwe berichten]]></string>
+  <string name="unallocated_stats_points"><![CDATA[Je hebt <b>%1$s niet toegekende statuspunten</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[Je hebt nieuwe <b>Mysterieuze items</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[Je werd uitgenodigd om je aan te sluiten bij de Groep <b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[Je werd uitgenodigd om je aan te sluiten bij het Gilde <b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[Je werd uitgenodigd om je aan te sluiten bij de Gilde <b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[Je bent uitgenodigd voor de Queeste <b>%1$s</b>]]></string>
 </resources>
