@@ -175,6 +175,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                             AmplitudeManager.sendEvent("show cron", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
                             if (tasks.isNotEmpty()) {
+                                isDisplaying = true
                                 showDialog(activity, userRepository, taskRepository, tasks)
                             } else {
                                 lastCronRun = Date()
