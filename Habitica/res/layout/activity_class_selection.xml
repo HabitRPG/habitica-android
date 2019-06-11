@@ -162,18 +162,19 @@
                 tools:text="Healer"
                 style="@style/Title1"
                 android:layout_marginBottom="@dimen/spacing_medium"/>
-            <TextView
-                android:id="@+id/selected_description_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@string/healer_description"
-                android:gravity="center_horizontal"
-                style="@style/Body2"
-                android:lineSpacingExtra="4sp"/>
-            <Space
+            <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/selected_description_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/healer_description"
+                    android:gravity="center_horizontal"
+                    style="@style/Body2"
+                    android:lineSpacingExtra="4sp"/>
+            </ScrollView>
             <Button
                 android:id="@+id/selected_button"
                 android:layout_width="match_parent"
