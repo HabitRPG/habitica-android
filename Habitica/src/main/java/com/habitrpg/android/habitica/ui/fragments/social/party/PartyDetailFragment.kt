@@ -6,26 +6,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder.GroupMemberViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
+import io.realm.RealmResults
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -56,6 +62,7 @@ class PartyDetailFragment : BaseFragment() {
     private val questAcceptButton: Button? by bindView(R.id.quest_accept_button)
     private val questRejectButton: Button? by bindView(R.id.quest_reject_button)
     private val questProgressView: OldQuestProgressView? by bindView(R.id.quest_progress_view)
+    private val membersWrapper: LinearLayout? by bindView(R.id.members_wrapper)
     private val leaveButton: Button? by bindView(R.id.leave_button)
 
     override fun injectFragment(component: UserComponent) {
@@ -89,6 +96,7 @@ class PartyDetailFragment : BaseFragment() {
 
         viewModel?.getGroupData()?.observe(viewLifecycleOwner, Observer { updateParty(it) })
         viewModel?.getUserData()?.observe(viewLifecycleOwner, Observer { updateUser(it) })
+        viewModel?.getMembersData()?.observe(viewLifecycleOwner, Observer { updateMembersList(it) })
     }
 
     private fun refreshParty() {
@@ -172,6 +180,22 @@ class PartyDetailFragment : BaseFragment() {
             questParticipationView?.text = context?.getString(R.string.number_participants, viewModel?.getGroupData()?.value?.quest?.members?.size)
         } else {
             questProgressView?.visibility = View.GONE
+        }
+    }
+
+    private fun updateMembersList(members: RealmResults<Member>?) {
+        membersWrapper?.removeAllViews()
+        val leaderID = viewModel?.leaderID
+        if (members != null) {
+            for (member in members) {
+                val memberView = membersWrapper?.inflate(R.layout.party_member, false) ?: continue
+                val viewHolder = GroupMemberViewHolder(memberView)
+                viewHolder.bind(member, leaderID ?: "")
+                viewHolder.onClickEvent = {
+                    FullProfileActivity.open(member.id ?: "")
+                }
+                membersWrapper?.addView(memberView)
+            }
         }
     }
 

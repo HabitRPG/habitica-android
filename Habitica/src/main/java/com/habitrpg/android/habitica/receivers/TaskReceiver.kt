@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -41,7 +40,6 @@ class TaskReceiver : BroadcastReceiver() {
                 taskAlarmManager.addAlarmForTaskId(taskId)
             }
 
-            Log.e("TASKK", taskId)
             taskRepository.getTask(taskId ?: "")
                     .firstElement()
                     .subscribe(Consumer {

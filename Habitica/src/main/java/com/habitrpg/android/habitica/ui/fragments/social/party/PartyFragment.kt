@@ -31,7 +31,6 @@ class PartyFragment : BaseMainFragment() {
 
     private val viewPager: ViewPager? by bindView(R.id.viewPager)
     private var firstFragment: Fragment? = null
-    private var partyMemberListFragment: PartyMemberListFragment? = null
     private var chatFragment: ChatFragment? = null
     private var viewPagerAdapter: FragmentPagerAdapter? = null
 
@@ -102,10 +101,6 @@ class PartyFragment : BaseMainFragment() {
                 firstFragment = childFragment
                 childFragment.viewModel = viewModel
             }
-            if (childFragment is PartyMemberListFragment) {
-                partyMemberListFragment = childFragment
-                childFragment.viewModel = viewModel
-            }
         }
     }
 
@@ -122,8 +117,6 @@ class PartyFragment : BaseMainFragment() {
         } else {
             tabLayout?.visibility = View.VISIBLE
         }
-
-        partyMemberListFragment?.setPartyId(group.id)
 
         this.activity?.invalidateOptionsMenu()
     }
@@ -252,16 +245,6 @@ class PartyFragment : BaseMainFragment() {
                         }
                         chatFragment
                     }
-                    2 -> {
-                        if (partyMemberListFragment == null) {
-                            partyMemberListFragment = PartyMemberListFragment()
-                            partyMemberListFragment?.viewModel = viewModel
-                            if (user?.hasParty() == true) {
-                                partyMemberListFragment?.setPartyId(user?.party?.id ?: "")
-                            }
-                        }
-                        partyMemberListFragment
-                    }
                     else -> Fragment()
                 } ?: Fragment()
 
@@ -271,7 +254,7 @@ class PartyFragment : BaseMainFragment() {
                 return if (user?.hasParty() != true) {
                     1
                 } else {
-                    3
+                    2
                 }
             }
 

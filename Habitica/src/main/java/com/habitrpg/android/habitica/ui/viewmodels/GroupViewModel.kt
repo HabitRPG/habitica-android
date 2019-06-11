@@ -39,22 +39,25 @@ open class GroupViewModel : BaseViewModel() {
     var groupViewType: GroupViewType? = null
 
     private val group: MutableLiveData<Group?> by lazy {
-        loadGroupFromLocal()
         MutableLiveData<Group?>()
     }
 
     private val leader: MutableLiveData<Member?> by lazy {
-        loadLeaderFromLocal()
         MutableLiveData<Member?>()
     }
 
     private val isMemberData: MutableLiveData<Boolean?> by lazy {
-        loadMembershipFromLocal()
         MutableLiveData<Boolean?>()
     }
 
     protected val groupIDSubject = BehaviorSubject.create<Optional<String>>()
     var gotNewMessages: Boolean = false
+
+    init {
+        loadGroupFromLocal()
+        loadLeaderFromLocal()
+        loadMembershipFromLocal()
+    }
 
     override fun inject(component: UserComponent) {
         component.inject(this)
@@ -82,6 +85,8 @@ open class GroupViewModel : BaseViewModel() {
     get() = groupIDSubject.value?.value
     val isMember: Boolean
     get() = isMemberData.value ?: false
+    val leaderID: String?
+    get() = group.value?.leaderID
 
     fun getGroupData(): LiveData<Group?> = group
     fun getLeaderData(): LiveData<Member?> = leader

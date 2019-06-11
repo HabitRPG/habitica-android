@@ -6,82 +6,114 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:padding="@dimen/spacing_large"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:focusable="true">
     <com.habitrpg.android.habitica.ui.AvatarView
         android:id="@+id/avatarView"
-        android:layout_width="103dp"
-        android:layout_height="90dp"
-        android:layout_marginRight="12dp"
-        app:showBackground="false"
-        app:showMount="false"
-        app:showPet="false" />
+        android:layout_width="97dp"
+        android:layout_height="99dp"
+        android:layout_marginEnd="12dp"
+        app:showBackground="true"
+        app:showMount="true"
+        app:showPet="true" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
         android:orientation="vertical">
-        <LinearLayout
+        <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+            android:id="@+id/display_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_small" />
+
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_medium">
-            <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
-                android:id="@+id/display_name_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
-            <ImageView
-                android:id="@+id/buff_icon_view"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:contentDescription="@string/buffs"
-                android:layout_marginLeft="@dimen/spacing_small"
-                android:layout_gravity="center_vertical"/>
-            <ImageView
-                android:id="@+id/class_icon_view"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_marginLeft="@dimen/spacing_small"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:id="@+id/leader_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/leader"
-                style="@style/Pill"
-                android:textSize="12sp"/>
-        </LinearLayout>
+            android:layout_height="wrap_content">
+            <TableRow>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_small">
+                    <TextView
+                        android:id="@+id/subline_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        tools:text="level 12 Warrior"
+                        android:textSize="12sp"/>
+                    <ImageView
+                        android:id="@+id/buff_icon_view"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:contentDescription="@string/buffs"
+                        android:layout_marginStart="@dimen/spacing_small"/>
+                    <ImageView
+                        android:id="@+id/class_icon_view"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="@dimen/spacing_small"/>
+                </LinearLayout>
+                <Space />
+            </TableRow>
+            <TableRow>
+                <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="13dp"
+                    android:id="@+id/health_bar"
+                    app:barForegroundColor="@color/hpColor"
+                    app:barBackgroundColor="@color/gray_700"/>
+                <TextView
+                    android:id="@+id/health_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_200"
+                    tools:text="50 / 50"
+                    android:layout_marginStart="13dp"/>
+            </TableRow>
+            <TableRow
+                android:gravity="center_vertical">
+                <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="13dp"
+                    android:id="@+id/experience_bar"
+                    app:barForegroundColor="@color/xpColor"
+                    app:barBackgroundColor="@color/gray_700"/>
+                <TextView
+                    android:id="@+id/experience_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_200"
+                    tools:text="50 / 50"
+                    android:layout_marginStart="13dp"/>
+            </TableRow>
+            <TableRow
+                android:gravity="center_vertical">
+                <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="13dp"
+                    android:id="@+id/mana_bar"
+                    app:barForegroundColor="@color/mpColor"
+                    app:barBackgroundColor="@color/gray_700"/>
+                <TextView
+                    android:id="@+id/mana_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_200"
+                    tools:text="50 / 5000"
+                    android:layout_marginStart="13dp"/>
+            </TableRow>
+        </TableLayout>
 
-        <TextView
-            android:id="@+id/subline_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            tools:text="lvl"
-            android:layout_marginBottom="@dimen/spacing_large"/>
-
-        <com.habitrpg.android.habitica.ui.views.ValueBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/hpBar"
-            app:barForegroundColor="@color/hpColor"
-            app:description="@string/HP_default"
-            app:lightBackground="true"/>
-        <com.habitrpg.android.habitica.ui.views.ValueBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/exp_bar"
-            app:barForegroundColor="@color/xpColor"
-            app:description="@string/XP_default"
-            app:lightBackground="true"/>
-        <com.habitrpg.android.habitica.ui.views.ValueBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mp_bar"
-            app:barForegroundColor="@color/mpColor"
-            app:description="@string/MP_default"
-            app:lightBackground="true"/>
     </LinearLayout>
 
 </LinearLayout>

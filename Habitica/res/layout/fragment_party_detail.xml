@@ -208,6 +208,21 @@
                         android:layout_height="wrap_content"
                         tools:text="This is our super awesome party!"/>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/SegmentView">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/members"
+                        style="@style/SegmentTitle"/>
+                    <LinearLayout
+                        android:id="@+id/members_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
             </LinearLayout>
 
             <Button
