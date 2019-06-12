@@ -822,4 +822,17 @@
   <string name="server">サーバー</string>
   <string name="gift_confirmation_title">プレゼントを贈りました！</string>
   <string name="discover">探す</string>
+  <string name="notifications">通知</string>
+  <string name="no_notifications_title">全ての通知をチェックしました！</string>
+  <string name="no_notifications_text">通知の妖精はパチパチとあなたに拍手を送っています！  えらい！</string>
+  <string name="dismiss_all">すべて閉じる</string>
+  <string name="new_bailey_update">Baileyから新しいお知らせがあります！</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> に新しい投稿があります]]></string>
+  <string name="new_msg_party"><![CDATA[あなたのパーティー、<b>%1$s</b> に新しい投稿があります]]></string>
+  <string name="unallocated_stats_points"><![CDATA[<b>%1$sポイントが割り当てできます。</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[新しい<b>ミステリー アイテム</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[パーティー「<b>%1$s</b>」に招待されました。]]></string>
+  <string name="invited_to_private_guild"><![CDATA[<b>%1$s</b> プライベートギルドに招待されました。]]></string>
+  <string name="invited_to_public_guild"><![CDATA[<b>%1$s</b> ギルドに招待されました。]]></string>
+  <string name="invited_to_quest"><![CDATA[<b>%1$s</b> クエストに招待されました。]]></string>
 </resources>

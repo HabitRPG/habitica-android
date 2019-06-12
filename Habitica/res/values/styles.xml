@@ -464,6 +464,14 @@
         <item name="android:text">?textColorPrimaryDark</item>
     </style>
 
+    <style name="HabiticaButton.Small" parent="HabiticaButton">
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:minHeight">@dimen/button_height_small</item>
+        <item name="android:layout_height">@dimen/button_height_small</item>
+    </style>
+
     <style name="HabiticaButton.Gray" parent="HabiticaButton">
         <item name="android:background">@drawable/layout_rounded_bg_gray_700</item>
         <item name="android:textColor">@color/brand_400</item>
@@ -482,11 +490,19 @@
         <item name="android:background">@drawable/layout_rounded_bg_blue</item>
     </style>
 
+    <style name="HabiticaButton.Red.Small" parent="HabiticaButton.Small">
+        <item name="android:background">@drawable/layout_rounded_bg_red</item>
+    </style>
+
     <style name="SegmentTitle" parent="Headline">
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
     </style>
 
     <style name="HabiticaButton.Green" parent="HabiticaButton">
+        <item name="android:background">@drawable/layout_rounded_bg_green</item>
+    </style>
+
+    <style name="HabiticaButton.Green.Small" parent="HabiticaButton.Small">
         <item name="android:background">@drawable/layout_rounded_bg_green</item>
     </style>
 

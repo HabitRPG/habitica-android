@@ -823,4 +823,17 @@
   <string name="gift_confirmation_text">Tu suscripción regalo ha sido enviada y tu suscripción ha sido aplicada a tu cuenta.</string>
   <string name="discover">Descubre</string>
   <string name="damage_paused">Daño pausado</string>
+  <string name="notifications">Notificaciones</string>
+  <string name="no_notifications_title">¡Estás al día!</string>
+  <string name="no_notifications_text">Las hadas de las notificaciones te aplauden atronadoramente. ¡Bien hecho!</string>
+  <string name="dismiss_all">Ignorar todas</string>
+  <string name="new_bailey_update">¡Nueva Actualización de Bailey!</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> tiene nuevos mensajes]]></string>
+  <string name="new_msg_party"><![CDATA[Tu Equipo, <b>%1$s</b>, tiene nuevos mensajes]]></string>
+  <string name="unallocated_stats_points"><![CDATA[Tienes <b>%1$s Puntos de Estadísticas sin asignar</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[Tienes <b>Objetos Misteriosos</b> nuevos]]></string>
+  <string name="invited_to_party_notification"><![CDATA[Has sido invitado a unirte al Equipo <b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[Has sido invitado a unirte al Gremio privado <b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[Has sido invitado a unirte al Gremio <b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[Has sido invitado a la misión <b>%1$s</b>]]></string>
 </resources>

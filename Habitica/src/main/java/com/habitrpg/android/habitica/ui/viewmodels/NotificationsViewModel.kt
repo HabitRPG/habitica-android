@@ -3,15 +3,24 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import android.os.Bundle
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
+import com.habitrpg.android.habitica.models.notifications.GuildInvitationData
 import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.android.habitica.models.notifications.PartyInvitationData
+import com.habitrpg.android.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.android.habitica.models.social.UserParty
+import com.habitrpg.android.habitica.models.user.User
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
+import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 import javax.inject.Inject
 
@@ -19,9 +28,12 @@ open class NotificationsViewModel : BaseViewModel() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
 
+    @Inject
+    lateinit var socialRepository: SocialRepository
+
     /**
      * A list of notification types handled by this component.
-     * NOTE: Those not listed here won't be shown in the notification panel
+     * NOTE: Those not listed here won't be shown in the notification panel (except the custom ones)
      */
     private val supportedNotificationTypes = listOf(
             Notification.Type.NEW_STUFF.type,
@@ -33,27 +45,53 @@ open class NotificationsViewModel : BaseViewModel() {
     )
 
     /**
+     * A list of notification types that are "actionable" (ones that have accept/reject buttons).
+     */
+    private val actionableNotificationTypes = listOf(
+            Notification.Type.GUILD_INVITATION.type,
+            Notification.Type.PARTY_INVITATION.type,
+            Notification.Type.QUEST_INVITATION.type
+    )
+
+    /**
      * Keep track of users party so we can determine which chat notifications are party chat
      * instead of guild chat notifications.
      */
     private var party: UserParty? = null
+
+    /**
+     * Custom notification types created by this class (from user data).
+     * Will be combined with the notifications coming from server.
+     */
+    private val customNotifications: BehaviorSubject<List<Notification>>
 
     override fun inject(component: UserComponent) {
         component.inject(this)
     }
 
     init {
+        customNotifications = BehaviorSubject.create()
+        customNotifications.onNext(emptyList())
+
         disposable.add(userRepository.getUser()
                 .subscribe(Consumer {
                     party = it.party
+                    customNotifications.onNext(convertInvitationsToNotifications(it))
                 }, RxErrorHandler.handleEmptyError()))
     }
 
 
     fun getNotifications(): Flowable<List<Notification>> {
-        return notificationsManager.getNotifications()
+        val serverNotifications = notificationsManager.getNotifications()
                 .map { filterSupportedTypes(it) }
-                .observeOn(AndroidSchedulers.mainThread())
+
+        return Flowable.combineLatest(
+                serverNotifications,
+                customNotifications.toFlowable(BackpressureStrategy.LATEST),
+                BiFunction<List<Notification>, List<Notification>, List<Notification>> {
+                    serverNotificationsList, customNotificationsList -> serverNotificationsList + customNotificationsList
+                }
+        ).observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getNotificationCount(): Flowable<Int> {
@@ -64,7 +102,7 @@ open class NotificationsViewModel : BaseViewModel() {
 
     fun allNotificationsSeen(): Flowable<Boolean> {
         return getNotifications()
-                .map { it.all { notification -> notification.seen == true } }
+                .map { it.all { notification -> notification.seen != false } }
                 .distinctUntilChanged()
     }
 
@@ -87,6 +125,44 @@ open class NotificationsViewModel : BaseViewModel() {
         return notifications.filter { supportedNotificationTypes.contains(it.type) }
     }
 
+    private fun convertInvitationsToNotifications(user: User): List<Notification> {
+        val notifications = arrayListOf<Notification>()
+
+        notifications.addAll(user.invitations?.parties?.map {
+            val notification = Notification()
+            notification.id = "custom-party-invitation-" + it.id
+            notification.type = Notification.Type.PARTY_INVITATION.type
+            val data = PartyInvitationData()
+            data.invitation = it
+            notification.data = data
+            notification
+        } ?: emptyList())
+
+        notifications.addAll(user.invitations?.getGuilds()?.map {
+            val notification = Notification()
+            notification.id = "custom-guild-invitation-" + it.id
+            notification.type = Notification.Type.GUILD_INVITATION.type
+            val data = GuildInvitationData()
+            data.invitation = it
+            notification.data = data
+            notification
+        } ?: emptyList())
+
+        val quest = user.party?.quest
+        if (quest != null && quest.RSVPNeeded) {
+            val notification = Notification()
+            notification.id = "custom-quest-invitation-" + user.party?.id
+            notification.type = Notification.Type.QUEST_INVITATION.type
+            val data = QuestInvitationData()
+            data.questKey = quest.key
+            notification.data = data
+
+            notifications.add(notification)
+        }
+
+        return notifications
+    }
+
     fun isPartyMessage(data: NewChatMessageData?): Boolean {
         if (party == null || data?.group?.id == null) {
             return false
@@ -95,26 +171,45 @@ open class NotificationsViewModel : BaseViewModel() {
         return party?.id == data.group?.id
     }
 
+    /**
+     * Is the given notification an "artificial" custom notification (created by this class)
+     * instead of one of the ones coming from server.
+     */
+    private fun isCustomNotification(notification: Notification): Boolean {
+        return notification.id.startsWith("custom-")
+    }
+
     fun dismissNotification(notification: Notification) {
+        if (isCustomNotification(notification)) {
+            return
+        }
+
         disposable.add(userRepository.readNotification(notification.id)
                 .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
     }
 
     fun dismissAllNotifications(notifications: List<Notification>) {
-        if (notifications.isEmpty()) {
+        val dismissableIds = notifications
+                .filter { !isCustomNotification(it) }
+                .filter { !actionableNotificationTypes.contains(it.type) }
+                .map { it.id }
+
+        if (dismissableIds.isEmpty()) {
             return
         }
 
         val notificationIds = HashMap<String, List<String>>()
-        notificationIds["notificationIds"] = notifications.map { notification -> notification.id }
+        notificationIds["notificationIds"] = dismissableIds
 
         disposable.add(userRepository.readNotifications(notificationIds)
                 .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
     }
 
     fun markNotificationsAsSeen(notifications: List<Notification>) {
-        val unseenIds = notifications.filter { notification -> notification.seen != true }
-                .map { notification -> notification.id }
+        val unseenIds = notifications
+                .filter { !isCustomNotification(it) }
+                .filter { it.seen == false }
+                .map { it.id }
 
         if (unseenIds.isEmpty()) {
             return
@@ -155,4 +250,71 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
+    fun accept(notificationId: String) {
+        val notification = customNotifications.value?.find { it.id == notificationId } ?: return
+
+        when (notification.type) {
+            Notification.Type.GUILD_INVITATION.type -> {
+                val data = notification.data as GuildInvitationData
+                acceptGroupInvitation(data.invitation?.id)
+            }
+            Notification.Type.PARTY_INVITATION.type -> {
+                val data = notification.data as PartyInvitationData
+                acceptGroupInvitation(data.invitation?.id)
+            }
+            Notification.Type.QUEST_INVITATION.type -> acceptQuestInvitation()
+        }
+    }
+
+    fun reject(notificationId: String) {
+        val notification = customNotifications.value?.find { it.id == notificationId } ?: return
+
+        when (notification.type) {
+            Notification.Type.GUILD_INVITATION.type -> {
+                val data = notification.data as GuildInvitationData
+                rejectGroupInvite(data.invitation?.id)
+            }
+            Notification.Type.PARTY_INVITATION.type -> {
+                val data = notification.data as PartyInvitationData
+                rejectGroupInvite(data.invitation?.id)
+            }
+            Notification.Type.QUEST_INVITATION.type -> rejectQuestInvitation()
+        }
+    }
+
+    fun acceptGroupInvitation(groupId: String?) {
+        groupId.notNull {
+            disposable.add(socialRepository.joinGroup(it)
+                    .subscribe(Consumer {
+                        refreshNotifications()
+                    }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    fun rejectGroupInvite(groupId: String?) {
+        groupId.notNull {
+            disposable.add(socialRepository.rejectGroupInvite(it)
+                    .subscribe(Consumer {
+                        refreshNotifications()
+                    }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    private fun acceptQuestInvitation() {
+        party?.id.notNull {
+            disposable.add(socialRepository.acceptQuest(null, it)
+                    .subscribe(Consumer {
+                        refreshNotifications()
+                    }, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    private fun rejectQuestInvitation() {
+        party?.id.notNull {
+            disposable.add(socialRepository.rejectQuest(null, it)
+                    .subscribe(Consumer {
+                        refreshNotifications()
+                    }, RxErrorHandler.handleEmptyError()))
+        }
+    }
 }

@@ -820,4 +820,17 @@
   <string name="gift_confirmation_title">Votre cadeau a été envoyé !</string>
   <string name="gift_confirmation_text_g1g1">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte.</string>
   <string name="gift_confirmation_text">Votre abonnement offert a été envoyé, et votre abonnement a été rattaché à votre compte.</string>
+  <string name="notifications">Notifications</string>
+  <string name="no_notifications_title">Vous êtes à jour !</string>
+  <string name="no_notifications_text">Les fées de la notification vous font un tonnerre d\'applaudissements ! Bien joué !</string>
+  <string name="dismiss_all">Tout effacer</string>
+  <string name="new_bailey_update">Nouvelles informations de Bailey !</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> a de nouveaux messages]]></string>
+  <string name="new_msg_party"><![CDATA[Votre équipe, <b>%1$s</b>, a de nouveaux messages]]></string>
+  <string name="unallocated_stats_points"><![CDATA[Vous avez <b>%1$s points d\'attribut non alloués</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[Vous avez de nouveaux <b>objets mystère</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[Vous avez reçu une invitation à rejoindre l\'équipe <b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[Vous avez reçu une invitation à rejoindre la guilde privée <b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[Vous avez reçu une invitation à rejoindre la guilde <b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[On vous invite à rejoindre la quête <b>%1$s</b>]]></string>
 </resources>

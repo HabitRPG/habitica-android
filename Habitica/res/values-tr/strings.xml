@@ -808,4 +808,17 @@
   <string name="visit_website">websiteyi ziyaret et</string>
   <string name="gift_subscription">Abonelik Hediye Et</string>
   <string name="send_gift">Hediye Gönder</string>
+  <string name="notifications">Bildirimler</string>
+  <string name="no_notifications_title">Bildirimleri temizledin!</string>
+  <string name="no_notifications_text">Bildirim perileri seni şevkle alkışlıyor! Bravo!</string>
+  <string name="dismiss_all">Okundu Olarak İşaretle</string>
+  <string name="new_bailey_update">Yeni Bailey Güncellemesi!</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> adlı Loncada yeni mesajlar var]]></string>
+  <string name="new_msg_party"><![CDATA[<b>%1$s</b> adlı Takımında yeni mesajlar var]]></string>
+  <string name="unallocated_stats_points"><![CDATA[<b>%1$s adet dağıtılmamış Nitelik Puanın var.</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[Yeni <b>Gizemli Eşyaların</b> var]]></string>
+  <string name="invited_to_party_notification"><![CDATA[<b>%1$s</b> Takımına davet edildin]]></string>
+  <string name="invited_to_private_guild"><![CDATA[<b>%1$s</b> adlı özel Loncaya davet edildin]]></string>
+  <string name="invited_to_public_guild"><![CDATA[<b>%1$s</b> adlı Loncaya davet edildin]]></string>
+  <string name="invited_to_quest"><![CDATA[<b>%1$s</b> Görevine davet edildin]]></string>
 </resources>

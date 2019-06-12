@@ -39,7 +39,9 @@ class NotificationsManager (private val context: Context) {
     }
 
     fun getNotifications(): Flowable<List<Notification>> {
-        return this.notifications.toFlowable(BackpressureStrategy.LATEST)
+        return this.notifications
+                .startWith(emptyList<Notification>())
+                .toFlowable(BackpressureStrategy.LATEST)
     }
 
     fun getNotification(id: String): Notification? {

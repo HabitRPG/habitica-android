@@ -739,4 +739,17 @@
   <string name="short_name">簡短的名稱</string>
   <string name="unlock_attribute_points">分配屬性點在10等時解鎖</string>
   <string name="moderator">管理員</string>
+  <string name="notifications">通知</string>
+  <string name="no_notifications_title">已查看所有新訊息!</string>
+  <string name="no_notifications_text">通知仙女給您一陣熱烈的掌聲！做得好！</string>
+  <string name="dismiss_all">清除全部</string>
+  <string name="new_bailey_update">Bailey的新信息！</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b>有新的貼文]]></string>
+  <string name="new_msg_party"><![CDATA[您的隊伍<b>%1$s</b>有新的貼文]]></string>
+  <string name="unallocated_stats_points"><![CDATA[你有<b>%1$s點未分配屬性點</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[您有新的<b>神秘裝備</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[您受邀加入<b>%1$s</b>隊伍]]></string>
+  <string name="invited_to_private_guild"><![CDATA[您受邀加入<b>%1$s</b>私人公會]]></string>
+  <string name="invited_to_public_guild"><![CDATA[您受邀加入<b>%1$s</b>您受邀加入]]></string>
+  <string name="invited_to_quest"><![CDATA[您受邀加入<b>%1$s</b>副本]]></string>
 </resources>

@@ -399,6 +399,18 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     MainNavigationController
             )
         }
+
+        if (resultCode == NOTIFICATION_ACCEPT && data?.hasExtra("notificationId") == true) {
+            notificationsViewModel?.accept(
+                    data.getStringExtra("notificationId")
+            )
+        }
+
+        if (resultCode == NOTIFICATION_REJECT && data?.hasExtra("notificationId") == true) {
+            notificationsViewModel?.reject(
+                    data.getStringExtra("notificationId")
+            )
+        }
     }
 
     // region Events
@@ -747,5 +759,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         const val SELECT_CLASS_RESULT = 11
         const val GEM_PURCHASE_REQUEST = 111
         const val NOTIFICATION_CLICK = 222
+        const val NOTIFICATION_ACCEPT = 223
+        const val NOTIFICATION_REJECT = 224
     }
 }
