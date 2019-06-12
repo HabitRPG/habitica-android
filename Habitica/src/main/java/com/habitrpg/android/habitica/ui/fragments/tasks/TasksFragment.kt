@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
-import com.habitrpg.android.habitica.events.TaskTappedEvent
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -19,7 +18,6 @@ import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.functions.Consumer
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import javax.inject.Inject
 
@@ -36,7 +34,6 @@ class TasksFragment : BaseMainFragment() {
     private var refreshItem: MenuItem? = null
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
 
-    private var displayingTaskForm: Boolean = false
     private var filterMenuItem: MenuItem? = null
 
     private val activeFragment: TaskRecyclerViewFragment?
@@ -46,7 +43,6 @@ class TasksFragment : BaseMainFragment() {
                               savedInstanceState: Bundle?): View? {
         this.usesTabLayout = false
         this.usesBottomNavigation = true
-        this.displayingTaskForm = false
         super.onCreateView(inflater, container, savedInstanceState)
         val v = inflater.inflate(R.layout.fragment_viewpager, container, false)
 
@@ -251,7 +247,7 @@ class TasksFragment : BaseMainFragment() {
     // endregion
 
     private fun openNewTaskActivity(type: String) {
-        if (this.displayingTaskForm) {
+        if (displayingTaskForm) {
             return
         }
 
@@ -273,26 +269,8 @@ class TasksFragment : BaseMainFragment() {
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         if (this.isAdded) {
-            this.displayingTaskForm = true
+            displayingTaskForm = true
             startActivityForResult(intent, TASK_CREATED_RESULT)
-        }
-    }
-
-    @Subscribe
-    fun onEvent(event: TaskTappedEvent) {
-        if (this.displayingTaskForm) {
-            return
-        }
-
-        val bundle = Bundle()
-        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.type)
-        bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.id)
-
-        val intent = Intent(activity, TaskFormActivity::class.java)
-        intent.putExtras(bundle)
-        this.displayingTaskForm = true
-        if (isAdded) {
-            startActivityForResult(intent, TASK_UPDATED_RESULT)
         }
     }
 
@@ -303,10 +281,10 @@ class TasksFragment : BaseMainFragment() {
 
         when (requestCode) {
             TASK_CREATED_RESULT -> {
-                this.displayingTaskForm = false
+                displayingTaskForm = false
                 onTaskCreatedResult(resultCode, data)
             }
-            TASK_UPDATED_RESULT -> this.displayingTaskForm = false
+            TASK_UPDATED_RESULT -> displayingTaskForm = false
         }
     }
 
@@ -345,7 +323,8 @@ class TasksFragment : BaseMainFragment() {
     override fun addToBackStack(): Boolean = false
 
     companion object {
+        var displayingTaskForm: Boolean = false
         private const val TASK_CREATED_RESULT = 1
-        private const val TASK_UPDATED_RESULT = 2
+        const val TASK_UPDATED_RESULT = 2
     }
 }

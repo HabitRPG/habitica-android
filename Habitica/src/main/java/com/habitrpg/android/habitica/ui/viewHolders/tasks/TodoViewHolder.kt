@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 
 import java.text.DateFormat
 
-class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc) {
+class TodoViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, openTaskFunc) {
 
     private val dateFormatter: DateFormat = android.text.format.DateFormat.getDateFormat(context)
 

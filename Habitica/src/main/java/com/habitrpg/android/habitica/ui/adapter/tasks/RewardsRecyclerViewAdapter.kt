@@ -20,9 +20,12 @@ import io.realm.OrderedRealmCollection
 class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollection<Task>?, private val layoutResource: Int, private val user: User?) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     private var inAppRewards: OrderedRealmCollection<ShopItem>? = null
 
-    private val errorButtonEvents = PublishSubject.create<String>()
+    val errorButtonEventsSubject = PublishSubject.create<String>()
+    override val errorButtonEvents = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     private var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
-    val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    protected var taskOpenEventsSubject = PublishSubject.create<Task>()
+    override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
 
     private val inAppRewardCount: Int
         get() = inAppRewards?.size ?: 0
@@ -30,13 +33,19 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
     private val customRewardCount: Int
         get() = customRewards?.size ?: 0
 
+    override var ignoreUpdates: Boolean
+        get() = false
+        set(_) {}
+
     private fun getContentView(parent: ViewGroup): View {
         return LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEWTYPE_CUSTOM_REWARD) {
-            RewardViewHolder(getContentView(parent)) { task, direction -> taskScoreEventsSubject.onNext(Pair(task, direction)) }
+            RewardViewHolder(getContentView(parent), { task, direction -> taskScoreEventsSubject.onNext(Pair(task, direction)) }) {
+                task -> taskOpenEventsSubject.onNext(task)
+            }
         } else {
             ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
         }
@@ -65,20 +74,8 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         }
     }
 
-    override fun setIgnoreUpdates(ignoreUpdates: Boolean) {
-
-    }
-
-    override fun getIgnoreUpdates(): Boolean {
-        return false
-    }
-
     override fun updateUnfilteredData(data: OrderedRealmCollection<Task>?) {
         updateData(data)
-    }
-
-    override fun getErrorButtonEvents(): Flowable<String> {
-        return errorButtonEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     override fun getItemCount(): Int {

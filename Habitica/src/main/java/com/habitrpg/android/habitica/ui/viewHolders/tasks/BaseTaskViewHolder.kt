@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.View
 import android.widget.*
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.TaskTappedEvent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
@@ -20,9 +19,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import org.greenrobot.eventbus.EventBus
 
-abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
+abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
 
 
     var task: Task? = null
@@ -186,10 +184,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
             return
         }
 
-        val event = TaskTappedEvent()
-        event.Task = task
-
-        EventBus.getDefault().post(event)
+        task?.let { openTaskFunc(it) }
     }
 
     open fun canContainMarkdown(): Boolean {

@@ -10,5 +10,7 @@ class HabitsRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpdate:
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder =
-            HabitViewHolder(getContentView(parent)) { task, direction -> taskScoreEventsSubject.onNext(Pair(task, direction)) }
+            HabitViewHolder(getContentView(parent), { task, direction -> taskScoreEventsSubject.onNext(Pair(task, direction)) }) {
+                task -> taskOpenEventsSubject.onNext(task)
+            }
 }

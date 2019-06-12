@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
-class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc) {
+class DailyViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit)) : ChecklistedViewHolder(itemView, scoreTaskFunc, openTaskFunc) {
 
     private val streakTextView: TextView by bindView(itemView, R.id.streakTextView)
 

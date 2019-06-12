@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
-class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc) {
+class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc) {
 
     private val btnPlusWrapper: FrameLayout by bindView(itemView, R.id.btnPlusWrapper)
     private val btnPlusIconView: ImageView by bindView(itemView, R.id.btnPlusIconView)
@@ -85,11 +85,11 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         super.bind(newTask, position)
     }
 
-    fun onPlusButtonClicked() {
+    private fun onPlusButtonClicked() {
         task?.let { scoreTaskFunc.invoke(it, TaskDirection.UP) }
     }
 
-    fun onMinusButtonClicked() {
+    private fun onMinusButtonClicked() {
         task?.let { scoreTaskFunc.invoke(it, TaskDirection.DOWN) }
     }
 

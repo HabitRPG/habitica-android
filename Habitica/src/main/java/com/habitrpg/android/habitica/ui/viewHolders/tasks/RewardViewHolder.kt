@@ -13,9 +13,9 @@ import com.habitrpg.android.habitica.ui.ItemDetailDialog
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
-class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc) {
+class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc) {
 
-    internal val buyButton: View by bindView(itemView, R.id.buyButton)
+    private val buyButton: View by bindView(itemView, R.id.buyButton)
     internal val priceLabel: TextView by bindView(itemView, R.id.priceLabel)
     private val goldIconView: ImageView by bindView(itemView, R.id.gold_icon)
 
@@ -53,7 +53,7 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
             dialog.setBuyListener( DialogInterface.OnClickListener { _, _ -> this.buyReward() })
             dialog.show()
         } else {
-            task?.let { scoreTaskFunc(it, TaskDirection.UP) }
+            super.onClick(v)
         }
     }
 

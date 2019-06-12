@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.events.TaskTappedEvent
 import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -27,11 +26,10 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -212,6 +210,7 @@ class ChallengeFormActivity : BaseActivity() {
         val bundle = intent.extras
 
         challengeTasks = ChallengeTasksRecyclerViewAdapter(null, 0, this, "", null, false, true)
+        compositeSubscription.add(challengeTasks.taskOpenEvents.subscribe { openNewTaskActivity(it.type, it) })
         locationAdapter = GroupArrayAdapter(this)
 
         if (bundle != null) {
@@ -236,11 +235,6 @@ class ChallengeFormActivity : BaseActivity() {
         socialRepository.close()
         challengeRepository.close()
         super.onDestroy()
-    }
-
-    @Subscribe
-    fun onEvent(tappedEvent: TaskTappedEvent) {
-        openNewTaskActivity(null, tappedEvent.Task)
     }
 
     private fun onAddGem() {

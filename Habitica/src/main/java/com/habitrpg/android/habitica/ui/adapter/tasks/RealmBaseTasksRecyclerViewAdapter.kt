@@ -18,7 +18,7 @@ import io.realm.RealmResults
 
 abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : androidx.recyclerview.widget.RecyclerView.Adapter<VH>(), TaskRecyclerViewAdapter {
     private var updateOnModification: Boolean = false
-    private var ignoreUpdates: Boolean = false
+    override var ignoreUpdates: Boolean = false
     private val listener: OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> by lazy {
         OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> { _, changeSet ->
             if (ignoreUpdates) {
@@ -50,9 +50,11 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         private set
 
     private var errorButtonEventsSubject = PublishSubject.create<String>()
-
+    override val errorButtonEvents = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     protected var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
-    val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    protected var taskOpenEventsSubject = PublishSubject.create<Task>()
+    override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
 
     private val isDataValid: Boolean
         get() = data?.isValid ?: false
@@ -159,17 +161,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         }
     }
 
-    override fun getIgnoreUpdates(): Boolean = ignoreUpdates
-
-    override fun setIgnoreUpdates(ignoreUpdates: Boolean) {
-        this.ignoreUpdates = ignoreUpdates
-    }
-
     override fun getTaskIDAt(position: Int): String {
         return data?.get(position)?.id ?: ""
-    }
-
-    override fun getErrorButtonEvents(): Flowable<String> {
-        return errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     }
 }

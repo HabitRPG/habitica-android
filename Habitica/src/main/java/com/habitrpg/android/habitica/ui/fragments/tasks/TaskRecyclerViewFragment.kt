@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -26,6 +27,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
@@ -111,7 +113,6 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             }
             else -> null
         }
-        compositeSubscription
 
         if (classType != Task.TYPE_REWARD) {
             allowReordering()
@@ -123,6 +124,9 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
             taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
         }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
+        recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler(Consumer {
+            openTaskForm(it)
+        })
 
         if (this.classType != null) {
             compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer {
@@ -301,6 +305,23 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
         if (activeFilter == Task.FILTER_COMPLETED) {
             compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    fun openTaskForm(task: Task) {
+        if (TasksFragment.displayingTaskForm) {
+            return
+        }
+
+        val bundle = Bundle()
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type)
+        bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
+
+        val intent = Intent(activity, TaskFormActivity::class.java)
+        intent.putExtras(bundle)
+        TasksFragment.displayingTaskForm = true
+        if (isAdded) {
+            startActivityForResult(intent, TasksFragment.TASK_UPDATED_RESULT)
         }
     }
 
