@@ -222,14 +222,21 @@ open class NotificationsViewModel : BaseViewModel() {
                 .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
     }
 
+    private fun findNotification(id: String): Notification? {
+        return notificationsManager.getNotification(id) ?: customNotifications.value?.find { it.id == id }
+    }
+
     fun click(notificationId: String, navController: MainNavigationController) {
-        val notification = notificationsManager.getNotification(notificationId) ?: return
+        val notification = findNotification(notificationId) ?: return
 
         dismissNotification(notification)
 
         when (notification.type) {
             Notification.Type.NEW_STUFF.type -> navController.navigate(R.id.newsFragment)
             Notification.Type.NEW_CHAT_MESSAGE.type -> clickNewChatMessage(notification, navController)
+            Notification.Type.GUILD_INVITATION.type -> clickGroupInvitation(notification, navController)
+            Notification.Type.PARTY_INVITATION.type -> clickGroupInvitation(notification, navController)
+            Notification.Type.QUEST_INVITATION.type -> navController.navigate(R.id.partyFragment)
             Notification.Type.NEW_MYSTERY_ITEMS.type -> navController.navigate(R.id.itemsFragment, bundleOf(Pair("itemType", "special")))
             Notification.Type.UNALLOCATED_STATS_POINTS.type -> navController.navigate(R.id.statsFragment)
             // Group tasks should go to Group tasks view if that is added to this app at some point
@@ -251,33 +258,46 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
-    fun accept(notificationId: String) {
-        val notification = customNotifications.value?.find { it.id == notificationId } ?: return
-
+    fun clickGroupInvitation(notification: Notification, navController: MainNavigationController) {
         when (notification.type) {
             Notification.Type.GUILD_INVITATION.type -> {
-                val data = notification.data as GuildInvitationData
-                acceptGroupInvitation(data.invitation?.id)
+                val bundle = Bundle()
+                val data = notification.data as? GuildInvitationData
+                bundle.putString("groupID", data?.invitation?.id)
+                bundle.putBoolean("isMember", true) // safe to assume user is member since they got the notification
+                navController.navigate(R.id.guildFragment, bundle)
             }
             Notification.Type.PARTY_INVITATION.type -> {
-                val data = notification.data as PartyInvitationData
-                acceptGroupInvitation(data.invitation?.id)
+                navController.navigate(R.id.partyFragment)
+            }
+        }
+    }
+
+    fun accept(notificationId: String) {
+        val notification = findNotification(notificationId) ?: return
+        when (notification.type) {
+            Notification.Type.GUILD_INVITATION.type -> {
+                val data = notification.data as? GuildInvitationData
+                acceptGroupInvitation(data?.invitation?.id)
+            }
+            Notification.Type.PARTY_INVITATION.type -> {
+                val data = notification.data as? PartyInvitationData
+                acceptGroupInvitation(data?.invitation?.id)
             }
             Notification.Type.QUEST_INVITATION.type -> acceptQuestInvitation()
         }
     }
 
     fun reject(notificationId: String) {
-        val notification = customNotifications.value?.find { it.id == notificationId } ?: return
-
+        val notification = findNotification(notificationId) ?: return
         when (notification.type) {
             Notification.Type.GUILD_INVITATION.type -> {
-                val data = notification.data as GuildInvitationData
-                rejectGroupInvite(data.invitation?.id)
+                val data = notification.data as? GuildInvitationData
+                rejectGroupInvite(data?.invitation?.id)
             }
             Notification.Type.PARTY_INVITATION.type -> {
-                val data = notification.data as PartyInvitationData
-                rejectGroupInvite(data.invitation?.id)
+                val data = notification.data as? PartyInvitationData
+                rejectGroupInvite(data?.invitation?.id)
             }
             Notification.Type.QUEST_INVITATION.type -> rejectQuestInvitation()
         }

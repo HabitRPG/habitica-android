@@ -318,6 +318,14 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             messageText: CharSequence): View? {
         val item = inflater?.inflate(R.layout.notification_item_actionable, notification_items, false)
 
+        val container = item?.findViewById(R.id.notification_item) as? View
+        container?.setOnClickListener {
+            val resultIntent = Intent()
+            resultIntent.putExtra("notificationId", notification.id)
+            setResult(NOTIFICATION_CLICK, resultIntent)
+            finish()
+        }
+
         val acceptButton = item?.findViewById(R.id.accept_button) as? Button
         acceptButton?.setOnClickListener {
             val resultIntent = Intent()
