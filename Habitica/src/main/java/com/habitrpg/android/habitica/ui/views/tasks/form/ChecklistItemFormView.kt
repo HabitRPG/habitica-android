@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
@@ -26,6 +27,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
 
     private val button: ImageButton by bindView(R.id.button)
     private val editText: AppCompatEditText by bindView(R.id.edit_text)
+    internal val dragGrip: View by bindView(R.id.drag_grip)
 
     var item: ChecklistItem = ChecklistItem()
     set(value) {
@@ -38,21 +40,34 @@ class ChecklistItemFormView @JvmOverloads constructor(
     var animDuration = 0L
     var isAddButton: Boolean = true
     set(value) {
+        if (field == value) {
+            return
+        }
         field = value
         editText.hint = context.getString(if (value) R.string.new_checklist_item else R.string.checklist_text)
-        if (value) {
-            val rotate = RotateAnimation(135f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-            rotate.duration = animDuration
-            rotate.interpolator = LinearInterpolator()
-            rotate.fillAfter = true
-            button.startAnimation(rotate)
+        val rotate = if (value) {
+            dragGrip.visibility = View.GONE
+            RotateAnimation(135f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
         } else {
-            val rotate = RotateAnimation(0f, 135f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-            rotate.duration = animDuration
-            rotate.interpolator = LinearInterpolator()
-            rotate.fillAfter = true
-            button.startAnimation(rotate)
+            dragGrip.visibility = View.VISIBLE
+            RotateAnimation(0f, 135f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
         }
+        rotate.duration = animDuration
+        rotate.interpolator = LinearInterpolator()
+        rotate.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {}
+
+            override fun onAnimationEnd(animation: Animation?) {
+                button.rotation = if (value) {
+                    0f
+                } else {
+                    135f
+                }
+            }
+
+            override fun onAnimationStart(animation: Animation?) {}
+        })
+        button.startAnimation(rotate)
     }
 
     init {

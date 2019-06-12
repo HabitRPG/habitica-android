@@ -4,16 +4,15 @@ import android.animation.LayoutTransition
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.LinearLayout
 import androidx.core.view.children
 import androidx.core.view.updateMargins
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
+import com.habitrpg.android.habitica.ui.views.DragLinearLayout
 import io.realm.RealmList
 
 class ChecklistContainer @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+        context: Context, attrs: AttributeSet? = null) : DragLinearLayout(context, attrs) {
     var checklistItems: RealmList<ChecklistItem>
         get() {
             val list = RealmList<ChecklistItem>()
@@ -60,10 +59,12 @@ class ChecklistContainer @JvmOverloads constructor(
                 addChecklistViewAt(-1)
                 view.animDuration = 300
                 view.isAddButton = false
+                setViewDraggable(view, view.dragGrip)
             } else if (shouldBecomeNewAddButton(view)) {
                 removeViewAt(childCount-1)
                 view.animDuration = 300
                 view.isAddButton = true
+                removeViewDraggable(view)
             }
         }
         val indexToUse = if (index < 0) {
@@ -76,6 +77,7 @@ class ChecklistContainer @JvmOverloads constructor(
             view.isAddButton = true
         } else {
             addView(view, indexToUse)
+            setViewDraggable(view, view.dragGrip)
         }
         val layoutParams = view.layoutParams as? LayoutParams
         layoutParams?.updateMargins(bottom = 8.dpToPx(context))
