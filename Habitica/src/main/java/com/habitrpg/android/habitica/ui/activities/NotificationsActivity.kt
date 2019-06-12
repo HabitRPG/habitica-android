@@ -272,7 +272,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val view = createActionableNotificationItem(notification, "")
 
         // hide view until we have loaded quest data and populated the values
-        view.visibility = View.GONE
+        view?.visibility = View.GONE
 
         compositeSubscription.add(inventoryRepository.getQuestContent(data?.questKey ?: "")
                 .firstElement()
@@ -283,16 +283,16 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return view
     }
 
-    private fun updateQuestInvitationView(view: View, questContent: QuestContent) {
-        val messageTextView = view.findViewById(R.id.message_text) as? TextView
+    private fun updateQuestInvitationView(view: View?, questContent: QuestContent) {
+        val messageTextView = view?.findViewById(R.id.message_text) as? TextView
         messageTextView?.text = fromHtml(getString(R.string.invited_to_quest, questContent.text))
 
-        val questObjectiveLabelView = view.findViewById(R.id.quest_objective_label) as? TextView
-        val questObjectiveTextView = view.findViewById(R.id.quest_objective_text) as? TextView
-        val questDifficultyLabelView = view.findViewById(R.id.difficulty_label) as? TextView
+        val questObjectiveLabelView = view?.findViewById(R.id.quest_objective_label) as? TextView
+        val questObjectiveTextView = view?.findViewById(R.id.quest_objective_text) as? TextView
+        val questDifficultyLabelView = view?.findViewById(R.id.difficulty_label) as? TextView
         questDifficultyLabelView?.text = getText(R.string.difficulty)
         questDifficultyLabelView?.append(":")
-        val questDifficultyView = view.findViewById(R.id.quest_difficulty) as? RatingBar
+        val questDifficultyView = view?.findViewById(R.id.quest_difficulty) as? RatingBar
 
         if (questContent.isBossQuest) {
             questObjectiveLabelView?.text = getString(R.string.defeat)
@@ -308,18 +308,17 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
 
         questObjectiveLabelView?.append(":")
-        val questDetailView = view.findViewById(R.id.quest_detail_view) as? View
+        val questDetailView = view?.findViewById(R.id.quest_detail_view) as? View
         questDetailView?.visibility = View.VISIBLE
-        view.visibility = View.VISIBLE
+        view?.visibility = View.VISIBLE
     }
 
     private fun createActionableNotificationItem(
             notification: Notification,
-            messageText: CharSequence
-    ): View {
-        val item = inflater.inflate(R.layout.notification_item_actionable, notification_items, false)
+            messageText: CharSequence): View? {
+        val item = inflater?.inflate(R.layout.notification_item_actionable, notification_items, false)
 
-        val acceptButton = item.findViewById(R.id.accept_button) as? Button
+        val acceptButton = item?.findViewById(R.id.accept_button) as? Button
         acceptButton?.setOnClickListener {
             val resultIntent = Intent()
             resultIntent.putExtra("notificationId", notification.id)
@@ -327,7 +326,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             finish()
         }
 
-        val rejectButton = item.findViewById(R.id.reject_button) as? Button
+        val rejectButton = item?.findViewById(R.id.reject_button) as? Button
         rejectButton?.setOnClickListener {
             val resultIntent = Intent()
             resultIntent.putExtra("notificationId", notification.id)
@@ -335,7 +334,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             finish()
         }
 
-        val messageTextView = item.findViewById(R.id.message_text) as? TextView
+        val messageTextView = item?.findViewById(R.id.message_text) as? TextView
         messageTextView?.text = messageText
 
         return item

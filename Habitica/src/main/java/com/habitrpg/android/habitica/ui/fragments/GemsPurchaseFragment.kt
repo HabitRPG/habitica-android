@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
@@ -19,7 +18,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import org.solovyev.android.checkout.BillingRequests
 import org.solovyev.android.checkout.Inventory
 import org.solovyev.android.checkout.ProductTypes
-import java.util.HashMap
 import javax.inject.Inject
 
 class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragment {
@@ -40,10 +38,6 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
                               savedInstanceState: Bundle?): View? {
 
         super.onCreateView(inflater, container, savedInstanceState)
-
-        val additionalData = HashMap<String, Any>()
-        additionalData["page"] = "Gem Purchase Page"
-        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
 
         return container?.inflate(R.layout.fragment_gem_purchase)
     }

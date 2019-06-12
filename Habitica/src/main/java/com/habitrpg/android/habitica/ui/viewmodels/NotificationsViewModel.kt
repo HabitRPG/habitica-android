@@ -5,7 +5,6 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -285,7 +284,7 @@ open class NotificationsViewModel : BaseViewModel() {
     }
 
     fun acceptGroupInvitation(groupId: String?) {
-        groupId.notNull {
+        groupId?.let {
             disposable.add(socialRepository.joinGroup(it)
                     .subscribe(Consumer {
                         refreshNotifications()
@@ -294,7 +293,7 @@ open class NotificationsViewModel : BaseViewModel() {
     }
 
     fun rejectGroupInvite(groupId: String?) {
-        groupId.notNull {
+        groupId?.let {
             disposable.add(socialRepository.rejectGroupInvite(it)
                     .subscribe(Consumer {
                         refreshNotifications()
@@ -303,7 +302,7 @@ open class NotificationsViewModel : BaseViewModel() {
     }
 
     private fun acceptQuestInvitation() {
-        party?.id.notNull {
+        party?.id?.let {
             disposable.add(socialRepository.acceptQuest(null, it)
                     .subscribe(Consumer {
                         refreshNotifications()
@@ -312,7 +311,7 @@ open class NotificationsViewModel : BaseViewModel() {
     }
 
     private fun rejectQuestInvitation() {
-        party?.id.notNull {
+        party?.id?.let {
             disposable.add(socialRepository.rejectQuest(null, it)
                     .subscribe(Consumer {
                         refreshNotifications()

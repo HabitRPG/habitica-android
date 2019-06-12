@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -56,6 +57,10 @@ abstract class BaseFragment : DialogFragment() {
         } catch (ignored: EventBusException) {
 
         }
+
+        val additionalData = HashMap<String, Any>()
+        additionalData["page"] = this.javaClass.simpleName
+        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
 
         return null
     }

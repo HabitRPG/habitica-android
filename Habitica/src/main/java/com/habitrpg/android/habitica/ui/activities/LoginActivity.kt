@@ -54,7 +54,6 @@ import io.reactivex.exceptions.Exceptions
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -153,13 +152,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         backgroundContainer.post { backgroundContainer.scrollTo(0, backgroundContainer.bottom) }
         backgroundContainer.setScrollingEnabled(false)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val window = window
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-            }
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        val window = window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
         }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
         newGameButton.setOnClickListener { newGameButtonClicked() }
         showLoginButton.setOnClickListener { showLoginButtonClicked() }

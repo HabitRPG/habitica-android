@@ -56,11 +56,6 @@ class WelcomeFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
-        val additionalData = HashMap<String, Any>()
-        additionalData["page"] = "Welcome Screen"
-        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
-
         return container?.inflate(R.layout.fragment_welcome)
     }
 
