@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -230,7 +231,7 @@ open class NotificationsViewModel : BaseViewModel() {
         when (notification.type) {
             Notification.Type.NEW_STUFF.type -> navController.navigate(R.id.newsFragment)
             Notification.Type.NEW_CHAT_MESSAGE.type -> clickNewChatMessage(notification, navController)
-            Notification.Type.NEW_MYSTERY_ITEMS.type -> navController.navigate(R.id.itemsFragment)
+            Notification.Type.NEW_MYSTERY_ITEMS.type -> navController.navigate(R.id.itemsFragment, bundleOf(Pair("itemType", "special")))
             Notification.Type.UNALLOCATED_STATS_POINTS.type -> navController.navigate(R.id.statsFragment)
             // Group tasks should go to Group tasks view if that is added to this app at some point
             Notification.Type.GROUP_TASK_APPROVED.type -> navController.navigate(R.id.tasksFragment)
@@ -246,6 +247,7 @@ open class NotificationsViewModel : BaseViewModel() {
             val bundle = Bundle()
             bundle.putString("groupID", data?.group?.id)
             bundle.putBoolean("isMember", true) // safe to assume user is member since they got the notification
+            bundle.putInt("tabToOpen", 1)
             navController.navigate(R.id.guildFragment, bundle)
         }
     }

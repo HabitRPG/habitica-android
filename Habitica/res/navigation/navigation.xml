@@ -110,6 +110,10 @@
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment"
         android:label="@string/sidebar_items">
         <deepLink app:uri="habitica.com/inventory/items" />
+        <argument
+            android:name="itemType"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/stableFragment"
@@ -164,6 +168,10 @@
             android:name="isMember"
             app:argType="boolean"
             android:defaultValue="false"/>
+        <argument
+            android:name="tabToOpen"
+            app:argType="integer"
+            android:defaultValue="0"/>
     </fragment>
     <fragment
         android:id="@+id/publicGuildsFragment"

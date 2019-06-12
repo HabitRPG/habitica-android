@@ -32,7 +32,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     lateinit var viewModel: NotificationsViewModel
 
-    lateinit var inflater: LayoutInflater
+    var inflater: LayoutInflater? = null
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
@@ -43,7 +43,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         setupToolbar(toolbar)
 
-        inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
         viewModel = ViewModelProviders.of(this)
                 .get(NotificationsViewModel::class.java)
@@ -94,9 +94,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     private fun displayNoNotificationsView() {
         notification_items.showDividers = LinearLayout.SHOW_DIVIDER_NONE
 
-        notification_items.addView(
-                inflater.inflate(R.layout.no_notifications, notification_items, false)
-        )
+        notification_items.addView(inflater?.inflate(R.layout.no_notifications, notification_items, false))
     }
 
     private fun displayNotificationsListView(notifications: List<Notification>) {
@@ -127,7 +125,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun createNotificationsHeaderView(notificationCount: Int): View? {
-        val header = inflater.inflate(R.layout.notifications_header, notification_items, false)
+        val header = inflater?.inflate(R.layout.notifications_header, notification_items, false)
 
         val badge = header?.findViewById(R.id.notifications_title_badge) as? TextView
         badge?.text = notificationCount.toString()
@@ -220,7 +218,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             imageResourceId: Int? = null,
             textColor: Int? = null
     ): View? {
-        val item = inflater.inflate(R.layout.notification_item, notification_items, false)
+        val item = inflater?.inflate(R.layout.notification_item, notification_items, false)
 
         val container = item?.findViewById(R.id.notification_item) as? View
         container?.setOnClickListener {

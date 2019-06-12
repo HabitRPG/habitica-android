@@ -48,9 +48,8 @@ class GuildFragment : BaseMainFragment() {
         viewModel.getGroupData().observe(viewLifecycleOwner, Observer { setGroup(it) })
         viewModel.getIsMemberData().observe(viewLifecycleOwner, Observer { activity?.invalidateOptionsMenu() })
 
-        val newArguments = arguments
-        if (newArguments != null) {
-            val args = GuildFragmentArgs.fromBundle(newArguments)
+        arguments?.let {
+            val args = GuildFragmentArgs.fromBundle(it)
             viewModel.setGroupID(args.groupID)
         }
 
@@ -58,6 +57,11 @@ class GuildFragment : BaseMainFragment() {
 
         setViewPagerAdapter()
         setFragments()
+
+        arguments?.let {
+            val args = GuildFragmentArgs.fromBundle(it)
+            viewPager?.currentItem = args.tabToOpen
+        }
 
         if (viewModel.groupID == "f2db2a7f-13c5-454d-b3ee-ea1f5089e601") {
             context?.let { FirebaseAnalytics.getInstance(it).logEvent("opened_no_party_guild", null) }

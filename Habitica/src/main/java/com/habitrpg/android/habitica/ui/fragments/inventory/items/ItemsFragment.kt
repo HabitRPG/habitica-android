@@ -30,6 +30,17 @@ class ItemsFragment : BaseMainFragment() {
 
         viewPager?.currentItem = 0
         setViewPagerAdapter()
+
+        arguments?.let {
+            val args = ItemsFragmentArgs.fromBundle(it)
+                viewPager?.currentItem = when (args.itemType) {
+                    "hatchingPotions" -> 1
+                    "food" -> 2
+                    "quests" -> 3
+                    "special" -> 4
+                    else -> 0
+                }
+        }
     }
 
     override fun injectFragment(component: UserComponent) {
