@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
@@ -65,7 +64,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
     }
 
     override fun onBindViewHolder(holder: GuildViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             val guild = it[position]
             val isInGroup = isInGroup(guild)
             holder.bind(guild, isInGroup)
@@ -94,7 +93,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             }
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
-                unfilteredData.notNull {
+                unfilteredData?.let {
                     if (constraint.isNotEmpty()) {
                         updateData(it.where()
                                 .contains("name", constraint.toString(), Case.INSENSITIVE)

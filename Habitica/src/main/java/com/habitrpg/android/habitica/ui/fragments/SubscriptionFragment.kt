@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -222,13 +221,13 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     private fun purchaseSubscription() {
-        selectedSubscriptionSku?.id?.code.notNull { code ->
+        selectedSubscriptionSku?.id?.code?.let { code ->
             billingRequests?.isPurchased(ProductTypes.SUBSCRIPTION, code, object : RequestListener<Boolean> {
                 override fun onSuccess(aBoolean: Boolean) {
                     if (!aBoolean) {
                         // no current product exist
                         val checkout = listener?.activityCheckout
-                        checkout.notNull {
+                        checkout?.let {
                             billingRequests?.purchase(ProductTypes.SUBSCRIPTION, code, null, it.purchaseFlow)
                         }
                     }
@@ -262,7 +261,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
             if (isSubscribed) {
                 this.subscriptionDetailsView?.visibility = View.VISIBLE
-                plan.notNull { this.subscriptionDetailsView?.setPlan(it) }
+                plan?.let { this.subscriptionDetailsView?.setPlan(it) }
                 this.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt_thanks)
                 this.subscriptionOptions?.visibility = View.GONE
             } else {
@@ -283,7 +282,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     private fun showGiftSubscriptionDialog() {
         val chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
 
-        this.activity.notNull { thisActivity ->
+        this.activity?.let { thisActivity ->
             val alert = HabiticaAlertDialog(thisActivity)
             alert.setTitle(getString(R.string.gift_title))
             alert.addButton(getString(R.string.action_continue), true) { _, _ ->

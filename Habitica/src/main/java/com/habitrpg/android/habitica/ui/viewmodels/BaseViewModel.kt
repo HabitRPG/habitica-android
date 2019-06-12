@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,7 +24,7 @@ abstract class BaseViewModel: ViewModel() {
     }
 
     init {
-        HabiticaBaseApplication.userComponent.notNull { inject(it) }
+        HabiticaBaseApplication.userComponent?.let { inject(it) }
     }
 
     abstract fun inject(component: UserComponent)

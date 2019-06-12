@@ -15,7 +15,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -73,7 +72,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
-        chatAdapter.notNull {adapter ->
+        chatAdapter?.let {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
                 FullProfileActivity.open(userId)
             }, RxErrorHandler.handleEmptyError()))

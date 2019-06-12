@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -100,7 +99,7 @@ class TavernDetailFragment : BaseFragment() {
 
         compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
-        user.notNull { questProgressView.configure(it) }
+        user?.let { questProgressView.configure(it) }
     }
 
     override fun onDestroy() {
@@ -112,7 +111,7 @@ class TavernDetailFragment : BaseFragment() {
 
     private fun bindButtons() {
         innButton.setOnClickListener {
-            user?.notNull { user -> userRepository.sleep(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
+            user?.let { user -> userRepository.sleep(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
         }
         guidelinesButton.setOnClickListener {
             MainNavigationController.navigate(R.id.guidelinesActivity)
@@ -147,7 +146,7 @@ class TavernDetailFragment : BaseFragment() {
 
     private fun addPlayerTiers() {
         for (tier in PlayerTier.getTiers()) {
-            context.notNull {
+            context?.let {
                 val container = FrameLayout(it)
                 container.background = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_gray_700)
                 val label = UsernameLabel(context, null)

@@ -25,7 +25,6 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
@@ -186,7 +185,7 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
             }
         })
 
-        billing.notNull { checkout = Checkout.forApplication(it) }
+        billing?.let { checkout = Checkout.forApplication(it) }
     }
 
     private fun setupRemoteConfig() {

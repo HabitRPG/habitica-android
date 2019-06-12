@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
@@ -348,10 +347,10 @@ class ChallengeFormActivity : BaseActivity() {
 
 
         val taskList = ArrayList<Task>()
-        addHabit.notNull { taskList.add(it) }
-        addDaily.notNull { taskList.add(it) }
-        addTodo.notNull { taskList.add(it) }
-        addReward.notNull { taskList.add(it) }
+        addHabit?.let { taskList.add(it) }
+        addDaily?.let { taskList.add(it) }
+        addTodo?.let { taskList.add(it) }
+        addReward?.let { taskList.add(it) }
 
         challengeTasks.setTasks(taskList)
         compositeSubscription.add(challengeTasks.addItemObservable().subscribe(Consumer { t ->
@@ -374,7 +373,7 @@ class ChallengeFormActivity : BaseActivity() {
     }
 
     private fun fillControlsByChallenge() {
-        challengeId.notNull {
+        challengeId?.let {
             challengeRepository.getChallenge(it).subscribe(Consumer { challenge ->
                 groupID = challenge.groupId
                 editMode = true

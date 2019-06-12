@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.FAQArticle
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -87,7 +86,7 @@ class FAQOverviewRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
         }
 
         override fun onClick(v: View) {
-            article.notNull {
+            article?.let {
                 MainNavigationController.navigate(FAQOverviewFragmentDirections.openFAQDetail(it.position))
             }
         }

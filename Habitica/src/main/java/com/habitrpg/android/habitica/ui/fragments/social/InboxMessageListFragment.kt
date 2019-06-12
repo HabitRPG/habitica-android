@@ -12,9 +12,8 @@ import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -56,7 +55,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         super.onViewCreated(view, savedInstanceState)
         swipeRefreshLayout?.setOnRefreshListener(this)
 
-        arguments.notNull {
+        arguments?.let {
             val args = InboxMessageListFragmentArgs.fromBundle(it)
             setReceivingUser(args.username, args.userID)
         }
@@ -67,7 +66,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, false)
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
-        chatAdapter.notNull { adapter ->
+        chatAdapter?.let { adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer<String> {
                 FullProfileActivity.open(it)
             }, RxErrorHandler.handleEmptyError()))
@@ -121,7 +120,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     }
 
     private fun sendMessage(chatText: String) {
-        replyToUserUUID?.notNull {userID ->
+        replyToUserUUID?.let {userID ->
             socialRepository.postPrivateMessage(userID, chatText)
                     .delay(200, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())

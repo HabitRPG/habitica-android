@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter
@@ -75,14 +74,14 @@ class PublicGuildsFragment : BaseMainFragment(), SearchView.OnQueryTextListener 
         val searchItem = menu.findItem(R.id.action_guild_search)
         val guildSearchView = searchItem?.actionView as? SearchView
         val theTextArea = guildSearchView?.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
-        context.notNull { theTextArea?.setHintTextColor(ContextCompat.getColor(it, R.color.white)) }
+        context?.let { theTextArea?.setHintTextColor(ContextCompat.getColor(it, R.color.white)) }
         guildSearchView?.queryHint = getString(R.string.guild_search_hint)
         guildSearchView?.setOnQueryTextListener(this)
     }
 
     override fun onQueryTextSubmit(s: String): Boolean {
         viewAdapter.filter.filter(s)
-        activity.notNull {
+        activity?.let {
             KeyboardUtil.dismissKeyboard(it)
         }
         return true

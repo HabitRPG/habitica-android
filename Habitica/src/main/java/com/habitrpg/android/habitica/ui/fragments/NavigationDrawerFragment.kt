@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
@@ -82,7 +81,7 @@ class NavigationDrawerFragment : DialogFragment() {
         val questContent = this.questContent
         if (quest == null || questContent == null || !quest.active) {
             questMenuView.visibility = View.GONE
-            context.notNull {
+            context?.let {
                 adapter.tintColor = it.getThemeColor(R.attr.colorPrimary)
                 adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimaryOffset)
             }
@@ -150,7 +149,7 @@ class NavigationDrawerFragment : DialogFragment() {
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true)
 
-        context?.notNull {recyclerView.setPadding(0, 0, 0,  NavbarUtils.getNavbarHeight(it)) }
+        context?.let {recyclerView.setPadding(0, 0, 0,  NavbarUtils.getNavbarHeight(it)) }
         recyclerView.clipToPadding = false
     }
 
@@ -253,7 +252,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun initializeMenuItems() {
         val items = ArrayList<HabiticaDrawerItem>()
-        context.notNull {context ->
+        context?.let {context ->
             items.add(HabiticaDrawerItem(R.id.tasksFragment, SIDEBAR_TASKS, context.getString(R.string.sidebar_tasks)))
             items.add(HabiticaDrawerItem(R.id.skillsFragment, SIDEBAR_SKILLS, context.getString(R.string.sidebar_skills)))
             items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
@@ -391,7 +390,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun setNotificationsSeen(allSeen: Boolean) {
-        context.notNull {
+        context?.let {
             val colorId = if (allSeen) R.color.gray_200 else R.color.brand_400
 
             val bg = notificationsBadge.background as? GradientDrawable

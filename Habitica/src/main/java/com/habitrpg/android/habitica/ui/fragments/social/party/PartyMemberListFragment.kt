@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
@@ -45,7 +44,7 @@ class PartyMemberListFragment : BaseFragment() {
 
         recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         adapter = PartyMemberRecyclerViewAdapter(null, true)
-        adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(userId) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
+        adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(userId) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         recyclerView?.adapter = adapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 

@@ -13,7 +13,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.extensions.*
+import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -97,7 +100,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val oldPasswordEditText = view?.findViewById<EditText>(R.id.editText)
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
         val passwordRepeatEditText = view?.findViewById<EditText>(R.id.passwordRepeatEditText)
-        context.notNull { context ->
+        context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.change_password)
             dialog.addButton(R.string.change, true) { _, _ ->
@@ -120,7 +123,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         emailEditText?.setText(user?.authentication?.localAuthentication?.email)
         view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.email)
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
-        context.notNull { context ->
+        context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.change_email)
             dialog.addButton(R.string.change, true) { _, _ ->
@@ -142,7 +145,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val loginNameEditText = view?.findViewById<EditText>(R.id.editText)
         loginNameEditText?.setText(user?.authentication?.localAuthentication?.username)
         view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.username)
-        context.notNull { context ->
+        context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.change_username)
             dialog.addButton(R.string.save, true) { _, _ ->
@@ -169,7 +172,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             editText?.inputType = InputType.TYPE_CLASS_TEXT
         }
         view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.confirm_deletion)
-        context.notNull { context ->
+        context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.delete_account)
             dialog.setMessage(deleteMessage)
@@ -189,7 +192,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         val emailEditText = view?.findViewById<EditText>(R.id.editText)
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
         val passwordRepeatEditText = view?.findViewById<EditText>(R.id.passwordRepeatEditText)
-        context.notNull { context ->
+        context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.add_local_authentication)
             dialog.addButton(R.string.save, true) { thisDialog, _ ->
@@ -214,7 +217,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         @Suppress("DEPRECATION")
         val dialog = ProgressDialog.show(context, context?.getString(R.string.deleting_account), null, true)
         compositeSubscription.add(userRepository.deleteAccount(password).subscribe({ _ ->
-            context.notNull { HabiticaBaseApplication.logout(it) }
+            context?.let { HabiticaBaseApplication.logout(it) }
             activity?.finish()
         }) { throwable ->
             dialog.dismiss()
@@ -223,7 +226,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showAccountResetConfirmation() {
-        context.notNull { context ->
+        context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.reset_account)
             dialog.setMessage(R.string.reset_account_description)
@@ -237,7 +240,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showConfirmUsernameDialog() {
-        context.notNull { context ->
+        context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.confirm_username_title)
             dialog.setMessage(R.string.confirm_username_description)
@@ -260,9 +263,9 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showSubscriptionStatusDialog() {
-        context.notNull { context ->
+        context?.let { context ->
             val view = SubscriptionDetailsView(context)
-            user?.purchased?.plan?.notNull {
+            user?.purchased?.plan?.let {
                 view.setPlan(it)
             }
             val dialog = HabiticaAlertDialog(context)

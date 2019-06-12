@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
@@ -111,7 +110,7 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     fun purchaseGems(sku: String) {
-        listener?.activityCheckout.notNull {
+        listener?.activityCheckout?.let {
             billingRequests?.purchase(ProductTypes.IN_APP, sku, null, it.purchaseFlow)
         }
     }

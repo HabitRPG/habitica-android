@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
@@ -246,7 +245,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)
                 .doOnNext {
-                    user.notNull {
+                    user?.let {
                         localRepository.updateRSVPNeeded(it, false)
                     }
                 }
@@ -255,7 +254,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun rejectQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.rejectQuest(partyId)
                 .doOnNext { _ ->
-                    user.notNull {
+                    user?.let {
                         localRepository.updateRSVPNeeded(it, false)
                     }
                 }

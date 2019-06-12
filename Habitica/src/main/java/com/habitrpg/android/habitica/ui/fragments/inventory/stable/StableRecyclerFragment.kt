@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.user.*
@@ -75,7 +74,7 @@ class StableRecyclerFragment : BaseFragment() {
             }
         }
         recyclerView?.layoutManager = layoutManager
-        activity.notNull {
+        activity?.let {
             recyclerView?.addItemDecoration(MarginDecoration(it))
         }
 

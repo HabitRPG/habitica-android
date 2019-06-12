@@ -2,14 +2,13 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
@@ -40,7 +39,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
 
         view.post { setGridSpanCount(view.width) }
-        context.notNull {
+        context?.let {
             recyclerView.setBackgroundColor(ContextCompat.getColor(it, R.color.white))
         }
         recyclerView.itemAnimator = SafeDefaultItemAnimator()

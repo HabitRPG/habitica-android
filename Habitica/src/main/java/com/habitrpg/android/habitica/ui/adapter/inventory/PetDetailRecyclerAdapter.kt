@@ -10,7 +10,6 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
@@ -49,7 +48,7 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
     }
 
     override fun onBindViewHolder(holder: PetViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             holder.bind(it[position], ownedPets?.get(it[position]?.key ?: ""))
         }
     }
@@ -138,7 +137,7 @@ class PetDetailRecyclerAdapter(data: OrderedRealmCollection<Pet>?, autoUpdate: B
             }
             menu.setSelectionRunnable { index ->
                 if (index == 0) {
-                    animal.notNull {
+                    animal?.let {
                         equipEvents.onNext(it.key)
                     }
                 } else if (index == 1) {

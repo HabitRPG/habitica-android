@@ -10,7 +10,6 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
@@ -69,7 +68,7 @@ class IntroFragment : BaseFragment() {
             this.descriptionTextView?.text = this.description
         }
 
-        backgroundColor.notNull {
+        backgroundColor?.let {
             this.containerView?.setBackgroundColor(it)
         }
     }

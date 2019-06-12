@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import io.reactivex.BackpressureStrategy
@@ -50,11 +51,13 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         private set
 
     private var errorButtonEventsSubject = PublishSubject.create<String>()
-    override val errorButtonEvents = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    override val errorButtonEvents: Flowable<String> = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     protected var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
-    override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    protected var checklistItemScoreSubject = PublishSubject.create<Pair<Task, ChecklistItem>>()
+    override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
     protected var taskOpenEventsSubject = PublishSubject.create<Task>()
-    override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.DROP)
 
     private val isDataValid: Boolean
         get() = data?.isValid ?: false
@@ -78,7 +81,6 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
     override fun onDetachedFromRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         if (hasAutoUpdates && isDataValid) {
-
             removeListener(data)
         }
     }
@@ -89,18 +91,18 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
 
     fun getItem(index: Int): Task? = if (isDataValid) data?.get(index) else null
 
-    override fun updateData(data: OrderedRealmCollection<Task>?) {
+    override fun updateData(tasks: OrderedRealmCollection<Task>?) {
         if (hasAutoUpdates) {
             if (isDataValid) {
 
-                removeListener(this.data)
+                removeListener(tasks)
             }
-            if (data != null) {
-                addListener(data)
+            if (tasks != null) {
+                addListener(tasks)
             }
         }
 
-        this.data = data
+        this.data = tasks
         notifyDataSetChanged()
     }
 

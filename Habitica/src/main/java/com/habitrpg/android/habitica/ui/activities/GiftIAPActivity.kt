@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -87,7 +86,7 @@ class GiftIAPActivity: BaseActivity() {
         giftedUsername = intent.getStringExtra("username")
 
         subscriptionButton?.setOnClickListener {
-            selectedSubscriptionSku?.notNull { sku -> purchaseSubscription(sku) }
+            selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
 
         giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
@@ -174,7 +173,7 @@ class GiftIAPActivity: BaseActivity() {
     }
 
     private fun setupCheckout() {
-        HabiticaBaseApplication.getInstance(this)?.billing.notNull {
+        HabiticaBaseApplication.getInstance(this)?.billing?.let {
             activityCheckout = Checkout.forActivity(this, it)
             activityCheckout?.start()
         }
@@ -236,7 +235,7 @@ class GiftIAPActivity: BaseActivity() {
         if (giftedUserID?.isNotEmpty() != true) {
             return
         }
-        activityCheckout.notNull {
+        activityCheckout?.let {
             HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
             billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.purchaseFlow)
         }

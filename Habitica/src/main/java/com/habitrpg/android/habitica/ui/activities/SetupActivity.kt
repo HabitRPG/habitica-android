@@ -5,17 +5,17 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.core.content.ContextCompat
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.preference.PreferenceManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.preference.PreferenceManager
+import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.UserComponent
@@ -23,9 +23,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.events.commands.EquipCommand
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -38,7 +35,6 @@ import com.viewpagerindicator.IconPageIndicator
 import com.viewpagerindicator.IconPagerAdapter
 import io.reactivex.BackpressureStrategy
 import io.reactivex.functions.Consumer
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import javax.inject.Inject
 
@@ -125,18 +121,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         indicator.setViewPager(pager)
     }
 
-    @Subscribe
-    fun onEvent(event: UpdateUserCommand) {
-        compositeSubscription.add(this.userRepository.updateUser(user, event.updateData)
-                .subscribe(Consumer<User> { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
-    }
-
-    @Subscribe
-    fun onEvent(event: EquipCommand) {
-        compositeSubscription.add(this.inventoryRepository.equip(user, event.type, event.key)
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
-    }
-
     private fun nextClicked() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.edit {
@@ -148,7 +132,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             }
             val newTasks = this.taskSetupFragment?.createSampleTasks()
             this.completedSetup = true
-            newTasks.notNull {
+            newTasks?.let {
                 this.taskRepository.createTasks(it).subscribe(Consumer { onUserReceived(user) }, RxErrorHandler.handleEmptyError())
             }
         } else if (pager.currentItem == 0) {

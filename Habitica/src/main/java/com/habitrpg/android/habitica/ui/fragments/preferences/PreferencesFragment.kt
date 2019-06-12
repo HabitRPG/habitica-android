@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.ContentResult
@@ -85,7 +84,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when(preference.key) {
             "logout" -> {
-                context.notNull { HabiticaBaseApplication.logout(it) }
+                context?.let { HabiticaBaseApplication.logout(it) }
                 activity?.finish()
             }
             "choose_class" -> {
@@ -96,7 +95,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 intent.putExtras(bundle)
 
                 if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
-                    context.notNull { context ->
+                    context?.let { context ->
                         val builder = AlertDialog.Builder(context)
                                 .setMessage(getString(R.string.change_class_confirmation))
                                 .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }

@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
@@ -181,8 +180,8 @@ class FullProfileActivity : BaseActivity() {
             blurbTextView.text = MarkdownParser.parseMarkdown(blurbText)
         }
 
-        user.authentication?.timestamps?.createdAt.notNull { joinedView.text = dateFormatter.format(it) }
-        user.authentication?.timestamps?.lastLoggedIn.notNull { lastLoginView.text = dateFormatter.format(it) }
+        user.authentication?.timestamps?.createdAt?.let { joinedView.text = dateFormatter.format(it) }
+        user.authentication?.timestamps?.lastLoggedIn?.let { lastLoginView.text = dateFormatter.format(it) }
         totalCheckinsView.text = user.loginIncentives.toString()
 
         usernameText.text = user.username
@@ -354,7 +353,7 @@ class FullProfileActivity : BaseActivity() {
             }
         }
 
-        user.stats.notNull { addNormalAddBuffAttributes(it) }
+        user.stats?.let { addNormalAddBuffAttributes(it) }
     }
 
     private fun gotCostume(obj: List<Equipment>) {

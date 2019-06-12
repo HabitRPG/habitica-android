@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.View
 import android.widget.*
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -134,9 +133,9 @@ abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc:
                 notesTextView?.text = data.parsedNotes
             } else {
                 notesTextView?.text = data.notes
-                data.notes.notNull {notes ->
+                data.notes?.let {notes ->
                     if (notes.isEmpty()) {
-                        return@notNull
+                        return@let
                     }
                     Single.just(notes)
                             .map { MarkdownParser.parseMarkdown(it) }

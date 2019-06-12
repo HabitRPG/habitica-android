@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.*
 import com.habitrpg.android.habitica.extensions.Optional
+import com.habitrpg.android.habitica.extensions.asOptional
+import com.habitrpg.android.habitica.extensions.filterMapEmpty
+import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
@@ -179,7 +181,7 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     fun markMessagesSeen() {
-        groupIDSubject.value?.value.notNull {
+        groupIDSubject.value?.value?.let {
             if (groupViewType != GroupViewType.TAVERN && it.isNotEmpty() && gotNewMessages) {
                 socialRepository.markMessagesSeen(it)
             }
@@ -195,7 +197,7 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     fun postGroupChat(chatText: String, onComplete: () -> Unit?) {
-        groupIDSubject.value?.value.notNull {
+        groupIDSubject.value?.value?.let {
             socialRepository.postGroupChat(it, chatText).subscribe(Consumer {
                 onComplete()
             }, RxErrorHandler.handleEmptyError())

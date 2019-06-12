@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -76,7 +75,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
 
         challengeAdapter = ChallengesListViewAdapter(null, true, viewUserChallengesOnly, userId)
         challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe(Consumer { openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
-                .notNull { compositeSubscription.add(it) }
+                ?.let { compositeSubscription.add(it) }
 
         swipeRefreshLayout?.setOnRefreshListener(this)
 
@@ -155,7 +154,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     }
 
     internal fun showFilterDialog() {
-        activity.notNull {
+        activity?.let {
             ChallengeFilterDialogHolder.showDialog(it,
                     challenges ?: emptyList(),
                     filterOptions, object : Action1<ChallengeFilterOptions> {

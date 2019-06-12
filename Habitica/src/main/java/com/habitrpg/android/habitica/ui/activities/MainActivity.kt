@@ -37,12 +37,12 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
-import com.habitrpg.android.habitica.events.*
-import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand
+import com.habitrpg.android.habitica.events.ShareEvent
+import com.habitrpg.android.habitica.events.ShowCheckinDialog
+import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.events.commands.HatchingCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -233,7 +233,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
 
         // Set the drawer toggle as the DrawerListener
-        drawerToggle.notNull { drawerLayout.addDrawerListener(it) }
+        drawerToggle?.let { drawerLayout.addDrawerListener(it) }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
@@ -358,8 +358,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         if (user != null) {
             val preferences = user?.preferences
 
-            preferences?.language.notNull { apiClient.setLanguageCode(it) }
-            preferences?.sound.notNull { soundManager.soundTheme = it }
+            preferences?.language?.let { apiClient.setLanguageCode(it) }
+            preferences?.sound?.let { soundManager.soundTheme = it }
 
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user?.id, userRepository, taskRepository)
@@ -420,55 +420,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         inventoryRepository.close()
         keyboardUtil?.disable()
         super.onDestroy()
-    }
-
-    @Subscribe
-    fun openMysteryItem(event: OpenMysteryItemEvent) {
-        compositeSubscription.add(inventoryRepository.openMysteryItem(user)
-                .flatMap { userRepository.retrieveUser(false) }
-                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
-    }
-
-    @Subscribe
-    fun onEvent(tutorialEvent: DisplayTutorialEvent) {
-        if (tutorialEvent.tutorialText != null) {
-            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText, tutorialEvent.canBeDeferred)
-        } else {
-            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialTexts, tutorialEvent.canBeDeferred)
-        }
-    }
-
-    @Subscribe
-    fun onEvent(event: HatchingCommand) {
-        if (event.usingEgg == null || event.usingHatchingPotion == null) {
-            return
-        }
-        compositeSubscription.add(this.inventoryRepository.hatchPet(event.usingEgg, event.usingHatchingPotion) {
-            val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
-            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
-
-            DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.key + "-" + event.usingHatchingPotion.key)
-            val potionName = event.usingHatchingPotion.text
-            val eggName = event.usingEgg.text
-            val dialog = HabiticaAlertDialog(this@MainActivity)
-            dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
-            dialog.setAdditionalContentView(petWrapper)
-            dialog.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
-            dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
-                        val event1 = ShareEvent()
-                        event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
-                        val petImageSideLength = 140
-                        val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
-                        val canvas = Canvas(sharedImage)
-                        canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
-                        petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
-                        petImageView?.drawable?.draw(canvas)
-                        event1.shareImage = sharedImage
-                        EventBus.getDefault().post(event1)
-                        hatchingDialog.dismiss()
-                    }
-            dialog.show()
-        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     @Subscribe
@@ -537,7 +488,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 hpBarView?.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
 
                 val dialogAvatarView = customView.findViewById<View>(R.id.avatarView) as? AvatarView
-                user.notNull { dialogAvatarView?.setAvatar(it) }
+                user?.let { dialogAvatarView?.setAvatar(it) }
             }
 
             this.faintDialog = HabiticaAlertDialog(this)
@@ -545,7 +496,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             faintDialog?.setAdditionalContentView(customView)
             faintDialog?.addButton(R.string.faint_button, true) { _, _ ->
                         faintDialog = null
-                        user.notNull {
+                        user?.let {
                             userRepository.revive(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                         }
                     }
@@ -578,7 +529,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
     }
 
-    private fun displayTutorialStep(step: TutorialStep, text: String, canBeDeferred: Boolean) {
+    fun displayTutorialStep(step: TutorialStep, text: String, canBeDeferred: Boolean) {
         removeActiveTutorialView()
         val view = TutorialView(this, step, this)
         this.activeTutorialView = view
@@ -594,7 +545,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         AmplitudeManager.sendEvent("tutorial", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
     }
 
-    private fun displayTutorialStep(step: TutorialStep, texts: List<String>, canBeDeferred: Boolean) {
+    fun displayTutorialStep(step: TutorialStep, texts: List<String>, canBeDeferred: Boolean) {
         removeActiveTutorialView()
         val view = TutorialView(this, step, this)
         this.activeTutorialView = view
@@ -652,11 +603,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
-    }
-
-    @Subscribe
-    fun onEvent(event: ChecklistCheckedCommand) {
-        compositeSubscription.add(taskRepository.scoreChecklistItem(event.task.id ?: "", event.item.id ?: "").subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun checkMaintenance() {
@@ -755,7 +701,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     }
 
     companion object {
-
         const val SELECT_CLASS_RESULT = 11
         const val GEM_PURCHASE_REQUEST = 111
         const val NOTIFICATION_CLICK = 222

@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -29,9 +28,9 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
@@ -79,7 +78,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments.notNull {
+        arguments?.let {
             val args = ChallengeDetailFragmentArgs.fromBundle(it)
             challengeID = args.challengeID
         }
@@ -93,7 +92,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
             FullProfileActivity.open(leaderID)
         }
 
-        challengeID.notNull {id ->
+        challengeID?.let {id ->
             compositeSubscription.add(challengeRepository.getChallenge(id)
                     .doOnNext {
                         set(it)
@@ -145,7 +144,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
             }, RxErrorHandler.handleEmptyError()))
         }
 
-        joinButton?.setOnClickListener { challenge.notNull { challenge -> challengeRepository.joinChallenge(challenge).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
+        joinButton?.setOnClickListener { challenge?.let { challenge -> challengeRepository.joinChallenge(challenge).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()) } }
         leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
 
         refresh()
@@ -179,7 +178,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     private fun refresh() {
-        challengeID.notNull {id ->
+        challengeID?.let {id ->
             challengeRepository.retrieveChallenge(id)
                     .flatMap { challengeRepository.retrieveChallengeTasks(id) }
                     .subscribe(Consumer {  }, RxErrorHandler.handleEmptyError(), Action {  })
@@ -227,7 +226,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
 
             entry?.findViewById<ImageView>(R.id.lock_icon_plus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#DFDEDF")))
             entry?.findViewById<ImageView>(R.id.lock_icon_minus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#DFDEDF")))
-            context.notNull {
+            context?.let {
                 if (task.up == true) {
                     entry?.findViewById<ImageView>(R.id.lock_icon_plus)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#B3FFFFFF")))
                     entry?.findViewById<View>(R.id.lock_icon_background_plus)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
@@ -265,7 +264,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
             val title = entry?.findViewById(R.id.daily_title) as? TextView?
             title?.text = EmojiParser.parseEmojis(task.text)
             entry?.findViewById<ImageView>(R.id.lock_icon)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#949494")))
-            context.notNull {
+            context?.let {
                 entry?.findViewById<View>(R.id.lock_icon_background)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
                 val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
                 drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.extraLightTaskColor), PorterDuff.Mode.MULTIPLY)
@@ -299,7 +298,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
             val title = entry?.findViewById(R.id.todo_title) as? TextView
             title?.text = EmojiParser.parseEmojis(task.text)
             entry?.findViewById<ImageView>(R.id.lock_icon)?.setImageBitmap(HabiticaIconsHelper.imageOfLocked(Color.parseColor("#949494")))
-            context.notNull {
+            context?.let {
                 entry?.findViewById<View>(R.id.lock_icon_background)?.setBackgroundColor(ContextCompat.getColor(it, task.mediumTaskColor))
                 val drawable = ContextCompat.getDrawable(it, R.drawable.circle_white)
                 drawable?.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(it, task.extraLightTaskColor), PorterDuff.Mode.MULTIPLY)
@@ -351,13 +350,13 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     private fun showChallengeLeaveDialog() {
-        context.notNull { context ->
+        context?.let { context ->
             val alert = HabiticaAlertDialog(context)
             alert.setTitle(this.getString(R.string.challenge_leave_title))
             alert.setMessage(this.getString(R.string.challenge_leave_text, challenge?.name ?: ""))
             alert.addButton(R.string.yes, true) { dialog, _ ->
                         dialog.dismiss()
-                        challenge.notNull { challenge ->
+                        challenge?.let { challenge ->
                             showRemoveTasksDialog(Consumer { keepTasks ->
                                 challengeRepository.leaveChallenge(challenge, keepTasks).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
                             })
@@ -371,7 +370,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     private fun showRemoveTasksDialog(callback: Consumer<String>) {
-        context.notNull {
+        context?.let {
             val alert = HabiticaAlertDialog(it)
             alert.setTitle(this.getString(R.string.challenge_remove_tasks_title))
             alert.setMessage(this.getString(R.string.challenge_remove_tasks_text))

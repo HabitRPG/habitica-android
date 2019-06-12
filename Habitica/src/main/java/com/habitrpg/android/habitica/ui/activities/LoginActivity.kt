@@ -40,7 +40,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -372,7 +371,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 .subscribe(this@LoginActivity, Consumer { throwable ->
                     throwable.printStackTrace()
                     hideProgress()
-                    throwable.cause.notNull {
+                    throwable.cause?.let {
                         if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
                             handleGoogleAuthException(throwable.cause as GoogleAuthException)
                         }

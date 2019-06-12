@@ -17,12 +17,12 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
@@ -72,44 +72,16 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     private fun setInnerAdapter() {
         val adapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>? = when (this.classType) {
             Task.TYPE_HABIT -> {
-                val adapter = HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
-                compositeSubscription.add(adapter.taskScoreEvents
-                        .doOnNext { soundManager.loadAndPlayAudio(if (it.second == TaskDirection.UP) SoundManager.SoundPlusHabit else SoundManager.SoundMinusHabit) }
-                        .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { result -> (activity as? MainActivity)?.displayTaskScoringResponse(result)} }
-                        .subscribeWithErrorHandler(Consumer {}))
-                adapter
+                HabitsRecyclerViewAdapter(null, true, R.layout.habit_item_card, taskFilterHelper)
             }
             Task.TYPE_DAILY -> {
-                val adapter = DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, taskFilterHelper)
-                compositeSubscription.add(adapter.taskScoreEvents
-                        .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundDaily) }
-                        .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false){ result -> (activity as? MainActivity)?.displayTaskScoringResponse(result)} }
-                    .subscribeWithErrorHandler(Consumer {}))
-                adapter
+                DailiesRecyclerViewHolder(null, true, R.layout.daily_item_card, taskFilterHelper)
             }
             Task.TYPE_TODO -> {
-                val adapter = TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
-                compositeSubscription.add(adapter.taskScoreEvents
-                        .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundTodo) }
-                        .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false){ result -> (activity as? MainActivity)?.displayTaskScoringResponse(result)} }
-                        .subscribeWithErrorHandler(Consumer {}))
-                adapter
+                TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
             }
             Task.TYPE_REWARD -> {
-                val adapter = RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user)
-                compositeSubscription.add(adapter.taskScoreEvents
-                        .doOnNext { soundManager.loadAndPlayAudio(SoundManager.SoundTodo) }
-                        .flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { _ ->
-                            (activity as? MainActivity)?.let { activity ->
-                                HabiticaSnackbar.showSnackbar(activity.snackbarContainer, null, getString(R.string.notification_purchase_reward),
-                                BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
-                                ContextCompat.getColor(activity, R.color.yellow_10),
-                                "-" + it.first.value.toInt(),
-                                HabiticaSnackbar.SnackbarDisplayType.DROP)
-                            }
-                        } }
-                        .subscribeWithErrorHandler(Consumer {}))
-                adapter
+                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user)
             }
             else -> null
         }
@@ -121,19 +93,37 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         recyclerAdapter = adapter as? TaskRecyclerViewAdapter
         recyclerView.adapter = adapter
 
-        recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
-            taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-        }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
-        recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler(Consumer {
-            openTaskForm(it)
-        })
-
         if (this.classType != null) {
             compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer {
                 this.recyclerAdapter?.updateUnfilteredData(it)
                 this.recyclerAdapter?.filter()
             }, RxErrorHandler.handleEmptyError()))
         }
+    }
+
+    private fun handleTaskResult(result: TaskScoringResult, value: Int) {
+        if (classType == Task.TYPE_REWARD) {
+            (activity as? MainActivity)?.let { activity ->
+                HabiticaSnackbar.showSnackbar(activity.snackbarContainer, null, getString(R.string.notification_purchase_reward),
+                        BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
+                        ContextCompat.getColor(activity, R.color.yellow_10),
+                        "-$value",
+                        HabiticaSnackbar.SnackbarDisplayType.DROP)
+            }
+        } else {
+            (activity as? MainActivity)?.displayTaskScoringResponse(result)
+        }
+    }
+
+    private fun playSound(direction: TaskDirection) {
+        val soundName = when (classType) {
+            Task.TYPE_HABIT -> if (direction == TaskDirection.UP) SoundManager.SoundPlusHabit else SoundManager.SoundMinusHabit
+            Task.TYPE_DAILY -> SoundManager.SoundDaily
+            Task.TYPE_TODO -> SoundManager.SoundTodo
+            Task.TYPE_REWARD -> SoundManager.SoundReward
+            else -> null
+        }
+        soundName?.let { soundManager.loadAndPlayAudio(it) }
     }
 
     private fun allowReordering() {
@@ -241,6 +231,23 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         if (recyclerView.adapter == null) {
             this.setInnerAdapter()
         }
+        if (this.classType != null) {
+            recyclerAdapter?.errorButtonEvents
+            recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
+                taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler(Consumer {
+                openTaskForm(it)
+            })?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.taskScoreEvents
+                    ?.doOnNext { playSound(it.second) }
+                    ?.flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { result ->
+                        handleTaskResult(result, it.first.value.toInt())
+                    }}?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.checklistItemScoreEvents
+                    ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
+                    }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
+        }
 
         val bottomPadding = (recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
         recyclerView.setPadding(0, 0, 0, bottomPadding)
@@ -308,7 +315,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         }
     }
 
-    fun openTaskForm(task: Task) {
+    private fun openTaskForm(task: Task) {
         if (TasksFragment.displayingTaskForm) {
             return
         }

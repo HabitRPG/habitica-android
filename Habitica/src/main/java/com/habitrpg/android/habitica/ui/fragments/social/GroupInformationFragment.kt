@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -116,7 +115,7 @@ class GroupInformationFragment : BaseFragment() {
             startActivityForResult(intent, GroupFormActivity.GROUP_FORM_ACTIVITY)
         }
 
-        context.notNull { context ->
+        context?.let { context ->
             DataBindingUtils.loadImage("timeTravelersShop_background_fall") {bitmap ->
                 val aspectRatio = bitmap.width / bitmap.height.toFloat()
                 val height = context.resources.getDimension(R.dimen.shop_height).toInt()

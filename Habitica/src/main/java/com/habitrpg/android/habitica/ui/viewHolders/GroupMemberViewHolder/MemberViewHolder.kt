@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
@@ -38,7 +37,7 @@ class GroupMemberViewHolder(itemView: View) : androidx.recyclerview.widget.Recyc
     fun bind(user: Member, leaderID: String?) {
         avatarView.setAvatar(user)
 
-        user.stats.notNull {
+        user.stats?.let {
             healthBar.set(it.hp ?: 0.0, it.maxHealth?.toDouble() ?: 50.0)
             healthTextView.text = "${it.hp?.toInt()} / ${it.maxHealth?.toInt()}"
             experienceBar.set(it.exp ?: 0.0, it.toNextLevel?.toDouble() ?: 0.0)

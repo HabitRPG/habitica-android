@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -212,7 +211,7 @@ class ShopFragment : BaseFragment() {
 
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
-        context.notNull { context ->
+        context?.let { context ->
             val itemWidth: Float = context.resources.getDimension(R.dimen.reward_width)
 
             spanCount = (width / itemWidth).toInt()

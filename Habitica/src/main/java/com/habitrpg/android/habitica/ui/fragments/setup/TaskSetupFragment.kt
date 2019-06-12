@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -79,7 +78,7 @@ class TaskSetupFragment : BaseFragment() {
     }
 
     private fun updateAvatar() {
-        user.notNull {
+        user?.let {
             avatarView?.setAvatar(it)
         }
     }

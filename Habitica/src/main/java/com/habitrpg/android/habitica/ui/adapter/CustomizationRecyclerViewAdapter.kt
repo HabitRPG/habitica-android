@@ -8,7 +8,6 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
@@ -181,7 +180,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                                 return@addButton
                             }
 
-                            customization.notNull {
+                            customization?.let {
                                 unlockCustomizationEvents.onNext(it)
                             }
                         }
@@ -196,7 +195,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 return
             }
 
-            customization.notNull {
+            customization?.let {
                 selectCustomizationEvents.onNext(it)
             }
         }
@@ -247,7 +246,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                                     .filter { !it.isUsable && it.customizationSet != null && it.customizationSet == set?.identifier }
                                     .forEach { set?.customizations?.add(it) }
                         }
-                        set.notNull {
+                        set?.let {
                             unlockSetEvents.onNext(it)
                         }
                     }

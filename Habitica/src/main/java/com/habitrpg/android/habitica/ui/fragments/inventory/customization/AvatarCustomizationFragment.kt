@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Customization
@@ -73,7 +72,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments.notNull {
+        arguments?.let {
             val args = AvatarCustomizationFragmentArgs.fromBundle(it)
             type = args.type
             if (args.category.isNotEmpty()) {
@@ -126,7 +125,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     private fun setGridSpanCount(width: Int) {
         var itemWidth = 0F
-        context?.resources?.notNull {
+        context?.resources?.let {
             itemWidth = if (this.type != null && this.type == "background") {
                 context?.resources?.getDimension(R.dimen.avatar_width)
             } else {

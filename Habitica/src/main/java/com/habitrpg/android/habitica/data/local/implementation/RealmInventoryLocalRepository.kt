@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import android.content.Context
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.shops.ShopItem
@@ -175,7 +174,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     }
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {
-        amountToAdd.notNull { amount ->
+        amountToAdd?.let { amount ->
             realm.executeTransaction { item.numberOwned = item.numberOwned + amount }
         }
     }

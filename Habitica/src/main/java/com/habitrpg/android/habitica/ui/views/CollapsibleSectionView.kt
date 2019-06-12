@@ -3,15 +3,14 @@ package com.habitrpg.android.habitica.ui.views
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
@@ -106,7 +105,7 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
 
     init {
         View.inflate(context, R.layout.view_collapsible_section, this)
-        context.notNull {
+        context?.let {
             caretColor = ContextCompat.getColor(it, R.color.black_50_alpha)
         }
         orientation = VERTICAL

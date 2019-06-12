@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
@@ -38,7 +37,7 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             holder.bindHolder(it[position])
         }
     }
@@ -74,7 +73,7 @@ class SkillTasksRecyclerViewAdapter(data: OrderedRealmCollection<Task>?, autoUpd
 
         override fun onClick(v: View) {
             if (v == itemView) {
-                task.notNull {
+                task?.let {
                     taskSelectionEvents.onNext(it)
                 }
             }

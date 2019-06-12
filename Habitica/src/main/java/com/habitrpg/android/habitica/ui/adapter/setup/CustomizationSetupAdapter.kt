@@ -2,28 +2,30 @@ package com.habitrpg.android.habitica.ui.adapter.setup
 
 import android.content.Context
 import android.graphics.PorterDuff
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.EquipCommand
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import org.greenrobot.eventbus.EventBus
-import java.util.*
+import io.reactivex.BackpressureStrategy
+import io.reactivex.subjects.PublishSubject
 
 internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
 
     var userSize: String? = null
     var user: User? = null
     private var customizationList: List<SetupCustomization> = emptyList()
+
+    private val equipGearEventSubject = PublishSubject.create<String>()
+    val equipGearEvents = equipGearEventSubject.toFlowable(BackpressureStrategy.DROP)
+    private val updateUserEventsSubject = PublishSubject.create<HashMap<String, Any>>()
+    val updateUserEvents = updateUserEventsSubject.toFlowable(BackpressureStrategy.DROP)
 
     fun setCustomizationList(newCustomizationList: List<SetupCustomization>) {
         this.customizationList = newCustomizationList
@@ -121,25 +123,19 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
         }
 
         override fun onClick(v: View) {
-            customization.notNull { selectedCustomization ->
+            customization?.let { selectedCustomization ->
                 if (selectedCustomization.path == "glasses") {
-                    val command = EquipCommand()
-                    if (selectedCustomization.key.isEmpty()) {
-                        command.key = user?.items?.gear?.equipped?.eyeWear
+                    val key = if (selectedCustomization.key.isEmpty()) {
+                        user?.items?.gear?.equipped?.eyeWear
                     } else {
-                        command.key = selectedCustomization.key
+                        selectedCustomization.key
                     }
-                    command.type = "equipped"
-                    EventBus.getDefault().post(command)
+                    key?.let { equipGearEventSubject.onNext(it) }
                 } else {
-                    val command = UpdateUserCommand()
                     val updateData = HashMap<String, Any>()
                     val updatePath = "preferences." + selectedCustomization.path
                     updateData[updatePath] = selectedCustomization.key
-
-                    command.updateData = updateData
-
-                    EventBus.getDefault().post(command)
+                    updateUserEventsSubject.onNext(updateData)
                 }
             }
 

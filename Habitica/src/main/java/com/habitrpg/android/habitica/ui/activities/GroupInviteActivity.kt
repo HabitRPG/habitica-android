@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.runDelayed
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -164,7 +163,7 @@ class GroupInviteActivity : BaseActivity() {
 
         val inviteData = HashMap<String, Any>()
         val invites = ArrayList<String>()
-        userIdToInvite.notNull {
+        userIdToInvite?.let {
             invites.add(it)
         }
         inviteData["uuids"] = invites

@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
@@ -77,7 +76,7 @@ class StatsFragment: BaseMainFragment() {
 
         leftSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
         rightSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesRight())
-        context.notNull {
+        context?.let {
             val color = ContextCompat.getColor(it, R.color.brand_200)
             distributeEvenlyHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
             distributeClassHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
@@ -128,7 +127,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun showBulkAllocateDialog() {
-        context.notNull { context ->
+        context?.let { context ->
             val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.userComponent)
             dialog.show()
         }
@@ -175,7 +174,7 @@ class StatsFragment: BaseMainFragment() {
         intelligenceStatsView.canDistributePoints = canDistributePoints
         constitutionStatsView.canDistributePoints = canDistributePoints
         perceptionStatsView.canDistributePoints = canDistributePoints
-        context.notNull { context ->
+        context?.let { context ->
             if (canDistributePoints) {
                 val points = user.stats?.points ?: 0
                 numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)
@@ -231,7 +230,7 @@ class StatsFragment: BaseMainFragment() {
 
         val outfit = currentUser.items?.gear?.equipped
         val outfitList = ArrayList<String>()
-        outfit.notNull { thisOutfit ->
+        outfit?.let { thisOutfit ->
             outfitList.add(thisOutfit.armor)
             outfitList.add(thisOutfit.back)
             outfitList.add(thisOutfit.body)

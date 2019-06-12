@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.user.OwnedMount
@@ -44,7 +43,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
     }
 
     override fun onBindViewHolder(holder: MountViewHolder, position: Int) {
-        data.notNull { holder.bind(it[position], ownedMounts?.get(it[position].key)) }
+        data?.let { holder.bind(it[position], ownedMounts?.get(it[position].key)) }
     }
 
     fun setOwnedMounts(ownedMounts: Map<String, OwnedMount>) {
@@ -96,7 +95,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
             val menu = BottomSheetMenu(itemView.context)
             menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_animal)))
             menu.setSelectionRunnable {
-                animal.notNull { equipEvents.onNext(it.key) }
+                animal?.let { equipEvents.onNext(it.key) }
             }
             menu.show()
         }

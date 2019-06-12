@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import io.reactivex.BackpressureStrategy
@@ -44,13 +43,13 @@ class PartyViewModel: GroupViewModel() {
     }
 
     fun acceptQuest() {
-        groupIDSubject.value?.value.notNull {
+        groupIDSubject.value?.value?.let {
             disposable.add(socialRepository.acceptQuest(null, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
     }
 
     fun rejectQuest() {
-        groupIDSubject.value?.value.notNull {
+        groupIDSubject.value?.value?.let {
             disposable.add(socialRepository.rejectQuest(null, it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         }
     }

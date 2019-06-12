@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
@@ -33,11 +32,11 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
     }
 
     override fun onBindViewHolder(holder: ChallengeViewHolder, position: Int) {
-        data?.get(position).notNull { challenge ->
+        data?.get(position)?.let { challenge ->
             holder.bind(challenge, challengeMemberships?.first { challenge.id == it.challengeID } != null)
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged) {
-                    challenge.id.notNull {
+                    challenge.id?.let {
                         openChallengeFragmentEvents.onNext(it)
                     }
                 }
@@ -75,7 +74,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
             }
         }
 
-        query.notNull {
+        query?.let {
             this.updateData(it.findAll())
         }
     }

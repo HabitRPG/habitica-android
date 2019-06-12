@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.util.*
@@ -22,7 +21,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: Collection<Group>) : Recycler
 
             for (h in holderList) {
                 if (h.checkbox.isChecked) {
-                    h.group.notNull {
+                    h.group?.let {
                         result.add(it)
                     }
                 }

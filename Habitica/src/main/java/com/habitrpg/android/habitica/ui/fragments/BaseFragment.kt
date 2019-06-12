@@ -8,9 +8,8 @@ import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
-import com.habitrpg.android.habitica.events.DisplayTutorialEvent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
@@ -41,7 +40,7 @@ abstract class BaseFragment : DialogFragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.userComponent.notNull {
+        HabiticaBaseApplication.userComponent?.let {
             injectFragment(it)
         }
         this.showsDialog = false
@@ -76,15 +75,12 @@ abstract class BaseFragment : DialogFragment() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(Consumer { step ->
                             if (step != null && step.isValid && step.isManaged && step.shouldDisplay()) {
-                                val event = DisplayTutorialEvent()
-                                event.step = step
+                                val mainActivity = activity as? MainActivity ?: return@Consumer
                                 if (tutorialText != null) {
-                                    event.tutorialText = tutorialText
+                                    mainActivity.displayTutorialStep(step, tutorialText ?: "", tutorialCanBeDeferred)
                                 } else {
-                                    event.tutorialTexts = tutorialTexts
+                                    mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
                                 }
-                                event.canBeDeferred = tutorialCanBeDeferred
-                                EventBus.getDefault().post(event)
                             }
                         }, RxErrorHandler.handleEmptyError()))
             }
@@ -100,7 +96,7 @@ abstract class BaseFragment : DialogFragment() {
         }
 
         super.onDestroyView()
-        context.notNull {
+        context?.let {
             val refWatcher = HabiticaBaseApplication.getInstance(it)?.refWatcher
             refWatcher?.watch(this)
         }

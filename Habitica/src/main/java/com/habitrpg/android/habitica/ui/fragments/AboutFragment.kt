@@ -16,7 +16,6 @@ import androidx.core.net.toUri
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.AppTestingLevel
 import com.habitrpg.android.habitica.modules.AppModule
@@ -66,14 +65,14 @@ class AboutFragment : BaseMainFragment() {
         versionInfo.setOnClickListener {
             versionNumberTappedCount += 1
             when (versionNumberTappedCount) {
-                1 -> context.notNull { context ->
+                1 -> context?.let { context ->
                     Toast.makeText(context, "Oh! You tapped me!", Toast.LENGTH_SHORT).show()
                 }
-                in 5..7 -> context.notNull { context ->
+                in 5..7 -> context?.let { context ->
                     Toast.makeText(context, "Only ${8 - versionNumberTappedCount} taps left!", Toast.LENGTH_SHORT).show()
                 }
                 8 -> {
-                    context.notNull { context ->
+                    context?.let { context ->
                         Toast.makeText(context, "You were blessed with cats!", Toast.LENGTH_SHORT).show()
                     }
                     doTheThing()
@@ -162,7 +161,7 @@ class AboutFragment : BaseMainFragment() {
         context?.let { FirebaseAnalytics.getInstance(it).logEvent("found_easter_egg", null) }
         DataBindingUtils.loadImage("Pet-Sabretooth-Base") {bitmap ->
             activity?.runOnUiThread {
-                activity.notNull {
+                activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                             .setAcceleration(0.00013f, 90)
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
@@ -174,7 +173,7 @@ class AboutFragment : BaseMainFragment() {
         }
         DataBindingUtils.loadImage("Pet-Sabretooth-Golden") {bitmap ->
             activity?.runOnUiThread {
-                activity.notNull {
+                activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                             .setAcceleration(0.00013f, 90)
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
@@ -186,7 +185,7 @@ class AboutFragment : BaseMainFragment() {
         }
         DataBindingUtils.loadImage("Pet-Sabretooth-Red") {bitmap ->
             activity?.runOnUiThread {
-                activity.notNull {
+                activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                             .setAcceleration(0.00013f, 90)
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)

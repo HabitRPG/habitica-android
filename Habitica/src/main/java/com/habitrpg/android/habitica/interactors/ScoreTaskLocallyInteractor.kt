@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.interactors
 
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -133,7 +132,7 @@ class ScoreTaskLocallyInteractor {
 
             val outfit = user.items?.gear?.equipped
             val outfitList = ArrayList<String>()
-            outfit.notNull { thisOutfit ->
+            outfit?.let { thisOutfit ->
                 outfitList.add(thisOutfit.armor)
                 outfitList.add(thisOutfit.back)
                 outfitList.add(thisOutfit.body)

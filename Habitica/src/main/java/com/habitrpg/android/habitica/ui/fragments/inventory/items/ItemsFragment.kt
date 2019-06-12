@@ -1,20 +1,16 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.fragment.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.events.commands.HatchingCommand
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
-
-import org.greenrobot.eventbus.Subscribe
 
 class ItemsFragment : BaseMainFragment() {
 
@@ -92,23 +88,4 @@ class ItemsFragment : BaseMainFragment() {
         tabLayout?.setupWithViewPager(viewPager)
         tabLayout?.tabMode = TabLayout.MODE_SCROLLABLE
     }
-
-    @Subscribe
-    fun showHatchingDialog(event: HatchingCommand) {
-        if (event.usingEgg == null || event.usingHatchingPotion == null) {
-            val fragment = ItemRecyclerFragment()
-            if (event.usingEgg != null) {
-                fragment.itemType = "hatchingPotions"
-                fragment.hatchingItem = event.usingEgg
-            } else {
-                fragment.itemType = "eggs"
-                fragment.hatchingItem = event.usingHatchingPotion
-            }
-            fragment.isHatching = true
-            fragment.isFeeding = false
-            fragment.show(fragmentManager!!, "hatchingDialog")
-        }
-    }
-
-
 }

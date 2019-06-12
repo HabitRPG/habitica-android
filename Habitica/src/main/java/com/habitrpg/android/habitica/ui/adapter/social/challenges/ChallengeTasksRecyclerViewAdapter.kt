@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter
@@ -67,10 +66,10 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
             TYPE_HABIT -> HabitViewHolder(getContentView(parent, R.layout.habit_item_card), { _, _ -> }) { task ->
                 taskOpenEventsSubject.onNext(task)
             }
-            TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }) { task ->
+            TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }, { _, _ -> }) { task ->
                 taskOpenEventsSubject.onNext(task)
             }
-            TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }) { task ->
+            TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }, { _, _ -> }) { task ->
                 taskOpenEventsSubject.onNext(task)
             }
             TYPE_REWARD -> RewardViewHolder(getContentView(parent, R.layout.reward_item_card), { _, _ -> }) { task ->
@@ -114,7 +113,7 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
 
         init {
             addBtn.isClickable = true
-            addBtn.setOnClickListener { newTask.notNull { callback.onNext(it) } }
+            addBtn.setOnClickListener { newTask?.let { callback.onNext(it) } }
         }
 
         override fun bind(newTask: Task, position: Int) {

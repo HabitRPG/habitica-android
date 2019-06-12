@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
@@ -64,7 +63,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             if (it[position].isSystemMessage) {
                 (holder as? SystemChatMessageViewHolder)?.bind(it[position])
             } else {
@@ -134,27 +133,27 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
             itemView.setOnClickListener {
                 expandMessage()
             }
-            tvLikes.setOnClickListener { chatMessage.notNull { likeMessageEvents.onNext(it) } }
+            tvLikes.setOnClickListener { chatMessage?.let { likeMessageEvents.onNext(it) } }
             messageText.setOnClickListener { expandMessage() }
             messageText.movementMethod = LinkMovementMethod.getInstance()
-            userLabel.setOnClickListener { chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
-            avatarView.setOnClickListener { chatMessage?.uuid.notNull {userLabelClickEvents.onNext(it) } }
+            userLabel.setOnClickListener { chatMessage?.uuid?.let {userLabelClickEvents.onNext(it) } }
+            avatarView.setOnClickListener { chatMessage?.uuid?.let {userLabelClickEvents.onNext(it) } }
             replyButton.setOnClickListener {
                 if (chatMessage?.username != null) {
-                    chatMessage?.username.notNull { replyMessageEvents.onNext(it) }
+                    chatMessage?.username?.let { replyMessageEvents.onNext(it) }
                 } else {
-                    chatMessage?.user.notNull { replyMessageEvents.onNext(it) }
+                    chatMessage?.user?.let { replyMessageEvents.onNext(it) }
                 }
             }
             replyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
                     null, null, null)
-            copyButton.setOnClickListener { chatMessage.notNull { copyMessageEvents.onNext(it) } }
+            copyButton.setOnClickListener { chatMessage?.let { copyMessageEvents.onNext(it) } }
             copyButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
                     null, null, null)
-            reportButton.setOnClickListener { chatMessage.notNull { flagMessageEvents.onNext(it) } }
+            reportButton.setOnClickListener { chatMessage?.let { flagMessageEvents.onNext(it) } }
             reportButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
                     null, null, null)
-            deleteButton.setOnClickListener { chatMessage.notNull { deleteMessageEvents.onNext(it) } }
+            deleteButton.setOnClickListener { chatMessage?.let { deleteMessageEvents.onNext(it) } }
             deleteButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
                     null, null, null)
         }
@@ -211,7 +210,7 @@ class ChatRecyclerViewAdapter(data: OrderedRealmCollection<ChatMessage>?, autoUp
                 val dpWidth = displayMetrics.widthPixels / displayMetrics.density
                 if (dpWidth > 350) {
                     avatarView.visibility = View.VISIBLE
-                    msg.userStyles.notNull {
+                    msg.userStyles?.let {
                         avatarView.setAvatar(it)
                     }
                 } else {

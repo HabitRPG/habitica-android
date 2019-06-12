@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
@@ -24,6 +25,8 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
     override val errorButtonEvents = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     private var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
     override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    protected var checklistItemScoreSubject = PublishSubject.create<Pair<Task, ChecklistItem>>()
+    override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
     protected var taskOpenEventsSubject = PublishSubject.create<Task>()
     override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
 

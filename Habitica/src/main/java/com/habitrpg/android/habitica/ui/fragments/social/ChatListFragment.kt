@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -120,7 +119,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
-        chatAdapter.notNull {adapter ->
+        chatAdapter?.let {adapter ->
             compositeSubscription.add(adapter.getUserLabelClickFlowable().subscribe(Consumer { userId ->
                 FullProfileActivity.open(userId)
             }, RxErrorHandler.handleEmptyError()))
@@ -139,7 +138,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        groupId.notNull { id ->
+        groupId?.let { id ->
             socialRepository.getGroupChat(id).firstElement()
                     .subscribe(Consumer<RealmResults<ChatMessage>> { this.setChatMessages(it) }, RxErrorHandler.handleEmptyError())
         }
@@ -220,7 +219,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
          if (isUserInitiated) {
              refreshLayout.isRefreshing = true
          }
-        groupId.notNull {id ->
+        groupId?.let {id ->
             socialRepository.retrieveGroupChat(id)
                     .doOnEvent { _, _ -> refreshLayout?.isRefreshing = false }.subscribe(Consumer {
                         if (isScrolledToTop && recyclerView != null) {
@@ -238,7 +237,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun markMessagesAsSeen() {
         if (!isTavern && groupId?.isNotEmpty() == true && gotNewMessages && navigatedOnceToFragment) {
             gotNewMessages = false
-            groupId.notNull {id ->
+            groupId?.let {id ->
                 socialRepository.markMessagesSeen(id)
             }
         }
@@ -289,7 +288,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun sendChatMessage(chatText: String) {
-        groupId.notNull {id ->
+        groupId?.let {id ->
             socialRepository.postGroupChat(id, chatText).subscribe({
                 recyclerView?.scrollToPosition(0)
             }, { throwable ->

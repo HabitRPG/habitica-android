@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -229,19 +228,19 @@ class PartyDetailFragment : BaseFragment() {
     }
 
     private fun onPartyInviteAccepted() {
-        viewModel?.getUserData()?.value?.invitations?.party?.id.notNull {
+        viewModel?.getUserData()?.value?.invitations?.party?.id?.let {
             viewModel?.joinGroup(it)
         }
     }
 
     private fun onPartyInviteRejected() {
-        viewModel?.getUserData()?.value?.invitations?.party?.id.notNull {
+        viewModel?.getUserData()?.value?.invitations?.party?.id?.let {
             viewModel?.rejectGroupInvite(it)
         }
     }
 
     private fun questDetailButtonClicked() {
-        viewModel?.getGroupData()?.value.notNull { party ->
+        viewModel?.getGroupData()?.value?.let { party ->
             MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail(party.id, party.quest?.key ?: ""))
         }
     }

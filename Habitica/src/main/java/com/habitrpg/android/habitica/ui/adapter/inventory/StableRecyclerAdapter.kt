@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
@@ -50,7 +49,7 @@ class StableRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<
         if (obj.javaClass == String::class.java) {
             (holder as? SectionViewHolder)?.bind(obj as? String ?: "")
         } else {
-            (obj as? Animal).notNull { (holder as? StableViewHolder)?.bind(it) }
+            (obj as? Animal)?.let { (holder as? StableViewHolder)?.bind(it) }
 
         }
     }

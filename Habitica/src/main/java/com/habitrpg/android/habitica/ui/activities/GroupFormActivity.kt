@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
 
@@ -39,7 +38,7 @@ class GroupFormActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        intent.extras.notNull {bundle ->
+        intent.extras?.let {bundle ->
             groupID = bundle.getString("groupID")
             groupType = bundle.getString("groupType")
             groupName = bundle.getString("name")

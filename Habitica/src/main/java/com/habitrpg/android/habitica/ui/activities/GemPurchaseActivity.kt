@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.ABTest
@@ -154,7 +153,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     }
 
     private fun setupCheckout() {
-        HabiticaBaseApplication.getInstance(this)?.billing.notNull {
+        HabiticaBaseApplication.getInstance(this)?.billing?.let {
             activityCheckout = Checkout.forActivity(this, it)
             activityCheckout?.start()
         }

@@ -11,7 +11,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -34,7 +33,7 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
     }
 
     override fun onBindViewHolder(holder: GearViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             holder.bind(it[position])
         }
     }

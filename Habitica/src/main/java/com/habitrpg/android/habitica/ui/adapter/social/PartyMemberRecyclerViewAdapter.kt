@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.adapter.social
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder.GroupMemberViewHolder
 import io.reactivex.BackpressureStrategy
@@ -23,7 +22,7 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
     }
 
     override fun onBindViewHolder(holder: GroupMemberViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             holder.bind(it[position], leaderID)
             holder.onClickEvent = {
                 userClickedEvents.onNext(it[position].id ?: "")

@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -84,7 +83,7 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
         assert(this.activity != null)
         this.chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
 
-        this.activity.notNull { thisActivity ->
+        this.activity?.let { thisActivity ->
             val alert = HabiticaAlertDialog(thisActivity)
             alert.setTitle(getString(R.string.choose_recipient_title))
             alert.addButton(getString(R.string.action_continue), true) { _, _ ->

@@ -8,11 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.OpenMysteryItemEvent
 import com.habitrpg.android.habitica.events.commands.FeedCommand
-import com.habitrpg.android.habitica.events.commands.HatchingCommand
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
@@ -49,6 +46,9 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
 
     private val sellItemEvents = PublishSubject.create<OwnedItem>()
     private val questInvitationEvents = PublishSubject.create<QuestContent>()
+    private val openMysteryItemEvents = PublishSubject.create<Item>()
+    private val startHatchingSubject = PublishSubject.create<Item>()
+    private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
 
     fun getSellItemFlowable(): Flowable<OwnedItem> {
         return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
@@ -57,13 +57,19 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
     fun getQuestInvitationFlowable(): Flowable<QuestContent> {
         return questInvitationEvents.toFlowable(BackpressureStrategy.DROP)
     }
+    fun getOpenMysteryItemFlowable(): Flowable<Item> {
+        return openMysteryItemEvents.toFlowable(BackpressureStrategy.DROP)
+    }
+
+    val startHatchingEvents = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
+    val hatchPetEvents = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(parent.inflate(R.layout.item_item))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             val ownedItem = it[position]
             holder.bind(ownedItem, items?.get(ownedItem.key))
         }
@@ -162,29 +168,21 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                     }
                 }
                 menu.setSelectionRunnable { index ->
-                    item.notNull { selectedItem ->
+                    item?.let { selectedItem ->
                         if (!(selectedItem is QuestContent || selectedItem is SpecialItem) && index == 0) {
                             ownedItem?.let { selectedOwnedItem -> sellItemEvents.onNext(selectedOwnedItem) }
-                            return@notNull
+                            return@let
                         }
                         when (selectedItem) {
-                            is Egg -> {
-                                val event = HatchingCommand()
-                                event.usingEgg = selectedItem
-                                EventBus.getDefault().post(event)
-                            }
+                            is Egg -> item?.let { startHatchingSubject.onNext(it) }
                             is Food -> {
                                 val event = FeedCommand()
                                 event.usingFood = selectedItem
                                 EventBus.getDefault().post(event)
                             }
-                            is HatchingPotion -> {
-                                val event = HatchingCommand()
-                                event.usingHatchingPotion = selectedItem
-                                EventBus.getDefault().post(event)
-                            }
+                            is HatchingPotion -> item?.let { startHatchingSubject.onNext(it) }
                             is QuestContent -> questInvitationEvents.onNext(selectedItem)
-                            is SpecialItem -> EventBus.getDefault().post(OpenMysteryItemEvent())
+                            is SpecialItem -> openMysteryItemEvents.onNext(selectedItem)
                         }
                     }
                 }
@@ -193,16 +191,13 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                 if (!this.canHatch) {
                     return
                 }
-                if (item is Egg) {
-                    val event = HatchingCommand()
-                    event.usingEgg = item as Egg
-                    event.usingHatchingPotion = hatchingItem as HatchingPotion?
-                    EventBus.getDefault().post(event)
-                } else if (item is HatchingPotion) {
-                    val event = HatchingCommand()
-                    event.usingHatchingPotion = item as HatchingPotion
-                    event.usingEgg = hatchingItem as Egg?
-                    EventBus.getDefault().post(event)
+                val firstItem = item ?: return
+                if (firstItem is Egg) {
+                    val potion = hatchingItem as HatchingPotion
+                    hatchPetSubject.onNext(Pair(potion, firstItem))
+                } else if (firstItem is HatchingPotion) {
+                    val egg = hatchingItem as Egg
+                    hatchPetSubject.onNext(Pair(firstItem, egg))
                 }
                 fragment?.dismiss()
             } else if (isFeeding) {

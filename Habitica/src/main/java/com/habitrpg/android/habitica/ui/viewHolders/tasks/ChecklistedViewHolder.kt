@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -25,9 +24,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import org.greenrobot.eventbus.EventBus
 
-abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc), CompoundButton.OnCheckedChangeListener {
+abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc), CompoundButton.OnCheckedChangeListener {
 
     private val checkboxHolder: ViewGroup by bindView(itemView, R.id.checkBoxHolder)
     internal val checkbox: CheckBox by bindView(itemView, R.id.checkBox)
@@ -94,10 +92,7 @@ abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, Task
                     }
                     checkbox?.isChecked = item.completed
                     checkbox?.setOnCheckedChangeListener { _, _ ->
-                        val event = ChecklistCheckedCommand()
-                        event.task = task
-                        event.item = item
-                        EventBus.getDefault().post(event)
+                        task?.let { scoreChecklistItemFunc(it, item) }
                     }
                     val checkboxHolder = itemView?.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
                     expandCheckboxTouchArea(checkboxHolder, checkbox)
