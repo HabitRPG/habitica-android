@@ -7,8 +7,8 @@ import io.reactivex.Single
 
 
 fun <S, T : Optional<S>> Flowable<T>.filterOptionalDoOnEmpty(function: () -> Unit): Flowable<S> {
-    return this.filter { !it.isEmpty }
-            .doOnNext { function() }
+    return this.doOnNext { if (it.isEmpty) function() }
+            .filter { !it.isEmpty }
             .map { it.value }
 }
 
@@ -18,8 +18,8 @@ fun <S, T : Optional<S>> Flowable<T>.filterMapEmpty(): Flowable<S> {
 }
 
 fun <S, T : Optional<S>> Observable<T>.filterOptionalDoOnEmpty(function: () -> Unit): Observable<S> {
-    return this.filter { !it.isEmpty }
-            .doOnNext { function() }
+    return this.doOnNext { if (it.isEmpty) function() }
+            .filter { !it.isEmpty }
             .map { it.value }
 }
 
@@ -29,8 +29,8 @@ fun <S, T : Optional<S>> Observable<T>.filterMapEmpty(): Observable<S> {
 }
 
 fun <S, T : Optional<S>> Single<T>.filterOptionalDoOnEmpty(function: () -> Unit): Maybe<S> {
-    return this.filter { !it.isEmpty }
-            .doAfterSuccess { function() }
+    return this.doAfterSuccess { if (it.isEmpty) function() }
+            .filter { !it.isEmpty }
             .map { it.value }
 }
 
@@ -40,8 +40,8 @@ fun <S, T : Optional<S>> Single<T>.filterMapEmpty(): Maybe<S> {
 }
 
 fun <S, T : Optional<S>> Maybe<T>.filterOptionalDoOnEmpty(function: () -> Unit): Maybe<S> {
-    return this.filter { !it.isEmpty }
-            .doAfterSuccess { function() }
+    return this.doAfterSuccess { if (it.isEmpty) function() }
+            .filter { !it.isEmpty }
             .map { it.value }
 }
 

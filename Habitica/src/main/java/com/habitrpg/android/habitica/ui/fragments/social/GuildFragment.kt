@@ -66,6 +66,8 @@ class GuildFragment : BaseMainFragment() {
         if (viewModel.groupID == "f2db2a7f-13c5-454d-b3ee-ea1f5089e601") {
             context?.let { FirebaseAnalytics.getInstance(it).logEvent("opened_no_party_guild", null) }
         }
+
+        viewModel.retrieveGroup {  }
     }
 
     private fun setFragments() {

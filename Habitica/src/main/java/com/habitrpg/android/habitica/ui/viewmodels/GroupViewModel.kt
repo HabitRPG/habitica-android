@@ -24,7 +24,6 @@ import io.realm.RealmResults
 import java.util.*
 import javax.inject.Inject
 
-
 enum class GroupViewType(internal val order: String) {
     PARTY("party"),
     GUILD("guild"),
@@ -53,6 +52,7 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     protected val groupIDSubject = BehaviorSubject.create<Optional<String>>()
+    val groupIDFlowable = groupIDSubject.toFlowable(BackpressureStrategy.BUFFER)
     var gotNewMessages: Boolean = false
 
     init {
@@ -95,7 +95,7 @@ open class GroupViewModel : BaseViewModel() {
     fun getIsMemberData(): LiveData<Boolean?> = isMemberData
 
     private fun loadGroupFromLocal() {
-        disposable.add(groupIDSubject.toFlowable(BackpressureStrategy.LATEST)
+        disposable.add(groupIDFlowable
                 .filterOptionalDoOnEmpty { group.value = null }
                 .flatMap { socialRepository.getGroup(it) }
                 .observeOn(AndroidSchedulers.mainThread())
@@ -103,8 +103,8 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     private fun loadLeaderFromLocal() {
-        disposable.add(groupIDSubject.toFlowable(BackpressureStrategy.LATEST)
-                .filterOptionalDoOnEmpty { group.value = null }
+        disposable.add(groupIDFlowable
+                .filterOptionalDoOnEmpty { leader.value = null }
                 .flatMap { socialRepository.getGroup(it) }
                 .distinctUntilChanged { group1, group2 -> group1.id == group2.id }
                 .flatMap { socialRepository.getMember(it.leaderID) }
@@ -113,8 +113,8 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     private fun loadMembershipFromLocal() {
-        disposable.add(groupIDSubject.toFlowable(BackpressureStrategy.LATEST)
-                .filterOptionalDoOnEmpty { group.value = null }
+        disposable.add(groupIDFlowable
+                .filterOptionalDoOnEmpty { isMemberData.value = null }
                 .flatMap { socialRepository.getGroupMemberships() }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Consumer {
@@ -123,13 +123,13 @@ open class GroupViewModel : BaseViewModel() {
     }
 
     fun getChatMessages(): Flowable<RealmResults<ChatMessage>> {
-        return groupIDSubject.toFlowable(BackpressureStrategy.BUFFER)
+        return groupIDFlowable
                 .filterMapEmpty()
                 .flatMapMaybe { socialRepository.getGroupChat(it).firstElement() }
     }
 
     fun retrieveGroup(function: (() -> Unit)?) {
-        disposable.add(socialRepository.retrieveGroup("party")
+        disposable.add(socialRepository.retrieveGroup(groupID ?: "")
                 .filter { groupViewType == GroupViewType.PARTY }
                 .flatMap { group1 ->
                     socialRepository.retrieveGroupMembers(group1.id, true)

@@ -258,7 +258,7 @@ open class NotificationsViewModel : BaseViewModel() {
         }
     }
 
-    fun clickGroupInvitation(notification: Notification, navController: MainNavigationController) {
+    private fun clickGroupInvitation(notification: Notification, navController: MainNavigationController) {
         when (notification.type) {
             Notification.Type.GUILD_INVITATION.type -> {
                 val bundle = Bundle()
