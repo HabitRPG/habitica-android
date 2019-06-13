@@ -9,7 +9,7 @@
     android:scrollbars="vertical"
     android:paddingTop="@dimen/row_padding">
 
-    <com.habitrpg.android.habitica.ui.views.PaddedLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -144,5 +144,5 @@
                     android:layout_width="match_parent"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-    </com.habitrpg.android.habitica.ui.views.PaddedLinearLayout>
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

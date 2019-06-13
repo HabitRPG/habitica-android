@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.android.habitica.ui.views.PaddedRecylerView
 
 //http://stackoverflow.com/a/27801394/1315039
-class RecyclerViewEmptySupport : PaddedRecylerView {
+class RecyclerViewEmptySupport : RecyclerView {
     private var emptyView: View? = null
     private val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onChanged() {

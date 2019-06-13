@@ -22,6 +22,7 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     val infoIconView: ImageView by bindView(R.id.infoIconView)
     private var preferences: SharedPreferences? = null
     private val padding = context?.resources?.getDimension(R.dimen.spacing_large)?.toInt() ?: 0
+    private val bottomPadding = context?.resources?.getDimension(R.dimen.collapsible_section_padding)?.toInt() ?: 0
 
     var title: CharSequence
     get() {
@@ -60,7 +61,6 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     private fun showViews() {
         updatePreferences()
         setCaretImage()
-        setPadding(0, 0, 0, padding)
         (2 until childCount)
                 .filter { getChildAt(it) != titleView }
                 .forEach { getChildAt(it).visibility = View.VISIBLE }
@@ -69,7 +69,6 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     private fun hideViews() {
         updatePreferences()
         setCaretImage()
-        setPadding(0, 0, 0, 0)
         (2 until childCount)
                 .map { getChildAt(it) }
                 .forEach {
@@ -92,8 +91,8 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
         (2 until childCount)
                 .map { getChildAt(it) }
                 .forEach {
-                    val lp = it.layoutParams as LayoutParams
-                    lp.setMargins(padding, 0, padding, padding)
+                    val lp = it.layoutParams as? LayoutParams
+                    lp?.setMargins(padding, 0, padding, bottomPadding)
                     it.layoutParams = lp
                 }
     }
@@ -101,6 +100,26 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         setChildMargins()
         super.onLayout(changed, l, t, r, b)
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        var height = 0
+        measureChildWithMargins(separatorView, widthMeasureSpec, 0, heightMeasureSpec, height)
+        height += separatorView.measuredHeight
+        measureChildWithMargins(titleView, widthMeasureSpec, 0, heightMeasureSpec, height)
+        height += titleView.measuredHeight
+        (2 until childCount)
+                .map { getChildAt(it) }
+                .forEach {
+                    if (it.visibility != View.GONE) {
+                        measureChildWithMargins(it, widthMeasureSpec, 0, heightMeasureSpec, height)
+                        height += it.measuredHeight + bottomPadding
+                    }
+                }
+        if (!isCollapsed) {
+            height += padding
+        }
+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), height)
     }
 
     init {

@@ -14,7 +14,7 @@
         android:id="@+id/title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/spacing_large"
+        android:paddingStart="@dimen/spacing_large"
         android:gravity="center_vertical">
         <TextView
             android:id="@+id/titleTextView"

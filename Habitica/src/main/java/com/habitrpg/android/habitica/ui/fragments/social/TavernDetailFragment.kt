@@ -78,23 +78,21 @@ class TavernDetailFragment : BaseFragment() {
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .doOnNext {  if (!it.hasActiveQuest) worldBossSection.visibility = View.GONE }
                 .filter { it.hasActiveQuest }
-                .doOnNext { questProgressView.progress = it.quest}
+                .doOnNext {
+                    questProgressView.progress = it.quest
+                    descriptionView.setText(R.string.tavern_description_world_boss)
+                    val filtered = it.quest?.rageStrikes?.filter { strike -> strike.key == "tavern" }
+                    if (filtered?.size ?: 0 > 0 && filtered?.get(0)?.wasHit == true) {
+                        val key = it.quest?.key
+                        if (key != null) {
+                            shopSpriteSuffix = key
+                        }
+                    }
+                }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
                 .subscribe(Consumer {
                     questProgressView.quest = it
                     worldBossSection.visibility = View.VISIBLE
-                }, RxErrorHandler.handleEmptyError()))
-
-        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
-                .filter { it.hasActiveQuest }
-                .doOnNext { descriptionView.setText(R.string.tavern_description_world_boss) }
-                .filter { group -> group.quest?.rageStrikes?.any { it.key == "tavern" } ?: false }
-                .filter { group -> group.quest?.rageStrikes?.filter { it.key == "tavern" }?.get(0)?.wasHit == true }
-                .subscribe(Consumer {
-                    val key = it.quest?.key
-                    if (key != null) {
-                        shopSpriteSuffix = key
-                    }
                 }, RxErrorHandler.handleEmptyError()))
 
         compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
@@ -162,7 +160,7 @@ class TavernDetailFragment : BaseFragment() {
                 container.setPadding(0, padding, 0, padding)
             }
         }
-        playerTiersView.invalidate()
+        (playerTiersView.parent as? ViewGroup)?.invalidate()
     }
 
     override fun injectFragment(component: UserComponent) {

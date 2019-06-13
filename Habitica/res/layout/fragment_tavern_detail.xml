@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<com.habitrpg.android.habitica.ui.views.PaddedLinearLayout
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -102,5 +102,5 @@
             android:layout_height="wrap_content"
             android:text="@string/tiers_descriptions"/>
     </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
-</com.habitrpg.android.habitica.ui.views.PaddedLinearLayout>
+</LinearLayout>
 </androidx.core.widget.NestedScrollView>

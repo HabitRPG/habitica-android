@@ -143,4 +143,5 @@
     <dimen name="button_text_size">16sp</dimen>
     <dimen name="alert_side_padding">26dp</dimen>
     <dimen name="downwards_drop_shadow_height">16dp</dimen>
+    <dimen name="collapsible_section_padding">12dp</dimen>
 </resources>

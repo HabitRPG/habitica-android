@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:maxHeightMultiplier="0.7">
-    <com.habitrpg.android.habitica.ui.views.PaddedLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -207,5 +207,5 @@
                 android:text="@string/leave"
                 style="@style/HabiticaButton.Red"/>
         </FrameLayout>
-    </com.habitrpg.android.habitica.ui.views.PaddedLinearLayout>
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>
