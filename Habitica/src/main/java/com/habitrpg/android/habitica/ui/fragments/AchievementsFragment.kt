@@ -54,6 +54,16 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
         return inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false)
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        useGridLayout = savedInstanceState?.getBoolean("useGridLayout") ?: false
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("useGridLayout", useGridLayout)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

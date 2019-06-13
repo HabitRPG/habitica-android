@@ -1,8 +1,12 @@
 package com.habitrpg.android.habitica.ui.views.navigation
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.ViewGroup
 import android.view.animation.Animation
+import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.ImageButton
@@ -14,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
+
 
 class HabiticaBottomNavigationView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -52,6 +57,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     private val todosTab: BottomNavigationItem by bindView(R.id.tab_todos)
     private val rewardsTab: BottomNavigationItem by bindView(R.id.tab_rewards)
     private val addButton: ImageButton by bindView(R.id.add)
+    private val addButtonBackground: ViewGroup by bindView(R.id.add_wrapper)
     private val submenuWrapper: LinearLayout by bindView(R.id.submenu_wrapper)
 
     init {
@@ -70,6 +76,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             } else {
                 showSubmenu()
             }
+            animateButtonTap()
         }
         addButton.setOnLongClickListener {
             if (flipAddBehaviour) {
@@ -77,13 +84,55 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             } else {
                 onAddListener?.invoke(activeTaskType)
             }
+            animateButtonTap()
             true
+        }
+        addButton.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val animX = ObjectAnimator.ofFloat(addButton, "scaleX", 1f, 1.1f)
+                animX.duration = 100
+                animX.interpolator = LinearInterpolator()
+                animX.start()
+                val animY = ObjectAnimator.ofFloat(addButton, "scaleY", 1f, 1.1f)
+                animY.duration = 100
+                animY.interpolator = LinearInterpolator()
+                animY.start()
+                val animXBackground = ObjectAnimator.ofFloat(addButtonBackground, "scaleX", 1f, 0.9f)
+                animXBackground.duration = 100
+                animXBackground.interpolator = LinearInterpolator()
+                animXBackground.start()
+                val animYBackground = ObjectAnimator.ofFloat(addButtonBackground, "scaleY", 1f, 0.9f)
+                animYBackground.duration = 100
+                animYBackground.interpolator = LinearInterpolator()
+                animYBackground.start()
+            }
+            false
         }
         submenuWrapper.setOnClickListener { hideSubmenu() }
         updateItemSelection()
     }
 
+    private fun animateButtonTap() {
+        val animX = ObjectAnimator.ofFloat(addButton, "scaleX", 1.3f, 1f)
+        animX.duration = 400
+        animX.interpolator = BounceInterpolator()
+        animX.start()
+        val animY = ObjectAnimator.ofFloat(addButton, "scaleY", 1.3f, 1f)
+        animY.duration = 400
+        animY.interpolator = BounceInterpolator()
+        animY.start()
+        val animXBackground = ObjectAnimator.ofFloat(addButtonBackground, "scaleX", 0.9f, 1f)
+        animXBackground.duration = 600
+        animXBackground.interpolator = BounceInterpolator()
+        animXBackground.start()
+        val animYBackground = ObjectAnimator.ofFloat(addButtonBackground, "scaleY", 0.9f, 1f)
+        animYBackground.duration = 600
+        animYBackground.interpolator = BounceInterpolator()
+        animYBackground.start()
+    }
+
     private fun showSubmenu() {
+        if (isShowingSubmenu) return
         isShowingSubmenu = true
 
         val rotate = RotateAnimation(0f, 135f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
