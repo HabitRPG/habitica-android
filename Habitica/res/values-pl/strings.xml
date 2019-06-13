@@ -751,4 +751,5 @@
     <string name="staff">Personel</string>
     <string name="setup_task_reward">Należy Ci się nagroda</string>
     <string name="gift_one_get_one">Dajesz - dostajesz!</string>
+    <string name="only_leader_create_challenge">Tylko lider może tworzyć wyzwania.</string>
     </resources>
