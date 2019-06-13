@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
+import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -160,6 +161,7 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                 } else if (item is HatchingPotion) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.hatch_egg)))
                 } else if (item is QuestContent) {
+                    menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.details)))
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.invite_party)))
                 } else if (item is SpecialItem) {
                     val specialItem = item as SpecialItem
@@ -180,8 +182,16 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                                 event.usingFood = selectedItem
                                 EventBus.getDefault().post(event)
                             }
-                            is HatchingPotion -> item?.let { startHatchingSubject.onNext(it) }
-                            is QuestContent -> questInvitationEvents.onNext(selectedItem)
+                            is HatchingPotion -> startHatchingSubject.onNext(selectedItem)
+                            is QuestContent -> {
+                                if (index == 0) {
+                                    val dialog = DetailDialog(context)
+                                    dialog.quest = selectedItem
+                                    dialog.show()
+                                } else {
+                                    questInvitationEvents.onNext(selectedItem)
+                                }
+                            }
                             is SpecialItem -> openMysteryItemEvents.onNext(selectedItem)
                         }
                     }

@@ -136,7 +136,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
         setCustomHeaderView(customHeader)
 
-
         addCloseButton()
         buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null)) { _, _ ->
             onBuyButtonClicked()

@@ -941,4 +941,5 @@
     <string name="confirm_deletion">Confirm deletion</string>
     <string name="new_task">New Task</string>
     <string name="create_task">Create %s</string>
+    <string name="details">Details</string>
 </resources>
