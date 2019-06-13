@@ -77,7 +77,7 @@ class SubscriptionDetailsView : LinearLayout {
         if (plan.consecutive?.count == 1) {
             monthsSubscribedTextView.text = resources.getString(R.string.one_month)
         } else {
-            monthsSubscribedTextView.text = resources.getString(R.string.months, plan.consecutive?.count ?: 0)
+            monthsSubscribedTextView.text = resources.getString(R.string.x_months, plan.consecutive?.count ?: 0)
         }
         gemCapTextView.text = plan.totalNumberOfGems().toString()
         currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
