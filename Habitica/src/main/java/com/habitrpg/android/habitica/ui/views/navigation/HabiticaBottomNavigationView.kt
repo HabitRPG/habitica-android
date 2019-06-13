@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import java.lang.ref.WeakReference
 
 
 class HabiticaBottomNavigationView @JvmOverloads constructor(
@@ -44,7 +45,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         }
     }
     var onTabSelectedListener: ((String) -> Unit)? = null
-    var onAddListener: ((String) -> Unit)? = null
+    var onAddListener:  WeakReference<((String) -> Unit)>? = null
     var activeTaskType: String = Task.TYPE_HABIT
     set(value) {
         field = value
@@ -71,7 +72,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
                 if (isShowingSubmenu) {
                     hideSubmenu()
                 } else {
-                    onAddListener?.invoke(activeTaskType)
+                    onAddListener?.get()?.invoke(activeTaskType)
                 }
             } else {
                 showSubmenu()
@@ -82,7 +83,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             if (flipAddBehaviour) {
                 showSubmenu()
             } else {
-                onAddListener?.invoke(activeTaskType)
+                onAddListener?.get()?.invoke(activeTaskType)
             }
             animateButtonTap()
             true
@@ -164,7 +165,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
                 }
             }
             view.onAddListener = {
-                onAddListener?.invoke(taskType)
+                onAddListener?.get()?.invoke(taskType)
                 hideSubmenu()
             }
             submenuWrapper.addView(view)

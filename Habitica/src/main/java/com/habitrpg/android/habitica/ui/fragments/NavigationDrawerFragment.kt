@@ -28,7 +28,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFI
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
 import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.TavernDetailFragment
-import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -148,9 +147,6 @@ class NavigationDrawerFragment : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true)
-
-        context?.let {recyclerView.setPadding(0, 0, 0,  NavbarUtils.getNavbarHeight(it)) }
-        recyclerView.clipToPadding = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -158,14 +154,6 @@ class NavigationDrawerFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var statusBarHeight = 0
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            statusBarHeight = resources.getDimensionPixelSize(resourceId)
-        }
-        val params = menuHeaderView.layoutParams as? ViewGroup.MarginLayoutParams
-        params?.topMargin = statusBarHeight
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)

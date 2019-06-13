@@ -1,13 +1,10 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -128,7 +125,7 @@ class ReportMessageActivity : BaseActivity() {
     private fun setStatusBarDim(dim: Boolean) {
         if (dim) {
             appBar.elevation = 0f
-            window.statusBarColor = Color.TRANSPARENT
+            window.statusBarColor = ContextCompat.getColor(this, R.color.brand_50)
             closeButton.visibility = View.GONE
             toolbarTextView.setTypeface(null, Typeface.BOLD)
         } else {

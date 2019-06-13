@@ -294,6 +294,17 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         outState.putString(CLASS_TYPE_KEY, this.classType)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            TasksFragment.TASK_CREATED_RESULT -> {
+                TasksFragment.displayingTaskForm = false
+            }
+            TasksFragment.TASK_UPDATED_RESULT -> TasksFragment.displayingTaskForm = false
+        }
+    }
+
     override val displayedClassName: String?
         get() = this.classType + super.displayedClassName
 

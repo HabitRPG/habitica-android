@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -47,12 +45,6 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         this.finishButton.setOnClickListener(this)
 
         compositeSubscription.add(contentRepository.retrieveContent(this).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
-
-        val window = window
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-        }
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
     }
 
     override fun injectActivity(component: UserComponent?) {

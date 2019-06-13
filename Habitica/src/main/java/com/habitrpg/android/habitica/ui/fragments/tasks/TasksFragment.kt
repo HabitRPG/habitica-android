@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.functions.Consumer
+import java.lang.ref.WeakReference
 import java.util.*
 import javax.inject.Inject
 
@@ -64,8 +65,8 @@ class TasksFragment : BaseMainFragment() {
             }
             updateBottomBarBadges()
         }
-        bottomNavigation?.onAddListener = {
-            openNewTaskActivity(it)
+        bottomNavigation?.onAddListener = WeakReference { type ->
+            openNewTaskActivity(type)
         }
         bottomNavigation?.flipAddBehaviour = appConfigManager.flipAddTaskBehaviour()
     }
@@ -324,7 +325,7 @@ class TasksFragment : BaseMainFragment() {
 
     companion object {
         var displayingTaskForm: Boolean = false
-        private const val TASK_CREATED_RESULT = 1
+        internal const val TASK_CREATED_RESULT = 1
         const val TASK_UPDATED_RESULT = 2
     }
 }

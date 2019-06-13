@@ -86,15 +86,13 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = window
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val decor = getWindow().decorView
-                decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                window.statusBarColor = ContextCompat.getColor(this, R.color.light_gray_bg)
-            } else {
-                window.statusBarColor = ContextCompat.getColor(this, R.color.days_gray)
-            }
+        val window = window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val decor = getWindow().decorView
+            decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            window.statusBarColor = ContextCompat.getColor(this, R.color.light_gray_bg)
+        } else {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.days_gray)
         }
 
         pager.disableFading = true

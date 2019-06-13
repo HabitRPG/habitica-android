@@ -10,8 +10,6 @@
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
-    <FrameLayout android:layout_width="match_parent"
-                 android:layout_height="match_parent">
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
@@ -29,7 +27,6 @@
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar"
                     android:layout_width="match_parent"
@@ -59,7 +56,7 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="16dp">
+                            android:layout_marginEnd="16dp">
 
                             <TextView
                                 android:id="@+id/toolbar_title"
@@ -79,7 +76,7 @@
                                 android:scaleType="centerCrop"
                                 android:adjustViewBounds="true"
                                 android:layout_centerVertical="true"
-                                android:layout_alignParentRight="true"/>
+                                android:layout_alignParentEnd="true"/>
 
                         </RelativeLayout>
                     </androidx.appcompat.widget.Toolbar>
@@ -116,7 +113,7 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <RelativeLayout
-                android:id="@+id/bottom_wrapper"
+                android:id="@+id/overlayFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:minHeight="60dp"
@@ -136,13 +133,6 @@
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/overlayFrameLayout"
-            android:clickable="false"
-            />
-    </FrameLayout>
 
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->

@@ -9,12 +9,10 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
-import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -43,6 +41,7 @@ import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -149,16 +148,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
     private var connectionIssueHandler: Handler? = null
 
-    private val statusBarHeight: Int
-        get() {
-            var result = 0
-            val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-            if (resourceId > 0) {
-                result = resources.getDimensionPixelSize(resourceId)
-            }
-            return result
-        }
-
     val userID: String
         get() = user?.id ?: ""
 
@@ -194,14 +183,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         avatarInHeader = AvatarWithBarsViewModel(this, avatarWithBars, userRepository)
         sideAvatarView = AvatarView(this, true, false, false)
 
-        val window = window
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.black_10_alpha)
-        }
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        toolbar.setPadding(0, statusBarHeight, 0, 0)
-        val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
-        avatarWithBars.setPadding(px.toInt(), statusBarHeight, px.toInt(), 0)
+        val px = 16.dpToPx(this)
+        avatarWithBars.setPadding(px.toInt(), 0, px.toInt(), 0)
 
         compositeSubscription.add(userRepository.getUser()
                 .subscribe(Consumer { newUser ->
@@ -334,6 +317,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         resumeFromActivity = true
         super.startActivity(intent, options)
     }
+
+
 
     private fun updateWidgets() {
         updateWidget(AvatarStatsWidgetProvider::class.java)

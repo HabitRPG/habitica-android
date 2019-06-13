@@ -40,6 +40,7 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:textColorLink">@color/brand_400</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
 
@@ -61,6 +62,7 @@
 
     <style name="AppTheme.ActionBar.Transparent" parent="AppTheme.ActionBar">
         <item name="actionBarStyle">@style/ActionBarTransparent</item>
+        <item name="android:statusBarColor">@color/brand_50</item>
         <item name="android:navigationBarColor">@color/brand_50</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -75,15 +77,15 @@
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/brand_50</item>
         <item name="android:navigationBarColor">@color/brand_50</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="MainAppTheme" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/activity_launch_background</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar.Green">
