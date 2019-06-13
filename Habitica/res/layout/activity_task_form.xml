@@ -50,7 +50,8 @@
                         android:id="@+id/text_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/task_title"/>
+                        android:hint="@string/task_title"
+                        android:inputType="textCapSentences|textAutoCorrect"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/TaskFormTextInputLayoutAppearance"
@@ -62,7 +63,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/notes"
                         android:minLines="3"
-                        android:gravity="top"/>
+                        android:gravity="top"
+                        android:inputType="textCapSentences|textAutoCorrect|textMultiLine"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <LinearLayout

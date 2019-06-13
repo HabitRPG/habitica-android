@@ -591,7 +591,7 @@
 
     <style name="TaskFormTextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <!-- reference our hint & error styles -->
-        <item name="boxBackgroundColor">@color/white_50_alpha</item>
+        <item name="boxBackgroundColor">@color/white_75_alpha</item>
         <item name="android:textColor">@color/textColorLight</item>
         <item name="android:textColorHint">@color/textColorLight</item>
         <item name="colorControlNormal">@color/white</item>
