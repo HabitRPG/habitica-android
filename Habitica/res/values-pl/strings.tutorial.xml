@@ -4,7 +4,7 @@
   <string name="tutorial_habits_1">Po pierwsze, Nawyki. Możesz dodać pozytywne Nawyki, które chcesz wzmocnić lub negatywne Nawyki, które chcesz rzucić.</string>
   <string name="tutorial_habits_2">Za każdym razem, kiedy zrobisz pozytywny nawyk, naciśnij +, aby otrzymać doświadczenie i złoto!</string>
   <string name="tutorial_habits_3">Jeśli zdarzy Ci się potknięcie i wykonasz negatywny nawyk, naciśnięcie - zredukuje zdrowie twojego awatara, aby pomóc Ci w byciu odpowiedzialnym.</string>
-  <string name="tutorial_habits_4">Spróbuj sprawdzić inne rodzaje zadań poprzez dolną nawigację!</string>
+  <string name="tutorial_habits_4">Spróbuj! Możesz przeglądać inne rodzaje zadań poprzez dolną nawigację.</string>
   <string name="tutorial_dailies_1">Twórz Codzienne dla zadań, które wymagają regularnego działania.</string>
   <string name="tutorial_dailies_2">Bądź ostrożny - jeśli pominiesz jedno z nich, twój awatar następnego dnia otrzyma obrażenia. Systematyczne odznaczanie ich przynosi wspaniałe nagrody!</string>
   <string name="tutorial_todos_1">Użyj Do-Zrobienia dla zadań, które musisz zrobić tylko raz.</string>
@@ -14,7 +14,7 @@
   <string name="tutorial_tasks_complete">To wszystko na razie. Jeżeli potrzebujesz przypomnienia, sprawdź sekcję FAQ.</string>
   <string name="tutorial_equipment">Tu pojawia się zakupiony ekwipunek. Wyposażenie Bojowe wpływa na Twoje statystyki, a Kostium (o ile włączony) na wygląd Twojego awatara.</string>
   <string name="tutorial_items">Zbieraj przedmioty kończąc zadania i zdobywając poziomy. Stuknij przedmiot, żeby go użyć!</string>
-  <string name="tutorial_pets">Kończąc zadania w prawdziwym świecie, masz szansę znalezienia losowych jaj i eliksirów. Połącz je, aby wykluć chowańce.</string>
+  <string name="tutorial_pets">Kończąc zadania w prawdziwym świecie, masz szansę znalezienia losowych jaj i eliksirów. Połącz je, aby wykluć chowańce</string>
   <string name="tutorial_skills">Umiejętności to specjalne zdolności, które mają potężne efekty! Stuknij umiejętność, aby jej użyć. To kosztuje Mana (niebieski pasek), którą zyskujesz zaglądając tu codziennie i kończąc zadania w prawdziwym świecie. Aby dowiedzieć się więcej, zaglądnij do FAQ w menu!</string>
   <string name="tutorial_party">Tutaj Ty i Twoi przyjaciele pilnujecie wzajemnie swoich celów i walczycie z potworami poprzez swoje zadania!</string>
   <string name="tutorial_tavern">Witaj w Karczmie - publicznym czacie dla wszystkich grup wiekowych! Możecie tu rozmawiać o produktywności i zadawać pytania. Miłej zabawy!</string>
