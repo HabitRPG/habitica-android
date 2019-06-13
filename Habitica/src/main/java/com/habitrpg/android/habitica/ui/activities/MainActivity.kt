@@ -142,7 +142,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     private var activeTutorialView: TutorialView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
-    private var keyboardUtil: KeyboardUtil? = null
     private var resumeFromActivity = false
     private var userIsOnQuest = false
 
@@ -167,8 +166,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         launchTrace?.start()
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val themeID = sharedPreferences.getInt("theme", R.style.AppTheme_NoActionBar)
-        setTheme(themeID)
         sharedPreferences.edit {
             this.putInt("theme", R.style.AppTheme_NoActionBar)
         }
@@ -183,9 +180,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         avatarInHeader = AvatarWithBarsViewModel(this, avatarWithBars, userRepository)
         sideAvatarView = AvatarView(this, true, false, false)
 
-        val px = 16.dpToPx(this)
-        avatarWithBars.setPadding(px.toInt(), 0, px.toInt(), 0)
-
         compositeSubscription.add(userRepository.getUser()
                 .subscribe(Consumer { newUser ->
                     this@MainActivity.user = newUser
@@ -198,7 +192,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         val viewModel = ViewModelProviders.of(this)
                 .get(NotificationsViewModel::class.java)
         notificationsViewModel = viewModel
-
 
         val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
 
@@ -220,9 +213,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-
-        keyboardUtil = KeyboardUtil(this, this.findViewById(android.R.id.content))
-        this.keyboardUtil?.enable()
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, _ ->
@@ -403,7 +393,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
     public override fun onDestroy() {
         userRepository.close()
         inventoryRepository.close()
-        keyboardUtil?.disable()
         super.onDestroy()
     }
 
