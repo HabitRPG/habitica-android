@@ -712,7 +712,7 @@
     <string name="discover">Odkryj</string>
     <string name="preference_push_important_announcements">Ważne Ogłoszenia</string>
     <string name="faint_penalty_body">Straciłeś poziom, złoto i przedmiot z wyposażenia, ale możesz je odzyskać poprzez ciężką pracę! Powodzenia — uda ci się.</string>
-    <string name="reminder_title">Pamiętaj aby odznaczyć swoje zadanie</string>
+    <string name="reminder_title">Pamiętaj aby odznaczyć swoje zadania</string>
     <string name="ago_minutes">%d minut temu</string>
     <string name="ago_hours">%d godzin temu</string>
     <string name="evolved_pet_title">Oswoiłeś %1$s %2$s, idź na przejażdżkę!</string>
@@ -751,5 +751,6 @@
     <string name="staff">Personel</string>
     <string name="setup_task_reward">Należy Ci się nagroda</string>
     <string name="gift_one_get_one">Dajesz - dostajesz!</string>
-    <string name="only_leader_create_challenge">Tylko lider może tworzyć wyzwania.</string>
+    <string name="only_leader_create_challenge">Tylko lider może tworzyć wyzwania</string>
+    <string name="quest_abort_message">Czy na pewno chcesz przerwać tę misję\? Zostanie ona przerwana u wszystkich uczestników z twojej drużyny a cały postęp zostanie utracony. Zwój misji zostanie zwrócony do właściciela.</string>
     </resources>
