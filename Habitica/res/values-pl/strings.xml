@@ -745,5 +745,5 @@
     <string name="equipment_con">KON:</string>
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
-    <string name="warrior_description">Wojownicy zdobywają częstsze i lepsze uderzenia krytyczne, które losowo dają dodatkowe złoto, doświadczenie i szansę na zdobycze, za zrobienie zadania. Zadają one też większe obrażenia bossom. Graj jako mag jeżeli motywują cię nieprzewidywalne, losowe nagrody, albo jeśli chcesz zadać duże obrażenia w misjach z bossem.</string>
+    <string name="warrior_description">Wojownicy zdobywają częstsze i lepsze uderzenia krytyczne, które losowo dają dodatkowe złoto, doświadczenie i szansę na zdobycze, za wykonanie zadania. Zadają oni też duże obrażenia bossom. Graj jako Wojownik, jeżeli motywują cię nieprzewidywalne, losowe nagrody, albo jeśli chcesz zadawać duże obrażenia w misjach z bossem!</string>
     </resources>
