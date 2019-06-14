@@ -171,7 +171,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
                 putExtra(Intent.EXTRA_TEXT, "${BuildConfig.BASE_URL}/challenges/$challengeID")
                 type = "text/plain"
             }
-            startActivity(shareGuildIntent)
+            startActivity(Intent.createChooser(shareGuildIntent, context?.getString(R.string.share_challenge_with)))
         }
 
         return super.onOptionsItemSelected(item)
