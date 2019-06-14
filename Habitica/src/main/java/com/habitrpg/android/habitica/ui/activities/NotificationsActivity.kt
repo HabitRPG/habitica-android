@@ -13,13 +13,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.notifications.*
-import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_ACCEPT
 import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_CLICK
-import com.habitrpg.android.habitica.ui.activities.MainActivity.Companion.NOTIFICATION_REJECT
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_notifications.*
@@ -29,6 +28,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var socialRepository: SocialRepository
 
     lateinit var viewModel: NotificationsViewModel
 
@@ -112,6 +113,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
                 Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
                 Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
+                Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
                 Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
                 Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
                 Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
@@ -199,6 +201,19 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
+    private fun createGroupTaskNeedsApprovalNotification(notification: Notification): View? {
+        val data = notification.data as? GroupTaskRequiresApprovalData
+        val message = convertGroupMessageHtml(data?.message ?: "")
+
+        val item = createActionableNotificationItem(
+                notification,
+                fromHtml(message)
+        )
+        //Hide for now
+        item?.visibility = View.GONE
+        return item
+    }
+
     /**
      * Group task notifications have the message text in the notification data as HTML
      * with <span class="notification-bold"> tags around emphasized words. So we just
@@ -262,14 +277,15 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         return createActionableNotificationItem(
                 notification,
-                fromHtml(getString(stringId, data?.invitation?.name))
+                fromHtml(getString(stringId, data?.invitation?.name)),
+                data?.invitation?.publicGuild == true
         )
     }
 
     private fun createQuestInvitationNotification(notification: Notification): View? {
         val data = notification.data as? QuestInvitationData
 
-        val view = createActionableNotificationItem(notification, "")
+        val view = createActionableNotificationItem(notification, "", true)
 
         // hide view until we have loaded quest data and populated the values
         view?.visibility = View.GONE
@@ -315,31 +331,28 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     private fun createActionableNotificationItem(
             notification: Notification,
-            messageText: CharSequence): View? {
+            messageText: CharSequence,
+            openable: Boolean = false): View? {
         val item = inflater?.inflate(R.layout.notification_item_actionable, notification_items, false)
 
-        val container = item?.findViewById(R.id.notification_item) as? View
-        container?.setOnClickListener {
-            val resultIntent = Intent()
-            resultIntent.putExtra("notificationId", notification.id)
-            setResult(NOTIFICATION_CLICK, resultIntent)
-            finish()
+        if (openable) {
+            val container = item?.findViewById(R.id.notification_item) as? View
+            container?.setOnClickListener {
+                val resultIntent = Intent()
+                resultIntent.putExtra("notificationId", notification.id)
+                setResult(NOTIFICATION_CLICK, resultIntent)
+                finish()
+            }
         }
 
         val acceptButton = item?.findViewById(R.id.accept_button) as? Button
         acceptButton?.setOnClickListener {
-            val resultIntent = Intent()
-            resultIntent.putExtra("notificationId", notification.id)
-            setResult(NOTIFICATION_ACCEPT, resultIntent)
-            finish()
+            viewModel.accept(notification.id)
         }
 
         val rejectButton = item?.findViewById(R.id.reject_button) as? Button
         rejectButton?.setOnClickListener {
-            val resultIntent = Intent()
-            resultIntent.putExtra("notificationId", notification.id)
-            setResult(NOTIFICATION_REJECT, resultIntent)
-            finish()
+            viewModel.reject(notification.id)
         }
 
         val messageTextView = item?.findViewById(R.id.message_text) as? TextView

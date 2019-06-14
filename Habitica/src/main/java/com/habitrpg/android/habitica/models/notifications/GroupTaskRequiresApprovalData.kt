@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models.notifications
 
-open class GroupTaskApprovedData : NotificationData {
+class GroupTaskRequiresApprovalData : NotificationData {
     var groupId: String = ""
     var message: String? = null
 }

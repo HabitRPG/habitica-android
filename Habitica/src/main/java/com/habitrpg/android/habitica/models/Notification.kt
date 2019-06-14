@@ -11,6 +11,7 @@ class Notification {
         NEW_MYSTERY_ITEMS("NEW_MYSTERY_ITEMS"),
         GROUP_TASK_NEEDS_WORK("GROUP_TASK_NEEDS_WORK"),
         GROUP_TASK_APPROVED("GROUP_TASK_APPROVED"),
+        GROUP_TASK_REQUIRES_APPROVAL("GROUP_TASK_REQUIRES_APPROVAL"),
         UNALLOCATED_STATS_POINTS("UNALLOCATED_STATS_POINTS"),
 
         // Custom notification types (created by this app)
@@ -33,6 +34,7 @@ class Notification {
             Type.NEW_CHAT_MESSAGE.type -> NewChatMessageData::class.java
             Type.GROUP_TASK_NEEDS_WORK.type -> GroupTaskNeedsWorkData::class.java
             Type.GROUP_TASK_APPROVED.type -> GroupTaskApprovedData::class.java
+            Type.GROUP_TASK_REQUIRES_APPROVAL.type -> GroupTaskRequiresApprovalData::class.java
             Type.UNALLOCATED_STATS_POINTS.type -> UnallocatedPointsData::class.java
             Type.GUILD_INVITATION.type -> GuildInvitationData::class.java
             Type.PARTY_INVITATION.type -> PartyInvitationData::class.java

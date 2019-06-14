@@ -9,10 +9,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.notifications.GuildInvitationData
-import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
-import com.habitrpg.android.habitica.models.notifications.PartyInvitationData
-import com.habitrpg.android.habitica.models.notifications.QuestInvitationData
+import com.habitrpg.android.habitica.models.notifications.*
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.BackpressureStrategy
@@ -286,7 +283,9 @@ open class NotificationsViewModel : BaseViewModel() {
                 acceptGroupInvitation(data?.invitation?.id)
             }
             Notification.Type.QUEST_INVITATION.type -> acceptQuestInvitation()
+            Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> acceptTaskApproval(notification)
         }
+        dismissNotification(notification)
     }
 
     fun reject(notificationId: String) {
@@ -301,7 +300,9 @@ open class NotificationsViewModel : BaseViewModel() {
                 rejectGroupInvite(data?.invitation?.id)
             }
             Notification.Type.QUEST_INVITATION.type -> rejectQuestInvitation()
+            Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> rejectTaskApproval(notification)
         }
+        dismissNotification(notification)
     }
 
     fun acceptGroupInvitation(groupId: String?) {
@@ -338,5 +339,13 @@ open class NotificationsViewModel : BaseViewModel() {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
         }
+    }
+
+    private fun acceptTaskApproval(notification: Notification) {
+        val data = notification.data as? GroupTaskRequiresApprovalData
+    }
+
+    private fun rejectTaskApproval(notification: Notification) {
+        val data = notification.data as? GroupTaskRequiresApprovalData
     }
 }
