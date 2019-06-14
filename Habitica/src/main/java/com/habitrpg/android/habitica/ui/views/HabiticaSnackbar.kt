@@ -26,16 +26,16 @@ class HabiticaSnackbar
 private constructor(parent: ViewGroup, content: View, callback: ContentViewCallback) : BaseTransientBottomBar<HabiticaSnackbar>(parent, content, callback) {
 
     fun setTitle(title: CharSequence?): HabiticaSnackbar {
-        val textView = view.findViewById<View>(R.id.snackbar_title) as TextView
-        textView.text = title
-        textView.visibility = if (title != null) View.VISIBLE else View.GONE
+        val textView = view.findViewById<View>(R.id.snackbar_title) as? TextView
+        textView?.text = title
+        textView?.visibility = if (title != null) View.VISIBLE else View.GONE
         return this
     }
 
     fun setText(text: CharSequence?): HabiticaSnackbar {
-        val textView = view.findViewById<View>(R.id.snackbar_text) as TextView
-        textView.text = text
-        textView.visibility = if (text != null) View.VISIBLE else View.GONE
+        val textView = view.findViewById<View>(R.id.snackbar_text) as? TextView
+        textView?.text = text
+        textView?.visibility = if (text != null) View.VISIBLE else View.GONE
         return this
     }
 

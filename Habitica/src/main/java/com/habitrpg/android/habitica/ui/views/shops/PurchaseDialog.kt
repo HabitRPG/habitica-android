@@ -218,7 +218,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         if (shopItem.key == "armoire") {
                             snackbarText[0] = when {
                                 buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
-                                buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"], buyResponse.armoire["dropText"])
+                                buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"] ?: "", buyResponse.armoire["dropText"])
                                 else -> context.getString(R.string.armoireExp)
                             }
                         }
@@ -231,7 +231,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         .doOnNext {
                             val event = ShowSnackbarEvent()
                             if (snackbarText[0].isNotEmpty()) {
-                                event.title = context.getString(R.string.successful_purchase, shopItem.text)
                                 event.text = snackbarText[0]
                             } else {
                                 event.text = context.getString(R.string.successful_purchase, shopItem.text)

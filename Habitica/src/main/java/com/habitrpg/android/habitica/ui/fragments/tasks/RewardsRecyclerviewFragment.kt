@@ -21,7 +21,7 @@ import java.util.*
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        inventoryRepository.retrieveInAppRewards().subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -44,9 +44,9 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        inventoryRepository.getInAppRewards().subscribe(Consumer {
+        compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe(Consumer {
             (recyclerAdapter as RewardsRecyclerViewAdapter?)?.updateItemRewards(it)
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun getLayoutManager(context: Context?): LinearLayoutManager =
@@ -54,11 +54,11 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onRefresh() {
         refreshLayout.isRefreshing = true
-        userRepository.retrieveUser(true, true)
+        compositeSubscription.add(userRepository.retrieveUser(true, true)
                 .flatMap<List<ShopItem>> { inventoryRepository.retrieveInAppRewards() }
                 .doOnTerminate {
                     refreshLayout?.isRefreshing = false
-                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setGridSpanCount(width: Int) {
