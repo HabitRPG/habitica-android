@@ -228,12 +228,6 @@ class TaskFormActivity : BaseActivity() {
         adjustStreakWrapper.visibility = habitDailyVisibility
         if (taskType == Task.TYPE_HABIT) {
             habitAdjustPositiveStreakView.hint = getString(R.string.positive_habit_form)
-            habitAdjustPositiveStreakView.visibility = if (task?.up == true) View.VISIBLE else View.GONE
-            habitAdjustNegativeStreakView.visibility = if (task?.down == true) View.VISIBLE else View.GONE
-            if (task?.up != true && task?.down != true) {
-                adjustStreakTitleView.visibility = View.GONE
-                adjustStreakWrapper.visibility = View.GONE
-            }
         } else {
             habitAdjustPositiveStreakView.hint = getString(R.string.streak)
         }
@@ -308,6 +302,12 @@ class TaskFormActivity : BaseActivity() {
                 }
                 habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
                 habitAdjustNegativeStreakView.setText((task.counterDown ?: 0).toString())
+                habitAdjustPositiveStreakView.visibility = if (task.up == true) View.VISIBLE else View.GONE
+                habitAdjustNegativeStreakView.visibility = if (task.down == true) View.VISIBLE else View.GONE
+                if (task.up != true && task.down != true) {
+                    adjustStreakTitleView.visibility = View.GONE
+                    adjustStreakWrapper.visibility = View.GONE
+                }
             }
             Task.TYPE_DAILY -> {
                 taskSchedulingControls.startDate = task.startDate ?: Date()
