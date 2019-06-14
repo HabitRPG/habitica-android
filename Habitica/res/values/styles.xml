@@ -85,7 +85,6 @@
         <item name="android:windowBackground">@drawable/activity_launch_background</item>
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:fitsSystemWindows">false</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar.Green">
