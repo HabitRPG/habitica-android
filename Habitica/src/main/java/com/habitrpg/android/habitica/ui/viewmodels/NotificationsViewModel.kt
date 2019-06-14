@@ -285,7 +285,11 @@ open class NotificationsViewModel : BaseViewModel() {
             Notification.Type.QUEST_INVITATION.type -> acceptQuestInvitation()
             Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> acceptTaskApproval(notification)
         }
-        dismissNotification(notification)
+        if (isCustomNotification(notification)) {
+            disposable.add(userRepository.retrieveUser(false).subscribe())
+        } else {
+            dismissNotification(notification)
+        }
     }
 
     fun reject(notificationId: String) {
@@ -302,12 +306,15 @@ open class NotificationsViewModel : BaseViewModel() {
             Notification.Type.QUEST_INVITATION.type -> rejectQuestInvitation()
             Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> rejectTaskApproval(notification)
         }
-        dismissNotification(notification)
+        if (!isCustomNotification(notification)) {
+            dismissNotification(notification)
+        }
     }
 
     fun acceptGroupInvitation(groupId: String?) {
         groupId?.let {
             disposable.add(socialRepository.joinGroup(it)
+                    .flatMap { userRepository.retrieveUser(false) }
                     .subscribe(Consumer {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
@@ -317,6 +324,7 @@ open class NotificationsViewModel : BaseViewModel() {
     fun rejectGroupInvite(groupId: String?) {
         groupId?.let {
             disposable.add(socialRepository.rejectGroupInvite(it)
+                    .flatMap { userRepository.retrieveUser(false) }
                     .subscribe(Consumer {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
@@ -326,6 +334,7 @@ open class NotificationsViewModel : BaseViewModel() {
     private fun acceptQuestInvitation() {
         party?.id?.let {
             disposable.add(socialRepository.acceptQuest(null, it)
+                    .flatMap { userRepository.retrieveUser(false) }
                     .subscribe(Consumer {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
@@ -335,6 +344,7 @@ open class NotificationsViewModel : BaseViewModel() {
     private fun rejectQuestInvitation() {
         party?.id?.let {
             disposable.add(socialRepository.rejectQuest(null, it)
+                    .flatMap { userRepository.retrieveUser(false) }
                     .subscribe(Consumer {
                         refreshNotifications()
                     }, RxErrorHandler.handleEmptyError()))
