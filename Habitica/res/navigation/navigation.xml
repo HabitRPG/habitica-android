@@ -41,6 +41,10 @@
         <action
             android:id="@+id/openQuestDetail"
             app:destination="@id/questDetailFragment" />
+        <argument
+            android:name="tabToOpen"
+            app:argType="integer"
+            android:defaultValue="0"/>
     </fragment>
     <fragment
         android:id="@+id/questDetailFragment"

@@ -83,8 +83,12 @@ class PartyFragment : BaseMainFragment() {
         viewPager?.currentItem = 0
 
         setViewPagerAdapter()
-
         setFragments()
+
+        arguments?.let {
+            val args = PartyFragmentArgs.fromBundle(it)
+            viewPager?.currentItem = args.tabToOpen
+        }
 
         this.tutorialStepIdentifier = "party"
         this.tutorialText = getString(R.string.tutorial_party)

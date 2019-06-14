@@ -63,14 +63,13 @@ open class NotificationsViewModel : BaseViewModel() {
      * Custom notification types created by this class (from user data).
      * Will be combined with the notifications coming from server.
      */
-    private val customNotifications: BehaviorSubject<List<Notification>>
+    private val customNotifications: BehaviorSubject<List<Notification>> = BehaviorSubject.create()
 
     override fun inject(component: UserComponent) {
         component.inject(this)
     }
 
     init {
-        customNotifications = BehaviorSubject.create()
         customNotifications.onNext(emptyList())
 
         disposable.add(userRepository.getUser()
@@ -248,7 +247,9 @@ open class NotificationsViewModel : BaseViewModel() {
     private fun clickNewChatMessage(notification: Notification, navController: MainNavigationController) {
         val data = notification.data as? NewChatMessageData
         if (isPartyMessage(data)) {
-            navController.navigate(R.id.partyFragment)
+            val bundle = Bundle()
+            bundle.putString("groupID", data?.group?.id)
+            navController.navigate(R.id.partyFragment, bundle)
         } else {
             val bundle = Bundle()
             bundle.putString("groupID", data?.group?.id)
