@@ -350,23 +350,21 @@ class ChallengeDetailFragment: BaseMainFragment() {
     }
 
     private fun showChallengeLeaveDialog() {
-        context?.let { context ->
-            val alert = HabiticaAlertDialog(context)
-            alert.setTitle(this.getString(R.string.challenge_leave_title))
-            alert.setMessage(this.getString(R.string.challenge_leave_text, challenge?.name ?: ""))
-            alert.addButton(R.string.yes, true) { dialog, _ ->
-                        dialog.dismiss()
-                        challenge?.let { challenge ->
-                            showRemoveTasksDialog(Consumer { keepTasks ->
-                                challengeRepository.leaveChallenge(challenge, keepTasks).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-                            })
-                        }
-                    }
-            alert.addButton(R.string.no, false) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-            alert.show()
+        val context = context ?: return
+        val alert = HabiticaAlertDialog(context)
+        alert.setTitle(this.getString(R.string.challenge_leave_title))
+        alert.setMessage(this.getString(R.string.challenge_leave_text, challenge?.name ?: ""))
+        alert.addButton(R.string.yes, true) { dialog, _ ->
+            dialog.dismiss()
+            showRemoveTasksDialog(Consumer { keepTasks ->
+                val challenge = challenge ?: return@Consumer
+                challengeRepository.leaveChallenge(challenge, keepTasks).subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            })
         }
+        alert.addButton(R.string.no, false) { dialog, _ ->
+            dialog.dismiss()
+        }
+        alert.show()
     }
 
     private fun showRemoveTasksDialog(callback: Consumer<String>) {

@@ -226,31 +226,30 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
     }
 
     private fun showAccountResetConfirmation() {
-        context?.let { context ->
-            val dialog = HabiticaAlertDialog(context)
-            dialog.setTitle(R.string.reset_account)
-            dialog.setMessage(R.string.reset_account_description)
-            dialog.addButton(R.string.reset_account_confirmation, true, true) { _, _ ->
-                resetAccount()
-            }
-            dialog.addCancelButton()
-            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
-            dialog.show()
+        val context = context ?: return
+
+        val dialog = HabiticaAlertDialog(context)
+        dialog.setTitle(R.string.reset_account)
+        dialog.setMessage(R.string.reset_account_description)
+        dialog.addButton(R.string.reset_account_confirmation, true, true) { _, _ ->
+            resetAccount()
         }
+        dialog.addCancelButton()
+        dialog.setAdditionalContentSidePadding(12.dpToPx(context))
+        dialog.show()
     }
 
     private fun showConfirmUsernameDialog() {
-        context?.let { context ->
-            val dialog = HabiticaAlertDialog(context)
-            dialog.setTitle(R.string.confirm_username_title)
-            dialog.setMessage(R.string.confirm_username_description)
-            dialog.addButton(R.string.confirm, true) { _, _ ->
-                userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
-                        .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-            }
-            dialog.addCancelButton()
-            dialog.show()
+        val context = context ?: return
+        val dialog = HabiticaAlertDialog(context)
+        dialog.setTitle(R.string.confirm_username_title)
+        dialog.setMessage(R.string.confirm_username_description)
+        dialog.addButton(R.string.confirm, true) { _, _ ->
+            userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
+                    .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
+        dialog.addCancelButton()
+        dialog.show()
     }
 
     private fun resetAccount() {

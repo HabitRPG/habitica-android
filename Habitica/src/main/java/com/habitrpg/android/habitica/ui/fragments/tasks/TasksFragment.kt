@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.functions.Consumer
-import java.lang.ref.WeakReference
 import java.util.*
 import javax.inject.Inject
 
@@ -65,10 +64,17 @@ class TasksFragment : BaseMainFragment() {
             }
             updateBottomBarBadges()
         }
-        bottomNavigation?.onAddListener = WeakReference { type ->
+        bottomNavigation?.onAddListener = { type ->
             openNewTaskActivity(type)
         }
         bottomNavigation?.flipAddBehaviour = appConfigManager.flipAddTaskBehaviour()
+    }
+
+    override fun onPause() {
+        bottomNavigation?.onTabSelectedListener = null
+        bottomNavigation?.onAddListener = null
+
+        super.onPause()
     }
 
     override fun onDestroy() {
