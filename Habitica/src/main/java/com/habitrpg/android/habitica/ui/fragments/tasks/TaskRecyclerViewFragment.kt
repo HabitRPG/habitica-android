@@ -294,17 +294,6 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         outState.putString(CLASS_TYPE_KEY, this.classType)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            TasksFragment.TASK_CREATED_RESULT -> {
-                TasksFragment.displayingTaskForm = false
-            }
-            TasksFragment.TASK_UPDATED_RESULT -> TasksFragment.displayingTaskForm = false
-        }
-    }
-
     override val displayedClassName: String?
         get() = this.classType + super.displayedClassName
 
@@ -326,7 +315,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     }
 
     private fun openTaskForm(task: Task) {
-        if (TasksFragment.displayingTaskForm) {
+        if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000) {
             return
         }
 
@@ -336,7 +325,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
-        TasksFragment.displayingTaskForm = true
+        TasksFragment.lastTaskFormOpen = Date()
         if (isAdded) {
             startActivityForResult(intent, TasksFragment.TASK_UPDATED_RESULT)
         }

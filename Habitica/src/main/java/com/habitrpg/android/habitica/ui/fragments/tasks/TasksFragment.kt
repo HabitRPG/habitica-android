@@ -254,7 +254,7 @@ class TasksFragment : BaseMainFragment() {
     // endregion
 
     private fun openNewTaskActivity(type: String) {
-        if (displayingTaskForm) {
+        if (Date().time - (lastTaskFormOpen?.time ?: 0) < 2000) {
             return
         }
 
@@ -276,7 +276,7 @@ class TasksFragment : BaseMainFragment() {
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         if (this.isAdded) {
-            displayingTaskForm = true
+            lastTaskFormOpen = Date()
             startActivityForResult(intent, TASK_CREATED_RESULT)
         }
     }
@@ -288,10 +288,8 @@ class TasksFragment : BaseMainFragment() {
 
         when (requestCode) {
             TASK_CREATED_RESULT -> {
-                displayingTaskForm = false
                 onTaskCreatedResult(resultCode, data)
             }
-            TASK_UPDATED_RESULT -> displayingTaskForm = false
         }
     }
 
@@ -330,7 +328,7 @@ class TasksFragment : BaseMainFragment() {
     override fun addToBackStack(): Boolean = false
 
     companion object {
-        var displayingTaskForm: Boolean = false
+        var lastTaskFormOpen: Date? = null
         internal const val TASK_CREATED_RESULT = 1
         const val TASK_UPDATED_RESULT = 2
     }
