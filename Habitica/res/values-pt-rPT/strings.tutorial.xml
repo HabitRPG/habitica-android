@@ -9,4 +9,5 @@
   <string name="tutorial_classes">Escolha para se tornar num Guerreiro, Mago, Curandeiro ou Bandido! Cada classe tem equipamento e habilidades únicos. Toque em (?) para saber mais!</string>
 <string name="tutorial_overview">Aqui estamos! Inseri algumas tarefas para ti com base nos teus interesses. Experimenta adicionar algumas por tua conta. Podes editar qualquer tarefa ao tocar o título.</string>
     <string name="tutorial_habits_1">Primeiro os Hábitos. Podem ser Hábitos positivos que queres melhorar ou Hábitos negativos que queres deixar.</string>
+    <string name="tutorial_habits_2">Sempre que realizares um hábito positivo, clica no + para receberes experiência e ouro!</string>
     </resources>
