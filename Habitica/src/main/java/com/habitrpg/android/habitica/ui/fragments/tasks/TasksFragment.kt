@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class TasksFragment : BaseMainFragment() {
 
@@ -271,6 +272,7 @@ class TasksFragment : BaseMainFragment() {
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
+        bundle.putStringArrayList(TaskFormActivity.SELECTED_TAGS_KEY, ArrayList(taskFilterHelper.tags))
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)

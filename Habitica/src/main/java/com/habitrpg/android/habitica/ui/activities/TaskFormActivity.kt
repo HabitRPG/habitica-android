@@ -95,6 +95,8 @@ class TaskFormActivity : BaseActivity() {
     private var task: Task? = null
     private var taskType: String = ""
     private var tags = listOf<Tag>()
+    private var preselectedTags: ArrayList<String>? = null
+    private var hasPreselectedTags = false
     private var selectedStat = Stats.STRENGTH
     set(value) {
         field = value
@@ -135,6 +137,7 @@ class TaskFormActivity : BaseActivity() {
 
         taskType = bundle.getString(TASK_TYPE_KEY) ?: Task.TYPE_HABIT
         val taskId = bundle.getString(TASK_ID_KEY)
+        preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
 
         compositeSubscription.add(tagRepository.getTags()
                 .map { tagRepository.getUnmanagedCopy(it) }
@@ -270,6 +273,9 @@ class TaskFormActivity : BaseActivity() {
             val view = CheckBox(this)
             view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
             view.text = tag.name
+            if (preselectedTags?.contains(tag.id) == true) {
+                view.isChecked = true
+            }
             tagsWrapper.addView(view)
         }
         setAllTagSelections()
@@ -277,9 +283,13 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun setAllTagSelections() {
-        tags.forEachIndexed { index, tag ->
-            val view = tagsWrapper.getChildAt(index) as? CheckBox
-            view?.isChecked = task?.tags?.find { it.id == tag.id } != null
+        if (hasPreselectedTags) {
+            tags.forEachIndexed { index, tag ->
+                val view = tagsWrapper.getChildAt(index) as? CheckBox
+                view?.isChecked = task?.tags?.find { it.id == tag.id } != null
+            }
+        } else {
+            hasPreselectedTags = true
         }
     }
 
@@ -463,6 +473,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     companion object {
+        val SELECTED_TAGS_KEY = "selectedTags"
         const val TASK_ID_KEY = "taskId"
         const val USER_ID_KEY = "userId"
         const val TASK_TYPE_KEY = "type"
