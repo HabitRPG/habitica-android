@@ -14,10 +14,9 @@ import io.reactivex.functions.Action
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.OrderedRealmCollectionChangeListener
-import io.realm.RealmList
-import io.realm.RealmResults
+import io.realm.RealmRecyclerViewAdapter
 
-abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : androidx.recyclerview.widget.RecyclerView.Adapter<VH>(), TaskRecyclerViewAdapter {
+abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : RealmRecyclerViewAdapter<Task, VH>(null, true), TaskRecyclerViewAdapter {
     private var updateOnModification: Boolean = false
     override var ignoreUpdates: Boolean = false
     private val listener: OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> by lazy {
@@ -47,8 +46,6 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
             }
         }
     }
-    var data: OrderedRealmCollection<Task>? = null
-        private set
 
     private var errorButtonEventsSubject = PublishSubject.create<String>()
     override val errorButtonEvents: Flowable<String> = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
@@ -66,77 +63,19 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         if (unfilteredData != null && unfilteredData?.isManaged == false) {
             throw IllegalStateException("Only use this adapter with managed RealmCollection, " + "for un-managed lists you can just use the BaseRecyclerViewAdapter")
         }
-        this.data = unfilteredData
         this.updateOnModification = true
         filter()
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        if (hasAutoUpdates && isDataValid) {
-            addListener(data)
-        }
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        if (hasAutoUpdates && isDataValid) {
-            removeListener(data)
-        }
     }
 
     override fun getItemId(index: Int): Long = index.toLong()
 
     override fun getItemCount(): Int = if (isDataValid) data?.size ?: 0 else 0
 
-    fun getItem(index: Int): Task? = if (isDataValid) data?.get(index) else null
-
-    override fun updateData(tasks: OrderedRealmCollection<Task>?) {
-        if (hasAutoUpdates) {
-            if (isDataValid) {
-
-                removeListener(tasks)
-            }
-            if (tasks != null) {
-                addListener(tasks)
-            }
-        }
-
-        this.data = tasks
-        notifyDataSetChanged()
-    }
+    override fun getItem(index: Int): Task? = if (isDataValid) data?.get(index) else null
 
     override fun updateUnfilteredData(data: OrderedRealmCollection<Task>?) {
         unfilteredData = data
         updateData(data)
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun addListener(data: OrderedRealmCollection<Task>?) = when (data) {
-        is RealmResults<*> -> {
-            val results = data as RealmResults<Task>
-            results.addChangeListener(listener as OrderedRealmCollectionChangeListener<RealmResults<Task>>)
-        }
-        is RealmList<*> -> {
-            val list = data as RealmList<Task>
-            list.addChangeListener(listener as OrderedRealmCollectionChangeListener<RealmList<Task>>)
-        }
-        else -> throw IllegalArgumentException("RealmCollection not supported: " + data?.javaClass)
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun removeListener(data: OrderedRealmCollection<Task>?) {
-        when (data) {
-            is RealmResults<*> -> {
-                val results = data as RealmResults<Task>
-                results.removeChangeListener(listener as OrderedRealmCollectionChangeListener<RealmResults<Task>>)
-            }
-            is RealmList<*> -> {
-                val list = data as RealmList<Task>
-                list.removeChangeListener(listener as OrderedRealmCollectionChangeListener<RealmList<Task>>)
-            }
-            else -> throw IllegalArgumentException("RealmCollection not supported: " + data?.javaClass)
-        }
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
