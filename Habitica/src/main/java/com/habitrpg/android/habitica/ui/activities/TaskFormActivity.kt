@@ -354,18 +354,6 @@ class TaskFormActivity : BaseActivity() {
         button.setTextColor(ContextCompat.getColor(this, textColorID))
     }
 
-    private fun getSelectedAttribute(): String {
-        return if (statIntelligenceButton.isSelected) {
-            Stats.INTELLIGENCE
-        } else if (statConstitutionButton.isSelected) {
-            Stats.CONSTITUTION
-        } else if (statPerceptionButton.isSelected) {
-            Stats.PERCEPTION
-        } else {
-            Stats.STRENGTH
-        }
-    }
-
     private fun updateTagViewsColors() {
         tagsWrapper.children.forEach { view ->
             val tagView = view as? AppCompatCheckBox
@@ -394,7 +382,7 @@ class TaskFormActivity : BaseActivity() {
         thisTask.notes = notesEditText.text.toString()
         thisTask.priority = taskDifficultyButtons.selectedDifficulty
         if (usesTaskAttributeStats) {
-            thisTask.attribute = getSelectedAttribute()
+            thisTask.attribute = selectedStat
         }
         if (taskType == Task.TYPE_HABIT) {
             thisTask.up = habitScoringButtons.isPositive
