@@ -8,13 +8,13 @@
     android:layout_marginTop="@dimen/spacing_medium"
     android:paddingLeft="@dimen/spacing_large"
     android:paddingRight="@dimen/spacing_large">
-<TextView
-    android:id="@+id/title"
-    android:layout_width="0dp"
-    android:layout_weight="1"
-    android:layout_height="wrap_content"
-    style="@style/Overline"
-    tools:text="Title"/>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        style="@style/Overline"
+        tools:text="Title"/>
     <TextView
         android:id="@+id/count_label"
         android:layout_width="wrap_content"

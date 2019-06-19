@@ -101,8 +101,8 @@
 
     <style name="Caption2">
         <item name="android:fontFamily">@string/font_family_medium</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.04</item>
     </style>
 
     <style name="Caption2.Regular">
@@ -124,6 +124,7 @@
     <style name="Overline">
         <item name="android:fontFamily">@string/font_family_regular</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:letterSpacing">0.15</item>
         <item name="android:textAllCaps">true</item>
     </style>
 </resources>

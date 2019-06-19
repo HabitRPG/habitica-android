@@ -70,7 +70,7 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
 
         if (canBuy) {
             goldIconView.alpha = 1.0f
-            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.yellow_50))
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.yellow_5))
         } else {
             goldIconView.alpha = 0.4f
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_500))

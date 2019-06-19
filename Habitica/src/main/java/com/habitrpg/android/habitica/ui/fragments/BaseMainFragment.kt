@@ -9,6 +9,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.User
@@ -57,8 +58,10 @@ abstract class BaseMainFragment : BaseFragment() {
 
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE
+            activity?.snackbarContainer?.setScaledPadding(context, 0, 0, 0, 68)
         } else {
             bottomNavigation?.visibility = View.GONE
+            activity?.snackbarContainer?.setScaledPadding(context, 0, 0, 0, 0)
         }
 
         floatingMenuWrapper?.removeAllViews()

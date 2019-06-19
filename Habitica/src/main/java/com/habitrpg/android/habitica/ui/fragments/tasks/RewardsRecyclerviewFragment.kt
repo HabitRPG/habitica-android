@@ -28,10 +28,10 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+        (layoutManager as? GridLayoutManager)?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (recyclerAdapter?.getItemViewType(position) ?: 0 < 2) {
-                    (layoutManager as GridLayoutManager).spanCount
+                    (layoutManager as? GridLayoutManager)?.spanCount ?: 1
                 } else {
                     1
                 }
@@ -45,7 +45,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
         compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe(Consumer {
-            (recyclerAdapter as RewardsRecyclerViewAdapter?)?.updateItemRewards(it)
+            (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
         }, RxErrorHandler.handleEmptyError()))
     }
 

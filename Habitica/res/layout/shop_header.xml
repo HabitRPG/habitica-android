@@ -35,5 +35,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="124dp"
+        style="@style/Caption2"
         tools:text="Welcome to the Market! Stock up on new gear or buy rare eggs and potions. Check in periodically for new stock." />
 </FrameLayout>
