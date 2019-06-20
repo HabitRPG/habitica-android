@@ -159,7 +159,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
 
 
     @Throws(NoSuchAlgorithmException::class, NoSuchPaddingException::class, NoSuchProviderException::class, BadPaddingException::class, IllegalBlockSizeException::class, UnsupportedEncodingException::class)
-    fun decrypt(encrypted: String): String {
+    fun decrypt(encrypted: String): String? {
         val c: Cipher
         val publicIV = getRandomIV()
 
@@ -180,9 +180,15 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
 
         }
 
-        val decodedValue = Base64.decode(encrypted.toByteArray(charset("UTF-8")), Base64.DEFAULT)
-        val decryptedVal = c.doFinal(decodedValue)
-        return String(decryptedVal)
+        return try {
+            val decodedValue = Base64.decode(encrypted.toByteArray(charset("UTF-8")), Base64.DEFAULT)
+            val decryptedVal = c.doFinal(decodedValue)
+            String(decryptedVal)
+        } catch (error: IllegalArgumentException) {
+            null
+        } catch (e: GeneralSecurityException) {
+            null
+        }
     }
 
     private fun getRandomIV(): String {
