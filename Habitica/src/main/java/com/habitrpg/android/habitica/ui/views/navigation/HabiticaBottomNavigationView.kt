@@ -209,6 +209,16 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         }
     }
 
+    fun tabWithId(id: Int): BottomNavigationItem? {
+        return when(id) {
+            R.id.tab_habits -> habitsTab
+            R.id.tab_dailies -> dailiesTab
+            R.id.tab_todos -> rewardsTab
+            R.id.tab_rewards -> todosTab
+            else -> null
+        }
+    }
+
     private fun updateItemSelection() {
         habitsTab.isActive = activeTaskType == Task.TYPE_HABIT
         dailiesTab.isActive = activeTaskType == Task.TYPE_DAILY

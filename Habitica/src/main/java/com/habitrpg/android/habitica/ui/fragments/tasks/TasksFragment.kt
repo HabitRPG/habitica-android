@@ -233,13 +233,13 @@ class TasksFragment : BaseMainFragment() {
                     }
                     else -> ""
                 }
-                /*val tab = bottomNavigation?.id(id)
+                val tab = bottomNavigation?.tabWithId(id)
                 if (step.shouldDisplay()) {
-                    tab?.setBadgeCount(1)
+                    tab?.badgeCount = 1
                     activeTutorialFragments.add(taskType)
                 } else {
-                    tab?.removeBadge()
-                }*/
+                    tab?.badgeCount = 0
+                }
             }
             if (activeTutorialFragments.size == 1) {
                 val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
