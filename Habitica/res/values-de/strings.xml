@@ -817,11 +817,11 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="only_leader_create_challenge">Nur ein Gruppenleiter kann Wettbewerbe erstellen</string>
     <string name="opting_out_progress">Abmelden</string>
     <string name="subscribe1month.gemcap">25 Edelstein Grenze</string>
-    <string name="subscribe3month.gemcap">30 Edelstein Grenze</string>
+    <string name="subscribe3month.gemcap">30 Edelstein-Grenze</string>
     <string name="subscribe6month.gemcap">35 Edelstein Grenze</string>
     <string name="subscribe12month.gemcap">45 Edelstein Grenze</string>
     <string name="delete_oauth_account_description">Bist du dir sicher\? Dies wird dein Konto für immer löschen und es kann nicht wiederhergestellt werden! Du musst ein neues Konto erstellen um Habitica erneut nutzen zu können. Erreichte und ausgegebene Edelsteine werden nicht rückerstattet. Wenn du dir absolut sicher bist, schreibe DELETE in die untere Textbox.</string>
-    <string name="daily_tip_7">Versuche Gegenstände aus dem Marktplatz an deine Belohnungen anzuheften, um dich zu motivieren sie dir zu verdienen.</string>
+    <string name="daily_tip_7">Versuche Gegenstände aus dem Marktplatz an Deine Belohnungen anzuheften, um Dich zu motivieren sie Dir zu verdienen!</string>
     <string name="week_reminder_text">Pausen sind gesund, dennoch kannst du für einfache Aufgaben Punkte verdienen um Level aufzusteigen und coole Ausrüstung zu bekommen!</string>
     <string name="usernamePromptBody">Login Namen sind jetzt einzigartige Benutzernamen, welche sichtbar neben deinem Anzeigenamen sind und für Einladungen, Chat @Erwähnungen und Nachrichten benutzt werden.</string>
     <string name="usernamePromptWiki">Wenn du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.wikia.com/wiki/Player_Names">geh auf unsere Wiki.</a></string>
