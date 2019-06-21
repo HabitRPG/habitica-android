@@ -150,8 +150,8 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         multiDexEnabled true
 
-        versionCode 2165
-        versionName "1.10"
+        versionCode 2168
+        versionName "2.0"
     }
 
     lintOptions {

@@ -444,10 +444,11 @@ class TaskFormActivity : BaseActivity() {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.are_you_sure)
         alert.addButton(R.string.delete_task, true) { _, _ ->
-                    task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
-                    dismissKeyboard()
-                    finish()
-                }
+            if (task?.isValid != true) return@addButton
+            task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
+            dismissKeyboard()
+            finish()
+        }
         alert.addCancelButton()
         alert.show()
     }

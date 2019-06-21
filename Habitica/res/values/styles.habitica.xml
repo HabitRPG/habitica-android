@@ -67,6 +67,7 @@
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.035</item>
+        <item name="android:lineSpacingExtra">6sp</item>
     </style>
 
     <style name="Body1_Button" parent="@style/Widget.AppCompat.Button.Borderless">
@@ -122,7 +123,7 @@
         <item name="android:letterSpacing">0.035</item>
     </style>
     <style name="Overline">
-        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">10sp</item>
         <item name="android:letterSpacing">0.15</item>
         <item name="android:textAllCaps">true</item>
