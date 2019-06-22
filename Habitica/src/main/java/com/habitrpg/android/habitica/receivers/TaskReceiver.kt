@@ -43,7 +43,7 @@ class TaskReceiver : BroadcastReceiver() {
             taskRepository.getTask(taskId ?: "")
                     .firstElement()
                     .subscribe(Consumer {
-                        if (it.completed) {
+                        if (it.isValid && it.completed) {
                             return@Consumer
                         }
 
