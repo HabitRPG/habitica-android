@@ -8,9 +8,14 @@ import android.widget.Toast
 import androidx.preference.Preference
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.api.HostConfig
 import java.util.*
+import javax.inject.Inject
 
 class APIPreferenceFragment: BasePreferencesFragment() {
+    @Inject
+    lateinit var hostConfig: HostConfig
+
     private val apiPreferences: List<String>
         get() = Arrays.asList(getString(R.string.SP_APIToken), getString(R.string.SP_userID))
 
@@ -22,7 +27,11 @@ class APIPreferenceFragment: BasePreferencesFragment() {
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-        clipMan?.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
+        if (preference.key == getString(R.string.SP_APIToken)) {
+            clipMan?.primaryClip = ClipData.newPlainText(preference.key, hostConfig.apiKey)
+        } else {
+            clipMan?.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
+        }
         Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
         return super.onPreferenceTreeClick(preference)
     }

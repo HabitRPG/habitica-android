@@ -95,15 +95,6 @@
                 android:shouldDisableView="false"
                 android:summary="@string/SP_APIToken_summary"
                 android:layout="@layout/preference_child_summary"/>
-
-            <Preference
-                android:key="SP_user_qr_code"
-                android:title="@string/SP_user_qr_code"
-                android:selectable="true"
-                android:persistent="false"
-                android:shouldDisableView="false"
-                android:summary="@string/SP_user_qr_code"
-                android:layout="@layout/preference_child_summary"/>
         </PreferenceScreen>
 
         <Preference
