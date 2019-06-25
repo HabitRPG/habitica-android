@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
@@ -36,6 +37,13 @@ class TasksFragment : BaseMainFragment() {
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
 
     private var filterMenuItem: MenuItem? = null
+
+    override var user: User?
+        get() = super.user
+        set(value) {
+            super.user = value
+            viewFragmentsDictionary?.values?.forEach { it.user = value }
+        }
 
     private val activeFragment: TaskRecyclerViewFragment?
         get() = viewFragmentsDictionary?.get(viewPager?.currentItem)

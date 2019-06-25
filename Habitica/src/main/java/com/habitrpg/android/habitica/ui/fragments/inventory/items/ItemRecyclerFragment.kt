@@ -192,6 +192,7 @@ class ItemRecyclerFragment : BaseFragment() {
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         compositeSubscription.add(this.inventoryRepository.hatchPet(egg, potion) {
+            dismiss()
             val petWrapper = View.inflate(context, R.layout.pet_imageview, null) as? FrameLayout
             val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
 

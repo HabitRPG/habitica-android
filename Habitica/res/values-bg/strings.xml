@@ -300,21 +300,17 @@
   <string name="use_animal">Използване</string>
   <string name="feed">Хранене</string>
   <string name="hatch_with">Излюпване на любимец с %s</string>
-  <string name="hatched_pet_title">Вие излюпихте %s!</string>
+  <string name="hatched_pet_title">Вие излюпихте %1$s %2$s!</string>
   <string name="evolved_pet_title">Вие опитомихте %s. Да се качваме!</string>
   <string name="close">Затваряне</string>
   <string name="share">Споделяне</string>
   <string name="notification_pet_fed">Вие нахранихте своя(та/то) %s!</string>
   <string name="notification_purchase">Вие закупихте %s</string>
   <string name="notification_purchase_reward">Вие закупихте награда</string>
-  <string name="sectionpets">Обикновени</string>
-  <string name="sectionpremiumPets">Магическа отвара</string>
-  <string name="sectionquestPets">Мисия</string>
-  <string name="sectionspecialPets">Редки</string>
-  <string name="sectionmounts">Обикновени</string>
-  <string name="sectionpremiumMounts">Магическа отвара</string>
-  <string name="sectionquestMounts">Мисия</string>
-  <string name="sectionspecialMounts">Редки</string>
+  <string name="sectiondrop">Обикновени</string>
+  <string name="sectionpremium">Магическа отвара</string>
+  <string name="sectionquest">Мисия</string>
+  <string name="sectionspecial">Редки</string>
   <string name="world_quest">Световна мисия</string>
   <string name="inn_description">Нуждаете се от почивка? Идете в странноприемницата на Даниел, за да спрете някои от по-трудните механики на Хабитика:\n\n
 • Пропуснатите ежедневни задачи няма да Ви нараняват;\n

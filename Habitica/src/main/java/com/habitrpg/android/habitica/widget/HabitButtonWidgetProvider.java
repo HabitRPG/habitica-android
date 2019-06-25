@@ -50,12 +50,10 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
                 HabitButtonWidgetProvider.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            for (int widgetId : allWidgetIds) {
-                Bundle options = appWidgetManager.getAppWidgetOptions(widgetId);
-                appWidgetManager.partiallyUpdateAppWidget(widgetId,
-                        sizeRemoteViews(context, options, widgetId));
-            }
+        for (int widgetId : allWidgetIds) {
+            Bundle options = appWidgetManager.getAppWidgetOptions(widgetId);
+            appWidgetManager.partiallyUpdateAppWidget(widgetId,
+                    sizeRemoteViews(context, options, widgetId));
         }
 
         // Build the intent to call the service

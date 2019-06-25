@@ -4,6 +4,8 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.OwnedMount;
+import com.habitrpg.android.habitica.models.user.OwnedPet;
 import com.habitrpg.android.habitica.models.user.User;
 
 import org.junit.Before;
@@ -30,12 +32,12 @@ public class UserTest {
 
     @Test
     public void getPetsFoundCount_shouldReturnSumOfAllPetEntries() {
-        RealmList<Pet> pets = new RealmList<>();
-        pets.add(new Pet());
-        pets.add(new Pet());
-        pets.add(new Pet());
-        pets.add(new Pet());
-        pets.add(new Pet());
+        RealmList<OwnedPet> pets = new RealmList<>();
+        pets.add(new OwnedPet());
+        pets.add(new OwnedPet());
+        pets.add(new OwnedPet());
+        pets.add(new OwnedPet());
+        pets.add(new OwnedPet());
 
         user.getItems().setPets(pets);
         assertEquals(5, user.getPetsFoundCount());
@@ -48,12 +50,12 @@ public class UserTest {
 
     @Test
     public void getMountsTamedCount_shouldReturnSumOfAllMountEntries() {
-        RealmList<Mount> mounts = new RealmList<>();
-        mounts.add(new Mount());
-        mounts.add(new Mount());
-        mounts.add(new Mount());
-        mounts.add(new Mount());
-        mounts.add(new Mount());
+        RealmList<OwnedMount> mounts = new RealmList<>();
+        mounts.add(new OwnedMount());
+        mounts.add(new OwnedMount());
+        mounts.add(new OwnedMount());
+        mounts.add(new OwnedMount());
+        mounts.add(new OwnedMount());
 
         user.getItems().setMounts(mounts);
         assertEquals(5, user.getMountsTamedCount());

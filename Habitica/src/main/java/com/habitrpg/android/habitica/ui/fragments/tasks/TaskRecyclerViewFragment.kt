@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -217,6 +218,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView.setScaledPadding(context, 0, 0, 0, 48)
         recyclerView.adapter = recyclerAdapter as? androidx.recyclerview.widget.RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
 

@@ -248,7 +248,7 @@
   <string name="use_animal">השתמשו</string>
   <string name="feed">האכילו</string>
   <string name="hatch_with">הבקיעו חיית מחמד עם %s</string>
-  <string name="hatched_pet_title">הבקעתם %1s!</string>
+  <string name="hatched_pet_title">הבקעתם %1$s %2$s!</string>
   <string name="close">סיגרו</string>
   <string name="share">שתפו</string>
   <string name="notification_pet_fed">האכלתם את ה %s שלכם!</string>

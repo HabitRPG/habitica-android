@@ -300,21 +300,13 @@
   <string name="use_animal">Utiliser</string>
   <string name="feed">Nourrir</string>
   <string name="hatch_with">Faire éclore le familier avec %s</string>
-  <string name="hatched_pet_title">Votre %s a éclos !</string>
+  <string name="hatched_pet_title">Votre %1$s %2$s a éclos !</string>
   <string name="evolved_pet_title">Vous avez dompté %s, partez en promenade ensemble !</string>
   <string name="close">Fermer</string>
   <string name="share">Partager</string>
   <string name="notification_pet_fed">Vous avez nourri votre %s !</string>
   <string name="notification_purchase">Vous avez acheté %s</string>
   <string name="notification_purchase_reward">Vous avez acheté une récompense</string>
-  <string name="sectionpets">Standard</string>
-  <string name="sectionpremiumPets">Potion magique</string>
-  <string name="sectionquestPets">Quête</string>
-  <string name="sectionspecialPets">Rare</string>
-  <string name="sectionmounts">Standard</string>
-  <string name="sectionpremiumMounts">Potion magique</string>
-  <string name="sectionquestMounts">Quête</string>
-  <string name="sectionspecialMounts">Rare</string>
   <string name="world_quest">Quête mondiale</string>
   <string name="inn_description">Besoin de repos ? Reposez vous à l\'Auberge de Daniel pour faire une pause des effets de jeu les plus compliqués :\n\n
 • Les quotidiennes manquées ne vous infligeront pas de dégâts\n

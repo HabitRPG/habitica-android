@@ -209,7 +209,6 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                     val egg = hatchingItem as Egg
                     hatchPetSubject.onNext(Pair(firstItem, egg))
                 }
-                fragment?.dismiss()
             } else if (isFeeding) {
                 val event = FeedCommand()
                 event.usingPet = feedingPet
@@ -217,7 +216,6 @@ class ItemRecyclerAdapter(data: OrderedRealmCollection<OwnedItem>?, autoUpdate: 
                 EventBus.getDefault().post(event)
                 fragment?.dismiss()
             }
-
         }
     }
 }

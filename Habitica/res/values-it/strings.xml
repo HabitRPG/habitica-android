@@ -300,21 +300,13 @@
   <string name="use_animal">Usa</string>
   <string name="feed">Dai da mangiare</string>
   <string name="hatch_with">Fai nascere un animale con %s</string>
-  <string name="hatched_pet_title">È nato un %s!</string>
+  <string name="hatched_pet_title">È nato un %1$s %2$s!</string>
   <string name="evolved_pet_title">Hai domato %s, inizia a cavalcare!</string>
   <string name="close">Chiudi</string>
   <string name="share">Condividi</string>
   <string name="notification_pet_fed">Hai dato da mangiare al tuo %s!</string>
   <string name="notification_purchase">Hai comprato %s</string>
   <string name="notification_purchase_reward">Hai comprato una ricompensa</string>
-  <string name="sectionpets">Base</string>
-  <string name="sectionpremiumPets">Pozione Magica</string>
-  <string name="sectionquestPets">Missione</string>
-  <string name="sectionspecialPets">Rari</string>
-  <string name="sectionmounts">Base</string>
-  <string name="sectionpremiumMounts">Pozione Magica</string>
-  <string name="sectionquestMounts">Missione</string>
-  <string name="sectionspecialMounts">Rare</string>
   <string name="world_quest">World Quest</string>
   <string name="inn_description">Bisogno di una pausa ? Riposati alla locanda di Daniel per mettere in pausa le meccaniche di gioco più difficili di Habitica:\n\n
 • Le Daily non completate non faranno diminuire la tua salute\n

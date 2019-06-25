@@ -268,9 +268,7 @@
   <string name="wear_costume">Kostüm tragen</string>
   <string name="equipped">Ausgerüstet</string>
   <string name="quest_cancel_message">Bist Du sicher, dass Du diese Quest abbrechen willst? Alle angenommenen Einladungen gehen verloren. Der Questbesitzer erhält die Questschriftrolle zurück.</string>
-  <string name="quest.invitation">Questeinladung</string>
   <string name="quest_begin_message">Bist Du sicher? Nur %1$d von %2$d Party-Mitglieder nehmen an der Quest teil. Quests starten automatisch, wenn alle Spieler die Einladung angenommen oder abgelehnt haben.</string>
-  <string name="quest.invitation.text">Du wurdest eingeladen, an einer Quest teilzunehmen!</string>
   <string name="ago_1day">vor einem Tag</string>
   <string name="ago_days">vor %d Tagen</string>
   <string name="ago_1Minute">Vor 1 Minute</string>
@@ -300,21 +298,13 @@
   <string name="use_animal">Nutzen</string>
   <string name="feed">Füttern</string>
   <string name="hatch_with">Haustier mit %s ausbrüten</string>
-  <string name="hatched_pet_title">Du hast ein %s ausgebrütet!</string>
+  <string name="hatched_pet_title">Du hast ein %1$s %2$s ausgebrütet!</string>
   <string name="evolved_pet_title">Du hast %s gezähmt, auf geht\'s!</string>
   <string name="close">Schließen</string>
   <string name="share">Teilen</string>
   <string name="notification_pet_fed">Du hast Dein/e/n %s gefüttert!</string>
   <string name="notification_purchase">Du hast %s gekauft</string>
   <string name="notification_purchase_reward">Du hast eine Belohnung gekauft</string>
-  <string name="sectionpets">Standard</string>
-  <string name="sectionpremiumPets">Magisches Schlüpfelixier</string>
-  <string name="sectionquestPets">Quest</string>
-  <string name="sectionspecialPets">Spezial</string>
-  <string name="sectionmounts">Standard</string>
-  <string name="sectionpremiumMounts">Magisches Schlüpfelixier</string>
-  <string name="sectionquestMounts">Quest</string>
-  <string name="sectionspecialMounts">Spezial</string>
   <string name="world_quest">Weltenquest</string>
   <string name="inn_description">Brauchst du eine Pause? Kehre in Daniels Gasthaus ein, um ein paar von Habiticas schwierigeren Spielmechaniken zu pausieren:\n\n
 • Verpasste Tagesaufgaben fügen dir keinen Schaden zu\n
