@@ -691,7 +691,7 @@
   <string name="class_equipment_shop_dialog">Este objeto solo está disponible para una clase específica.\nPuedes cambiar tu clase desde Ajustes.</string>
   <string name="class_gear_disclaimer">Solo puedes comprar equipo para tu clase actual</string>
   <string name="available_stats" formatted="false">%d puntos</string>
-  <string name="toogle_emojis">Activar/desactivar Emojis</string>
+  <string name="toogle_emojis">Activar/desactivar emoticonos</string>
   <string name="tavern_description">¡Bienvenido a la posada! Trae una silla para conversar, o toma un descanso de sus tareas.</string>
   <string name="check_into_inn">Entrar en la Posada</string>
   <string name="community_guidelines">Normas de la comunidad</string>
@@ -828,4 +828,5 @@
     <string name="only_leader_create_challenge">Sólo el/la líder puede crear Desafíos</string>
     <string name="create_party">Crear Fiesta</string>
 
-</resources>
+<string name="create">Crear</string>
+    </resources>
