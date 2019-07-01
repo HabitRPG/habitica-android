@@ -41,7 +41,6 @@ import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
-import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -49,6 +48,8 @@ import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
@@ -59,7 +60,6 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
@@ -672,6 +672,35 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 connectionIssueTextView.visibility = View.GONE
             }, 5000)
         }
+    }
+
+    fun hatchPet(potion: HatchingPotion, egg: Egg) {
+        compositeSubscription.add(this.inventoryRepository.hatchPet(egg, potion) {
+            val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
+            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
+
+            DataBindingUtils.loadImage(petImageView, "Pet-" + egg.key + "-" + potion.key)
+            val potionName = potion.text
+            val eggName = egg.text
+            val dialog = HabiticaAlertDialog(this)
+            dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
+            dialog.setAdditionalContentView(petWrapper)
+            dialog.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
+            dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
+                val event1 = ShareEvent()
+                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
+                val petImageSideLength = 140
+                val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(sharedImage)
+                canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
+                petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
+                petImageView?.drawable?.draw(canvas)
+                event1.shareImage = sharedImage
+                EventBus.getDefault().post(event1)
+                hatchingDialog.dismiss()
+            }
+            dialog?.show()
+        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     companion object {

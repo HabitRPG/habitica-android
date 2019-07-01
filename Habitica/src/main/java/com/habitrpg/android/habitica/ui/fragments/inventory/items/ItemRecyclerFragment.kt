@@ -1,34 +1,30 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.events.ShareEvent
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.*
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.resetViews
 import io.reactivex.functions.Consumer
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment() {
@@ -191,33 +187,8 @@ class ItemRecyclerFragment : BaseFragment() {
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
-        compositeSubscription.add(this.inventoryRepository.hatchPet(egg, potion) {
-            dismiss()
-            val petWrapper = View.inflate(context, R.layout.pet_imageview, null) as? FrameLayout
-            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
-
-            DataBindingUtils.loadImage(petImageView, "Pet-" + egg.key + "-" + potion.key)
-            val potionName = potion.text
-            val eggName = egg.text
-            val dialog = context?.let { HabiticaAlertDialog(it) }
-            dialog?.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
-            dialog?.setAdditionalContentView(petWrapper)
-            dialog?.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
-            dialog?.addButton(R.string.share, false) { hatchingDialog, _ ->
-                val event1 = ShareEvent()
-                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
-                val petImageSideLength = 140
-                val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(sharedImage)
-                context?.let { canvas.drawColor(ContextCompat.getColor(it, R.color.brand_300)) }
-                petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
-                petImageView?.drawable?.draw(canvas)
-                event1.shareImage = sharedImage
-                EventBus.getDefault().post(event1)
-                hatchingDialog.dismiss()
-            }
-            dialog?.show()
-        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        dismiss()
+        (activity as? MainActivity)?.hatchPet(potion, egg)
     }
 
     private fun loadItems() {
