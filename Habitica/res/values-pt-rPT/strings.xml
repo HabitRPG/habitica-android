@@ -512,4 +512,14 @@
     <string name="ago_days">%dd atrás</string>
     <string name="ago_1Minute">1m atrás</string>
     <string name="evolved_pet_title">Domaste %1$s %2$s, vamos dar um passeio!</string>
+    <string name="inn_description">Preciso de um descanso\? Visite o Daniel\'s Inn para pausar alguns dos mecanismos de jogo mais difíceis do Habitica:
+\n
+\n • As diárias perdidas não o prejudicarão
+\n • Tarefas não perdem listras ou decaem em cores
+\n • Chefes não causam dano por suas diárias perdidas
+\n • Seus itens de missão de dano ou coleta de chefe permanecerão pendentes até o check-out</string>
+    <string name="warrior_description">Os guerreiros obtêm mais e melhores acertos críticos, que dão aleatoriamente bônus de ouro, experiência e chance de queda para marcar uma tarefa. Eles também causam grandes danos a monstros chefes. Jogue um Guerreiro se você encontrar motivação de recompensas imprevisíveis ao estilo de um jackpot, ou quiser distribuir a mágoa em missões de patrão!</string>
+    <string name="opting_out_progress">Optando por</string>
+    <string name="class_changed_description">Você tem um novo Battle Gear padrão que pode ser alterado em Equipamento!</string>
+    <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
     </resources>
