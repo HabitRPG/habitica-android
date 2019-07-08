@@ -45,16 +45,10 @@ abstract class BaseMainFragment : BaseFragment() {
         }
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        if (savedInstanceState != null && savedInstanceState.containsKey("userId")) {
-            val userId = savedInstanceState.getString("userId")
-            if (userId != null) {
-                compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer { habitRPGUser -> user = habitRPGUser }, RxErrorHandler.handleEmptyError()))
-            }
-        }
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { user = it }, RxErrorHandler.handleEmptyError()))
 
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE
@@ -94,14 +88,6 @@ abstract class BaseMainFragment : BaseFragment() {
     override fun onDestroy() {
         userRepository.close()
         super.onDestroy()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        if (user?.isValid == true) {
-            outState.putString("userId", user?.id)
-        }
-
-        super.onSaveInstanceState(outState)
     }
 
     private fun hideToolbar() {
