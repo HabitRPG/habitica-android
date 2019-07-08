@@ -46,7 +46,9 @@ class TasksFragment : BaseMainFragment() {
         }
 
     private val activeFragment: TaskRecyclerViewFragment?
-        get() = viewFragmentsDictionary?.get(viewPager?.currentItem)
+        get() {
+            return viewFragmentsDictionary?.get(viewPager?.currentItem) ?: (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager?.currentItem) as? TaskRecyclerViewFragment)
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
