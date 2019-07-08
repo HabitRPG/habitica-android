@@ -13,9 +13,9 @@ open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(
 
     override fun saveContent(contentResult: ContentResult) {
         realm.executeTransactionAsync { realm1 ->
-            realm1.insertOrUpdate(contentResult.potion)
-            realm1.insertOrUpdate(contentResult.armoire)
-            realm1.insertOrUpdate(contentResult.gear.flat)
+            contentResult.potion?.let { realm1.insertOrUpdate(it) }
+            contentResult.armoire?.let { realm1.insertOrUpdate(it) }
+            contentResult.gear?.flat?.let { realm1.insertOrUpdate(it) }
 
             realm1.insertOrUpdate(contentResult.quests)
             realm1.insertOrUpdate(contentResult.eggs)
