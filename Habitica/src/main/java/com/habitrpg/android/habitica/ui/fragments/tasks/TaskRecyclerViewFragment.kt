@@ -346,21 +346,15 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 when (fragment.classType) {
                     Task.TYPE_HABIT -> {
                         fragment.tutorialStepIdentifier = "habits"
-                        tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_overview),
-                                context.getString(R.string.tutorial_habits_1),
-                                context.getString(R.string.tutorial_habits_2),
-                                context.getString(R.string.tutorial_habits_3),
-                                context.getString(R.string.tutorial_habits_4))
+                        tutorialTexts = listOf(context.getString(R.string.tutorial_overview), context.getString(R.string.tutorial_habits_1), context.getString(R.string.tutorial_habits_2), context.getString(R.string.tutorial_habits_3), context.getString(R.string.tutorial_habits_4))
                     }
                     Task.FREQUENCY_DAILY -> {
                         fragment.tutorialStepIdentifier = "dailies"
-                        tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_dailies_1),
-                                context.getString(R.string.tutorial_dailies_2))
+                        tutorialTexts = listOf(context.getString(R.string.tutorial_dailies_1), context.getString(R.string.tutorial_dailies_2))
                     }
                     Task.TYPE_TODO -> {
                         fragment.tutorialStepIdentifier = "todos"
-                        tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_todos_1),
-                                context.getString(R.string.tutorial_todos_2))
+                        tutorialTexts = listOf(context.getString(R.string.tutorial_todos_1), context.getString(R.string.tutorial_todos_2))
                     }
                 }
             }

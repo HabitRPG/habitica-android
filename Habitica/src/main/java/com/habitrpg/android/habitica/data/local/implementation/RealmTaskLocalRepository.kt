@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.models.tasks.*
+import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.realm.Realm
@@ -12,6 +13,9 @@ import io.realm.Sort
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
     override fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>> {
+        if (realm.isClosed) {
+            return Flowable.empty()
+        }
         return realm.where(Task::class.java)
                 .equalTo("type", taskType)
                 .equalTo("userId", userID)
@@ -23,6 +27,9 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun getTasks(userId: String): Flowable<RealmResults<Task>> {
+        if (realm.isClosed) {
+            return Flowable.empty()
+        }
         return realm.where(Task::class.java).equalTo("userId", userId)
                 .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
                 .findAll()
@@ -210,4 +217,13 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .asFlowable()
                 .filter { it.isLoaded }
                 .retry(1)    }
+
+    override fun getUser(userID: String): Flowable<User> {
+        return realm.where(User::class.java)
+                .equalTo("id", userID)
+                .findAll()
+                .asFlowable()
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
+                .map { users -> users.first() }
+    }
 }
