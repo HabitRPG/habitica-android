@@ -13,9 +13,9 @@
   <string name="sidebar.avatar">頭像</string>
   <string name="sidebar.equipment">裝備</string>
   <string name="sidebar.stable">馬廄</string>
-  <string name="sidebar.news">新聞</string>
+  <string name="sidebar.news">消息</string>
   <string name="sidebar.settings">設定</string>
   <string name="sidebar.about">關於</string>
   <string name="sidebar_shops">商店</string>
-  <string name="sidebar_stats">馬廄</string>
+  <string name="sidebar_stats">統計</string>
 </resources>
