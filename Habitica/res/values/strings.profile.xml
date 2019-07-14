@@ -14,5 +14,6 @@
     <string name="profile_achievements">Achievements</string>
     <string name="profile_achievement_ok">OK</string>
     <string name="profile_qrcode_close">Close</string>
+    <string name="profile_copy_user_id">Copy User ID</string>
 
 </resources>

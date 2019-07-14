@@ -8,4 +8,8 @@
         android:orderInCategory="100"
         app:showAsAction="always"
        />
+    <item android:id="@+id/profile_copy_uuid"
+        android:title="@string/profile_copy_user_id"
+        app:showAsAction="never"
+        />
 </menu>

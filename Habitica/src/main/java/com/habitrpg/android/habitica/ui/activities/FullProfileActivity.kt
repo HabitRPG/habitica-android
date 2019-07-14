@@ -120,6 +120,14 @@ class FullProfileActivity : BaseActivity() {
                 showSendMessageToUserDialog()
                 true
             }
+            R.id.profile_copy_uuid -> {
+                val clipboard = applicationContext.getSystemService(Context.CLIPBOARD_SERVICE) as?
+                        android.content.ClipboardManager
+                val clip = android.content.ClipData.newPlainText(this.userID, this.userID)
+                clipboard?.primaryClip = clip
+                Toast.makeText(applicationContext, "User ID Copied", Toast.LENGTH_SHORT).show()
+                true
+            }
             android.R.id.home -> {
                 // app icon in action bar clicked; goto parent activity.
                 this.finish()
