@@ -125,7 +125,7 @@ class FullProfileActivity : BaseActivity() {
                         android.content.ClipboardManager
                 val clip = android.content.ClipData.newPlainText(this.userID, this.userID)
                 clipboard?.primaryClip = clip
-                Toast.makeText(applicationContext, "User ID Copied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.user_id_copied), Toast.LENGTH_SHORT).show()
                 true
             }
             android.R.id.home -> {
