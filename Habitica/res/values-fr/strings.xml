@@ -45,14 +45,14 @@
   <string name="action_edit">Modifier</string>
   <string name="action_delete">Supprimer</string>
   <string name="action_cancel">Annuler</string>
-  <string name="login_btn">Connexion</string>
+  <string name="login_btn">Se connecter</string>
   <string name="register_btn">Créer un compte</string>
   <string name="username">Nom d\'utilisateur</string>
   <string name="email_username">E-mail ou nom d\'utilisateur</string>
   <string name="password">Mot de passe</string>
   <string name="emailAddress">Adresse e-mail</string>
   <string name="confirmpassword">Confirmez votre mot de passe</string>
-  <string name="logout">Déconnexion</string>
+  <string name="logout">Se déconnecter</string>
   <string name="logout_description">Déconnexion de votre compte</string>
   <string name="account_details">Détails du compte</string>
   <string name="LoginActivityName">Bienvenue</string>
@@ -237,7 +237,7 @@
 \n
 \nLes gemmes vous permettent d\'acheter des éléments supplémentaires pour votre compte, comme : 
 \n
-\n - De supers costumes pour votre avatar
+\n - De super costumes pour votre avatar
 \n - Des arrière-plans géniaux
 \n - Des quêtes amusantes où vous gagnez des œufs de familiers
 \n - La possibilité de changer de classe avant le niveau 100
@@ -250,7 +250,7 @@
   <string name="join">Rejoindre</string>
   <string name="leader">Responsable</string>
   <string name="gems">Gemmes</string>
-  <string name="copy_as_todo">Copier comme une tâche À Faire</string>
+  <string name="copy_as_todo">Copier comme une tâche à faire</string>
   <string name="send_pm">Envoyer un MP</string>
   <string name="flag">Signaler</string>
   <string name="delete">Supprimer</string>
