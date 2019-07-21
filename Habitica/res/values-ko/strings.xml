@@ -14,7 +14,7 @@
   <string name="SP_APIToken_summary">본인의 API 토큰</string>
   <string name="Language_title">언어</string>
   <string name="Language_summary">Habitica의 언어 바꾸기</string>
-  <string name="SP_user_qr_code">당신의 QR코드</string>
+  <string name="SP_user_qr_code">본인의 QR코드</string>
   <string name="PS_contact_title">연락처</string>
   <string name="unknown_error">오류가 발생했습니다…</string>
   <string name="pref_account_header">계정</string>
