@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="profile_pets_and_mounts">Pets &amp; Mounts</string>
     <string name="profile_pets_found">Pets Found</string>
@@ -7,7 +7,7 @@
     <string name="profile_send_message_to">Send message to %s</string>
     <string name="profile_message_sent_to">Message sent to %s</string>
     <string name="profile_level">Level:</string>
-    <string name="profile_class_bonus">Class-Bonus</string>
+    <string name="profile_class_bonus">Class-Bonus:</string>
     <string name="profile_allocated">Allocated:</string>
     <string name="profile_boosts">Boosts:</string>
     <string name="profile_private_message">Private Message</string>

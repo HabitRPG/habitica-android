@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="profile_pets_and_mounts">Augintiniai</string>
     <string name="profile_pets_found">Augintinių Maistas</string>
@@ -10,4 +10,9 @@
     <string name="profile_allocated">Priskirta:</string>
     <string name="profile_boosts">Sustiprinimai:</string>
     <string name="profile_private_message">Privati Žinutė</string>
-    </resources>
+    <string name="profile_loading_data">Įkeliami narių duomenys ...</string>
+    <string name="profile_achievements">Pasiekimai</string>
+    <string name="profile_achievement_ok">Gerai</string>
+    <string name="profile_qrcode_close">Uždaryti</string>
+
+</resources>

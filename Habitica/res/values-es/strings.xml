@@ -16,7 +16,7 @@
   <string name="Language_summary">Cambiar el idioma de Habitica</string>
   <string name="SP_user_qr_code">Tu código QR</string>
   <string name="PS_contact_title">Contactar</string>
-  <string name="unknown_error">A ocurrido un error...</string>
+  <string name="unknown_error">Ha ocurrido un error…</string>
   <string name="pref_account_header">Cuenta</string>
   <string name="pref_first_day_of_the_week_title">Primer día de la semana</string>
   <string name="pref_first_day_of_the_week_summary">Primer día de la semana en todos los calendarios</string>
@@ -32,8 +32,8 @@
   <string name="preference_push_received_a_private_message">Has recibido un mensaje privado</string>
   <string name="preference_push_gifted_gems">Gemas regaladas</string>
   <string name="preference_push_gifted_subscription">Suscripción regalada</string>
-  <string name="preference_push_invited_to_party">Invitado a un grupo</string>
-  <string name="preference_push_invited_to_guild">Invitado a un Gremio</string>
+  <string name="preference_push_invited_to_party">Invitado al Equipo</string>
+  <string name="preference_push_invited_to_guild">Invitado al Gremio</string>
   <string name="preference_push_your_quest_has_begun">La misión ha comenzado</string>
   <string name="preference_push_invited_to_quest">Invitado a una misión</string>
   <!--Adding tasks-->
@@ -63,7 +63,7 @@
   <string name="about.versionhistory">Historial de versiones</string>
   <string name="about.habitica_open_source">Habitica está disponible como software de código abierto en Github</string>
   <string name="about.rate_our_app">Califica nuestra aplicación</string>
-  <string name="about.give_us_feedback">Envíanos tus comentarios</string>
+  <string name="about.give_us_feedback">¡Envíanos tus comentarios!</string>
   <string name="about.bugreport">Notificar un error</string>
   <string name="about.source_code">Código fuente</string>
   <string name="repeatEvery">Repite Cada</string>
@@ -141,7 +141,7 @@
   <string name="tavern.inn.rest">Pausar tareas diarias</string>
   <string name="reward.dialog.buy">Comprar</string>
   <string name="reward.dialog.dismiss">Descartar</string>
-  <string name="party">Grupo</string>
+  <string name="party">Equipo</string>
   <string name="chat">Conversación</string>
   <string name="members">Miembros</string>
   <string name="habits">Hábitos</string>
@@ -234,7 +234,7 @@
   <string name="setup_task_creativity_2">Trabajar en proyecto creativo</string>
   <string name="setup_task_creativity_3">Terminar proyecto creativo</string>
   <string name="gem.purchase.support">¿Quieres contribuir a que Habitica siga en funcionamiento? Puedes ayudar a los desarrolladores comprando gemas.\n\nLas gemas te permiten comprar artículos adicionales para tu cuenta, por ejemplo: \n\n - Fantásticos trajes para tu personaje\n - Increíbles fondos\n - Divertidas misiones que te recompensan con huevos de mascotas\n - La capacidad de cambiar de clase antes de llegar al nivel 100\n\nMuchísimas gracias por ayudarnos a hacer que Habitica sea lo mejor posible. ¡Valoramos enormemente vuestras contribuciones!</string>
-  <string name="my_guilds">Mis gremios</string>
+  <string name="my_guilds">Mis Gremios</string>
   <string name="public_guilds">Gremios públicos</string>
   <string name="guild">Gremio</string>
   <string name="leave">Abandonar</string>
@@ -270,7 +270,7 @@
   <string name="quest_cancel_message">¿Seguro que quieres cancelar esta misión? Se perderán todas las invitaciones que se hayan aceptado y el propietario de la misión recuperará el pergamino.</string>
   <string name="quest.invitation">Invitación a misión</string>
   <string name="quest_begin_message">¿Estás seguro? ¡Sólo %1$d de tus %2$d miembros de equipo se han unido a la misión! Las misiones comienzan automáticamente cuando todos los jugadores se han unido o rechazado la invitación.</string>
-  <string name="quest.invitation.text">Te han invitado a participar en una misión.</string>
+  <string name="quest.invitation.text">¡Te han invitado a participar en una misión!</string>
   <string name="ago_1day">Hace 1d</string>
   <string name="ago_days">Hace %dd</string>
   <string name="ago_1Minute">Hace 1m</string>
@@ -290,12 +290,12 @@
   <string name="armoireExp">Te peleas con el Armario y ganas experiencia. ¡Ahí lo llevas!</string>
   <string name="armoireNotesFull">Abre el Armario para recibir prendas especiales, experiencia o comida al azar. Prendas que te faltan por conseguir: %d.</string>
   <string name="armoireLastItem">Has encontrado la última prenda insólita del Armario encantado.</string>
-  <string name="armoireNotesEmpty">El Armario dispone de nuevas prendas la primera semana de cada mes. Hasta entonces, sigue haciendo clic en él para ganar experiencia y comida.</string>
+  <string name="armoireNotesEmpty">El Armario dispondrá de nuevas prendas la primera semana de cada mes. ¡Hasta entonces, sigue haciendo clic en él para ganar Experiencia y Comida!</string>
   <string name="sell">Vender (%d de oro)</string>
   <string name="hatch_with_potion">Mezclar con poción</string>
   <string name="feed_to_pet">Alimentar a mascota</string>
   <string name="hatch_egg">Mezclar con huevo</string>
-  <string name="invite_party">Invitar al grupo</string>
+  <string name="invite_party">Invitar al equipo</string>
   <string name="dialog_feeding">Dar de comer a %s:</string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
@@ -306,7 +306,7 @@
   <string name="share">Compartir</string>
   <string name="notification_pet_fed">¡Tu %s ha comido!</string>
   <string name="notification_purchase">Has comprado %s</string>
-  <string name="notification_purchase_reward">Has obtenido una recompensa.</string>
+  <string name="notification_purchase_reward">Has comprado una recompensa</string>
   <string name="sectiondrop">Estandar</string>
   <string name="sectionpremium">Poción Mágica</string>
   <string name="sectionquest">Misión</string>
@@ -331,8 +331,8 @@
   <string name="warrior_description">Los Guerreros obtienen «golpes críticos» mejores y más frecuentes, que aportan Oro, Experiencia y Botín extras de forma aleatoria. También pueden hacer mucho daño a los jefes. Juega como Guerrero si lo que más te motiva es obtener recompensas aleatorias e impredecibles, o si disfrutas poniendo en su sitio a los jefes de las Misiones.</string>
   <string name="mage_description">Los magos aprenden rápido y tardan menos que otras clases en ganar experiencia y subir de nivel. Además, disponen de una gran cantidad de maná para usar sus habilidades especiales. Juega como mago si disfrutas con los aspectos estratégicos de Habitica, o si lo que más te motiva es subir de nivel y desbloquear funciones avanzadas.</string>
   <string name="rogue_description">A los pícaros les encanta acumular riquezas: ganan más oro que ninguna otra clase y son expertos en encontrar artículos por azar. Su habilidad más característica, la del sigilo, les permite eludir las consecuencias de no completar las tareas diarias. Juega como pícaro si lo que más te motiva es conseguir recompensas, logros, botines e insignias.</string>
-  <string name="healer_description">Los sanadores se mantienen impertérritos ante los daños y ofrecen esa protección a los demás. Las tareas diarias sin cumplir y los hábitos negativos no les quitan el sueño, y tienen maneras de recuperar la salud cuando algo va mal. Juega como sanador si te gusta ayudar a los otros miembros del grupo o si te atrae la idea de esquivar a la Muerte con tu esfuerzo.</string>
-  <string name="select_class">Elegir clase</string>
+  <string name="healer_description">Los sanadores se mantienen impertérritos ante los daños y ofrecen esa protección a los demás. Las tareas diarias sin cumplir y los hábitos negativos no les quitan el sueño, y tienen maneras de recuperar la salud cuando algo va mal. Juega como sanador si te gusta ayudar a los otros miembros del equipo o si te atrae la idea de esquivar a la Muerte con tu esfuerzo.</string>
+  <string name="select_class">Elegir Clase</string>
   <string name="opt_out_class">No elegir</string>
   <string name="opt_out_description">¿Te dan igual las clases? ¿Quieres decidirlo más adelante? No elijas nada y serás un guerrero sin ninguna habilidad especial. Cuando quieras, puedes informarte sobre el sistema de clases en la wiki y activarlas.</string>
   <string name="class_confirmation">¿Seguro que quieres ser %s?</string>
@@ -342,7 +342,7 @@
   <string name="dialog_go_back">Volver</string>
   <string name="opt_out_confirmation">¿Seguro que no quieres elegir?</string>
   <string name="change_class">Cambiar de clase</string>
-  <string name="change_class_description">Cambia tu clase y reembolsa tus puntos de estadística por 3 gemas.</string>
+  <string name="change_class_description">Cambia tu clase y reembolsa tus puntos de atributo por 3 gemas.</string>
   <string name="enable_class">Activar sistema de clases</string>
   <string name="changing_class_progress">Cambio de clase</string>
   <string name="by_email">Por correo electrónico</string>
@@ -351,7 +351,7 @@
   <string name="invite">Invitar a amigos</string>
   <string name="invite_id_description">Si tienes amigos que ya usan Habitica, invítalos desde aquí indicando su ID de usuario.</string>
   <string name="invite_username_description">Si tienes amigos que ya usan Habitica, invítalos indicando su nombre de usuario aquí.</string>
-  <string name="invite_email_description">Si un amigo se apunta a Habitica a través del correo electrónico que le has enviado, se le invitará automáticamente a tu grupo.</string>
+  <string name="invite_email_description">Si un amigo se apunta a Habitica a través del correo electrónico que le has enviado, se le invitará automáticamente a tu equipo.</string>
   <string name="add_invites">Añadir invitaciones</string>
   <string name="user_id">ID de usuario</string>
   <string name="email">Correo electrónico</string>
@@ -403,7 +403,7 @@
   <string name="action_continue">Continuar</string>
   <string name="scan_qr_code">Leer código QR</string>
   <string name="enter_recipient_uuid">Introduce el ID de usuario del destinatario</string>
-  <string name="invited_to_party">¡Te han invitado a un grupo!</string>
+  <string name="invited_to_party">¡Te han invitado a un Equipo!</string>
   <string name="stats_widget_label">Estadísticas de Habitica</string>
   <string name="add_task">Añadir Tarea</string>
   <string name="add_habit">Añadir Hábito</string>
@@ -513,11 +513,11 @@
   <string name="open">Abrir</string>
   <string name="notification_mystery_item">¡Abres la caja y encuentras %s!</string>
   <string name="checkInRewardEarned">Ganaste %1$s como recompensa por tu devoción por mejorar tu vida. </string>
-  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Tu próximo premio se desbloqueará en %1$d chequeos</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Tu próximo premio se desbloqueará en %1$d Registros</string>
   <string name="pending_approval">Esperando aprobación</string>
   <string name="filters">Filtros</string>
   <string name="done">Hecho</string>
-  <string name="group_tasks_edit_description">Las Tareas de Grupo no pueden editarse</string>
+  <string name="group_tasks_edit_description">Las Tareas de Grupo no pueden editarse.</string>
   <string name="group_tasks_edit_title">No se puede editar esta tarea</string>
   <string name="groups">Grupos</string>
   <string name="all">Todo</string>
@@ -568,7 +568,7 @@
   <string name="edit_challenge">Editar</string>
   <string name="challenge_create_error_tavern_one_gem">Necesitas al menos 1 Gema para crear un Desafío público.</string>
   <string name="challenge_create_error_enough_gems">No tienes Gemas suficientes para crear un Reto.</string>
-  <string name="identify_your_challenge_with_a_tag">Identifica tu Desafío con un nombre corto.</string>
+  <string name="identify_your_challenge_with_a_tag">Identifica tu desafío con un nombre corto</string>
   <string name="challenge_create_error_tag">Necesitas un nombre corto para crear este Desafío.</string>
   <string name="challenge_create_error_no_tasks">Necesitas añadir al menos una tarea para crear este Reto.</string>
   <string name="challenge_create_error_title">Necesitas un título para crear este Reto.</string>
@@ -578,24 +578,24 @@
   <string name="inn">Posada</string>
   <string name="system">Sistema</string>
   <string name="start_quest">Iniciar una nueva Búsqueda</string>
-  <string name="leave_party">Dejar el Grupo</string>
-  <string name="party_description">Descripción del Grupo</string>
-  <string name="abort_confirmation">¿Estás seguro de que quieres abortar esta misión? Se abortará para todos en su partido y todo el progreso se perderá. El rollo de búsqueda se devolverá al propietario de la búsqueda .</string>
-  <string name="leave_quest_confirmation">¿Estás seguro de que quieres dejar la búsqueda activa? Todo tu progreso de búsqueda se perderá.</string>
+  <string name="leave_party">Dejar Equipo</string>
+  <string name="party_description">Descripción del Equipo</string>
+  <string name="abort_confirmation">¿Estás seguro de que quieres abortar esta misión\? Se abortará para todos en el equipo y todo progreso se perderá. El Pergamino de Misión se devolverá al propietario de la misión.</string>
+  <string name="leave_quest_confirmation">¿Estás seguro de que quieres dejar la Misión activa\? Todo tu progreso de misión se perderá.</string>
   <string name="number_participants">%1$dParticipantes</string>
-  <string name="welcome_back">¡Bienvenido de vuelta!</string>
+  <string name="welcome_back">¡Bienvenido/a de vuelta!</string>
   <string name="yesterdaililes_prompt">¿Has hecho alguno de estos Diarios ayer?</string>
   <string name="start_day">Empezar mi día</string>
-  <string name="leave_party_confirmation">¿Seguro que quieres salir de la fiesta?</string>
-  <string name="nextPrizeUnlocksIn" formatted="false">Siguiente premio en %dEntradas</string>
+  <string name="leave_party_confirmation">¿Seguro que quieres salir del Equipo\?</string>
+  <string name="nextPrizeUnlocksIn" formatted="false">Siguiente premio en %d Registros</string>
   <string name="pending">Pendiente</string>
   <string name="accepted">Aceptado</string>
   <string name="declined">Rechazado</string>
   <string name="participants">Participantes</string>
   <string name="invitations">Invitaciones</string>
   <string name="quest_leader_header" formatted="false">Comenzado por %s</string>
-  <string name="quest_abort_message">¿Estás seguro de que quieres abortar esta misión? Se abortará para todos en su partido y todo el progreso se perderá. El rollo de búsqueda se devolverá al propietario de la búsqueda.</string>
-  <string name="loading">Cargando...</string>
+  <string name="quest_abort_message">¿Estás seguro de que quieres abortar esta misión\? Se abortará para todos en el equipo y todo progreso se perderá. El Pergamino de Misión será devuelto al propietario de la misión.</string>
+  <string name="loading">Cargando…</string>
   <string name="reloading_content">Recargando Contenido</string>
   <string name="thousand_abbrev">k</string>
   <string name="million_abbrev">m</string>
@@ -640,7 +640,7 @@
   <string name="come_back_soon">¡Vuelve pronto!</string>
   <string name="level">Nivel</string>
   <string name="streak_label">Racha de 21 Días</string>
-  <string name="stats">Estadísticas</string>
+  <string name="stats">Atributos</string>
   <string name="fix_character_description">Si has encontrado un error o has cometido un error que cambió a tu personaje injustamente, puedes corregir manualmente esos valores aquí.</string>
   <string name="fix_character_values">Arreglar Valores del Personaje</string>
   <string name="saving">Guardando</string>
@@ -656,7 +656,7 @@
   <string name="about">Información</string>
   <string name="app_settings">Ajustes de la Aplicación</string>
   <string name="authentication">Autentificación</string>
-  <string name="authentication_summary">Cambia tus opciones de autentificación</string>
+  <string name="authentication_summary">Cambia tus opciones de autentificación.</string>
   <string name="change_password">Cambia la contraseña</string>
   <string name="change_email">Cambia dirección de correo</string>
   <string name="change_login_name">Cambiar Nombre de Inicio de sesión</string>
@@ -664,8 +664,8 @@
   <string name="change">Cambiar</string>
   <string name="character_level">Nivel de Personaje</string>
   <string name="auto_allocate_points">Asignar Puntos Automáticamente</string>
-  <string name="stat_guide">Guía de Inicio</string>
-  <string name="character_build">Selección de Personaje</string>
+  <string name="stat_guide">Guía de Atributos</string>
+  <string name="character_build">Construcción de Personaje</string>
   <string name="character_build_description">Cada nivel te otorga un punto para asignar a un atributo a tu elección. Puedes hacerlo manualmente o dejar que el juego decida por ti usando la opción de Distribución Automática.</string>
   <string name="strength">Fuerza</string>
   <string name="strength_description">Incrementa la posibilidad de asestar golpes críticos al sumar puntos en una tarea. También aumenta el daño que reciben los Jefes.</string>
@@ -683,7 +683,7 @@
   <string name="no_points_to_allocate">No hay puntos que asignar</string>
   <string name="points_to_allocate" formatted="false">%d puntos por asignar</string>
   <string name="distribute_evenly_help">Asigna el mismo número de puntos a cada atributo.</string>
-  <string name="distribute_class_help">Asigna más puntos a los atributos importantes para tu clase</string>
+  <string name="distribute_class_help">Asigna más puntos a los atributos importantes para tu Clase.</string>
   <string name="distribute_task_help">Asigna puntos según las categorías de Fuerza, Inteligencia, Constitución y Percepción asociadas con las tareas que cumples.</string>
   <string name="allocating_points">Asignación de Puntos</string>
   <string name="class_equipment">Equipamiento</string>
@@ -692,7 +692,7 @@
   <string name="class_equipment_shop_dialog">Este objeto solo está disponible para una clase específica.\nPuedes cambiar tu clase desde Ajustes.</string>
   <string name="class_gear_disclaimer">Solo puedes comprar equipo para tu clase actual</string>
   <string name="available_stats" formatted="false">%d puntos</string>
-  <string name="toogle_emojis">Activar/desactivar Emojis</string>
+  <string name="toogle_emojis">Activar/desactivar emoticonos</string>
   <string name="tavern_description">¡Bienvenido a la posada! Trae una silla para conversar, o toma un descanso de sus tareas.</string>
   <string name="check_into_inn">Entrar en la Posada</string>
   <string name="community_guidelines">Normas de la comunidad</string>
@@ -706,10 +706,10 @@
   <string name="tiers_descriptions">Los nombres de usuario coloreados que ves en el chat representan el escalafón de colaborador de una persona. ¡Cuanto más alto sea el escalafón, más ha contribuido la persona a habitica a través de arte, codificación, la comunidad o incluso más!</string>
   <string name="navigation_drawer_open">Abrir panel de navegación</string>
   <string name="navigation_drawer_close">Cerrar panel de navegación</string>
-  <string name="world_boss">Jefe mundial</string>
+  <string name="world_boss">Jefe Mundial</string>
   <string name="world_boss_art">Imagen del jefe</string>
   <string name="boss_art">Imagen del jefe</string>
-  <string name="world_boss_description">Descripción del jefe mundial</string>
+  <string name="world_boss_description">Descripción del Jefe Mundial</string>
   <string name="rage_strike_count" formatted="false">Ataque de ira: %d/%d</string>
   <string name="pending_strike_description">¡Este ataque aún no ha ocurrido!\nEl Jefe Mundial arremeterá y atacará a uno de nuestros amigables tenderos una vez que su barra de ira se llene. ¡Mantente al día con tus Tareas Diarias para evitar que suceda!</string>
   <string name="pending_strike_title">Ataque pendiente</string>
@@ -728,8 +728,8 @@
   <string name="active_world_boss">Jefe Mundial Activo</string>
   <string name="no_party_description">Realiza misiones con amigos o por tu cuenta. Combate monstruos, crea retos y ayúdate a ser responsable a través de los Equipos.</string>
   <string name="no_party_title">Juega a Habitica en un Equipo</string>
-  <string name="join_party_description">Dále el nombre de usuario que hay abajo al miembro de un Equipo y ellos podrán mandarte un invitación</string>
-  <string name="join_party_description_id">Dáles tu ID de Usuario o haz que escaneen tu código QR cuando te inviten</string>
+  <string name="join_party_description">Dale el nombre de usuario que hay abajo al un miembro del Equipo y ellos podrán mandarte una invitación</string>
+  <string name="join_party_description_id">Dales tu ID de Usuario o haz que escaneen tu código QR cuando te inviten</string>
   <string name="join_party_title">¿Quieres unirte a un equipo?</string>
   <string name="create_party_website">Abrir página web para crear un equipo</string>
   <string name="id_copied">ID copiada en el portapapeles</string>
@@ -823,6 +823,12 @@
   <string name="gift_confirmation_text">Tu suscripción regalo ha sido enviada y tu suscripción ha sido aplicada a tu cuenta.</string>
   <string name="discover">Descubre</string>
   <string name="damage_paused">Daño pausado</string>
+  <string name="opting_out_progress">optar por no</string>
+  <string name="delete_oauth_account_description">¿Estás seguro/a\? Esto eliminará tu cuenta permanentemente, ¡y no podrá ser restaurada! Necesitarás registrar una nueva cuenta para utilizar Habitica de nuevo. Las Gemas que hayas gastado o que tengas en el banco no serán reembolsadas. Si estás absolutamente seguro/a, escribe ELIMINAR en el cuadro de texto de abajo.</string>
+  <string name="preference_push_important_announcements">Anuncios Importantes</string>
+  <string name="only_leader_create_challenge">Sólo el/la líder puede crear Desafíos</string>
+  <string name="create_party">Crear Equipo</string>
+  <string name="create">Crear</string>
   <string name="notifications">Notificaciones</string>
   <string name="no_notifications_title">¡Estás al día!</string>
   <string name="no_notifications_text">Las hadas de las notificaciones te aplauden atronadoramente. ¡Bien hecho!</string>

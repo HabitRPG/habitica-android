@@ -16,4 +16,6 @@
   <string name="sidebar.settings">הגדרות</string>
   <string name="sidebar.about">אודות</string>
   <string name="sidebar_shops">חנויות</string>
+<string name="sidebar.inbox">הודעות</string>
+    <string name="sidebar_stats">נתונים סטטיסטיים</string>
 </resources>

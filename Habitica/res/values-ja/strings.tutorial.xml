@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_overview">興味がありそうなタスクをいくつか入れてみたよ！自分でもタスクを追加してみよう。編集するときはタスクのタイトルをタップ！</string>
+  <string name="tutorial_overview">さぁ、どうぞ！ 興味がありそうなタスクをいくつか入れてみました。自分でもタスクを追加してみましょう。タスクのタイトルをタップして編集できます。</string>
   <string name="tutorial_habits_1">まずは習慣。身につけたい良い習慣もあれば、やめられない悪い習慣もあるよね。</string>
   <string name="tutorial_habits_2">良い習慣をこなした時は、＋をタップして経験値とゴールドをゲット！</string>
   <string name="tutorial_habits_3">うっかり悪い習慣を行ってしまった時は、－をタップ。アバターの体力が減ってしまうので、責任を持って悪い習慣を断ち切ろう。</string>
@@ -13,10 +13,10 @@
   <string name="tutorial_rewards_2">あなた自身のモチベーションを上げるために、現実世界での報酬を登録することもできます。</string>
   <string name="tutorial_tasks_complete">これで説明は終わり。もし忘れちゃったときは，FAQをチェックしてみてね。</string>
   <string name="tutorial_equipment">装備を買ったら、ここに表示されるよ。武装はアバターのステータスに影響し、(有効にすれば)衣装としてアバターの見た目を変えるよ。</string>
-  <string name="tutorial_items">タスクを達成したりレベルを上げることで、アイテムを入手できるぞ。アイテムを使うにはタップしよう。</string>
-  <string name="tutorial_pets">現実世界のタスクを達成すると、「たまご」や「たまごがえしの薬」を見つけるチャンスが。組み合わせるとペットが生まれるよ。</string>
-  <string name="tutorial_skills">スキルは、特別な属性で強力な効果だ!　スキルを使うにはタップしよう。魔法を使うとマナ (青いバー) が減る。マナは、毎日アプリを使ったり、実生活のタスクを達成することで増える。詳しくは、メニューのFAQをチェック!</string>
-  <string name="tutorial_party">友達といっしょにモンスターと戦おう!　あなたと友達それぞれの目標を達成するための責任感が試されるぞ。</string>
+  <string name="tutorial_items">タスクを達成したりレベルを上げることで、アイテムを入手できます。アイテムを使うにはタップしましょう！</string>
+  <string name="tutorial_pets">現実世界のタスクを達成すると、ランダムに「たまご」や「たまごがえしの薬」を見つけるチャンスが得られます。組み合わせてペットをかえしてみましょう</string>
+  <string name="tutorial_skills">スキルは、強力な効果を持つ特殊能力です！ スキルをタップして使いましょう。スキルを使うとマナ (青いバー) が減ります。マナは、毎日チェックして実生活のタスクを達成することで獲得できます。詳しくは、メニューのFAQをチェックしましょう！</string>
+  <string name="tutorial_party">ここは、あなたと仲間たちが目標達成のために互いに責任感を持ち続けられる場です。タスクをこなしてモンスターと戦うことができます！</string>
   <string name="tutorial_tavern">キャンプ場へようこそ!　ここは年齢なんか気にしないオープンなチャットルームです。ここでタスクの進め方について話したり、質問したりできます。楽しんでね!</string>
   <string name="tutorial_classes">戦士、魔道士、治療師、それとも盗賊…どれになるか決めよう!　クラスにはそれぞれ専用の装備とスキルがある。詳しくは (?) をタップしてね!</string>
   <string name="tutorial_stats">一度にステータスを割り当てるには灰色のボタンを、1つずつ割り振るには矢印をタップして下さい。</string>

@@ -16,4 +16,6 @@
   <string name="sidebar.settings">설정</string>
   <string name="sidebar.about">소개</string>
   <string name="sidebar_shops">상점</string>
+<string name="sidebar.inbox">메세지</string>
+    <string name="sidebar_stats">스탯</string>
 </resources>

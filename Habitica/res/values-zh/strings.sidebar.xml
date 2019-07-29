@@ -6,7 +6,7 @@
   <string name="sidebar.inbox">讯息</string>
   <string name="sidebar.tavern">酒馆</string>
   <string name="sidebar.party">队伍</string>
-  <string name="sidebar.purchaseGems">宝石;捐赠</string>
+  <string name="sidebar.purchaseGems">宝石&amp;开通会员</string>
   <string name="sidebar.guilds">公会</string>
   <string name="sidebar.challenges">挑战</string>
   <string name="sidebar.section.inventory">物品栏</string>

@@ -16,4 +16,6 @@
   <string name="sidebar.settings">Settings</string>
   <string name="sidebar.about">About</string>
   <string name="sidebar_shops">Shops </string>
+<string name="sidebar.inbox">Messages</string>
+    <string name="sidebar_stats">Stats</string>
 </resources>

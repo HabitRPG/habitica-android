@@ -16,7 +16,7 @@
   <string name="Language_summary">Mudar a língua do Habitica</string>
   <string name="SP_user_qr_code">O Seu Código QR</string>
   <string name="PS_contact_title">Contactar-me</string>
-  <string name="unknown_error">Ocorreu um erro...</string>
+  <string name="unknown_error">Ocorreu um erro…</string>
   <string name="pref_account_header">Conta</string>
   <string name="pref_first_day_of_the_week_title">Primeiro Dia da Semana</string>
   <string name="pref_first_day_of_the_week_summary">Primeiro dia da semana em todos os calendários </string>
@@ -494,6 +494,34 @@
   <string name="collection_quest">Recolha de Missão</string>
   <string name="quest_owner_rewards">Recompensas do Dono de Missão</string>
   <string name="tavern_description">Bem-vindo à Pousada! Puxe uma cadeira para conversar, ou efetue uma pausa das suas tarefas.</string>
+<string name="repeatables_title">Repete</string>
+    <string name="repeatables_on_title">Repete em</string>
+    <string name="levelup_header">Alcançaste o Nível %1$d!</string>
+    <string name="levelup_detail">Por completares os teus objectivos na vida real, subiste de nível e agora estás totalmente curado!</string>
+    <string name="faint_penalty_body">Perdeste um Nível. o teu Ouro, e uma peça de Equipamento, mas podes recuperá-los de volta com trabalho árduo! Boa sorte — Vais-te sair bem.</string>
+    <string name="reminder_title">Lembra-te de marcares as tuas Diárias</string>
+    <string name="intro_2_title">Progresso na vida</string>
+    <string name="intro_2_description">Desbloqueia recursos no jogo ao completares as tuas tarefas da vida real. Ganha armaduras, animais de estimação, e mais como recompensas por atingires os teus objectivos.</string>
+    <string name="intro_3_subtitle">Combate monstros</string>
+    <string name="intro_3_title">Sociabiliza</string>
+    <string name="avatar_setup_description">Então, como te queres parecer\? Não te preocupes, podes mudar isto depois.</string>
+    <string name="task_setup_description">Óptimo! Agora, no que estás interessado em trabalhar durante esta jornada\?</string>
+    <string name="add_tag">Adicionar nova Etiqueta</string>
+    <string name="quest_begin_message">Tens a certeza\? Apenas %1$d dos teus %2$d membros do grupo aceitaram esta missão! As missões iniciam automaticamente quando todos os jogadores tiverem aceite ou rejeitado o convite.</string>
+    <string name="ago_1day">1d atrás</string>
+    <string name="ago_days">%dd atrás</string>
+    <string name="ago_1Minute">1m atrás</string>
+    <string name="evolved_pet_title">Domaste %1$s %2$s, vamos dar um passeio!</string>
+    <string name="inn_description">Preciso de um descanso\? Visite o Daniel\'s Inn para pausar alguns dos mecanismos de jogo mais difíceis do Habitica:
+\n
+\n • As diárias perdidas não o prejudicarão
+\n • Tarefas não perdem listras ou decaem em cores
+\n • Chefes não causam dano por suas diárias perdidas
+\n • Seus itens de missão de dano ou coleta de chefe permanecerão pendentes até o check-out</string>
+    <string name="warrior_description">Os guerreiros obtêm mais e melhores acertos críticos, que dão aleatoriamente bônus de ouro, experiência e chance de queda para marcar uma tarefa. Eles também causam grandes danos a monstros chefes. Jogue um Guerreiro se você encontrar motivação de recompensas imprevisíveis ao estilo de um jackpot, ou quiser distribuir a mágoa em missões de patrão!</string>
+    <string name="opting_out_progress">Optando por</string>
+    <string name="class_changed_description">Você tem um novo Battle Gear padrão que pode ser alterado em Equipamento!</string>
+    <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
   <string name="notifications">Notificações</string>
   <string name="no_notifications_title">Já sabes tudo o que se passa!</string>
   <string name="no_notifications_text">As fadas das notificações dão-te uma ruidosa salva de palmas! Bom trabalho!</string>

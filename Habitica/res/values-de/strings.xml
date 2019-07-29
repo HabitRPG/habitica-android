@@ -16,7 +16,7 @@
   <string name="Language_summary">Habiticas Sprache ändern</string>
   <string name="SP_user_qr_code">Dein QR-Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
-  <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
+  <string name="unknown_error">Ein Fehler ist aufgetreten…</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_first_day_of_the_week_title">Erster Tag der Woche</string>
   <string name="pref_first_day_of_the_week_summary">Erster Tag der Woche in allen Kalendern</string>
@@ -72,7 +72,7 @@
   <string name="network_error_no_network_body">Keine Internetverbindung.</string>
   <string name="internal_error_api">Es scheint ein Problem mit dem Server zu geben. Versuche es später noch mal.</string>
   <string name="authentication_error_title">Authentifikationsfehler</string>
-  <string name="authentication_error_body">Ungültiger Benutzername und/oder Passwort</string>
+  <string name="authentication_error_body">Ungültiger Benutzername und/oder Passwort.</string>
   <string name="login_validation_error_title">Validierungsfehler</string>
   <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
   <string name="save_changes">Speichern</string>
@@ -254,7 +254,7 @@
   <string name="guild_search_hint">Nach Gilden suchen</string>
   <string name="todo_due">Bis: %s</string>
   <string name="daily_streak">Aktuelle Serie: %d</string>
-  <string name="todo_has_duedate">Diese Aufgabe hat eine Frist.</string>
+  <string name="todo_has_duedate">Diese Aufgabe hat eine Frist</string>
   <string name="battle_gear">Kampfausrüstung</string>
   <string name="costume">Kostüm</string>
   <string name="outfit_head">Kopf</string>
@@ -319,7 +319,7 @@
   <string name="mage">Magier</string>
   <string name="healer">Heiler</string>
   <string name="warrior_description">Krieger verursachen mehr und stärkere \"kritische Treffer\", die zufällig Bonus Gold, Erfahrung und größere Chance auf Beute beim Erfüllen einer Aufgabe geben. Sie teilen außerdem schweren Schaden gegen Boss Monster aus. Spiele einen Krieger, wenn es dich anspornt, unvorhergesehene Chancen auf große Belohnungen zu haben und du in Endgegner-Quests besonders viel Schaden austeilen möchtest!</string>
-  <string name="mage_description">Magier lernen rasch und erhalten schneller Erfahrung und Level als andere Klassen. Sie bekommen zudem eine große Menge Mana, um ihre Spezialfähigkeiten einzusetzen. Spiele einen Magier, wenn Dir die taktischen Aspekte des Spiels Spaß bereiten, oder wenn Du motiviert wirst durch schnellen Level-Aufstieg und das Freischalten fortgeschrittener Funktionen.</string>
+  <string name="mage_description">Magier lernen rasch und erhalten schneller Erfahrung und Level als andere Klassen. Sie bekommen zudem eine große Menge Mana, um ihre Spezialfähigkeiten einzusetzen. Spiele einen Magier, wenn Dir die taktischen Aspekte des Spiels Spaß bereiten, oder wenn Du motiviert wirst durch schnellen Level-Aufstieg und das Freischalten fortgeschrittener Funktionen!</string>
   <string name="rogue_description">Schurken lieben es Reichtümer anzuhäufen, indem sie mehr Gold als andere verdienen und geschickt darin sind, neue Gegenstände zu finden. Ihre typische Fähigkeit sich im verborgenen zu bewegen erlaubt Dir gelegentlich, die Folgen verpasster täglicher Aufgaben zu vermeiden. Spiele einen Schurken, wenn Dich Spielbelohnungen und Erfolge besonders reizen und Du nach Beute und Abzeichen trachtest!</string>
   <string name="healer_description">Heiler stehen Schaden unbeeindruckt gegenüber und erweitern diesen Schutz auf andere. Verpasste tägliche Aufgaben und schlechte Angewohnheiten schaden ihnen nicht viel und sie haben Mittel und Wege Lebenspunkte wiederherzustellen. Spiele einen Heiler, wenn Du gerne Anderen in Deiner Party hilfst, oder wenn es Dich besonders reizt, dem Tod durch harte Arbeit zu entkommen!</string>
   <string name="select_class">Klasse wählen</string>
@@ -405,7 +405,7 @@
   <string name="widget_dailies">Habitica: Tägliche Aufgaben</string>
   <string name="widget_todo_list">Habitica To-Do-Liste</string>
   <string name="widget_add_task">Habitica: Neue Aufgabe</string>
-  <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden</string>
+  <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden.</string>
   <string name="gem.purchase.toolbartitle">Kaufen</string>
   <string name="gem.purchase.title">Das Erwerben von Edelsteinen unterstützt die Entwickler und hilft Habitica am Laufen zu halten</string>
   <string name="gem.purchase.subtitle">Edelsteine erlaubes es Dir spaßige Extras für Deinen Account zu erwerben, inklusive:</string>
@@ -538,7 +538,7 @@
   <string name="empty_description_todos">To-Dos sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu den To-Dos hinzu, um deren Wert zu steigern.</string>
   <string name="empty_title_rewards">Du hast keine Belohnungen</string>
   <string name="reset_walkthrough">Setze Justins Einführung zurück</string>
-  <string name="read_community_guidelines">Bitte lies dir unsere Community-Richtlinien durch, bevor du etwas postest.</string>
+  <string name="read_community_guidelines">Bitte lies dir unsere Community-Richtlinien durch, bevor du etwas postest</string>
   <string name="maintenance">Wartung</string>
   <string name="reload_content">Inhalt erneut laden</string>
   <string name="dailyDueDefaultView">Setze die Standards der täglichen Aufgaben auf \"fällig\"</string>
@@ -554,7 +554,7 @@
   <string name="edit_challenge">Bearbeiten</string>
   <string name="challenge_create_error_tavern_one_gem">Du benötigst mindestens 1 Juwel, um eine öffentliche Herausforderung zu erstellen.</string>
   <string name="challenge_create_error_enough_gems">Du hast nicht genug Edelsteine, um eine Herausforderung zu erstellen.</string>
-  <string name="identify_your_challenge_with_a_tag">Gib deiner Herausforderung einen kurzen Namen.</string>
+  <string name="identify_your_challenge_with_a_tag">Gib deiner Herausforderung einen kurzen Namen</string>
   <string name="challenge_create_error_tag">Du brauchst einen kurzen Namen um diese Herausforderung zu erstellen.</string>
   <string name="challenge_create_error_no_tasks">Du musst wenigstens eine Aufgabe hinzufügen, um diese Herausforderung erstellen zu können.</string>
   <string name="challenge_create_error_title">Du musst einen Titel angeben, um diese Herausforderung erstellen zu können.</string>
@@ -583,7 +583,7 @@
   <string name="quest_abort_message">Willst Du diese Mission wirklich abbrechen?
 Sie wird für alle Mitglieder Deiner Party abgebrochen und Euer gesamter Fortschritt geht verloren.
 Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
-  <string name="loading">Inhalt wird geladen...</string>
+  <string name="loading">Inhalt wird geladen…</string>
   <string name="reloading_content">Inhalt wird erneut geladen</string>
   <string name="thousand_abbrev">k</string>
   <string name="million_abbrev">m</string>
@@ -670,8 +670,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
   <string name="distribute_task">Nach Aufgabenaktivität verteilen</string>
   <string name="no_points_to_allocate">Keine Punkte zum Verteilen</string>
   <string name="points_to_allocate" formatted="false">%d Punkte zum Verteilen</string>
-  <string name="distribute_evenly_help">Weist jedem Attribut die gleiche Anzahl an Punkten zu</string>
-  <string name="distribute_class_help">Weist den Attributen, die wichtig für Deine Klasse sind, mehr Punkte zu</string>
+  <string name="distribute_evenly_help">Weist jedem Attribut die gleiche Anzahl an Punkten zu.</string>
+  <string name="distribute_class_help">Weist den Attributen, die wichtig für Deine Klasse sind, mehr Punkte zu.</string>
   <string name="distribute_task_help">Weist Punkte nach den Eigenschaftskategorien zu, die mit den abgeschlossenen Aufgaben zusammenhängen.</string>
   <string name="allocating_points">Attributspunkte zuweisen</string>
   <string name="class_equipment">Ausrüstung</string>
@@ -691,7 +691,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
   <string name="report_bug">Melde einen Fehler</string>
   <string name="player_tiers">Spielerränge</string>
   <string name="staff_moderators">Mitarbeiter und Moderatoren</string>
-  <string name="tiers_descriptions">Die Farbe der Spielernamen im Chat repräsentieren den Rang der Mitwirkung dieser Person. Je höher der Rang, desto mehr hat die Person zu der Weiterenticklung von Habitica durch Kunst, Code oder mehr beigetragen. </string>
+  <string name="tiers_descriptions">Die Farbe der Spielernamen im Chat repräsentieren den Rang der Mitwirkung dieser Person. Je höher der Rang, desto mehr hat die Person zu der Weiterenticklung von Habitica durch Kunst, Code oder mehr beigetragen!</string>
   <string name="navigation_drawer_open">Öffne Navigationsleiste</string>
   <string name="navigation_drawer_close">Schließe Navigationsleiste</string>
   <string name="world_boss">Weltboss</string>
@@ -727,7 +727,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
   <string name="world_boss_description_title">Was ist ein Weltboss?</string>
   <string name="world_boss_description_description">Ein Weltboss ist ein spezielles Ereignis, bei dem die ganze Community zusammenarbeitet, um mit ihren Aufgaben ein mächtiges Monster zu besiegen!\nErledige Aufgaben, um dem Boss Schaden zuzufügen.\nDer Boss fügt Dir keinen Schaden für unerledigte Aufgaben zu, aber seine Raserei-Anzeige füllt sich. Wenn die Anzeige voll ist, wird der Boss einen unserer Ladenbesitzer angreifen!\nDu kannst weiterhin normale Questbosse bekämpfen;der Schaden wird beiden angerechnet.\nIn der Taverne kannst Du den Bosskampf-Fortschritt und die Raserei-Attacken einsehen.</string>
   <string name="world_boss_description_intro">Ein Weltboss ist ein spezielles Ereignis, bei dem die ganze Community zusammenarbeitet, um mit ihren Aufgaben ein mächtiges Monster zu besiegen!</string>
-  <string name="world_boss_description_1">Erledige Aufgaben, um dem Boss Schaden zuzufügen.</string>
+  <string name="world_boss_description_1">Erledige Aufgaben, um dem Boss Schaden zuzufügen</string>
   <string name="world_boss_description_2">Der Boss fügt Dir keinen Schaden für unerledigte Aufgaben zu, aber seine Raserei-Anzeige steigt. Wenn sie gefüllt ist, greift der Boss einen der Ladenbesitzer an!</string>
   <string name="world_boss_description_3">Du kannst weiterhin gegen Questbosse kämpfen; der Schaden wird beiden angerechnet</string>
   <string name="world_boss_description_4">In der Taverne kannst Du den aktuellen Stand im Bosskampf und die Raserei-Attacken einsehen</string>
@@ -790,6 +790,37 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
   <string name="verification_pet">Eines dieser Veteranen-Haustiere wartet auf Dich wenn Du die Bestätigung abgeschlossen hast!</string>
   <string name="gift_subscription">Abonnement verschenken</string>
   <string name="create_party">Gruppe erstellen</string>
+  <string name="subscribe_gift_description">Möchtest Du jemandem die Vorteile eines Abos schenken\?</string>
+  <string name="gift_one_get_one_description">Jetzt aktuell: \"Verschenke ein Abo und erhalte eins gratis\"-Aktion!</string>
+  <string name="gift_one_get_one">Verschenke eins, erhalte eins!</string>
+  <string name="gift_one_get_one_detailed_description">Während diese Aktion läuft, erhältst Du nach dem Versand Deines Geschenks automatisch ein gleiches Abonnement.</string>
+  <string name="gift_subscription_subtitle">Wähle unten das Abo, das Du schenken möchtest! Dieser Kauf wird nicht automatisch verlängert.</string>
+  <string name="send_gift">Geschenk abschicken</string>
+  <string name="server">Server</string>
+  <string name="gift_confirmation_title">Dein Geschenk wurde verschickt!</string>
+  <string name="gift_confirmation_text_g1g1">Du hast %s ein %s-monatiges Abo für Habitica geschickt und das gleiche Abo wurde Deinem Konto gutgeschrieben dank unserer \"Verschenke ein Abo und erhalte eins gratis\"-Aktion!</string>
+  <string name="gift_confirmation_text">Du hast %s ein %s-monatiges Abo für Habitica geschickt.</string>
+  <string name="discover">Entdecken</string>
+  <string name="damage_paused">Schaden pausiert</string>
+  <string name="preference_push_important_announcements">Wichtige Ankündigungen</string>
+  <string name="create">Erstellen</string>
+  <string name="only_leader_create_challenge">Nur ein Gruppenleiter kann Wettbewerbe erstellen</string>
+  <string name="opting_out_progress">Abmelden</string>
+  <string name="subscribe1month.gemcap">25 Edelstein Grenze</string>
+  <string name="subscribe3month.gemcap">30 Edelstein-Grenze</string>
+  <string name="subscribe6month.gemcap">35 Edelstein Grenze</string>
+  <string name="subscribe12month.gemcap">45 Edelstein Grenze</string>
+  <string name="delete_oauth_account_description">Bist du dir sicher\? Dies wird dein Konto für immer löschen und es kann nicht wiederhergestellt werden! Du musst ein neues Konto erstellen um Habitica erneut nutzen zu können. Erreichte und ausgegebene Edelsteine werden nicht rückerstattet. Wenn du dir absolut sicher bist, schreibe DELETE in die untere Textb$
+  <string name="daily_tip_7">Versuche Gegenstände aus dem Marktplatz an Deine Belohnungen anzuheften, um Dich zu motivieren sie Dir zu verdienen!</string>
+  <string name="week_reminder_text">Pausen sind gesund, dennoch kannst du mit einfachen Aufgaben Punkte verdienen um Level aufzusteigen und coole Ausrüstung zu bekommen!</string>
+  <string name="usernamePromptBody">Login Namen sind jetzt einzigartige Benutzernamen, welche sichtbar neben deinem Anzeigenamen sind und für Einladungen, Chat @Erwähnungen und Nachrichten benutzt werden.</string>
+  <string name="usernamePromptWiki">Wenn du mehr über diese Änderung erfahren möchtest, <a href="https://habitica.wikia.com/wiki/Player_Names">geh auf unsere Wiki.</a></string>
+  <string name="usernamePromptDisclaimer">Benutzernamen sollten mit unseren <a href="https://habitica.com/static/terms">Servicebedingungen</a> und <a href="https://habitica.com/static/community-guidelines">Gemeinschaftsleitlinien</a> übereinstimmen. Falls du vorher keinen Loginnamen festgelegt hast, wurde dein Benutzername auto-generiert.</string>
+  <string name="confirm_username_description">Das Bestätigen deines Nutzernamens wird diesen öffentlich für Einladungen, @Erwähnungen und Nachrichten machen. Du kannst deinen Benutzernamen jederzeit in den Einstellungen ändern.</string>
+  <string name="equipment_str">STR:</string>
+  <string name="equipment_con">CON:</string>
+  <string name="equipment_int">INT:</string>
+  <string name="equipment_per">PER:</string>
   <string name="notifications">Mitteilungen</string>
   <string name="no_notifications_title">Du bist auf dem Laufenden!</string>
   <string name="no_notifications_text">Die Mitteilungsfeen geben dir eine heftige Runde Applaus! Gut gemacht!</string>

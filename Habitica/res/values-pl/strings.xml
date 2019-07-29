@@ -16,7 +16,7 @@
   <string name="Language_summary">Zmień język Habitici</string>
   <string name="SP_user_qr_code">Twój kod QR</string>
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
-  <string name="unknown_error">Wystąpił błąd...</string>
+  <string name="unknown_error">Wystąpił błąd…</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_first_day_of_the_week_title">Pierwszy Dzień Tygodnia</string>
   <string name="pref_first_day_of_the_week_summary">Pierwszy dzień tygodnia we wszystkich kalendarzach</string>
@@ -124,7 +124,7 @@
   <string name="filter">Filtr</string>
   <string name="profile_image">Obrazek profilowy</string>
   <string name="mana_price_button">%d PM</string>
-  <string name="used_skill">Użyłeś %1$s za %2$d pkt. many.</string>
+  <string name="used_skill">Użyłeś %1$s za %2$d pkt many.</string>
   <string name="used_skill_without_mana">Użyto %1$s.</string>
   <string name="new_checklist_item">nowa część zadania</string>
   <string name="add_checklist_item">Dodaj</string>
@@ -162,7 +162,7 @@
   <string name="avatar_mustache">Wąsy</string>
   <string name="avatar_flower">Kwiatek</string>
   <string name="avatar_bangs">Grzywka</string>
-  <string name="avatar_nothing">Niewybrano</string>
+  <string name="avatar_nothing">Nie wybrano</string>
   <string name="avatar_size">Rozmiar</string>
   <string name="avatar_size_slim">Szczupła</string>
   <string name="avatar_size_broad">Krzepka</string>
@@ -266,7 +266,7 @@
   <string name="wear_costume">Użyj kostiumu</string>
   <string name="equipped">W użyciu</string>
   <string name="quest_cancel_message">Jesteś pewien że chcesz przerwać quest? Quest zostanie przerwany dla wszystkich uczestników. Zwołujący quest odzyska skrypt (quest scroll).</string>
-  <string name="quest.invitation">Zaproszenie do questa.</string>
+  <string name="quest.invitation">Zaproszenie do misji</string>
   <string name="quest_begin_message">Jesteś pewien? Tylko %1$d z %2$d członków twojej drużyny dołączyło do tej misji! Misje zaczynają się automatycznie kiedy wszyscy członkowie dołączą bądź odrzucą zaproszenie.</string>
   <string name="quest.invitation.text">Zostałeś zaproszony do udziału w misji!</string>
   <string name="today">Dzisiaj</string>
@@ -288,6 +288,7 @@
   <string name="feed_to_pet">Nakarm chowańca</string>
   <string name="hatch_egg">Wykluj za pomocą jaja</string>
   <string name="invite_party">Zaproś drużynę</string>
+  <string name="dialog_feeding">Nakarm %1$s %2$s:</string>
   <string name="dialog_feeding">Nakarm %s</string>
   <string name="use_animal">Użyj</string>
   <string name="feed">Nakarm</string>
@@ -351,7 +352,7 @@
   <string name="share_raised">Właśnie zyskałem wierzchowca %1$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
   <string name="open_in_store">Otwórz w sklepie Google Play</string>
   <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
-  <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s</string>
+  <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s.</string>
   <string name="leaderMessage">Wiadomość od %1$s</string>
   <string name="leaderName">Lider: %1$s</string>
   <string name="confirm">Potwierdź</string>
@@ -383,7 +384,7 @@
   <string name="filter_drawer_edit_tags">Edytuj tagi</string>
   <string name="filter_drawer_filter_tags">Filtruj po tagach</string>
   <!--QR Strings-->
-  <string name="qr_section_title">Czy ktoś zaprosił Cię przy pomocy tego kodu QR?</string>
+  <string name="qr_section_title">Ktoś może zaprosić cię przy pomocy tego kodu QR</string>
   <string name="qr_save_message">Kod QR zapisany w</string>
   <string name="qr_dialogue_title">Twój kod QR</string>
   <string name="download">Pobierz</string>
@@ -417,15 +418,15 @@
   <string name="hatching_market_info">Nie znajdujesz poszukiwanych prezentów? Sprawdź na Targu!</string>
   <string name="feeding_market_info">Szukasz innego pokarmu? Kup je na Targu!</string>
   <string name="open_market">Otwórz Targ</string>
-  <string name="cds_description">Twoje codzienne zostaną zresotowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu.</string>
+  <string name="cds_description">Twoje codzienne zostaną zresetowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu!</string>
   <string name="AudioTheme_title">Temat dźwiękowy</string>
   <string name="AudioTheme_summary">Zmień temat dźwiękowy Habitiki</string>
   <!--Login Incentives-->
-  <string name="see_you_tomorrow">Do zobaczenia jutro </string>
+  <string name="see_you_tomorrow">Do zobaczenia jutro!</string>
   <string name="belongs_to_challenge">Należy do wyzwania</string>
   <string name="has_reminder">Ma powiadomienie</string>
   <string name="has_tag">Ma tag</string>
-  <string name="subscribe.title">Subskrypcja wspiera deweloperów i pozwala utrzymać Habitikę.</string>
+  <string name="subscribe.title">Subskrypcja wspiera deweloperów i pozwala utrzymać Habitikę</string>
   <string name="subscribe_prompt">Zostań abonentem i uzyskuj te użyteczne korzyści:</string>
   <string name="subscribe.listitem1">Kup klejnoty za złoto</string>
   <string name="subscribe.listitem2">Ekskluzywne przedmioty miesiąca </string>
@@ -441,7 +442,7 @@
   <string name="subscription">Subskrypcja</string>
   <string name="active">Aktywne</string>
   <string name="cancel_subscription">Anuluj Subskrypcję</string>
-  <string name="cancel_subscription_google.description">Nie chcesz dłużej subskrypcji? Możesz z niej zrezygnować w sekcji \"Moje Aplikacje\" Google Play Store.</string>
+  <string name="cancel_subscription_google.description">Nie chcesz dłużej subskrypcji\? Możesz z niej zrezygnować w sekcji \"Moje Aplikacje\" w Google Play Store.</string>
   <string name="cancel_subscription_notgoogle.description">Nie chcesz dłużej subskrybować? Z powodu twojej metody płatności, możesz anulować subskrypcję tylko poprzez stronę internetową. Kliknij przycisk poniżej, aby otworzyć stronę w twojej przeglądarce!</string>
   <string name="visit_habitica_website">Odwiedź Stronę Habitiki</string>
   <string name="current_bonuses">Obecne Dodatki</string>
@@ -459,10 +460,10 @@
   <string name="subscription_status">Status Subskrypcji</string>
   <string name="byLeader">przez %s</string>
   <string name="challenge_details">Szczegóły wyzwania</string>
-  <string name="challenge_leave_title">Opuść wyzwanie.</string>
+  <string name="challenge_leave_title">Opuść wyzwanie</string>
   <string name="challenge_leave_text">Jesteś pewien, że chcesz opuścić wyzwanie “%s”?</string>
   <string name="challenge_remove_tasks_title">Usuń zadania</string>
-  <string name="challenge_remove_tasks_text">Czy chcesz usunąć zadania</string>
+  <string name="challenge_remove_tasks_text">Czy chcesz usunąć zadania\?</string>
   <string name="remove_tasks">Usuń</string>
   <string name="keep_tasks">Zachowaj</string>
   <string name="my_challenges">Moje wyzwania</string>
@@ -517,12 +518,12 @@
   <string name="avatar_glasses">Okulary</string>
   <string name="avatar_wheelchair">Wózek</string>
   <string name="weak">Słaby</string>
-  <string name="strong">Silny</string>
-  <string name="gray">Szary</string>
-  <string name="dated">Zaplanowany</string>
+  <string name="strong">Silne</string>
+  <string name="gray">Szare</string>
+  <string name="dated">Zaplanowane</string>
   <string name="completed">Ukończone</string>
   <string name="setuP_group_other">Pozostałe</string>
-  <string name="clear">Jasny</string>
+  <string name="clear">Czyść</string>
   <string name="empty_title_habits">Nie posiadasz żadnych nawyków</string>
   <string name="empty_description_habits">Nawyki są zadaniami nie posiadającymi sztywnego harmonogramu. Możesz je odhaczać wiele razy dziennie, lub w ogóle.</string>
   <string name="empty_title_dailies">Nie posiadasz żadnych codziennych</string>
@@ -534,8 +535,8 @@
   <string name="read_community_guidelines">Prosimy, przeczytaj Wytyczne Społeczności zanim umieścisz posta</string>
   <string name="maintenance">Utrzymanie</string>
   <string name="reload_content">Odśwież zawartość</string>
-  <string name="dailyDueDefaultView">Ustaw codzienne domyślnie w zakładce \'do\'</string>
-  <string name="repeat_summary">Powtarzaj %1$sco %2$s%3$s%4$s</string>
+  <string name="dailyDueDefaultView">Ustaw codzienne ‘dzisiejsze’ jako domyślne</string>
+  <string name="repeat_summary">Powtarzaj %1$s co %2$s %3$s %4$s</string>
   <string name="no_billing_gems">Twoje urządzenie nie posiada żadnych wspieranych metod płatności. Aby kupić klejnoty, użyj strony internetowej Habitiki.</string>
   <string name="no_billing_subscriptions">Twoje urządzenie nie posiada żadnych wspieranych metod płatności. Aby wykupić subskrypcję, użyj strony internetowej Habitiki.</string>
   <string name="save">Zapisz</string>
@@ -552,10 +553,10 @@
   <string name="start_quest">Rozpocznij nową misję</string>
   <string name="leave_party">Opuść drużynę</string>
   <string name="party_description">Opis drużyny</string>
-  <string name="number_participants">%1$dUczestników</string>
+  <string name="number_participants">%1$d Uczestników</string>
   <string name="welcome_back">Witaj ponownie</string>
   <string name="yesterdaililes_prompt">Czy wykonałeś wczoraj któreś z tych Codziennych?</string>
-  <string name="start_day">Rozpocznij nowy dzień!</string>
+  <string name="start_day">Rozpocznij mój dzień</string>
   <string name="leave_party_confirmation">Jesteś pewien, że chcesz opuścić drużynę ?</string>
   <string name="nextPrizeUnlocksIn" formatted="false">Następna nagroda za %d wizyt</string>
   <string name="pending">Oczekujące</string>
@@ -564,13 +565,13 @@
   <string name="participants">Uczestnicy</string>
   <string name="invitations">Zaproszenia</string>
   <string name="quest_leader_header" formatted="false">Rozpoczęta przez %s</string>
-  <string name="reloading_content">Przeładowuję...</string>
+  <string name="reloading_content">Odświeżanie zawartości</string>
   <string name="thousand_abbrev">k</string>
   <string name="million_abbrev">m</string>
   <string name="billion_abbrev">b</string>
   <string name="your_balance">Twoje saldo:</string>
   <string name="available_until" formatted="false">Dostępne do %s</string>
-  <string name="gems_left_nomax" formatted="false">Miesięczne Klejnoty: %d pozostało</string>
+  <string name="gems_left_nomax" formatted="false">Miesięczne Klejnoty: pozostało %d</string>
   <string name="health">Zdrowie</string>
   <string name="collect">Zbierz</string>
   <string name="rage_meter">Wskaźnik szału</string>
@@ -676,6 +677,85 @@
   <string name="questShop_owner_long">Ian Przewodnik Misji</string>
   <string name="seasonalShop_owner_long">Sezonowa Czarodziejka</string>
   <string name="rage_attack">Atak szału:</string>
+  <string name="ago_1day">1 dzień temu</string>
+    <string name="ago_days">%d dni temu</string>
+    <string name="ago_1Minute">1 minutę temu</string>
+    <string name="ago_1hour">1 godzinę temu</string>
+    <string name="invite_username_description">Jeśli masz już znajomych, którzy korzystają z Habitiki, zaproś ich, używając ich nazwy użytkownika tutaj.</string>
+    <string name="create_challenge">Stwórz wyzwanie</string>
+    <string name="edit_challenge">Edytuj</string>
+    <string name="loading">Ładowanie…</string>
+    <string name="insufficientGold">Musisz najpierw wykonać więcej zadań, zanim będzie Cię stać na ten przedmiot!</string>
+    <string name="change_username">Zmień nazwę użytkownika</string>
+    <string name="id_copied">ID skopiowane do schowka</string>
+    <string name="report">Zaraportuj</string>
+    <string name="like">Lubię to</string>
+    <string name="reply">Odpowiedz</string>
+    <string name="challenge_categories">Kategorie Wyzwań</string>
+    <string name="joined">Dołączono</string>
+    <string name="public_challenge">Wyzwanie Publiczne</string>
+    <string name="next_day_reminder_title">Czy odznaczyłeś swoje zadania dzisiaj\?</string>
+    <string name="moderator">Moderator</string>
+    <string name="expand_notes">Czytaj więcej</string>
+    <string name="collapse_notes">Pokaż mniej</string>
+    <string name="week_reminder_title">Jak Ci idzie z zadaniami\?</string>
+    <string name="two_handed">Dwuręczna</string>
+    <string name="usernamePromptTitle">Czas ustawić Twoją nazwę użytkownika!</string>
+    <string name="confirmUsername">Potwierdź nazwę użytkownika</string>
+    <string name="cancel">Anuluj</string>
+    <string name="confirm_username">Potwierdź nazwę użytkownika</string>
+    <string name="username_not_confirmed">Nazwa użytkownika nie została potwierdzona</string>
+    <string name="username_confirmed">Nazwa użytkownika została potwierdzona</string>
+    <string name="username_copied">Nazwa użytkownika została skopiowana do schowka</string>
+    <string name="setup_task_join_habitica">Dołączyć do Habitiki (Odznacz mnie!)</string>
+    <string name="visit_website">odwiedź stronę</string>
+    <string name="send_gift">Wyślij prezent</string>
+    <string name="server">Serwer</string>
+    <string name="gift_confirmation_title">Twój prezent został wysłany!</string>
+    <string name="discover">Odkryj</string>
+    <string name="preference_push_important_announcements">Ważne Ogłoszenia</string>
+    <string name="faint_penalty_body">Straciłeś poziom, złoto i przedmiot z wyposażenia, ale możesz je odzyskać poprzez ciężką pracę! Powodzenia — uda ci się.</string>
+    <string name="reminder_title">Pamiętaj aby odznaczyć swoje zadania</string>
+    <string name="ago_minutes">%d minut temu</string>
+    <string name="ago_hours">%d godzin temu</string>
+    <string name="evolved_pet_title">Oswoiłeś %1$s %2$s, idź na przejażdżkę!</string>
+    <string name="opting_out_progress">Wycofywanie się</string>
+    <string name="subscription_duration_norenew">Na %s</string>
+    <string name="subscribe.listitem2.description">Co miesiąc dostaniesz wyjątkowy kosmetyczny przedmiot który możesz założyć na swój awatar!
+\n
+\nDodatkowo, za każde trzy miesiące ciągłej subskrypcji, Tajemniczy Podróżnicy w Czasie zapewnią ci dostęp do historycznych (i futurystycznych!) przedmiotów kosmetycznych.</string>
+    <string name="subscribe.listitem4.description">Podwojone limity łupów pozwolą ci otrzymać więcej przedmiotów każdego dnia, za ukończone zadania, co sprawi że twoja stajnia wypełni się szybciej!</string>
+    <string name="subscribe1month.gemcap">Limit 25 klejnotów</string>
+    <string name="subscribe3month.gemcap">Limit 3 klejnotów</string>
+    <string name="subscribe6month.gemcap">Limit 35 klejnotów</string>
+    <string name="subscribe12month.gemcap">Limit 45 klejnotów</string>
+    <string name="due">Do</string>
+    <string name="join_a_challenge">Dołącz do wyzwania aby dodać wybrany zastaw zadań do twojej listy i rywalizuj z innymi Habitikanami aby zdobyć osiągnięcia a nawet klejnoty!</string>
+    <string name="welcome_text">Oh, musisz byś to nowy. Jestem Justin, będę twoim przewodnikiem po Habitice.
+\n
+\nPo pierwsze, jak się nazywasz\? Śmiało, zmień wszystko co wybrałem. Kiedy skończysz, stworzymy twój awatar!</string>
+    <string name="challenge_create_error_tavern_one_gem">Potrzebujesz przynajmniej jednego klejnotu by stworzyć publiczne wyzwanie.</string>
+    <string name="challenge_create_error_tag">Potrzebujesz krótkiej nazwy aby stworzyć to wyzwanie.</string>
+    <string name="dailyDueDefaultViewDescription">Włączenie opcji powoduje wyświetlanie zadań ‘dzisiejszych’ zamiast ‘wszystkich’</string>
+    <string name="gem_reward">Nagroda w klejnotach</string>
+    <string name="identify_your_challenge_with_a_tag">Określ wyzwanie krótką nazwą</string>
+    <string name="abort_confirmation">Czy na pewno chcesz przerwać tę misję\? Zostanie ona przerwana u wszystkich uczestników z twojej drużyny a cały postęp zostanie utracony. Zwój misji zostanie zwrócony do właściciela.</string>
+    <string name="leave_quest_confirmation">Czy na pewno chcesz opuścić trwającą misję\? Cały twój postęp w misji zostanie utracony.</string>
+    <string name="gems_left_max" formatted="false">Miesięczne Klejnoty: pozostało %1$d/%2$d</string>
+    <string name="forgot_password_confirmation">Instrukcja dotyczącą ustawiania nowego hasła zostanie wysłana na e-mail, o ile został on ustawiony w profilu.</string>
+    <string name="strike_active_description" formatted="false">Nasz ukochany %s został zdewastowany, gdy %s roztrzaskał %s. Szybko, kończ swoje zadania, żeby pokonać potwora i pomóc w odbudowie!!</string>
+    <string name="equipment_str">SIŁ:</string>
+    <string name="equipment_con">KON:</string>
+    <string name="equipment_int">INT:</string>
+    <string name="equipment_per">PER:</string>
+    <string name="warrior_description">Wojownicy zdobywają częstsze i lepsze uderzenia krytyczne, które losowo dają dodatkowe złoto, doświadczenie i szansę na zdobycze, za wykonanie zadania. Zadają oni też duże obrażenia bossom. Graj jako Wojownik, jeżeli motywują cię nieprzewidywalne, losowe nagrody, albo jeśli chcesz zadawać duże obrażenia w misjach z bossem!</string>
+    <string name="daily_tip_5">Weź kilka głębokich oddechów, aby się dobrze skupić. Dasz radę!</string>
+    <string name="daily_tip_8">Możesz zmienić trudność zadania, żeby uzyskać większe nagrody za trudniejsze zadania!</string>
+    <string name="staff">Personel</string>
+    <string name="setup_task_reward">Należy Ci się nagroda</string>
+    <string name="gift_one_get_one">Dajesz - dostajesz!</string>
+    <string name="only_leader_create_challenge">Tylko lider może tworzyć wyzwania</string>
+    <string name="quest_abort_message">Czy na pewno chcesz przerwać tę misję\? Zostanie ona przerwana u wszystkich uczestników z twojej drużyny a cały postęp zostanie utracony. Zwój misji zostanie zwrócony do właściciela.</string>
   <string name="notifications">Powiadomienia</string>
   <string name="no_notifications_title">Teraz jesteś na bieżąco!</string>
   <string name="no_notifications_text">Wróżki powiadomień składają ci gromkie brawa. Dobra robota!</string>
