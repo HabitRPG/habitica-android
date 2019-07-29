@@ -9,7 +9,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:id="@+id/imageView"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:text=""
@@ -19,7 +19,9 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:id="@+id/you_earned_message"
-        tools:text="You unlocked something"/>
+        tools:text="You unlocked something"
+        android:gravity="center_horizontal"
+        style="@style/Body2"/>
 
     <TextView
         tools:text="Next prize unlocks in 2 check-ins."
@@ -27,6 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:id="@+id/next_unlock_message"
-        android:textColor="@color/blue_10"/>
+        android:textColor="@color/gray_100"
+        android:gravity="center_horizontal"
+        style="@style/Body1"/>
 
 </LinearLayout>

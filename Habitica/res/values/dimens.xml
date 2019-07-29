@@ -72,7 +72,7 @@
     <dimen name="drawer_section_item_text">12sp</dimen>
     <dimen name="material_drawer_section_vertical_padding">4dp</dimen>
     <dimen name="pet_width">120dp</dimen>
-    <dimen name="bottom_menu_padding">18dp</dimen>
+    <dimen name="bottom_menu_padding">28dp</dimen>
     <dimen name="pet_image_width">81dp</dimen>
     <dimen name="pet_image_height">99dp</dimen>
     <dimen name="shop_height">124dp</dimen>
@@ -105,7 +105,7 @@
     <dimen name="diamond_button_height">40dp</dimen>
     <dimen name="setup_customization_size">56dp</dimen>
     <dimen name="outer_inset">16dp</dimen>
-	<dimen name="rounded_button_radius">6dp</dimen>
+	<dimen name="rounded_button_radius">4dp</dimen>
     <dimen name="content_border">18dp</dimen>
 	<dimen name="content_section_spacing">21dp</dimen>
 	<dimen name="header_spacing">6dp</dimen>
@@ -138,4 +138,10 @@
     <dimen name="bb_height">65dp</dimen>
     <dimen name="bb_default_elevation">8dp</dimen>
     <dimen name="bb_fake_shadow_height">4dp</dimen>
+    <dimen name="button_height">38dp</dimen>
+    <dimen name="button_height_small">24dp</dimen>
+    <dimen name="button_text_size">16sp</dimen>
+    <dimen name="alert_side_padding">26dp</dimen>
+    <dimen name="downwards_drop_shadow_height">16dp</dimen>
+    <dimen name="collapsible_section_padding">12dp</dimen>
 </resources>

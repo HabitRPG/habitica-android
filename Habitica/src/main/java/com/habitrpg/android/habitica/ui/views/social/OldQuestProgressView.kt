@@ -3,26 +3,27 @@ package com.habitrpg.android.habitica.ui.views.social
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.RectF
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ValueBar
+import kotlinx.android.synthetic.main.value_bar.view.*
 
 class OldQuestProgressView : LinearLayout {
 
@@ -49,7 +50,7 @@ class OldQuestProgressView : LinearLayout {
         setWillNotDraw(false)
         inflate(R.layout.quest_progress_old, true)
 
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
 
         setScaledPadding(context, 16, 16, 16, 16)
 
@@ -106,9 +107,17 @@ class OldQuestProgressView : LinearLayout {
         }
     }
 
-    fun configure(user: User) {
-        bossHealthView.pendingValue = (user.party?.quest?.progress?.up ?: 0F).toDouble()
-        bossHealthView.description = String.format("%.01f dmg pending", (user.party?.quest?.progress?.up ?: 0F) )
+    fun configure(user: User, userOnQuest: Boolean?) {
+        val value = (user.party?.quest?.progress?.up ?: 0F).toDouble()
+        if (userOnQuest == true) {
+            bossHealthView.pendingValue = value
+            bossHealthView.description = String.format("%.01f dmg pending", value)
+            bossHealthView.descriptionIconView.visibility = View.VISIBLE
+        } else {
+            bossHealthView.pendingValue = 0.0
+            bossHealthView.description = ""
+            bossHealthView.descriptionIconView.visibility = View.GONE
+        }
     }
 
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/touch_outside"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/bottom_sheet"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:behavior_peekHeight="350dp"
+        app:behavior_hideable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/content_container"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            >
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="0dp">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/Toolbar"
+                    app:title=""
+                    android:background="@color/white"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:titleTextColor="@color/gray_50"
+                    app:theme="@style/ReportMessageToolbar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+                    <ImageButton
+                        android:id="@+id/close_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_close_grey_800_24dp"
+                        android:background="@color/transparent"
+                        android:paddingLeft="@dimen/spacing_small"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/report_violation"
+                        android:textSize="20sp"
+                        android:textColor="@color/gray_50"
+                        android:layout_marginLeft="36dp"
+                        android:id="@+id/toolbar_title" />
+                    <Button
+                        android:id="@+id/report_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/report"
+                        android:textColor="@color/red_50"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="end" />
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0dp">
+            <LinearLayout
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingBottom="25dp"
+                android:layout_marginBottom="0dp"
+                android:focusableInTouchMode="true">
+                <TextView
+                    android:id="@+id/title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Report NAME for violation:"
+                    android:textColor="@color/gray_10"
+                    style="@style/Caption1"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:layout_marginStart="13dp"/>
+                <TextView
+                    android:id="@+id/message_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_1f000000"
+                    android:textColor="@color/gray_300"
+                    style="@style/Body2"
+                    android:lineSpacingExtra="4sp"
+                    android:paddingTop="11dp"
+                    android:paddingBottom="11dp"
+                    android:paddingStart="13dp"
+                    android:paddingEnd="13dp"
+                    tools:text="This is the message that is reported" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputLayoutAppearanceTheme"
+                    style="@style/TextInputLayoutAppearance"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_large">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/additional_info_edittext"
+                        android:overScrollMode="always"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/reason_for_report"
+                        android:textColor="@color/gray_50"
+                        android:paddingBottom="34dp"
+                        android:paddingTop="16dp"
+                        android:paddingStart="@dimen/spacing_large"
+                        android:paddingEnd="@dimen/spacing_large"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/report_explanation_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    tools:text="@string/report_explanation"
+                    android:textColor="@color/gray_200"
+                    style="@style/Caption3"
+                    android:textColorLink="@color/brand_400"
+                    />
+            </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

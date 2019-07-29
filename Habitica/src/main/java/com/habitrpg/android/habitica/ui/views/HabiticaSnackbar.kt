@@ -1,18 +1,17 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.graphics.drawable.Drawable
-import androidx.annotation.ColorInt
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 
@@ -27,16 +26,16 @@ class HabiticaSnackbar
 private constructor(parent: ViewGroup, content: View, callback: ContentViewCallback) : BaseTransientBottomBar<HabiticaSnackbar>(parent, content, callback) {
 
     fun setTitle(title: CharSequence?): HabiticaSnackbar {
-        val textView = view.findViewById<View>(R.id.snackbar_title) as TextView
-        textView.text = title
-        textView.visibility = if (title != null) View.VISIBLE else View.GONE
+        val textView = view.findViewById<View>(R.id.snackbar_title) as? TextView
+        textView?.text = title
+        textView?.visibility = if (title != null) View.VISIBLE else View.GONE
         return this
     }
 
     fun setText(text: CharSequence?): HabiticaSnackbar {
-        val textView = view.findViewById<View>(R.id.snackbar_text) as TextView
-        textView.text = text
-        textView.visibility = if (text != null) View.VISIBLE else View.GONE
+        val textView = view.findViewById<View>(R.id.snackbar_text) as? TextView
+        textView?.text = text
+        textView?.visibility = if (text != null) View.VISIBLE else View.GONE
         return this
     }
 
@@ -87,13 +86,17 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
 
         override fun animateContentIn(delay: Int, duration: Int) {
             content.scaleY = 0f
+            content.scaleX = 0f
             ViewCompat.animate(content).scaleY(1f).setDuration(duration.toLong()).startDelay = delay.toLong()
+            ViewCompat.animate(content).scaleX(1f).setDuration(duration.toLong()).startDelay = delay.toLong()
             ViewCompat.animate(content).alpha(1f).setDuration(duration.toLong()).startDelay = delay.toLong()
         }
 
         override fun animateContentOut(delay: Int, duration: Int) {
             content.scaleY = 1f
+            content.scaleX = 1f
             ViewCompat.animate(content).scaleY(0f).setDuration(duration.toLong()).startDelay = delay.toLong()
+            ViewCompat.animate(content).scaleX(0f).setDuration(duration.toLong()).startDelay = delay.toLong()
             ViewCompat.animate(content).alpha(0f).setDuration(duration.toLong()).startDelay = delay.toLong()
         }
     }
@@ -149,10 +152,10 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                     .setRightDiff(rightIcon, rightTextColor, rightText)
 
             when (displayType) {
-                HabiticaSnackbar.SnackbarDisplayType.FAILURE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_red)
-                HabiticaSnackbar.SnackbarDisplayType.FAILURE_BLUE, HabiticaSnackbar.SnackbarDisplayType.BLUE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_blue)
-                HabiticaSnackbar.SnackbarDisplayType.DROP, HabiticaSnackbar.SnackbarDisplayType.NORMAL -> snackbar.setBackgroundResource(R.drawable.snackbar_background_gray)
-                HabiticaSnackbar.SnackbarDisplayType.SUCCESS -> snackbar.setBackgroundResource(R.drawable.snackbar_background_green)
+                SnackbarDisplayType.FAILURE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_red)
+                SnackbarDisplayType.FAILURE_BLUE, SnackbarDisplayType.BLUE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_blue)
+                SnackbarDisplayType.DROP, SnackbarDisplayType.NORMAL -> snackbar.setBackgroundResource(R.drawable.snackbar_background_gray)
+                SnackbarDisplayType.SUCCESS -> snackbar.setBackgroundResource(R.drawable.snackbar_background_green)
             }
 
             snackbar.show()

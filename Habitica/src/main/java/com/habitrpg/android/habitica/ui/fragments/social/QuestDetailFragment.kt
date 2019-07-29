@@ -3,19 +3,18 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -23,7 +22,11 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
+import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import javax.inject.Named
@@ -72,7 +75,7 @@ class QuestDetailFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments.notNull {
+        arguments?.let {
             val args = QuestDetailFragmentArgs.fromBundle(it)
             partyId = args.partyID
             questKey = args.questKey
@@ -104,11 +107,11 @@ class QuestDetailFragment : BaseMainFragment() {
         party = group
         quest = group.quest
         setQuestParticipants(group.quest?.participants)
-        socialRepository.getMember(quest?.leader).firstElement().subscribe(Consumer { member ->
+        compositeSubscription.add(socialRepository.getMember(quest?.leader).firstElement().subscribe(Consumer { member ->
             if (context != null && questLeaderView != null && member != null) {
                 questLeaderView?.text = context?.getString(R.string.quest_leader_header, member.displayName)
             }
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
 
         if (questLeaderResponseWrapper != null) {
             if (showParticipatantButtons()) {
@@ -170,7 +173,7 @@ class QuestDetailFragment : BaseMainFragment() {
             textView?.text = participant.displayName
             val statusTextView = participantView?.findViewById<View>(R.id.status_view) as? TextView
             if (quest?.active == false) {
-                context.notNull {
+                context?.let {
                     when {
                         participant.participatesInQuest == null -> {
                             statusTextView?.setText(R.string.pending)
@@ -215,49 +218,56 @@ class QuestDetailFragment : BaseMainFragment() {
     }
 
     private fun onQuestAccept() {
-        partyId.notNull { partyID ->
+        partyId?.let { partyID ->
         socialRepository.acceptQuest(user, partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
 
     private fun onQuestReject() {
-        partyId.notNull { partyID ->
+        partyId?.let { partyID ->
             socialRepository.rejectQuest(user, partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
     private fun onQuestBegin() {
-        val builder = AlertDialog.Builder(getActivity())
-                .setMessage(beginQuestMessage)
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    party.notNull { party ->
-                        socialRepository.forceStartQuest(party)
-                                .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
-                    }
+        val context = context
+        if (context != null) {
+            val alert = HabiticaAlertDialog(context)
+            alert.setMessage(beginQuestMessage)
+            alert.addButton(R.string.yes, true) { _, _ ->
+                val party = party
+                if (party != null) {
+                    socialRepository.forceStartQuest(party)
+                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 }
-                .setNegativeButton(R.string.no) { _, _ -> }
-        builder.show()
+            }
+            alert.addButton(R.string.no, false)
+            alert.show()
+        }
     }
 
     private fun onQuestCancel() {
-        val builder = AlertDialog.Builder(getActivity())
-                .setMessage(R.string.quest_cancel_message)
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    partyId.notNull { partyID ->
-                        @Suppress("DEPRECATION")
-                        socialRepository.cancelQuest(partyID)
-                                .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
-                    }
-                }.setNegativeButton(R.string.no) { _, _ -> }
-        builder.show()
+        context?.let {
+            val alert = HabiticaAlertDialog(it)
+            alert.setMessage(R.string.quest_cancel_message)
+            alert.addButton(R.string.yes, true) { _, _ ->
+                partyId?.let { partyID ->
+                    @Suppress("DEPRECATION")
+                    socialRepository.cancelQuest(partyID)
+                            .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                }
+            }
+            alert.addButton(R.string.no, false)
+            alert.show()
+        }
     }
 
     private fun onQuestAbort() {
         val builder = AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_abort_message)
                 .setPositiveButton(R.string.yes) { _, _ ->
-                    partyId.notNull { partyID ->
+                    partyId?.let { partyID ->
                         @Suppress("DEPRECATION")
                         socialRepository.abortQuest(partyID)
                                 .subscribe(Consumer { getActivity()?.fragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
@@ -266,7 +276,7 @@ class QuestDetailFragment : BaseMainFragment() {
         builder.show()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 }

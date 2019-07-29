@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation"
+    android:id="@+id/main_nav"
     app:startDestination="@id/tasksFragment">
 
     <fragment
@@ -41,6 +41,10 @@
         <action
             android:id="@+id/openQuestDetail"
             app:destination="@id/questDetailFragment" />
+        <argument
+            android:name="tabToOpen"
+            app:argType="integer"
+            android:defaultValue="0"/>
     </fragment>
     <fragment
         android:id="@+id/questDetailFragment"
@@ -78,11 +82,7 @@
         <deepLink app:uri="habitica.com/groups/myGuilds" />
         <action
             android:id="@+id/openGuildDetail"
-            app:destination="@id/guildFragment" >
-            <argument
-                android:name="isMember"
-                android:defaultValue="true" />
-        </action>
+            app:destination="@id/guildFragment" />
         <action
             android:id="@+id/openPublicGuilds"
             app:destination="@id/publicGuildsFragment" />
@@ -114,6 +114,10 @@
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment"
         android:label="@string/sidebar_items">
         <deepLink app:uri="habitica.com/inventory/items" />
+        <argument
+            android:name="itemType"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/stableFragment"
@@ -168,6 +172,10 @@
             android:name="isMember"
             app:argType="boolean"
             android:defaultValue="false"/>
+        <argument
+            android:name="tabToOpen"
+            app:argType="integer"
+            android:defaultValue="0"/>
     </fragment>
     <fragment
         android:id="@+id/publicGuildsFragment"
@@ -211,8 +219,14 @@
             app:argType="string" />
         <argument
             android:name="username"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
+    <activity
+        android:id="@+id/notificationsActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.NotificationsActivity"
+        android:label="@string/notifications">
+    </activity>
     <fragment
         android:id="@+id/petDetailRecyclerFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment"
@@ -245,10 +259,6 @@
             app:argType="string" />
     </fragment>
     <activity
-        android:id="@+id/taskFormActivity"
-        android:name="com.habitrpg.android.habitica.ui.activities.TaskFormActivity"
-        android:label="TaskFormActivity" />
-    <activity
         android:id="@+id/fullProfileActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.FullProfileActivity"
         android:label="FullProfileActivity">
@@ -257,7 +267,55 @@
             app:argType="string" />
     </activity>
     <activity
+        android:id="@+id/guidelinesActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.GuidelinesActivity" />
+    <activity
         android:id="@+id/groupFormActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GroupFormActivity"
         android:label="GroupFormActivity" />
+    <activity
+        android:id="@+id/classSelectionActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity"
+        android:label="ClassSelectionActivity" >
+        <argument
+            android:name="isInitialSelection"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="className"
+            app:argType="string"
+            android:defaultValue="warrior" />
+    </activity>
+    <activity
+        android:id="@+id/reportMessageActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.ReportMessageActivity"
+        android:label="ReportMessageActivity" >
+        <argument
+            android:name="text"
+            app:argType="string" />
+        <argument
+            android:name="profileName"
+            app:argType="string" />
+        <argument
+            android:name="messageID"
+            app:argType="string" />
+    </activity>
+    <action
+        android:id="@+id/action_global_reportMessageActivity"
+        app:destination="@id/reportMessageActivity" />
+    <action
+        android:id="@+id/action_global_classSelectionActivity"
+        app:destination="@id/classSelectionActivity" />
+    <action
+        android:id="@+id/openProfileActivity"
+        app:destination="@id/fullProfileActivity" />
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.AchievementsFragment"
+        android:label="@string/sidebar_achievements" >
+        <argument
+            android:name="userID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

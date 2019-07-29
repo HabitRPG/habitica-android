@@ -91,7 +91,7 @@
 //    @Test
 //    public void shouldBeAbleToScoreTaskUp() {
 //        TestSubscriber<TaskDirectionData> testSubscriber = new TestSubscriber<>();
-//        apiClient.postTaskDirection(habit1.getId(), "up")
+//        apiClient.postTaskDirection(habit1.getId(), "UP")
 //                .subscribe(testSubscriber);
 //        testSubscriber.awaitTerminalEvent();
 //        testSubscriber.assertNoErrors();
@@ -103,7 +103,7 @@
 //    @Test
 //    public void shouldBeAbleToScoreTaskDown() {
 //        TestSubscriber<TaskDirectionData> testSubscriber = new TestSubscriber<>();
-//        apiClient.postTaskDirection(habit1.getId(), "down")
+//        apiClient.postTaskDirection(habit1.getId(), "DOWN")
 //                .subscribe(testSubscriber);
 //        testSubscriber.awaitTerminalEvent();
 //        testSubscriber.assertNoErrors();

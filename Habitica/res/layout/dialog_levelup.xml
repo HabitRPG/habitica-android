@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="24dip"
-    android:paddingEnd="24dip"
-    android:paddingStart="24dip"
-    android:paddingRight="24dip">
-    <com.habitrpg.android.habitica.ui.AvatarView
-        android:layout_width="@dimen/avatar_width"
-        android:layout_height="@dimen/avatar_height"
-        android:id="@+id/avatarView"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginBottom="@dimen/spacing_large"/>
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <FrameLayout
+        android:layout_width="111dp"
+        android:layout_height="114dp"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:gravity="center"
+        android:background="@drawable/avatar_border"
+        android:layout_marginTop="@dimen/spacing_large">
+        <com.habitrpg.android.habitica.ui.AvatarView
+            android:layout_width="94dp"
+            android:layout_height="98dp"
+            android:id="@+id/avatarView"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/levelupDetail"
         android:text="@string/levelup_detail"
+        style="@style/Body2"
         android:gravity="center_horizontal"
         android:textColor="@color/gray_200"/>
 </LinearLayout>

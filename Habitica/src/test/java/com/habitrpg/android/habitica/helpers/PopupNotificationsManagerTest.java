@@ -1,26 +1,19 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.api.HostConfig;
-import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
-import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.models.Notification;
-import com.habitrpg.android.habitica.models.notifications.NotificationData;
+import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
-import org.robolectric.shadows.ShadowApplication;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
@@ -42,7 +35,7 @@ public class PopupNotificationsManagerTest {
 
     public HostConfig hostConfig;
     private Context context;
-    private PopupNotificationsManager popupNotificationsManager;
+    private NotificationsManager notificationsManager;
 
     @Before
     public void setUp() {
@@ -51,13 +44,13 @@ public class PopupNotificationsManagerTest {
                 BuildConfig.PORT,
                 "",
                 "");
-        popupNotificationsManager =new PopupNotificationsManager(context);
+        notificationsManager =new NotificationsManager(context);
     }
 
     @Test
     public void itDoesNothingWhenNotificationsListIsEmpty() {
         List<Notification> notifications = new ArrayList<>();
-        popupNotificationsManager.showNotificationDialog(notifications);
+        notificationsManager.handlePopupNotifications(notifications);
 
         AlertDialog alert =
                 ShadowAlertDialog.getLatestAlertDialog();
@@ -74,13 +67,13 @@ public class PopupNotificationsManagerTest {
 
         notifications.add(notification);
 
-        final PopupNotificationsManager testClass = Mockito.mock(PopupNotificationsManager.class);
-        Mockito.when(testClass.displayNotification(notification)).thenReturn(true);
-        Mockito.when(testClass.showNotificationDialog(notifications)).thenCallRealMethod();
+        final NotificationsManager testClass = Mockito.mock(NotificationsManager.class);
+        Mockito.when(testClass.displayLoginIncentiveNotification(notification)).thenReturn(true);
+        Mockito.when(testClass.handlePopupNotifications(notifications)).thenCallRealMethod();
 
-        testClass.showNotificationDialog(notifications);
+        testClass.handlePopupNotifications(notifications);
 
-        verify(testClass, times(0)).displayNotification(notification);
+        verify(testClass, times(0)).displayLoginIncentiveNotification(notification);
     }
 
     @Test
@@ -89,22 +82,22 @@ public class PopupNotificationsManagerTest {
 
         List<Notification> notifications = new ArrayList<>();
 
-        NotificationData notificationData = new NotificationData();
-        notificationData.message = testTitle;
+        LoginIncentiveData notificationData = new LoginIncentiveData();
+        notificationData.setMessage(testTitle);
 
         Notification notification = new Notification();
         notification.setType("LOGIN_INCENTIVE");
-        notification.data = notificationData;
+        notification.setData(notificationData);
 
         notifications.add(notification);
 
-        final PopupNotificationsManager testClass = Mockito.mock(PopupNotificationsManager.class);
-        Mockito.when(testClass.displayNotification(notification)).thenReturn(true);
-        Mockito.when(testClass.showNotificationDialog(notifications)).thenCallRealMethod();
+        final NotificationsManager testClass = Mockito.mock(NotificationsManager.class);
+        Mockito.when(testClass.displayLoginIncentiveNotification(notification)).thenReturn(true);
+        Mockito.when(testClass.handlePopupNotifications(notifications)).thenCallRealMethod();
 
-        testClass.showNotificationDialog(notifications);
+        testClass.handlePopupNotifications(notifications);
 
-        verify(testClass, times(1)).displayNotification(notification);
+        verify(testClass, times(1)).displayLoginIncentiveNotification(notification);
     }
 
     @Test
@@ -113,22 +106,22 @@ public class PopupNotificationsManagerTest {
 
         List<Notification> notifications = new ArrayList<>();
 
-        NotificationData notificationData = new NotificationData();
-        notificationData.message = testTitle;
+        LoginIncentiveData notificationData = new LoginIncentiveData();
+        notificationData.setMessage(testTitle);
 
         Notification notification = new Notification();
         notification.setType("LOGIN_INCENTIVE");
-        notification.data = notificationData;
+        notification.setData(notificationData);
 
         notifications.add(notification);
         notifications.add(notification);
 
-        final PopupNotificationsManager testClass = Mockito.mock(PopupNotificationsManager.class);
-        Mockito.when(testClass.displayNotification(notification)).thenReturn(true);
-        Mockito.when(testClass.showNotificationDialog(notifications)).thenCallRealMethod();
+        final NotificationsManager testClass = Mockito.mock(NotificationsManager.class);
+        Mockito.when(testClass.displayLoginIncentiveNotification(notification)).thenReturn(true);
+        Mockito.when(testClass.handlePopupNotifications(notifications)).thenCallRealMethod();
 
-        testClass.showNotificationDialog(notifications);
+        testClass.handlePopupNotifications(notifications);
 
-        verify(testClass, times(1)).displayNotification(notification);
+        verify(testClass, times(1)).displayLoginIncentiveNotification(notification);
     }
 }

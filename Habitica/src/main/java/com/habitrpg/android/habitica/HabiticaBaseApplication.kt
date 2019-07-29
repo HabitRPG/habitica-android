@@ -17,27 +17,23 @@ import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.modules.UserModule
+import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.IntroActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.instabug.bug.BugReporting
-import com.instabug.bug.PromptOption
-import com.instabug.library.Instabug
-import com.instabug.library.invocation.InstabugInvocationEvent
-import com.instabug.library.ui.onboarding.WelcomeMessage
-import com.instabug.library.visualusersteps.State
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
-import io.reactivex.functions.Consumer
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import org.solovyev.android.checkout.Billing
@@ -51,8 +47,6 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
     var refWatcher: RefWatcher? = null
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
-    @Inject
-    internal lateinit var inventoryRepository: InventoryRepository
     @Inject
     internal lateinit var sharedPrefs: SharedPreferences
     @Inject
@@ -82,8 +76,8 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
         setupRealm()
         setupDagger()
         setupRemoteConfig()
+        setupNotifications()
         refWatcher = LeakCanary.install(this)
-        setupInstabug()
         createBillingAndCheckout()
         HabiticaIconsHelper.init(this)
 
@@ -105,18 +99,9 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
 
         RxErrorHandler.init(crashlyticsProxy)
 
-        checkIfNewVersion()
-    }
+        FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
-    private fun setupInstabug() {
-        Instabug.Builder(this, getString(R.string.instabug_key))
-                .setInvocationEvents(InstabugInvocationEvent.SHAKE)
-                .setReproStepsState(State.ENABLED_WITH_NO_SCREENSHOTS)
-                .build()
-        Instabug.setWelcomeMessageState(WelcomeMessage.State.DISABLED)
-        Instabug.setUserAttribute("", lazyApiHelper.hostConfig.user)
-        BugReporting.setShakingThreshold(900)
-        BugReporting.setPromptOptionsEnabled(PromptOption.BUG, PromptOption.FEEDBACK)
+        checkIfNewVersion()
     }
 
     protected open fun setupRealm() {
@@ -151,12 +136,12 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
             sharedPrefs.edit {
                 putInt("last_installed_version", info.versionCode)
             }
-            inventoryRepository.retrieveContent().subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
         }
     }
 
     private fun setupDagger() {
         component = initDagger()
+        reloadUserComponent()
         component?.inject(this)
     }
 
@@ -200,26 +185,43 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
             }
         })
 
-        billing.notNull { checkout = Checkout.forApplication(it) }
+        billing?.let { checkout = Checkout.forApplication(it) }
     }
 
     private fun setupRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
                 .build()
         remoteConfig.setConfigSettings(configSettings)
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
-        remoteConfig.fetch(if (BuildConfig.DEBUG) 0 else 3600)
-                .addOnCompleteListener {
-                    remoteConfig.activateFetched()
-                }
+        remoteConfig.fetchAndActivate()
+    }
+
+    private fun setupNotifications() {
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("Token", "getInstanceId failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new Instance ID token
+            val token = task.result?.token
+
+            // Log and toast
+            if (BuildConfig.DEBUG) {
+                Log.d("Token", "Firebase Notification Token: $token")
+            }
+        }
     }
 
     companion object {
 
         var component: AppComponent? = null
             private set
+
+        var userComponent: UserComponent? = null
 
         fun getInstance(context: Context): HabiticaBaseApplication? {
             return context.applicationContext as? HabiticaBaseApplication
@@ -237,12 +239,17 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
                 putBoolean("use_reminder", useReminder)
                 putString("reminder_time", reminderTime)
             }
+            reloadUserComponent()
             getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
             startActivity(LoginActivity::class.java, context)
         }
 
+        fun reloadUserComponent() {
+            userComponent = component?.plus(UserModule(), UserRepositoryModule())
+        }
+
         fun checkUserAuthentication(context: Context, hostConfig: HostConfig?): Boolean {
-            if (hostConfig?.api == null || hostConfig.api == "" || hostConfig.user == "") {
+            if (hostConfig?.apiKey == null || hostConfig.apiKey == "" || hostConfig.userID == "") {
                 startActivity(IntroActivity::class.java, context)
 
                 return false

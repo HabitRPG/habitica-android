@@ -2,17 +2,13 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
-import net.pherth.android.emoji_library.EmojiTextView
+import android.widget.TextView
 
-open class HabiticaEmojiTextView : EmojiTextView {
+open class HabiticaEmojiTextView : TextView {
 
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
-
-    init {
-        setEmojiconSize((textSize * 1.5).toInt())
-    }
 }

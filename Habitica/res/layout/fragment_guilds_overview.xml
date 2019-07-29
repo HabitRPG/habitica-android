@@ -9,11 +9,11 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.habitrpg.android.habitica.ui.views.PaddedLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="?attr/actionBarSize">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,6 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/card_horizontal_padding"
                 android:text="@string/public_guilds" />
-        </com.habitrpg.android.habitica.ui.views.PaddedLinearLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

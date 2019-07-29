@@ -10,12 +10,12 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
@@ -26,7 +26,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
 
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
-    private var ownedItems: Map<String, Item> = HashMap()
+    private var ownedItems: Map<String, OwnedItem> = HashMap()
 
 
     var shopSpriteSuffix: String = ""
@@ -108,13 +108,13 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
         val obj = getItem(position)
         if (obj != null) {
             when (obj.javaClass) {
-                Shop::class.java -> (obj as? Shop).notNull { (holder as? ShopHeaderViewHolder)?.bind(it, shopSpriteSuffix) }
+                Shop::class.java -> (obj as? Shop)?.let { (holder as? ShopHeaderViewHolder)?.bind(it, shopSpriteSuffix) }
                 ShopCategory::class.java -> {
                     val category = obj as? ShopCategory
                     val sectionHolder = holder as? SectionViewHolder ?: return
                     sectionHolder.bind(category?.text ?: "")
                     if (gearCategories.contains(category)) {
-                        context.notNull {context ->
+                        context?.let {context ->
                             val adapter = HabiticaClassArrayAdapter(context, R.layout.class_spinner_dropdown_item, gearCategories.map { it.identifier })
                             sectionHolder.spinnerAdapter = adapter
                             sectionHolder.selectedItem = gearCategories.indexOf(category)
@@ -140,7 +140,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                     val itemHolder = holder as? ShopItemViewHolder ?: return
                     itemHolder.bind(item, item.canAfford(user))
                     if (ownedItems.containsKey(item.key+"-"+item.pinType)) {
-                        itemHolder.itemCount = ownedItems[item.key+"-"+item.pinType]?.owned ?: 0
+                        itemHolder.itemCount = ownedItems[item.key+"-"+item.pinType]?.numberOwned ?: 0
                     }
                     itemHolder.isPinned = pinnedItemKeys.contains(item.key)
                 }
@@ -210,7 +210,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
     private fun getSelectedShopCategory() =
             gearCategories.firstOrNull { selectedGearCategory == it.identifier }
 
-    fun setOwnedItems(ownedItems: Map<String, Item>) {
+    fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
         this.notifyDataSetChanged()
     }

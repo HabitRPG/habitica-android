@@ -9,7 +9,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -58,7 +57,7 @@ class NPCBannerView(context: Context?, attrs: AttributeSet?) : FrameLayout(conte
             Observable.just(drawable)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(Consumer {
-                        backgroundView.backgroundCompat = it
+                        backgroundView.background = it
                     }, RxErrorHandler.handleEmptyError())
         }
     }

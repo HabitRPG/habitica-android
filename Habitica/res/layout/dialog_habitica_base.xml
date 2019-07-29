@@ -2,46 +2,108 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/titleTextView"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    tools:background="@color/black"
+    android:minWidth="300dp"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
+    android:paddingTop="@dimen/spacing_medium"
+    android:paddingBottom="@dimen/spacing_medium">
+    <LinearLayout
+        android:id="@+id/dialog_container"
+        android:minWidth="300dp"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/alert_dialog_background"
+        android:paddingBottom="24dp"
+        android:paddingTop="40dp"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/spacing_large"
+            style="@style/Headline6"
+            tools:text="This is the title"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginStart="@dimen/alert_side_padding"
+            android:layout_marginEnd="@dimen/alert_side_padding"
+            />
+
+        <TextView
+            android:id="@+id/messageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:textColor="?textColorSecondary"
+            style="@style/Body2"
+            tools:text="This is the message"
+            android:paddingBottom="@dimen/spacing_medium"
+            android:paddingStart="@dimen/alert_side_padding"
+            android:paddingEnd="@dimen/alert_side_padding"
+            />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <FrameLayout
+                android:id="@+id/content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/alert_side_padding"
+                android:paddingEnd="@dimen/alert_side_padding"/>
+        </androidx.core.widget.NestedScrollView>
+        <View
+            android:id="@+id/scrolling_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_600"
+            android:visibility="gone"/>
+        <LinearLayout
+            android:id="@+id/buttons_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:divider="@drawable/alert_dialog_button_divider"
+            android:showDividers="middle"
+            android:paddingStart="@dimen/alert_side_padding"
+            android:paddingEnd="@dimen/alert_side_padding"/>
+        <TextView
+            android:id="@+id/notice_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/alert_side_padding"
+            android:layout_marginEnd="@dimen/alert_side_padding"
+            android:paddingTop="@dimen/spacing_medium"
+            android:paddingBottom="@dimen/spacing_medium"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
+            android:background="@drawable/layout_rounded_bg_gray_700"
+            android:visibility="gone"
+            android:gravity="center"
+            style="@style/Caption3"
+            android:textColor="@color/gray_100"
+            tools:text="This is a small label"
+            tools:visibility="visible"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/close_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/white"
-        android:paddingTop="@dimen/spacing_large"
-        android:paddingBottom="@dimen/spacing_large"
-        android:textSize="18sp"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
-        tools:text="This is the title!"
-        tools:background="@color/brand_300"
-        />
-    <TextView
+        android:text="@string/close"
+        android:textColor="@color/brand_400"
+        android:background="@drawable/alert_dialog_background"
         android:layout_marginTop="@dimen/spacing_large"
-        android:id="@+id/subtitleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:textSize="18sp"
         android:visibility="gone"
-        android:layout_marginBottom="@dimen/spacing_small"
-        tools:text="This is a subtitle"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
-        tools:visibility="visible"/>
-    <TextView
-        android:id="@+id/messageTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black_50_alpha"
-        android:textSize="14sp"
-        android:visibility="gone"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
-        tools:text="This is an example message"
-        tools:visibility="visible"/>
+        tools:visibility="visible"
+        android:textSize="16sp"
+        android:textAllCaps="false"/>
 </LinearLayout>

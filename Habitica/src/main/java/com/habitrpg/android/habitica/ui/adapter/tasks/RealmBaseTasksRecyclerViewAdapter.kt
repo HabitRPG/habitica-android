@@ -1,25 +1,24 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
+import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.functions.Action
 import io.reactivex.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 import io.realm.OrderedRealmCollectionChangeListener
-import io.realm.RealmList
-import io.realm.RealmResults
+import io.realm.RealmRecyclerViewAdapter
 
-abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : androidx.recyclerview.widget.RecyclerView.Adapter<VH>(), TaskRecyclerViewAdapter {
+abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(private var unfilteredData: OrderedRealmCollection<Task>?, private val hasAutoUpdates: Boolean, private val layoutResource: Int, private val taskFilterHelper: TaskFilterHelper?) : RealmRecyclerViewAdapter<Task, VH>(null, true), TaskRecyclerViewAdapter {
     private var updateOnModification: Boolean = false
-    private var ignoreUpdates: Boolean = false
+    override var ignoreUpdates: Boolean = false
     private val listener: OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> by lazy {
         OrderedRealmCollectionChangeListener<OrderedRealmCollection<Task>> { _, changeSet ->
             if (ignoreUpdates) {
@@ -47,10 +46,15 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
             }
         }
     }
-    var data: OrderedRealmCollection<Task>? = null
-        private set
 
     private var errorButtonEventsSubject = PublishSubject.create<String>()
+    override val errorButtonEvents: Flowable<String> = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    protected var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
+    override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    protected var checklistItemScoreSubject = PublishSubject.create<Pair<Task, ChecklistItem>>()
+    override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
+    protected var taskOpenEventsSubject = PublishSubject.create<Task>()
+    override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.DROP)
 
     private val isDataValid: Boolean
         get() = data?.isValid ?: false
@@ -59,84 +63,25 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         if (unfilteredData != null && unfilteredData?.isManaged == false) {
             throw IllegalStateException("Only use this adapter with managed RealmCollection, " + "for un-managed lists you can just use the BaseRecyclerViewAdapter")
         }
-        this.data = unfilteredData
         this.updateOnModification = true
         filter()
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        if (hasAutoUpdates && isDataValid) {
-            addListener(data)
-        }
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        if (hasAutoUpdates && isDataValid) {
-
-            removeListener(data)
-        }
     }
 
     override fun getItemId(index: Int): Long = index.toLong()
 
     override fun getItemCount(): Int = if (isDataValid) data?.size ?: 0 else 0
 
-    fun getItem(index: Int): Task? = if (isDataValid) data?.get(index) else null
-
-    override fun updateData(data: OrderedRealmCollection<Task>?) {
-        if (hasAutoUpdates) {
-            if (isDataValid) {
-
-                removeListener(this.data)
-            }
-            if (data != null) {
-                addListener(data)
-            }
-        }
-
-        this.data = data
-        notifyDataSetChanged()
-    }
+    override fun getItem(index: Int): Task? = if (isDataValid) data?.get(index) else null
 
     override fun updateUnfilteredData(data: OrderedRealmCollection<Task>?) {
         unfilteredData = data
         updateData(data)
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun addListener(data: OrderedRealmCollection<Task>?) = when (data) {
-        is RealmResults<*> -> {
-            val results = data as RealmResults<Task>
-            results.addChangeListener(listener as OrderedRealmCollectionChangeListener<RealmResults<Task>>)
-        }
-        is RealmList<*> -> {
-            val list = data as RealmList<Task>
-            list.addChangeListener(listener as OrderedRealmCollectionChangeListener<RealmList<Task>>)
-        }
-        else -> throw IllegalArgumentException("RealmCollection not supported: " + data?.javaClass)
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    private fun removeListener(data: OrderedRealmCollection<Task>?) {
-        when (data) {
-            is RealmResults<*> -> {
-                val results = data as RealmResults<Task>
-                results.removeChangeListener(listener as OrderedRealmCollectionChangeListener<RealmResults<Task>>)
-            }
-            is RealmList<*> -> {
-                val list = data as RealmList<Task>
-                list.removeChangeListener(listener as OrderedRealmCollectionChangeListener<RealmList<Task>>)
-            }
-            else -> throw IllegalArgumentException("RealmCollection not supported: " + data?.javaClass)
-        }
-    }
-
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = getItem(position)
         if (item != null) {
-            holder.bindHolder(item, position)
+            holder.bind(item, position)
             holder.errorButtonClicked = Action {
                 errorButtonEventsSubject.onNext("")
             }
@@ -157,17 +102,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
         }
     }
 
-    override fun getIgnoreUpdates(): Boolean = ignoreUpdates
-
-    override fun setIgnoreUpdates(ignoreUpdates: Boolean) {
-        this.ignoreUpdates = ignoreUpdates
-    }
-
     override fun getTaskIDAt(position: Int): String {
         return data?.get(position)?.id ?: ""
-    }
-
-    override fun getErrorButtonEvents(): Flowable<String> {
-        return errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     }
 }

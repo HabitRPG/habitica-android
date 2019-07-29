@@ -1,21 +1,18 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment
-import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -23,14 +20,13 @@ import io.reactivex.functions.Consumer
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import org.greenrobot.eventbus.EventBus
 
 class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, autoUpdate: Boolean) : RealmRecyclerViewAdapter<Group, PublicGuildsRecyclerViewAdapter.GuildViewHolder>(data, autoUpdate), Filterable {
 
-    var apiClient: ApiClient? = null
-    private var memberGuildIDs: MutableList<String> = mutableListOf()
+    var socialRepository: SocialRepository? = null
+    private var memberGuildIDs: List<String> = listOf()
 
-    fun setMemberGuildIDs(memberGuildIDs: MutableList<String>) {
+    fun setMemberGuildIDs(memberGuildIDs: List<String>) {
         this.memberGuildIDs = memberGuildIDs
     }
 
@@ -38,7 +34,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         val guildViewHolder = GuildViewHolder(parent.inflate(R.layout.item_public_guild))
         guildViewHolder.itemView.setOnClickListener { v ->
             val guild = v.tag as? Group ?: return@setOnClickListener
-            val directions =PublicGuildsFragmentDirections.openGuildDetail(guild.id)
+            val directions = PublicGuildsFragmentDirections.openGuildDetail(guild.id)
             directions.isMember = isInGroup(guild)
             MainNavigationController.navigate(directions)
         }
@@ -46,18 +42,16 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             val guild = v.tag as? Group ?: return@setOnClickListener
             val isMember = this.memberGuildIDs.contains(guild.id)
             if (isMember) {
-                this@PublicGuildsRecyclerViewAdapter.apiClient?.leaveGroup(guild.id)
+                this@PublicGuildsRecyclerViewAdapter.socialRepository?.leaveGroup(guild.id)
                         ?.subscribe(Consumer {
-                            memberGuildIDs.remove(guild.id)
                             if (data != null) {
-                                val indexOfGroup = data!!.indexOf(guild)
-                                notifyItemChanged(indexOfGroup)
+                                val indexOfGroup = data?.indexOf(guild)
+                                notifyItemChanged(indexOfGroup ?: 0)
                             }
                         }, RxErrorHandler.handleEmptyError())
             } else {
-                this@PublicGuildsRecyclerViewAdapter.apiClient?.joinGroup(guild.id)
+                this@PublicGuildsRecyclerViewAdapter.socialRepository?.joinGroup(guild.id)
                         ?.subscribe(Consumer { group ->
-                            memberGuildIDs.add(group.id)
                             if (data != null) {
                                 val indexOfGroup = data?.indexOf(group)
                                 notifyItemChanged(indexOfGroup ?: 0)
@@ -70,7 +64,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
     }
 
     override fun onBindViewHolder(holder: GuildViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             val guild = it[position]
             val isInGroup = isInGroup(guild)
             holder.bind(guild, isInGroup)
@@ -92,14 +86,14 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
 
     override fun getFilter(): Filter {
         return object : Filter() {
-            override fun performFiltering(constraint: CharSequence): Filter.FilterResults {
-                val results = Filter.FilterResults()
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+                val results = FilterResults()
                 results.values = constraint
-                return Filter.FilterResults()
+                return FilterResults()
             }
 
-            override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
-                unfilteredData.notNull {
+            override fun publishResults(constraint: CharSequence, results: FilterResults) {
+                unfilteredData?.let {
                     if (constraint.isNotEmpty()) {
                         updateData(it.where()
                                 .contains("name", constraint.toString(), Case.INSENSITIVE)
@@ -110,7 +104,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
         }
     }
 
-    class GuildViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    class GuildViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val nameTextView: TextView by bindView(R.id.nameTextView)
         private val memberCountTextView: TextView by bindView(R.id.memberCountTextView)

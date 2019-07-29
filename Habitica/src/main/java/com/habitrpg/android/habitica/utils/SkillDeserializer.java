@@ -23,7 +23,7 @@ public class SkillDeserializer
                                    JsonDeserializationContext context) throws JsonParseException {
 
         JsonObject object = json.getAsJsonObject();
-        List<Skill> skills = new ArrayList<Skill>();
+        List<Skill> skills = new ArrayList<>();
         for (Map.Entry<String, JsonElement> classEntry : object.entrySet()) {
             String classname = classEntry.getKey();
             JsonObject classObject = classEntry.getValue().getAsJsonObject();

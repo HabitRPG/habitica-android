@@ -10,8 +10,7 @@
         android:layout_height="match_parent"
         android:id="@+id/background_container"
         android:scrollIndicators="none"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
 
         <com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
             android:id="@+id/background_view"
@@ -78,8 +77,7 @@
             android:id="@+id/login_intro_view"
             android:orientation="vertical"
             android:background="@color/transparent"
-            android:fitsSystemWindows="true"
-            >
+                        >
 
             <ImageView
                 android:id="@+id/logo_view"

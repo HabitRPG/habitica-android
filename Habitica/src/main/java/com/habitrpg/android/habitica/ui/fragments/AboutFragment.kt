@@ -10,15 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.net.toUri
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.AppTestingLevel
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
@@ -30,7 +32,13 @@ class AboutFragment : BaseMainFragment() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    override fun injectFragment(component: AppComponent) {
+    @Inject
+    lateinit var appConfigManager: AppConfigManager
+
+    private val updateAvailableWrapper: ViewGroup by bindView(R.id.update_available_wrapper)
+    private val updateAvailableTextView: TextView by bindView(R.id.update_available_textview)
+
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -46,8 +54,8 @@ class AboutFragment : BaseMainFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         this.hidesToolbar = true
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
@@ -57,14 +65,14 @@ class AboutFragment : BaseMainFragment() {
         versionInfo.setOnClickListener {
             versionNumberTappedCount += 1
             when (versionNumberTappedCount) {
-                1 -> context.notNull { context ->
+                1 -> context?.let { context ->
                     Toast.makeText(context, "Oh! You tapped me!", Toast.LENGTH_SHORT).show()
                 }
-                in 4..7 -> context.notNull { context ->
+                in 5..7 -> context?.let { context ->
                     Toast.makeText(context, "Only ${8 - versionNumberTappedCount} taps left!", Toast.LENGTH_SHORT).show()
                 }
                 8 -> {
-                    context.notNull { context ->
+                    context?.let { context ->
                         Toast.makeText(context, "You were blessed with cats!", Toast.LENGTH_SHORT).show()
                     }
                     doTheThing()
@@ -96,12 +104,20 @@ class AboutFragment : BaseMainFragment() {
 
         versionInfo.text = getString(R.string.version_info, versionName, versionCode)
 
+        if (appConfigManager.lastVersionCode() > versionCode) {
+            updateAvailableWrapper.visibility = View.VISIBLE
+            updateAvailableTextView.text = getString(R.string.update_available, appConfigManager.lastVersionNumber(), appConfigManager.lastVersionCode())
+        } else {
+            updateAvailableWrapper.visibility = View.GONE
+        }
+
         sourceCodeLink.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         twitter.setOnClickListener { openBrowserLink(twitterLink) }
         sourceCodeButton.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         reportBug.setOnClickListener { sendEmail("[Android] Bugreport") }
         sendFeedback.setOnClickListener { sendEmail("[Android] Feedback") }
         googlePlayStoreButton.setOnClickListener { openGooglePlay() }
+        updateAvailableWrapper.setOnClickListener { openGooglePlay() }
     }
 
     private fun openBrowserLink(url: String) {
@@ -113,10 +129,14 @@ class AboutFragment : BaseMainFragment() {
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
         val device = Build.DEVICE
-        var bodyOfEmail = "Device: " + device +
-                " \nAndroid Version: " + version +
-                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
-                " \nUser ID: " + userId
+        var bodyOfEmail = "Device: $device" +
+                " \nAndroid Version: $version"+
+                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode)
+
+        if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
+            bodyOfEmail += " ${appConfigManager.testingLevel().name}"
+        }
+        bodyOfEmail += " \nUser ID: $userId"
 
         val user = this.user
         if (user != null) {
@@ -131,16 +151,17 @@ class AboutFragment : BaseMainFragment() {
         bodyOfEmail += " \nDetails: "
 
         val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto", "mobile@habitica.com", null))
+                "mailto", appConfigManager.supportEmail(), null))
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
         emailIntent.putExtra(Intent.EXTRA_TEXT, bodyOfEmail)
         startActivity(Intent.createChooser(emailIntent, "Send email..."))
     }
 
     private fun doTheThing() {
+        context?.let { FirebaseAnalytics.getInstance(it).logEvent("found_easter_egg", null) }
         DataBindingUtils.loadImage("Pet-Sabretooth-Base") {bitmap ->
             activity?.runOnUiThread {
-                activity.notNull {
+                activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                             .setAcceleration(0.00013f, 90)
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
@@ -152,7 +173,7 @@ class AboutFragment : BaseMainFragment() {
         }
         DataBindingUtils.loadImage("Pet-Sabretooth-Golden") {bitmap ->
             activity?.runOnUiThread {
-                activity.notNull {
+                activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                             .setAcceleration(0.00013f, 90)
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
@@ -164,7 +185,7 @@ class AboutFragment : BaseMainFragment() {
         }
         DataBindingUtils.loadImage("Pet-Sabretooth-Red") {bitmap ->
             activity?.runOnUiThread {
-                activity.notNull {
+                activity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                             .setAcceleration(0.00013f, 90)
                             .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)

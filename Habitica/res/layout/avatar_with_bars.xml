@@ -7,7 +7,7 @@
               android:layout_height="wrap_content"
               android:layout_centerHorizontal="true"
               android:adjustViewBounds="true"
-              android:background="@color/brand"
+              android:background="?colorPrimary"
               android:focusable="true"
               android:focusableInTouchMode="true"
               android:orientation="vertical"
@@ -39,7 +39,6 @@
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
                     android:id="@+id/hpBar"
-                    layout="@layout/value_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/header_bar_spacing"
@@ -48,7 +47,6 @@
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
                     android:id="@+id/xpBar"
-                    layout="@layout/value_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/header_bar_spacing"
@@ -57,7 +55,6 @@
 
             <com.habitrpg.android.habitica.ui.views.ValueBar
                     android:id="@+id/mpBar"
-                    layout="@layout/value_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:barForegroundColor="@color/mpColor"
@@ -79,7 +76,7 @@
                 android:layout_height="36dp"
                 android:drawablePadding="6dp"
                 android:gravity="center"
-                android:textColor="@color/textColorSecondaryDark"
+                android:textColor="?textColorSecondaryDark"
                 android:textSize="14sp"
                 tools:text="Lvl 12 Warrior"/>
 

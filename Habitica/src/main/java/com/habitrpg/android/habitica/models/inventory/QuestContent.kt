@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models.inventory
 
-import java.util.ArrayList
-
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -19,7 +17,6 @@ open class QuestContent : RealmObject(), Item {
     internal var text: String = ""
     var notes: String = ""
     internal var value: Int = 0
-    internal var owned: Int = 0
     var previous: String? = null
     var lvl: Int = 0
     var isCanBuy: Boolean = false
@@ -59,16 +56,8 @@ open class QuestContent : RealmObject(), Item {
         return key
     }
 
-    override fun setOwned(size: Int) {
-        owned = size
-    }
-
     override fun getText(): String {
         return text
-    }
-
-    override fun getOwned(): Int? {
-        return owned
     }
 
     override fun getValue(): Int? {

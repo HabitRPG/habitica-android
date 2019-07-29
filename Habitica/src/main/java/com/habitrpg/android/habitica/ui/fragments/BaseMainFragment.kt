@@ -2,23 +2,19 @@ package com.habitrpg.android.habitica.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.tabs.TabLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.views.bottombar.BottomBar
 import io.reactivex.functions.Consumer
-
 import javax.inject.Inject
 
 abstract class BaseMainFragment : BaseFragment() {
@@ -35,15 +31,11 @@ abstract class BaseMainFragment : BaseFragment() {
     val collapsingToolbar get() = activity?.toolbar
     val toolbarAccessoryContainer get() = activity?.toolbarAccessoryContainer
     val bottomNavigation get() = activity?.bottomNavigation
-    val floatingMenuWrapper get() = activity?.floatingMenuWrapper
+    val floatingMenuWrapper get() = activity?.snackbarContainer
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
     open var user: User? = null
-
-    open fun updateUserData(user: User?) {
-        this.user = user
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -65,11 +57,11 @@ abstract class BaseMainFragment : BaseFragment() {
         }
 
         if (this.usesBottomNavigation) {
-            bottomNavigation?.removeOnTabSelectListener()
-            bottomNavigation?.removeOnTabReselectListener()
             bottomNavigation?.visibility = View.VISIBLE
+            activity?.snackbarContainer?.setScaledPadding(context, 0, 0, 0, 68)
         } else {
             bottomNavigation?.visibility = View.GONE
+            activity?.snackbarContainer?.setScaledPadding(context, 0, 0, 0, 0)
         }
 
         floatingMenuWrapper?.removeAllViews()

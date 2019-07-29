@@ -11,6 +11,8 @@ public class GuildInvite extends RealmObject {
     @PrimaryKey
     private String id;
 
+    private Boolean publicGuild;
+
     /**
      * @return The inviter
      */
@@ -51,5 +53,13 @@ public class GuildInvite extends RealmObject {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Boolean getPublicGuild() {
+        return publicGuild;
+    }
+
+    public void setPublicGuild(Boolean publicGuild) {
+        this.publicGuild = publicGuild;
     }
 }

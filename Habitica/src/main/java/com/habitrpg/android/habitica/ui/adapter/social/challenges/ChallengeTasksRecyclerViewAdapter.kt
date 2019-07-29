@@ -6,26 +6,29 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.*
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 
 class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, layoutResource: Int,
-                                        newContext: Context, userID: String, sortCallback: SortableTasksRecyclerViewAdapter.SortTasksCallback?,
-                                        private val openTaskDisabled: Boolean, private val taskActionsDisabled: Boolean) : SortableTasksRecyclerViewAdapter<BaseTaskViewHolder>("", taskFilterHelper, layoutResource, newContext, userID, sortCallback) {
+                                        newContext: Context, userID: String, sortCallback: SortTasksCallback?,
+                                        private val openTaskDisabled: Boolean, private val taskActionsDisabled: Boolean) : SortableTasksRecyclerViewAdapter<BindableViewHolder<Task>>("", taskFilterHelper, layoutResource, newContext, userID, sortCallback) {
 
     private val addItemSubject = PublishSubject.create<Task>()
 
     val taskList: MutableList<Task>
         get() = content?.map { t -> t }?.toMutableList() ?: mutableListOf()
 
-    override fun injectThis(component: AppComponent) {
+    protected var taskOpenEventsSubject = PublishSubject.create<Task>()
+    val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+
+    override fun injectThis(component: UserComponent) {
         component.inject(this)
     }
 
@@ -36,21 +39,13 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
     override fun getItemViewType(position: Int): Int {
         val task = this.filteredContent?.get(position)
 
-        if (task?.type == Task.TYPE_HABIT) {
-            return TYPE_HABIT
+        return when (task?.type) {
+            Task.TYPE_HABIT -> TYPE_HABIT
+            Task.TYPE_DAILY -> TYPE_DAILY
+            Task.TYPE_TODO -> TYPE_TODO
+            Task.TYPE_REWARD -> TYPE_REWARD
+            else -> if (addItemSubject.hasObservers() && task?.type == TASK_TYPE_ADD_ITEM) TYPE_ADD_ITEM else TYPE_HEADER
         }
-        if (task?.type == Task.TYPE_DAILY) {
-            return TYPE_DAILY
-        }
-        if (task?.type == Task.TYPE_TODO) {
-            return TYPE_TODO
-        }
-        if (task?.type == Task.TYPE_REWARD) {
-            return TYPE_REWARD
-        }
-
-        return if (addItemSubject.hasObservers() && task?.type == TASK_TYPE_ADD_ITEM) TYPE_ADD_ITEM else TYPE_HEADER
-
     }
 
     fun addItemObservable(): Flowable<Task> {
@@ -66,17 +61,25 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
         return position
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseTaskViewHolder {
-        val viewHolder: BaseTaskViewHolder = when (viewType) {
-            TYPE_HABIT -> HabitViewHolder(getContentView(parent, R.layout.habit_item_card))
-            TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card))
-            TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card))
-            TYPE_REWARD -> RewardViewHolder(getContentView(parent, R.layout.reward_item_card))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder<Task> {
+        val viewHolder: BindableViewHolder<Task> = when (viewType) {
+            TYPE_HABIT -> HabitViewHolder(getContentView(parent, R.layout.habit_item_card), { _, _ -> }) { task ->
+                taskOpenEventsSubject.onNext(task)
+            }
+            TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }, { _, _ -> }) { task ->
+                taskOpenEventsSubject.onNext(task)
+            }
+            TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }, { _, _ -> }) { task ->
+                taskOpenEventsSubject.onNext(task)
+            }
+            TYPE_REWARD -> RewardViewHolder(getContentView(parent, R.layout.reward_item_card), { _, _ -> }) { task ->
+                taskOpenEventsSubject.onNext(task)
+            }
             TYPE_ADD_ITEM -> AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), addItemSubject)
             else -> DividerViewHolder(getContentView(parent, R.layout.challenge_task_divider))
         }
 
-        viewHolder.setDisabled(openTaskDisabled, taskActionsDisabled)
+        (viewHolder as? BaseTaskViewHolder)?.setDisabled(openTaskDisabled, taskActionsDisabled)
         return viewHolder
     }
 
@@ -103,27 +106,27 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
         return false
     }
 
-    inner class AddItemViewHolder internal constructor(itemView: View, private val callback: PublishSubject<Task>) : BaseTaskViewHolder(itemView) {
+    inner class AddItemViewHolder internal constructor(itemView: View, private val callback: PublishSubject<Task>) : BindableViewHolder<Task>(itemView) {
 
         private val addBtn: Button = itemView.findViewById(R.id.btn_add_task)
         private var newTask: Task? = null
 
         init {
             addBtn.isClickable = true
-            addBtn.setOnClickListener { newTask.notNull { callback.onNext(it) } }
+            addBtn.setOnClickListener { newTask?.let { callback.onNext(it) } }
         }
 
-        override fun bindHolder(newTask: Task, position: Int) {
+        override fun bind(newTask: Task, position: Int) {
             this.newTask = newTask
             addBtn.text = newTask.text
         }
     }
 
-    private inner class DividerViewHolder internal constructor(itemView: View) : BaseTaskViewHolder(itemView) {
+    private inner class DividerViewHolder internal constructor(itemView: View) : BindableViewHolder<Task>(itemView) {
 
         private val dividerName: TextView = itemView.findViewById(R.id.divider_name)
 
-        override fun bindHolder(newTask: Task, position: Int) {
+        override fun bind(newTask: Task, position: Int) {
             dividerName.text = newTask.text
         }
     }

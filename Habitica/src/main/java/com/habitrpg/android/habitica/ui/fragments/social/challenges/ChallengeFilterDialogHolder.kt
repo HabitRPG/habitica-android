@@ -17,7 +17,7 @@ import java.util.*
 
 internal class ChallengeFilterDialogHolder private constructor(view: View, private val context: Activity) {
 
-    private val groupRecyclerView: androidx.recyclerview.widget.RecyclerView? by bindView(view, R.id.challenge_filter_recycler_view)
+    private val groupRecyclerView: RecyclerView? by bindView(view, R.id.challenge_filter_recycler_view)
     private val allButton: Button? by bindView(view, R.id.challenge_filter_button_all)
     private val noneButton: Button? by bindView(view, R.id.challenge_filter_button_none)
     private val checkboxOwned: CheckBox? by bindView(view, R.id.challenge_filter_owned)
@@ -51,7 +51,7 @@ internal class ChallengeFilterDialogHolder private constructor(view: View, priva
     }
 
     private fun fillChallengeGroups() {
-        this.groupRecyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        this.groupRecyclerView?.layoutManager = LinearLayoutManager(context)
         adapter = ChallengesFilterRecyclerViewAdapter(getGroups(challengesViewed))
         if (currentFilter != null && currentFilter?.showByGroups != null) {
             adapter?.selectAll(currentFilter?.showByGroups ?: emptyList())

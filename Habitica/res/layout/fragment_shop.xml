@@ -25,7 +25,7 @@
             android:scrollbarSize="3dp"
             android:scrollbarThumbVertical="@color/scrollbarThumb"
             android:scrollbars="vertical"
-            android:paddingBottom="?attr/actionBarSize" />
+            />
 
         <FrameLayout
             android:id="@+id/emptyView"

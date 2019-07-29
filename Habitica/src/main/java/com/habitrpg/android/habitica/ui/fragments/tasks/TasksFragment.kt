@@ -3,26 +3,25 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.FragmentPagerAdapter
 import android.view.*
-import com.github.clans.fab.FloatingActionButton
-import com.github.clans.fab.FloatingActionMenu
+import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
-import com.habitrpg.android.habitica.events.TaskTappedEvent
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.functions.Consumer
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class TasksFragment : BaseMainFragment() {
 
@@ -31,77 +30,68 @@ class TasksFragment : BaseMainFragment() {
     lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
     lateinit var tagRepository: TagRepository
+    @Inject
+    lateinit var appConfigManager: AppConfigManager
 
     private var refreshItem: MenuItem? = null
-    private var floatingMenu: FloatingActionMenu? = null
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
 
-    private var displayingTaskForm: Boolean = false
     private var filterMenuItem: MenuItem? = null
+
+    override var user: User?
+        get() = super.user
+        set(value) {
+            super.user = value
+            viewFragmentsDictionary?.values?.forEach { it.user = value }
+        }
 
     private val activeFragment: TaskRecyclerViewFragment?
         get() = viewFragmentsDictionary?.get(viewPager?.currentItem)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         this.usesTabLayout = false
         this.usesBottomNavigation = true
-        this.displayingTaskForm = false
         super.onCreateView(inflater, container, savedInstanceState)
         val v = inflater.inflate(R.layout.fragment_viewpager, container, false)
 
-
         viewPager = v.findViewById(R.id.viewPager)
-        val view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true)
-        floatingMenu = if (FloatingActionMenu::class.java == view.javaClass) {
-            view as? FloatingActionMenu
-        } else {
-            val frame = view as? ViewGroup
-            frame?.findViewById(R.id.fab_menu)
-        }
-        val habitFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_habit)
-        habitFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_HABIT) }
-        val dailyFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_daily)
-        dailyFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_DAILY) }
-        val todoFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_todo)
-        todoFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_TODO) }
-        val rewardFab = floatingMenu?.findViewById<FloatingActionButton>(R.id.fab_new_reward)
-        rewardFab?.setOnClickListener { openNewTaskActivity(Task.TYPE_REWARD) }
-        floatingMenu?.setOnMenuButtonLongClickListener { this.onFloatingMenuLongClicked() }
-
         loadTaskLists()
-
-        bottomNavigation?.setBadgesHideWhenActive(true)
-        bottomNavigation?.setOnTabSelectListener { tabId ->
-            when (tabId) {
-                R.id.tab_habits -> viewPager?.currentItem = 0
-                R.id.tab_dailies -> viewPager?.currentItem = 1
-                R.id.tab_todos -> viewPager?.currentItem = 2
-                R.id.tab_rewards -> viewPager?.currentItem = 3
-            }
-            updateBottomBarBadges()
-        }
 
         return v
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        bottomNavigation?.onTabSelectedListener = {
+            when (it) {
+                Task.TYPE_HABIT -> viewPager?.currentItem = 0
+                Task.TYPE_DAILY -> viewPager?.currentItem = 1
+                Task.TYPE_TODO -> viewPager?.currentItem = 2
+                Task.TYPE_REWARD -> viewPager?.currentItem = 3
+            }
+            updateBottomBarBadges()
+        }
+        bottomNavigation?.onAddListener = { type ->
+            openNewTaskActivity(type)
+        }
+        bottomNavigation?.flipAddBehaviour = appConfigManager.flipAddTaskBehaviour()
+    }
+
+    override fun onPause() {
+        bottomNavigation?.onTabSelectedListener = null
+        bottomNavigation?.onAddListener = null
+
+        super.onPause()
+    }
+
     override fun onDestroy() {
         tagRepository.close()
-        bottomNavigation?.removeOnTabSelectListener()
         super.onDestroy()
     }
 
-    private fun onFloatingMenuLongClicked(): Boolean {
-        val currentFragment = activeFragment
-        if (currentFragment != null) {
-            val className = currentFragment.className
-            openNewTaskActivity(className)
-        }
-        return true
-    }
-
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -113,26 +103,23 @@ class TasksFragment : BaseMainFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        when (id) {
+        return when (item.itemId) {
             R.id.action_search -> {
                 showFilterDialog()
-                return true
+                true
             }
             R.id.action_reload -> {
                 refreshItem = item
                 refresh()
-                return true
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     private fun showFilterDialog() {
-        context.notNull {
-            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.component)
+        context?.let {
+            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
             if (user != null) {
                 dialog.setTags(user?.tags?.createSnapshot() ?: emptyList())
             }
@@ -144,7 +131,6 @@ class TasksFragment : BaseMainFragment() {
                 }
             }
             dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
-
                 override fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>) {
                     if (viewFragmentsDictionary == null) {
                         return
@@ -203,7 +189,7 @@ class TasksFragment : BaseMainFragment() {
             }
 
             override fun onPageSelected(position: Int) {
-                bottomNavigation?.selectTabAtPosition(position)
+                bottomNavigation?.selectedPosition = position
                 updateFilterIcon()
             }
 
@@ -232,7 +218,7 @@ class TasksFragment : BaseMainFragment() {
         if (bottomNavigation == null) {
             return
         }
-        tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
+        compositeSubscription.add(tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
             val activeTutorialFragments = ArrayList<String>()
             for (step in tutorialSteps) {
                 var id = -1
@@ -255,12 +241,12 @@ class TasksFragment : BaseMainFragment() {
                     }
                     else -> ""
                 }
-                val tab = bottomNavigation?.getTabWithId(id)
+                val tab = bottomNavigation?.tabWithId(id)
                 if (step.shouldDisplay()) {
-                    tab?.setBadgeCount(1)
+                    tab?.badgeCount = 1
                     activeTutorialFragments.add(taskType)
                 } else {
-                    tab?.removeBadge()
+                    tab?.badgeCount = 0
                 }
             }
             if (activeTutorialFragments.size == 1) {
@@ -272,52 +258,36 @@ class TasksFragment : BaseMainFragment() {
                     }
                 }
             }
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError()))
     }
     // endregion
 
     private fun openNewTaskActivity(type: String) {
-        if (this.displayingTaskForm) {
+        if (Date().time - (lastTaskFormOpen?.time ?: 0) < 2000) {
             return
         }
 
-        val allocationMode = user?.preferences?.hasTaskBasedAllocation() ?: false
+        val additionalData = HashMap<String, Any>()
+        additionalData["created task type"] = type
+        additionalData["viewed task type"] = when (viewPager?.currentItem) {
+            0 -> Task.TYPE_HABIT
+            1 -> Task.TYPE_DAILY
+            2 -> Task.TYPE_TODO
+            3 -> Task.TYPE_REWARD
+            else -> ""
+        }
+        AmplitudeManager.sendEvent("open create task form", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type)
-        bundle.putString(TaskFormActivity.USER_ID_KEY, if (this.user != null) this.user?.id else null)
-        bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode)
-        bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, true)
+        bundle.putStringArrayList(TaskFormActivity.SELECTED_TAGS_KEY, ArrayList(taskFilterHelper.tags))
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         if (this.isAdded) {
-            this.displayingTaskForm = true
+            lastTaskFormOpen = Date()
             startActivityForResult(intent, TASK_CREATED_RESULT)
-        }
-    }
-
-    @Subscribe
-    fun onEvent(event: TaskTappedEvent) {
-        if (this.displayingTaskForm) {
-            return
-        }
-
-        val allocationMode = user?.preferences?.hasTaskBasedAllocation() ?: false
-
-        val bundle = Bundle()
-        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.type)
-        bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.id)
-        bundle.putString(TaskFormActivity.USER_ID_KEY, if (this.user != null) this.user?.id else null)
-        bundle.putBoolean(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode)
-        bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, true)
-
-        val intent = Intent(activity, TaskFormActivity::class.java)
-        intent.putExtras(bundle)
-        this.displayingTaskForm = true
-        if (isAdded) {
-            startActivityForResult(intent, TASK_UPDATED_RESULT)
         }
     }
 
@@ -328,12 +298,9 @@ class TasksFragment : BaseMainFragment() {
 
         when (requestCode) {
             TASK_CREATED_RESULT -> {
-                this.displayingTaskForm = false
                 onTaskCreatedResult(resultCode, data)
             }
-            TASK_UPDATED_RESULT -> this.displayingTaskForm = false
         }
-        floatingMenu?.close(true)
     }
 
     private fun onTaskCreatedResult(resultCode: Int, data: Intent?) {
@@ -371,7 +338,8 @@ class TasksFragment : BaseMainFragment() {
     override fun addToBackStack(): Boolean = false
 
     companion object {
-        private const val TASK_CREATED_RESULT = 1
-        private const val TASK_UPDATED_RESULT = 2
+        var lastTaskFormOpen: Date? = null
+        internal const val TASK_CREATED_RESULT = 1
+        const val TASK_UPDATED_RESULT = 2
     }
 }

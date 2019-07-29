@@ -1,25 +1,24 @@
 package com.habitrpg.android.habitica.ui.fragments
 
-import android.app.AlertDialog
-import android.os.Build
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.extensions.setOkButton
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_stats.*
@@ -30,6 +29,7 @@ import javax.inject.Named
 
 class StatsFragment: BaseMainFragment() {
 
+    private var canAllocatePoints: Boolean = false
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
@@ -76,7 +76,7 @@ class StatsFragment: BaseMainFragment() {
 
         leftSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
         rightSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesRight())
-        context.notNull {
+        context?.let {
             val color = ContextCompat.getColor(it, R.color.brand_200)
             distributeEvenlyHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
             distributeClassHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
@@ -84,10 +84,10 @@ class StatsFragment: BaseMainFragment() {
         }
 
         compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer {
-            user = it
-            unlock_at_level.visibility = if (user?.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
-            updateStats()
-            updateAttributePoints()
+            canAllocatePoints = user?.stats?.lvl ?: 0 >= 10 && user?.stats?.points ?: 0 > 0
+            unlock_at_level.visibility = if (it?.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
+            updateStats(it)
+            updateAttributePoints(it)
         }, RxErrorHandler.handleEmptyError()))
 
         distributeEvenlyButton.setOnCheckedChangeListener { _, isChecked ->
@@ -120,18 +120,15 @@ class StatsFragment: BaseMainFragment() {
         distributeTaskHelpButton.setOnClickListener { showHelpAlert(R.string.distribute_task_help) }
 
         statsAllocationButton.setOnClickListener {
-            if (user?.stats?.points ?: 0 > 0) {
-                val lvl = user?.stats?.lvl
-                if (lvl != null && lvl >= 10) {
-                    showBulkAllocateDialog()
-                }
+            if (canAllocatePoints) {
+                showBulkAllocateDialog()
             }
         }
     }
 
     private fun showBulkAllocateDialog() {
-        context.notNull { context ->
-            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.component)
+        context?.let { context ->
+            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.userComponent)
             dialog.show()
         }
     }
@@ -145,26 +142,28 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun showHelpAlert(resourceId: Int) {
-        val builder = AlertDialog.Builder(context).setMessage(resourceId).setOkButton()
-        builder.show()
+        val alert = context?.let { HabiticaAlertDialog(it) }
+        alert?.setMessage(resourceId)
+        alert?.addOkButton()
+        alert?.show()
     }
 
     private fun allocatePoint(stat: String) {
         compositeSubscription.add(userRepository.allocatePoint(user, stat).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun updateAttributePoints() {
-        val automaticAllocation = user?.preferences?.automaticAllocation ?: false
+    private fun updateAttributePoints(user: User) {
+        val automaticAllocation = user.preferences?.automaticAllocation ?: false
         automaticAllocationSwitch.isChecked = automaticAllocation
         autoAllocationModeWrapper.visibility = if (automaticAllocation) View.VISIBLE else View.GONE
 
-        val allocationMode = user?.preferences?.allocationMode ?: ""
+        val allocationMode = user.preferences?.allocationMode ?: ""
         distributeEvenlyButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         distributeClassButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         distributeTaskButton.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
 
-        val canDistributePoints = 0 < (user?.stats?.points ?: 0) && 10 <= (user?.stats?.lvl ?: 0)
-        if (10 <= (user?.stats?.lvl ?: 0)) {
+        val canDistributePoints = 0 < (user.stats?.points ?: 0) && 10 <= (user.stats?.lvl ?: 0)
+        if (10 <= (user.stats?.lvl ?: 0)) {
             automaticAllocationSwitch.visibility = View.VISIBLE
             automaticAllocationSwitch.visibility = View.VISIBLE
         } else {
@@ -175,14 +174,12 @@ class StatsFragment: BaseMainFragment() {
         intelligenceStatsView.canDistributePoints = canDistributePoints
         constitutionStatsView.canDistributePoints = canDistributePoints
         perceptionStatsView.canDistributePoints = canDistributePoints
-        context.notNull { context ->
+        context?.let { context ->
             if (canDistributePoints) {
-                val points = user?.stats?.points ?: 0
+                val points = user.stats?.points ?: 0
                 numberOfPointsTextView.text = getString(R.string.points_to_allocate, points)
                 numberOfPointsTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.button_gray_100)
-                }
+                numberOfPointsTextView.background = ContextCompat.getDrawable(context, R.drawable.button_gray_100)
                 leftSparklesView.visibility = View.VISIBLE
                 rightSparklesView.visibility = View.VISIBLE
             } else {
@@ -196,12 +193,11 @@ class StatsFragment: BaseMainFragment() {
         numberOfPointsTextView.setScaledPadding(context, 18, 4, 18, 4)
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
-    private fun updateStats() {
-        val currentUser = user ?: return
+    private fun updateStats(currentUser: User) {
         val levelStat = Math.min((currentUser.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
         totalStrength = levelStat
@@ -223,18 +219,18 @@ class StatsFragment: BaseMainFragment() {
         constitutionStatsView.buffValue = currentUser.stats?.buffs?.getCon()?.toInt() ?: 0
         perceptionStatsView.buffValue = currentUser.stats?.buffs?.getPer()?.toInt() ?: 0
 
-        totalStrength += currentUser.stats?.str ?: 0
-        totalIntelligence += currentUser.stats?._int ?: 0
-        totalConstitution += currentUser.stats?.con ?: 0
+        totalStrength += currentUser.stats?.strength ?: 0
+        totalIntelligence += currentUser.stats?.intelligence ?: 0
+        totalConstitution += currentUser.stats?.constitution ?: 0
         totalPerception += currentUser.stats?.per ?: 0
-        strengthStatsView.allocatedValue = currentUser.stats?.str ?: 0
-        intelligenceStatsView.allocatedValue = currentUser.stats?._int ?: 0
-        constitutionStatsView.allocatedValue = currentUser.stats?.con ?: 0
+        strengthStatsView.allocatedValue = currentUser.stats?.strength ?: 0
+        intelligenceStatsView.allocatedValue = currentUser.stats?.intelligence ?: 0
+        constitutionStatsView.allocatedValue = currentUser.stats?.constitution ?: 0
         perceptionStatsView.allocatedValue = currentUser.stats?.per ?: 0
 
         val outfit = currentUser.items?.gear?.equipped
         val outfitList = ArrayList<String>()
-        outfit.notNull { thisOutfit ->
+        outfit?.let { thisOutfit ->
             outfitList.add(thisOutfit.armor)
             outfitList.add(thisOutfit.back)
             outfitList.add(thisOutfit.body)
@@ -245,7 +241,7 @@ class StatsFragment: BaseMainFragment() {
             outfitList.add(thisOutfit.weapon)
         }
 
-        compositeSubscription.add(inventoryRepository.getItems(outfitList).firstElement()
+        compositeSubscription.add(inventoryRepository.getEquipment(outfitList).firstElement()
                 .retry(1)
                 .subscribe(Consumer {
             val userStatComputer = UserStatComputer()

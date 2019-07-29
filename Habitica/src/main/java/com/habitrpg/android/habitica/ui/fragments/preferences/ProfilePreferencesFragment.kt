@@ -6,7 +6,6 @@ import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
@@ -21,7 +20,7 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
     }
 
@@ -83,7 +82,7 @@ class ProfilePreferencesFragment: BasePreferencesFragment(), SharedPreferences.O
                 }
                 else -> null
             }
-            observable?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
+            observable?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         }
     }
 

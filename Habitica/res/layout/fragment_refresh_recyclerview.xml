@@ -18,8 +18,7 @@
             android:scrollbarSize="3dp"
             android:scrollbarThumbVertical="@color/scrollbarThumb"
             android:scrollbars="vertical"
-            android:clipToPadding="false"
-            android:paddingBottom="?attr/actionBarSize" />
+            android:clipToPadding="false" />
 
         <LinearLayout
             android:id="@+id/emptyView"

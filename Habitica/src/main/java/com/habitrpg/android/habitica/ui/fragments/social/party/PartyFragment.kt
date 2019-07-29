@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -11,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
-import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity
+import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment
@@ -23,6 +22,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.functions.Consumer
 import java.util.*
 
@@ -31,11 +31,10 @@ class PartyFragment : BaseMainFragment() {
 
     private val viewPager: ViewPager? by bindView(R.id.viewPager)
     private var firstFragment: Fragment? = null
-    private var partyMemberListFragment: PartyMemberListFragment? = null
     private var chatFragment: ChatFragment? = null
-    private var viewPagerAdapter: androidx.fragment.app.FragmentPagerAdapter? = null
+    private var viewPagerAdapter: FragmentPagerAdapter? = null
 
-    private lateinit var viewModel: PartyViewModel
+    internal lateinit var viewModel: PartyViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -84,11 +83,32 @@ class PartyFragment : BaseMainFragment() {
         viewPager?.currentItem = 0
 
         setViewPagerAdapter()
+        setFragments()
+
+        arguments?.let {
+            val args = PartyFragmentArgs.fromBundle(it)
+            viewPager?.currentItem = args.tabToOpen
+        }
+
         this.tutorialStepIdentifier = "party"
         this.tutorialText = getString(R.string.tutorial_party)
     }
 
-    override fun injectFragment(component: AppComponent) {
+    private fun setFragments() {
+        val fragments = childFragmentManager.fragments
+        for (childFragment in fragments) {
+            if (childFragment is ChatFragment) {
+                chatFragment = childFragment
+                chatFragment?.viewModel = viewModel
+            }
+            if (childFragment is PartyDetailFragment) {
+                firstFragment = childFragment
+                childFragment.viewModel = viewModel
+            }
+        }
+    }
+
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -101,8 +121,6 @@ class PartyFragment : BaseMainFragment() {
         } else {
             tabLayout?.visibility = View.VISIBLE
         }
-
-        partyMemberListFragment?.setPartyId(group.id)
 
         this.activity?.invalidateOptionsMenu()
     }
@@ -123,12 +141,11 @@ class PartyFragment : BaseMainFragment() {
 
     @Suppress("ReturnCount")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        when (id) {
+        when (item.itemId) {
             R.id.menu_invite_item -> {
-                val intent = Intent(activity, PartyInviteActivity::class.java)
-                startActivityForResult(intent, PartyInviteActivity.RESULT_SEND_INVITES)
+                val intent = Intent(activity, GroupInviteActivity::class.java)
+                intent.putExtra("groupType", "party")
+                startActivityForResult(intent, GroupInviteActivity.RESULT_SEND_INVITES)
                 return true
             }
             R.id.menu_guild_edit -> {
@@ -136,15 +153,18 @@ class PartyFragment : BaseMainFragment() {
                 return true
             }
             R.id.menu_guild_leave -> {
-                AlertDialog.Builder(context)
-                        .setTitle(context?.getString(R.string.leave_party))
-                        .setMessage(context?.getString(R.string.leave_party_confirmation))
-                        .setPositiveButton(context?.getString(R.string.yes)) { _, _ ->
-                            viewModel.leaveGroup {
-                            }
+                context?.let {
+                    val alert = HabiticaAlertDialog(it)
+                    alert.setTitle(context?.getString(R.string.leave_party))
+                    alert.setMessage(context?.getString(R.string.leave_party_confirmation))
+                    alert.addButton(R.string.yes, true) { _, _ ->
+                        viewModel.leaveGroup {
+                            fragmentManager?.popBackStack()
                         }
-                        .setNegativeButton(context?.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
-                        .show()
+                    }
+                    alert.addButton(R.string.no, false)
+                    alert.show()
+                }
                 return true
             }
         }
@@ -176,12 +196,12 @@ class PartyFragment : BaseMainFragment() {
                     viewModel.updateOrCreateGroup(data?.extras)
                 }
             }
-            PartyInviteActivity.RESULT_SEND_INVITES -> {
+            GroupInviteActivity.RESULT_SEND_INVITES -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val inviteData = HashMap<String, Any>()
                     inviteData["inviter"] = user?.profile?.name ?: ""
-                    if (data?.getBooleanExtra(PartyInviteActivity.IS_EMAIL_KEY, false) == true) {
-                        val emails = data.getStringArrayExtra(PartyInviteActivity.EMAILS_KEY)
+                    if (data?.getBooleanExtra(GroupInviteActivity.IS_EMAIL_KEY, false) == true) {
+                        val emails = data.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
                         val invites = ArrayList<HashMap<String, String>>()
                         for (email in emails) {
                             val invite = HashMap<String, String>()
@@ -191,7 +211,7 @@ class PartyFragment : BaseMainFragment() {
                         }
                         inviteData["emails"] = invites
                     } else {
-                        val userIDs = data?.getStringArrayExtra(PartyInviteActivity.USER_IDS_KEY)
+                        val userIDs = data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
                         val invites = ArrayList<String>()
                         Collections.addAll(invites, *userIDs)
                         inviteData["usernames"] = invites
@@ -210,7 +230,7 @@ class PartyFragment : BaseMainFragment() {
 
         viewPagerAdapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+            override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> {
                         firstFragment = if (user?.hasParty() == true) {
@@ -229,16 +249,6 @@ class PartyFragment : BaseMainFragment() {
                         }
                         chatFragment
                     }
-                    2 -> {
-                        if (partyMemberListFragment == null) {
-                            partyMemberListFragment = PartyMemberListFragment()
-                            partyMemberListFragment?.viewModel = viewModel
-                            if (user?.hasParty() == true) {
-                                partyMemberListFragment?.setPartyId(user?.party?.id ?: "")
-                            }
-                        }
-                        partyMemberListFragment
-                    }
                     else -> Fragment()
                 } ?: Fragment()
 
@@ -248,7 +258,7 @@ class PartyFragment : BaseMainFragment() {
                 return if (user?.hasParty() != true) {
                     1
                 } else {
-                    3
+                    2
                 }
             }
 
@@ -271,7 +281,7 @@ class PartyFragment : BaseMainFragment() {
         }
         this.viewPager?.adapter = viewPagerAdapter
 
-        viewPager?.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position == 1) {
                     chatFragment?.setNavigatedToFragment()

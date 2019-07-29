@@ -36,6 +36,8 @@ public class TaskSerializer implements JsonSerializer<Task> {
                 obj.addProperty("up", task.getUp());
                 obj.addProperty("down", task.getDown());
                 obj.addProperty("frequency", task.getFrequency());
+                obj.addProperty("counterUp", task.getCounterUp());
+                obj.addProperty("counterDown", task.getCounterDown());
                 break;
             case "daily":
                 obj.addProperty("frequency", task.getFrequency());

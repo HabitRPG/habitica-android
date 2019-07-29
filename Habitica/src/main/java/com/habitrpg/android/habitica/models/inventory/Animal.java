@@ -1,40 +1,33 @@
 package com.habitrpg.android.habitica.models.inventory;
 
+
 public interface Animal {
 
-    public String getKey();
+    String getKey();
 
-    public void setKey(String key);
+    void setKey(String key);
 
-    public String getAnimal();
+    String getText();
 
-    public void setAnimal(String animal);
+    void setText(String text);
 
-    public String getColor();
+    String getType();
 
-    public void setColor(String color);
+    void setType(String type);
 
-    public String getAnimalGroup();
+    String getAnimal();
 
-    public void setAnimalGroup(String group);
+    void setAnimal(String animal);
 
-    public String getAnimalText();
+    String getColor();
 
-    public void setAnimalText(String animalText);
+    void setColor(String color);
 
-    public String getColorText();
+    boolean getPremium();
 
-    public void setColorText(String colorText);
+    void setPremium(boolean premium);
 
-    public boolean getPremium();
+    Integer getNumberOwned();
 
-    public void setPremium(boolean premium);
-
-    public boolean getLimited();
-
-    public void setLimited(boolean limited);
-
-    public Integer getNumberOwned();
-
-    public void setNumberOwned(Integer numberOwned);
+    void setNumberOwned(Integer numberOwned);
 }

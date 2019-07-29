@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/create"
-                style="@style/HabiticaButton"
+                style="@style/HabiticaButton.Borderless"
                 android:textColor="@color/brand_400"
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingStart="@dimen/spacing_large"
@@ -47,7 +47,7 @@
             android:layout_marginRight="@dimen/spacing_large"
             android:background="@drawable/edittext"
             android:textColorHint="@color/gray_50">
-            <MultiAutoCompleteTextView
+            <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
                 android:id="@+id/group_name_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                 android:background="@drawable/edittext"
                 android:textColorHint="@color/gray_50">
 
-                <MultiAutoCompleteTextView
+                <com.habitrpg.android.habitica.ui.views.HabiticaAutocompleteTextView
                     android:id="@+id/group_description_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

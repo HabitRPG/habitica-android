@@ -90,7 +90,7 @@
   <string name="friday">שישי</string>
   <string name="saturday">שבת</string>
   <string name="sunday">ראשון</string>
-  <string name="levelup_button">ישש!</string>
+  <string name="onwards">ישש!</string>
   <string name="faint_subtitle">אל ייאוש!</string>
   <string name="faint_header">נגמרה לכם הבריאות!</string>
   <string name="faint_button">מלאו בריאות ונסו מחדש</string>
@@ -244,14 +244,14 @@
   <string name="feed_to_pet">האכילו חיית מחמד</string>
   <string name="hatch_egg">הבקיעו עם ביצה</string>
   <string name="invite_party">הזמינו חבורה</string>
-  <string name="dialog_feeding">האכלתם %1$s %2$s עם:</string>
+  <string name="dialog_feeding">האכלתם %s עם:</string>
   <string name="use_animal">השתמשו</string>
   <string name="feed">האכילו</string>
   <string name="hatch_with">הבקיעו חיית מחמד עם %s</string>
   <string name="hatched_pet_title">הבקעתם %1$s %2$s!</string>
   <string name="close">סיגרו</string>
   <string name="share">שתפו</string>
-  <string name="notification_pet_fed">האכלתם את ה %1$s %2$s שלכם!</string>
+  <string name="notification_pet_fed">האכלתם את ה %s שלכם!</string>
   <string name="world_quest">הרפתקאה עולמית</string>
   <string name="empty_items">אין לכם כל %s</string>
   <string name="user_level">דרגה %d</string>

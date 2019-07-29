@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
@@ -41,14 +41,14 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments.notNull {
+        arguments?.let {
             val args = MountDetailRecyclerFragmentArgs.fromBundle(it)
             animalGroup = args.group
             animalType = args.type
@@ -62,12 +62,13 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
         if (adapter == null) {
             adapter = MountDetailRecyclerAdapter(null, true)
             adapter?.itemType = this.animalType
+            adapter?.context = context
             recyclerView.adapter = adapter
             recyclerView.itemAnimator = SafeDefaultItemAnimator()
             this.loadItems()
 
             adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip(user, "mount", key) }
-                    ?.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
+                    ?.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         }
 
         if (savedInstanceState != null) {
@@ -85,7 +86,7 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
 
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
-        context?.resources.notNull { resources
+        context?.resources?.let { resources
             val itemWidth: Float = resources.getDimension(R.dimen.pet_width)
 
             spanCount = (width / itemWidth).toInt()
@@ -99,6 +100,13 @@ class MountDetailRecyclerFragment : BaseMainFragment() {
 
     private fun loadItems() {
         if (animalType != null && animalGroup != null) {
+            compositeSubscription.add(inventoryRepository.getOwnedMounts().firstElement()
+                    .map { ownedMounts ->
+                        val mountMap = mutableMapOf<String, OwnedMount>()
+                        ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                        return@map mountMap
+                    }
+                    .subscribe(Consumer { adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(inventoryRepository.getMounts(animalType!!, animalGroup!!).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
     }

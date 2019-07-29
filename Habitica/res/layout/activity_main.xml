@@ -6,18 +6,16 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.habitrpg.android.habitica.ui.activities.MainActivity">
+    tools:context="com.habitrpg.android.habitica.ui.activities.MainActivity"
+    android:background="@color/gray_700">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
-    <FrameLayout android:layout_width="match_parent"
-                 android:layout_height="match_parent">
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.activities.MainActivity"
-            android:fitsSystemWindows="false">
+            tools:context=".ui.activities.MainActivity">
             <fragment
                 android:id="@+id/nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
@@ -30,7 +28,6 @@
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar"
                     android:layout_width="match_parent"
@@ -60,7 +57,7 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="16dp">
+                            android:layout_marginEnd="16dp">
 
                             <TextView
                                 android:id="@+id/toolbar_title"
@@ -80,7 +77,7 @@
                                 android:scaleType="centerCrop"
                                 android:adjustViewBounds="true"
                                 android:layout_centerVertical="true"
-                                android:layout_alignParentRight="true"/>
+                                android:layout_alignParentEnd="true"/>
 
                         </RelativeLayout>
                     </androidx.appcompat.widget.Toolbar>
@@ -91,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/brand_200"
+                    android:background="?colorPrimaryOffset"
                     android:elevation="0dp"
                     android:fillViewport="false"
 
@@ -101,51 +98,43 @@
 
                     app:layout_collapseMode="pin"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="@android:color/white"
+                    app:tabIndicatorColor="?colorContentBackground"
                     app:tabMode="fixed" />
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <LinearLayout
-                android:id="@+id/bottom_wrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_alignParentBottom="true"
-                app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
-                android:padding="0dp">
-                <androidx.coordinatorlayout.widget.CoordinatorLayout
-                    android:id="@+id/floating_menu_wrapper"
+                <TextView
+                    android:id="@+id/connection_issue_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="-5dp"
-                    />
-                <com.habitrpg.android.habitica.ui.views.bottombar.BottomBar
+                    android:textColor="@color/white"
+                    android:background="@color/gray_50"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/spacing_small"
+                    android:text="@string/internal_error_api"
+                    android:visibility="gone"/>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <RelativeLayout
+                android:id="@+id/overlayFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="60dp"
+                android:layout_gravity="bottom|center_horizontal">
+                <FrameLayout
+                    android:id="@+id/snackbar_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="158dp"
+                    android:layout_alignParentBottom="true"
+                    android:paddingBottom="68dp"/>
+                <com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationView
                     android:id="@+id/bottom_navigation"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/brand_100"
-                    app:bb_tabXmlResource="@xml/main_menu_tasks"
-                    app:bb_inActiveTabColor="@color/brand_500"
-                    app:bb_activeTabColor="@color/white"
-                    app:bb_behavior="underNavbar"
-                    app:bb_badgesHideWhenActive="true"
-                    app:bb_badgeBackgroundColor="@color/brand_400"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="-5dp"
-                    />
-
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/overlayFrameLayout"
-            android:clickable="false"
-            android:fitsSystemWindows="true"
-            />
-    </FrameLayout>
 
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->
@@ -155,7 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
         tools:layout="@layout/drawer_main"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

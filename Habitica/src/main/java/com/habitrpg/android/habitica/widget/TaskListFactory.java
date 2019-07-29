@@ -55,7 +55,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         this.taskType = taskType;
 
         if (userID == null) {
-            Objects.requireNonNull(HabiticaApplication.Companion.getComponent()).inject(this);
+            Objects.requireNonNull(HabiticaApplication.Companion.getUserComponent()).inject(this);
         }
         this.loadData();
     }
@@ -75,7 +75,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                     reloadData = false;
                     taskList = tasks;
                     AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
-                }, RxErrorHandler.handleEmptyError()));
+                }, RxErrorHandler.Companion.handleEmptyError()));
 
     }
 

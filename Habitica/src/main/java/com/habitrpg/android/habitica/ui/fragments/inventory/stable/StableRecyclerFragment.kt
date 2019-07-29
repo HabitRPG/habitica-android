@@ -1,34 +1,27 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Animal
-import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-
-import java.util.ArrayList
-
-import javax.inject.Inject
-
-import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.*
-import io.reactivex.Flowable
-import io.reactivex.Single
+import io.reactivex.Maybe
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
+import io.realm.RealmResults
+import java.util.*
+import javax.inject.Inject
 
 class StableRecyclerFragment : BaseFragment() {
 
@@ -58,7 +51,7 @@ class StableRecyclerFragment : BaseFragment() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -81,7 +74,7 @@ class StableRecyclerFragment : BaseFragment() {
             }
         }
         recyclerView?.layoutManager = layoutManager
-        activity.notNull {
+        activity?.let {
             recyclerView?.addItemDecoration(MarginDecoration(it))
         }
 
@@ -91,6 +84,7 @@ class StableRecyclerFragment : BaseFragment() {
             adapter = StableRecyclerAdapter()
             adapter?.activity = this.activity as? MainActivity
             adapter?.itemType = this.itemType
+            adapter?.context = context
             recyclerView?.adapter = adapter
             recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         }
@@ -119,54 +113,69 @@ class StableRecyclerFragment : BaseFragment() {
     }
 
     private fun loadItems() {
-        val observable: Flowable<out Animal> = if ("pets" == itemType) {
-            inventoryRepository.getPets().firstElement().toFlowable().flatMap { Flowable.fromIterable(it) }
+        val observable: Maybe<out RealmResults<out Animal>> = if ("pets" == itemType) {
+            inventoryRepository.getPets().firstElement()
         } else {
-            inventoryRepository.getMounts().firstElement().toFlowable().flatMap { Flowable.fromIterable(it) }
+            inventoryRepository.getMounts().firstElement()
+        }
+        val ownedObservable: Maybe<out Map<String, OwnedObject>> = if ("pets" == itemType) {
+            inventoryRepository.getOwnedPets().firstElement()
+        } else {
+            inventoryRepository.getOwnedMounts().firstElement()
+        }.map {
+            val animalMap = mutableMapOf<String, OwnedObject>()
+            it.forEach { animal ->
+                val castedAnimal = animal as? OwnedObject ?: return@forEach
+                animalMap[castedAnimal.key ?: ""] = castedAnimal
+            }
+            animalMap
         }
 
-        compositeSubscription.add(observable.toList().flatMap { unsortedAnimals ->
-            val items = ArrayList<Any>()
-            if (unsortedAnimals.size == 0) {
-                return@flatMap Single.just<List<Any>>(items)
-            }
-            var lastSectionTitle = ""
+        compositeSubscription.add(observable.zipWith(ownedObservable, BiFunction<RealmResults<out Animal>, Map<String, OwnedObject>, ArrayList<Any>> { unsortedAnimals, ownedAnimals ->
+            mapAnimals(unsortedAnimals, ownedAnimals)
+        }).subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
+    }
 
-            var lastAnimal: Animal = unsortedAnimals[0]
-            for (animal in unsortedAnimals) {
-                if (animal.animal != lastAnimal.animal || animal === unsortedAnimals[unsortedAnimals.size - 1]) {
-                    if (!((lastAnimal.animalGroup == "premiumPets" || lastAnimal.animalGroup == "specialPets"
-                                    || lastAnimal.animalGroup == "specialMounts" || lastAnimal.animalGroup == "premiumMounts") && lastAnimal.numberOwned == 0)) {
-                        items.add(lastAnimal)
-                    }
-                    lastAnimal = animal
+    private fun mapAnimals(unsortedAnimals: RealmResults<out Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
+        val items = ArrayList<Any>()
+        var lastAnimal: Animal = unsortedAnimals[0] ?: return items
+        var lastSectionTitle = ""
+
+        for (animal in unsortedAnimals) {
+            val identifier = if (animal.animal.isNotEmpty()) animal.animal else animal.key
+            val lastIdentifier = if (lastAnimal.animal.isNotEmpty()) lastAnimal.animal else lastAnimal.key
+            if (identifier != lastIdentifier || animal === unsortedAnimals[unsortedAnimals.size - 1]) {
+                if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
+                    items.add(lastAnimal)
                 }
-                if (animal.animalGroup != lastSectionTitle) {
-                    if (items.size > 0 && items[items.size - 1].javaClass == String::class.java) {
-                        items.removeAt(items.size - 1)
-                    }
-                    items.add(animal.animalGroup)
-                    lastSectionTitle = animal.animalGroup
+                lastAnimal = animal
+            }
+            if (animal.type != lastSectionTitle) {
+                if (items.size > 0 && items[items.size - 1].javaClass == String::class.java) {
+                    items.removeAt(items.size - 1)
                 }
-                if (user != null && user?.items != null) {
-                    when (itemType) {
-                        "pets" -> {
-                            val pet = animal as Pet
-                            if (pet.trained > 0) {
-                                lastAnimal.numberOwned = lastAnimal.numberOwned + 1
-                            }
-                        }
-                        "mounts" -> {
-                            val mount = animal as Mount
-                            if (mount.owned) {
-                                lastAnimal.numberOwned = lastAnimal.numberOwned + 1
-                            }
-                        }
+                items.add(animal.type)
+                lastSectionTitle = animal.type
+            }
+            when (itemType) {
+                "pets" -> {
+                    val ownedPet = ownedAnimals[animal?.key] as? OwnedPet
+                    if (ownedPet?.trained ?: 0 > 0) {
+                        lastAnimal.numberOwned += 1
+                    }
+                }
+                "mounts" -> {
+                    val ownedMount = ownedAnimals[animal?.key] as? OwnedMount
+                    if (ownedMount?.owned == true) {
+                        lastAnimal.numberOwned = lastAnimal.numberOwned + 1
                     }
                 }
             }
-            Single.just<List<Any>>(items)
-        }.subscribe(Consumer { items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError()))
+        }
+        if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
+            items.add(lastAnimal)
+        }
+        return items
     }
 
     companion object {

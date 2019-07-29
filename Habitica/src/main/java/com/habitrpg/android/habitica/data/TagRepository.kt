@@ -8,6 +8,7 @@ import io.realm.RealmResults
 
 interface TagRepository : BaseRepository {
 
+    fun getTags(): Flowable<RealmResults<Tag>>
     fun getTags(userId: String): Flowable<RealmResults<Tag>>
 
     fun createTag(tag: Tag): Flowable<Tag>

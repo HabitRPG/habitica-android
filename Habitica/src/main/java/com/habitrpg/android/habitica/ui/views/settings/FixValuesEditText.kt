@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import kotlinx.android.synthetic.main.fixvalues_edittext.view.*
 
@@ -28,7 +27,7 @@ class FixValuesEditText(context: Context, attrs: AttributeSet) : FrameLayout(con
         val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg)
         backgroundDrawable?.setColorFilter(field, PorterDuff.Mode.MULTIPLY)
         backgroundDrawable?.alpha = 50
-        iconBackgroundView.backgroundCompat = backgroundDrawable
+        iconBackgroundView.background = backgroundDrawable
     }
 
     init {

@@ -96,7 +96,7 @@
   <string name="friday">Penktadienis</string>
   <string name="saturday">Šeštadienis</string>
   <string name="sunday">Sekmadienis</string>
-  <string name="levelup_button">Valio!</string>
+  <string name="onwards">Valio!</string>
   <string name="faint_subtitle">Nepergyvenk!</string>
   <string name="faint_header">Tavo gyvybingumas išseko!</string>
   <string name="faint_button">Atstatyti Gyvybes ir bandyti dar kartą</string>
@@ -251,14 +251,14 @@
   <string name="feed_to_pet">Maitinti gyvūnui</string>
   <string name="hatch_egg">Išperėti kiaušinį</string>
   <string name="invite_party">Pakviesti grupę</string>
-  <string name="dialog_feeding">Pašerti %1$s %2$s su:</string>
+  <string name="dialog_feeding">Pašerti %s su:</string>
   <string name="use_animal">Naudoti</string>
   <string name="feed">Maitinti</string>
   <string name="hatch_with">Užauginti gyvūną su %s</string>
   <string name="hatched_pet_title">Užauginai %1$s %2$s!</string>
   <string name="close">Uždaryti</string>
   <string name="share">Dalintis</string>
-  <string name="notification_pet_fed">Pašėrei savo %1$s %2$s!</string>
+  <string name="notification_pet_fed">Pašėrei savo %s!</string>
   <string name="world_quest">Pasaulinė Misija</string>
   <string name="empty_items">Nebeturi %s</string>
   <string name="warrior">Karys</string>
@@ -290,7 +290,7 @@
   <string name="invite_users">Pakviesk į Grupę</string>
   <string name="share_using">Pasidalinti su</string>
   <string name="share_hatched">Kątik gavau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
-  <string name="share_raised">Kątik užauginau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
+  <string name="share_raised">Kątik užauginau %1$s Habitica augintinį atliekant kasdienes užduotis!</string>
   <string name="open_in_store">Atidaryti play parduotuvėje</string>
   <string name="change_class_confirmation">Ar tikrai nori pasikeisti savo klasę? Tai kainuos 3 brangakmenius.</string>
   <string name="leaderMessage">Žinutė nuo %1$s</string>

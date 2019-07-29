@@ -1,12 +1,13 @@
 package com.habitrpg.android.habitica.data
 
+import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
-import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -51,6 +52,8 @@ interface UserRepository : BaseRepository {
     fun runCron()
 
     fun readNotification(id: String): Flowable<List<*>>
+    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
+    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
 
     fun changeCustomDayStart(dayStartTime: Int): Flowable<User>
 
@@ -63,10 +66,16 @@ interface UserRepository : BaseRepository {
 
     fun updateLoginName(newLoginName: String, password: String? = null): Maybe<User>
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
-    fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void>
+    fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
 
     fun allocatePoint(user: User?, stat: String): Flowable<Stats>
 
     fun bulkAllocatePoints(user: User?, strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
+    fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User>
+    fun retrieveAchievements(): Flowable<List<Achievement>>
+    fun getAchievements(): Flowable<RealmResults<Achievement>>
+    fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>>
+
+    fun getIsUserOnQuest(): Flowable<Boolean>
 }

@@ -6,12 +6,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.HabitScoreEvent
-import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
-import org.greenrobot.eventbus.EventBus
+import com.habitrpg.android.habitica.ui.helpers.bindView
 
-class HabitViewHolder(itemView: View) : BaseTaskViewHolder(itemView) {
+class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), openTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc) {
 
     private val btnPlusWrapper: FrameLayout by bindView(itemView, R.id.btnPlusWrapper)
     private val btnPlusIconView: ImageView by bindView(itemView, R.id.btnPlusIconView)
@@ -35,7 +34,7 @@ class HabitViewHolder(itemView: View) : BaseTaskViewHolder(itemView) {
         btnMinus.setOnClickListener { onMinusButtonClicked() }
     }
 
-    override fun bindHolder(newTask: Task, position: Int) {
+    override fun bind(newTask: Task, position: Int) {
         this.task = newTask
         if (newTask.up == true) {
             this.btnPlusWrapper.setBackgroundResource(newTask.lightTaskColor)
@@ -83,21 +82,15 @@ class HabitViewHolder(itemView: View) : BaseTaskViewHolder(itemView) {
         } else {
             streakTextView.visibility = View.GONE
         }
-        super.bindHolder(newTask, position)
+        super.bind(newTask, position)
     }
 
-    fun onPlusButtonClicked() {
-        val event = HabitScoreEvent()
-        event.Up = true
-        event.habit = task
-        EventBus.getDefault().post(event)
+    private fun onPlusButtonClicked() {
+        task?.let { scoreTaskFunc.invoke(it, TaskDirection.UP) }
     }
 
-    fun onMinusButtonClicked() {
-        val event = HabitScoreEvent()
-        event.Up = false
-        event.habit = task
-        EventBus.getDefault().post(event)
+    private fun onMinusButtonClicked() {
+        task?.let { scoreTaskFunc.invoke(it, TaskDirection.DOWN) }
     }
 
     override fun setDisabled(openTaskDisabled: Boolean, taskActionsDisabled: Boolean) {

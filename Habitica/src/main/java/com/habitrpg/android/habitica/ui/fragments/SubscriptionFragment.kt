@@ -7,32 +7,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.UserSubscribedEvent
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity
 import com.habitrpg.android.habitica.ui.activities.GiftIAPActivity
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_subscription.*
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.*
-import java.util.HashMap
 import javax.inject.Inject
 
 class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragment {
@@ -42,7 +40,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
-    lateinit var remoteConfigManager: RemoteConfigManager
+    lateinit var appConfigManager: AppConfigManager
 
     private val giftOneGetOneContainer: ViewGroup? by bindView(R.id.gift_subscription_container)
     private val giftOneGetOneButton: Button? by bindView(R.id.gift_subscription_promo_button)
@@ -92,10 +90,6 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         fetchUser(null)
 
-        val additionalData = HashMap<String, Any>()
-        additionalData["page"] = "Subscription Page"
-        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
-
         return inflater.inflate(R.layout.fragment_subscription, container, false)
     }
 
@@ -128,7 +122,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         subscribeButton.setOnClickListener { subscribeUser() }
 
-        giftOneGetOneContainer?.isVisible = remoteConfigManager.enableGiftOneGetOne()
+        giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
     }
 
     private fun toggleDescriptionView(button: ImageView?, descriptionView: TextView?) {
@@ -141,7 +135,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
         }
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -221,13 +215,13 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     }
 
     private fun purchaseSubscription() {
-        selectedSubscriptionSku?.id?.code.notNull { code ->
+        selectedSubscriptionSku?.id?.code?.let { code ->
             billingRequests?.isPurchased(ProductTypes.SUBSCRIPTION, code, object : RequestListener<Boolean> {
                 override fun onSuccess(aBoolean: Boolean) {
                     if (!aBoolean) {
                         // no current product exist
                         val checkout = listener?.activityCheckout
-                        checkout.notNull {
+                        checkout?.let {
                             billingRequests?.purchase(ProductTypes.SUBSCRIPTION, code, null, it.purchaseFlow)
                         }
                     }
@@ -261,7 +255,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
             if (isSubscribed) {
                 this.subscriptionDetailsView?.visibility = View.VISIBLE
-                plan.notNull { this.subscriptionDetailsView?.setPlan(it) }
+                plan?.let { this.subscriptionDetailsView?.setPlan(it) }
                 this.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt_thanks)
                 this.subscriptionOptions?.visibility = View.GONE
             } else {
@@ -282,22 +276,20 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     private fun showGiftSubscriptionDialog() {
         val chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
 
-        this.activity.notNull { thisActivity ->
-            val alert = AlertDialog.Builder(thisActivity)
-                    .setTitle(getString(R.string.gift_title))
-                    .setPositiveButton(getString(R.string.action_continue)) { _, _ ->
+        this.activity?.let { thisActivity ->
+            val alert = HabiticaAlertDialog(thisActivity)
+            alert.setTitle(getString(R.string.gift_title))
+            alert.addButton(getString(R.string.action_continue), true) { _, _ ->
                         val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
                         val intent = Intent(thisActivity, GiftIAPActivity::class.java).apply {
                             putExtra("username", usernameEditText?.text.toString())
                         }
                         startActivity(intent)
                     }
-                    .setNeutralButton(getString(R.string.action_cancel)) { dialog, _ ->
-                        KeyboardUtil.dismissKeyboard(thisActivity)
-                        dialog.cancel()
+            alert.addCancelButton() { dialog, _ ->
+                        thisActivity.dismissKeyboard()
                     }
-                    .create()
-            alert.setView(chooseRecipientDialogView)
+            alert.setAdditionalContentView(chooseRecipientDialogView)
             alert.show()
         }
     }

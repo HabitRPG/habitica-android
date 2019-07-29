@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -36,7 +35,7 @@ class FAQDetailFragment : BaseMainFragment() {
 
         resetViews()
 
-        arguments.notNull {
+        arguments?.let {
             val args = FAQDetailFragmentArgs.fromBundle(it)
             compositeSubscription.add(faqRepository.getArticle(args.position).subscribe(Consumer { faq ->
                 this.questionTextView?.text = faq.question
@@ -47,7 +46,7 @@ class FAQDetailFragment : BaseMainFragment() {
         this.answerTextView?.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 }

@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -38,10 +37,10 @@ class FAQOverviewFragment : BaseMainFragment() {
         resetViews()
 
         adapter = FAQOverviewRecyclerAdapter()
-        adapter?.getResetWalkthroughEvents()?.subscribe(Consumer { this.userRepository.resetTutorial(user) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
+        adapter?.getResetWalkthroughEvents()?.subscribe(Consumer { this.userRepository.resetTutorial(user) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         adapter?.activity = activity
         recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        activity.notNull { recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)) }
+        activity?.let { recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)) }
         recyclerView?.adapter = adapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadArticles()
@@ -52,12 +51,12 @@ class FAQOverviewFragment : BaseMainFragment() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
     private fun loadArticles() {
-        if (user == null || adapter == null) {
+        if (adapter == null) {
             return
         }
         compositeSubscription.add(faqRepository.getArticles().subscribe(Consumer { adapter?.setArticles(it) }, RxErrorHandler.handleEmptyError()))

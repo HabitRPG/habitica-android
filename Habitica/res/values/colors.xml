@@ -5,7 +5,7 @@
     <color name="brand_100">#432874</color>
     <color name="brand_200">#4f2a93</color>
     <color name="brand_300">#6133B4</color>
-    <color name="brand_400">#9A62FF</color>
+    <color name="brand_400">#925CF3</color>
     <color name="brand_500">#bda8ff</color>
     <color name="brand_700">#ede7f6</color>
     <color name="brand">@color/brand_100</color>
@@ -36,6 +36,7 @@
     <color name="green_100">#24CC8F</color>
     <color name="green_50">#20B780</color>
     <color name="green_10">#1CA372</color>
+    <color name="green_5">#168059</color>
 
     <color name="teal_500">#8eedf6</color>
     <color name="teal_100">#3BCAD7</color>
@@ -46,6 +47,7 @@
     <color name="blue_100">#50B5E9</color>
     <color name="blue_50">#46A7D9</color>
     <color name="blue_10">#2995cd</color>
+    <color name="blue_5">#217AA6</color>
 
 
     <color name="gray_10">#34313a</color>
@@ -96,6 +98,7 @@
     <!-- dialog -->
     <color name="primary_text_light">#000000</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent_white">#00FFFFFF</color>
 
     <!--  clock styled weekdays -->
     <color name="days_gray">#ffb5b5b5</color>
@@ -140,6 +143,7 @@
     <color name="black_10_alpha">#16000000</color>
     <color name="black_20_alpha">#33000000</color>
     <color name="black_50_alpha">#89000000</color>
+    <color name="gray_20_alpha">#331a181d</color>
     <color name="light_gray_bg">#F6F4F8</color>
 
     <color name="skin_ddc994">#ddc994</color>
@@ -167,4 +171,5 @@
     <color name="bb_inActiveBottomBarItemColor">#747474</color>
     <color name="bb_darkBackgroundColor">#212121</color>
     <color name="bb_tabletRightBorderDark">#505050</color>
+    <color name="dark_brown">#794b00</color>
 </resources>

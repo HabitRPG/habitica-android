@@ -1,15 +1,14 @@
 package com.habitrpg.android.habitica.ui.views.insufficientCurrency
 
 import android.content.Context
-
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class InsufficientGoldDialog(context: Context) : InsufficientCurrencyDialog(context) {
     init {
-
-        imageView.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
+        imageView.setImageResource(R.drawable.gold_multiple)
         textView.text = context.getString(R.string.insufficientGold)
-        setTitle(R.string.insufficientSubscriberGemsTitle)
+        setTitle(R.string.insufficientGoldTitle)
+
+        addButton(R.string.take_me_back, true)
     }
 }

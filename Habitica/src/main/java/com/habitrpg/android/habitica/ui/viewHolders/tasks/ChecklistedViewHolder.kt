@@ -2,8 +2,6 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
 import android.graphics.Rect
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.TouchDelegate
 import android.view.View
@@ -12,22 +10,22 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import net.pherth.android.emoji_library.EmojiTextView
-import org.greenrobot.eventbus.EventBus
 
-abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemView), CompoundButton.OnCheckedChangeListener {
+abstract class ChecklistedViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> Unit), var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit), openTaskFunc: ((Task) -> Unit)) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc), CompoundButton.OnCheckedChangeListener {
 
     private val checkboxHolder: ViewGroup by bindView(itemView, R.id.checkBoxHolder)
     internal val checkbox: CheckBox by bindView(itemView, R.id.checkBox)
@@ -44,7 +42,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
         expandCheckboxTouchArea(checkboxHolder, checkbox)
     }
 
-    override fun bindHolder(newTask: Task, position: Int) {
+    override fun bind(newTask: Task, position: Int) {
         var completed = newTask.completed
         if (newTask.isPendingApproval) {
             completed = false
@@ -68,7 +66,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
         } else {
             this.rightBorderView?.setBackgroundColor(this.taskGray)
         }
-        super.bindHolder(newTask, position)
+        super.bind(newTask, position)
     }
 
     abstract fun shouldDisplayAsActive(newTask: Task): Boolean
@@ -82,7 +80,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
                 for (item in this.task?.checklist ?: emptyList<ChecklistItem>()) {
                     val itemView = layoutInflater?.inflate(R.layout.checklist_item_row, this.checklistView, false) as? LinearLayout
                     val checkbox = itemView?.findViewById<CheckBox>(R.id.checkBox)
-                    val textView = itemView?.findViewById<EmojiTextView>(R.id.checkedTextView)
+                    val textView = itemView?.findViewById<HabiticaEmojiTextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
                     if (item.text != null) {
@@ -94,10 +92,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
                     }
                     checkbox?.isChecked = item.completed
                     checkbox?.setOnCheckedChangeListener { _, _ ->
-                        val event = ChecklistCheckedCommand()
-                        event.task = task
-                        event.item = item
-                        EventBus.getDefault().post(event)
+                        task?.let { scoreChecklistItemFunc(it, item) }
                     }
                     val checkboxHolder = itemView?.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
                     expandCheckboxTouchArea(checkboxHolder, checkbox)
@@ -116,8 +111,8 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
     private fun onChecklistIndicatorClicked() {
         expandedChecklistRow = if (this.shouldDisplayExpandedChecklist()) null else adapterPosition
         if (this.shouldDisplayExpandedChecklist()) {
-            val recyclerView = this.checklistView.parent.parent as? androidx.recyclerview.widget.RecyclerView
-            val layoutManager = recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+            val recyclerView = this.checklistView.parent.parent as? RecyclerView
+            val layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
             layoutManager?.scrollToPositionWithOffset(this.adapterPosition, 15)
         }
         updateChecklistDisplay()
@@ -142,13 +137,7 @@ abstract class ChecklistedViewHolder(itemView: View) : BaseTaskViewHolder(itemVi
                 return
             }
             if (isChecked != task?.completed) {
-                val event = TaskCheckedCommand()
-                event.Task = task
-                event.completed = task?.completed == false
-
-                // it needs to be changed after the event is send -> to the server
-                // maybe a refactor is needed here
-                EventBus.getDefault().post(event)
+                task?.let { scoreTaskFunc(it, if (task?.completed == false) TaskDirection.UP else TaskDirection.DOWN) }
             }
         }
     }

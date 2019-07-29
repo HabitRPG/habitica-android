@@ -1,30 +1,29 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.HabiticaPurchaseVerifier
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import io.reactivex.functions.Consumer
@@ -40,7 +39,7 @@ class GiftIAPActivity: BaseActivity() {
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
-    lateinit var remoteConfigManager: RemoteConfigManager
+    lateinit var appConfigManager: AppConfigManager
 
     var activityCheckout: ActivityCheckout? = null
         private set
@@ -71,7 +70,7 @@ class GiftIAPActivity: BaseActivity() {
         return R.layout.activity_gift_iap
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
@@ -87,10 +86,10 @@ class GiftIAPActivity: BaseActivity() {
         giftedUsername = intent.getStringExtra("username")
 
         subscriptionButton?.setOnClickListener {
-            selectedSubscriptionSku?.notNull { sku -> purchaseSubscription(sku) }
+            selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
 
-        giftOneGetOneContainer?.isVisible = remoteConfigManager.enableGiftOneGetOne()
+        giftOneGetOneContainer?.isVisible = appConfigManager.enableGiftOneGetOne()
 
         compositeSubscription.add(socialRepository.getMemberWithUsername(giftedUsername).subscribe(Consumer {
             avatarView.setAvatar(it)
@@ -174,7 +173,7 @@ class GiftIAPActivity: BaseActivity() {
     }
 
     private fun setupCheckout() {
-        HabiticaBaseApplication.getInstance(this)?.billing.notNull {
+        HabiticaBaseApplication.getInstance(this)?.billing?.let {
             activityCheckout = Checkout.forActivity(this, it)
             activityCheckout?.start()
         }
@@ -236,7 +235,7 @@ class GiftIAPActivity: BaseActivity() {
         if (giftedUserID?.isNotEmpty() != true) {
             return
         }
-        activityCheckout.notNull {
+        activityCheckout?.let {
             HabiticaPurchaseVerifier.pendingGifts[sku.id.code] = giftedUserID
             billingRequests?.purchase(ProductTypes.IN_APP, sku.id.code, null, it.purchaseFlow)
         }
@@ -244,7 +243,7 @@ class GiftIAPActivity: BaseActivity() {
 
 
     @Subscribe
-    public fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
+    fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         consumePurchase(event.purchase)
         runOnUiThread {
             displayConfirmationDialog()
@@ -262,19 +261,19 @@ class GiftIAPActivity: BaseActivity() {
     }
 
     private fun displayConfirmationDialog() {
-        val message = getString(if (remoteConfigManager.enableGiftOneGetOne()){
+        val message = getString(if (appConfigManager.enableGiftOneGetOne()){
             R.string.gift_confirmation_text_g1g1
         } else {
             R.string.gift_confirmation_text
         }, giftedUsername, selectedDurationString())
-        AlertDialog.Builder(this)
-                .setTitle(R.string.gift_confirmation_title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok) { dialog, _ ->
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.gift_confirmation_title)
+        alert.setMessage(message)
+        alert.addOkButton { dialog, _ ->
                     dialog.dismiss()
                     finish()
                 }
-                .show()
+        alert.show()
     }
 
     private fun consumePurchase(purchase: Purchase) {

@@ -16,5 +16,37 @@
         <key>spriteSubstitutions</key>
         <value>{}</value>
     </entry>
+    <entry>
+        <key>enableUsernameAutocomplete</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>enableLocalChanges</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>enableLocalTaskScoring</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>lastVersionNumber</key>
+        <value>1.0</value>
+    </entry>
+    <entry>
+        <key>lastVersionCode</key>
+        <value>0</value>
+    </entry>
+    <entry>
+        <key>noPartyLinkPartyGuild</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>supportEmail</key>
+        <value>admin@habitica.com</value>
+    </entry>
+    <entry>
+        <key>flipAddTaskBehaviour</key>
+        <value>true</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

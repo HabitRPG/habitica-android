@@ -3,16 +3,13 @@ package com.habitrpg.android.habitica.utils
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestMember
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
-
-import java.lang.reflect.Type
-
 import io.realm.RealmList
+import java.lang.reflect.Type
 
 class QuestDeserializer : JsonDeserializer<Quest> {
     @Throws(JsonParseException::class)

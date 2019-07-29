@@ -1,15 +1,14 @@
 package com.habitrpg.android.habitica.ui.helpers
 
 import android.content.Context
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Point
 import android.os.Build
-import androidx.annotation.IntRange
 import android.util.DisplayMetrics
-import android.view.*
-import androidx.annotation.IntegerRes
-
+import android.view.KeyCharacterMap
+import android.view.KeyEvent
+import android.view.ViewConfiguration
+import android.view.WindowManager
+import androidx.annotation.IntRange
 import com.habitrpg.android.habitica.R
 
 object NavbarUtils {

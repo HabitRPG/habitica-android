@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/buyButton"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:gravity="center"
+    android:background="@drawable/layout_rounded_bg_gray_700"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+    <TextView
+        android:id="@+id/buy_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reward.dialog.buy"
+        android:textColor="@color/brand_300"
+        style="@style/Subheader1" />
+    <com.habitrpg.android.habitica.ui.views.CurrencyView
+        android:id="@+id/priceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="10"
+        tools:textColor="@color/green_10"
+        style="@style/Subheader1"
+        app:hasLightBackground="true"
+        android:layout_marginStart="12dp"/>
+</LinearLayout>

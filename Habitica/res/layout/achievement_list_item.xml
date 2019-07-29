@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingTop="13dp"
+    android:paddingBottom="13dp">
+<RelativeLayout
+    android:layout_width="100dp"
+    android:layout_height="86dp">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/achievement_icon"
+        android:layout_width="48dp"
+        android:layout_height="52dp"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/achievement_count_label"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:minWidth="24dp"
+        android:background="@drawable/achievement_badge_bg"
+        android:gravity="center"
+        tools:text="1"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="0dp"/>
+</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/spacing_large">
+        <TextView
+            android:id="@+id/achievement_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Body1"
+            android:textColor="@color/gray_100"/>
+        <TextView
+            android:id="@+id/achievement_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Caption3"
+            android:textColor="@color/gray_100"/>
+    </LinearLayout>r
+</LinearLayout>

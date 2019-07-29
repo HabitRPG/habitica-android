@@ -2,9 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.setup
 
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +9,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
@@ -29,7 +29,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView
-import org.greenrobot.eventbus.EventBus
+import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 
@@ -37,11 +37,15 @@ class AvatarSetupFragment : BaseFragment() {
 
     @Inject
     lateinit var customizationRepository: SetupCustomizationRepository
+    @Inject
+    lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
     
     var activity: SetupActivity? = null
     var width: Int = 0
     private val avatarView: AvatarView? by bindOptionalView(R.id.avatarView)
-    private val customizationList: androidx.recyclerview.widget.RecyclerView? by bindOptionalView(R.id.customization_list)
+    private val customizationList: RecyclerView? by bindOptionalView(R.id.customization_list)
     private val subCategoryTabs: TabLayout? by bindOptionalView(R.id.subcategory_tabs)
     private val bodyButton: AvatarCategoryView? by bindOptionalView(R.id.body_button)
     private val skinButton: AvatarCategoryView? by bindOptionalView(R.id.skin_button)
@@ -52,7 +56,7 @@ class AvatarSetupFragment : BaseFragment() {
     private val randomizeButton: Button? by bindOptionalView(R.id.randomize_button)
 
     internal var adapter: CustomizationSetupAdapter? = null
-    internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+    internal var layoutManager: LinearLayoutManager = LinearLayoutManager(activity)
 
     private var user: User? = null
     private var subcategories: List<String> = emptyList()
@@ -63,11 +67,6 @@ class AvatarSetupFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
-        val additionalData = HashMap<String, Any>()
-        additionalData["page"] = "Avatar Setup"
-        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
-
         return container?.inflate(R.layout.fragment_setup_avatar)
     }
 
@@ -78,10 +77,12 @@ class AvatarSetupFragment : BaseFragment() {
 
         this.adapter = CustomizationSetupAdapter()
         this.adapter?.userSize = this.user?.preferences?.size ?: "slim"
+        adapter?.updateUserEvents?.flatMap { userRepository.updateUser(user, it) }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
+        adapter?.equipGearEvents?.flatMap { inventoryRepository.equip(user, "equipped", it) }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
 
         this.adapter?.user = this.user
-        this.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        this.layoutManager.orientation = androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
+        this.layoutManager = LinearLayoutManager(activity)
+        this.layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         this.customizationList?.layoutManager = this.layoutManager
 
         this.customizationList?.adapter = this.adapter
@@ -124,7 +125,7 @@ class AvatarSetupFragment : BaseFragment() {
         }
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -147,7 +148,7 @@ class AvatarSetupFragment : BaseFragment() {
     }
 
     private fun updateAvatar() {
-        user.notNull {
+        user?.let {
             avatarView?.setAvatar(it)
         }
     }
@@ -158,8 +159,8 @@ class AvatarSetupFragment : BaseFragment() {
         this.activeCategory = "body"
         this.subCategoryTabs?.removeAllTabs()
         this.subcategories = Arrays.asList("size", "shirt")
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_size).notNull { this.subCategoryTabs?.addTab(it) }
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_shirt).notNull { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_size)?.let { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_shirt)?.let { this.subCategoryTabs?.addTab(it) }
         loadCustomizations()
     }
 
@@ -168,7 +169,7 @@ class AvatarSetupFragment : BaseFragment() {
         this.activeCategory = "skin"
         this.subCategoryTabs?.removeAllTabs()
         this.subcategories = listOf("color")
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_skin_color).notNull { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_skin_color)?.let { this.subCategoryTabs?.addTab(it) }
         loadCustomizations()
     }
 
@@ -177,9 +178,9 @@ class AvatarSetupFragment : BaseFragment() {
         this.activeCategory = "hair"
         this.subCategoryTabs?.removeAllTabs()
         this.subcategories = Arrays.asList("bangs", "color", "ponytail")
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_bangs).notNull { this.subCategoryTabs?.addTab(it) }
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_color).notNull { this.subCategoryTabs?.addTab(it) }
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_ponytail).notNull { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_bangs)?.let { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_color)?.let { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_hair_ponytail)?.let { this.subCategoryTabs?.addTab(it) }
         loadCustomizations()
     }
 
@@ -188,15 +189,14 @@ class AvatarSetupFragment : BaseFragment() {
         this.activeCategory = "extras"
         this.subCategoryTabs?.removeAllTabs()
         this.subcategories = Arrays.asList("glasses", "flower", "wheelchair")
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_glasses).notNull { this.subCategoryTabs?.addTab(it) }
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_flower).notNull { this.subCategoryTabs?.addTab(it) }
-        subCategoryTabs?.newTab()?.setText(R.string.avatar_wheelchair).notNull { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_glasses)?.let { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_flower)?.let { this.subCategoryTabs?.addTab(it) }
+        subCategoryTabs?.newTab()?.setText(R.string.avatar_wheelchair)?.let { this.subCategoryTabs?.addTab(it) }
         loadCustomizations()
     }
 
     private fun randomizeCharacter() {
         val user = this.user ?: return
-        val command = UpdateUserCommand()
         val updateData = HashMap<String, Any>()
         updateData["preferences.size"] = chooseRandomKey(customizationRepository.getCustomizations("body", "size", user), false)
         updateData["preferences.shirt"] = chooseRandomKey(customizationRepository.getCustomizations("body", "shirt", user), false)
@@ -206,9 +206,7 @@ class AvatarSetupFragment : BaseFragment() {
         updateData["preferences.hair.bangs"] = chooseRandomKey(customizationRepository.getCustomizations("hair", "bangs", user), false)
         updateData["preferences.hair.flower"] = chooseRandomKey(customizationRepository.getCustomizations("extras", "flower", user), true)
         updateData["preferences.chair"] = chooseRandomKey(customizationRepository.getCustomizations("extras", "wheelchair", user), true)
-        command.updateData = updateData
-
-        EventBus.getDefault().post(command)
+        compositeSubscription.add(userRepository.updateUser(user, updateData).subscribeWithErrorHandler(Consumer {}))
     }
 
     @Suppress("ReturnCount")

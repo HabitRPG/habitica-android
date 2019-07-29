@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.api;
 
-import com.habitrpg.android.habitica.models.AchievementResult;
+import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
@@ -34,8 +34,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -236,7 +234,7 @@ public interface ApiService {
     Flowable<HabitResponse<ChatMessage>> likeMessage(@Path("gid") String groupId, @Path("mid") String mid);
 
     @POST("groups/{gid}/chat/{mid}/flag")
-    Flowable<HabitResponse<Void>> flagMessage(@Path("gid") String groupId, @Path("mid") String mid);
+    Flowable<HabitResponse<Void>> flagMessage(@Path("gid") String groupId, @Path("mid") String mid, @Body Map<String, String> data);
 
     @POST("groups/{gid}/chat/seen")
     Flowable<HabitResponse<Void>> seenMessages(@Path("gid") String groupId);
@@ -286,7 +284,7 @@ public interface ApiService {
     Flowable<HabitResponse<Member>> getMemberWithUsername(@Path("username") String username);
 
     @GET("members/{mid}/achievements")
-    Flowable<HabitResponse<AchievementResult>> getMemberAchievements(@Path("mid") String memberId);
+    Flowable<HabitResponse<List<Achievement>>> getMemberAchievements(@Path("mid") String memberId);
 
     @POST("members/send-private-message")
     Flowable<HabitResponse<PostChatMessageResult>> postPrivateMessage(@Body Map<String, String> messageDetails);
@@ -349,6 +347,12 @@ public interface ApiService {
     // Notifications
     @POST("notifications/{notificationId}/read")
     Flowable<HabitResponse<List>> readNotification(@Path("notificationId") String notificationId);
+
+    @POST("notifications/read")
+    Flowable<HabitResponse<List>> readNotifications(@Body Map<String, List<String>> notificationIds);
+
+    @POST("notifications/see")
+    Flowable<HabitResponse<List>> seeNotifications(@Body Map<String, List<String>> notificationIds);
 
     @POST("user/open-mystery-item")
     Flowable<HabitResponse<Equipment>> openMysteryItem();

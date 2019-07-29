@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
@@ -36,7 +33,7 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
     }
 
     override fun onBindViewHolder(holder: GearViewHolder, position: Int) {
-        data.notNull {
+        data?.let {
             holder.bind(it[position])
         }
     }
@@ -87,11 +84,11 @@ class EquipmentRecyclerViewAdapter(data: OrderedRealmCollection<Equipment>?, aut
             if (gear.key == equippedGear) {
                 this.equippedIndicator.visibility = View.VISIBLE
                 this.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_700))
-                imageViewWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_white)
+                imageViewWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_white)
             } else {
                 this.equippedIndicator.visibility = View.GONE
                 this.gearContainer.setBackgroundResource(R.drawable.selection_highlight)
-                imageViewWrapper.backgroundCompat = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_700)
+                imageViewWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_700)
             }
             twoHandedView.visibility = if (gear.twoHanded) View.VISIBLE else View.GONE
             DataBindingUtils.loadImage(imageView, "shop_"+gear.key)

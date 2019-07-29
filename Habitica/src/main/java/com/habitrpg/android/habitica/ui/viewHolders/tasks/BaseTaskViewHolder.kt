@@ -1,27 +1,25 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.*
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.TaskTappedEvent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindColor
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import org.greenrobot.eventbus.EventBus
 
-abstract class BaseTaskViewHolder constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+abstract class BaseTaskViewHolder constructor(itemView: View, var scoreTaskFunc: ((Task, TaskDirection) -> Unit), var openTaskFunc: ((Task) -> Unit)) : BindableViewHolder<Task>(itemView), View.OnClickListener {
 
 
     var task: Task? = null
@@ -104,68 +102,68 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : androidx.recycle
         }
     }
 
-    open fun bindHolder(newTask: Task, position: Int) {
-        task = newTask
+    override fun bind(data: Task, position: Int) {
+        task = data
         itemView.setBackgroundResource(R.color.white)
 
-        if (newTask.notes?.isNotEmpty() == true) {
+        expandNotesButton?.visibility = View.GONE
+        if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             //expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
         } else {
             notesTextView?.visibility = View.GONE
-            expandNotesButton?.visibility = View.GONE
         }
 
         if (canContainMarkdown()) {
-            if (newTask.parsedText != null) {
-                titleTextView.text = newTask.parsedText
+            if (data.parsedText != null) {
+                titleTextView.text = data.parsedText
             } else {
-                titleTextView.text = newTask.text
-                if (newTask.text.isNotEmpty()) {
-                    Single.just(newTask.text)
+                titleTextView.text = data.text
+                if (data.text.isNotEmpty()) {
+                    Single.just(data.text)
                             .map { MarkdownParser.parseMarkdown(it) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(Consumer{ parsedText ->
-                                newTask.parsedText = parsedText
+                                data.parsedText = parsedText
                                 titleTextView.text = parsedText
                             }, RxErrorHandler.handleEmptyError())
                 }
-            if (newTask.parsedNotes != null) {
-                notesTextView?.text = newTask.parsedNotes
+            if (data.parsedNotes != null) {
+                notesTextView?.text = data.parsedNotes
             } else {
-                notesTextView?.text = newTask.notes
-                newTask.notes.notNull {notes ->
+                notesTextView?.text = data.notes
+                data.notes?.let {notes ->
                     if (notes.isEmpty()) {
-                        return@notNull
+                        return@let
                     }
                     Single.just(notes)
                             .map { MarkdownParser.parseMarkdown(it) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(Consumer { parsedNotes ->
-                                newTask.parsedNotes = parsedNotes
+                                data.parsedNotes = parsedNotes
                                 notesTextView?.text = parsedNotes
                             }, RxErrorHandler.handleEmptyError())
                 }
             }
             }
         } else {
-            titleTextView.text = newTask.text
-            notesTextView?.text = newTask.notes
+            titleTextView.text = data.text
+            notesTextView?.text = data.notes
         }
 
-        rightBorderView?.setBackgroundResource(newTask.lightTaskColor)
-        iconViewReminder?.visibility = if (newTask.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
-        iconViewTag?.visibility = if (newTask.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
+        rightBorderView?.setBackgroundResource(data.lightTaskColor)
+        iconViewReminder?.visibility = if (data.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
+        iconViewTag?.visibility = if (data.tags?.size ?: 0 > 0) View.VISIBLE else View.GONE
 
         iconViewChallenge?.visibility = View.GONE
 
-        configureSpecialTaskTextView(newTask)
+        configureSpecialTaskTextView(data)
 
         taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
 
-        if (newTask.isPendingApproval) {
+        if (data.isPendingApproval) {
             approvalRequiredTextView?.visibility = View.VISIBLE
         } else {
             approvalRequiredTextView?.visibility = View.GONE
@@ -185,10 +183,7 @@ abstract class BaseTaskViewHolder constructor(itemView: View) : androidx.recycle
             return
         }
 
-        val event = TaskTappedEvent()
-        event.Task = task
-
-        EventBus.getDefault().post(event)
+        task?.let { openTaskFunc(it) }
     }
 
     open fun canContainMarkdown(): Boolean {

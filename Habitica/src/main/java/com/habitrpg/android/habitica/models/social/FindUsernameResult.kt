@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.models.social
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.ContributorInfo
+import com.habitrpg.android.habitica.models.user.Profile
 import io.realm.annotations.PrimaryKey
 
 class FindUsernameResult {
@@ -12,6 +13,7 @@ class FindUsernameResult {
 
     var contributor: ContributorInfo? = null
     var authentication: Authentication? = null
+    var profile: Profile? = null
 
     val username: String?
         get() = authentication?.localAuthentication?.username

@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
-import io.reactivex.ObservableTransformer
 import retrofit2.HttpException
 
 
@@ -150,7 +149,7 @@ interface ApiClient {
     // Like returns the full chat list
     fun likeMessage(groupId: String, mid: String): Flowable<ChatMessage>
 
-    fun flagMessage(groupId: String, mid: String): Flowable<Void>
+    fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Flowable<Void>
 
     fun seenMessages(groupId: String): Flowable<Void>
 
@@ -180,7 +179,7 @@ interface ApiClient {
     fun getMember(memberId: String): Flowable<Member>
     fun getMemberWithUsername(username: String): Flowable<Member>
 
-    fun getMemberAchievements(memberId: String): Flowable<AchievementResult>
+    fun getMemberAchievements(memberId: String): Flowable<List<Achievement>>
 
     fun postPrivateMessage(messageDetails: Map<String, String>): Flowable<PostChatMessageResult>
 
@@ -213,6 +212,8 @@ interface ApiClient {
 
     // Notifications
     fun readNotification(notificationId: String): Flowable<List<*>>
+    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
+    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>>
 
     fun getErrorResponse(throwable: HttpException): ErrorResponse
 
@@ -241,7 +242,7 @@ interface ApiClient {
 
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
 
-    fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void>
+    fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
 
     fun allocatePoint(stat: String): Flowable<Stats>
 

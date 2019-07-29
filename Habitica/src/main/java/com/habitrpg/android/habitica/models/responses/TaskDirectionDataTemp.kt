@@ -4,7 +4,7 @@ class TaskDirectionDataTemp {
 
     var drop: TaskDirectionDataDrop? = null
     var quest: TaskDirectionDataQuest? = null
-
+    var crit: Float? = null
 }
 
 class TaskDirectionDataQuest {

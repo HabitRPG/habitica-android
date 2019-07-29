@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             tools:text="2"
-            android:background="@drawable/layout_rounded_bg_brand"
+            android:background="@drawable/layout_rounded_bg_primary"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:textSize="12sp"

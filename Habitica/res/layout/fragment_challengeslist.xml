@@ -13,7 +13,7 @@
             android:clipToPadding="false"
             android:divider="@null"
             android:scrollbars="vertical"
-            android:paddingBottom="?attr/actionBarSize" />
+            />
         <LinearLayout
             android:id="@+id/emptyView"
             android:layout_width="match_parent"

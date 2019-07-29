@@ -3,11 +3,11 @@ package com.habitrpg.android.habitica.ui.views
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
 
@@ -54,7 +54,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         } else if ("gems" == currency) {
             icon = HabiticaIconsHelper.imageOfGem()
             if (lightBackground) {
-                setTextColor(ContextCompat.getColor(context, R.color.green_100))
+                setTextColor(ContextCompat.getColor(context, R.color.green_10))
             } else {
                 setTextColor(ContextCompat.getColor(context, R.color.green_50))
             }
@@ -119,7 +119,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         visibility = if ("hourglasses" == this.currency) {
             if ("0" == text) View.GONE else View.VISIBLE
         } else {
-            View.VISIBLE;
+            View.VISIBLE
         }
     }
 }

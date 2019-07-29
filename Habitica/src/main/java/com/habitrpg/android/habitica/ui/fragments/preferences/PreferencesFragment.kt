@@ -14,8 +14,7 @@ import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.ContentResult
@@ -31,13 +30,13 @@ import javax.inject.Inject
 class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
-    lateinit var inventoryRepository: InventoryRepository
+    lateinit var contentRepository: ContentRepository
     @Inject
     lateinit var soundManager: SoundManager
     @Inject
     lateinit  var pushNotificationManager: PushNotificationManager
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
     @Inject
     lateinit var apiClient: ApiClient
 
@@ -47,7 +46,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     private var serverUrlPreference: ListPreference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.component?.inject(this)
+        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
     }
@@ -85,26 +84,18 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when(preference.key) {
             "logout" -> {
-                context.notNull { HabiticaBaseApplication.logout(it) }
+                context?.let { HabiticaBaseApplication.logout(it) }
                 activity?.finish()
             }
             "choose_class" -> {
                 val bundle = Bundle()
-                bundle.putString("size", user?.preferences?.size)
-                bundle.putString("skin", user?.preferences?.skin)
-                bundle.putString("shirt", user?.preferences?.shirt)
-                bundle.putInt("hairBangs", user?.preferences?.hair?.bangs ?: 0)
-                bundle.putInt("hairBase", user?.preferences?.hair?.base ?: 0)
-                bundle.putString("hairColor", user?.preferences?.hair?.color)
-                bundle.putInt("hairMustache", user?.preferences?.hair?.mustache ?: 0)
-                bundle.putInt("hairBeard", user?.preferences?.hair?.beard ?: 0)
                 bundle.putBoolean("isInitialSelection", user?.flags?.classSelected == false)
 
                 val intent = Intent(activity, ClassSelectionActivity::class.java)
                 intent.putExtras(bundle)
 
                 if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
-                    context.notNull { context ->
+                    context?.let { context ->
                         val builder = AlertDialog.Builder(context)
                                 .setMessage(getString(R.string.change_class_confirmation))
                                 .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
@@ -120,7 +111,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "reload_content" -> {
                 @Suppress("DEPRECATION")
                 val dialog = ProgressDialog.show(context, context?.getString(R.string.reloading_content), null, true)
-                inventoryRepository.retrieveContent(true).subscribe({
+                contentRepository.retrieveContent(context,true).subscribe({
                     if (dialog.isShowing) {
                         dialog.dismiss()
                     }
@@ -187,7 +178,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
                 userRepository.updateLanguage(user, languageHelper.languageCode)
-                        .flatMap<ContentResult> { inventoryRepository.retrieveContent(true) }
+                        .flatMap<ContentResult> { contentRepository.retrieveContent(context,true) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
@@ -259,6 +250,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val cdsTimePreference = findPreference("cds_time") as? TimePreference
         cdsTimePreference?.text = user?.preferences?.dayStart.toString() + ":00"
         findPreference("dailyDueDefaultView").setDefaultValue(user?.preferences?.dailyDueDefaultView)
+        val languagePreference = findPreference("language") as? ListPreference
+        languagePreference?.value = user?.preferences?.language
+        languagePreference?.summary = languagePreference?.entry
+        val audioThemePreference = findPreference("audioTheme") as? ListPreference
+        audioThemePreference?.value = user?.preferences?.sound
+        audioThemePreference?.summary = audioThemePreference?.entry
 
         val preference = findPreference("authentication")
         if (user?.flags?.isVerifiedUsername == true) {

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
 
         <item name="android:elevation" tools:targetApi="21">0dp</item>
@@ -18,14 +18,41 @@
         <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/brand</item>
         <item name="colorPrimaryDark">@color/brand_50</item>
-        <item name="colorAccent">@color/brand</item>
+        <item name="colorAccent">@color/brand_400</item>
+        <item name="android:colorPrimary">@color/brand</item>
+        <item name="android:colorPrimaryDark">@color/brand_50</item>
+        <item name="android:colorAccent">@color/brand_400</item>
+        <item name="colorPrimaryOffset">@color/brand_200</item>
+        <item name="colorPrimaryDistinct">@color/brand_500</item>
+        <item name="colorBadgeBackground">@color/brand_400</item>
+
+        <item name="textColorPrimary">@color/gray_50</item>
+        <item name="textColorSecondary">@color/gray_200</item>
+        <item name="textColorPrimaryDark">#D5C8FF</item>
+        <item name="textColorSecondaryDark">@color/brand_500</item>
+
+        <item name="colorContentBackground">@color/white</item>
+        <item name="colorWindowBackground">@color/gray_700</item>
 
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-
+        <item name="android:textColorLink">@color/brand_400</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+
+    <style name="BottomSheetTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="actionBarStyle">@color/transparent</item>
+        <item name="colorPrimary">@color/brand</item>
+        <item name="colorPrimaryDark">@color/brand_50</item>
+        <item name="colorAccent">@color/brand_400</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="AppTheme">
@@ -33,15 +60,53 @@
         <item name="windowNoTitle">false</item>
     </style>
 
-    <style name="AppTheme.ActionBar.Transparent">
+    <style name="AppTheme.ActionBar.Transparent" parent="AppTheme.ActionBar">
+        <item name="actionBarStyle">@style/ActionBarTransparent</item>
+        <item name="android:statusBarColor">@color/brand_50</item>
+        <item name="android:navigationBarColor">@color/brand_50</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBarOverlay">true</item>
     </style>
-    
+
+    <style name="ActionBarTransparent">
+        <item name="android:background">@color/transparent</item>
+    </style>
+
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/brand_50</item>
+        <item name="android:navigationBarColor">@color/brand_50</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.Transparent">
+    <style name="MainAppTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/activity_launch_background</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Green">
+        <item name="colorPrimary">@color/green_10</item>
+        <item name="colorPrimaryDark">@color/green_5</item>
+        <item name="colorAccent">@color/green_100</item>
+        <item name="colorPrimaryOffset">@color/green_50</item>
+        <item name="colorPrimaryDistinct">@color/green_500</item>
+        <item name="colorBadgeBackground">@color/green_100</item>
+        <item name="textColorSecondaryDark">@color/green_500</item>
+        <item name="android:textColorLink">@color/green_100</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Blue">
+        <item name="colorPrimary">@color/blue_10</item>
+        <item name="colorPrimaryDark">@color/blue_5</item>
+        <item name="colorAccent">@color/blue_100</item>
+        <item name="colorPrimaryOffset">@color/blue_50</item>
+        <item name="colorPrimaryDistinct">@color/blue_500</item>
+        <item name="colorBadgeBackground">@color/blue_100</item>
+        <item name="textColorSecondaryDark">@color/blue_500</item>
+        <item name="android:textColorLink">@color/blue_100</item>
     </style>
 
     <style name="AppThemeWithActionBarBlackText" parent="AppTheme.ActionBar">
@@ -140,6 +205,16 @@
         <item name="colorAccent">@color/brand_100</item>
     </style>
 
+    <style name="HabiticaAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/brand_100</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
     <style name="SectionTitle">
         <item name="android:textSize">@dimen/card_medium_text</item>
         <item name="android:textStyle">bold</item>
@@ -156,6 +231,7 @@
     <style name="BottomMenu">
         <item name="android:divider">?android:listDivider</item>
         <item name="android:showDividers">middle</item>
+        <item name="android:paddingBottom">@dimen/spacing_medium</item>
     </style>
     
     <style name="BottomMenuItem">
@@ -187,9 +263,9 @@
         <item name="android:textColor">@color/brand_300</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:drawableLeft">@drawable/ic_check_purple_24dp</item>
+        <item name="android:drawableLeft">@drawable/ic_check_purple</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
     </style>
 
     <style name="SubscriptionListTitle" parent="GemPurchaseListItem">
@@ -286,29 +362,12 @@
         <item name="android:layout_marginRight">16dp</item>
     </style>
 
-    <style name="Button">
-        <item name="android:paddingLeft">@dimen/button_padding</item>
-        <item name="android:paddingRight">@dimen/button_padding</item>
-    </style>
-
-    <style name="Button.Purple">
+    <style name="HabiticaButton.Purple" parent="HabiticaButton">
         <item name="android:background">@drawable/rounded_purple_square</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="Button.Purple.Small">
-        <item name="android:paddingLeft">@dimen/button_padding_small</item>
-        <item name="android:paddingRight">@dimen/button_padding_small</item>
-        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
-        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
-    </style>
-
-    <style name="Button.Yellow">
-        <item name="android:background">@drawable/rounded_yellow_10_square</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Button.Yellow.Small">
+    <style name="HabiticaButton.Purple.Small" parent="HabiticaButton.Purple">
         <item name="android:paddingLeft">@dimen/button_padding_small</item>
         <item name="android:paddingRight">@dimen/button_padding_small</item>
         <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
@@ -374,13 +433,44 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="HabiticaButton" parent="@style/Widget.AppCompat.Button.Borderless">
+    <style name="HabiticaButton" parent="@style/Widget.AppCompat.Button">
         <item name="android:textAllCaps">false</item>
-        <item name="android:minHeight">0dp</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@string/font_family_medium</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:shadowColor">@color/gray_400</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:paddingStart">@dimen/spacing_large</item>
+        <item name="android:paddingEnd">@dimen/spacing_large</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:minWidth">147dp</item>
+    </style>
+
+    <style name="HabiticaButton.Borderless" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@string/font_family_medium</item>
+        <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:shadowColor">@color/transparent</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:paddingStart">@dimen/spacing_large</item>
+        <item name="android:paddingEnd">@dimen/spacing_large</item>
+        <item name="android:minWidth">147dp</item>
+    </style>
+
+    <style name="HabiticaButton.Primary" parent="HabiticaButton">
+        <item name="android:background">@drawable/button_background_primary</item>
+        <item name="android:text">?textColorPrimaryDark</item>
+    </style>
+
+    <style name="HabiticaButton.Small" parent="HabiticaButton">
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:minHeight">@dimen/button_height_small</item>
+        <item name="android:layout_height">@dimen/button_height_small</item>
     </style>
 
     <style name="HabiticaButton.Gray" parent="HabiticaButton">
@@ -397,6 +487,14 @@
         <item name="android:background">@drawable/layout_rounded_bg_red</item>
     </style>
 
+    <style name="HabiticaButton.Blue" parent="HabiticaButton">
+        <item name="android:background">@drawable/layout_rounded_bg_blue</item>
+    </style>
+
+    <style name="HabiticaButton.Red.Small" parent="HabiticaButton.Small">
+        <item name="android:background">@drawable/layout_rounded_bg_red</item>
+    </style>
+
     <style name="SegmentTitle" parent="Headline">
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
     </style>
@@ -405,8 +503,19 @@
         <item name="android:background">@drawable/layout_rounded_bg_green</item>
     </style>
 
+    <style name="HabiticaButton.Green.Small" parent="HabiticaButton.Small">
+        <item name="android:background">@drawable/layout_rounded_bg_green</item>
+    </style>
+
     <style name="HabiticaButton.Yellow" parent="HabiticaButton">
         <item name="android:background">@drawable/layout_rounded_bg_yellow</item>
+    </style>
+
+    <style name="HabiticaButton.Yellow.Small" parent="HabiticaButton.Yellow">
+        <item name="android:paddingLeft">@dimen/button_padding_small</item>
+        <item name="android:paddingRight">@dimen/button_padding_small</item>
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
     </style>
 
     <style name="CurrencyTextView">
@@ -469,5 +578,84 @@
 
     <style name="BB_BottomBarBadge_Text" parent="TextAppearance.AppCompat.Body2">
         <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="ErrorText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/red_100</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="HintText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TaskFormTextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <!-- reference our hint & error styles -->
+        <item name="boxBackgroundColor">@color/white_75_alpha</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColorHint">@color/textColorLight</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="TextInputLayoutAppearanceTheme">
+        <item name="boxBackgroundColor">@color/taskform_gray</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColorHint">@color/gray_300</item>
+        <item name="android:colorControlNormal">@color/gray_400</item>
+        <item name="android:colorControlActivated">@color/brand_400</item>
+        <item name="android:colorControlHighlight">@color/brand_400</item>
+        <item name="android:colorAccent">@color/brand_400</item>
+    </style>
+
+    <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/taskform_gray</item>
+        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColorHint">@color/gray_300</item>
+    </style>
+
+    <style name="TaskFormSectionheader">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/gray_10</item>
+        <item name="android:layout_marginTop">@dimen/spacing_large</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
+    </style>
+
+    <style name="TaskFormToggle">
+        <item name="android:background">@drawable/layout_rounded_bg_white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/spacing_small</item>
+        <item name="android:paddingBottom">@dimen/spacing_small</item>
+        <item name="android:height">28dp</item>
+    </style>
+
+    <style name="TaskFormWeekdayButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">gravity</item>
+    </style>
+
+    <style name="ClassSelectionClassButton">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/layout_rounded_bg_gray_700</item>
+        <item name="android:paddingStart">@dimen/spacing_medium</item>
+        <item name="android:paddingEnd">@dimen/spacing_medium</item>
+    </style>
+
+    <style name="ToolbarDarkBackArrow" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/gray_50</item>
+        <item name="android:actionMenuTextColor">@color/gray_50</item>
+    </style>
+
+    <style name="ReportMessageToolbar">
+        <item name="android:actionMenuTextColor">@color/red_50</item>
+    </style>
+
+    <color name="taskform_gray">#99edecee</color>
+
+    <style name="AlertDialogContainer">
+        <item name="android:layout_width">320dp</item>
     </style>
 </resources>

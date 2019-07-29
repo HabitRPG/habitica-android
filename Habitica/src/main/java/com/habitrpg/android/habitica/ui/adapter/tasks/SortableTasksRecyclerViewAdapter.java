@@ -1,20 +1,21 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import android.content.Context;
+
 import androidx.annotation.Nullable;
 
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
+import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder;
 
 import java.util.Collections;
 
 /**
  * Created by ell on 7/21/16.
  */
-public abstract class SortableTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder>
+public abstract class SortableTasksRecyclerViewAdapter<VH extends BindableViewHolder<Task>>
         extends BaseTasksRecyclerViewAdapter<VH> implements ItemTouchHelperAdapter, ItemTouchHelperDropCallback {
 
     private SortTasksCallback sortCallback;

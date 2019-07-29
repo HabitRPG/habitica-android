@@ -1,1 +1,4 @@
-This update brings username and emoji autocomplete, deep linking (open https://habitica.com urls from anywhere on your device with the app), bigger emojis and bugfixes.
+This beta update stores the apps authentication credentials more securely. The app should automatically update to the new storage method without you having to log in again. If you experience any issues with this, please report them through the in-app-reporting option or to admin@habitica.com
+We updated the app with a new modal design
+
+Be sure to download this update now for a better Habitica experience!

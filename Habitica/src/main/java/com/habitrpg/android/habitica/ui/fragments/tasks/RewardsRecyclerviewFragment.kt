@@ -2,14 +2,13 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
@@ -22,17 +21,17 @@ import java.util.*
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        inventoryRepository.retrieveInAppRewards().subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (layoutManager as androidx.recyclerview.widget.GridLayoutManager).spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
+        (layoutManager as? GridLayoutManager)?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (recyclerAdapter?.getItemViewType(position) ?: 0 < 2) {
-                    (layoutManager as androidx.recyclerview.widget.GridLayoutManager).spanCount
+                    (layoutManager as? GridLayoutManager)?.spanCount ?: 1
                 } else {
                     1
                 }
@@ -40,26 +39,26 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
 
         view.post { setGridSpanCount(view.width) }
-        context.notNull {
+        context?.let {
             recyclerView.setBackgroundColor(ContextCompat.getColor(it, R.color.white))
         }
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
 
-        inventoryRepository.getInAppRewards().subscribe(Consumer {
-            (recyclerAdapter as RewardsRecyclerViewAdapter?)?.updateItemRewards(it)
-        }, RxErrorHandler.handleEmptyError())
+        compositeSubscription.add(inventoryRepository.getInAppRewards().subscribe(Consumer {
+            (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
+        }, RxErrorHandler.handleEmptyError()))
     }
 
-    override fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager =
-            androidx.recyclerview.widget.GridLayoutManager(context, 4)
+    override fun getLayoutManager(context: Context?): LinearLayoutManager =
+            GridLayoutManager(context, 4)
 
     override fun onRefresh() {
         refreshLayout.isRefreshing = true
-        userRepository.retrieveUser(true, true)
+        compositeSubscription.add(userRepository.retrieveUser(true, true)
                 .flatMap<List<ShopItem>> { inventoryRepository.retrieveInAppRewards() }
                 .doOnTerminate {
                     refreshLayout?.isRefreshing = false
-                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setGridSpanCount(width: Int) {
@@ -73,7 +72,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         if (spanCount == 0) {
             spanCount = 1
         }
-        (layoutManager as androidx.recyclerview.widget.GridLayoutManager).spanCount = spanCount
+        (layoutManager as GridLayoutManager).spanCount = spanCount
     }
 
     companion object {

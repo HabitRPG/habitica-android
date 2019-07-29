@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputLayoutAppearanceTheme"
+        style="@style/TextInputLayoutAppearance"
+        android:hint="@string/email">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputLayoutAppearanceTheme"
+        style="@style/TextInputLayoutAppearance"
+        android:hint="@string/password"
+        android:layout_marginTop="@dimen/content_section_spacing">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputLayoutAppearanceTheme"
+        style="@style/TextInputLayoutAppearance"
+        android:hint="@string/confirmpassword"
+        android:layout_marginTop="@dimen/content_section_spacing">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordRepeatEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large" />
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>

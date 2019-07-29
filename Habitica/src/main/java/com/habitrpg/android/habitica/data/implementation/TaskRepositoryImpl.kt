@@ -3,25 +3,25 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.*
 import com.habitrpg.android.habitica.models.user.User
-import com.playseeds.android.sdk.inappmessaging.Log
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.functions.Consumer
 import io.realm.Realm
-import io.realm.RealmList
 import io.realm.RealmResults
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
+class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiClient, userID: String, val appConfigManager: AppConfigManager) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     override fun getTasksOfType(taskType: String): Flowable<RealmResults<Task>> = getTasks(taskType, userID)
 
     private var lastTaskAction: Long = 0
@@ -58,65 +58,91 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     @Suppress("ReturnCount")
-    override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Flowable<TaskScoringResult?> {
+    override fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult?> {
+        val localData = if (user != null && appConfigManager.enableLocalTaskScoring()) {
+             ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
+        } else null
+        if (user != null && localData != null) {
+            val stats = user.stats
+            val result = TaskScoringResult()
+
+            result.healthDelta = localData.hp - (stats?.hp ?: 0.0)
+            result.experienceDelta = localData.exp - (stats?.exp ?: 0.0)
+            result.manaDelta = localData.mp - (stats?.mp ?: 0.0)
+            result.goldDelta = localData.gp - (stats?.gp ?: 0.0)
+            result.hasLeveledUp = localData.lvl > stats?.lvl ?: 0
+            result.questDamage = localData._tmp?.quest?.progressDelta
+            result.drop = localData._tmp?.drop
+            notifyFunc?.invoke(result)
+
+            handleTaskResponse(user, localData, task, up, 0f)
+        }
         val now = Date().time
         val id = task.id
         if (lastTaskAction > now - 500 && !force || id == null) {
             return Flowable.empty()
         }
         lastTaskAction = now
-        return this.apiClient.postTaskDirection(id, (if (up) TaskDirection.up else TaskDirection.down).toString())
+        return this.apiClient.postTaskDirection(id, (if (up) TaskDirection.UP else TaskDirection.DOWN).text)
                 .map { res ->
                     // save local task changes
                     val result = TaskScoringResult()
                     if (user != null) {
                         val stats = user.stats
 
-                        result.taskValueDelta = res.delta
                         result.healthDelta = res.hp - (stats?.hp ?: 0.0)
                         result.experienceDelta = res.exp - (stats?.exp ?: 0.0)
                         result.manaDelta = res.mp - (stats?.mp ?: 0.0)
                         result.goldDelta = res.gp - (stats?.gp ?: 0.0)
                         result.hasLeveledUp = res.lvl > stats?.lvl ?: 0
-                        result.questDamage = res._tmp.quest?.progressDelta
-                        if (res._tmp != null) {
-                            result.drop = res._tmp.drop
-                        }
-                        this.localRepository.executeTransaction {
-                            if (!task.isValid) {
-                                return@executeTransaction
-                            }
-                            if (task.type != "reward") {
-                                task.value = task.value + res.delta
-                                if (Task.TYPE_DAILY == task.type || Task.TYPE_TODO == task.type) {
-                                    task.completed = up
-                                    if (Task.TYPE_DAILY == task.type && up) {
-                                        task.streak = (task.streak ?: 0) + 1
-                                    }
-                                } else if (Task.TYPE_HABIT == task.type) {
-                                    if (up) {
-                                        task.counterUp = (task.counterUp ?: 0) + 1
-                                    } else {
-                                        task.counterDown = (task.counterDown ?: 0) + 1
-                                    }
-                                }
-                            }
-                            stats?.hp = res.hp
-                            stats?.exp = res.exp
-                            stats?.mp = res.mp
-                            stats?.gp = res.gp
-                            stats?.lvl = res.lvl
-                            user.party?.quest?.progress?.up = (user.party?.quest?.progress?.up ?: 0F) + (res._tmp.quest?.progressDelta?.toFloat() ?: 0F)
-                            user.stats = stats
+                        result.questDamage = res._tmp?.quest?.progressDelta
+                        result.drop = res._tmp?.drop
+                        if (localData == null) {
+                            notifyFunc?.invoke(result)
                         }
                     }
+                    handleTaskResponse(user, res, task, up, localData?.delta ?: 0f)
                     result
                 }
     }
 
-    override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean): Maybe<TaskScoringResult?> {
+    private fun handleTaskResponse(user: User?, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
+        if (user != null) {
+            val stats = user.stats
+            this.localRepository.executeTransaction {
+                if (!task.isValid) {
+                    return@executeTransaction
+                }
+                if (task.type != "reward" && (task.value - localDelta) + res.delta != task.value) {
+                    task.value = (task.value - localDelta) + res.delta
+                    if (Task.TYPE_DAILY == task.type || Task.TYPE_TODO == task.type) {
+                        task.completed = up
+                        if (Task.TYPE_DAILY == task.type && up) {
+                            task.streak = (task.streak ?: 0) + 1
+                        }
+                    } else if (Task.TYPE_HABIT == task.type) {
+                        if (up) {
+                            task.counterUp = (task.counterUp ?: 0) + 1
+                        } else {
+                            task.counterDown = (task.counterDown ?: 0) + 1
+                        }
+                    }
+                }
+                stats?.hp = res.hp
+                stats?.exp = res.exp
+                stats?.mp = res.mp
+                stats?.gp = res.gp
+                stats?.lvl = res.lvl
+                user.party?.quest?.progress?.up = (user.party?.quest?.progress?.up
+                        ?: 0F) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
+                user.stats = stats
+            }
+        }
+    }
+
+    override fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Maybe<TaskScoringResult?> {
         return localRepository.getTask(taskId).firstElement()
-                .flatMap { task -> taskChecked(user, task, up, force).singleElement() }
+                .flatMap { task -> taskChecked(user, task, up, force, notifyFunc).singleElement() }
     }
 
     override fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task> {
@@ -140,29 +166,6 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
             return Flowable.empty()
         }
         lastTaskAction = now
-        task.tags?.let {
-            if (it.size > 0) {
-                val tags = RealmList<Tag>()
-                tags.addAll(localRepository.getUnmanagedCopy(it))
-                task.tags = tags
-            }
-        }
-
-        task.checklist?.let {
-            if (it.size > 0) {
-                val checklist = RealmList<ChecklistItem>()
-                checklist.addAll(localRepository.getUnmanagedCopy(it))
-                task.checklist = checklist
-            }
-        }
-
-        task.reminders?.let {
-            if (it.size > 0) {
-                val reminders = RealmList<RemindersItem>()
-                reminders.addAll(localRepository.getUnmanagedCopy(it))
-                task.reminders = reminders
-            }
-        }
 
         task.isSaving = true
         task.isCreating = true

@@ -10,10 +10,9 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.ABTest
@@ -49,7 +48,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         return R.layout.activity_gem_purchase
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
@@ -154,7 +153,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     }
 
     private fun setupCheckout() {
-        HabiticaBaseApplication.getInstance(this)?.billing.notNull {
+        HabiticaBaseApplication.getInstance(this)?.billing?.let {
             activityCheckout = Checkout.forActivity(this, it)
             activityCheckout?.start()
         }
@@ -271,7 +270,7 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
     }
 
     @Subscribe
-    public fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
+    fun onConsumablePurchased(event: ConsumablePurchasedEvent) {
         if (isActive) {
             consumePurchase(event.purchase)
         }

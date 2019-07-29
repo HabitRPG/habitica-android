@@ -5,21 +5,20 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.annotation.IdRes
-import androidx.core.content.ContextCompat
-import androidx.core.widget.CompoundButtonCompat
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatCheckBox
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.core.content.ContextCompat
+import androidx.core.widget.CompoundButtonCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -28,7 +27,7 @@ import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialog(context), RadioGroup.OnCheckedChangeListener {
 
     @Inject
     lateinit var repository: TagRepository
@@ -73,7 +72,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
 
         taskFilters.setOnCheckedChangeListener(this)
 
-        this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.done)) { _, _ ->
+        this.setButton(BUTTON_POSITIVE, context.getString(R.string.done)) { _, _ ->
             if (isEditing) {
                 stopEditing()
             }
@@ -81,14 +80,14 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
             this.dismiss()
         }
 
-        setButton(AlertDialog.BUTTON_NEUTRAL, getContext().getString(R.string.clear)) { _, _ -> }
+        setButton(BUTTON_NEUTRAL, getContext().getString(R.string.clear)) { _, _ -> }
 
         tagsEditButton.setOnClickListener { editButtonClicked() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val clearButton = getButton(AlertDialog.BUTTON_NEUTRAL)
+        val clearButton = getButton(BUTTON_NEUTRAL)
         if (clearButton != null) {
             clearButton.setOnClickListener {
                 if (isEditing) {
@@ -199,14 +198,9 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
         val wrapper = inflater.inflate(R.layout.edit_tag_item, tagsList, false) as? LinearLayout
         val tagEditText = wrapper?.findViewById<View>(R.id.edit_text) as? EditText
         tagEditText?.setText(tag.name)
-        tagEditText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        tagEditText?.addTextChangedListener(OnChangeTextWatcher { s, _, _, _ ->
                 if (index >= tags.size) {
-                    return
+                    return@OnChangeTextWatcher
                 }
                 val changedTag = tags[index]
                 changedTag.name = s.toString()
@@ -216,11 +210,6 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
                     editedTags[changedTag.getId()] = changedTag
                 }
                 tags[index] = changedTag
-            }
-
-            override fun afterTextChanged(s: Editable) {
-
-            }
         })
         val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as? Button
         deleteButton?.setOnClickListener {
@@ -344,7 +333,7 @@ class TaskFilterDialog(context: Context, component: AppComponent?) : AlertDialog
     }
 
     private fun filtersChanged() {
-        val clearButton = getButton(AlertDialog.BUTTON_NEUTRAL)
+        val clearButton = getButton(BUTTON_NEUTRAL)
         if (clearButton != null) {
             clearButton.isEnabled = hasActiveFilters()
         }

@@ -1,1012 +1,474 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
+import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import com.google.android.material.textfield.TextInputLayout
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
-import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.ItemTouchHelper
-import android.text.TextUtils
-import android.util.TypedValue
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.view.children
+import androidx.core.view.forEachIndexed
+import androidx.core.widget.NestedScrollView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
+import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
-import com.habitrpg.android.habitica.models.tasks.Days
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
+import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager
-import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter
-import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter
-import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.tasks.form.*
 import io.reactivex.functions.Consumer
-import io.realm.Realm
 import io.realm.RealmList
-import java.text.DateFormat
-import java.text.DecimalFormat
-import java.text.ParseException
 import java.util.*
 import javax.inject.Inject
-import javax.inject.Named
+
 
 class TaskFormActivity : BaseActivity() {
-    private val taskValue: EditText by bindView(R.id.task_value_edittext)
-    private val taskValueLayout: TextInputLayout by bindView(R.id.task_value_layout)
-    private val checklistWrapper: LinearLayout by bindView(R.id.task_checklist_wrapper)
-    private val difficultyWrapper: LinearLayout by bindView(R.id.task_difficulty_wrapper)
-    private val attributeWrapper: LinearLayout by bindView(R.id.task_attribute_wrapper)
-    private val mainWrapper: LinearLayout by bindView(R.id.task_main_wrapper)
-    private val taskText: MultiAutoCompleteTextView by bindView(R.id.task_text_edittext)
-    private val taskNotes: MultiAutoCompleteTextView by bindView(R.id.task_notes_edittext)
-    private val taskDifficultySpinner: Spinner by bindView(R.id.task_difficulty_spinner)
-    private val taskAttributeSpinner: Spinner by bindView(R.id.task_attribute_spinner)
-    private val btnDelete: Button by bindView(R.id.btn_delete_task)
-    private val positiveCheckBox: CheckBox by bindView(R.id.task_positive_checkbox)
-    private val negativeCheckBox: CheckBox by bindView(R.id.task_negative_checkbox)
-    private val actionsLayout: LinearLayout by bindView(R.id.task_actions_wrapper)
-    private val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.checklist_recycler_view)
-    private val newCheckListEditText: MultiAutoCompleteTextView by bindView(R.id.new_checklist)
-    private val addChecklistItemButton: Button by bindView(R.id.add_checklist_button)
-    private val remindersWrapper: LinearLayout by bindView(R.id.task_reminders_wrapper)
-    private val newRemindersEditText: EditText by bindView(R.id.new_reminder_edittext)
-    private val remindersRecyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.reminders_recycler_view)
-    private val dueDateLayout: LinearLayout by bindView(R.id.task_duedate_layout)
-    private val dueDatePickerLayout: LinearLayout by bindView(R.id.task_duedate_picker_layout)
-    private val dueDateCheckBox: CheckBox by bindView(R.id.duedate_checkbox)
-    private val repeatablesStartDatePickerText: EditText by bindView(R.id.repeatables_startdate_text_edittext)
-    private var startDateListener: DateEditTextListener? = null
-    private val repeatablesLayout: LinearLayout by bindView(R.id.repeatables)
-    private val reapeatablesOnTextView: TextView by bindView(R.id.repeatables_on_title)
-    private val repeatablesOnSpinner: Spinner by bindView(R.id.task_repeatables_on_spinner)
-    private val repeatablesEveryXSpinner: NumberPicker by bindView(R.id.task_repeatables_every_x_spinner)
-    private val repeatablesFrequencyContainer: LinearLayout by bindView(R.id.task_repeatables_frequency_container)
-    private val summaryTextView: TextView by bindView(R.id.summary)
-    private val dueDatePickerText: EditText by bindView(R.id.duedate_text_edittext)
-    private var dueDateListener: DateEditTextListener? = null
-    private val tagsWrapper: LinearLayout by bindView(R.id.task_tags_wrapper)
-    private val tagsContainerLinearLayout: LinearLayout by bindView(R.id.task_tags_checklist)
-    private val repeatablesFrequencySpinner: Spinner by bindView(R.id.task_repeatables_frequency_spinner)
-    private val taskResetFrequencyWrapper: ViewGroup by bindView(R.id.task_reset_frequency_wrapper)
-    private val taskResetFrequencySpinner: Spinner by bindView(R.id.task_reset_frequency_spinner)
 
+    private var userScrolled: Boolean = false
+    private var isSaving: Boolean = false
     @Inject
-    internal lateinit var taskFilterHelper: TaskFilterHelper
+    lateinit var userRepository: UserRepository
     @Inject
-    internal lateinit var taskRepository: TaskRepository
+    lateinit var taskRepository: TaskRepository
     @Inject
-    internal lateinit var tagRepository: TagRepository
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    internal lateinit var userId: String
+    lateinit var tagRepository: TagRepository
     @Inject
-    internal lateinit var remoteConfigManager: RemoteConfigManager
-    @Inject
-    internal lateinit var taskAlarmManager: TaskAlarmManager
+    lateinit var taskAlarmManager: TaskAlarmManager
 
+    private val toolbar: Toolbar by bindView(R.id.toolbar)
+    private val scrollView: NestedScrollView by bindView(R.id.scroll_view)
+    private val upperTextWrapper: LinearLayout by bindView(R.id.upper_text_wrapper)
+    private val textEditText: EditText by bindView(R.id.text_edit_text)
+    private val notesEditText: EditText by bindView(R.id.notes_edit_text)
+    private val habitScoringButtons: HabitScoringButtonsView by bindView(R.id.habit_scoring_buttons)
+    private val checklistTitleView: TextView by bindView(R.id.checklist_title)
+    private val checklistContainer: ChecklistContainer by bindView(R.id.checklist_container)
+    private val habitResetStreakTitleView: TextView by bindView(R.id.habit_reset_streak_title)
+    private val habitResetStreakButtons: HabitResetStreakButtons by bindView(R.id.habit_reset_streak_buttons)
+    private val taskSchedulingTitleView: TextView by bindView(R.id.scheduling_title)
+    private val taskSchedulingControls: TaskSchedulingControls by bindView(R.id.scheduling_controls)
+    private val adjustStreakWrapper: ViewGroup by bindView(R.id.adjust_streak_wrapper)
+    private val adjustStreakTitleView: TextView by bindView(R.id.adjust_streak_title)
+    private val habitAdjustPositiveStreakView: EditText by bindView(R.id.habit_adjust_positive_streak)
+    private val habitAdjustNegativeStreakView: EditText by bindView(R.id.habit_adjust_negative_streak)
+    private val remindersTitleView: TextView by bindView(R.id.reminders_title)
+    private val remindersContainer: ReminderContainer by bindView(R.id.reminders_container)
+
+    private val taskDifficultyTitleView: TextView by bindView(R.id.task_difficulty_title)
+    private val taskDifficultyButtons: TaskDifficultyButtons by bindView(R.id.task_difficulty_buttons)
+
+    private val statWrapper: ViewGroup by bindView(R.id.stat_wrapper)
+    private val statStrengthButton: TextView by bindView(R.id.stat_strength_button)
+    private val statIntelligenceButton: TextView by bindView(R.id.stat_intelligence_button)
+    private val statConstitutionButton: TextView by bindView(R.id.stat_constitution_button)
+    private val statPerceptionButton: TextView by bindView(R.id.stat_perception_button)
+
+    private val rewardValueTitleView: TextView by bindView(R.id.reward_value_title)
+    private val rewardValueFormView: RewardValueFormView by bindView(R.id.reward_value)
+
+    private val tagsTitleView: TextView by bindView(R.id.tags_title)
+    private val tagsWrapper: LinearLayout by bindView(R.id.tags_wrapper)
+
+    private var isCreating = true
+    private var isChallengeTask = false
+    private var usesTaskAttributeStats = false
     private var task: Task? = null
-    private var taskBasedAllocation: Boolean = false
-    private val repeatablesWeekDayCheckboxes = ArrayList<CheckBox>()
-    private var tags: List<Tag>? = null
-    private var checklistAdapter: CheckListAdapter? = null
-    private var remindersAdapter: RemindersAdapter? = null
-    private var tagCheckBoxList: MutableList<CheckBox>? = null
-    private var selectedTags: MutableList<Tag>? = null
+    private var taskType: String = ""
+    private var tags = listOf<Tag>()
+    private var preselectedTags: ArrayList<String>? = null
+    private var hasPreselectedTags = false
+    private var selectedStat = Stats.STRENGTH
+    set(value) {
+        field = value
+        setSelectedAttribute(value)
+    }
 
-    private lateinit var remindersManager: RemindersManager
-    private var firstDayOfTheWeekHelper: FirstDayOfTheWeekHelper? = null
+    private var canSave: Boolean = false
 
-    private var taskType: String? = null
-    private var taskId: String? = null
-
-    private var shouldSaveTask = true
+    private var tintColor: Int = 0
+    set(value) {
+        field = value
+        upperTextWrapper.setBackgroundColor(value)
+        taskDifficultyButtons.tintColor = value
+        habitScoringButtons.tintColor = value
+        habitResetStreakButtons.tintColor = value
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(value))
+        updateTagViewsColors()
+    }
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_task_form
     }
 
-    @Suppress("ReturnCount")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val bundle = intent.extras ?: return
-
-        taskType = bundle.getString(TASK_TYPE_KEY)
-        task = bundle.getParcelable(PARCELABLE_TASK) as? Task
-        taskId = bundle.getString(TASK_ID_KEY)
-        taskBasedAllocation = bundle.getBoolean(ALLOCATION_MODE_KEY)
-        shouldSaveTask = bundle.getBoolean(SAVE_TO_DB)
-        val showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true)
-        tagCheckBoxList = ArrayList()
-
-        tagsWrapper.visibility = if (showTagSelection) View.VISIBLE else View.GONE
-
-        if (bundle.containsKey(PARCELABLE_TASK)) {
-            task = bundle.getParcelable(PARCELABLE_TASK)
-            taskType = task?.type
-        }
-
-        tagCheckBoxList = ArrayList()
-        selectedTags = ArrayList()
-        if (taskType == null) {
-            return
-        }
-
-        remindersManager = RemindersManager(taskType)
-
-        dueDateListener = DateEditTextListener(dueDatePickerText)
-
-        btnDelete.isEnabled = false
-        ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.red_10))
-        btnDelete.setOnClickListener { view ->
-            AlertDialog.Builder(view.context)
-                    .setTitle(getString(R.string.taskform_delete_title))
-                    .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes)) { _, _ ->
-
-                        finish()
-                        dismissKeyboard()
-
-                        taskId.notNull { taskID -> taskRepository.deleteTask(taskID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
-                    }.setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }.show()
-        }
-
-        val difficultyAdapter = ArrayAdapter.createFromResource(this,
-                R.array.task_difficulties, android.R.layout.simple_spinner_item)
-        difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        taskDifficultySpinner.adapter = difficultyAdapter
-        taskDifficultySpinner.setSelection(1)
-
-        val attributeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.task_attributes, android.R.layout.simple_spinner_item)
-        attributeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        taskAttributeSpinner.adapter = attributeAdapter
-        taskAttributeSpinner.setSelection(0)
-
-        if (!taskBasedAllocation) {
-            attributeWrapper.visibility = View.GONE
-        }
-
-        if (taskType == Task.TYPE_HABIT) {
-            mainWrapper.removeView(checklistWrapper)
-            mainWrapper.removeView(remindersWrapper)
-
-            positiveCheckBox.isChecked = true
-            negativeCheckBox.isChecked = true
-
-            val resetFrequencyAdapter = ArrayAdapter.createFromResource(this,
-                    R.array.task_reset_frequencies, android.R.layout.simple_spinner_item)
-            resetFrequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            taskResetFrequencySpinner.adapter = resetFrequencyAdapter
-            taskResetFrequencySpinner.setSelection(0)
-            taskResetFrequencyWrapper.visibility = View.VISIBLE
-        } else {
-            mainWrapper.removeView(actionsLayout)
-            taskResetFrequencyWrapper.visibility = View.GONE
-        }
-
-        if (taskType == Task.TYPE_TODO) {
-            dueDatePickerLayout.removeView(dueDatePickerText)
-            //Allows user to decide if they want to add a due date or not
-            dueDateCheckBox.setOnCheckedChangeListener { buttonView, _ ->
-                if (buttonView.isChecked) {
-                    dueDatePickerLayout.addView(dueDatePickerText)
-                } else {
-                    dueDatePickerLayout.removeView(dueDatePickerText)
-                }
-            }
-        } else {
-            mainWrapper.removeView(dueDateLayout)
-        }
-
-        if (taskType != Task.TYPE_REWARD) {
-            taskValueLayout.visibility = View.GONE
-        } else {
-
-            mainWrapper.removeView(checklistWrapper)
-            mainWrapper.removeView(remindersWrapper)
-
-            difficultyWrapper.visibility = View.GONE
-            attributeWrapper.visibility = View.GONE
-        }
-
-        if (taskType == Task.TYPE_TODO || taskType == Task.TYPE_DAILY) {
-            createCheckListRecyclerView()
-            createRemindersRecyclerView()
-        }
-
-        val textAutocompleteAdapter = AutocompleteAdapter(this)
-        val tokenizer = AutocompleteTokenizer(listOf(':'))
-        taskText.setAdapter(textAutocompleteAdapter)
-        taskText.threshold = 2
-        taskText.setTokenizer(tokenizer)
-        val notesAutocompleteAdapter = AutocompleteAdapter(this)
-        taskNotes.setAdapter(notesAutocompleteAdapter)
-        taskText.threshold = 2
-        taskNotes.setTokenizer(tokenizer)
-
-        enableRepeatables()
-
-        compositeSubscription.add(tagRepository.getTags(userId)
-                .firstElement()
-                .subscribe(Consumer { loadedTags ->
-                    tags = loadedTags
-                    createTagsCheckBoxes()
-                }, RxErrorHandler.handleEmptyError()))
-
-        if (taskId != null) {
-            compositeSubscription.add(taskRepository.getTask(taskId ?: "")
-                    .firstElement()
-                    .subscribe(Consumer { task ->
-                        this.task = task
-                        if (task != null) {
-                            populate(task)
-
-                            setTaskTitle(task)
-                            if (taskType == Task.TYPE_TODO || taskType == Task.TYPE_DAILY) {
-                                populateChecklistRecyclerView()
-                                populateRemindersRecyclerView()
-                            }
-                        }
-
-                        setTaskTitle(task)
-                    }, RxErrorHandler.handleEmptyError()))
-
-            btnDelete.isEnabled = true
-        } else if (task != null) {
-            val thisTask = task
-            if (thisTask != null) {
-                populate(thisTask)
-
-                setTaskTitle(thisTask)
-                if (taskType == Task.TYPE_TODO || taskType == Task.TYPE_DAILY) {
-                    populateChecklistRecyclerView()
-                    populateRemindersRecyclerView()
-                }
-            }
-        } else {
-            setTaskTitle(null)
-            taskText.requestFocus()
-        }
-
-    }
-
-    override fun onDestroy() {
-        tagRepository.close()
-        super.onDestroy()
-    }
-
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
-    fun hideMonthOptions() {
-        val repeatablesOnSpinnerParams = repeatablesOnSpinner.layoutParams
-        repeatablesOnSpinnerParams.height = 0
-        repeatablesOnSpinner.layoutParams = repeatablesOnSpinnerParams
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        tintColor = ContextCompat.getColor(this, R.color.brand_300)
 
-        val repeatablesOnTitleParams = reapeatablesOnTextView.layoutParams
-        repeatablesOnTitleParams.height = 0
-        reapeatablesOnTextView.layoutParams = repeatablesOnTitleParams
-    }
+        val bundle = intent.extras ?: return
 
-    fun hideWeekOptions() {
-        val repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.layoutParams
-        repeatablesFrequencyContainerParams.height = 0
-        repeatablesFrequencyContainer.layoutParams = repeatablesFrequencyContainerParams
-    }
+        isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
-    private fun enableRepeatables() {
-        if (!remoteConfigManager.repeatablesAreEnabled() || taskType != Task.TYPE_DAILY) {
-            repeatablesLayout.visibility = View.INVISIBLE
-            val repeatablesLayoutParams = repeatablesLayout.layoutParams
-            repeatablesLayoutParams.height = 0
-            repeatablesLayout.layoutParams = repeatablesLayoutParams
-            return
+        taskType = bundle.getString(TASK_TYPE_KEY) ?: Task.TYPE_HABIT
+        val taskId = bundle.getString(TASK_ID_KEY)
+        preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
+
+        compositeSubscription.add(tagRepository.getTags()
+                .map { tagRepository.getUnmanagedCopy(it) }
+                .subscribe(Consumer {
+                    tags = it
+                    setTagViews()
+                }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer {
+            usesTaskAttributeStats = it.preferences?.allocationMode == "taskbased"
+            configureForm()
+        }, RxErrorHandler.handleEmptyError()))
+
+
+        textEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
+            checkCanSave()
+        })
+        statStrengthButton.setOnClickListener { selectedStat = Stats.STRENGTH }
+        statIntelligenceButton.setOnClickListener { selectedStat = Stats.INTELLIGENCE }
+        statConstitutionButton.setOnClickListener { selectedStat = Stats.CONSTITUTION }
+        statPerceptionButton.setOnClickListener { selectedStat = Stats.PERCEPTION }
+        scrollView.setOnTouchListener { view, event ->
+            userScrolled = view == scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
+            return@setOnTouchListener false
         }
-
-        // Start Date
-        startDateListener = DateEditTextListener(repeatablesStartDatePickerText)
-
-        // Frequency
-        val frequencyAdapter = ArrayAdapter.createFromResource(this,
-                R.array.repeatables_frequencies, android.R.layout.simple_spinner_item)
-        frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        this.repeatablesFrequencySpinner.adapter = frequencyAdapter
-        repeatablesFrequencySpinner.setSelection(1)
-        this.repeatablesFrequencySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                generateSummary()
-                val r = resources
-
-                when (position) {
-                    2 -> {
-                        hideWeekOptions()
-
-                        val repeatablesOnSpinnerParams = repeatablesOnSpinner.layoutParams
-                        repeatablesOnSpinnerParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72f, r.displayMetrics).toInt()
-                        repeatablesOnSpinner.layoutParams = repeatablesOnSpinnerParams
-
-                        val repeatablesOnTitleParams = reapeatablesOnTextView.layoutParams
-                        repeatablesOnTitleParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, r.displayMetrics).toInt()
-                        reapeatablesOnTextView.layoutParams = repeatablesOnTitleParams
-                    }
-                    1 -> {
-                        hideMonthOptions()
-
-                        val repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.layoutParams
-                        repeatablesFrequencyContainerParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 220f, r.displayMetrics).toInt()
-                        repeatablesFrequencyContainer.layoutParams = repeatablesFrequencyContainerParams
-                    }
-                    else -> {
-                        hideWeekOptions()
-                        hideMonthOptions()
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
+        scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->
+            if (userScrolled) {
+                dismissKeyboard()
             }
         }
 
-        // Repeat On
-        val repeatablesOnAdapter = ArrayAdapter.createFromResource(this,
-                R.array.repeatables_on, android.R.layout.simple_spinner_item)
-        repeatablesOnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        this.repeatablesOnSpinner.adapter = repeatablesOnAdapter
-        this.repeatablesOnSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                generateSummary()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-        }
-
-        // Every X
-        setupEveryXSpinner(repeatablesEveryXSpinner)
-        repeatablesEveryXSpinner.setOnValueChangedListener { _, _, _ -> generateSummary() }
-
-        // WeekDays
-        this.repeatablesFrequencyContainer.removeAllViews()
-        var weekdays = resources.getStringArray(R.array.weekdays)
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
-                Integer.toString(Calendar.getInstance().firstDayOfWeek))
-        firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek ?: "0"))
-        val weekdaysTemp = weekdays.asList()
-        Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0)
-        weekdays = weekdaysTemp.toTypedArray()
-
-        for (i in 0..6) {
-            val weekdayRow = layoutInflater.inflate(R.layout.row_checklist, this.repeatablesFrequencyContainer, false)
-            val checkbox = weekdayRow.findViewById<View>(R.id.checkbox) as? CheckBox
-            checkbox?.text = weekdays[i]
-            checkbox?.isChecked = true
-            checkbox?.setOnClickListener { generateSummary() }
-            checkbox.notNull { repeatablesWeekDayCheckboxes.add(it) }
-            repeatablesFrequencyContainer.addView(weekdayRow)
-        }
-
-        generateSummary()
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {}
-
-    private fun generateSummary() {
-        val frequency = repeatablesFrequencySpinner.selectedItem.toString()
-        val everyX = repeatablesEveryXSpinner.value.toString()
-        var frequencyQualifier = ""
-
-        when (frequency) {
-            "Daily" -> frequencyQualifier = "day(s)"
-            "Weekly" -> frequencyQualifier = "week(s)"
-            "Monthly" -> frequencyQualifier = "month(s)"
-            "Yearly" -> frequencyQualifier = "year(s)"
-        }
-
-        var weekdays: String
-        val weekdayStrings = ArrayList<String>()
-        val offset = firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0
-        if (this.repeatablesWeekDayCheckboxes[offset].isChecked) {
-            weekdayStrings.add("Monday")
-        }
-        if (this.repeatablesWeekDayCheckboxes[(offset + 1) % 7].isChecked) {
-            weekdayStrings.add("Tuesday")
-        }
-        if (this.repeatablesWeekDayCheckboxes[(offset + 2) % 7].isChecked) {
-            weekdayStrings.add("Wednesday")
-        }
-        if (this.repeatablesWeekDayCheckboxes[(offset + 3) % 7].isChecked) {
-            weekdayStrings.add("Thursday")
-        }
-        if (this.repeatablesWeekDayCheckboxes[(offset + 4) % 7].isChecked) {
-            weekdayStrings.add("Friday")
-        }
-        if (this.repeatablesWeekDayCheckboxes[(offset + 5) % 7].isChecked) {
-            weekdayStrings.add("Saturday")
-        }
-        if (this.repeatablesWeekDayCheckboxes[(offset + 6) % 7].isChecked) {
-            weekdayStrings.add("Sunday")
-        }
-        weekdays = " on " + TextUtils.join(", ", weekdayStrings)
-        if (frequency != "Weekly") {
-            weekdays = ""
-        }
-
-        if (frequency == "Monthly") {
-            val calendar = startDateListener?.getCalendar()
-            val monthlyFreq = repeatablesOnSpinner.selectedItem.toString()
-            weekdays = if (monthlyFreq == "Day of Month") {
-                val date = calendar?.get(Calendar.DATE)
-                " on the " + date.toString()
-            } else {
-                val week = calendar?.get(Calendar.WEEK_OF_MONTH)
-                val dayLongName = calendar?.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
-                " on the " + week.toString() + " week on " + dayLongName
-            }
-        }
-
-        val summary = resources.getString(R.string.repeat_summary, frequency, everyX, frequencyQualifier, weekdays)
-        summaryTextView.text = summary
-    }
-
-    private fun populateRepeatables(task: Task) {
-        // Frequency
-        var frequencySelection = 0
+        title = ""
         when {
-            task.frequency == "weekly" -> frequencySelection = 1
-            task.frequency == "monthly" -> frequencySelection = 2
-            task.frequency == "yearly" -> frequencySelection = 3
-        }
-        this.repeatablesFrequencySpinner.setSelection(frequencySelection)
-        this.repeatablesEveryXSpinner.value = task.everyX ?: 0
-
-        if (task.frequency == "weekly") {
-            if (repeatablesWeekDayCheckboxes.size == 7) {
-                val offset = firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0
-                this.repeatablesWeekDayCheckboxes[offset].isChecked = this.task?.repeat?.m ?: false
-                this.repeatablesWeekDayCheckboxes[(offset + 1) % 7].isChecked = this.task?.repeat?.t ?: false
-                this.repeatablesWeekDayCheckboxes[(offset + 2) % 7].isChecked = this.task?.repeat?.w ?: false
-                this.repeatablesWeekDayCheckboxes[(offset + 3) % 7].isChecked = this.task?.repeat?.th ?: false
-                this.repeatablesWeekDayCheckboxes[(offset + 4) % 7].isChecked = this.task?.repeat?.f ?: false
-                this.repeatablesWeekDayCheckboxes[(offset + 5) % 7].isChecked = this.task?.repeat?.s ?: false
-                this.repeatablesWeekDayCheckboxes[(offset + 6) % 7].isChecked = this.task?.repeat?.su ?: false
+            taskId != null -> {
+                isCreating = false
+                compositeSubscription.add(taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(Consumer {
+                    task = it
+                    //tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
+                    fillForm(it)
+                }, RxErrorHandler.handleEmptyError()))
             }
-        }
-
-        setUpRepeatsOn(task)
-    }
-
-    private fun setUpRepeatsOn(task: Task) {
-        this.repeatablesOnSpinner.setSelection(0)
-        if (task.getWeeksOfMonth()?.isNotEmpty() == true) {
-            this.repeatablesOnSpinner.setSelection(1)
-        }
-    }
-
-    private fun setupEveryXSpinner(frequencyPicker: NumberPicker) {
-        frequencyPicker.minValue = 0
-        frequencyPicker.maxValue = 366
-        frequencyPicker.value = 1
-    }
-
-    private fun createCheckListRecyclerView() {
-        checklistAdapter = CheckListAdapter()
-
-        val llm = LinearLayoutManager(this)
-        llm.orientation = RecyclerView.VERTICAL
-
-        recyclerView.layoutManager = llm
-        recyclerView.adapter = checklistAdapter
-
-        recyclerView.layoutManager = WrapContentRecyclerViewLayoutManager(this)
-
-        val callback = SimpleItemTouchHelperCallback(checklistAdapter)
-        val mItemTouchHelper = ItemTouchHelper(callback)
-        mItemTouchHelper.attachToRecyclerView(recyclerView)
-        addChecklistItemButton.setOnClickListener { addChecklistItem() }
-    }
-
-    private fun populateChecklistRecyclerView() {
-        var checklistItems: List<ChecklistItem> = ArrayList()
-        if (task?.isManaged == true) {
-            task?.checklist.notNull {
-                checklistItems = taskRepository.getUnmanagedCopy(it)
+            bundle.containsKey(PARCELABLE_TASK) -> {
+                isCreating = false
+                task = bundle.getParcelable(PARCELABLE_TASK)
+                task?.let { fillForm(it) }
             }
+            else -> title = getString(R.string.create_task, getString(when (taskType) {
+                Task.TYPE_DAILY -> R.string.daily
+                Task.TYPE_TODO -> R.string.todo
+                Task.TYPE_REWARD -> R.string.reward
+                else -> R.string.habit
+            }))
         }
-        checklistAdapter?.setItems(checklistItems)
-    }
-
-    private fun addChecklistItem() {
-        val text = newCheckListEditText.text.toString()
-        val item = ChecklistItem(null, text)
-        checklistAdapter?.addItem(item)
-        newCheckListEditText.setText("")
-    }
-
-    private fun createRemindersRecyclerView() {
-        taskType.notNull { remindersAdapter = RemindersAdapter(it) }
-
-        val llm = LinearLayoutManager(this)
-        llm.orientation = RecyclerView.VERTICAL
-
-        remindersRecyclerView.layoutManager = llm
-        remindersRecyclerView.adapter = remindersAdapter
-
-        remindersRecyclerView.layoutManager = WrapContentRecyclerViewLayoutManager(this)
-
-
-        val callback = SimpleItemTouchHelperCallback(remindersAdapter)
-        val mItemTouchHelper = ItemTouchHelper(callback)
-        mItemTouchHelper.attachToRecyclerView(remindersRecyclerView)
-        newRemindersEditText.setOnClickListener { selectNewReminderTime() }
-    }
-
-    private fun populateRemindersRecyclerView() {
-        var reminders: List<RemindersItem> = ArrayList()
-        task?.reminders.notNull {
-            reminders = taskRepository.getUnmanagedCopy(it)
-        }
-
-        remindersAdapter?.setReminders(reminders)
-    }
-
-    private fun addNewReminder(remindersItem: RemindersItem) {
-        remindersAdapter?.addItem(remindersItem)
-    }
-
-    private fun selectNewReminderTime() {
-        remindersManager.createReminderTimeDialog({ item -> item.notNull { this.addNewReminder(it) } }, taskType, this, null)
-    }
-
-    private fun createTagsCheckBoxes() {
-        this.tagsContainerLinearLayout.removeAllViews()
-        for ((position, tag) in (tags ?: emptyList()).withIndex()) {
-            val row = layoutInflater.inflate(R.layout.row_checklist, this.tagsContainerLinearLayout, false) as? TableRow
-            val checkbox = row?.findViewById<View>(R.id.checkbox) as? CheckBox
-            row?.id = position
-            checkbox?.text = tag.name // set text Name
-            checkbox?.id = position
-            //This is to check if the tag was selected by the user. Similar to onClickListener
-            checkbox?.setOnCheckedChangeListener { buttonView, _ ->
-                if (buttonView.isChecked) {
-                    if (selectedTags?.contains(tag) == false) {
-                        selectedTags?.add(tag)
-                    }
-                } else {
-                    if (selectedTags?.contains(tag) == true) {
-                        selectedTags?.remove(tag)
-                    }
-                }
-            }
-            checkbox?.isChecked = taskFilterHelper.isTagChecked(tag.getId())
-            tagsContainerLinearLayout.addView(row)
-            checkbox.notNull { tagCheckBoxList?.add(it) }
-        }
-
-        if (task != null) {
-            fillTagCheckboxes()
-        }
-    }
-
-    private fun setTaskTitle(task: Task?) {
-        val actionBar = supportActionBar
-
-        if (actionBar != null) {
-
-            var title = ""
-
-            if (task != null && task.isValid) {
-                title = resources.getString(R.string.action_edit) + " " + task.text
-            } else {
-                when (taskType) {
-                    Task.TYPE_TODO -> title = resources.getString(R.string.new_todo)
-                    Task.TYPE_DAILY -> title = resources.getString(R.string.new_daily)
-                    Task.TYPE_HABIT -> title = resources.getString(R.string.new_habit)
-                    Task.TYPE_REWARD -> title = resources.getString(R.string.new_reward)
-                }
-            }
-
-            actionBar.title = title
-        }
+        configureForm()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_save, menu)
+        if (isCreating) {
+            menuInflater.inflate(R.menu.menu_task_create, menu)
+        } else {
+            menuInflater.inflate(R.menu.menu_task_edit, menu)
+        }
+        menu.findItem(R.id.action_save).isEnabled = canSave
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-
-
-        if (id == R.id.action_save_changes) {
-            finishActivitySuccessfully()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_save -> saveTask()
+            R.id.action_delete -> deleteTask()
         }
-
         return super.onOptionsItemSelected(item)
     }
 
-    private fun populate(task: Task) {
+    private fun checkCanSave() {
+        val newCanSave = textEditText.text.isNotBlank()
+        if (newCanSave != canSave) {
+            invalidateOptionsMenu()
+        }
+        canSave = newCanSave
+    }
+
+    private fun configureForm() {
+        val habitViewsVisibility = if (taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
+        habitScoringButtons.visibility = habitViewsVisibility
+        habitResetStreakTitleView.visibility = habitViewsVisibility
+        habitResetStreakButtons.visibility = habitViewsVisibility
+        habitAdjustNegativeStreakView.visibility = habitViewsVisibility
+
+        val habitDailyVisibility = if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_HABIT) View.VISIBLE else View.GONE
+        adjustStreakTitleView.visibility = habitDailyVisibility
+        adjustStreakWrapper.visibility = habitDailyVisibility
+        if (taskType == Task.TYPE_HABIT) {
+            habitAdjustPositiveStreakView.hint = getString(R.string.positive_habit_form)
+        } else {
+            habitAdjustPositiveStreakView.hint = getString(R.string.streak)
+        }
+
+        val todoDailyViewsVisibility = if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) View.VISIBLE else View.GONE
+
+        checklistTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        checklistContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+
+        remindersTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        remindersContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        remindersContainer.taskType = taskType
+
+        taskSchedulingTitleView.visibility = todoDailyViewsVisibility
+        taskSchedulingControls.visibility = todoDailyViewsVisibility
+        taskSchedulingControls.taskType = taskType
+
+        val rewardHideViews = if (taskType == Task.TYPE_REWARD) View.GONE else View.VISIBLE
+        taskDifficultyTitleView.visibility = rewardHideViews
+        taskDifficultyButtons.visibility = rewardHideViews
+
+        val rewardViewsVisibility = if (taskType == Task.TYPE_REWARD) View.VISIBLE else View.GONE
+        rewardValueTitleView.visibility = rewardViewsVisibility
+        rewardValueFormView.visibility = rewardViewsVisibility
+
+        tagsTitleView.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
+        tagsWrapper.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
+
+        statWrapper.visibility = if (usesTaskAttributeStats) View.VISIBLE else View.GONE
+        if (isCreating) {
+            adjustStreakTitleView.visibility = View.GONE
+            adjustStreakWrapper.visibility = View.GONE
+        }
+    }
+
+    private fun setTagViews() {
+        tagsWrapper.removeAllViews()
+        val padding = 20.dpToPx(this)
+        for (tag in tags) {
+            val view = CheckBox(this)
+            view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
+            view.text = tag.name
+            if (preselectedTags?.contains(tag.id) == true) {
+                view.isChecked = true
+            }
+            tagsWrapper.addView(view)
+        }
+        setAllTagSelections()
+        updateTagViewsColors()
+    }
+
+    private fun setAllTagSelections() {
+        if (hasPreselectedTags) {
+            tags.forEachIndexed { index, tag ->
+                val view = tagsWrapper.getChildAt(index) as? CheckBox
+                view?.isChecked = task?.tags?.find { it.id == tag.id } != null
+            }
+        } else {
+            hasPreselectedTags = true
+        }
+    }
+
+    private fun fillForm(task: Task) {
         if (!task.isValid) {
             return
         }
-        taskText.setText(task.text)
-        taskNotes.setText(task.notes)
-        taskValue.setText(String.format(Locale.getDefault(), "%.2f", task.value))
-
-        for (tag in task.tags ?: emptyList<Tag>()) {
-            selectedTags?.add(tag)
-        }
-
-        if (tags != null) {
-            fillTagCheckboxes()
-        }
-
-        val priority = task.priority
-        when {
-            Math.abs(priority - 0.1) < 0.000001 -> this.taskDifficultySpinner.setSelection(0)
-            Math.abs(priority - 1.0) < 0.000001 -> this.taskDifficultySpinner.setSelection(1)
-            Math.abs(priority - 1.5) < 0.000001 -> this.taskDifficultySpinner.setSelection(2)
-            Math.abs(priority - 2.0) < 0.000001 -> this.taskDifficultySpinner.setSelection(3)
-        }
-
-        val attribute = task.attribute
-        if (attribute != null) {
-            when (attribute) {
-                Stats.STRENGTH -> taskAttributeSpinner.setSelection(0)
-                Stats.INTELLIGENCE -> taskAttributeSpinner.setSelection(1)
-                Stats.CONSTITUTION -> taskAttributeSpinner.setSelection(2)
-                Stats.PERCEPTION -> taskAttributeSpinner.setSelection(3)
-            }
-        }
-
-        if (task.type == Task.TYPE_HABIT) {
-            positiveCheckBox.isChecked = task.up ?: false
-            negativeCheckBox.isChecked = task.down ?: false
-
-            val resetFrequency = task.frequency
-            if (resetFrequency != null) {
-                when (resetFrequency) {
-                    Task.FREQUENCY_DAILY -> taskResetFrequencySpinner.setSelection(0)
-                    Task.FREQUENCY_WEEKLY -> taskResetFrequencySpinner.setSelection(1)
-                    Task.FREQUENCY_MONTHLY -> taskResetFrequencySpinner.setSelection(2)
+        canSave = true
+        textEditText.setText(task.text)
+        notesEditText.setText(task.notes)
+        taskDifficultyButtons.selectedDifficulty = task.priority
+        when (taskType) {
+            Task.TYPE_HABIT -> {
+                habitScoringButtons.isPositive = task.up ?: false
+                habitScoringButtons.isNegative = task.down ?: false
+                task.frequency?.let {
+                    if (it.isNotBlank()) {
+                        habitResetStreakButtons.selectedResetOption = HabitResetOption.valueOf(it.toUpperCase(Locale.US))
+                    }
+                }
+                habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
+                habitAdjustNegativeStreakView.setText((task.counterDown ?: 0).toString())
+                habitAdjustPositiveStreakView.visibility = if (task.up == true) View.VISIBLE else View.GONE
+                habitAdjustNegativeStreakView.visibility = if (task.down == true) View.VISIBLE else View.GONE
+                if (task.up != true && task.down != true) {
+                    adjustStreakTitleView.visibility = View.GONE
+                    adjustStreakWrapper.visibility = View.GONE
                 }
             }
-        }
-
-        if (task.type == Task.TYPE_DAILY) {
-
-            if (task.startDate != null) {
-                startDateListener?.setCalendar(task.startDate)
+            Task.TYPE_DAILY -> {
+                taskSchedulingControls.startDate = task.startDate ?: Date()
+                taskSchedulingControls.frequency = task.frequency ?: Task.FREQUENCY_DAILY
+                taskSchedulingControls.everyX = task.everyX ?: 1
+                task.repeat?.let { taskSchedulingControls.weeklyRepeat = it }
+                taskSchedulingControls.daysOfMonth = task.getDaysOfMonth()
+                taskSchedulingControls.weeksOfMonth = task.getWeeksOfMonth()
+                habitAdjustPositiveStreakView.setText((task.streak ?: 0).toString())
             }
-
-            populateRepeatables(task)
+            Task.TYPE_TODO -> taskSchedulingControls.dueDate = task.dueDate
+            Task.TYPE_REWARD -> rewardValueFormView.value = task.value
         }
-
-        if (task.type == Task.TYPE_TODO) {
-            if (task.dueDate != null) {
-                dueDateCheckBox.isChecked = true
-                dueDateListener?.setCalendar(task.dueDate)
-            }
+        if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
+            task.checklist?.let { checklistContainer.checklistItems = it }
+            remindersContainer.taskType = taskType
+            task.reminders?.let { remindersContainer.reminders = it }
         }
+        task.attribute?.let { setSelectedAttribute(it) }
+        setAllTagSelections()
+    }
 
-        if (task.isGroupTask) {
-            AlertDialog.Builder(this)
-                    .setTitle(R.string.group_tasks_edit_title)
-                    .setMessage(R.string.group_tasks_edit_description)
-                    .setPositiveButton(android.R.string.ok) { _, _ -> finish() }
-                    .show()
+    private fun setSelectedAttribute(attributeName: String) {
+        if (!usesTaskAttributeStats) return
+        configureStatsButton(statStrengthButton, attributeName == Stats.STRENGTH )
+        configureStatsButton(statIntelligenceButton, attributeName == Stats.INTELLIGENCE )
+        configureStatsButton(statConstitutionButton, attributeName == Stats.CONSTITUTION )
+        configureStatsButton(statPerceptionButton, attributeName == Stats.PERCEPTION )
+    }
+
+    private fun configureStatsButton(button: TextView, isSelected: Boolean) {
+        button.background.setTint(if (isSelected) tintColor else ContextCompat.getColor(this, R.color.taskform_gray))
+        val textColorID = if (isSelected) R.color.white else R.color.gray_100
+        button.setTextColor(ContextCompat.getColor(this, textColorID))
+    }
+
+    private fun updateTagViewsColors() {
+        tagsWrapper.children.forEach { view ->
+            val tagView = view as? AppCompatCheckBox
+            val colorStateList = ColorStateList(
+                    arrayOf(intArrayOf(-android.R.attr.state_checked), // unchecked
+                            intArrayOf(android.R.attr.state_checked)  // checked
+                    ),
+                    intArrayOf(ContextCompat.getColor(this, R.color.gray_400), tintColor)
+            )
+            tagView?.buttonTintList = colorStateList
         }
     }
 
-    private fun fillTagCheckboxes() {
-        for (tag in task?.tags ?: emptyList<Tag>()) {
-            val position = tags?.indexOf(tag) ?: 0
-            if (tagCheckBoxList?.size ?: 0 > position && position >= 0) {
-                tagCheckBoxList?.get(position)?.isChecked = true
-            }
+    private fun saveTask() {
+        if (isSaving) {
+            return
         }
-    }
-
-    @Suppress("ReturnCount")
-    private fun saveTask(task: Task): Boolean {
-
-        val text = MarkdownParser.parseCompiled(taskText.text)
-        if (text == null || text.isEmpty()) {
-            return false
-        }
-
-        if (!task.isValid) {
-            return true
-        }
-
-        taskRepository.executeTransaction(Realm.Transaction { realm ->
-            try {
-                task.text = text
-                task.notes = MarkdownParser.parseCompiled(taskNotes.text)
-            } catch (ignored: IllegalArgumentException) {
-
-            }
-
-            if (checklistAdapter != null) {
-                val newChecklist = RealmList<ChecklistItem>()
-                checklistAdapter?.checkListItems.notNull { newChecklist.addAll(realm.copyToRealmOrUpdate(it)) }
-                task.checklist = newChecklist
-            }
-            if (remindersAdapter != null) {
-                val newReminders = RealmList<RemindersItem>()
-                remindersAdapter?.remindersItems.notNull { newReminders.addAll(realm.copyToRealmOrUpdate(it)) }
-                task.reminders = newReminders
-            }
-
-
-            val taskTags = RealmList<Tag>()
-            selectedTags.notNull { taskTags.addAll(it) }
-            task.tags = taskTags
-
-
-            task.priority = when {
-                taskDifficultySpinner.selectedItemPosition == 0 -> 0.1
-                taskDifficultySpinner.selectedItemPosition == 1 -> 1.0
-                taskDifficultySpinner.selectedItemPosition == 2 -> 1.5
-                taskDifficultySpinner.selectedItemPosition == 3 -> 2.0
-                else -> { 1.0 }
-            }.toFloat()
-
-            if (!taskBasedAllocation) {
-                task.attribute = Stats.STRENGTH
-            } else {
-                when (taskAttributeSpinner.selectedItemPosition) {
-                    0 -> task.attribute = Stats.STRENGTH
-                    1 -> task.attribute = Stats.INTELLIGENCE
-                    2 -> task.attribute = Stats.CONSTITUTION
-                    3 -> task.attribute = Stats.PERCEPTION
-                }
-            }
-
-            when (task.type) {
-                Task.TYPE_HABIT -> {
-                    task.up = positiveCheckBox.isChecked
-                    task.down = negativeCheckBox.isChecked
-
-                    task.frequency = when (taskResetFrequencySpinner.selectedItemPosition) {
-                        0 -> Task.FREQUENCY_DAILY
-                        1 -> Task.FREQUENCY_WEEKLY
-                        2 -> Task.FREQUENCY_MONTHLY
-                        else -> ""
-                    }
-                }
-
-                Task.TYPE_DAILY -> {
-                    task.startDate = Date(startDateListener?.getCalendar()?.timeInMillis ?: Date().time)
-
-                    val frequency = this.repeatablesFrequencySpinner.selectedItemPosition
-                    var frequencyString = ""
-                    when (frequency) {
-                        0 -> frequencyString = "daily"
-                        1 -> frequencyString = "weekly"
-                        2 -> frequencyString = "monthly"
-                        3 -> frequencyString = "yearly"
-                    }
-                    task.frequency = frequencyString
-
-                    task.everyX = this.repeatablesEveryXSpinner.value
-
-                    var repeat = task.repeat
-                    if (repeat == null) {
-                        repeat = Days()
-                        task.repeat = repeat
-                    }
-
-                    if ("weekly" == frequencyString) {
-                        val offset = firstDayOfTheWeekHelper?.dailyTaskFormOffset ?: 0
-                        repeat.m = this.repeatablesWeekDayCheckboxes[offset].isChecked
-                        repeat.t = this.repeatablesWeekDayCheckboxes[(offset + 1) % 7].isChecked
-                        repeat.w = this.repeatablesWeekDayCheckboxes[(offset + 2) % 7].isChecked
-                        repeat.th = this.repeatablesWeekDayCheckboxes[(offset + 3) % 7].isChecked
-                        repeat.f = this.repeatablesWeekDayCheckboxes[(offset + 4) % 7].isChecked
-                        repeat.s = this.repeatablesWeekDayCheckboxes[(offset + 5) % 7].isChecked
-                        repeat.su = this.repeatablesWeekDayCheckboxes[(offset + 6) % 7].isChecked
-                    }
-
-                    if ("monthly" == frequencyString) {
-                        val calendar = startDateListener?.getCalendar()
-                        val monthlyFreq = repeatablesOnSpinner.selectedItem.toString()
-
-                        if (monthlyFreq == "Day of Month") {
-                            val date = calendar?.get(Calendar.DATE)
-                            val daysOfMonth = ArrayList<Int>()
-                            date.notNull { daysOfMonth.add(it) }
-                            task.setDaysOfMonth(daysOfMonth)
-                            task.setWeeksOfMonth(ArrayList())
-                        } else {
-                            val week = calendar?.get(Calendar.WEEK_OF_MONTH)
-                            val weeksOfMonth = ArrayList<Int>()
-                            week.notNull { weeksOfMonth.add(it) }
-                            task.setWeeksOfMonth(weeksOfMonth)
-                            task.setDaysOfMonth(ArrayList())
-                        }
-                    }
-                }
-
-                Task.TYPE_TODO -> {
-                    if (dueDateCheckBox.isChecked) {
-                        task.dueDate = Date(dueDateListener?.getCalendar()?.timeInMillis ?: Date().time)
-                    } else {
-                        task.dueDate = null
-                    }
-                }
-
-                Task.TYPE_REWARD -> {
-                    val value = taskValue.text.toString()
-                    if (!value.isEmpty()) {
-                        val localFormat = DecimalFormat.getInstance(Locale.getDefault())
-                        try {
-                            task.value = localFormat.parse(value).toDouble()
-                        } catch (ignored: ParseException) {
-                        }
-
-                    } else {
-                        task.value = 0.0
-                    }
-
-                }
-            }
-        })
-        return true
-    }
-
-    private fun prepareSave() {
+        isSaving = true
         var thisTask = task
         if (thisTask == null) {
             thisTask = Task()
-            thisTask.type = taskType ?: "habit"
+            thisTask.type = taskType
+            thisTask.dateCreated = Date()
+        }
+        thisTask.text = textEditText.text.toString()
+        thisTask.notes = notesEditText.text.toString()
+        thisTask.priority = taskDifficultyButtons.selectedDifficulty
+        if (usesTaskAttributeStats) {
+            thisTask.attribute = selectedStat
+        }
+        if (taskType == Task.TYPE_HABIT) {
+            thisTask.up = habitScoringButtons.isPositive
+            thisTask.down = habitScoringButtons.isNegative
+            thisTask.frequency = habitResetStreakButtons.selectedResetOption.value
+            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.counterUp = habitAdjustPositiveStreakView.text.toString().toInt()
+            if (habitAdjustNegativeStreakView.text.isNotEmpty()) thisTask.counterDown = habitAdjustNegativeStreakView.text.toString().toInt()
+        } else if (taskType == Task.TYPE_DAILY) {
+            thisTask.startDate = taskSchedulingControls.startDate
+            thisTask.everyX = taskSchedulingControls.everyX
+            thisTask.frequency = taskSchedulingControls.frequency
+            thisTask.repeat = taskSchedulingControls.weeklyRepeat
+            thisTask.setDaysOfMonth(taskSchedulingControls.daysOfMonth)
+            thisTask.setWeeksOfMonth(taskSchedulingControls.weeksOfMonth)
+            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.streak = habitAdjustPositiveStreakView.text.toString().toInt()
+        } else if (taskType == Task.TYPE_TODO) {
+            thisTask.dueDate = taskSchedulingControls.dueDate
+        } else if (taskType == Task.TYPE_REWARD) {
+            thisTask.value = rewardValueFormView.value
         }
 
-        if (this.saveTask(thisTask) && thisTask.isValid) {
-            if (!shouldSaveTask) {
-                task = thisTask
-                return
+        val resultIntent = Intent()
+        resultIntent.putExtra(TASK_TYPE_KEY, taskType)
+        if (!isChallengeTask) {
+            if (taskType == Task.TYPE_DAILY || taskType == Task.TYPE_TODO) {
+                thisTask.checklist = checklistContainer.checklistItems
+                thisTask.reminders = remindersContainer.reminders
             }
-            //send back to other elements.
-            if (thisTask.id == null || thisTask.id?.isEmpty() == true) {
+            thisTask.tags = RealmList()
+            tagsWrapper.forEachIndexed { index, view ->
+                val tagView = view as? CheckBox
+                if (tagView?.isChecked == true) {
+                    thisTask.tags?.add(tags[index])
+                }
+            }
+
+            if (isCreating) {
                 taskRepository.createTaskInBackground(thisTask)
             } else {
                 taskRepository.updateTaskInBackground(thisTask)
             }
-            val unmanagedTask = taskRepository.getUnmanagedCopy(thisTask)
-            taskAlarmManager.scheduleAlarmsForTask(unmanagedTask)
+
+            if (thisTask.type == Task.TYPE_DAILY || thisTask.type == Task.TYPE_TODO) {
+                taskAlarmManager.scheduleAlarmsForTask(thisTask)
+            }
+        } else {
+                resultIntent.putExtra(PARCELABLE_TASK, thisTask)
         }
-    }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        dismissKeyboard()
-        return true
-    }
-
-    override fun onBackPressed() {
-        finish()
-        dismissKeyboard()
-    }
-
-    private fun finishActivitySuccessfully() {
-        this.prepareSave()
-        finishWithSuccess()
-        dismissKeyboard()
-    }
-
-    private fun finishWithSuccess() {
         val mainHandler = Handler(this.mainLooper)
         mainHandler.postDelayed({
-            val resultIntent = Intent()
-            resultIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, taskType)
-            if (!shouldSaveTask) {
-                resultIntent.putExtra(TaskFormActivity.PARCELABLE_TASK, task)
-            }
             setResult(Activity.RESULT_OK, resultIntent)
+            dismissKeyboard()
             finish()
         }, 500)
+    }
+
+    private fun deleteTask() {
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.are_you_sure)
+        alert.addButton(R.string.delete_task, true) { _, _ ->
+            if (task?.isValid != true) return@addButton
+            task?.id?.let { taskRepository.deleteTask(it).subscribe(Consumer {  }, RxErrorHandler.handleEmptyError()) }
+            dismissKeyboard()
+            finish()
+        }
+        alert.addCancelButton()
+        alert.show()
     }
 
     private fun dismissKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         val currentFocus = currentFocus
-        if (currentFocus != null) {
+        if (currentFocus != null && !habitAdjustPositiveStreakView.isFocused && !habitAdjustNegativeStreakView.isFocused) {
             imm?.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }
     }
 
-    private inner class DateEditTextListener internal constructor(internal var datePickerText: EditText) : View.OnClickListener, DatePickerDialog.OnDateSetListener {
-        internal var calendar: Calendar = Calendar.getInstance()
-        internal var datePickerDialog: DatePickerDialog
-        internal var dateFormatter: DateFormat
-
-        init {
-            this.datePickerText.setOnClickListener(this)
-            this.dateFormatter = DateFormat.getDateInstance()
-            this.datePickerDialog = DatePickerDialog(datePickerText.context, this,
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH))
-
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-            val dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
-                    Integer.toString(Calendar.getInstance().firstDayOfWeek))
-            val firstDayOfTheWeekHelper = FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek ?: "0"))
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
-                @Suppress("DEPRECATION")
-                datePickerDialog.datePicker.calendarView.firstDayOfWeek = firstDayOfTheWeekHelper.firstDayOfTheWeek
-            } else {
-                datePickerDialog.datePicker.firstDayOfWeek = firstDayOfTheWeekHelper
-                        .firstDayOfTheWeek
-            }
-
-            this.datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.today)) { _, _ -> setCalendar(Calendar.getInstance().time) }
-            updateDateText()
-        }
-
-        override fun onClick(view: View) {
-            datePickerDialog.show()
-        }
-
-        override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-            calendar.set(year, monthOfYear, dayOfMonth)
-            updateDateText()
-        }
-
-        @Suppress("UnsafeCast")
-        fun getCalendar(): Calendar {
-            return calendar.clone() as Calendar
-        }
-
-        fun setCalendar(date: Date?) {
-            calendar.time = date
-            datePickerDialog.updateDate(calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH))
-            updateDateText()
-        }
-
-        private fun updateDateText() {
-            datePickerText.setText(dateFormatter.format(calendar.time))
-        }
-    }
-
     companion object {
+        val SELECTED_TAGS_KEY = "selectedTags"
         const val TASK_ID_KEY = "taskId"
         const val USER_ID_KEY = "userId"
         const val TASK_TYPE_KEY = "type"
-        const val SHOW_TAG_SELECTION = "show_tag_selection"
-        const val ALLOCATION_MODE_KEY = "allocationModeKey"
-        const val SHOW_CHECKLIST = "show_checklist"
+        const val IS_CHALLENGE_TASK = "isChallengeTask"
 
         const val PARCELABLE_TASK = "parcelable_task"
-        const val SAVE_TO_DB = "saveToDb"
 
         // in order to disable the event handler in MainActivity
         const val SET_IGNORE_FLAG = "ignoreFlag"

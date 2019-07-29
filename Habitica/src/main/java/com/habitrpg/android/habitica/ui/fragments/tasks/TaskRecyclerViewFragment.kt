@@ -1,30 +1,40 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import androidx.recyclerview.widget.ItemTouchHelper
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
+import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.*
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_refresh_recyclerview.*
@@ -47,6 +57,8 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     lateinit var inventoryRepository: InventoryRepository
     @Inject
     lateinit var taskRepository: TaskRepository
+    @Inject
+    lateinit var soundManager: SoundManager
 
     internal var layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager? = null
 
@@ -70,7 +82,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 TodosRecyclerViewAdapter(null, true, R.layout.todo_item_card, taskFilterHelper)
             }
             Task.TYPE_REWARD -> {
-                RewardsRecyclerViewAdapter(null, context, R.layout.reward_item_card, user)
+                RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, user)
             }
             else -> null
         }
@@ -82,16 +94,37 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         recyclerAdapter = adapter as? TaskRecyclerViewAdapter
         recyclerView.adapter = adapter
 
-        recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
-            taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-        }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
-
         if (this.classType != null) {
             compositeSubscription.add(taskRepository.getTasks(this.classType ?: "", userID).firstElement().subscribe(Consumer {
                 this.recyclerAdapter?.updateUnfilteredData(it)
                 this.recyclerAdapter?.filter()
             }, RxErrorHandler.handleEmptyError()))
         }
+    }
+
+    private fun handleTaskResult(result: TaskScoringResult, value: Int) {
+        if (classType == Task.TYPE_REWARD) {
+            (activity as? MainActivity)?.let { activity ->
+                HabiticaSnackbar.showSnackbar(activity.snackbarContainer, null, getString(R.string.notification_purchase_reward),
+                        BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
+                        ContextCompat.getColor(activity, R.color.yellow_10),
+                        "-$value",
+                        HabiticaSnackbar.SnackbarDisplayType.DROP)
+            }
+        } else {
+            (activity as? MainActivity)?.displayTaskScoringResponse(result)
+        }
+    }
+
+    private fun playSound(direction: TaskDirection) {
+        val soundName = when (classType) {
+            Task.TYPE_HABIT -> if (direction == TaskDirection.UP) SoundManager.SoundPlusHabit else SoundManager.SoundMinusHabit
+            Task.TYPE_DAILY -> SoundManager.SoundDaily
+            Task.TYPE_TODO -> SoundManager.SoundTodo
+            Task.TYPE_REWARD -> SoundManager.SoundReward
+            else -> null
+        }
+        soundName?.let { soundManager.loadAndPlayAudio(it) }
     }
 
     private fun allowReordering() {
@@ -138,7 +171,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
             //defines the enabled move directions in each state (idle, swiping, dragging).
             override fun getMovementFlags(recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder): Int {
-                return ItemTouchHelper.Callback.makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
                         ItemTouchHelper.DOWN or ItemTouchHelper.UP)
             }
 
@@ -179,15 +212,15 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView.setScaledPadding(context, 0, 0, 0, 48)
         recyclerView.adapter = recyclerAdapter as? androidx.recyclerview.widget.RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
-        recyclerView.extraPadding = context?.resources?.getDimension(R.dimen.bb_height) ?: 0f
 
         layoutManager = recyclerView.layoutManager
 
@@ -198,6 +231,23 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         }
         if (recyclerView.adapter == null) {
             this.setInnerAdapter()
+        }
+        if (this.classType != null) {
+            recyclerAdapter?.errorButtonEvents
+            recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
+                taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler(Consumer {
+                openTaskForm(it)
+            })?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.taskScoreEvents
+                    ?.doOnNext { playSound(it.second) }
+                    ?.flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { result ->
+                        handleTaskResult(result, it.first.value.toInt())
+                    }}?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
+            recyclerAdapter?.checklistItemScoreEvents
+                    ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
+                    }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
         }
 
         val bottomPadding = (recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
@@ -263,6 +313,23 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
         if (activeFilter == Task.FILTER_COMPLETED) {
             compositeSubscription.add(taskRepository.retrieveCompletedTodos(userID).subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    private fun openTaskForm(task: Task) {
+        if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000) {
+            return
+        }
+
+        val bundle = Bundle()
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type)
+        bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
+
+        val intent = Intent(activity, TaskFormActivity::class.java)
+        intent.putExtras(bundle)
+        TasksFragment.lastTaskFormOpen = Date()
+        if (isAdded) {
+            startActivityForResult(intent, TasksFragment.TASK_UPDATED_RESULT)
         }
     }
 

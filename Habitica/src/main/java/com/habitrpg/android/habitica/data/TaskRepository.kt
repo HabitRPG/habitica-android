@@ -22,8 +22,8 @@ interface TaskRepository : BaseRepository {
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList>
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<TaskList>
 
-    fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean): Flowable<TaskScoringResult?>
-    fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean): Maybe<TaskScoringResult?>
+    fun taskChecked(user: User?, task: Task, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Flowable<TaskScoringResult?>
+    fun taskChecked(user: User?, taskId: String, up: Boolean, force: Boolean, notifyFunc: ((TaskScoringResult) -> Unit)?): Maybe<TaskScoringResult?>
     fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task>
 
     fun getTask(taskId: String): Flowable<Task>

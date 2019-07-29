@@ -1,34 +1,34 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
-import android.app.AlertDialog
 import android.content.Context
-import androidx.core.content.ContextCompat
-import android.util.DisplayMetrics
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ScrollView
+import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
+import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
@@ -40,32 +40,28 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
-class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopItem) : AlertDialog(context) {
+class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
-    private val customView: View by lazy {
-        LayoutInflater.from(context).inflate(R.layout.dialog_purchase_shopitem, null)
+    private val customHeader: View by lazy {
+        LayoutInflater.from(context).inflate(R.layout.dialog_purchase_shopitem_header, null)
     }
-    private val currencyView: CurrencyViews by bindView(customView, R.id.currencyView)
-    private val limitedTextView: TextView by bindView(customView, R.id.limitedTextView)
-    private val priceLabel: CurrencyView by bindView(customView, R.id.priceLabel)
-    private val buyButton: View by bindView(customView, R.id.buyButton)
-    private val closeButton: View by bindView(customView, R.id.closeButton)
-    private val pinButton: ImageButton by bindView(customView, R.id.pinButton)
-    private val contentContainer: ViewGroup by bindView(customView, R.id.content_container)
-    private val scrollView: ScrollView by bindView(customView, R.id.scrollView)
+    private val currencyView: CurrencyViews by bindView(customHeader, R.id.currencyView)
+    private val limitedTextView: TextView by bindView(customHeader, R.id.limitedTextView)
+    private val buyButton: ViewGroup
+    private val priceLabel: CurrencyView
+    private val buyLabel: TextView
+    private val pinButton: Button by bindView(customHeader, R.id.pin_button)
 
     private var shopItem: ShopItem = item
         set(value) {
             field = value
-
-            buyButton.visibility = View.VISIBLE
 
             if (shopItem.unlockCondition == null) {
                 priceLabel.value = shopItem.value.toDouble()
@@ -99,9 +95,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                 else -> contentView = PurchaseDialogBaseContent(context)
             }
             contentView.setItem(shopItem)
-            contentContainer.addView(contentView)
-
-            setScrollviewSize()
+            setAdditionalContentView(contentView)
         }
 
     private fun checkGearClass() {
@@ -111,7 +105,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
             return
         }
 
-        if (shopItem.habitClass != "special" && user.stats?.habitClass != shopItem.habitClass) {
+        if (shopItem.habitClass != null && shopItem.habitClass != "special" && user.stats?.habitClass != shopItem.habitClass) {
             limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray_100))
@@ -127,27 +121,33 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
         set(value) {
             field = value
             if (isPinned) {
-                pinButton.setImageBitmap(HabiticaIconsHelper.imageOfUnpinItem())
+                pinButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfUnpinItem()), null, null, null)
+                pinButton.text = context.getText(R.string.unpin)
             } else {
-                pinButton.setImageBitmap(HabiticaIconsHelper.imageOfPinItem())
+                pinButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfPinItem()), null, null, null)
+                pinButton.text = context.getText(R.string.pin)
             }
         }
+
     init {
         component?.inject(this)
 
-        setView(customView)
+        forceScrollableLayout = true
+
+        setCustomHeaderView(customHeader)
+
+        addCloseButton()
+        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null)) { _, _ ->
+            onBuyButtonClicked()
+        } as ViewGroup
+        priceLabel = buyButton.findViewById(R.id.priceLabel)
+        buyLabel = buyButton.findViewById(R.id.buy_label)
+        pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe(Consumer { isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
+        pinButton.visibility = View.GONE
 
         shopItem = item
 
         compositeSubscription.add(userRepository.getUser().subscribe(Consumer<User> { this.setUser(it) }, RxErrorHandler.handleEmptyError()))
-
-        if (!this.configManager.newShopsEnabled()) {
-            pinButton.visibility = View.GONE
-        }
-
-        closeButton.setOnClickListener { dismiss() }
-        buyButton.setOnClickListener { onBuyButtonClicked() }
-        pinButton.setOnClickListener { _-> inventoryRepository.togglePinnedItem(shopItem).subscribe(Consumer { isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
     }
 
     private fun setUser(user: User) {
@@ -172,8 +172,14 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
             }
         }
 
-        if (!shopItem.canAfford(user)) {
-            priceLabel.cantAfford = true
+        if (shopItem.canAfford(user)) {
+            buyButton.background = context.getDrawable(R.drawable.button_background_primary)
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
+            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
+        } else {
+            buyButton.background = context.getDrawable(R.drawable.button_background_gray_700)
+            priceLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
+            buyLabel.setTextColor(ContextCompat.getColor(context, R.color.gray_200))
         }
 
         if (shopItem.isTypeGear) {
@@ -190,25 +196,6 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
         super.dismiss()
     }
 
-    private fun setScrollviewSize() {
-        scrollView.post {
-            if (window != null) {
-                val height = scrollView.getChildAt(0).height
-                val displayMetrics = DisplayMetrics()
-                window?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-                val screenHeight = displayMetrics.heightPixels
-                val spaceRequired = (displayMetrics.density * 160).toInt()
-
-                if (height > screenHeight - spaceRequired) {
-                    val myScrollViewParams = scrollView.layoutParams
-                    myScrollViewParams.height = screenHeight - spaceRequired
-                    scrollView.layoutParams = myScrollViewParams
-
-                }
-            }
-        }
-    }
-
     private fun onBuyButtonClicked() {
         val snackbarText = arrayOf("")
         if (shopItem.isValid) {
@@ -220,7 +207,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                 val observable: Flowable<Any>
                 if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType) {
                     observable = if (shopItem.purchaseType == "gear") {
-                        inventoryRepository.purchaseMysterySet(shopItem.categoryIdentifier)
+                        inventoryRepository.purchaseMysterySet(shopItem.key)
                     } else {
                         inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key)
                     }
@@ -231,7 +218,7 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                         if (shopItem.key == "armoire") {
                             snackbarText[0] = when {
                                 buyResponse.armoire["type"] == "gear" -> context.getString(R.string.armoireEquipment, buyResponse.armoire["dropText"])
-                                buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"], buyResponse.armoire["dropText"])
+                                buyResponse.armoire["type"] == "food" -> context.getString(R.string.armoireFood, buyResponse.armoire["dropArticle"] ?: "", buyResponse.armoire["dropText"])
                                 else -> context.getString(R.string.armoireExp)
                             }
                         }
@@ -244,18 +231,21 @@ class PurchaseDialog(context: Context, component: AppComponent?, val item: ShopI
                         .doOnNext {
                             val event = ShowSnackbarEvent()
                             if (snackbarText[0].isNotEmpty()) {
-                                event.title = context.getString(R.string.successful_purchase, shopItem.text)
                                 event.text = snackbarText[0]
                             } else {
                                 event.text = context.getString(R.string.successful_purchase, shopItem.text)
                             }
                             event.type = HabiticaSnackbar.SnackbarDisplayType.NORMAL
                             event.rightIcon = priceLabel.compoundDrawables[0]
-                            event.rightTextColor = priceLabel.currentTextColor
+                            when {
+                                "gold" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.yellow_5)
+                                "gems" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.green_10)
+                                "hourglasses" == item.currency -> event.rightTextColor = ContextCompat.getColor(context, R.color.brand_300)
+                            }
                             event.rightText = "-" + priceLabel.text
                             EventBus.getDefault().post(event)
                         }
-                        .flatMap { userRepository.retrieveUser(false, true) }
+                        .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                         .flatMap { inventoryRepository.retrieveInAppRewards() }
                         .subscribe({
                             if (item.isTypeGear) {

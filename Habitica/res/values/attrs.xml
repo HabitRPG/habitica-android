@@ -1,7 +1,18 @@
 <resources>
+    <attr name="colorPrimaryOffset" format="color" />
+    <attr name="colorPrimaryDistinct" format="color" />
+    <attr name="colorBadgeBackground" format="color" />
+    <attr name="colorContentBackground" format="color" />
+    <attr name="colorContentBackgroundOffset" format="color" />
+    <attr name="colorWindowBackground" format="color" />
+    <attr name="textColorPrimary" format="color" />
+    <attr name="textColorSecondary" format="color" />
+    <attr name="textColorPrimaryDark" format="color" />
+    <attr name="textColorSecondaryDark" format="color" />
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />
     <attr name="title" format="string" />
+    <attr name="iconDrawable" format="integer" />
     <attr name="identifier" format="string" />
     <attr name="hasLightBackground" format="boolean" />
     <attr name="barForegroundColor" format="color" />
@@ -36,7 +47,7 @@
         <attr name="npcDrawable" format="integer" />
     </declare-styleable>
     <declare-styleable name="AvatarCategoryView">
-        <attr name="iconDrawable" format="integer" />
+        <attr name="iconDrawable" />
         <attr name="categoryTitle" format="string" />
     </declare-styleable>
     <declare-styleable name="ValueBar">
@@ -108,5 +119,9 @@
         <attr name="bb_titleTextAppearance" format="reference" />
         <attr name="bb_titleTypeFace" format="string" />
         <attr name="bb_showShadow" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="BottomNavigationItem">
+        <attr name="title" />
+        <attr name="iconDrawable" />
     </declare-styleable>
 </resources>

@@ -117,7 +117,7 @@
   <string name="sunday">日</string>
   <string name="levelup_header">你达到%1$d级！</string>
   <string name="levelup_detail">通过完成您现实生活中的目标，你提升等级并恢复满血状态了！</string>
-  <string name="levelup_button">吼啊~！</string>
+  <string name="onwards">吼啊~！</string>
   <string name="faint_subtitle">别失望！</string>
   <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你就可以把他们都拿回来！加油，你会更棒的！</string>
   <string name="faint_header">你失去了所有的生命值！</string>
@@ -307,21 +307,21 @@
   <string name="feed_to_pet">喂养宠物</string>
   <string name="hatch_egg">孵化宠物蛋</string>
   <string name="invite_party">邀请队伍</string>
-  <string name="dialog_feeding">喂养%1$s %2$s用：</string>
+  <string name="dialog_feeding">喂养%s用：</string>
   <string name="use_animal">使用</string>
   <string name="feed">喂食</string>
   <string name="hatch_with">用%s孵化宠物</string>
   <string name="hatched_pet_title">你孵化了一个 %1$s %2$s！</string>
-  <string name="evolved_pet_title">您驯服了%1$s%2$s，我们去骑一圈吧！</string>
+  <string name="evolved_pet_title">您驯服了%s，我们去骑一圈吧！</string>
   <string name="close">关闭</string>
   <string name="share">分享</string>
-  <string name="notification_pet_fed">你喂食了你的%1$s %2$s！</string>
+  <string name="notification_pet_fed">你喂食了你的%s！</string>
   <string name="notification_purchase">你购买了%s</string>
   <string name="notification_purchase_reward">你购买了一个奖励</string>
-  <string name="sectionpets">基本宠物</string>
-  <string name="sectionpremiumPets">神奇药水宠物</string>
-  <string name="sectionquestPets">剧情任务宠物</string>
-  <string name="sectionspecialPets">稀有宠物</string>
+  <string name="sectiondrop">基本宠物</string>
+  <string name="sectionpremium">神奇药水宠物</string>
+  <string name="sectionquest">剧情任务宠物</string>
+  <string name="sectionspecial">稀有宠物</string>
   <string name="sectionmounts">基本坐骑</string>
   <string name="sectionpremiumMounts">神奇药水坐骑</string>
   <string name="sectionquestMounts">剧情任务坐骑</string>
@@ -370,7 +370,7 @@
   <string name="share_using">分享使用</string>
   <string name="share_levelup">我在Habitica中通过改善我现实生活中的习惯到达了%d级！</string>
   <string name="share_hatched">我刚刚在Habitica中通完成我现实生活中的任务孵化了一只宠物%1$s %2$s！</string>
-  <string name="share_raised">我刚刚在Habitica中通完成我现实生活中的任务得到了一匹坐骑%1$s %2$s！</string>
+  <string name="share_raised">我刚刚在Habitica中通完成我现实生活中的任务得到了一匹坐骑%1$s！</string>
   <string name="open_in_store">在应用商店中打开</string>
   <string name="change_class_confirmation">你确定想要转变职业吗？这将花费3颗宝石。</string>
   <string name="change_class_equipment_warning">提示：你无法再购买%s职业的装备了。</string>
@@ -851,7 +851,19 @@
     <string name="create">创建</string>
     <string name="only_leader_create_challenge">只有会长可以创建挑战</string>
     <string name="create_party">创建队伍</string>
-
-<string name="daily_tip_4">偶尔审视一下你的任务以免偏离正道。</string>
-    <string name="verification_pet">确认后，其中一只久经沙场的宠物在等待着你！</string>
-    </resources>
+  <string name="daily_tip_4">偶尔审视一下你的任务以免偏离正道。</string>
+  <string name="verification_pet">确认后，其中一只久经沙场的宠物在等待着你！</string>
+  <string name="notifications">通知</string>
+  <string name="no_notifications_title">您全部都完成了！</string>
+  <string name="no_notifications_text">小信使仙女们围着你欢快得鼓起了热烈的掌声！恭喜，做得太棒了！</string>
+  <string name="dismiss_all">关闭全部</string>
+  <string name="new_bailey_update">新的贝利更新！</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> 有新消息]]></string>
+  <string name="new_msg_party"><![CDATA[您的队伍 <b>%1$s</b> 有新消息]]></string>
+  <string name="unallocated_stats_points"><![CDATA[你有<b>%1$s没分配的属性点</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[你有新的<b>神秘物品</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[你被邀请加入队伍<b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[你被邀请加入一个私人工会<b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[你被邀请加入一个工会<b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[你被邀请加入任务<b>%1$s</b>]]></string>
+</resources>

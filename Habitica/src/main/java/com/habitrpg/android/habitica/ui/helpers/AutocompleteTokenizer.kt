@@ -11,7 +11,7 @@ class AutocompleteTokenizer(val tokens: List<Char>) : MultiAutoCompleteTextView.
     override fun findTokenStart(text: CharSequence, cursor: Int): Int {
         var i = cursor
 
-        while (i > 0 && !tokens.contains(text[i-1])) {
+        while (i > 0 && text[i-1] != ' ' && !tokens.contains(text[i-1])) {
             i--
         }
 

@@ -6,24 +6,20 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
-import androidx.preference.PreferenceManager
 import android.text.InputType
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -31,29 +27,33 @@ import com.google.android.gms.auth.GoogleAuthException
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
 import com.google.android.gms.auth.UserRecoverableAuthException
-import com.google.android.gms.common.*
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.common.GooglePlayServicesUtil
+import com.google.android.gms.common.Scopes
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
 import io.reactivex.Flowable
 import io.reactivex.exceptions.Exceptions
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import org.json.JSONException
-import org.json.JSONObject
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -69,6 +69,9 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     lateinit var hostConfig: HostConfig
     @Inject
     internal lateinit var userRepository: UserRepository
+    @Inject
+    @JvmField
+    var keyHelper: KeyHelper? = null
 
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
@@ -107,7 +110,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 return@OnClickListener
             }
             apiClient.registerUser(username, email, password, confirmPassword)
-                    .subscribe(this@LoginActivity, Consumer { hideProgress() })
+                    .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
         } else {
             val username: String = mUsernameET.text.toString().trim { it <= ' ' }
             val password: String = mPasswordET.text.toString()
@@ -116,7 +119,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 return@OnClickListener
             }
             apiClient.connectUser(username, password)
-                    .subscribe(this@LoginActivity, Consumer { hideProgress() })
+                    .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
         }
     }
 
@@ -149,13 +152,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         backgroundContainer.post { backgroundContainer.scrollTo(0, backgroundContainer.bottom) }
         backgroundContainer.setScrollingEnabled(false)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val window = window
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-            }
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        val window = window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
         }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
         newGameButton.setOnClickListener { newGameButtonClicked() }
         showLoginButton.setOnClickListener { showLoginButtonClicked() }
@@ -170,14 +171,12 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         loginManager.registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(loginResult: LoginResult) {
-                        Log.e("Login", "SUCCESS")
                         val accessToken = AccessToken.getCurrentAccessToken()
                         apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                                .subscribe(this@LoginActivity, Consumer { hideProgress() })
+                                .subscribe(this@LoginActivity, RxErrorHandler.handleEmptyError())
                     }
 
                     override fun onCancel() {
-                        Log.e("Login", "CANCEL")
                     }
 
                     override fun onError(exception: FacebookException) {
@@ -195,7 +194,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
@@ -252,16 +251,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)
-        val scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (scanResult != null) {
-            try {
-                Log.d("scanresult", scanResult.contents)
-                this.parse(scanResult.contents)
-            } catch (e: Exception) {
-                Log.e("scanresult", "Could not parse scanResult", e)
-            }
-
-        }
 
         if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
             if (resultCode == Activity.RESULT_OK) {
@@ -283,43 +272,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         }
     }
 
-    private fun parse(contents: String) {
-        val adr: String
-        val user: String
-        val key: String
-        try {
-            val obj = JSONObject(contents)
-
-            adr = obj.getString(TAG_ADDRESS)
-            user = obj.getString(TAG_USERID)
-            key = obj.getString(TAG_APIKEY)
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-            prefs.edit {
-                putString(getString(R.string.SP_address), adr)
-                putString(getString(R.string.SP_APIToken), key)
-                putString(getString(R.string.SP_userID), user)
-            }
-            startMainActivity()
-        } catch (e: JSONException) {
-            showSnackbar(getString(R.string.ERR_pb_barcode))
-            e.printStackTrace()
-        } catch (e: Exception) {
-            if ("PB_string_commit" == e.message) {
-                showSnackbar(getString(R.string.ERR_pb_barcode))
-            }
-        }
-
-    }
-
-    private fun showSnackbar(content: String) {
-        val snackbar = Snackbar
-                .make(this.findViewById(R.id.login_linear_layout), content, Snackbar.LENGTH_LONG)
-
-        val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(Color.RED)//change Snackbar's background color;
-        snackbar.show() // Don’t forget to show!
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_toggleRegistering -> toggleRegistering()
@@ -331,8 +283,12 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     private fun saveTokens(api: String, user: String) {
         this.apiClient.updateAuthenticationCredentials(user, api)
         sharedPrefs.edit {
-            putString(getString(R.string.SP_APIToken), api)
             putString(getString(R.string.SP_userID), user)
+            if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                putString(user, keyHelper?.encrypt(api))
+            } else {
+                putString(getString(R.string.SP_APIToken), api)
+            }
         }
     }
 
@@ -344,12 +300,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
 
     private fun showValidationError(resourceMessageString: Int) {
         mProgressBar.visibility = View.GONE
-        androidx.appcompat.app.AlertDialog.Builder(this)
-                .setTitle(R.string.login_validation_error_title)
-                .setMessage(resourceMessageString)
-                .setNeutralButton(android.R.string.ok) { _, _ -> }
-                .setIcon(R.drawable.ic_warning_black)
-                .show()
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.login_validation_error_title)
+        alert.setMessage(resourceMessageString)
+        alert.addOkButton()
+        alert.show()
     }
 
     override fun accept(userAuthResponse: UserAuthResponse) {
@@ -358,6 +313,8 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        HabiticaBaseApplication.reloadUserComponent()
 
         compositeSubscription.add(userRepository.retrieveUser(true)
                 .subscribe(Consumer {
@@ -384,12 +341,11 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         try {
             startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT)
         } catch (e: ActivityNotFoundException) {
-            val dialog = AlertDialog.Builder(this)
-                    .setTitle(R.string.authentication_error_title)
-                    .setMessage(R.string.google_services_missing)
-                    .setNegativeButton(R.string.close) { dialogInterface, _ -> dialogInterface.dismiss() }
-                    .create()
-            dialog.show()
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(R.string.authentication_error_title)
+            alert.setMessage(R.string.google_services_missing)
+            alert.addCloseButton()
+            alert.show()
         }
 
     }
@@ -412,7 +368,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 .subscribe(this@LoginActivity, Consumer { throwable ->
                     throwable.printStackTrace()
                     hideProgress()
-                    throwable.cause.notNull {
+                    throwable.cause?.let {
                         if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
                             handleGoogleAuthException(throwable.cause as GoogleAuthException)
                         }
@@ -432,7 +388,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
             @Suppress("DEPRECATION")
             GooglePlayServicesUtil.showErrorDialogFragment(statusCode,
                     this@LoginActivity,
-                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) { _ ->
+                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
 
             }
         } else if (e is UserRecoverableAuthException) {
@@ -555,7 +511,7 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.start()
-        KeyboardUtil.dismissKeyboard(this)
+        dismissKeyboard()
     }
 
     private fun onForgotPasswordClicked() {
@@ -568,23 +524,22 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT)
         input.layoutParams = lp
-        val alertDialog = AlertDialog.Builder(this)
-                .setTitle(R.string.forgot_password_title)
-                .setMessage(R.string.forgot_password_description)
-                .setView(input)
-                .setPositiveButton(R.string.send) { dialog, _ ->
-                    dialog.dismiss()
+        val alertDialog = HabiticaAlertDialog(this)
+        alertDialog.setTitle(R.string.forgot_password_title)
+        alertDialog.setMessage(R.string.forgot_password_description)
+        alertDialog.setAdditionalContentView(input)
+        alertDialog.addButton(R.string.send, true) { _, _ ->
                     userRepository.sendPasswordResetEmail(input.text.toString()).subscribe(Consumer { showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
-                }.setNegativeButton(R.string.action_cancel) { dialog, _ -> dialog.dismiss() }
-
+                }
+        alertDialog.addCancelButton()
         alertDialog.show()
     }
 
     private fun showPasswordEmailConfirmation() {
-        AlertDialog.Builder(this)
-                .setMessage(R.string.forgot_password_confirmation)
-                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
-                .show()
+        val alert = HabiticaAlertDialog(this)
+        alert.setMessage(R.string.forgot_password_confirmation)
+        alert.addOkButton()
+        alert.show()
     }
 
     companion object {

@@ -2,7 +2,7 @@
 //
 //
 //import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
-//import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
+//import com.habitrpg.android.habitica.helpers.NotificationsManager;
 //import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
 //import com.habitrpg.android.habitica.data.ApiClient;
 //import com.habitrpg.android.habitica.BuildConfig;
@@ -62,7 +62,7 @@
 //                BuildConfig.PORT,
 //                "",
 //                "");
-//        //apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), new PopupNotificationsManager(context), context);
+//        //apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), new NotificationsManager(context), context);
 //        //generateUser();
 //    }
 //

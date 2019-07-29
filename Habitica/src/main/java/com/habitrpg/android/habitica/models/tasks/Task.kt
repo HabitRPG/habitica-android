@@ -35,7 +35,7 @@ open class Task : RealmObject, Parcelable {
     var value: Double = 0.0
     var tags: RealmList<Tag>? = RealmList()
     var dateCreated: Date? = null
-    var position: Int? = 0
+    var position: Int = 0
     var group: TaskGroupPlan? = null
     //Habits
     var up: Boolean? = false
@@ -81,10 +81,10 @@ open class Task : RealmObject, Parcelable {
     private var weeksOfMonthString: String? = null
 
     @Ignore
-    private var daysOfMonth: MutableList<Int>? = null
+    private var daysOfMonth: List<Int>? = null
 
     @Ignore
-    private var weeksOfMonth: MutableList<Int>? = null
+    private var weeksOfMonth: List<Int>? = null
 
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
@@ -162,6 +162,9 @@ open class Task : RealmObject, Parcelable {
     fun checkIfDue(): Boolean? = isDue == true
 
     fun getNextReminderOccurence(oldTime: Date?): Date? {
+        if (oldTime == null) {
+            return null
+        }
         val today = Calendar.getInstance()
 
         val newTime = GregorianCalendar()
@@ -255,7 +258,7 @@ open class Task : RealmObject, Parcelable {
         dest.writeDouble(this.value)
         dest.writeList(this.tags)
         dest.writeLong(this.dateCreated?.time ?: -1)
-        dest.writeInt(this.position ?: 0)
+        dest.writeInt(this.position)
         dest.writeValue(this.up)
         dest.writeValue(this.down)
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())
@@ -269,17 +272,19 @@ open class Task : RealmObject, Parcelable {
         dest.writeLong(this.dueDate?.time ?: -1)
         dest.writeString(this.specialTag)
         dest.writeString(this.id)
+        dest.writeInt(this.counterUp ?: 0)
+        dest.writeInt(this.counterDown ?: 0)
     }
 
     constructor()
 
     protected constructor(`in`: Parcel) {
-        this.userId = `in`.readString()
+        this.userId = `in`.readString() ?: ""
         this.priority = `in`.readValue(Float::class.java.classLoader) as? Float ?: 0f
-        this.text = `in`.readString()
+        this.text = `in`.readString() ?: ""
         this.notes = `in`.readString()
         this.attribute = `in`.readString()
-        this.type = `in`.readString()
+        this.type = `in`.readString() ?: ""
         this.value = `in`.readDouble()
         this.tags = RealmList()
         `in`.readList(this.tags, TaskTag::class.java.classLoader)
@@ -303,59 +308,59 @@ open class Task : RealmObject, Parcelable {
         this.dueDate = if (tmpDuedate == -1L) null else Date(tmpDuedate)
         this.specialTag = `in`.readString()
         this.id = `in`.readString()
+        this.counterUp = `in`.readInt()
+        this.counterDown = `in`.readInt()
     }
 
 
-    fun setWeeksOfMonth(weeksOfMonth: MutableList<Int>) {
+    fun setWeeksOfMonth(weeksOfMonth: List<Int>?) {
         this.weeksOfMonth = weeksOfMonth
         this.weeksOfMonthString = this.weeksOfMonth?.toString()
     }
 
     fun getWeeksOfMonth(): List<Int>? {
         if (weeksOfMonth == null) {
-            weeksOfMonth = ArrayList()
+            val weeksOfMonth = mutableListOf<Int>()
             if (weeksOfMonthString != null) {
                 try {
                     val obj = JSONArray(weeksOfMonthString)
                     var i = 0
                     while (i < obj.length()) {
-                        weeksOfMonth?.add(obj.getInt(i))
+                        weeksOfMonth.add(obj.getInt(i))
                         i += 1
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
 
-            } else {
-                weeksOfMonth = ArrayList()
             }
+            this.weeksOfMonth = weeksOfMonth.toList()
         }
         return weeksOfMonth
     }
 
-    fun setDaysOfMonth(daysOfMonth: MutableList<Int>) {
+    fun setDaysOfMonth(daysOfMonth: List<Int>?) {
         this.daysOfMonth = daysOfMonth
         this.daysOfMonthString = daysOfMonth.toString()
     }
 
     fun getDaysOfMonth(): List<Int>? {
         if (daysOfMonth == null) {
-            daysOfMonth = ArrayList()
+            val daysOfMonth = mutableListOf<Int>()
             if (daysOfMonthString != null) {
                 try {
                     val obj = JSONArray(daysOfMonthString)
                     var i = 0
                     while (i < obj.length()) {
-                        daysOfMonth?.add(obj.getInt(i))
+                        daysOfMonth.add(obj.getInt(i))
                         i += 1
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
 
-            } else {
-                daysOfMonth = ArrayList()
             }
+            this.daysOfMonth = daysOfMonth
         }
 
         return daysOfMonth
@@ -381,6 +386,7 @@ open class Task : RealmObject, Parcelable {
         const val FREQUENCY_WEEKLY = "weekly"
         const val FREQUENCY_DAILY = "daily"
         const val FREQUENCY_MONTHLY = "monthly"
+        const val FREQUENCY_YEARLY = "yearly"
 
         @JvmField
         val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {

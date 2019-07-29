@@ -3,23 +3,26 @@ package com.habitrpg.android.habitica.ui.adapter
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.events.commands.UseSkillCommand
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import org.greenrobot.eventbus.EventBus
+import io.reactivex.BackpressureStrategy
+import io.reactivex.subjects.PublishSubject
 
-class SkillsRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
+class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
+
+    private val useSkillSubject = PublishSubject.create<Skill>()
+    val useSkillEvents = useSkillSubject.toFlowable(BackpressureStrategy.DROP)
 
     var mana: Double = 0.toDouble()
      set(value) {
@@ -33,7 +36,6 @@ class SkillsRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adap
         this.notifyDataSetChanged()
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillViewHolder {
         return SkillViewHolder(parent.inflate(R.layout.skill_list_item))
     }
@@ -46,7 +48,7 @@ class SkillsRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adap
         return skillList.size
     }
 
-    inner class SkillViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class SkillViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val magicDrawable: Drawable
         private val skillImageView: SimpleDraweeView by bindView(R.id.skill_image)
@@ -92,10 +94,7 @@ class SkillsRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adap
         }
 
         override fun onClick(v: View) {
-            val event = UseSkillCommand()
-            event.skill = this.skill
-
-            EventBus.getDefault().post(event)
+            skill?.let { useSkillSubject.onNext(it) }
         }
     }
 }

@@ -1,14 +1,14 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
@@ -33,7 +33,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
     private var activeCustomization: String? = null
 
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
-    internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
+    internal var layoutManager: GridLayoutManager = GridLayoutManager(activity, 2)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -42,11 +42,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
         compositeSubscription.add(adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
-                    var updatePath = "preferences." + customization.type
-                    if (customization.category != null) {
-                        updatePath = updatePath + "." + customization.category
-                    }
-                    userRepository.updateUser(user, updatePath, customization.identifier)
+                    userRepository.useCustomization(user, customization.type ?: "", customization.category, customization.identifier ?: "")
                 }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(adapter.getUnlockCustomizationEvents()
@@ -76,7 +72,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments.notNull {
+        arguments?.let {
             val args = AvatarCustomizationFragmentArgs.fromBundle(it)
             type = args.type
             if (args.category.isNotEmpty()) {
@@ -86,8 +82,8 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
         setGridSpanCount(view.width)
         if (recyclerView.layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
-            layoutManager.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
+            layoutManager = GridLayoutManager(activity, 2)
+            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter.getItemViewType(position) == 0) {
                         layoutManager.spanCount
@@ -104,12 +100,9 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         this.loadCustomizations()
 
-        this.updateActiveCustomization()
-        if (this.user != null) {
-            this.adapter.userSize = this.user?.preferences?.size
-            this.adapter.hairColor = this.user?.preferences?.hair?.color
-            this.adapter.gemBalance = user?.gemCount ?: 0
-        }
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler(Consumer {
+            updateUser(it)
+        }))
     }
 
     override fun onDestroy() {
@@ -117,7 +110,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -132,7 +125,7 @@ class AvatarCustomizationFragment : BaseMainFragment() {
 
     private fun setGridSpanCount(width: Int) {
         var itemWidth = 0F
-        context?.resources?.notNull {
+        context?.resources?.let {
             itemWidth = if (this.type != null && this.type == "background") {
                 context?.resources?.getDimension(R.dimen.avatar_width)
             } else {
@@ -146,21 +139,23 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         layoutManager.spanCount = spanCount
     }
 
-    override fun updateUserData(user: User?) {
-        super.updateUserData(user)
-        this.adapter.gemBalance = user?.gemCount ?: 0
-        this.updateActiveCustomization()
+    fun updateUser(user: User) {
+        this.updateActiveCustomization(user)
         if (adapter.customizationList.size != 0) {
             val ownedCustomizations = ArrayList<String>()
-            user?.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
+            user.purchased?.customizations?.filter { it.type == this.type }?.mapTo(ownedCustomizations) { it.id }
             adapter.updateOwnership(ownedCustomizations)
         } else {
             this.loadCustomizations()
         }
+        this.adapter.userSize = this.user?.preferences?.size
+        this.adapter.hairColor = this.user?.preferences?.hair?.color
+        this.adapter.gemBalance = user.gemCount
+        adapter.notifyDataSetChanged()
     }
 
-    private fun updateActiveCustomization() {
-        if (this.type == null || user?.preferences == null) {
+    private fun updateActiveCustomization(user: User) {
+        if (this.type == null || user.preferences == null) {
             return
         }
         val prefs = this.user?.preferences
@@ -185,3 +180,4 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         }
     }
 }
+

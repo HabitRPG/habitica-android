@@ -113,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
                     android:id="@+id/subscribeButton"
-                    style="@style/Button.Purple.Small"
+                    style="@style/HabiticaButton.Purple.Small"
                     android:textAllCaps="false"
                     android:layout_marginTop="8dp"/>
             </LinearLayout>

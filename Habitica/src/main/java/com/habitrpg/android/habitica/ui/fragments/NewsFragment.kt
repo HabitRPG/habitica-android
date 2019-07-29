@@ -8,7 +8,7 @@ import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.inflate
 import kotlinx.android.synthetic.main.fragment_news.*
 
@@ -28,14 +28,11 @@ class NewsFragment : BaseMainFragment() {
         webSettings.javaScriptEnabled = true
         webSettings.domStorageEnabled = true
         newsWebview.webChromeClient = object : WebChromeClient() {
-            override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
-                return super.onConsoleMessage(consoleMessage)
-            }
         }
         newsWebview.loadUrl("$address/static/new-stuff")
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 

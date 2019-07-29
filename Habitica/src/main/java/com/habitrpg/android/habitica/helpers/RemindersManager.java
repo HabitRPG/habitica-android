@@ -5,11 +5,12 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import androidx.annotation.Nullable;
-import androidx.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+
+import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
@@ -33,7 +34,7 @@ public class RemindersManager {
     private DateFormat dateFormater;
 
     public RemindersManager(String taskType) {
-        Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
+        Objects.requireNonNull(HabiticaBaseApplication.Companion.getUserComponent()).inject(this);
         if (taskType.equals("todo")) {
             dateFormater = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
         } else {
@@ -73,9 +74,9 @@ public class RemindersManager {
             dialog.setContentView(R.layout.custom_date_time_dialogue);
             dialog.setTitle("Select Date and Time");
 
-            Button dialogConfirmButton = (Button) dialog.findViewById(R.id.customDialogConfirmButton);
-            TimePicker dialogTimePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
-            DatePicker dialogDatePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
+            Button dialogConfirmButton = dialog.findViewById(R.id.customDialogConfirmButton);
+            TimePicker dialogTimePicker = dialog.findViewById(R.id.timePicker);
+            DatePicker dialogDatePicker = dialog.findViewById(R.id.datePicker);
 
             dialogTimePicker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context));
 

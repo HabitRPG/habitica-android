@@ -81,9 +81,8 @@
 
 
     <!-- Network Errors -->
-    <string name="network_error_title">Connection Error</string>
     <string name="network_error_no_network_body">You are not connected to the internet.</string>
-    <string name="internal_error_api">There seems to be a problem with the server. Try again later.</string>
+    <string name="internal_error_api">Server connection lost</string>
 
     <string name="authentication_error_title">Authentication Error</string>
     <string name="authentication_error_body">Your Username and/or Password was incorrect.</string>
@@ -102,8 +101,8 @@
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
     <string name="start_date">Start Date</string>
-    <string name="positive_habit_form">Positive ( + )</string>
-    <string name="negative_habit_form">Negative ( - )</string>
+    <string name="positive_habit_form">Positive</string>
+    <string name="negative_habit_form">Negative</string>
     <string name="checklist">Checklist</string>
     <string name="reminders">Reminders</string>
     <string name="actions">Actions</string>
@@ -139,7 +138,7 @@
 
     <string name="levelup_header">You Reached Level %1$d!</string>
     <string name="levelup_detail">By accomplishing your real life goals, you leveled up and are now fully healed!</string>
-    <string name="levelup_button">Huzzah!</string>
+    <string name="onwards">Onwards!</string>
 
     <string name="faint_subtitle">Don\'t despair!</string>
     <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck—you\'ll do great.</string>
@@ -152,7 +151,7 @@
     <string name="mana_price_button">%d MP</string>
     <string name="used_skill">You used %1$s for %2$d mana.</string>
     <string name="used_skill_without_mana">You used %1$s.</string>
-    <string name="new_checklist_item">new checklist item</string>
+    <string name="new_checklist_item">New checklist entry</string>
     <string name="add_checklist_item">Add</string>
 
     <string name="reminder_title">Remember to check off your tasks</string>
@@ -315,7 +314,7 @@
     <string name="pets">Pets</string>
     <string name="mounts">Mounts</string>
 
-    <string name="armoireEquipment">You found a piece of rare Equipment in the Armoire: %s! Awesome!</string>
+    <string name="armoireEquipment">You found %s in the Armoire</string>
     <string name="armoireFood">You rummage in the Armoire and find %1$s %2$s. What\'s that doing in here?</string>
     <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
     <string name="armoireNotesFull">Open the Armoire to randomly receive special Equipment, Experience, or food! Equipment pieces remaining: %d</string>
@@ -326,25 +325,22 @@
     <string name="feed_to_pet">Feed to pet</string>
     <string name="hatch_egg">Hatch with egg</string>
     <string name="invite_party">Invite party</string>
-    <string name="dialog_feeding">Feed %1$s %2$s with:</string>
+    <string name="dialog_feeding">Feed %s with:</string>
     <string name="use_animal">Use</string>
     <string name="feed">Feed</string>
     <string name="hatch_with">Hatch pet with %s</string>
     <string name="hatched_pet_title">You hatched a %1$s %2$s!</string>
-    <string name="evolved_pet_title">You have tamed %1$s %2$s, let\'s go for a ride!</string>
+    <string name="evolved_pet_title">You have tamed %s, let\'s go for a ride!</string>
     <string name="close">Close</string>
     <string name="share">Share</string>
-    <string name="notification_pet_fed" >You fed your %1$s %2$s!</string>
+    <string name="notification_pet_fed" >You fed your %s!</string>
     <string name="notification_purchase" >You purchased %s</string>
     <string name="notification_purchase_reward" >You purchased a reward</string>
-    <string name="sectionpets">Standard</string>
-    <string name="sectionpremiumPets">Magic Potion</string>
-    <string name="sectionquestPets">Quest</string>
-    <string name="sectionspecialPets">Rare</string>
-    <string name="sectionmounts">Standard</string>
-    <string name="sectionpremiumMounts">Magic Potion</string>
-    <string name="sectionquestMounts">Quest</string>
-    <string name="sectionspecialMounts">Rare</string>
+    <string name="sectiondrop">Standard</string>
+    <string name="sectionpremium">Magic Potion</string>
+    <string name="sectionquest">Quest</string>
+    <string name="sectionspecial">Special</string>
+    <string name="sectionwacky">Wacky</string>
     <string name="world_quest">World Quest</string>
     <string name="inn_description">Need a break? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:\n\n
 &#8226; Missed Dailies won’t damage you\n
@@ -358,10 +354,10 @@
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>
     <string name="healer">Healer</string>
-    <string name="warrior_description">Warriors score more and better \“critical hits\”, which randomly give bonus Gold, Experience, and drop chance for scoring a task. They also deal heavy damage to boss monsters. Play a Warrior if you find motivation from unpredictable jackpot-style rewards, or want to dish out the hurt in boss Quests!</string>
-    <string name="mage_description">Mages learn swiftly, gaining Experience and Levels faster than other classes. They also get a great deal of Mana for using special abilities. Play a Mage if you enjoy the tactical game aspects of Habit, or if you are strongly motivated by leveling up and unlocking advanced features!</string>
-    <string name="rogue_description">Rogues love to accumulate wealth, gaining more Gold than anyone else, and are adept at finding random items. Their iconic Stealth ability lets them duck the consequences of missed Dailies. Play a Rogue if you find strong motivation from Rewards and Achievements, striving for loot and badges!</string>
-    <string name="healer_description">Healers stand impervious against harm, and extend that protection to others. Missed Dailies and bad Habits don\'t faze them much, and they have ways to recover Health from failure. Play a Healer if you enjoy assisting others in your Party, or if the idea of cheating Death through hard work inspires you!</string>
+    <string name="warrior_description">Warriors score more critical hits and deal heavy damage to Bosses. Play a Warrior if you want to defeat monsters easily! Warrior benefit from a high Strength stat.</string>
+    <string name="mage_description">Mages learn Skills that damage Bosses and boost EXP and Mana. Play a Mage if you’re motivated by leveling up quickly! Mages benefit from a high Intelligence stat.</string>
+    <string name="rogue_description">Rogues learn Skills that let them and their Party find more Gold and random drops. Play a Rogue if you want lots of items and Gold! Rogues benefit from a high Perception stat.</string>
+    <string name="healer_description">Healers learn Skills that can heal and protect themselves and their Party. Play a Healer if you enjoy assisting others or avoiding damage! Healers benefit from a high Constitution stat.</string>
     <string name="select_class">Select Class</string>
     <string name="opt_out_class">Opt Out</string>
     <string name="opt_out_description">Can\'t be bothered with classes? Want to choose later? Opt out - you\'ll be a warrior with no special abilities. You can read about the class system later on the wiki and enable classes at any time.</string>
@@ -390,7 +386,7 @@
     <string name="share_using">Share using</string>o
     <string name="share_levelup">I got to level %d in Habitica by improving my real-life habits!</string>
     <string name="share_hatched">I just hatched a %1$s %2$s pet in Habitica by completing my real-life tasks!</string>
-    <string name="share_raised">I just gained a %1$s %2$s mount in Habitica by completing my real-life tasks!</string>
+    <string name="share_raised">I just gained a %1$s mount in Habitica by completing my real-life tasks!</string>
     <string name="open_in_store">Open in play store</string>
     <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
     <string name="change_class_equipment_warning">Warning: You will no longer be able to buy equipment from the %s class.</string>
@@ -503,7 +499,7 @@
     <string name="monthly_gem_cap">Monthly gem cap</string>
     <string name="inactive">Inactive</string>
     <string name="one_month">1 Month</string>
-    <string name="months">%d Months</string>
+    <string name="x_months">%d Months</string>
     <string name="month">month</string>
     <string name="three_months">3 months</string>
     <string name="six_months">6 months</string>
@@ -538,6 +534,7 @@
     <string name="open_settings">Open Settings</string>
     <string name="dont_keep_activities_warning">It seems like you have the Developer option \“Don\'t keep Activities\” active. Currently this option causes issues with the habitica app, so we suggest disabling it.</string>
     <string name="inbox">Messages</string>
+    <string name="notifications">Notifications</string>
     <string name="FAQ">Frequently Asked Questions</string>
     <string name="special">Special</string>
     <string name="gem_for_gold_description">Because you subscribe to Habitica, you can purchase a number of Gems each month using Gold.</string>
@@ -548,7 +545,7 @@
     <string name="open">Open</string>
     <string name="notification_mystery_item">You open the box and find %s!</string>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
-    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Your next prize unlocks at %1$d Check-Ins</string>
+    <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Next prize in %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
     <string name="filters">Filters</string>
     <string name="done">Done</string>
@@ -586,8 +583,8 @@
     <string name="empty_title_todos">You don\'t have any To-Dos</string>
     <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
     <string name="empty_title_rewards">You don\'t have any Rewards</string>
-    <string name="reset_walkthrough">Reset Justins Walkthrough</string>
-    <string name="read_community_guidelines">Please read our Community Guidelines before posting</string>
+    <string name="reset_walkthrough">Reset Tutorials</string>
+    <string name="read_community_guidelines">Review our <u>Community Guidelines</u> before posting</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Reload Content</string>
     <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
@@ -620,7 +617,7 @@
     <string name="leave_quest_confirmation">Are you sure you want to leave the active quest? All your quest progress will be lost.</string>
     <string name="number_participants">%1$d Participants</string>
     <string name="welcome_back">Welcome Back</string>
-    <string name="yesterdaililes_prompt">Did you do any of these Dailies yesterday?</string>
+    <string name="yesterdaililes_prompt">Check off any Dailies you did yesterday:</string>
     <string name="start_day">Start My Day</string>
     <string name="leave_party_confirmation">Are you sure you want to leave the Party?</string>
     <string name="nextPrizeUnlocksIn" formatted="false">Next Prize in %d Check-ins</string>
@@ -658,13 +655,14 @@
     <string name="delete_account">Delete Account</string>
     <string name="delete_account_description">Are you sure? This will delete your account forever, and it can never be restored! You will need to register a new account to use Habitica again. Banked or spent Gems will not be refunded. If you\'re absolutely certain, type your password into the text box below.</string>
     <string name="delete_oauth_account_description">Are you sure? This will delete your account forever, and it can never be restored! You will need to register a new account to use Habitica again. Banked or spent Gems will not be refunded. If you\'re absolutely certain, type DELETE into the text box below.</string>
-    <string name="reset_account_confirmation">reset my account</string>
-    <string name="delete_account_confirmation">delete my account</string>
+    <string name="reset_account_confirmation">Reset my Account</string>
+    <string name="delete_account_confirmation">Delete my Account</string>
     <string name="danger_zone">Danger Zone</string>
     <string name="nevermind">Nevermind</string>
     <string name="resetting_account">Resetting Account</string>
     <string name="deleting_account">Deleting Account</string>
     <string name="insufficientGold">You need to complete more tasks before you can afford this item!</string>
+    <string name="insufficientGoldTitle">Not Enough Gold</string>
     <string name="insufficientGems">You\'ll need more Gems to buy this item!</string>
     <string name="purchase_gems">Purchase gems</string>
     <string name="insufficientHourglasses">You\'ll need more Mystic Hourglasses to buy this item!</string>
@@ -765,6 +763,7 @@
     <string name="no_party_description">Take on quests with friends or on your own. Battle monsters, create Challenges, and help yourself stay accountable through Parties.</string>
     <string name="no_party_title">Play Habitica in a Party</string>
     <string name="join_party_description">Give a Party member the username found below and they can send you an invite</string>
+    <string name="join_party_description_guild">Give the username below to a friend or head to the %s to meet potential comrades!e</string>
     <string name="join_party_description_id">Give them your User ID or have them scan your QR code while inviting</string>
     <string name="join_party_title">Want to join a party?</string>
     <string name="create_party_website">Open website to create party</string>
@@ -809,7 +808,7 @@
     <string name="daily_tip_7">Try pinning items from the Market to your Rewards to help motivate you to earn them!</string>
     <string name="daily_tip_8">You can change your task\'s difficulty to reward yourself more for hard tasks!</string>
     <string name="daily_tip_9">If you\'re having a tough time, try breaking your tasks down into smaller parts.</string>
-    <string name="moderator">Moderator</string>
+    <string name="moderator">Mod</string>
     <string name="staff">Staff</string>
     <string name="expand_notes">Read More</string>
     <string name="collapse_notes">Show Less</string>
@@ -860,8 +859,88 @@
     <string name="discover">Discover</string>
     <string name="damage_paused">Damage paused</string>
     <string name="preference_push_important_announcements">Important Announcements</string>
+    <string name="no_notifications_title">You’re all caught up!</string>
+    <string name="no_notifications_text">The notification fairies give you a raucous round of applause! Well done!</string>
+    <string name="dismiss_all">Dismiss All</string>
+    <string name="new_bailey_update">New Bailey Update!</string>
+    <string name="new_msg_guild"><![CDATA[<b>%1$s</b> has new posts]]></string>
+    <string name="new_msg_party"><![CDATA[Your Party, <b>%1$s</b>, has new posts]]></string>
+    <string name="unallocated_stats_points"><![CDATA[You have <b>%1$s unallocated Stat Points</b>]]></string>
+    <string name="new_subscriber_item"><![CDATA[You have new <b>Mystery Items</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[You were invited to join the Party <b>%1$s</b>]]></string>
+    <string name="invited_to_private_guild"><![CDATA[You were invited to join the private Guild <b>%1$s</b>]]></string>
+    <string name="invited_to_public_guild"><![CDATA[You were invited to join the Guild <b>%1$s</b>]]></string>
+    <string name="invited_to_quest"><![CDATA[You were invited to the Quest <b>%1$s</b>]]></string>
+    <string name="defeat">Defeat</string>
     <string name="create">Create</string>
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>
     <string name="create_party">Create Party</string>
+    <string name="add_local_authentication">Add Local Authentication</string>
+    <string name="task_title">Task Title</string>
 
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="new_password_repeat">Repeat new Password</string>
+    <string name="adjust_streak">Adjust Streak</string>
+    <string name="password_changed">Password successfully changed</string>
+    <string name="assigned_stat">Assigned Stat</string>
+    <string name="monthly">Monthly</string>
+    <string name="weekly">Weekly</string>
+    <string name="repeats">Repeats</string>
+    <string name="every">Every</string>
+    <string name="scheduling">Scheduling</string>
+    <string name="days">Days</string>
+    <string name="weeks">Weeks</string>
+    <string name="months">Months</string>
+    <string name="years">Years</string>
+    <string name="checklist_text">Checklist Text</string>
+    <string name="new_reminder">New reminder</string>
+    <string name="streak">Streak</string>
+    <string name="update_available">Update available: %1$s (%2$d)</string>
+    <string name="need_help_header_description">Post a message in the %s to have your questions answered by a fellow player.</string>
+    <string name="need_more_help">Need more help?</string>
+    <string name="become_x">Become a %s</string>
+    <string name="x_class">%s Class</string>
+    <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
+    <string name="report_message_title">Report %s for violation:</string>
+    <string name="reason_for_report">Reason for report (optional)</string>
+    <string name="mystery_sets">Mystery Sets</string>
+    <string name="guild_description">Guild Description</string>
+    <string name="invite_to_guild">Invite to Guild</string>
+    <string name="join_guild">Join Guild</string>
+    <string name="garden">Garden</string>
+    <string name="i_agree_to_follow_the_guidelines">I agree to follow the guidelines</string>
+    <string name="report_violation">Report Violation</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="leave_guild">Leave Guild</string>
+    <string name="left_guild">You left the guild</string>
+    <string name="joined_guild">You joined the guild</string>
+    <string name="cost">Cost</string>
+    <string name="setup_task_habit_1">Add a task to Habitica</string>
+    <string name="setup_task_habit_1_notes">Either a Habit, a Daily or a To-Do</string>
+    <string name="setup_task_habit_2">Tap here to edit this into a bad habit you\'d like to quit</string>
+    <string name="setup_task_habit_2_notes">Or delete it from the edit screen</string>
+    <string name="guild_summary">Guild Summary</string>
+    <string name="guild_members">Guild Members</string>
+    <string name="guild_bank">Guild Bank</string>
+    <string name="invite_to_party">Invite to Party</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="not_now">Not right now</string>
+    <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armor to help you on your journey</string>
+    <string name="levelup_title_10">Class System unlocked!</string>
+    <string name="pin">Pin</string>
+    <string name="unpin">Unpin</string>
+    <string name="take_me_back">Take me Back</string>
+    <string name="sidebar_achievements">Achievements</string>
+    <string name="basic_achievements">Basic Achievements</string>
+    <string name="seasonal_achievements">Seasonal Achievements</string>
+    <string name="special_achievements">Special Achievements</string>
+    <string name="switch_to_list_view">Switch to list view</string>
+    <string name="switch_to_grid_view">Switch to grid view</string>
+    <string name="confirm_deletion">Confirm deletion</string>
+    <string name="new_task">New Task</string>
+    <string name="create_task">Create %s</string>
+    <string name="details">Details</string>
+    <string name="share_challenge_with">Share Challenge with</string>
 </resources>

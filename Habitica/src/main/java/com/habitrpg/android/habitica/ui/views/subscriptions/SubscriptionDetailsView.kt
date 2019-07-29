@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.subscriptions
 
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -78,7 +77,7 @@ class SubscriptionDetailsView : LinearLayout {
         if (plan.consecutive?.count == 1) {
             monthsSubscribedTextView.text = resources.getString(R.string.one_month)
         } else {
-            monthsSubscribedTextView.text = resources.getString(R.string.months, plan.consecutive?.count ?: 0)
+            monthsSubscribedTextView.text = resources.getString(R.string.x_months, plan.consecutive?.count ?: 0)
         }
         gemCapTextView.text = plan.totalNumberOfGems().toString()
         currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
@@ -94,17 +93,14 @@ class SubscriptionDetailsView : LinearLayout {
         }
     }
 
-    fun openSubscriptionWebsite() {
+    private fun openSubscriptionWebsite() {
         if (plan?.paymentMethod != null) {
-            val intent: Intent = if (plan?.paymentMethod == "Google") {
-                Intent(Intent.ACTION_VIEW)
-                        .setComponent(ComponentName("com.android.vending",
-                                "com.google.android.finsky.activities.MainActivity"))
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            val url = if (plan?.paymentMethod == "Google") {
+                "https://play.google.com/store/account/subscriptions"
             } else {
-                Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL + "/"))
+                BuildConfig.BASE_URL + "/"
             }
-            context.startActivity(intent)
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
     }
 }

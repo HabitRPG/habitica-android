@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_marginTop="@dimen/spacing_medium"
+    android:paddingLeft="@dimen/spacing_large"
+    android:paddingRight="@dimen/spacing_large">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        style="@style/Overline"
+        tools:text="Title"/>
+    <TextView
+        android:id="@+id/count_label"
+        android:layout_width="wrap_content"
+        android:minWidth="24dp"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:background="@drawable/achievement_section_badge_bg"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:textColor="@color/gray_200"
+        style="@style/Overline"
+        tools:text="1"/>
+</LinearLayout>

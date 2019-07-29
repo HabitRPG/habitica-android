@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.receivers
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,7 +11,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import androidx.legacy.content.WakefulBroadcastReceiver
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 //https://gist.github.com/BrandonSmith/6679223
-class NotificationPublisher : WakefulBroadcastReceiver() {
+class NotificationPublisher : BroadcastReceiver() {
 
     @Inject
     lateinit var taskRepository: TaskRepository
@@ -47,7 +47,7 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
         this.context = context
         if (!wasInjected) {
             wasInjected = true
-            HabiticaBaseApplication.component?.inject(this)
+            HabiticaBaseApplication.userComponent?.inject(this)
         }
 
         val additionalData = HashMap<String, Any>()
@@ -96,7 +96,7 @@ class NotificationPublisher : WakefulBroadcastReceiver() {
     private fun buildNotification(wasInactive: Boolean, registrationDate: Date? = null): Notification? {
         val thisContext = context ?: return null
         val notification: Notification
-        val builder = NotificationCompat.Builder(thisContext)
+        val builder = NotificationCompat.Builder(thisContext, "default")
         builder.setContentTitle(thisContext.getString(R.string.reminder_title))
         var notificationText = getRandomDailyTip()
         if (registrationDate != null) {

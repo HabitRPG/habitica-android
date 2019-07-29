@@ -3,13 +3,15 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.AchievementResult
+import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
-import com.habitrpg.android.habitica.models.social.*
+import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.FindUsernameResult
+import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -18,7 +20,9 @@ import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 
 class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
-
+    override fun getChatmessage(messageID: String): Flowable<ChatMessage> {
+        return localRepository.getChatMessage(messageID)
+    }
 
     override fun getGroupMembership(id: String): Flowable<GroupMembership> {
         return localRepository.getGroupMembership(userID, id)
@@ -47,10 +51,14 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         apiClient.seenMessages(seenGroupId).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
     }
 
-    override fun flagMessage(chatMessage: ChatMessage): Flowable<Void> {
+    override fun flagMessage(chatMessage: ChatMessage, additionalInfo: String): Flowable<Void> {
         return if (chatMessage.id == "") {
             Flowable.empty()
-        } else apiClient.flagMessage(chatMessage.groupId ?: "", chatMessage.id)
+        } else {
+            val data = mutableMapOf<String, String>()
+            data["comment"] = additionalInfo
+            apiClient.flagMessage(chatMessage.groupId ?: "", chatMessage.id, data)
+        }
     }
 
     override fun likeMessage(chatMessage: ChatMessage): Flowable<ChatMessage> {
@@ -117,7 +125,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             return Flowable.empty()
         }
         return apiClient.leaveGroup(id)
-                .doOnNext { _ -> localRepository.updateMembership(userID, id, false) }
+                .doOnNext { localRepository.updateMembership(userID, id, false) }
                 .flatMapMaybe { localRepository.getGroup(id).firstElement() }
     }
 
@@ -225,7 +233,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun markPrivateMessagesRead(user: User?): Flowable<Void> {
         return apiClient.markPrivateMessagesRead()
-                .doOnNext { _ ->
+                .doOnNext {
                     if (user?.isManaged == true) {
                         localRepository.executeTransaction { user.inbox?.newMessages = 0 }
                     }
@@ -236,8 +244,8 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.acceptQuest(partyId)
-                .doOnNext { _ ->
-                    user.notNull {
+                .doOnNext {
+                    user?.let {
                         localRepository.updateRSVPNeeded(it, false)
                     }
                 }
@@ -246,7 +254,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
     override fun rejectQuest(user: User?, partyId: String): Flowable<Void> {
         return apiClient.rejectQuest(partyId)
                 .doOnNext { _ ->
-                    user.notNull {
+                    user?.let {
                         localRepository.updateRSVPNeeded(it, false)
                     }
                 }
@@ -278,7 +286,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 .doOnNext { localRepository.setQuestActivity(party, true) }
     }
 
-    override fun getMemberAchievements(userId: String?): Flowable<AchievementResult> {
+    override fun getMemberAchievements(userId: String?): Flowable<List<Achievement>> {
         return if (userId == null) {
             Flowable.empty()
         } else apiClient.getMemberAchievements(userId)

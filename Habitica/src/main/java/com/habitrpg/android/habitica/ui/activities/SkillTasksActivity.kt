@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import android.util.SparseArray
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -27,7 +27,7 @@ class SkillTasksActivity : BaseActivity() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    private val viewPager: androidx.viewpager.widget.ViewPager by bindView(R.id.viewPager)
+    private val viewPager: ViewPager by bindView(R.id.viewPager)
     private val tabLayout: TabLayout by bindView(R.id.tab_layout)
 
     internal var viewFragmentsDictionary = SparseArray<SkillTasksRecyclerViewFragment>()
@@ -41,7 +41,7 @@ class SkillTasksActivity : BaseActivity() {
         loadTaskLists()
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
@@ -50,7 +50,7 @@ class SkillTasksActivity : BaseActivity() {
 
         viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
 
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+            override fun getItem(position: Int): Fragment {
                 val fragment = SkillTasksRecyclerViewFragment()
                 when (position) {
                     0 -> fragment.taskType = Task.TYPE_HABIT

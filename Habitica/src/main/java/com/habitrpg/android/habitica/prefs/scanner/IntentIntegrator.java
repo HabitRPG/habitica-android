@@ -24,8 +24,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -276,11 +279,11 @@ public class IntentIntegrator {
     /**
      * Initiates a scan for all known barcode types.
      */
-    public final AlertDialog initiateScan() {
+    public final HabiticaAlertDialog initiateScan() {
         return initiateScan(ALL_CODE_TYPES);
     }
 
-    public final AlertDialog initiateScan(Fragment fragment) {
+    public final HabiticaAlertDialog initiateScan(Fragment fragment) {
         return initiateScan(fragment, ALL_CODE_TYPES);
     }
 
@@ -292,11 +295,11 @@ public class IntentIntegrator {
      * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
      * if a prompt was needed, or null otherwise
      */
-    public final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats) {
+    public final HabiticaAlertDialog initiateScan(Collection<String> desiredBarcodeFormats) {
         return initiateScan(null, desiredBarcodeFormats);
     }
 
-    public final AlertDialog initiateScan(Fragment fragment, Collection<String> desiredBarcodeFormats) {
+    public final HabiticaAlertDialog initiateScan(Fragment fragment, Collection<String> desiredBarcodeFormats) {
         Intent intentScan = new Intent(BS_PACKAGE + ".SCAN");
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
@@ -361,11 +364,11 @@ public class IntentIntegrator {
         return null;
     }
 
-    private AlertDialog showDownloadDialog() {
-        AlertDialog.Builder downloadDialog = new AlertDialog.Builder(activity);
+    private HabiticaAlertDialog showDownloadDialog() {
+        HabiticaAlertDialog downloadDialog = new HabiticaAlertDialog(activity);
         downloadDialog.setTitle(title);
         downloadDialog.setMessage(message);
-        downloadDialog.setPositiveButton(buttonYes, (dialogInterface, i) -> {
+        downloadDialog.addButton(buttonYes, true, false, (dialogInterface, i) -> {
             String packageName = targetApplications.get(0);
             Uri uri = Uri.parse("market://details?id=" + packageName);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -375,10 +378,11 @@ public class IntentIntegrator {
                 // Hmm, market is not installed
                 Log.w(TAG, "Google Play is not installed; cannot install " + packageName, anfe);
             }
+            return null;
         });
-        downloadDialog.setNegativeButton(buttonNo, (dialogInterface, i) -> {
-        });
-        return downloadDialog.show();
+        downloadDialog.addButton(buttonNo, false, false, null);
+        downloadDialog.show();
+        return downloadDialog;
     }
 
     /**
@@ -386,7 +390,7 @@ public class IntentIntegrator {
      *
      * @see #shareText(CharSequence, CharSequence)
      */
-    public final AlertDialog shareText(CharSequence text) {
+    public final HabiticaAlertDialog shareText(CharSequence text) {
         return shareText(text, "TEXT_TYPE");
     }
 
@@ -400,7 +404,7 @@ public class IntentIntegrator {
      * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
      * if a prompt was needed, or null otherwise
      */
-    public final AlertDialog shareText(CharSequence text, CharSequence type) {
+    public final HabiticaAlertDialog shareText(CharSequence text, CharSequence type) {
         Intent intent = new Intent();
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.setAction(BS_PACKAGE + ".ENCODE");

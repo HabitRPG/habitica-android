@@ -1,24 +1,20 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.core.view.MenuItemCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
@@ -79,7 +75,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
 
         challengeAdapter = ChallengesListViewAdapter(null, true, viewUserChallengesOnly, userId)
         challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe(Consumer { openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
-                .notNull { compositeSubscription.add(it) }
+                ?.let { compositeSubscription.add(it) }
 
         swipeRefreshLayout?.setOnRefreshListener(this)
 
@@ -112,7 +108,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
         MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeID))
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -158,7 +154,7 @@ class ChallengeListFragment : BaseFragment(), androidx.swiperefreshlayout.widget
     }
 
     internal fun showFilterDialog() {
-        activity.notNull {
+        activity?.let {
             ChallengeFilterDialogHolder.showDialog(it,
                     challenges ?: emptyList(),
                     filterOptions, object : Action1<ChallengeFilterOptions> {

@@ -1,19 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
@@ -24,9 +18,9 @@ import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
-class PartyMemberListFragment constructor() : BaseFragment() {
+class PartyMemberListFragment : BaseFragment() {
 
-    lateinit var viewModel: PartyViewModel
+    var viewModel: PartyViewModel? = null
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -41,7 +35,7 @@ class PartyMemberListFragment constructor() : BaseFragment() {
         return container?.inflate(R.layout.fragment_refresh_recyclerview)
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -50,22 +44,12 @@ class PartyMemberListFragment constructor() : BaseFragment() {
 
         recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         adapter = PartyMemberRecyclerViewAdapter(null, true)
-        adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(userId) }, RxErrorHandler.handleEmptyError()).notNull { compositeSubscription.add(it) }
+        adapter?.getUserClickedEvents()?.subscribe(Consumer { userId -> FullProfileActivity.open(userId) }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         recyclerView?.adapter = adapter
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         refreshLayout?.setOnRefreshListener { this.refreshMembers() }
-
         getUsers()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel.getGroupData().observe(viewLifecycleOwner, Observer {
-            adapter?.leaderID = it?.leaderID
-            adapter?.notifyDataSetChanged()
-        })
     }
 
     private fun refreshMembers() {

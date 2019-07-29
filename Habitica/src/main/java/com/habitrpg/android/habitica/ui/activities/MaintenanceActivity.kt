@@ -10,15 +10,15 @@ import androidx.core.net.toUri
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.MaintenanceApiService
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
+import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import net.pherth.android.emoji_library.EmojiTextView
 import javax.inject.Inject
 
 class MaintenanceActivity : BaseActivity() {
@@ -31,7 +31,7 @@ class MaintenanceActivity : BaseActivity() {
 
     internal val titleTextView: TextView by bindView(R.id.titleTextView)
     internal val imageView: SimpleDraweeView by bindView(R.id.imageView)
-    internal val descriptionTextView: EmojiTextView by bindView(R.id.descriptionTextView)
+    internal val descriptionTextView: HabiticaEmojiTextView by bindView(R.id.descriptionTextView)
     internal val playStoreButton: Button by bindView(R.id.playStoreButton)
     private var isDeprecationNotice: Boolean = false
 
@@ -61,7 +61,7 @@ class MaintenanceActivity : BaseActivity() {
         playStoreButton.setOnClickListener { openInPlayStore() }
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 

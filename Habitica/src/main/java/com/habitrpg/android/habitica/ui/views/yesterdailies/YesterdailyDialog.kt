@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.yesterdailies
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
@@ -13,18 +12,21 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindColor
+import com.habitrpg.android.habitica.ui.views.HabiticaEmojiTextView
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
-import net.pherth.android.emoji_library.EmojiTextView
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class YesterdailyDialog private constructor(context: Context, private val userRepository: UserRepository, private val taskRepository: TaskRepository, private val tasks: List<Task>) : AlertDialog(context) {
+class YesterdailyDialog private constructor(context: Context, private val userRepository: UserRepository, private val taskRepository: TaskRepository, private val tasks: List<Task>) : HabiticaAlertDialog(context) {
 
     private lateinit var yesterdailiesList: LinearLayout
 
@@ -33,14 +35,18 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         val view = inflater?.inflate(R.layout.dialog_yesterdaily, null)
-        this.setView(view)
-        this.setButton(AlertDialog.BUTTON_POSITIVE,
-                context.getString(R.string.start_day)
-        ) { _, _ -> }
+        setTitle(R.string.welcome_back)
+        setMessage(R.string.yesterdaililes_prompt)
+        this.setAdditionalContentView(view)
+        setAdditionalContentSidePadding(9.dpToPx(context))
+
+
+        addButton(R.string.start_day, true)
 
         this.setOnDismissListener {
             lastCronRun = Date()
-            runCron() }
+            runCron()
+        }
 
         //Can't use by bindView() because the view doesn't seem to be available through that yet
         val listView = view?.findViewById(R.id.yesterdailies_list) as? LinearLayout
@@ -50,6 +56,11 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
         if (inflater != null) {
             createTaskViews(inflater)
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        isDisplaying = true
     }
 
     private fun runCron() {
@@ -119,7 +130,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             checkboxHolder.setBackgroundResource(task.lightTaskColor)
         }
 
-        val emojiView = taskView.findViewById<View>(R.id.text_view) as? EmojiTextView
+        val emojiView = taskView.findViewById<View>(R.id.text_view) as? HabiticaEmojiTextView
         emojiView?.text = task.markdownText { emojiView?.text = it }
 
     }
@@ -147,9 +158,10 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                             taskRepository.updateDailiesIsDue(cal.time).firstElement()
                         }
                         .flatMapMaybe { taskRepository.getTasks(Task.TYPE_DAILY, userId).firstElement() }
-                        .map { tasks -> tasks.where().equalTo("isDue", true).equalTo("completed", false).equalTo("yesterDaily", true).findAll() }
+                        .map { tasks -> tasks.where().equalTo("isDue", true).notEqualTo("completed", true).notEqualTo("yesterDaily", false).findAll() }
                         .flatMapMaybe<List<Task>> { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
                         .retry(1)
+                        .throttleFirst(2, TimeUnit.SECONDS)
                         .subscribe(Consumer { tasks ->
                             if (isDisplaying) {
                                 return@Consumer
@@ -158,8 +170,12 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                             if (Math.abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
                                 return@Consumer
                             }
+                            val additionalData = HashMap<String, Any>()
+                            additionalData["task count"] = tasks.size
+                            AmplitudeManager.sendEvent("show cron", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
                             if (tasks.isNotEmpty()) {
+                                isDisplaying = true
                                 showDialog(activity, userRepository, taskRepository, tasks)
                             } else {
                                 lastCronRun = Date()
@@ -171,9 +187,10 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
 
         private fun showDialog(activity: Activity, userRepository: UserRepository, taskRepository: TaskRepository, tasks: List<Task>) {
             val dialog = YesterdailyDialog(activity, userRepository, taskRepository, tasks)
+            dialog.setCancelable(false)
+            dialog.setCanceledOnTouchOutside(false)
             if (!activity.isFinishing) {
                 dialog.show()
-                isDisplaying = true
             }
         }
     }

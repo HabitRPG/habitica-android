@@ -7,9 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import androidx.annotation.NonNull;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
@@ -47,7 +48,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
     private void setUp() {
         if (userRepository == null) {
-            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getUserComponent()).inject(this);
         }
     }
 
@@ -58,7 +59,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         this.appWidgetManager = appWidgetManager;
         this.setContext(context);
 
-        userRepository.getUser(userId).firstElement().subscribe(this::updateData, RxErrorHandler.handleEmptyError());
+        userRepository.getUser(userId).firstElement().subscribe(this::updateData, RxErrorHandler.Companion.handleEmptyError());
     }
 
     @NonNull
@@ -115,12 +116,14 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
             int hourGlassCount = user.getHourglassCount();
             if (hourGlassCount == 0) {
+                remoteViews.setViewVisibility(R.id.hourglass_icon, View.GONE);
                 remoteViews.setViewVisibility(R.id.hourglasses_tv, View.GONE);
             } else {
+                remoteViews.setImageViewBitmap(R.id.hourglass_icon, HabiticaIconsHelper.imageOfHourglass());
+                remoteViews.setViewVisibility(R.id.hourglass_icon, View.VISIBLE);
                 remoteViews.setTextViewText(R.id.hourglasses_tv, String.valueOf(hourGlassCount));
                 remoteViews.setViewVisibility(R.id.hourglasses_tv, View.VISIBLE);
             }
-            remoteViews.setImageViewBitmap(R.id.hourglass_cion, HabiticaIconsHelper.imageOfHourglass());
             remoteViews.setImageViewBitmap(R.id.gem_icon, HabiticaIconsHelper.imageOfGem());
             remoteViews.setImageViewBitmap(R.id.gold_icon, HabiticaIconsHelper.imageOfGold());
             remoteViews.setTextViewText(R.id.lvl_tv, getContext().getString(R.string.user_level, user.getStats().getLvl()));

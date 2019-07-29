@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import androidx.appcompat.app.AlertDialog
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import com.amplitude.api.Amplitude
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
-import com.habitrpg.android.habitica.helpers.PopupNotificationsManager
+import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.auth.UserAuth
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
@@ -61,7 +61,7 @@ import javax.net.ssl.SSLException
 
 class ApiClientImpl//private OnHabitsAPIResult mResultListener;
 //private HostConfig mConfig;
-(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val popupNotificationsManager: PopupNotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
+(private val gsonConverter: GsonConverterFactory, override val hostConfig: HostConfig, private val crashlyticsProxy: CrashlyticsProxy, private val notificationsManager: NotificationsManager, private val context: Context) : Consumer<Throwable>, ApiClient {
 
 
     private lateinit var retrofitAdapter: Retrofit
@@ -73,11 +73,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         observable
                 .filter { it.data != null }
                 .map { habitResponse ->
-            if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
-            }
-            habitResponse.data
-        }
+                    if (habitResponse.notifications != null) {
+                        notificationsManager.setNotifications(habitResponse.notifications)
+                    }
+                    habitResponse.data
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(this)
@@ -87,12 +87,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     private var lastAPICallURL: String? = null
 
     init {
-        this.popupNotificationsManager.setApiClient(this)
+        this.notificationsManager.setApiClient(this)
 
-        HabiticaBaseApplication.component?.inject(this)
-        crashlyticsProxy.setUserIdentifier(this.hostConfig.user)
-        crashlyticsProxy.setUserName(this.hostConfig.user)
-        Amplitude.getInstance().userId = this.hostConfig.user
+        HabiticaBaseApplication.userComponent?.inject(this)
+        crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
+        crashlyticsProxy.setUserName(this.hostConfig.userID)
+        Amplitude.getInstance().userId = this.hostConfig.userID
         buildRetrofit()
     }
 
@@ -115,8 +115,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     var builder: Request.Builder = original.newBuilder()
                     if (this.hostConfig.hasAuthentication()) {
                         builder = builder
-                                .header("x-api-key", this.hostConfig.api)
-                                .header("x-api-user", this.hostConfig.user)
+                                .header("x-api-key", this.hostConfig.apiKey)
+                                .header("x-api-user", this.hostConfig.userID)
                     }
                     builder = builder.header("x-client", "habitica-android")
                             .header("x-user-timezoneOffset", timezoneOffset.toString())
@@ -201,6 +201,10 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 return
             }
 
+            if (status == 404) {
+                return
+            }
+
             if (status in 400..499) {
                 if (res.displayMessage.isNotEmpty()) {
                     showConnectionProblemDialog("", res.displayMessage)
@@ -252,23 +256,20 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun hasAuthenticationKeys(): Boolean {
-        return this.hostConfig.user.isNotEmpty() && hostConfig.api.isNotEmpty()
+        return this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
     }
 
     private fun showConnectionProblemDialog(resourceMessageString: Int) {
-        showConnectionProblemDialog(R.string.network_error_title, resourceMessageString)
+        showConnectionProblemDialog(null, context.getString(resourceMessageString))
     }
 
     private fun showConnectionProblemDialog(resourceTitleString: Int, resourceMessageString: Int) {
         showConnectionProblemDialog(context.getString(resourceTitleString), context.getString(resourceMessageString))
     }
 
-    private fun showConnectionProblemDialog(resourceTitleString: String, resourceMessageString: String) {
+    private fun showConnectionProblemDialog(resourceTitleString: String?, resourceMessageString: String) {
         val event = ShowConnectionProblemEvent(resourceTitleString, resourceMessageString)
         EventBus.getDefault().post(event)
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "showConnectionProblemDialog: $resourceTitleString $resourceMessageString")
-        }
     }
 
     /*
@@ -281,11 +282,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
-        this.hostConfig.user = userID ?: ""
-        this.hostConfig.api = apiToken ?: ""
-        crashlyticsProxy.setUserIdentifier(this.hostConfig.user)
-        crashlyticsProxy.setUserName(this.hostConfig.user)
-        Amplitude.getInstance().userId = this.hostConfig.user
+        this.hostConfig.userID = userID ?: ""
+        this.hostConfig.apiKey = apiToken ?: ""
+        crashlyticsProxy.setUserIdentifier(this.hostConfig.userID)
+        crashlyticsProxy.setUserName(this.hostConfig.userID)
+        Amplitude.getInstance().userId = this.hostConfig.userID
     }
 
     override fun setLanguageCode(languageCode: String) {
@@ -333,7 +334,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {
         return apiService.validateSubscription(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }
@@ -342,7 +343,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any> {
         return apiService.validateNoRenewSubscription(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }
@@ -520,8 +521,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.likeMessage(groupId, mid).compose(configureApiCallObserver())
     }
 
-    override fun flagMessage(groupId: String, mid: String): Flowable<Void> {
-        return apiService.flagMessage(groupId, mid).compose(configureApiCallObserver())
+    override fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Flowable<Void> {
+        return apiService.flagMessage(groupId, mid, data).compose(configureApiCallObserver())
     }
 
     override fun seenMessages(groupId: String): Flowable<Void> {
@@ -567,7 +568,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     override fun validatePurchase(request: PurchaseValidationRequest): Flowable<PurchaseValidationResult> {
         return apiService.validatePurchase(request).map { habitResponse ->
             if (habitResponse.notifications != null) {
-                popupNotificationsManager.showNotificationDialog(habitResponse.notifications)
+                notificationsManager.setNotifications(habitResponse.notifications)
             }
             habitResponse.getData()
         }
@@ -585,7 +586,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.getMemberWithUsername(username).compose(configureApiCallObserver())
     }
 
-    override fun getMemberAchievements(memberId: String): Flowable<AchievementResult> {
+    override fun getMemberAchievements(memberId: String): Flowable<List<Achievement>> {
         return apiService.getMemberAchievements(memberId).compose(configureApiCallObserver())
     }
 
@@ -662,6 +663,14 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.readNotification(notificationId).compose(configureApiCallObserver())
     }
 
+    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
+        return apiService.readNotifications(notificationIds).compose(configureApiCallObserver())
+    }
+
+    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> {
+        return apiService.seeNotifications(notificationIds).compose(configureApiCallObserver())
+    }
+
     override val content: Flowable<ContentResult>
         get() = apiService.getContent(languageCode).compose(configureApiCallObserver())
 
@@ -719,11 +728,11 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.updateEmail(updateObject).compose(configureApiCallObserver())
     }
 
-    override fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void> {
+    override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
-        updateObject["newPassword"] = newPassword
         updateObject["password"] = oldPassword
-        updateObject["confirmPassowrd"] = oldPasswordConfirmation
+        updateObject["newPassword"] = newPassword
+        updateObject["confirmPassword"] = newPasswordConfirmation
         return apiService.updatePassword(updateObject).compose(configureApiCallObserver())
     }
 

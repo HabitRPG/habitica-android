@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_700"
+    android:paddingTop="@dimen/spacing_large"
+    android:paddingBottom="@dimen/spacing_large"
+    android:paddingLeft="@dimen/spacing_large"
+    android:paddingRight="@dimen/spacing_large">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/need_more_help"
+    android:gravity="center"
+    android:paddingBottom="@dimen/spacing_medium"
+    style="@style/Headline"
+    android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Post a message in the [Habitica Help Guild] to have your questions answered by a fellow player."
+        android:gravity="center"
+        style="@style/Body2"
+        android:lineSpacingExtra="4sp"/>
+</LinearLayout>

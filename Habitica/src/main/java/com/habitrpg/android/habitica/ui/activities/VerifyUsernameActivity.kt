@@ -3,18 +3,17 @@ package com.habitrpg.android.habitica.ui.activities
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.runDelayed
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
@@ -22,9 +21,7 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
-import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.PublishSubject
@@ -57,7 +54,7 @@ class VerifyUsernameActivity: BaseActivity() {
         return R.layout.activity_verify_username
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
@@ -69,28 +66,11 @@ class VerifyUsernameActivity: BaseActivity() {
 
         confirmUsernameButton.setOnClickListener { confirmNames() }
 
-        displayNameEditText.addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                displayNameVerificationEvents.onNext(p0.toString())
-            }
+        displayNameEditText.addTextChangedListener(OnChangeTextWatcher { p0, _, _, _ ->
+            displayNameVerificationEvents.onNext(p0.toString())
         })
-
-        usernameEditText.addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                usernameVerificationEvents.onNext(p0.toString())
-            }
+        usernameEditText.addTextChangedListener(OnChangeTextWatcher { p0, _, _, _ ->
+            usernameVerificationEvents.onNext(p0.toString())
         })
 
         compositeSubscription.add(Flowable.combineLatest(

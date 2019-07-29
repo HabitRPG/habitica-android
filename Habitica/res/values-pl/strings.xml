@@ -117,7 +117,7 @@
   <string name="sunday">Niedziela</string>
   <string name="levelup_header">Udało Ci się osiągnąć poziom 1%1$d!</string>
   <string name="levelup_detail">Wypełniając swoje cele życiowe, udało Ci się zyskać kolejny poziom i pełne uzdrowienie postaci!</string>
-  <string name="levelup_button">Hurra!</string>
+  <string name="onwards">Hurra!</string>
   <string name="faint_subtitle">Nie rozpaczaj!</string>
   <string name="faint_header">Możesz stracić całe Zdrowie!</string>
   <string name="faint_button">Uzupełnij Zdrowie &amp; Spróbuj jeszcze raz</string>
@@ -289,19 +289,20 @@
   <string name="hatch_egg">Wykluj za pomocą jaja</string>
   <string name="invite_party">Zaproś drużynę</string>
   <string name="dialog_feeding">Nakarm %1$s %2$s:</string>
+  <string name="dialog_feeding">Nakarm %s</string>
   <string name="use_animal">Użyj</string>
   <string name="feed">Nakarm</string>
   <string name="hatch_with">Wykluj za pomocą %s</string>
   <string name="hatched_pet_title">Wyklułeś/as %1$s %2$s!</string>
   <string name="close">Zamknij</string>
   <string name="share">Podziel się</string>
-  <string name="notification_pet_fed">Nakarmiłeś/aś %1$s %2$s!</string>
+  <string name="notification_pet_fed">Nakarmiłeś/aś %s!</string>
   <string name="notification_purchase">Kupiłeś %s</string>
   <string name="notification_purchase_reward">Kupiłeś nagrodę</string>
-  <string name="sectionpets">Standardowe</string>
-  <string name="sectionpremiumPets">Eliksir Magiczny</string>
-  <string name="sectionquestPets">Misja</string>
-  <string name="sectionspecialPets">Rzadkie</string>
+  <string name="sectiondrop">Standardowe</string>
+  <string name="sectionpremium">Eliksir Magiczny</string>
+  <string name="sectionquest">Misja</string>
+  <string name="sectionspecial">Rzadkie</string>
   <string name="sectionmounts">Standardowe</string>
   <string name="sectionpremiumMounts">Eliksir Magiczny</string>
   <string name="sectionquestMounts">Misja</string>
@@ -348,7 +349,7 @@
   <string name="share_using">Udostępnij używanie</string>
   <string name="share_levelup">Uzyskałem poziom %d w Habitice dzięki poprawie moich życiowych nawyków!</string>
   <string name="share_hatched">Właśnie wyklułem chowańca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
-  <string name="share_raised">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
+  <string name="share_raised">Właśnie zyskałem wierzchowca %1$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
   <string name="open_in_store">Otwórz w sklepie Google Play</string>
   <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
   <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s.</string>
@@ -592,6 +593,8 @@
   <string name="nevermind">Nieważne</string>
   <string name="resetting_account">Resetowanie konta</string>
   <string name="deleting_account">Usuwanie konta</string>
+  <string name="insufficientGold">Musisz wykonać więcej zadań, zanim będzie Cię stać na ten przedmiot!</string>
+  <string name="insufficientGoldTitle">Za mało złota</string>
   <string name="insufficientGems">Potrzebujesz więcej klejnotów by kupić ten przedmiot!</string>
   <string name="purchase_gems">Kup klejnoty</string>
   <string name="insufficientHourglasses">Potrzebujesz więcej Mistycznych Klepsydr, żeby kupić ten przedmiot!</string>
@@ -674,7 +677,7 @@
   <string name="questShop_owner_long">Ian Przewodnik Misji</string>
   <string name="seasonalShop_owner_long">Sezonowa Czarodziejka</string>
   <string name="rage_attack">Atak szału:</string>
-<string name="ago_1day">1 dzień temu</string>
+  <string name="ago_1day">1 dzień temu</string>
     <string name="ago_days">%d dni temu</string>
     <string name="ago_1Minute">1 minutę temu</string>
     <string name="ago_1hour">1 godzinę temu</string>
@@ -753,4 +756,17 @@
     <string name="gift_one_get_one">Dajesz - dostajesz!</string>
     <string name="only_leader_create_challenge">Tylko lider może tworzyć wyzwania</string>
     <string name="quest_abort_message">Czy na pewno chcesz przerwać tę misję\? Zostanie ona przerwana u wszystkich uczestników z twojej drużyny a cały postęp zostanie utracony. Zwój misji zostanie zwrócony do właściciela.</string>
-    </resources>
+  <string name="notifications">Powiadomienia</string>
+  <string name="no_notifications_title">Teraz jesteś na bieżąco!</string>
+  <string name="no_notifications_text">Wróżki powiadomień składają ci gromkie brawa. Dobra robota!</string>
+  <string name="dismiss_all">Odrzuć wszystko</string>
+  <string name="new_bailey_update">Nowości od Bailey</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> ma nowe posty]]></string>
+  <string name="new_msg_party"><![CDATA[Twoja drużyna <b>%1$s</b> ma nowe posty]]></string>
+  <string name="unallocated_stats_points"><![CDATA[Masz <b>nieprzydzielone Punkty Atrybutów: %1$s</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[Masz nowy <b>Tajemniczy Przedmiot</b>]]></string>
+  <string name="invited_to_party_notification"><![CDATA[Zostałeś/aś zaproszony/a do Dryżyny <b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[Zostałeś/aś zaproszony/a do prywatnej Gildii <b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[Zostałeś/aś zaproszony/a do Gildii <b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[Zostałeś/aś zaproszony/a do Misji <b>%1$s</b>]]></string>
+</resources>

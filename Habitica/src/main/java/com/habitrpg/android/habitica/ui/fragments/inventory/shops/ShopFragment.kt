@@ -1,18 +1,17 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.GearPurchasedEvent
-import com.habitrpg.android.habitica.extensions.notNull
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
@@ -41,9 +40,9 @@ class ShopFragment : BaseFragment() {
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
-    private var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
+    private var layoutManager: GridLayoutManager? = null
 
     private var gearCategories: MutableList<ShopCategory>? = null
 
@@ -71,8 +70,8 @@ class ShopFragment : BaseFragment() {
         }
 
         if (recyclerView.layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
-            layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
+            layoutManager = GridLayoutManager(context, 2)
+            layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter?.getItemViewType(position) ?: 0 < 3) {
                         layoutManager?.spanCount ?: 1
@@ -140,7 +139,11 @@ class ShopFragment : BaseFragment() {
                             shop1.categories.add(specialCategory)
                         }
                     }
-                    shop1
+                    if (shop1.identifier == Shop.TIME_TRAVELERS_SHOP) {
+                        formatTimeTravelersShop(shop1)
+                    } else {
+                        shop1
+                    }
                 }
                 .subscribe(Consumer {
                     this.shop = it
@@ -149,13 +152,34 @@ class ShopFragment : BaseFragment() {
 
 
 
-        user.notNull { user ->
-            compositeSubscription.add(this.inventoryRepository.getOwnedItems(user)
-                    .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-        }
+        compositeSubscription.add(this.inventoryRepository.getOwnedItems()
+                .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(this.inventoryRepository.getInAppRewards()
                 .map<List<String>> { rewards -> rewards.map { it.key } }
                 .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
+    }
+
+    private fun formatTimeTravelersShop(shop: Shop): Shop {
+        val newCategories = mutableListOf<ShopCategory>()
+        for (category in shop.categories) {
+             if (category.identifier == "pets" || category.identifier == "mounts") {
+                 newCategories.add(category)
+             } else {
+                 val newCategory = newCategories.find { it.identifier == "mystery_sets" } ?: ShopCategory()
+                 if (newCategory.identifier.isEmpty()) {
+                     newCategory.identifier = "mystery_sets"
+                     newCategory.text = getString(R.string.mystery_sets)
+                     newCategories.add(newCategory)
+                 }
+                 val item = category.items.firstOrNull() ?: continue
+                 item.key = category.identifier
+                 item.text = category.text
+                 item.imageName = "shop_set_mystery_${item.key}"
+                 newCategory.items.add(item)
+             }
+        }
+        shop.categories = newCategories
+        return shop
     }
 
     private fun loadMarketGear() {
@@ -176,7 +200,7 @@ class ShopFragment : BaseFragment() {
                 }, RxErrorHandler.handleEmptyError()))
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -187,7 +211,7 @@ class ShopFragment : BaseFragment() {
 
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
-        context.notNull { context ->
+        context?.let { context ->
             val itemWidth: Float = context.resources.getDimension(R.dimen.reward_width)
 
             spanCount = (width / itemWidth).toInt()
@@ -207,6 +231,8 @@ class ShopFragment : BaseFragment() {
     fun onItemPurchased(event: GearPurchasedEvent) {
         if (Shop.MARKET == shopIdentifier) {
             loadMarketGear()
+        } else if (Shop.TIME_TRAVELERS_SHOP == shopIdentifier) {
+            loadShopInventory()
         }
     }
 

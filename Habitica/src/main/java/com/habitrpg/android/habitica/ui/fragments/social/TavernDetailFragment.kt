@@ -1,27 +1,23 @@
 package com.habitrpg.android.habitica.ui.fragments.social
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.net.toUri
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.backgroundCompat
-import com.habitrpg.android.habitica.extensions.notNull
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RemoteConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.PlayerTier
@@ -29,7 +25,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.views.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_tavern_detail.*
@@ -48,7 +44,7 @@ class TavernDetailFragment : BaseFragment() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
     @Inject
-    lateinit var configManager: RemoteConfigManager
+    lateinit var configManager: AppConfigManager
 
     private var shopSpriteSuffix = ""
 
@@ -82,28 +78,26 @@ class TavernDetailFragment : BaseFragment() {
         compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
                 .doOnNext {  if (!it.hasActiveQuest) worldBossSection.visibility = View.GONE }
                 .filter { it.hasActiveQuest }
-                .doOnNext { questProgressView.progress = it.quest}
+                .doOnNext {
+                    questProgressView.progress = it.quest
+                    descriptionView.setText(R.string.tavern_description_world_boss)
+                    val filtered = it.quest?.rageStrikes?.filter { strike -> strike.key == "tavern" }
+                    if (filtered?.size ?: 0 > 0 && filtered?.get(0)?.wasHit == true) {
+                        val key = it.quest?.key
+                        if (key != null) {
+                            shopSpriteSuffix = key
+                        }
+                    }
+                }
                 .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
                 .subscribe(Consumer {
                     questProgressView.quest = it
                     worldBossSection.visibility = View.VISIBLE
                 }, RxErrorHandler.handleEmptyError()))
 
-        compositeSubscription.add(socialRepository.getGroup(Group.TAVERN_ID)
-                .filter { it.hasActiveQuest }
-                .doOnNext { descriptionView.setText(R.string.tavern_description_world_boss) }
-                .filter { group -> group.quest?.rageStrikes?.any { it.key == "tavern" } ?: false }
-                .filter { group -> group.quest?.rageStrikes?.filter { it.key == "tavern" }?.get(0)?.wasHit == true }
-                .subscribe(Consumer {
-                    val key = it.quest?.key
-                    if (key != null) {
-                        shopSpriteSuffix = key
-                    }
-                }, RxErrorHandler.handleEmptyError()))
-
         compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
 
-        user.notNull { questProgressView.configure(it) }
+        user?.let { questProgressView.configure(it) }
     }
 
     override fun onDestroy() {
@@ -114,13 +108,11 @@ class TavernDetailFragment : BaseFragment() {
     }
 
     private fun bindButtons() {
-        innButton.setOnClickListener { _ ->
-            user?.notNull { user -> userRepository.sleep(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
+        innButton.setOnClickListener {
+            user?.let { user -> userRepository.sleep(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
         }
         guidelinesButton.setOnClickListener {
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = "https://habitica.com/static/community-guidelines".toUri()
-            context?.startActivity(i)
+            MainNavigationController.navigate(R.id.guidelinesActivity)
         }
         faqButton.setOnClickListener {
             MainNavigationController.navigate(R.id.FAQOverviewFragment)
@@ -152,9 +144,9 @@ class TavernDetailFragment : BaseFragment() {
 
     private fun addPlayerTiers() {
         for (tier in PlayerTier.getTiers()) {
-            context.notNull {
+            context?.let {
                 val container = FrameLayout(it)
-                container.backgroundCompat = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_gray_700)
+                container.background = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_gray_700)
                 val label = UsernameLabel(context, null)
                 label.tier = tier.id
                 label.username = tier.title
@@ -168,10 +160,10 @@ class TavernDetailFragment : BaseFragment() {
                 container.setPadding(0, padding, 0, padding)
             }
         }
-        playerTiersView.invalidate()
+        (playerTiersView.parent as? ViewGroup)?.invalidate()
     }
 
-    override fun injectFragment(component: AppComponent) {
+    override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
 
@@ -181,8 +173,7 @@ class TavernDetailFragment : BaseFragment() {
             val alert = HabiticaAlertDialog(context)
             val bossName = quest.boss?.name ?: ""
             alert.setTitle(R.string.world_boss_description_title)
-            alert.setTitleBackgroundColor(quest.colors?.lightColor ?: 0)
-            alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))
+            //alert.setSubtitle(context.getString(R.string.world_boss_description_subtitle, bossName))
             alert.setAdditionalContentView(R.layout.world_boss_description_view)
 
             val descriptionView = alert.getContentView()
@@ -191,7 +182,7 @@ class TavernDetailFragment : BaseFragment() {
             promptView?.setTextColor(quest.colors?.lightColor ?: 0)
             val background = ContextCompat.getDrawable(context, R.drawable.rounded_border)
             background?.setColorFilter(quest.colors?.extraLightColor ?: 0, PorterDuff.Mode.MULTIPLY)
-            promptView?.backgroundCompat = background
+            promptView?.background = background
 
             alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
                 dialog.dismiss()

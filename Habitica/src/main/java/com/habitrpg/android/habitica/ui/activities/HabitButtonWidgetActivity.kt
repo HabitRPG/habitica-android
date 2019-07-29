@@ -9,9 +9,8 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.AppComponent
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.extensions.notNull
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
@@ -29,7 +28,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    internal val recyclerView: androidx.recyclerview.widget.RecyclerView by bindView(R.id.recyclerView)
+    internal val recyclerView: RecyclerView by bindView(R.id.recyclerView)
     private var widgetId: Int = 0
     private var adapter: SkillTasksRecyclerViewAdapter? = null
 
@@ -37,7 +36,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
         return R.layout.widget_configure_habit_button
     }
 
-    override fun injectActivity(component: AppComponent?) {
+    override fun injectActivity(component: UserComponent?) {
         component?.inject(this)
     }
 
@@ -56,10 +55,10 @@ class HabitButtonWidgetActivity : BaseActivity() {
             finish()
         }
 
-        var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = recyclerView.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+        var layoutManager: LinearLayoutManager? = recyclerView.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+            layoutManager = LinearLayoutManager(this)
 
             recyclerView.layoutManager = layoutManager
         }
@@ -67,7 +66,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
         adapter = SkillTasksRecyclerViewAdapter(null, true)
         adapter?.getTaskSelectionEvents()?.subscribe(Consumer { task -> taskSelected(task.id) },
                 RxErrorHandler.handleEmptyError())
-                .notNull { compositeSubscription.add(it) }
+                ?.let { compositeSubscription.add(it) }
         recyclerView.adapter = adapter
 
         compositeSubscription.add(taskRepository.getTasks(Task.TYPE_HABIT, userId).firstElement().subscribe(Consumer { adapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))

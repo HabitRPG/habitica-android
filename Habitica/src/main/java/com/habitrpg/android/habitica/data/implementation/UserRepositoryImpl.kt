@@ -4,14 +4,16 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
-import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -22,7 +24,7 @@ import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, userID: String, private val taskRepository: TaskRepository) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
+class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiClient, userID: String, private val taskRepository: TaskRepository, var appConfigManager: AppConfigManager) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
 
     private var lastSync: Date? = null
 
@@ -126,11 +128,11 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
     }
 
-    override fun changeClass(): Flowable<User> = apiClient.changeClass().flatMap { retrieveUser(false, true) }
+    override fun changeClass(): Flowable<User> = apiClient.changeClass().flatMap { retrieveUser(withTasks = false, forced = true) }
 
-    override fun disableClasses(): Flowable<User> = apiClient.disableClasses().flatMap { retrieveUser(false, true) }
+    override fun disableClasses(): Flowable<User> = apiClient.disableClasses().flatMap { retrieveUser(withTasks = false, forced = true) }
 
-    override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass)
+    override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass).flatMap { retrieveUser(false) }
 
     override fun unlockPath(user: User, customization: Customization): Flowable<UnlockResponse> {
         return apiClient.unlockPath(customization.path)
@@ -169,6 +171,15 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun readNotification(id: String): Flowable<List<*>> = apiClient.readNotification(id)
+    override fun getIsUserOnQuest(): Flowable<Boolean> {
+        return localRepository.getIsUserOnQuest(userID)
+    }
+
+    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =
+            apiClient.readNotifications(notificationIds)
+
+    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<*>> =
+            apiClient.seeNotifications(notificationIds)
 
     override fun changeCustomDayStart(dayStartTime: Int): Flowable<User> {
         val updateObject = HashMap<String, Any>()
@@ -182,7 +193,7 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
     }
 
     override fun resetAccount(): Flowable<User> {
-        return apiClient.resetAccount().flatMap { retrieveUser(true, true) }
+        return apiClient.resetAccount().flatMap { retrieveUser(withTasks = true, forced = true) }
     }
 
     override fun deleteAccount(password: String): Flowable<Void> =
@@ -193,9 +204,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
 
     override fun updateLoginName(newLoginName: String, password: String?): Maybe<User> {
         return (if (password != null && password.isNotEmpty()) {
-            apiClient.updateLoginName(newLoginName, password)
+            apiClient.updateLoginName(newLoginName.trim(), password.trim())
         } else {
-            apiClient.updateUsername(newLoginName)
+            apiClient.updateUsername(newLoginName.trim())
         }).flatMapMaybe { localRepository.getUser(userID).firstElement() }
                 .doOnNext { user ->
                     localRepository.executeTransaction {
@@ -206,21 +217,21 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 .firstElement()
     }
 
-    override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> = apiClient.verifyUsername(username)
+    override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> = apiClient.verifyUsername(username.trim())
 
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
-            apiClient.updateEmail(newEmail, password)
+            apiClient.updateEmail(newEmail.trim(), password)
 
-    override fun updatePassword(newPassword: String, oldPassword: String, oldPasswordConfirmation: String): Flowable<Void> =
-            apiClient.updatePassword(newPassword, oldPassword, oldPasswordConfirmation)
+    override fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void> =
+            apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override fun allocatePoint(user: User?, stat: String): Flowable<Stats> {
         if (user != null && user.isManaged) {
             localRepository.executeTransaction {
                 when (stat) {
-                    Stats.STRENGTH -> user.stats?.str = user.stats?.str?.inc()
-                    Stats.INTELLIGENCE -> user.stats?._int = user.stats?._int?.inc()
-                    Stats.CONSTITUTION -> user.stats?.con= user.stats?.con?.inc()
+                    Stats.STRENGTH -> user.stats?.strength = user.stats?.strength?.inc()
+                    Stats.INTELLIGENCE -> user.stats?.intelligence = user.stats?.intelligence?.inc()
+                    Stats.CONSTITUTION -> user.stats?.constitution= user.stats?.constitution?.inc()
                     Stats.PERCEPTION -> user.stats?.per = user.stats?.per?.inc()
                 }
                 user.stats?.points = user.stats?.points?.dec()
@@ -230,10 +241,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 .doOnNext { stats ->
                     if (user != null && user.isManaged) {
                         localRepository.executeTransaction {
-                            user.stats?.str = stats.str
-                            user.stats?.con = stats.con
+                            user.stats?.strength = stats.strength
+                            user.stats?.constitution = stats.constitution
                             user.stats?.per = stats.per
-                            user.stats?._int = stats._int
+                            user.stats?.intelligence = stats.intelligence
                             user.stats?.points = stats.points
                             user.stats?.mp = stats.mp
                         }
@@ -246,10 +257,10 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                     .doOnNext { stats ->
                         if (user != null && user.isManaged) {
                             localRepository.executeTransaction {
-                                user.stats?.str = stats.str
-                                user.stats?.con = stats.con
+                                user.stats?.strength = stats.strength
+                                user.stats?.constitution = stats.constitution
                                 user.stats?.per = stats.per
-                                user.stats?._int = stats._int
+                                user.stats?.intelligence = stats.intelligence
                                 user.stats?.points = stats.points
                                 user.stats?.mp = stats.mp
                             }
@@ -267,12 +278,54 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
                 }
         if (tasks.isNotEmpty()) {
             for (task in tasks) {
-                observable = observable.flatMap { taskRepository.taskChecked(null, task, true, true).firstElement() }
+                observable = observable.flatMap { taskRepository.taskChecked(null, task, true, true, null).firstElement() }
             }
         }
         observable.flatMap { apiClient.runCron().firstElement() }
-                .flatMap { this.retrieveUser(true, true).firstElement() }
+                .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
                 .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+    }
+
+    override fun useCustomization(user: User?, type: String, category: String?, identifier: String): Flowable<User> {
+        if (user != null && appConfigManager.enableLocalChanges()) {
+            localRepository.executeTransaction {
+                when (type) {
+                    "skin" -> user.preferences?.setSkin(identifier)
+                    "shirt" -> user.preferences?.setShirt(identifier)
+                    "hair" -> {
+                        when (category) {
+                            "color" -> user.preferences?.hair?.color = identifier
+                            "flower" -> user.preferences?.hair?.flower = identifier.toInt()
+                            "mustache" -> user.preferences?.hair?.mustache = identifier.toInt()
+                            "beard" -> user.preferences?.hair?.beard = identifier.toInt()
+                            "bangs" -> user.preferences?.hair?.bangs = identifier.toInt()
+                            "base" -> user.preferences?.hair?.base = identifier.toInt()
+                        }
+                    }
+                    "background" -> user.preferences?.setBackground(identifier)
+                    "chair" -> user.preferences?.setChair(identifier)
+                }
+            }
+        }
+        var updatePath = "preferences.$type"
+        if (category != null) {
+            updatePath = "$updatePath.$category"
+        }
+        return updateUser(user, updatePath, identifier)
+    }
+
+    override fun retrieveAchievements(): Flowable<List<Achievement>> {
+        return apiClient.getMemberAchievements(userID).doOnNext {
+            localRepository.save(it)
+        }
+    }
+
+    override fun getAchievements(): Flowable<RealmResults<Achievement>> {
+        return localRepository.getAchievements()
+    }
+
+    override fun getQuestAchievements(): Flowable<RealmResults<QuestAchievement>> {
+        return localRepository.getQuestAchievements(userID)
     }
 
     private fun mergeUser(oldUser: User?, newUser: User): User {

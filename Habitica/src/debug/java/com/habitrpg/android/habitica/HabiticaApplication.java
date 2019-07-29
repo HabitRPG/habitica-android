@@ -13,5 +13,4 @@ public class HabiticaApplication extends HabiticaBaseApplication {
                 .developerModule(new DebugDeveloperModule())
                 .build();
     }
-
 }

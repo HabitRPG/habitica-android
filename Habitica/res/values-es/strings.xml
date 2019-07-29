@@ -117,7 +117,7 @@
   <string name="sunday">Domingo</string>
   <string name="levelup_header">¡Has llegado al Nivel %1$d!</string>
   <string name="levelup_detail">¡Cumpliendo tus metas en la vida real, has subido de nivel y tu salud está restaurada!</string>
-  <string name="levelup_button">¡Hurra!</string>
+  <string name="onwards">¡Hurra!</string>
   <string name="faint_subtitle">¡No desesperes!</string>
   <string name="faint_penalty_body">Has perdido un Nivel, todo tu Oro y una pieza de tu Equipamiento, ¡pero puedes recuperarlo todo con tu esfuerzo! Buena suerte, lo harás genial.</string>
   <string name="faint_header">¡Te has quedado sin salud!</string>
@@ -296,21 +296,21 @@
   <string name="feed_to_pet">Alimentar a mascota</string>
   <string name="hatch_egg">Mezclar con huevo</string>
   <string name="invite_party">Invitar al equipo</string>
-  <string name="dialog_feeding">Dar de comer a %2$s %1$s:</string>
+  <string name="dialog_feeding">Dar de comer a %s:</string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
   <string name="hatch_with">Criar mascota con %s</string>
-  <string name="hatched_pet_title">¡Ha nacido un/a %2$s %1$s!</string>
-  <string name="evolved_pet_title">Has domado %1$s %2$s, ¡vamos a dar un paseo!</string>
+  <string name="hatched_pet_title">¡Ha nacido un/a %1$s %2$s!</string>
+  <string name="evolved_pet_title">Has domado %s, ¡vamos a dar un paseo!</string>
   <string name="close">Cerrar</string>
   <string name="share">Compartir</string>
-  <string name="notification_pet_fed">¡Tu %2$s %1$s ha comido!</string>
+  <string name="notification_pet_fed">¡Tu %s ha comido!</string>
   <string name="notification_purchase">Has comprado %s</string>
   <string name="notification_purchase_reward">Has comprado una recompensa</string>
-  <string name="sectionpets">Estandar</string>
-  <string name="sectionpremiumPets">Poción Mágica</string>
-  <string name="sectionquestPets">Misión</string>
-  <string name="sectionspecialPets">Raro</string>
+  <string name="sectiondrop">Estandar</string>
+  <string name="sectionpremium">Poción Mágica</string>
+  <string name="sectionquest">Misión</string>
+  <string name="sectionspecial">Raro</string>
   <string name="sectionmounts">Estandar</string>
   <string name="sectionpremiumMounts">Poción Mágica</string>
   <string name="sectionquestMounts">Misión</string>
@@ -359,7 +359,7 @@
   <string name="share_using">Compartir con</string>
   <string name="share_levelup">¡He subido al nivel %d en Habitica mejorando mis hábitos en el mundo real!</string>
   <string name="share_hatched">¡He criado un %1$s %2$s de mascota en Habitica realizando tareas en mi vida real!</string>
-  <string name="share_raised">¡He conseguido una montura de %1$s %2$s en Habitica realizando tareas en mi vida real!</string>
+  <string name="share_raised">¡He conseguido una montura de %1$s en Habitica realizando tareas en mi vida real!</string>
   <string name="open_in_store">Abrir en Play Store</string>
   <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase? Te costará 3 gemas.</string>
   <string name="change_class_equipment_warning">Aviso: Ya no podrás comprar equipamiento para la clase %s</string>
@@ -628,6 +628,7 @@
   <string name="resetting_account">Reestableciendo cuenta</string>
   <string name="deleting_account">Borrando cuenta</string>
   <string name="insufficientGold">¡Debes completar más tareas antes de poder pagar este artículo!</string>
+  <string name="insufficientGoldTitle">Insuficiente oro</string>
   <string name="insufficientGems">¡Necesitarás más gemas para comprar este objeto!</string>
   <string name="purchase_gems">Comprar gemas</string>
   <string name="insufficientHourglasses">¡Necesitarás más Relojes de Arena Místicos para comprar este objeto!</string>
@@ -822,11 +823,23 @@
   <string name="gift_confirmation_text">Tu suscripción regalo ha sido enviada y tu suscripción ha sido aplicada a tu cuenta.</string>
   <string name="discover">Descubre</string>
   <string name="damage_paused">Daño pausado</string>
-<string name="opting_out_progress">optar por no</string>
-    <string name="delete_oauth_account_description">¿Estás seguro/a\? Esto eliminará tu cuenta permanentemente, ¡y no podrá ser restaurada! Necesitarás registrar una nueva cuenta para utilizar Habitica de nuevo. Las Gemas que hayas gastado o que tengas en el banco no serán reembolsadas. Si estás absolutamente seguro/a, escribe ELIMINAR en el cuadro de texto de abajo.</string>
-    <string name="preference_push_important_announcements">Anuncios Importantes</string>
-    <string name="only_leader_create_challenge">Sólo el/la líder puede crear Desafíos</string>
-    <string name="create_party">Crear Equipo</string>
-
-<string name="create">Crear</string>
-    </resources>
+  <string name="opting_out_progress">optar por no</string>
+  <string name="delete_oauth_account_description">¿Estás seguro/a\? Esto eliminará tu cuenta permanentemente, ¡y no podrá ser restaurada! Necesitarás registrar una nueva cuenta para utilizar Habitica de nuevo. Las Gemas que hayas gastado o que tengas en el banco no serán reembolsadas. Si estás absolutamente seguro/a, escribe ELIMINAR en el cuadro de texto de abajo.</string>
+  <string name="preference_push_important_announcements">Anuncios Importantes</string>
+  <string name="only_leader_create_challenge">Sólo el/la líder puede crear Desafíos</string>
+  <string name="create_party">Crear Equipo</string>
+  <string name="create">Crear</string>
+  <string name="notifications">Notificaciones</string>
+  <string name="no_notifications_title">¡Estás al día!</string>
+  <string name="no_notifications_text">Las hadas de las notificaciones te aplauden atronadoramente. ¡Bien hecho!</string>
+  <string name="dismiss_all">Ignorar todas</string>
+  <string name="new_bailey_update">¡Nueva Actualización de Bailey!</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> tiene nuevos mensajes]]></string>
+  <string name="new_msg_party"><![CDATA[Tu Equipo, <b>%1$s</b>, tiene nuevos mensajes]]></string>
+  <string name="unallocated_stats_points"><![CDATA[Tienes <b>%1$s Puntos de Estadísticas sin asignar</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[Tienes <b>Objetos Misteriosos</b> nuevos]]></string>
+  <string name="invited_to_party_notification"><![CDATA[Has sido invitado a unirte al Equipo <b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[Has sido invitado a unirte al Gremio privado <b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[Has sido invitado a unirte al Gremio <b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[Has sido invitado a la misión <b>%1$s</b>]]></string>
+</resources>

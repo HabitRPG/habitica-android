@@ -4,37 +4,35 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import androidx.preference.Preference
 import android.widget.Toast
+import androidx.preference.Preference
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.QrCodeManager
+import com.habitrpg.android.habitica.api.HostConfig
 import java.util.*
+import javax.inject.Inject
 
 class APIPreferenceFragment: BasePreferencesFragment() {
+    @Inject
+    lateinit var hostConfig: HostConfig
+
     private val apiPreferences: List<String>
         get() = Arrays.asList(getString(R.string.SP_APIToken), getString(R.string.SP_userID))
 
-    lateinit private var qrCodeManager: QrCodeManager
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.component?.inject(this)
-
-        qrCodeManager = QrCodeManager(userRepository, this.context)
-
+        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
-        when (preference.key) {
-            "SP_user_qr_code" -> qrCodeManager.showDialogue()
-            else -> {
-                val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                clipMan.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
-                Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
-            }
+        val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+        if (preference.key == getString(R.string.SP_APIToken)) {
+            clipMan?.primaryClip = ClipData.newPlainText(preference.key, hostConfig.apiKey)
+        } else {
+            clipMan?.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
         }
+        Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
         return super.onPreferenceTreeClick(preference)
     }
 

@@ -113,7 +113,7 @@
   <string name="friday">Sexta</string>
   <string name="saturday">Sábado</string>
   <string name="sunday">Domingo</string>
-  <string name="levelup_button">Hurra!</string>
+  <string name="onwards">Hurra!</string>
   <string name="faint_subtitle">Não desespere!</string>
   <string name="faint_header">Gastou a sua Vida!</string>
   <string name="faint_button">Recarregue a Vida e Tente Novamente</string>
@@ -279,20 +279,20 @@
   <string name="feed_to_pet">Alimento para o animal</string>
   <string name="hatch_egg">Nascimento com ovo</string>
   <string name="invite_party">Convidar a equipa</string>
-  <string name="dialog_feeding">Alimente %1$s %2$s com:</string>
+  <string name="dialog_feeding">Alimente %s com:</string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
   <string name="hatch_with">Nascimento do animal com %s</string>
   <string name="hatched_pet_title">Chocou um %1$s %2$s!</string>
   <string name="close">Fechar</string>
   <string name="share">Partilhar</string>
-  <string name="notification_pet_fed">Alimentou o seu %1$s %2$s!</string>
+  <string name="notification_pet_fed">Alimentou o seu %s!</string>
   <string name="notification_purchase">Comprou %s</string>
   <string name="notification_purchase_reward">Comprou uma recompensa</string>
-  <string name="sectionpets">Padrão</string>
-  <string name="sectionpremiumPets">Porção Mágica</string>
-  <string name="sectionquestPets">Missão</string>
-  <string name="sectionspecialPets">Raro</string>
+  <string name="sectiondrop">Padrão</string>
+  <string name="sectionpremium">Porção Mágica</string>
+  <string name="sectionquest">Missão</string>
+  <string name="sectionspecial">Raro</string>
   <string name="sectionmounts">Padrão</string>
   <string name="sectionpremiumMounts">Porção Mágica</string>
   <string name="sectionquestMounts">Missão</string>
@@ -331,7 +331,7 @@
   <string name="invite_users">Convidar para a Equipa</string>
   <string name="share_using">Partilhe, utilizando</string>
   <string name="share_hatched">Eu acabei de ganhar uma mascote %1$s %2$s no Habitica ao concluir as minhas tarefas da vida real!</string>
-  <string name="share_raised">Eu acabei de ganhar uma montaria %1$s %2$s no Habitica, ao concluir as minhas tarefas da vida real!</string>
+  <string name="share_raised">Eu acabei de ganhar uma montaria %1$s no Habitica, ao concluir as minhas tarefas da vida real!</string>
   <string name="open_in_store">Abrir na Play Store</string>
   <string name="change_class_confirmation">Tem a certeza que pretende alterar a sua classe? Isto irá custar 3 gemas.</string>
   <string name="change_class_equipment_warning">Aviso: já não irá poder comprar equipamento da classe %s.</string>
@@ -522,4 +522,17 @@
     <string name="opting_out_progress">Optando por</string>
     <string name="class_changed_description">Você tem um novo Battle Gear padrão que pode ser alterado em Equipamento!</string>
     <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
-    </resources>
+  <string name="notifications">Notificações</string>
+  <string name="no_notifications_title">Já sabes tudo o que se passa!</string>
+  <string name="no_notifications_text">As fadas das notificações dão-te uma ruidosa salva de palmas! Bom trabalho!</string>
+  <string name="dismiss_all">Dispensar Todos</string>
+  <string name="new_bailey_update">Nova atualização de Bailey!</string>
+  <string name="new_msg_guild"><![CDATA[<b>%1$s</b> tem novas mensagens]]></string>
+  <string name="new_msg_party"><![CDATA[A sua Equipa, <b>%1$s</b>, tem novas mensagens]]></string>
+  <string name="unallocated_stats_points"><![CDATA[Tens <b>%1$s Ponto(s) de Atributo por alocar</b>]]></string>
+  <string name="new_subscriber_item"><![CDATA[Você tem <b>Items Mistério</b> novos]]></string>
+  <string name="invited_to_party_notification"><![CDATA[Foi convidado a juntar-se à Equipa <b>%1$s</b>]]></string>
+  <string name="invited_to_private_guild"><![CDATA[Foi convidado a juntar-se à Guilda privada <b>%1$s</b>]]></string>
+  <string name="invited_to_public_guild"><![CDATA[Foi convidado a juntar-se à Guilda <b>%1$s</b>]]></string>
+  <string name="invited_to_quest"><![CDATA[Foste convidado para a Missão <b>%1$s</b>]]></string>
+</resources>

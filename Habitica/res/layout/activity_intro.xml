@@ -10,8 +10,7 @@
         android:layout_height="match_parent" />
     <RelativeLayout
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
         <com.viewpagerindicator.IconPageIndicator
             android:id="@+id/view_pager_indicator"
             android:layout_height="wrap_content"

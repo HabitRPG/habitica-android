@@ -6,8 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +14,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.backgroundCompat
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -28,7 +26,9 @@ import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.*
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -82,8 +82,8 @@ class QuestProgressView : LinearLayout {
 
     private fun setupView(context: Context) {
         setWillNotDraw(false)
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.quest_progress, this)
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
+        inflater?.inflate(R.layout.quest_progress, this)
 
         questImageCaretView.setImageBitmap(HabiticaIconsHelper.imageOfCaret(ContextCompat.getColor(context, R.color.white), true))
         questImageTitle.setOnClickListener {
@@ -116,9 +116,7 @@ class QuestProgressView : LinearLayout {
         if (quest?.isValid == true) {
             val colors = quest?.colors
             if (colors != null) {
-                rect.set(0.0f, 0.0f, (canvas?.width?.toFloat()
-                        ?: 1.0f) / displayDensity, (canvas?.height?.toFloat()
-                        ?: 1.0f) / displayDensity)
+                rect.set(0.0f, 0.0f, width.toFloat() / displayDensity, height.toFloat() / displayDensity)
                 canvas?.scale(displayDensity, displayDensity)
                 HabiticaIcons.drawQuestBackground(canvas, rect, colors.darkColor, colors.mediumColor, colors.extraLightColor)
                 canvas?.scale(1.0f / displayDensity, 1.0f / displayDensity)
@@ -179,7 +177,7 @@ class QuestProgressView : LinearLayout {
                     GradientDrawable.Orientation.TOP_BOTTOM,
                     intArrayOf(ContextCompat.getColor(context, R.color.transparent), lightColor))
             gradientDrawable.cornerRadius = 0f
-            questImageWrapper.backgroundCompat = gradientDrawable
+            questImageWrapper.background = gradientDrawable
         }
         updateCaretImage()
         questDescriptionSection.caretColor = quest.colors?.extraLightColor ?: 0
@@ -201,11 +199,11 @@ class QuestProgressView : LinearLayout {
                 DataBindingUtils.loadImage("rage_strike_${strike.key}") {
                     Observable.just(it)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer {
+                            .subscribe(Consumer { bitmap ->
                                 val displayDensity = resources.displayMetrics.density
-                                val width = it.width * displayDensity
-                                val height = it.height * displayDensity
-                                val scaledImage = Bitmap.createScaledBitmap(it, width.toInt(), height.toInt(), false)
+                                val width = bitmap.width * displayDensity
+                                val height = bitmap.height * displayDensity
+                                val scaledImage = Bitmap.createScaledBitmap(bitmap, width.toInt(), height.toInt(), false)
                                 iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
                                 iconView.setOnClickListener {
                                     showActiveStrikeAlert(strike.key)
@@ -226,42 +224,39 @@ class QuestProgressView : LinearLayout {
     private fun showActiveStrikeAlert(key: String) {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(context.getString(R.string.strike_active_title, getLocationName(key)))
-        alert.setTitleBackground(R.color.orange_10)
-        alert.setSubtitle(context.getString(R.string.strike_active_subtitle, getNpcName(key)))
+//        alert.setSubtitle(context.getString(R.string.strike_active_subtitle, getNpcName(key)))
         alert.setMessage(context.getString(R.string.strike_active_description, getLongNPCName(key), quest?.boss?.name ?: "", getLocationName(key)))
 
         val npcBannerView = NPCBannerView(context, null)
         npcBannerView.shopSpriteSuffix = quest?.key ?: ""
         npcBannerView.identifier = key
-        alert.setAdditionalContentView(npcBannerView, 1)
+        alert.setAdditionalContentView(npcBannerView)
 
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
-        })
+        }
         alert.show()
     }
 
     private fun showPendingStrikeAlert() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.pending_strike_title)
-        alert.setTitleBackground(R.color.orange_10)
-        alert.setSubtitle(R.string.pending_strike_subtitle)
-        alert.setMessage(R.string.pending_strike_description)
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+//        alert.setSubtitle(R.string.pending_strike_subtitle)
+        //alert.setMessage(R.string.pending_strike_description)
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
-        })
+        }
         alert.show()
     }
 
     private fun showStrikeDescriptionAlert() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.strike_description_title)
-        alert.setTitleBackground(R.color.orange_10)
-        alert.setSubtitle(R.string.strike_description_subtitle)
-        alert.setMessage(R.string.strike_description_description)
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), { dialog, _ ->
+//        alert.setSubtitle(R.string.strike_description_subtitle)
+        //alert.setMessage(R.string.strike_description_description)
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close)) { dialog, _ ->
             dialog.dismiss()
-        })
+        }
         alert.show()
     }
 

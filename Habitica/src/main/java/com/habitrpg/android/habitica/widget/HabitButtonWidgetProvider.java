@@ -33,7 +33,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
     private void setUp() {
         if (taskRepository == null) {
-            Objects.requireNonNull(HabiticaBaseApplication.Companion.getComponent()).inject(this);
+            Objects.requireNonNull(HabiticaBaseApplication.Companion.getUserComponent()).inject(this);
         }
     }
 
@@ -50,12 +50,10 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
                 HabitButtonWidgetProvider.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            for (int widgetId : allWidgetIds) {
-                Bundle options = appWidgetManager.getAppWidgetOptions(widgetId);
-                appWidgetManager.partiallyUpdateAppWidget(widgetId,
-                        sizeRemoteViews(context, options, widgetId));
-            }
+        for (int widgetId : allWidgetIds) {
+            Bundle options = appWidgetManager.getAppWidgetOptions(widgetId);
+            appWidgetManager.partiallyUpdateAppWidget(widgetId,
+                    sizeRemoteViews(context, options, widgetId));
         }
 
         // Build the intent to call the service
@@ -82,8 +80,8 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
             int[] ids = {appWidgetId};
 
             if (taskId != null) {
-                getUserRepository().getUser(userId).firstElement().flatMap(user -> taskRepository.taskChecked(user, taskId, TaskDirection.up.toString().equals(direction), false))
-                        .subscribe(taskDirectionData -> showToastForTaskDirection(context, taskDirectionData, userId), RxErrorHandler.handleEmptyError(), () -> this.onUpdate(context, mgr, ids));
+                getUserRepository().getUser(userId).firstElement().flatMap(user -> taskRepository.taskChecked(user, taskId, TaskDirection.UP.getText().equals(direction), false, null))
+                        .subscribe(taskDirectionData -> showToastForTaskDirection(context, taskDirectionData, userId), RxErrorHandler.Companion.handleEmptyError(), () -> this.onUpdate(context, mgr, ids));
             }
         }
         super.onReceive(context, intent);
