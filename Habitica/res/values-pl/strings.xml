@@ -70,7 +70,7 @@
   <!--Network Errors-->
   <string name="network_error_title">Błąd połączenia</string>
   <string name="network_error_no_network_body">Nie masz połączenia z internetem.</string>
-  <string name="internal_error_api">Wygląda na to, że mamy problem z serwerem. Spróbuj później.</string>
+  <string name="internal_error_api">Utracono połączenie z serwerem</string>
   <string name="authentication_error_title">Błąd autentykacji</string>
   <string name="authentication_error_body">Twoja nazwa użytkownika lub hasło są niepoprawne.</string>
   <string name="login_validation_error_title">Błąd walidacji</string>
@@ -86,8 +86,8 @@
   <string name="medium">Średni</string>
   <string name="hard">Trudny</string>
   <string name="start_date">Data rozpoczęcia</string>
-  <string name="positive_habit_form">Pozytywne ( + )</string>
-  <string name="negative_habit_form">Negatywne ( - )</string>
+  <string name="positive_habit_form">Pozytywne</string>
+  <string name="negative_habit_form">Negatywne</string>
   <string name="checklist">Lista</string>
   <string name="reminders">Przypomnienia</string>
   <string name="actions">Akcje</string>
@@ -126,7 +126,7 @@
   <string name="mana_price_button">%d PM</string>
   <string name="used_skill">Użyłeś %1$s za %2$d pkt many.</string>
   <string name="used_skill_without_mana">Użyto %1$s.</string>
-  <string name="new_checklist_item">nowa część zadania</string>
+  <string name="new_checklist_item">nowy wpis na listę</string>
   <string name="add_checklist_item">Dodaj</string>
   <string name="skill_progress_title">Użycie umiejętności</string>
   <string name="coming_soon">Wkrótce dostępne</string>
@@ -277,7 +277,7 @@
   <string name="quests">Misje</string>
   <string name="pets">Zwierzaki</string>
   <string name="mounts">Wierzchowce</string>
-  <string name="armoireEquipment">Znalazłeś element rzadkiego Ekwipunku w Skrzyni: %s! Super!</string>
+  <string name="armoireEquipment">W Skrzyni znajdujesz %s</string>
   <string name="armoireFood">Przeszukujesz Skrzynię i znajdujesz %1$s %2$s. Co to tam robi?</string>
   <string name="armoireExp">Mocujesz się ze Skrzynią i zyskujesz Doświadczenie. A masz!</string>
   <string name="armoireNotesFull">Otwórz Skrzynię żeby losowo otrzymać specjalne Wyposażenie, Doświadczenie lub jedzenie! Pozostało elementów : %d</string>
@@ -289,7 +289,7 @@
   <string name="hatch_egg">Wykluj za pomocą jaja</string>
   <string name="invite_party">Zaproś drużynę</string>
   <string name="dialog_feeding">Nakarm %1$s %2$s:</string>
-  <string name="dialog_feeding">Nakarm %s</string>
+  <string name="dialog_feeding">Nakarm %s:</string>
   <string name="use_animal">Użyj</string>
   <string name="feed">Nakarm</string>
   <string name="hatch_with">Wykluj za pomocą %s</string>
@@ -320,9 +320,9 @@
   <string name="rogue">Łotrzyk</string>
   <string name="mage">Mag</string>
   <string name="healer">Uzdrowiciel</string>
-  <string name="mage_description">Magowie uczą się sprawnie, zyskując Doświadczenie i Poziomy szybciej niż inne klasy. Dostają także dużo Many na specjalne umiejętności. Graj jako Mag jeśli lubisz elementy gry taktycznej w Habit, lub jeśli jesteś silnie motywowany przez zdobywanie poziomów i odblokowywanie zaawansowanych aspektów gry!</string>
-  <string name="rogue_description">Łotrzyki uwielbiają gromadzić bogactwa, zyskując więcej Złota niż inni, oraz są adeptami w znajdowaniu losowych rzeczy. Ich umiejętność skradania pozwala im uniknąć konsekwencji pominięcia Codziennych. Graj jako Łotrzyk jeśli motywują Cię Nagrody i Osiągnięcia, walczenie o skarby i odznaki!</string>
-  <string name="healer_description">Medycy są odporni na obrażenia, i przedłużają tą ochronę na innych. Pominięte Codzienne i złe Nawyki nie robią na nich wrażenia, mają także sposoby na odzyskanie Zdrowia po porażce. Graj jako Medyk jeśli lubisz pomagać innym w Drużynie, lub jeśli koncepcja oszukania Śmierci dzięki ciężkiej pracy jest dla ciebie inspirująca!</string>
+  <string name="mage_description">Magowie uczą się Umiejętności, które zadają obrażenia Bossom oraz zwiększają Doświadczenie i Manę. Graj jako Mag, jeśli motywuje cię szybkie zdobywanie poziomów! Magowie wykorzystują wysokie punkty Inteligencji.</string>
+  <string name="rogue_description">Łotrzyki uczą się umiejętności pozwalających im oraz członkom drużyny na zdobywanie większej ilości Złota i losowych nagród. Graj jako Łotrzyk jeśli pragniesz nagród i złota! Łotrzyki korzystają z wysokiej wartości punktów Percepcji.</string>
+  <string name="healer_description">Medycy uczą się Umiejętności, które potrafią leczyć i chronić siebie oraz Drużynę. Graj Medykiem jeśli lubisz pomagać innym lub chcesz chronić przyjaciół przed obrażeniami. Medycy korzystają z wysokiej wartości punktów Kondycji.</string>
   <string name="select_class">Wybierz klasę postaci</string>
   <string name="opt_out_class">Wycofaj się</string>
   <string name="opt_out_description">Nie zależy ci na klasach? Chcesz wybrać później? Wycofaj się - będziesz wojownikiem bez specjalnych umiejętności. Możesz przeczytać o systemie klas później na wiki i włączyć klasy w każdej chwili.</string>
@@ -451,7 +451,7 @@
   <string name="monthly_gem_cap">Miesięczny limit Klejnotów</string>
   <string name="inactive">Nieaktywne</string>
   <string name="one_month">1 Miesiąc</string>
-  <string name="months">%d Miesięcy</string>
+  <string name="months">Miesięcy</string>
   <string name="month">miesiąc</string>
   <string name="three_months">3 miesiące</string>
   <string name="six_months">6 miesięcy</string>
@@ -494,7 +494,7 @@
   <string name="open">Otwórz</string>
   <string name="notification_mystery_item">Otwórz pudełko i znajdź %s!</string>
   <string name="checkInRewardEarned">Zdobyłeś %1$s jako nagrodę za poświęcenie w poprawie swojego życia.</string>
-  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Twoja następna nagroda zostanie odblokowana za %1$d wizyt</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Następna nagroda za %1$d wizyt</string>
   <string name="pending_approval">oczekująca aprobata</string>
   <string name="filters">Filtry</string>
   <string name="done">Zrobione</string>
@@ -531,8 +531,8 @@
   <string name="empty_title_todos">Nie posiadasz żadnych Do-Zrobienia</string>
   <string name="empty_description_todos">Do-Zrobienia są jednokrotnymi zadaniami. Dodaj listy kontrolne do swoich Do-Zrobienia, aby zwiększyć ich wartość.</string>
   <string name="empty_title_rewards">Nie posiadasz żadnych nagród</string>
-  <string name="reset_walkthrough">Zresetuj przewodnik Justina</string>
-  <string name="read_community_guidelines">Prosimy, przeczytaj Wytyczne Społeczności zanim umieścisz posta</string>
+  <string name="reset_walkthrough">Zresetuj Przewodniki</string>
+  <string name="read_community_guidelines">Przejrzyj nasze <u>Wytyczne Społeczności</u> zanim umieścisz posta</string>
   <string name="maintenance">Utrzymanie</string>
   <string name="reload_content">Odśwież zawartość</string>
   <string name="dailyDueDefaultView">Ustaw codzienne ‘dzisiejsze’ jako domyślne</string>
@@ -555,7 +555,7 @@
   <string name="party_description">Opis drużyny</string>
   <string name="number_participants">%1$d Uczestników</string>
   <string name="welcome_back">Witaj ponownie</string>
-  <string name="yesterdaililes_prompt">Czy wykonałeś wczoraj któreś z tych Codziennych?</string>
+  <string name="yesterdaililes_prompt">Zaznacz wykonane wczoraj Codzienne:</string>
   <string name="start_day">Rozpocznij mój dzień</string>
   <string name="leave_party_confirmation">Jesteś pewien, że chcesz opuścić drużynę ?</string>
   <string name="nextPrizeUnlocksIn" formatted="false">Następna nagroda za %d wizyt</string>
@@ -587,7 +587,7 @@
   <string name="con_abbrv">Kon</string>
   <string name="reset_account">Zresetuj konto</string>
   <string name="delete_account">Usuń konto</string>
-  <string name="reset_account_confirmation">zresetuj moje konto</string>
+  <string name="reset_account_confirmation">Zresetuj moje konto</string>
   <string name="delete_account_confirmation">Usuń moje konto</string>
   <string name="danger_zone">Strefa zagrożenia</string>
   <string name="nevermind">Nieważne</string>
@@ -695,7 +695,7 @@
     <string name="joined">Dołączono</string>
     <string name="public_challenge">Wyzwanie Publiczne</string>
     <string name="next_day_reminder_title">Czy odznaczyłeś swoje zadania dzisiaj\?</string>
-    <string name="moderator">Moderator</string>
+    <string name="moderator">Mod</string>
     <string name="expand_notes">Czytaj więcej</string>
     <string name="collapse_notes">Pokaż mniej</string>
     <string name="week_reminder_title">Jak Ci idzie z zadaniami\?</string>
@@ -715,10 +715,10 @@
     <string name="discover">Odkryj</string>
     <string name="preference_push_important_announcements">Ważne Ogłoszenia</string>
     <string name="faint_penalty_body">Straciłeś poziom, złoto i przedmiot z wyposażenia, ale możesz je odzyskać poprzez ciężką pracę! Powodzenia — uda ci się.</string>
-    <string name="reminder_title">Pamiętaj aby odznaczyć swoje zadania</string>
+    <string name="reminder_title">Pamiętaj aby zaznaczyć swoje zadania</string>
     <string name="ago_minutes">%d minut temu</string>
     <string name="ago_hours">%d godzin temu</string>
-    <string name="evolved_pet_title">Oswoiłeś %1$s %2$s, idź na przejażdżkę!</string>
+    <string name="evolved_pet_title">Udało ci się oswoić %s, idź na przejażdżkę!</string>
     <string name="opting_out_progress">Wycofywanie się</string>
     <string name="subscription_duration_norenew">Na %s</string>
     <string name="subscribe.listitem2.description">Co miesiąc dostaniesz wyjątkowy kosmetyczny przedmiot który możesz założyć na swój awatar!
@@ -748,7 +748,7 @@
     <string name="equipment_con">KON:</string>
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
-    <string name="warrior_description">Wojownicy zdobywają częstsze i lepsze uderzenia krytyczne, które losowo dają dodatkowe złoto, doświadczenie i szansę na zdobycze, za wykonanie zadania. Zadają oni też duże obrażenia bossom. Graj jako Wojownik, jeżeli motywują cię nieprzewidywalne, losowe nagrody, albo jeśli chcesz zadawać duże obrażenia w misjach z bossem!</string>
+    <string name="warrior_description">Wojownicy zdobywają częstsze uderzenia krytyczne oraz zadają ciężkie obrażenia bossom. Graj jako Wojownik, jeżeli chcesz łatwo pokonywać potwory! Wojownik korzysta z wysokich punktów Siły.</string>
     <string name="daily_tip_5">Weź kilka głębokich oddechów, aby się dobrze skupić. Dasz radę!</string>
     <string name="daily_tip_8">Możesz zmienić trudność zadania, żeby uzyskać większe nagrody za trudniejsze zadania!</string>
     <string name="staff">Personel</string>
@@ -760,7 +760,7 @@
   <string name="no_notifications_title">Teraz jesteś na bieżąco!</string>
   <string name="no_notifications_text">Wróżki powiadomień składają ci gromkie brawa. Dobra robota!</string>
   <string name="dismiss_all">Odrzuć wszystko</string>
-  <string name="new_bailey_update">Nowości od Bailey</string>
+  <string name="new_bailey_update">Nowości od Bailey!</string>
   <string name="new_msg_guild"><![CDATA[<b>%1$s</b> ma nowe posty]]></string>
   <string name="new_msg_party"><![CDATA[Twoja drużyna <b>%1$s</b> ma nowe posty]]></string>
   <string name="unallocated_stats_points"><![CDATA[Masz <b>nieprzydzielone Punkty Atrybutów: %1$s</b>]]></string>
@@ -769,4 +769,12 @@
   <string name="invited_to_private_guild"><![CDATA[Zostałeś/aś zaproszony/a do prywatnej Gildii <b>%1$s</b>]]></string>
   <string name="invited_to_public_guild"><![CDATA[Zostałeś/aś zaproszony/a do Gildii <b>%1$s</b>]]></string>
   <string name="invited_to_quest"><![CDATA[Zostałeś/aś zaproszony/a do Misji <b>%1$s</b>]]></string>
-</resources>
+<string name="sectionwacky">Zwariowane</string>
+    <string name="x_months">%d Miesięcy</string>
+    <string name="reset_account_description">UWAGA! Resetowanie dotyczy różnych części twojego konta. Jest to wysoce niezalecane, chociaż niektórzy mogą uznać to za przydatne na początku przygody, gdy grali przez krótki czas.
+\n
+\nStracisz wszystkie poziomy, złoto i punkty doświadczenia. Wszystkie twoje zadania (z wyjątkiem tych z wyzwań) zostaną bezpowrotnie usunięte oraz utracisz wszystkie historyczne dane. Stracisz również cały swój ekwipunek, ale będziesz mógł go ponownie kupić, włączając wszystkie limitowane edycje, tajemnicze przedmioty subskrybenta (musisz mieć odpowiednią klasę, żeby odkupić ekwipunek specyficzny dla klasy). Zachowasz swoją obecną klasę, swoje zwierzęta i wierzchowce. Zamiast tego resetowania możesz skorzystać z Kuli Odrodzenia, która jest znacznie bezpieczniejszą opcją i która pozwala zachować twoje zadania i ekwipunek.</string>
+    <string name="delete_account_description">Jesteś pewna/y\? Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Aby ponownie korzystać z Habitica trzeba będzie zarejestrować nowe konto. Bankowe lub wydane klejnoty nie będą zwrócone. Jeśli masz całkowitą pewność, wpisz poniżej swoje hasło.</string>
+    <string name="delete_oauth_account_description">Jesteś pewna/y\? Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Aby ponownie korzystać z Habitica trzeba będzie zarejestrować nowe konto. Bankowe lub wydane klejnoty nie będą zwrócone. Jeśli masz całkowitą pewność, wpisz DELETE do poniższego pola tekstowego.</string>
+    <string name="seasonal_closed_description">Wielkie Gale mają miejsce w pobliżu przesilenia i równonocy, więc zajrzyj tu później aby znaleźć zabawny asortyment specjalnych przedmiotów sezonowych!</string>
+    </resources>
