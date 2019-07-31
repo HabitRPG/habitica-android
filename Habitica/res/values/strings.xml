@@ -763,7 +763,7 @@
     <string name="no_party_description">Take on quests with friends or on your own. Battle monsters, create Challenges, and help yourself stay accountable through Parties.</string>
     <string name="no_party_title">Play Habitica in a Party</string>
     <string name="join_party_description">Give a Party member the username found below and they can send you an invite</string>
-    <string name="join_party_description_guild">Give the username below to a friend or head to the %s to meet potential comrades!e</string>
+    <string name="join_party_description_guild">Give the username below to a friend or head to the %s to meet potential comrades!</string>
     <string name="join_party_description_id">Give them your User ID or have them scan your QR code while inviting</string>
     <string name="join_party_title">Want to join a party?</string>
     <string name="create_party_website">Open website to create party</string>
