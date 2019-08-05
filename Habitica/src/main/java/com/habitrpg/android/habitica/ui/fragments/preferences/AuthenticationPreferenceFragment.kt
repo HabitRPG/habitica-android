@@ -84,7 +84,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             }
             "reset_account" -> showAccountResetConfirmation()
             "delete_account" -> showAccountDeleteConfirmation()
-            "add_local_auth" -> showAddLocalNotificationDialog()
+            "add_local_auth" -> showAddLocalAuthDialog()
             else -> {
                 val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
                 clipMan?.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
@@ -186,10 +186,10 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
         }
     }
 
-    private fun showAddLocalNotificationDialog() {
+    private fun showAddLocalAuthDialog() {
         val inflater = context?.layoutInflater
         val view = inflater?.inflate(R.layout.dialog_edittext_add_local_auth, null)
-        val emailEditText = view?.findViewById<EditText>(R.id.editText)
+        val emailEditText = view?.findViewById<EditText>(R.id.emailTitleTextView)
         val passwordEditText = view?.findViewById<EditText>(R.id.passwordEditText)
         val passwordRepeatEditText = view?.findViewById<EditText>(R.id.passwordRepeatEditText)
         context?.let { context ->
