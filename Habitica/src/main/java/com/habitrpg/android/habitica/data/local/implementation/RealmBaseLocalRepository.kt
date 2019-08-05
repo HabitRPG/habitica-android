@@ -15,12 +15,14 @@ abstract class RealmBaseLocalRepository internal constructor(protected var realm
     }
 
     override fun executeTransaction(transaction: (Realm) -> Unit) {
+        if (isClosed) { return }
         realm.executeTransaction {
             transaction(it)
         }
     }
 
     override fun executeTransaction(transaction: Realm.Transaction) {
+        if (isClosed) { return }
         realm.executeTransaction(transaction)
     }
 
@@ -33,18 +35,22 @@ abstract class RealmBaseLocalRepository internal constructor(protected var realm
     }
 
     override fun <T : RealmObject> getUnmanagedCopy(list: List<T>): List<T> {
+        if (isClosed) { return emptyList() }
         return realm.copyFromRealm(list)
     }
 
     override fun <T : RealmObject> save(`object`: T) {
+        if (isClosed) { return }
         realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(`object`) }
     }
 
     override fun <T : RealmObject> save(objects: List<T>) {
+        if (isClosed) { return }
         realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(objects) }
     }
 
     override fun <T : RealmObject> saveSyncronous(`object`: T) {
+        if (isClosed) { return }
         realm.executeTransaction { realm1 -> realm1.insertOrUpdate(`object`) }
     }
 }
