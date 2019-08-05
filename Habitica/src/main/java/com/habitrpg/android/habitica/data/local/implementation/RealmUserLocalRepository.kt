@@ -5,6 +5,8 @@ import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.Realm
@@ -70,6 +72,8 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         if (user.challenges != null) {
             removeOldChallenges(user.id ?: "", user.challenges ?: emptyList())
         }
+        removeOldPets(user.id ?: "", user.items?.pets ?: emptyList())
+        removeOldMounts(user.id ?: "", user.items?.mounts ?: emptyList())
     }
 
     override fun saveMessages(messages: List<ChatMessage>) {
@@ -93,6 +97,26 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val membershipsToDelete = memberships.filterNot { onlineChallenges.contains(it) }
         realm.executeTransaction {
             membershipsToDelete.forEach {
+                it.deleteFromRealm()
+            }
+        }
+    }
+
+    private fun removeOldPets(userID: String, onlinePets: List<OwnedPet>) {
+        val pets = realm.where(OwnedPet::class.java).equalTo("userID", userID).findAll().createSnapshot()
+        val petsToDelete = pets.filterNot { onlinePets.contains(it) }
+        realm.executeTransaction {
+            petsToDelete.forEach {
+                it.deleteFromRealm()
+            }
+        }
+    }
+
+    private fun removeOldMounts(userID: String, onlineMounts: List<OwnedMount>) {
+        val mount = realm.where(OwnedMount::class.java).equalTo("userID", userID).findAll().createSnapshot()
+        val mountsToDelete = mount.filterNot { onlineMounts.contains(it) }
+        realm.executeTransaction {
+            mountsToDelete.forEach {
                 it.deleteFromRealm()
             }
         }
