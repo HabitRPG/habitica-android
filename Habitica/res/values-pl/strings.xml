@@ -288,7 +288,6 @@
   <string name="feed_to_pet">Nakarm chowańca</string>
   <string name="hatch_egg">Wykluj za pomocą jaja</string>
   <string name="invite_party">Zaproś drużynę</string>
-  <string name="dialog_feeding">Nakarm %1$s %2$s:</string>
   <string name="dialog_feeding">Nakarm %s</string>
   <string name="use_animal">Użyj</string>
   <string name="feed">Nakarm</string>
@@ -593,7 +592,6 @@
   <string name="nevermind">Nieważne</string>
   <string name="resetting_account">Resetowanie konta</string>
   <string name="deleting_account">Usuwanie konta</string>
-  <string name="insufficientGold">Musisz wykonać więcej zadań, zanim będzie Cię stać na ten przedmiot!</string>
   <string name="insufficientGoldTitle">Za mało złota</string>
   <string name="insufficientGems">Potrzebujesz więcej klejnotów by kupić ten przedmiot!</string>
   <string name="purchase_gems">Kup klejnoty</string>
