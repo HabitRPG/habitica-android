@@ -2,10 +2,10 @@ package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -92,7 +92,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
 
     override fun onClick(view: View) {
         val item = item
-        if (item != null) {
+        if (item != null && item.isValid) {
             val dialog = PurchaseDialog(context, HabiticaBaseApplication.userComponent, item)
             dialog.shopIdentifier = shopIdentifier
             dialog.isPinned = isPinned
