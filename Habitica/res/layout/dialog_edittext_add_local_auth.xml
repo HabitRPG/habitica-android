@@ -12,7 +12,7 @@
             android:id="@+id/emailTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
             android:paddingStart="@dimen/spacing_large"
