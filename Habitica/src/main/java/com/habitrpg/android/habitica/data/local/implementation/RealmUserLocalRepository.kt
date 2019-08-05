@@ -65,6 +65,10 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 if (user.lastCron?.before(oldUser.lastCron) == true) {
                     user.needsCron = false
                 }
+            } else {
+                if (oldUser.versionNumber >= user.versionNumber) {
+                    return
+                }
             }
         }
         realm.executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
