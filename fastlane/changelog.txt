@@ -1,3 +1,5 @@
-We fixed a bug where the task list would not update correctly in version 2.0.2.
+Things that 2.0.3 fixes:
 
-In the latest update, version 2.0 brings you a redesigned way to add new tasks as well as a new Notifications section in the Menu so that you can stay up to date with your Party and Guilds! We also fixed bugs related to task editing, Shops, and Rewards. Be sure to download this update now for a better Habitica experience!
+- Adding local authentication to an account with social authentication
+- Users could end up with pets they didn't own showing in the stable
+- The pin/unpin button wasn't showing correctly.
