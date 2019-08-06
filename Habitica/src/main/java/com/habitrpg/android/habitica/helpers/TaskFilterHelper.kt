@@ -1,12 +1,9 @@
 package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.android.habitica.models.tasks.Task
-
-import java.util.ArrayList
-import java.util.HashMap
-
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
+import java.util.*
 
 class TaskFilterHelper {
     private var tagsId: MutableList<String> = ArrayList()
@@ -86,31 +83,32 @@ class TaskFilterHelper {
         return activeFilters[type]
     }
 
-    fun createQuery(unfilteredData: OrderedRealmCollection<Task>): RealmQuery<Task> {
+    fun createQuery(unfilteredData: OrderedRealmCollection<Task>): RealmQuery<Task>? {
+        if (!unfilteredData.isValid) {
+            return null
+        }
         var query = unfilteredData.where()
 
-        if (unfilteredData.size == 0) {
-            return query
-        }
+        if (unfilteredData.size != 0) {
+            val taskType = unfilteredData[0].type
+            val activeFilter = getActiveFilter(taskType)
 
-        val taskType = unfilteredData[0].type
-        val activeFilter = getActiveFilter(taskType)
-
-        if (tagsId.size > 0) {
-            query = query.`in`("tags.id", tagsId.toTypedArray())
-        }
-        if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
-            when (activeFilter) {
-                Task.FILTER_ACTIVE -> query = if (Task.TYPE_DAILY == taskType) {
-                    query.equalTo("completed", false).equalTo("isDue", true)
-                } else {
-                    query.equalTo("completed", false)
+            if (tagsId.size > 0) {
+                query = query.`in`("tags.id", tagsId.toTypedArray())
+            }
+            if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
+                when (activeFilter) {
+                    Task.FILTER_ACTIVE -> query = if (Task.TYPE_DAILY == taskType) {
+                        query.equalTo("completed", false).equalTo("isDue", true)
+                    } else {
+                        query.equalTo("completed", false)
+                    }
+                    Task.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
+                    Task.FILTER_WEAK -> query = query.lessThan("value", 1.0)
+                    Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
+                    Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false)
+                    Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
                 }
-                Task.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
-                Task.FILTER_WEAK -> query = query.lessThan("value", 1.0)
-                Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
-                Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false)
-                Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
             }
         }
         return query

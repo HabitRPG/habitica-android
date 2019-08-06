@@ -146,6 +146,9 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun getTask(taskId: String): Flowable<Task> {
+        if (realm.isClosed) {
+            return Flowable.empty()
+        }
         return realm.where(Task::class.java).equalTo("id", taskId).findFirstAsync().asFlowable<RealmObject>()
                 .filter { realmObject -> realmObject.isLoaded }
                 .cast(Task::class.java)
