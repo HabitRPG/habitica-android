@@ -89,7 +89,7 @@ class MountDetailRecyclerAdapter(data: OrderedRealmCollection<Mount>?, autoUpdat
         }
 
         override fun onClick(v: View) {
-            if (ownedMount?.owned == false) {
+            if (ownedMount?.owned != true) {
                 return
             }
             val menu = BottomSheetMenu(itemView.context)
