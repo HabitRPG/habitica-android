@@ -165,10 +165,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         launchTrace?.start()
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        sharedPreferences.edit {
-            this.putInt("theme", R.style.AppTheme_NoActionBar)
-        }
         super.onCreate(savedInstanceState)
 
         if (!HabiticaBaseApplication.checkUserAuthentication(this, hostConfig)) {

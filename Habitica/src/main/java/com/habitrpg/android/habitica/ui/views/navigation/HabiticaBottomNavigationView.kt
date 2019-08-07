@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.navigation
 
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -10,11 +11,13 @@ import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -52,6 +55,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         onTabSelectedListener?.invoke(value)
     }
 
+    private val cutoutBackgroundView: ImageView by bindView(R.id.cutout_background)
     private val habitsTab: BottomNavigationItem by bindView(R.id.tab_habits)
     private val dailiesTab: BottomNavigationItem by bindView(R.id.tab_dailies)
     private val todosTab: BottomNavigationItem by bindView(R.id.tab_todos)
@@ -110,6 +114,13 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         }
         submenuWrapper.setOnClickListener { hideSubmenu() }
         updateItemSelection()
+
+        val cutout = context.getDrawable(R.drawable.bottom_navigation_inset)
+        cutout?.setColorFilter(context.getThemeColor(R.attr.barColor), PorterDuff.Mode.MULTIPLY)
+        cutoutBackgroundView.setImageDrawable(cutout)
+        val fabBackground = context.getDrawable(R.drawable.fab_background)
+        fabBackground?.setColorFilter(context.getThemeColor(R.attr.colorAccent), PorterDuff.Mode.MULTIPLY)
+        addButtonBackground.background = fabBackground
     }
 
     private fun animateButtonTap() {

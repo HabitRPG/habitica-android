@@ -943,4 +943,5 @@
     <string name="create_task">Create %s</string>
     <string name="details">Details</string>
     <string name="share_challenge_with">Share Challenge with</string>
+    <string name="app_theme">App Theme</string>
 </resources>

@@ -23,7 +23,7 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
+        android:theme="@style/MainAppTheme"
         tools:replace="android:name"
         android:fullBackupContent="@xml/backup_descriptor"
         android:configChanges="orientation"
@@ -34,7 +34,7 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/MainAppTheme"
+            android:theme="@style/LaunchAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
@@ -80,12 +80,10 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/LoginActivityName"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".ui.activities.IntroActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
@@ -114,8 +112,7 @@
                 android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
                 android:value="false"/>
         <activity
-            android:name=".ui.activities.AboutActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText"/>
+            android:name=".ui.activities.AboutActivity" />
         <activity
             android:name=".ui.activities.TaskFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
@@ -127,7 +124,6 @@
         </activity>
         <activity
             android:name=".ui.activities.GroupFormActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.activities.MainActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
@@ -145,12 +141,10 @@
         </activity>
         <activity
             android:name=".ui.activities.GroupInviteActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText"
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
             android:name=".ui.activities.FullProfileActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText"
             android:parentActivityName=".ui.activities.MainActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
@@ -167,7 +161,6 @@
         </activity>
         <activity
             android:name=".ui.activities.ChallengeFormActivity"
-            android:theme="@style/AppTheme.ActionBar"
             android:parentActivityName=".ui.activities.MainActivity"
             android:launchMode="singleTask"
             tools:ignore="UnusedAttribute">

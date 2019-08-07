@@ -126,6 +126,27 @@
         <item>airuTheme</item>
     </string-array>
 
+
+    <string-array name="AppThemes">
+        <item>Default</item>
+        <item>Maroon</item>
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Green</item>
+        <item>Teal</item>
+        <item>Blue</item>
+    </string-array>
+
+    <string-array name="AppThemeValues">
+        <item>purple</item>
+        <item>maroon</item>
+        <item>red</item>
+        <item>orange</item>
+        <item>green</item>
+        <item>teal</item>
+        <item>blue</item>
+    </string-array>
+
     <string-array name="server_urls">
         <item>https://habitica.com</item>
         <item>https://habitrpg-staging.herokuapp.com</item>
