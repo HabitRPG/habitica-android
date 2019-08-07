@@ -98,7 +98,6 @@
             android:layout_width="250dp"
             android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
-
             android:layout_marginTop="35sp"
             android:background="@drawable/rounded_purple_square"
             android:text="@string/about.rate_our_app"
@@ -112,7 +111,6 @@
             android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20sp"
-
             android:background="@drawable/rounded_purple_square"
             android:text="@string/about.bugreport"
             android:textAllCaps="false"
@@ -147,7 +145,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10sp"
             android:background="@drawable/rounded_purple_square"
-
             android:text="@string/about.source_code"
             android:textAllCaps="false"
             android:textColor="@color/white"

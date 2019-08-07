@@ -48,6 +48,6 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:text="@string/dismiss_all"
-        android:textColor="@color/brand_400" />
+        android:textColor="?colorAccent" />
 
 </LinearLayout>

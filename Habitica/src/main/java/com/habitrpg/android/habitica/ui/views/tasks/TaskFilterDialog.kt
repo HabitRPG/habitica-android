@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -116,7 +117,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
                         intArrayOf(android.R.attr.state_checked) //enabled
                 ),
                 intArrayOf(Color.LTGRAY, //disabled
-                        ContextCompat.getColor(context, R.color.brand_400) //enabled
+                        context.getThemeColor(R.attr.colorAccent) //enabled
                 )
         )
         val leftPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, context.resources.displayMetrics).toInt()

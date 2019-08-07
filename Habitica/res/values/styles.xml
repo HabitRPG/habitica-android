@@ -380,7 +380,7 @@
     </style>
 
     <style name="subscriptionBoxText">
-        <item name="android:textColor">@color/brand_100</item>
+        <item name="android:textColor">?colorPrimary</item>
     </style>
 
     <style name="subscriptionBoxText.Title">

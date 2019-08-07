@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.FragmentPagerAdapter
@@ -9,6 +10,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -212,7 +214,11 @@ class TasksFragment : BaseMainFragment() {
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
         } else {
-            filterMenuItem?.setIcon(R.drawable.ic_filters_active)
+            context?.let {
+                val filterIcon = it.getDrawable(R.drawable.ic_filters_active)
+                filterIcon?.setColorFilter(it.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY)
+                filterMenuItem?.setIcon(filterIcon)
+            }
         }
     }
 
@@ -220,7 +226,7 @@ class TasksFragment : BaseMainFragment() {
         if (bottomNavigation == null) {
             return
         }
-        compositeSubscription.add(tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
+        compositeSubscription.add(tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
             val activeTutorialFragments = ArrayList<String>()
             for (step in tutorialSteps) {
                 var id = -1

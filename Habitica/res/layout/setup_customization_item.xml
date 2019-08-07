@@ -6,7 +6,7 @@
               android:gravity="center_vertical"
               android:paddingLeft="6dp"
               android:paddingRight="6dp"
-        tools:background="@color/brand_200">
+        tools:background="?colorPrimaryOffset">
     <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/setup_customization_size"

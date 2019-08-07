@@ -141,7 +141,7 @@
                         android:id="@+id/username_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/brand_400"
+                        android:textColor="?colorAccent"
                         style="@style/HabiticaButton.Gray.600"
                         android:background="@drawable/layout_rounded_bg_gray_700"
                         android:layout_marginTop="@dimen/spacing_large"

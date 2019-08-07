@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:text="@string/want_to_subscribe"
-        android:textColor="@color/brand_400"
+        android:textColor="?colorAccent"
         android:background="@drawable/layout_rounded_bg_lighter_gray"
         android:layout_marginTop="18dp"/>
 </LinearLayout>

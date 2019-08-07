@@ -3,7 +3,7 @@
           android:layout_width="match_parent"
           android:layout_height="22dp"
           xmlns:tools="http://schemas.android.com/tools"
-          android:background="@color/brand_100"
+          android:background="?colorPrimary"
           tools:text="Social"
     style="@style/Body1"
     android:textSize="12sp"

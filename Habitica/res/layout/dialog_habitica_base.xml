@@ -99,7 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/close"
-        android:textColor="@color/brand_400"
+        android:textColor="?colorAccent"
         android:background="@drawable/alert_dialog_background"
         android:layout_marginTop="@dimen/spacing_large"
         android:visibility="gone"

@@ -65,7 +65,7 @@
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            tools:background="@color/brand_50"
+            tools:background="?colorPrimaryDark"
             android:paddingLeft="@dimen/spacing_medium"
             android:paddingRight="@dimen/spacing_large">
             <ImageView

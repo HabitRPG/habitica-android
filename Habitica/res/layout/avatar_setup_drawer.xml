@@ -17,7 +17,7 @@
                 android:id="@+id/subcategory_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/brand_400"
+                app:tabIndicatorColor="?colorAccent"
                 app:tabIndicatorHeight="2dp"
                 app:tabTextColor="@color/white_50_alpha"
                 app:tabSelectedTextColor="@color/white"

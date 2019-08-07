@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         style="@style/FragmentDialogTitle"
         android:id="@+id/titleTextView"
-        android:background="@color/brand_100"
+        android:background="?colorPrimary"
         android:textColor="@android:color/white" />
     <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
         android:id="@+id/recyclerView"

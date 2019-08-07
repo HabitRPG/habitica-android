@@ -18,8 +18,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:background="@color/brand_100" />
+            android:background="?barColor" />
         <ImageView
+            android:id="@+id/cutout_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bottom_navigation_inset"/>
@@ -27,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:background="@color/brand_100" />
+            android:background="?barColor" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

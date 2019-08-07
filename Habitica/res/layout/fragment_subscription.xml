@@ -79,7 +79,7 @@
                 android:text="@string/subscribe_prompt"
                 android:gravity="center"
                 android:textStyle="normal|bold"
-                android:textColor="@color/brand_100"
+                android:textColor="?colorPrimary"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="8dp"
@@ -297,7 +297,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/gift_subscription"
                 android:background="@color/transparent"
-                android:textColor="@color/brand_400"
+                android:textColor="?colorAccent"
                 android:textAllCaps="false"/>
 
         </LinearLayout>

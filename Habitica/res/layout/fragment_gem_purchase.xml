@@ -101,7 +101,7 @@
             android:text="@string/gem.purchase.subtitle"
             android:gravity="center"
             android:textStyle="normal|bold"
-            android:textColor="@color/brand_100"
+            android:textColor="?colorPrimary"
             android:textSize="16sp"
             android:lineSpacingExtra="4dp"
             android:layout_marginTop="23dp"

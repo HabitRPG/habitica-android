@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -77,7 +78,7 @@ class StatsFragment: BaseMainFragment() {
         leftSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
         rightSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesRight())
         context?.let {
-            val color = ContextCompat.getColor(it, R.color.brand_200)
+            val color = it.getThemeColor(R.attr.colorPrimaryOffset)
             distributeEvenlyHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
             distributeClassHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
             distributeTaskHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))

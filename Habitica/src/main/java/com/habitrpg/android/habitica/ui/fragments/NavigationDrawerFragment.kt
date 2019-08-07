@@ -379,10 +379,14 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun setNotificationsSeen(allSeen: Boolean) {
         context?.let {
-            val colorId = if (allSeen) R.color.gray_200 else R.color.brand_400
+            val color = if (allSeen) {
+                ContextCompat.getColor(it, R.color.gray_200)
+            } else {
+                it.getThemeColor(R.attr.colorAccent)
+            }
 
             val bg = notificationsBadge.background as? GradientDrawable
-            bg?.color = ColorStateList.valueOf(ContextCompat.getColor(it, colorId))
+            bg?.color = ColorStateList.valueOf(color)
         }
     }
 

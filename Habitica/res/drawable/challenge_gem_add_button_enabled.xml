@@ -3,6 +3,6 @@
     <item >
         <bitmap
             android:src="@drawable/ic_add_white_18dp"
-            android:tint="@color/brand_400" />
+            android:tint="?colorAccent" />
     </item>
 </layer-list>

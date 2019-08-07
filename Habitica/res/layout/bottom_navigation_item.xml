@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:parentTag="android.widget.RelativeLayout"
-    tools:background="@color/brand_100">
+    tools:background="?colorPrimary">
         <ImageView
             android:id="@+id/icon_view"
             android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
             android:id="@+id/title_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/brand_500"
+            android:textColor="?textColorPrimaryDark"
             tools:text="@string/habits"
             android:layout_gravity="center"
             android:textSize="12sp"

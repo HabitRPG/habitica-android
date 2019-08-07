@@ -133,7 +133,7 @@
                     tools:text="@string/report_explanation"
                     android:textColor="@color/gray_200"
                     style="@style/Caption3"
-                    android:textColorLink="@color/brand_400"
+                    android:textColorLink="?colorAccent"
                     />
             </LinearLayout>
             </androidx.core.widget.NestedScrollView>
