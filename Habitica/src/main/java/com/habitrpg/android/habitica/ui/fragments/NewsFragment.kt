@@ -1,15 +1,17 @@
 package com.habitrpg.android.habitica.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_news.*
 
 
@@ -21,6 +23,7 @@ class NewsFragment : BaseMainFragment() {
         return container?.inflate(R.layout.fragment_news)
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val address = if (BuildConfig.DEBUG) BuildConfig.BASE_URL else context?.getString(R.string.base_url)
@@ -36,5 +39,8 @@ class NewsFragment : BaseMainFragment() {
         component.inject(this)
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        compositeSubscription.add(userRepository.updateUser(user, "flags.newStuff", false).subscribeWithErrorHandler(Consumer {}))
+    }
 }

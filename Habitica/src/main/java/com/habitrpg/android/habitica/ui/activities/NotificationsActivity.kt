@@ -150,7 +150,11 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     private fun createNewStuffNotification(notification: Notification): View? {
         val data = notification.data as? NewStuffData
-        val text = fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data?.title)
+        val text = if (data?.title != null) {
+            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
+        } else {
+            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b>")
+        }
 
         return createDismissableNotificationItem(
                 notification,

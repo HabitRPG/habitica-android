@@ -42,4 +42,17 @@ class Notification {
             else -> null
         }
     }
+
+    val priority: Int
+    get() {
+        return when (type) {
+            Type.NEW_STUFF.type -> 1
+            Type.GUILD_INVITATION.type -> 2
+            Type.PARTY_INVITATION.type -> 3
+            Type.UNALLOCATED_STATS_POINTS.type -> 4
+            Type.NEW_MYSTERY_ITEMS.type -> 5
+            Type.NEW_CHAT_MESSAGE.type -> 6
+            else -> 100
+        }
+    }
 }

@@ -228,6 +228,9 @@ class NavigationDrawerFragment : DialogFragment() {
             }
             updateItem(statsItem)
         }
+        getItemWithIdentifier(SIDEBAR_NEWS)?.let {
+            it.showBubble = user.flags?.newStuff ?: false
+        }
     }
 
     override fun onDestroy() {
@@ -315,11 +318,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }))
         subscriptions?.add(viewModel.getHasPartyNotification().subscribeWithErrorHandler(Consumer {
             val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
-            if (it) {
-                partyMenuItem?.additionalInfo = ""
-            } else {
-                partyMenuItem?.additionalInfo = null
-            }
+            partyMenuItem?.showBubble = it
         }))
     }
 

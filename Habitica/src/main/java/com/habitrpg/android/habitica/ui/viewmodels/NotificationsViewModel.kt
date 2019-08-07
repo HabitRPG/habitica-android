@@ -72,7 +72,16 @@ open class NotificationsViewModel : BaseViewModel() {
         disposable.add(userRepository.getUser()
                 .subscribe(Consumer {
                     party = it.party
-                    customNotifications.onNext(convertInvitationsToNotifications(it))
+                    var notifications = convertInvitationsToNotifications(it)
+                    if (it.flags?.newStuff == true) {
+                        val notification = Notification()
+                        notification.id = "new-stuff-notification"
+                        notification.type = Notification.Type.NEW_STUFF.type
+                        val data = NewStuffData()
+                        notification.data = data
+                        notifications.add(notification)
+                    }
+                    customNotifications.onNext(notifications)
                 }, RxErrorHandler.handleEmptyError()))
     }
 
@@ -85,9 +94,15 @@ open class NotificationsViewModel : BaseViewModel() {
                 serverNotifications,
                 customNotifications.toFlowable(BackpressureStrategy.LATEST),
                 BiFunction<List<Notification>, List<Notification>, List<Notification>> {
-                    serverNotificationsList, customNotificationsList -> serverNotificationsList + customNotificationsList
+                    serverNotificationsList, customNotificationsList ->
+                    if (serverNotificationsList.firstOrNull { notification -> notification.type == Notification.Type.NEW_STUFF.type } != null) {
+                        return@BiFunction serverNotificationsList + customNotificationsList.filter { notification -> notification.type != Notification.Type.NEW_STUFF.type }
+                    }
+                    return@BiFunction serverNotificationsList + customNotificationsList
                 }
-        ).observeOn(AndroidSchedulers.mainThread())
+        )
+                .map { it.sortedBy { notification -> notification.priority } }
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getNotificationCount(): Flowable<Int> {
@@ -121,8 +136,8 @@ open class NotificationsViewModel : BaseViewModel() {
         return notifications.filter { supportedNotificationTypes.contains(it.type) }
     }
 
-    private fun convertInvitationsToNotifications(user: User): List<Notification> {
-        val notifications = arrayListOf<Notification>()
+    private fun convertInvitationsToNotifications(user: User): MutableList<Notification> {
+        val notifications = mutableListOf<Notification>()
 
         notifications.addAll(user.invitations?.parties?.map {
             val notification = Notification()
