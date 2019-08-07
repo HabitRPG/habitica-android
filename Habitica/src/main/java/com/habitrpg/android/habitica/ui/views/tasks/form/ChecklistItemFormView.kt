@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -35,7 +36,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
         editText.setText(item.text)
     }
 
-    var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
+    var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
     var textChangedListener: ((String) -> Unit)? = null
     var animDuration = 0L
     var isAddButton: Boolean = true

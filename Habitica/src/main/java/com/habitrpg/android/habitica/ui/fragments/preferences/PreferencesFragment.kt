@@ -72,7 +72,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.isVisible = configManager.testingLevel() == AppTestingLevel.ALPHA || BuildConfig.DEBUG
-        themePreference?.summary = preferenceManager.sharedPreferences.getString("theme_name", "")
+        themePreference?.summary = themePreference?.entry
     }
 
     override fun onResume() {

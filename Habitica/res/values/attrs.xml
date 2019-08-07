@@ -9,6 +9,7 @@
     <attr name="textColorSecondary" format="color" />
     <attr name="textColorPrimaryDark" format="color" />
     <attr name="barColor" format="color" />
+    <attr name="taskFormTint" format="color" />
     <attr name="textColorSecondaryDark" format="color" />
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />

@@ -113,6 +113,7 @@ class TaskFormActivity : BaseActivity() {
         taskDifficultyButtons.tintColor = value
         habitScoringButtons.tintColor = value
         habitResetStreakButtons.tintColor = value
+        taskSchedulingControls.tintColor = value
         supportActionBar?.setBackgroundDrawable(ColorDrawable(value))
         updateTagViewsColors()
     }
@@ -126,18 +127,33 @@ class TaskFormActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val bundle = intent.extras ?: return
+
+        val taskId = bundle.getString(TASK_ID_KEY)
+        forcedTheme = if (taskId != null) {
+            val taskValue = bundle.getDouble(TASK_VALUE_KEY)
+            when {
+                taskValue < -20 -> "maroon"
+                taskValue < -10 -> "red"
+                taskValue < -1 -> "orange"
+                taskValue < 1 -> "yellow"
+                taskValue < 5 -> "green"
+                taskValue < 10 -> "teal"
+                else -> "blue"
+            }
+        } else {
+            "purple"
+        }
+
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        tintColor = getThemeColor(R.attr.colorAccent)
-
-        val bundle = intent.extras ?: return
+        tintColor = getThemeColor(R.attr.taskFormTint)
 
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
         taskType = bundle.getString(TASK_TYPE_KEY) ?: Task.TYPE_HABIT
-        val taskId = bundle.getString(TASK_ID_KEY)
         preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
 
         compositeSubscription.add(tagRepository.getTags()
@@ -465,6 +481,7 @@ class TaskFormActivity : BaseActivity() {
     companion object {
         val SELECTED_TAGS_KEY = "selectedTags"
         const val TASK_ID_KEY = "taskId"
+        const val TASK_VALUE_KEY = "taskValue"
         const val USER_ID_KEY = "userId"
         const val TASK_TYPE_KEY = "type"
         const val IS_CHALLENGE_TASK = "isChallengeTask"

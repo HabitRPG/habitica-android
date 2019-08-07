@@ -24,6 +24,7 @@ import java.util.*
 abstract class BaseActivity : AppCompatActivity() {
 
     private var currentTheme: String? = null
+    internal var forcedTheme: String? = null
     private var destroyed: Boolean = false
 
     protected abstract fun getLayoutResId(): Int
@@ -80,12 +81,17 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun loadTheme(sharedPreferences: SharedPreferences) {
-        val theme = sharedPreferences.getString("theme_name", "purple")
+        val theme = if (forcedTheme != null) {
+            forcedTheme
+        } else {
+            sharedPreferences.getString("theme_name", "purple")
+        }
         if (theme == currentTheme) return
         setTheme(when (theme) {
             "maroon" -> R.style.MainAppTheme_Maroon
             "red" -> R.style.MainAppTheme_Red
             "orange" -> R.style.MainAppTheme_Orange
+            "yellow" -> R.style.MainAppTheme_Yellow
             "green" -> R.style.MainAppTheme_Green
             "teal" -> R.style.MainAppTheme_Teal
             "blue" -> R.style.MainAppTheme_Blue

@@ -324,6 +324,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type)
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
+        bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
