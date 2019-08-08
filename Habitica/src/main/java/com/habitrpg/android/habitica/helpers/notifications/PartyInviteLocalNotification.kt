@@ -18,6 +18,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String) : Habit
 
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         acceptInviteIntent.action = res.getString(R.string.accept_party_invite)
+        acceptInviteIntent.putExtra("groupID", this.data?.get("groupID"))
         val pendingIntentAccept = PendingIntent.getBroadcast(
                 context,
                 3000,
@@ -28,6 +29,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String) : Habit
 
         val rejectInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         rejectInviteIntent.action = res.getString(R.string.reject_party_invite)
+        rejectInviteIntent.putExtra("groupID", this.data?.get("groupID"))
         val pendingIntentReject = PendingIntent.getBroadcast(
                 context,
                 2000,

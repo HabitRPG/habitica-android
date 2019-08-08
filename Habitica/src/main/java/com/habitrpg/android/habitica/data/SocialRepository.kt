@@ -65,8 +65,8 @@ interface SocialRepository : BaseRepository {
 
     fun markPrivateMessagesRead(user: User?): Flowable<Void>
 
-    fun acceptQuest(user: User?, partyId: String): Flowable<Void>
-    fun rejectQuest(user: User?, partyId: String): Flowable<Void>
+    fun acceptQuest(user: User?, partyId: String = "party"): Flowable<Void>
+    fun rejectQuest(user: User?, partyId: String = "party"): Flowable<Void>
 
     fun leaveQuest(partyId: String): Flowable<Void>
 
