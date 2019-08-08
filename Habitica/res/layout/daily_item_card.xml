@@ -90,7 +90,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/task_icon_space"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/specialTaskText"
@@ -135,6 +136,12 @@
                         android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/has_reminder"
                         app:srcCompat="@drawable/task_icon_reminder" />
+                    <TextView
+                        android:id="@+id/reminder_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/task_secondary_text"
+                        style="@style/Caption3" />
 
                     <ImageView
                         android:id="@+id/iconviewTag"
