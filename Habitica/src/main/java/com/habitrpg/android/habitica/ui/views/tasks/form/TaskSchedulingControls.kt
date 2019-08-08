@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.icu.text.MessageFormat
+import android.os.Build
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
@@ -288,52 +290,62 @@ class TaskSchedulingControls @JvmOverloads constructor(
         var frequencyQualifier = ""
 
         when (frequency) {
-            "daily" -> frequencyQualifier = "day(s)"
-            "weekly" -> frequencyQualifier = "week(s)"
-            "monthly" -> frequencyQualifier = "month(s)"
-            "yearly" -> frequencyQualifier = "year(s)"
+            "daily" ->  frequencyQualifier = if (everyX == 1) "day" else "days"
+            "weekly" -> frequencyQualifier = if (everyX == 1) "week" else "weeks"
+            "monthly" -> frequencyQualifier = if (everyX == 1) "month" else "months"
+            "yearly" -> frequencyQualifier = if (everyX == 1) "year" else "years"
         }
 
-        var weekdays: String
-        val weekdayStrings = ArrayList<String>()
-        if (weeklyRepeat.m) {
-            weekdayStrings.add("Monday")
-        }
-        if (weeklyRepeat.t) {
-            weekdayStrings.add("Tuesday")
-        }
-        if (weeklyRepeat.w) {
-            weekdayStrings.add("Wednesday")
-        }
-        if (weeklyRepeat.th) {
-            weekdayStrings.add("Thursday")
-        }
-        if (weeklyRepeat.f) {
-            weekdayStrings.add("Friday")
-        }
-        if (weeklyRepeat.s) {
-            weekdayStrings.add("Saturday")
-        }
-        if (weeklyRepeat.su) {
-            weekdayStrings.add("Sunday")
-        }
-        weekdays = " on " + TextUtils.join(", ", weekdayStrings)
-        if (frequency != "weekly") {
-            weekdays = ""
+        var weekdays = if (frequency == "weekly") {
+            val weekdayStrings = ArrayList<String>()
+            if (weeklyRepeat.m) {
+                weekdayStrings.add("Monday")
+            }
+            if (weeklyRepeat.t) {
+                weekdayStrings.add("Tuesday")
+            }
+            if (weeklyRepeat.w) {
+                weekdayStrings.add("Wednesday")
+            }
+            if (weeklyRepeat.th) {
+                weekdayStrings.add("Thursday")
+            }
+            if (weeklyRepeat.f) {
+                weekdayStrings.add("Friday")
+            }
+            if (weeklyRepeat.s) {
+                weekdayStrings.add("Saturday")
+            }
+            if (weeklyRepeat.su) {
+                weekdayStrings.add("Sunday")
+            }
+            " on " + TextUtils.join(", ", weekdayStrings)
+        } else {
+            ""
         }
 
         if (frequency == "monthly") {
-            weekdays = if (daysOfMonth != null) {
+            weekdays = if (daysOfMonth?.isNotEmpty() == true) {
                 val date = startDateCalendar.get(Calendar.DATE)
-                " on the $date"
+                val formattedDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    val formatter = MessageFormat("{0,ordinal}", Locale.getDefault())
+                    formatter.format(arrayOf(date))
+                } else date.toString()
+                " on the $formattedDate"
             } else {
                 val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
+                val formattedWeek = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    val formatter = MessageFormat("{0,ordinal}", Locale.getDefault())
+                    formatter.format(arrayOf(week))
+                } else week.toString()
                 val dayLongName = startDateCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
-                " on the $week week on $dayLongName"
+                " on the $formattedWeek week on $dayLongName"
             }
         }
 
-        val summary = resources.getString(R.string.repeat_summary, frequency, everyX.toString(), frequencyQualifier, weekdays)
+        val everyXString = if (everyX == 1) "" else "$everyX "
+
+        val summary = resources.getString(R.string.repeat_summary, frequency, everyXString, frequencyQualifier, weekdays)
         summaryTextView.text = summary
     }
 }

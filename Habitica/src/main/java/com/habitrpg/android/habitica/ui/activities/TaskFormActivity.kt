@@ -338,12 +338,12 @@ class TaskFormActivity : BaseActivity() {
             }
             Task.TYPE_DAILY -> {
                 taskSchedulingControls.startDate = task.startDate ?: Date()
-                taskSchedulingControls.frequency = task.frequency ?: Task.FREQUENCY_DAILY
                 taskSchedulingControls.everyX = task.everyX ?: 1
                 task.repeat?.let { taskSchedulingControls.weeklyRepeat = it }
                 taskSchedulingControls.daysOfMonth = task.getDaysOfMonth()
                 taskSchedulingControls.weeksOfMonth = task.getWeeksOfMonth()
                 habitAdjustPositiveStreakView.setText((task.streak ?: 0).toString())
+                taskSchedulingControls.frequency = task.frequency ?: Task.FREQUENCY_DAILY
             }
             Task.TYPE_TODO -> taskSchedulingControls.dueDate = task.dueDate
             Task.TYPE_REWARD -> rewardValueFormView.value = task.value

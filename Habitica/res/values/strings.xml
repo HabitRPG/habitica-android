@@ -589,7 +589,7 @@
     <string name="reload_content">Reload Content</string>
     <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
     <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
-    <string name="repeat_summary">"Repeats %1$s every %2$s %3$s %4$s"</string>
+    <string name="repeat_summary" translatable="false">"Repeats %1$s every %2$s%3$s %4$s"</string>
 
     <string name="no_billing_gems">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase gems.</string>
     <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase a subscription.</string>
