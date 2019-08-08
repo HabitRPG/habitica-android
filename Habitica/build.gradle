@@ -149,7 +149,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         multiDexEnabled true
 
-        versionCode 2187
+        versionCode 2189
         versionName "2.0.3"
     }
 
