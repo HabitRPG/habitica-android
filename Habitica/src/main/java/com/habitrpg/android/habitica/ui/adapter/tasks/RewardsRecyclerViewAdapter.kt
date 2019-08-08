@@ -25,10 +25,12 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
     override val errorButtonEvents = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
     private var taskScoreEventsSubject = PublishSubject.create<Pair<Task, TaskDirection>>()
     override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
-    protected var checklistItemScoreSubject = PublishSubject.create<Pair<Task, ChecklistItem>>()
+    private var checklistItemScoreSubject = PublishSubject.create<Pair<Task, ChecklistItem>>()
     override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
-    protected var taskOpenEventsSubject = PublishSubject.create<Task>()
+    private var taskOpenEventsSubject = PublishSubject.create<Task>()
     override val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    private var purchaseCardSubject = PublishSubject.create<ShopItem>()
+    val purchaseCardEvents: Flowable<ShopItem> = purchaseCardSubject.toFlowable(BackpressureStrategy.LATEST)
 
     private val inAppRewardCount: Int
         get() = inAppRewards?.size ?: 0
@@ -50,7 +52,11 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
                 task -> taskOpenEventsSubject.onNext(task)
             }
         } else {
-            ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
+            val viewHolder = ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
+            viewHolder.purchaseCardAction = {
+                purchaseCardSubject.onNext(it)
+            }
+            viewHolder
         }
     }
 

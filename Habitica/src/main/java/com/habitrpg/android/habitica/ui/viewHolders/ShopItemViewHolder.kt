@@ -34,6 +34,8 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     private var limitedDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
     private var countDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber())
 
+    var purchaseCardAction: ((ShopItem) -> Unit)? = null
+
     var itemCount = 0
     set(value) {
         field = value
@@ -96,6 +98,9 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             val dialog = PurchaseDialog(context, HabiticaBaseApplication.userComponent, item)
             dialog.shopIdentifier = shopIdentifier
             dialog.isPinned = isPinned
+            dialog.purchaseCardAction = {
+                purchaseCardAction?.invoke(it)
+            }
             dialog.show()
         }
     }

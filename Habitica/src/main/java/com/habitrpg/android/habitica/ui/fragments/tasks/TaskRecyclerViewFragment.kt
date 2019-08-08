@@ -233,7 +233,6 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             this.setInnerAdapter()
         }
         if (this.classType != null) {
-            recyclerAdapter?.errorButtonEvents
             recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
                 taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
             }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
