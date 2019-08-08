@@ -27,13 +27,13 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
@@ -213,8 +213,8 @@ class FullProfileActivity : BaseActivity() {
         petsFoundCount.text = user.petsFoundCount.toString()
         mountsTamedCount.text = user.mountsTamedCount.toString()
 
-        DataBindingUtils.loadImage(this.currentPetDrawee, "Pet-" + user.currentPet)
-        DataBindingUtils.loadImage(this.currentMountDrawee, "Mount_Icon_" + user.currentMount)
+        currentPetDrawee.loadImage("Pet-" + user.currentPet)
+        currentMountDrawee.loadImage("Mount_Icon_" + user.currentMount)
     }
 
     // endregion

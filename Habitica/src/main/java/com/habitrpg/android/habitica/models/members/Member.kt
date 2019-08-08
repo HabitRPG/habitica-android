@@ -101,9 +101,9 @@ open class Member : RealmObject(), Avatar {
 
     val petsFoundCount: Int
         get() = this.items?.pets?.size ?: 0
-
     val mountsTamedCount: Int
         get() = this.items?.mounts?.size ?: 0
+
     val username: String?
     get() = authentication?.localAuthentication?.username
     val formattedUsername: String?

@@ -2,13 +2,13 @@ package com.habitrpg.android.habitica.ui.helpers
 
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.net.toUri
 import com.facebook.common.executors.CallerThreadExecutor
 import com.facebook.common.references.CloseableReference
@@ -19,6 +19,11 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
 import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.habitrpg.android.habitica.R
+
+
+fun SimpleDraweeView.loadImage(imageName: String, imageFormat: String = "png") {
+    DataBindingUtils.loadImage(this, imageName, imageFormat)
+}
 
 object DataBindingUtils {
 
