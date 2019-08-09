@@ -306,9 +306,9 @@
   <string name="notification_purchase">Вы купили %s</string>
   <string name="notification_purchase_reward">Вы купили награду</string>
   <string name="sectiondrop">Обычные</string>
-  <string name="sectionpremium">Магический эликсир</string>
-  <string name="sectionquest">Квест</string>
-  <string name="sectionspecial">Редкие питомцы</string>
+  <string name="sectionpremium">Из Волшебного эликсира</string>
+  <string name="sectionquest">Квестовые</string>
+  <string name="sectionspecial">Особые</string>
   <string name="sectionmounts">Основные скакуны</string>
   <string name="sectionpremiumMounts">Магический эликсир</string>
   <string name="sectionquestMounts">Квест</string>
@@ -845,4 +845,7 @@
   <string name="invited_to_private_guild"><![CDATA[Вас пригласили присоединиться к частной гильдии <b>%1$s</b>]]></string>
   <string name="invited_to_public_guild"><![CDATA[Вас пригласили в гильдию <b>%1$s</b>]]></string>
   <string name="invited_to_quest"><![CDATA[Вас пригласили на квест <b>%1$s</b>]]></string>
-</resources>
+<string name="sectionwacky">Дурацкие</string>
+    <string name="x_months">%d мес.</string>
+    <string name="insufficientGoldTitle">Недостаточно золота</string>
+    </resources>
