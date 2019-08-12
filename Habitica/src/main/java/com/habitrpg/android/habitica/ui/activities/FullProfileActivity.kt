@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
@@ -50,6 +51,7 @@ class FullProfileActivity : BaseActivity() {
     @Inject
     lateinit var socialRepository: SocialRepository
 
+    private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val profileImage: SimpleDraweeView by bindView(R.id.profile_image)
     private val blurbTextView: TextView by bindView(R.id.profile_blurb)
     private val avatarView: AvatarView by bindView(R.id.avatarView)
@@ -87,6 +89,7 @@ class FullProfileActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupToolbar(toolbar)
 
         userID = intent?.extras?.getString("userID", "") ?: ""
         if (userID.isEmpty()) {
@@ -113,9 +116,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        return when (id) {
+        return when (item.itemId) {
             R.id.private_message -> {
                 showSendMessageToUserDialog()
                 true
