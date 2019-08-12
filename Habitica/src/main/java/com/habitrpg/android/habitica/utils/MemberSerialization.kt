@@ -12,6 +12,8 @@ import com.habitrpg.android.habitica.models.user.*
 import io.realm.Realm
 import java.lang.reflect.Type
 
+
+
 class MemberSerialization : JsonDeserializer<Member> {
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Member {
@@ -53,6 +55,25 @@ class MemberSerialization : JsonDeserializer<Member> {
 
         if (obj.has("items")) {
             member.items = context.deserialize(obj.get("items"), Items::class.java)
+            member.items?.gear = null
+            member.items?.special = null
+
+            val items = obj.getAsJsonObject("items")
+            if (items.has("currentMount") && items.get("currentMount").isJsonPrimitive) {
+                member.setCurrentMount(items.get("currentMount").asString)
+            }
+            if (items.has("currentPet") && items.get("currentPet").isJsonPrimitive) {
+                member.setCurrentPet(items.get("currentPet").asString)
+            }
+            if (items.has("gear")) {
+                val gear = items.getAsJsonObject("gear")
+                if (gear.has("costume")) {
+                    member.costume = context.deserialize(gear.get("costume"), Outfit::class.java)
+                }
+                if (gear.has("equipped")) {
+                    member.equipped = context.deserialize(gear.get("equipped"), Outfit::class.java)
+                }
+            }
         }
         if (obj.has("contributor")) {
             member.contributor = context.deserialize<ContributorInfo>(obj.get("contributor"), ContributorInfo::class.java)
