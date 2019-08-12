@@ -1,449 +1,471 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fullprofile_scrollview"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity"
+    android:background="@color/white">
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            style="@style/CardView.Default"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Toolbar"
+            android:background="@color/brand_300"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
-            <LinearLayout
-                style="@style/CardContent"
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/fullprofile_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                style="@style/CardView.Default"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/avatar_with_bars"
+                    style="@style/CardContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/transparent"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/avatar_with_bars"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.habitrpg.android.habitica.ui.AvatarView
-                            android:id="@+id/avatarView"
-                            android:layout_width="@dimen/avatar_header_width"
-                            android:layout_height="@dimen/avatar_header_height"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            app:showBackground="true"
-                            app:showMount="true"
-                            app:showPet="true" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
+                        android:background="@color/transparent"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/LL_header"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content">
 
-                            <com.habitrpg.android.habitica.ui.views.ValueBar
-                                android:id="@+id/hpBar"
-                                layout="@layout/value_bar"
+                            <com.habitrpg.android.habitica.ui.AvatarView
+                                android:id="@+id/avatarView"
+                                android:layout_width="@dimen/avatar_header_width"
+                                android:layout_height="@dimen/avatar_header_height"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginRight="16dp"
+                                app:showBackground="true"
+                                app:showMount="true"
+                                app:showPet="true" />
+
+                            <LinearLayout
+                                android:id="@+id/LL_header"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/header_bar_spacing"
-                                app:barForegroundColor="@color/hpColor"
-                                app:lightBackground="true"
-                                app:description="@string/HP_default" />
+                                android:orientation="vertical">
 
-                            <com.habitrpg.android.habitica.ui.views.ValueBar
-                                android:id="@+id/xpBar"
-                                layout="@layout/value_bar"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/header_bar_spacing"
-                                app:barForegroundColor="@color/xpColor"
-                                app:lightBackground="true"
-                                app:description="@string/XP_default"  />
+                                <com.habitrpg.android.habitica.ui.views.ValueBar
+                                    android:id="@+id/hpBar"
+                                    layout="@layout/value_bar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/header_bar_spacing"
+                                    app:barForegroundColor="@color/hpColor"
+                                    app:lightBackground="true"
+                                    app:description="@string/HP_default" />
 
-                            <com.habitrpg.android.habitica.ui.views.ValueBar
-                                android:id="@+id/mpBar"
-                                layout="@layout/value_bar"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:barForegroundColor="@color/mpColor"
-                                app:lightBackground="true"
-                                app:description="@string/MP_default" />
+                                <com.habitrpg.android.habitica.ui.views.ValueBar
+                                    android:id="@+id/xpBar"
+                                    layout="@layout/value_bar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/header_bar_spacing"
+                                    app:barForegroundColor="@color/xpColor"
+                                    app:lightBackground="true"
+                                    app:description="@string/XP_default"  />
 
+                                <com.habitrpg.android.habitica.ui.views.ValueBar
+                                    android:id="@+id/mpBar"
+                                    layout="@layout/value_bar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:barForegroundColor="@color/mpColor"
+                                    app:lightBackground="true"
+                                    app:description="@string/MP_default" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/lvl_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dp"
+                                android:drawablePadding="6dp"
+                                android:gravity="center"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <com.habitrpg.android.habitica.ui.views.CurrencyViews
+                                android:id="@+id/currencyView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
                     </LinearLayout>
 
+
+                    <TextView
+                        android:id="@+id/profile_blurb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textIsSelectable="true"
+                        android:text="Blurb" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/profile_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:minHeight="200dp"
+                        fresco:actualImageScaleType="fitCenter" />
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:layout_marginBottom="@dimen/spacing_medium">
                         <TextView
-                            android:id="@+id/lvl_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:drawablePadding="6dp"
-                            android:gravity="center"
-                            android:textSize="14sp" />
-
-                        <View
                             android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <com.habitrpg.android.habitica.ui.views.CurrencyViews
-                            android:id="@+id/currencyView"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/joined"
+                            style="@style/Subheader1"/>
+                        <TextView
+                            android:id="@+id/joined_view"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            tools:text="today"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/spacing_medium">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/last_login"
+                            style="@style/Subheader1"/>
+                        <TextView
+                            android:id="@+id/last_login_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="today"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_checkins"
+                            style="@style/Subheader1"/>
+                        <TextView
+                            android:id="@+id/total_checkins_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="100"/>
                     </LinearLayout>
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-
-                <TextView
-                    android:id="@+id/profile_blurb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:text="Blurb" />
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/profile_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:minHeight="200dp"
-                    fresco:actualImageScaleType="fitCenter" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/spacing_medium"
-                    android:layout_marginBottom="@dimen/spacing_medium">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/joined"
-                        style="@style/Subheader1"/>
-                    <TextView
-                        android:id="@+id/joined_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="today"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/spacing_medium">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/last_login"
-                        style="@style/Subheader1"/>
-                    <TextView
-                        android:id="@+id/last_login_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="today"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@string/total_checkins"
-                        style="@style/Subheader1"/>
-                    <TextView
-                        android:id="@+id/total_checkins_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="100"/>
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            style="@style/CardView.Default"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                style="@style/CardContent"
+            <androidx.cardview.widget.CardView
+                style="@style/CardView.Default"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
                 <LinearLayout
+                    style="@style/CardContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                <TextView
-                    style="@style/CardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/username"
-                    android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:id="@+id/username"
-                        android:layout_gravity="right"/>
-                </LinearLayout>
+                        android:orientation="horizontal">
 
-                <Button
+                        <TextView
+                            style="@style/CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/username"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:id="@+id/username"
+                            android:layout_gravity="right"/>
+                    </LinearLayout>
+
+                    <Button
                         android:text="@string/copy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
                         android:id="@+id/copy_username" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView
-            style="@style/CardView.Default"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                style="@style/CardContent"
+            <androidx.cardview.widget.CardView
+                style="@style/CardView.Default"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/CardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/battle_gear"
-                    android:textStyle="bold" />
-                <TableLayout
-                    android:id="@+id/equipment_table"
+                <LinearLayout
+                    style="@style/CardContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:shrinkColumns="1"
-                    android:stretchColumns="0" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/profile_costume_card"
-            style="@style/CardView.Default"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <TextView
+                        style="@style/CardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/battle_gear"
+                        android:textStyle="bold" />
+                    <TableLayout
+                        android:id="@+id/equipment_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:shrinkColumns="1"
+                        android:stretchColumns="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                style="@style/CardContent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_costume_card"
+                style="@style/CardView.Default"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/CardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/costume"
-                    android:textStyle="bold" />
-                <TableLayout
-                    android:id="@+id/costume_table"
+                <LinearLayout
+                    style="@style/CardContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:shrinkColumns="1"
-                    android:stretchColumns="0" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/profile_attributes_card"
-            style="@style/CardView.Default"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+                    <TextView
+                        style="@style/CardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/costume"
+                        android:textStyle="bold" />
+                    <TableLayout
+                        android:id="@+id/costume_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:shrinkColumns="1"
+                        android:stretchColumns="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                style="@style/CardContent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_attributes_card"
+                style="@style/CardView.Default"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="1">
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
-                <TableLayout
-                    android:id="@+id/attributes_table"
+                <LinearLayout
+                    style="@style/CardContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:stretchColumns="0,1,2,3,4">
+                    android:orientation="vertical"
+                    android:weightSum="1">
 
-                    <TableRow android:layout_height="wrap_content">
-                        <!-- Headers -->
+                    <TableLayout
+                        android:id="@+id/attributes_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="0,1,2,3,4">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                        <TableRow android:layout_height="wrap_content">
+                            <!-- Headers -->
 
-                            <TextView
-                                style="@style/CardTitle"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/attributes"
-                                android:textStyle="bold" />
+                                android:layout_height="wrap_content">
 
-                            <androidx.appcompat.widget.AppCompatImageView
+                                <TextView
+                                    style="@style/CardTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/attributes"
+                                    android:textStyle="bold" />
+
+                                <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/attributes_collapse_icon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
                                     android:layout_gravity="bottom" />
 
-                        </LinearLayout>
+                            </LinearLayout>
 
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="STR" />
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="STR" />
 
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="INT" />
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="INT" />
 
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="CON" />
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="CON" />
 
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="PER" />
-                    </TableRow>
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="PER" />
+                        </TableRow>
 
-                </TableLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    </TableLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView
-            style="@style/CardView.Default"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                style="@style/CardContent"
+            <androidx.cardview.widget.CardView
+                style="@style/CardView.Default"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="1">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/CardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_pets_and_mounts"
-                    android:textStyle="bold" />
-
-                <TableLayout
+                <LinearLayout
+                    style="@style/CardContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:stretchColumns="0,1">
+                    android:orientation="vertical"
+                    android:weightSum="1">
 
-                    <TableRow
+                    <TextView
+                        style="@style/CardTitle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
+                        android:text="@string/profile_pets_and_mounts"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="match_parent"
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="0,1">
+
+                        <TableRow
                             android:layout_height="wrap_content"
-                            android:text="@string/profile_pets_found" />
+                            android:gravity="center_vertical">
 
-                        <TextView
-                            android:id="@+id/profile_pets_found_count"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:text="#" />
-                        <com.facebook.drawee.view.SimpleDraweeView
-                            android:id="@+id/current_pet_drawee"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            fresco:actualImageScaleType="centerCrop"/>>
-                    </TableRow>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/profile_pets_found" />
 
-                    <TableRow android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
+                            <TextView
+                                android:id="@+id/profile_pets_found_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="#" />
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/current_pet_drawee"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                fresco:actualImageScaleType="centerCrop"/>>
+                        </TableRow>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/profile_mounts_tamed" />
+                        <TableRow android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
 
-                        <TextView
-                            android:id="@+id/profile_mounts_tamed_count"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:text="#" />
-                        <com.facebook.drawee.view.SimpleDraweeView
-                            android:id="@+id/current_mount_drawee"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            fresco:actualImageScaleType="centerCrop"/>
-                    </TableRow>
-                </TableLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/profile_mounts_tamed" />
+
+                            <TextView
+                                android:id="@+id/profile_mounts_tamed_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="#" />
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/current_mount_drawee"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                fresco:actualImageScaleType="centerCrop"/>
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/profile_achievements_card"
-            style="@style/CardView.Default"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                style="@style/CardContent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_achievements_card"
+                style="@style/CardView.Default"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/CardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_achievements"
-                    android:textStyle="bold" />
-
-                <ProgressBar
-                    android:id="@+id/avatar_achievements_progress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true" />
-
-                <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
-                    android:id="@+id/recyclerView"
+                <LinearLayout
+                    style="@style/CardContent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbarSize="3dp"
-                    android:scrollbarThumbVertical="@color/scrollbarThumb"
-                    android:scrollbars="vertical" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-    </LinearLayout>
-</ScrollView>
+                    <TextView
+                        style="@style/CardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_achievements"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/avatar_achievements_progress"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true" />
+
+                    <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbarSize="3dp"
+                        android:scrollbarThumbVertical="@color/scrollbarThumb"
+                        android:scrollbars="vertical" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
