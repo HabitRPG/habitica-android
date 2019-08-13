@@ -49,6 +49,9 @@ class TaskSchedulingControls @JvmOverloads constructor(
     set(value) {
         field = value
         configureViewsForType()
+        if (value == Task.TYPE_TODO) {
+            dueDate = null
+        }
     }
     var startDate = Date()
     set(value) {
@@ -61,7 +64,11 @@ class TaskSchedulingControls @JvmOverloads constructor(
     var dueDate: Date? = null
     set(value) {
         field = value
-        value?.let { startDateTextView.text = dateFormatter.format(it) }
+        if (value != null) {
+            startDateTextView.text = dateFormatter.format(value)
+        } else {
+            startDateTextView.text = null
+        }
     }
     var frequency = Task.FREQUENCY_DAILY
     set(value) {
