@@ -31,6 +31,8 @@ public class HabiticaLocalNotificationFactory {
             return new GiftOneGetOneLocalNotification(context, notificationType);
         } else if (notificationType.contains(PushNotificationManager.CHAT_MENTION_NOTIFICATION_KEY)) {
             return new ChatMentionNotification(context, notificationType);
+        } else if (notificationType.contains(PushNotificationManager.GROUP_ACTIVITY_NOTIFICATION_KEY)) {
+            return new GroupActivityNotification(context, notificationType);
         } else {
             return new GenericLocalNotification(context, notificationType);
         }

@@ -4,6 +4,8 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.RemoteInput
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
@@ -24,11 +26,15 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
 
     private var user: User? = null
     private var groupID: String? = null
+    private var senderID: String? = null
     private var context: Context? = null
+    private var intent: Intent? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         HabiticaBaseApplication.userComponent?.inject(this)
+        this.intent = intent
         groupID = intent.extras?.getString("groupID")
+        senderID = intent.extras?.getString("senderID")
         this.context = context
         handleLocalNotificationAction(intent.action)
     }
@@ -63,6 +69,26 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 }
             }
+            context?.getString(R.string.group_message_reply) -> {
+                groupID?.let {
+                    getMessageText(context?.getString(R.string.group_message_reply))?.let { message ->
+                        socialRepository.postGroupChat(it, message).subscribe(Consumer {
+                            context?.let { c -> NotificationManagerCompat.from(c).cancel(it.hashCode()) }
+                        }, RxErrorHandler.handleEmptyError())
+                    }
+                }
+            }
+            context?.getString(R.string.inbox_message_reply) -> {
+                senderID?.let {
+                    getMessageText(context?.getString(R.string.inbox_message_reply))?.let { message ->
+                        socialRepository.postPrivateMessage(it, message).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    }
+                }
+            }
         }
+    }
+
+    private fun getMessageText(key: String?): String? {
+        return RemoteInput.getResultsFromIntent(intent)?.getCharSequence(key)?.toString()
     }
 }

@@ -15,6 +15,8 @@
     <string name="reject_guild_invite" translatable="false">REJECT_GUILD_INVITE</string>
     <string name="accept_quest_invite" translatable="false">ACCEPT_QUEST_INVITE</string>
     <string name="reject_quest_invite" translatable="false">REJECT_QUEST_INVITE</string>
+    <string name="group_message_reply" translatable="false">GROUP_MESSAGE_REPLY</string>
+    <string name="inbox_message_reply" translatable="false">INBOX_MESSAGE_REPLY</string>
 
     <string name="qr_album_name" translatable="false">habitica</string>
     <string name="qr_file_name" translatable="false"> habitrpg-qr-code.jpg</string>

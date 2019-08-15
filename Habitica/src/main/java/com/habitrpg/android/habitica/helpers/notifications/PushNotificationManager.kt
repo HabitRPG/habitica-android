@@ -78,7 +78,7 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
             additionalData["identifier"] = remoteMessageIdentifier ?: ""
             AmplitudeManager.sendEvent("receive notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
             notification.setExtras(remoteMessage.data)
-            notification.notifyLocally(remoteMessage.data["title"], remoteMessage.data["body"])
+            notification.notifyLocally(remoteMessage.data["title"], remoteMessage.data["body"], remoteMessage.data)
         }
     }
 
@@ -110,7 +110,6 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
     }
 
     companion object {
-
         const val PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty"
         const val RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM"
         const val RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems"
@@ -122,6 +121,7 @@ class PushNotificationManager(var apiClient: ApiClient, private val sharedPrefer
         const val CHANGE_USERNAME_PUSH_NOTIFICATION_KEY = "changeUsername"
         const val GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY = "gift1get1"
         const val CHAT_MENTION_NOTIFICATION_KEY = "chatMention"
+        const val GROUP_ACTIVITY_NOTIFICATION_KEY = "groupActivity"
         private const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
     }
 }

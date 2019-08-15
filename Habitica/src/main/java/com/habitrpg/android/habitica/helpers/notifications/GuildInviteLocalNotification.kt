@@ -17,8 +17,8 @@ class GuildInviteLocalNotification(context: Context, identifier: String) : Habit
         intent.putExtra("groupID", data?.get("groupID"))
     }
 
-    override fun setNotificationActions() {
-        super.setNotificationActions()
+    override fun setNotificationActions(data: Map<String, String>) {
+        super.setNotificationActions(data)
         val res = context.resources
 
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)

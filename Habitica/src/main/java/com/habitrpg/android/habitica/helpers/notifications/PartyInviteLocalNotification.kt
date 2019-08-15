@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
  */
 class PartyInviteLocalNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier) {
 
-    override fun setNotificationActions() {
-        super.setNotificationActions()
+    override fun setNotificationActions(data: Map<String, String>) {
+        super.setNotificationActions(data)
         val res = context.resources
 
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)

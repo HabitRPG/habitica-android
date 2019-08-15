@@ -945,4 +945,6 @@
     <string name="share_challenge_with">Share Challenge with</string>
     <string name="app_theme">App Theme</string>
     <string name="sent_card">You sent a %s</string>
+    <string name="group_activity_summary_notif">New messages in %s</string>
+    <string name="inbox_messages_title">You received %d messages from %s</string>
 </resources>

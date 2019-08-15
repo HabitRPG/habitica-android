@@ -1,18 +1,15 @@
 package com.habitrpg.android.habitica.helpers.notifications
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
-import android.os.Build
 import androidx.annotation.CallSuper
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-
+import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import java.util.*
 
 /**
  * Created by keithholliday on 6/28/16.
@@ -24,40 +21,40 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
     protected var message: String? = null
 
     protected var notificationBuilder = NotificationCompat.Builder(context, "default")
+            .setSmallIcon(R.drawable.ic_gryphon_white)
+            .setAutoCancel(true)
+
+    open fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
+        val path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        return notificationBuilder
+                .setSound(path)
+    }
 
     @CallSuper
-    open fun notifyLocally(title: String?, message: String?) {
+    open fun notifyLocally(title: String?, message: String?, data: MutableMap<String, String>) {
         this.title = title
         this.message = message
 
-        val path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        var notificationBuilder = configureNotificationBuilder(data)
 
-        this.notificationBuilder = notificationBuilder
-                .setSmallIcon(R.drawable.ic_gryphon_white)
-                .setAutoCancel(true)
-                .setSound(path)
-
-        if (title != null) {
+        if (this.title != null) {
             notificationBuilder = notificationBuilder.setContentTitle(title)
         }
-        if (message != null) {
-            notificationBuilder = notificationBuilder.setStyle(NotificationCompat.BigTextStyle().bigText(message))
+        if (this.message != null) {
+            notificationBuilder = notificationBuilder.setContentText(message)
         }
 
-        this.setNotificationActions()
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+        this.setNotificationActions(data)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager?.createOrUpdateHabiticaChannel()
-        }
-        notificationManager?.notify(getNotificationID(), notificationBuilder.build())
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(getNotificationID(data), notificationBuilder.build())
     }
 
     fun setExtras(data: Map<String, String>) {
         this.data = data
     }
 
-    protected open fun setNotificationActions()  {
+    protected open fun setNotificationActions(data: Map<String, String>)  {
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra("notificationIdentifier", identifier)
         configureMainIntent(intent)
@@ -73,20 +70,7 @@ abstract class HabiticaLocalNotification(protected var context: Context, protect
     protected open fun configureMainIntent(intent: Intent) {
     }
 
-    protected open fun getNotificationID(): Int = 10
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun NotificationManager.createOrUpdateHabiticaChannel() {
-    var hasChannel = false
-    for (channel in notificationChannels) {
-        if (channel.id == "default") {
-            hasChannel = true
-            break
-        }
-    }
-    if (!hasChannel) {
-        val channel = NotificationChannel("default", "Habitica Notifications", NotificationManager.IMPORTANCE_DEFAULT)
-        createNotificationChannel(channel)
+    protected open fun getNotificationID(data: MutableMap<String, String>): Int {
+        return Date().time.toInt()
     }
 }

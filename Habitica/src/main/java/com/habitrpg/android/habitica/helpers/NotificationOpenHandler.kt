@@ -21,7 +21,8 @@ class NotificationOpenHandler {
                 PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY -> openPrivateMessageScreen(intent.getStringExtra("replyTo"))
                 PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY -> openSettingsScreen()
                 PushNotificationManager.GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY -> openSubscriptionScreen()
-                PushNotificationManager.CHAT_MENTION_NOTIFICATION_KEY -> handleChatMention(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
+                PushNotificationManager.CHAT_MENTION_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
+                PushNotificationManager.GROUP_ACTIVITY_NOTIFICATION_KEY -> handleChatMessage(intent.getStringExtra("type"), intent.getStringExtra("groupID"))
             }
         }
 
@@ -60,7 +61,7 @@ class NotificationOpenHandler {
             MainNavigationController.navigate(R.id.prefsActivity)
         }
 
-        private fun handleChatMention(type: String, groupID: String) {
+        private fun handleChatMessage(type: String, groupID: String) {
             when (type) {
                 "party" -> MainNavigationController.navigate(R.id.partyFragment)
                 "tavern" -> MainNavigationController.navigate(R.id.tavernFragment)
