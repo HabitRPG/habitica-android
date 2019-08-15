@@ -803,7 +803,7 @@
   <string name="equipment_int">ИНТ:</string>
   <string name="equipment_per">ВОС:</string>
   <string name="ago_1Minute">1 минуту назад</string>
-  <string name="ago_minutes">%минуты назад</string>
+  <string name="ago_minutes">%sминуты назад</string>
   <string name="opting_out_progress">Не принимать участие</string>
   <string name="subscription_duration_norenew">Для %s</string>
   <string name="subscribe1month.gemcap">Максимум 25 драгоценные камни</string>
