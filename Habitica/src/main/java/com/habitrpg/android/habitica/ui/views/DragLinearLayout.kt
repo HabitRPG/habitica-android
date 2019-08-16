@@ -22,6 +22,9 @@ import android.widget.ScrollView
 import androidx.core.content.ContextCompat
 import androidx.core.view.MotionEventCompat
 import com.habitrpg.android.habitica.R
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 // Adapted from https://github.com/justasm/DragLinearLayout
 
@@ -296,8 +299,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
      * A linear relationship b/w distance and duration, bounded.
      */
     private fun getTranslateAnimationDuration(distance: Float): Long {
-        return Math.min(MAX_SWITCH_DURATION, Math.max(MIN_SWITCH_DURATION,
-                (NOMINAL_SWITCH_DURATION * Math.abs(distance) / nominalDistanceScaled).toLong()))
+        return min(MAX_SWITCH_DURATION, max(MIN_SWITCH_DURATION, (NOMINAL_SWITCH_DURATION * abs(distance) / nominalDistanceScaled).toLong()))
     }
 
     /**
@@ -565,7 +567,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
                 if (INVALID_POINTER_ID == activePointerId) return false
                 val y = event.y
                 val dy = y - downY
-                if (Math.abs(dy) > slop) {
+                if (abs(dy) > slop) {
                     startDrag()
                     return true
                 }
@@ -688,9 +690,9 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
          * By Ken Perlin. See [Smoothstep - Wikipedia](http://en.wikipedia.org/wiki/Smoothstep).
          */
         private fun smootherStep(edge1: Float, edge2: Float, `val`: Float): Float {
-            var `val` = `val`
-            `val` = Math.max(0f, Math.min((`val` - edge1) / (edge2 - edge1), 1f))
-            return `val` * `val` * `val` * (`val` * (`val` * 6 - 15) + 10)
+            var value = `val`
+            value = max(0f, min((value - edge1) / (edge2 - edge1), 1f))
+            return value * value * value * (value * (value * 6 - 15) + 10)
         }
 
         /**

@@ -146,7 +146,7 @@ open class Member : RealmObject(), Avatar {
     fun setCostume(costume: Outfit?) {
         this.costume = costume
         if (costume != null && this.id != null) {
-            costume.userId = this.id!! + "costume"
+            costume.userId = this.id + "costume"
         }
     }
 
@@ -161,7 +161,7 @@ open class Member : RealmObject(), Avatar {
     fun setEquipped(equipped: Outfit?) {
         this.equipped = equipped
         if (equipped != null && this.id != null) {
-            equipped.userId = this.id!! + "equipped"
+            equipped.userId = this.id + "equipped"
         }
     }
 
@@ -182,6 +182,6 @@ open class Member : RealmObject(), Avatar {
     }
 
     override fun getSleep(): Boolean {
-        return getPreferences() != null && getPreferences()!!.sleep
+        return getPreferences()?.sleep ?: false
     }
 }

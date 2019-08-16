@@ -25,6 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.abs
 
 class YesterdailyDialog private constructor(context: Context, private val userRepository: UserRepository, private val taskRepository: TaskRepository, private val tasks: List<Task>) : HabiticaAlertDialog(context) {
 
@@ -167,7 +168,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                                 return@Consumer
                             }
 
-                            if (Math.abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
+                            if (abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
                                 return@Consumer
                             }
                             val additionalData = HashMap<String, Any>()

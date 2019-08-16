@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_stats.*
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.math.min
 
 
 class StatsFragment: BaseMainFragment() {
@@ -199,7 +200,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun updateStats(currentUser: User) {
-        val levelStat = Math.min((currentUser.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
+        val levelStat = min((currentUser.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
         totalStrength = levelStat
         totalIntelligence = levelStat
@@ -246,7 +247,7 @@ class StatsFragment: BaseMainFragment() {
                 .retry(1)
                 .subscribe(Consumer {
             val userStatComputer = UserStatComputer()
-            val statsRows = userStatComputer.computeClassBonus(it, user)
+            val statsRows = user?.let { it1 -> userStatComputer.computeClassBonus(it, it1) } ?: return@Consumer
 
             var strength = 0
             var intelligence = 0

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -19,7 +18,6 @@ import com.habitrpg.android.habitica.extensions.runDelayed
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
@@ -138,23 +136,6 @@ class GroupInviteActivity : BaseActivity() {
         }
 
         tabLayout.setupWithViewPager(viewPager)
-    }
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        val scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
-        if (scanningResult != null && scanningResult.contents != null) {
-            val qrCodeUrl = scanningResult.contents
-            val uri = qrCodeUrl.toUri()
-            if (uri.pathSegments.size < 3) {
-                return
-            }
-            userIdToInvite = uri.pathSegments[2]
-
-            compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer<User> { this.handleUserReceived(it) }, RxErrorHandler.handleEmptyError()))
-        }
     }
 
     private fun handleUserReceived(user: User) {

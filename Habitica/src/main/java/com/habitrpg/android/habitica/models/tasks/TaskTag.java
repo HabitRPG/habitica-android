@@ -33,7 +33,7 @@ public class TaskTag extends RealmObject {
 
     public void setTag(Tag tag) {
         this.tag = tag;
-        tagId = tag.id;
+        tagId = tag.getId();
         updatePrimaryKey();
     }
 

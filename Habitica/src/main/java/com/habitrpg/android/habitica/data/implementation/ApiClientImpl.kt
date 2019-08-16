@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import com.amplitude.api.Amplitude
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
@@ -82,7 +81,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(this)
     }
-    private val displayedAlert: AlertDialog? = null
     private var languageCode: String? = null
     private var lastAPICallURL: String? = null
 
@@ -96,7 +94,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         buildRetrofit()
     }
 
-    fun buildRetrofit() {
+    private fun buildRetrofit() {
         val logging = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
             logging.level = HttpLoggingInterceptor.Level.BODY
@@ -123,7 +121,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent)
                     }
-                    if (!BuildConfig.STAGING_KEY.isEmpty()) {
+                    if (BuildConfig.STAGING_KEY.isNotEmpty()) {
                         builder = builder.header("Authorization", "Basic " + BuildConfig.STAGING_KEY)
                     }
                     val request = builder.method(original.method(), original.body())
@@ -196,12 +194,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             val res = getErrorResponse(error)
             val status = error.code()
 
-            if (error.response().raw().request().url().toString().endsWith("/user/push-devices")) {
+            if (status == 404 || error.response().raw().request().url().toString().endsWith("/user/push-devices")) {
                 //workaround for an error that sometimes displays that the user already has this push device
-                return
-            }
-
-            if (status == 404) {
                 return
             }
 
@@ -648,7 +642,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun updateChallenge(challenge: Challenge): Flowable<Challenge> {
-        return apiService.updateChallenge(challenge.id, challenge).compose(configureApiCallObserver())
+        return apiService.updateChallenge(challenge.id ?: "", challenge).compose(configureApiCallObserver())
     }
 
     override fun deleteChallenge(challengeId: String): Flowable<Void> {
@@ -759,8 +753,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         get() = apiService.worldState.compose(configureApiCallObserver())
 
     companion object {
-        private const val TAG = "ApiClientImpl"
-
         fun createGsonFactory(): GsonConverterFactory {
             return GSonFactoryCreator.create()
         }

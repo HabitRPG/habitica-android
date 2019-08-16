@@ -9,7 +9,6 @@ import androidx.preference.Preference
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
-import java.util.*
 import javax.inject.Inject
 
 class APIPreferenceFragment: BasePreferencesFragment() {
@@ -17,7 +16,7 @@ class APIPreferenceFragment: BasePreferencesFragment() {
     lateinit var hostConfig: HostConfig
 
     private val apiPreferences: List<String>
-        get() = Arrays.asList(getString(R.string.SP_APIToken), getString(R.string.SP_userID))
+        get() = listOf(getString(R.string.SP_APIToken), getString(R.string.SP_userID))
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

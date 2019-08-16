@@ -2,13 +2,12 @@ package com.habitrpg.android.habitica.components;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.UserScope;
 import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseMessagingService;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
-import com.habitrpg.android.habitica.modules.UserRepositoryModule;
 import com.habitrpg.android.habitica.modules.UserModule;
+import com.habitrpg.android.habitica.modules.UserRepositoryModule;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
@@ -237,8 +236,6 @@ public interface UserComponent {
     void inject(ApiClient apiClient);
 
     void inject(TaskListWidgetProvider taskListWidgetProvider);
-
-    void inject(RemindersManager remindersManager);
 
     void inject(DailiesRecyclerViewHolder dailiesRecyclerViewHolder);
 

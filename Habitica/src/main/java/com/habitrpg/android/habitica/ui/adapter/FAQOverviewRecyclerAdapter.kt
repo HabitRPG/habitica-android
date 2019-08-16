@@ -86,8 +86,8 @@ class FAQOverviewRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
         }
 
         override fun onClick(v: View) {
-            article?.let {
-                MainNavigationController.navigate(FAQOverviewFragmentDirections.openFAQDetail(it.position))
+            article?.position?.let {
+                MainNavigationController.navigate(FAQOverviewFragmentDirections.openFAQDetail(it))
             }
         }
     }

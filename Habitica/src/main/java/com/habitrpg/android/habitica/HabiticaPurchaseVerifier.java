@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
+
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
@@ -13,7 +15,6 @@ import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Transaction;
 import com.habitrpg.android.habitica.models.responses.ErrorResponse;
-import com.habitrpg.android.habitica.proxy.CrashlyticsProxy;
 import com.playseeds.android.sdk.Seeds;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
 import retrofit2.HttpException;
 
 /**
@@ -69,8 +69,8 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                     PurchaseValidationRequest validationRequest = new PurchaseValidationRequest();
                     validationRequest.setSku(purchase.sku);
                     validationRequest.setTransaction(new Transaction());
-                    validationRequest.getTransaction().receipt = purchase.data;
-                    validationRequest.getTransaction().signature = purchase.signature;
+                    validationRequest.getTransaction().setReceipt(purchase.data);
+                    validationRequest.getTransaction().setSignature(purchase.signature);
                     if (pendingGifts.containsKey(purchase.sku)) {
                         validationRequest.setGift(new IAPGift());
                         validationRequest.getGift().uuid = pendingGifts.get(purchase.sku);
@@ -113,8 +113,8 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                     PurchaseValidationRequest validationRequest = new PurchaseValidationRequest();
                     validationRequest.setSku(purchase.sku);
                     validationRequest.setTransaction(new Transaction());
-                    validationRequest.getTransaction().receipt = purchase.data;
-                    validationRequest.getTransaction().signature = purchase.signature;
+                    validationRequest.getTransaction().setReceipt(purchase.data);
+                    validationRequest.getTransaction().setSignature(purchase.signature);
                     if (pendingGifts.containsKey(purchase.sku)) {
                         validationRequest.setGift(new IAPGift());
                         validationRequest.getGift().uuid = pendingGifts.get(purchase.sku);
@@ -146,8 +146,8 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                     SubscriptionValidationRequest validationRequest = new SubscriptionValidationRequest();
                     validationRequest.setSku(purchase.sku);
                     validationRequest.setTransaction(new Transaction());
-                    validationRequest.getTransaction().receipt = purchase.data;
-                    validationRequest.getTransaction().signature = purchase.signature;
+                    validationRequest.getTransaction().setReceipt(purchase.data);
+                    validationRequest.getTransaction().setSignature(purchase.signature);
                     apiClient.validateSubscription(validationRequest).subscribe(purchaseValidationResult -> {
                         purchasedOrderList.add(purchase.orderId);
 

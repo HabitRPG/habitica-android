@@ -174,7 +174,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         setupToolbar(toolbar)
 
         avatarInHeader = AvatarWithBarsViewModel(this, avatarWithBars, userRepository)
-        sideAvatarView = AvatarView(this, true, false, false)
+        sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         compositeSubscription.add(userRepository.getUser()
                 .subscribe(Consumer { newUser ->
@@ -443,7 +443,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
 
     private fun displayDeathDialogIfNeeded() {
-
         if (user?.stats?.hp ?: 1.0 > 0) {
             return
         }
@@ -565,7 +564,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
         val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "share.png", event.shareImage)
-        val fileUri = FileProvider.getUriForFile(this, getString(R.string.content_provider), f)
+        val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
         sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
         val resInfoList = this.packageManager.queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY)
         for (resolveInfo in resInfoList) {
@@ -695,7 +694,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 EventBus.getDefault().post(event1)
                 hatchingDialog.dismiss()
             }
-            dialog?.show()
+            dialog.show()
         }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 

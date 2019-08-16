@@ -84,12 +84,6 @@ class AvatarView : View {
         isOrphan = true
     }
 
-    fun configureView(showBackground: Boolean, showMount: Boolean, showPet: Boolean) {
-        this.showBackground = showBackground
-        this.showMount = showMount
-        this.showPet = showPet
-    }
-
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         // Load attributes
         val a = context.obtainStyledAttributes(
@@ -217,25 +211,23 @@ class AvatarView : View {
 
         var hasVisualBuffs = false
 
-        if (avatar.stats != null && avatar.stats?.buffs != null) {
-            val buffs = avatar.stats?.buffs
-
-            if (buffs?.snowball == true) {
+        avatar.stats?.buffs?.let { buffs ->
+            if (buffs.snowball == true) {
                 layerMap[LayerType.VISUAL_BUFF] = "snowman"
                 hasVisualBuffs = true
             }
 
-            if (buffs?.seafoam == true) {
+            if (buffs.seafoam == true) {
                 layerMap[LayerType.VISUAL_BUFF] = "seafoam_star"
                 hasVisualBuffs = true
             }
 
-            if (buffs?.shinySeed == true) {
+            if (buffs.shinySeed == true) {
                 layerMap[LayerType.VISUAL_BUFF] = "avatar_floral_" + avatar.stats?.habitClass
                 hasVisualBuffs = true
             }
 
-            if (buffs?.spookySparkles == true) {
+            if (buffs.spookySparkles == true) {
                 layerMap[LayerType.VISUAL_BUFF] = "ghost"
                 hasVisualBuffs = true
             }
@@ -500,30 +492,30 @@ class AvatarView : View {
         if (avatarCanvas != null) draw(avatarCanvas)
     }
 
-    enum class LayerType(internal val order: Int) {
-        BACKGROUND(0),
-        MOUNT_BODY(1),
-        CHAIR(2),
-        BACK(3),
-        SKIN(4),
-        SHIRT(5),
-        ARMOR(6),
-        BODY(7),
-        HEAD_0(8),
-        HAIR_BASE(9),
-        HAIR_BANGS(10),
-        HAIR_MUSTACHE(11),
-        HAIR_BEARD(12),
-        EYEWEAR(13),
-        VISUAL_BUFF(14),
-        HEAD(15),
-        HEAD_ACCESSORY(16),
-        HAIR_FLOWER(17),
-        SHIELD(18),
-        WEAPON(19),
-        MOUNT_HEAD(20),
-        ZZZ(21),
-        PET(22)
+    enum class LayerType {
+        BACKGROUND,
+        MOUNT_BODY,
+        CHAIR,
+        BACK,
+        SKIN,
+        SHIRT,
+        ARMOR,
+        BODY,
+        HEAD_0,
+        HAIR_BASE,
+        HAIR_BANGS,
+        HAIR_MUSTACHE,
+        HAIR_BEARD,
+        EYEWEAR,
+        VISUAL_BUFF,
+        HEAD,
+        HEAD_ACCESSORY,
+        HAIR_FLOWER,
+        SHIELD,
+        WEAPON,
+        MOUNT_HEAD,
+        ZZZ,
+        PET
     }
 
     interface Consumer<in T> {

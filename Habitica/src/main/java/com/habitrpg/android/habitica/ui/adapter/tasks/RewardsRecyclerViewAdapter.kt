@@ -93,8 +93,8 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
         return rewardCount
     }
 
-    override fun updateData(data: OrderedRealmCollection<Task>?) {
-        this.customRewards = data
+    override fun updateData(tasks: OrderedRealmCollection<Task>?) {
+        this.customRewards = tasks
         notifyDataSetChanged()
     }
 

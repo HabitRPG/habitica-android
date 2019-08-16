@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import kotlin.math.abs
 
 
 class FadingViewPager : ViewPager {
@@ -34,7 +35,7 @@ class FadingViewPager : ViewPager {
                 }
                 page.visibility = View.VISIBLE
                 // position is between -1.0F & 0.0F OR 0.0F & 1.0F
-                page.alpha = 1.0f - Math.abs(position)
+                page.alpha = 1.0f - abs(position)
             }
         }
     }

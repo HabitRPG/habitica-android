@@ -13,7 +13,6 @@ import androidx.core.view.ViewCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 
 class HabiticaSnackbar
 /**
@@ -112,13 +111,6 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         private fun make(parent: ViewGroup, duration: Int): HabiticaSnackbar {
             val inflater = LayoutInflater.from(parent.context)
             val content = inflater.inflate(R.layout.snackbar_view, parent, false)
-            if (NavbarUtils.hasSoftKeys(parent.context)) {
-                val parentLocation = IntArray(2)
-                parent.getLocationInWindow(parentLocation)
-                if (NavbarUtils.isBehindNavbar(parentLocation, parent.context)) {
-                    content.setPadding(0, 0, 0, NavbarUtils.getNavbarHeight(parent.context))
-                }
-            }
             val viewCallback = ContentViewCallback(content)
             val customSnackbar = HabiticaSnackbar(parent, content, viewCallback)
             customSnackbar.duration = duration

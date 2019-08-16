@@ -19,7 +19,7 @@ package com.habitrpg.android.habitica.ui.helpers
 import android.app.Activity
 import android.view.inputmethod.InputMethodManager
 
-class KeyboardUtil() {
+class KeyboardUtil {
     companion object {
         fun dismissKeyboard(act: Activity?) {
             if (act != null && act.currentFocus != null) {

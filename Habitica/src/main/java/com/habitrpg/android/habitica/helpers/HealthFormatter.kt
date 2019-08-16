@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.helpers
 import android.os.Build
 import java.text.NumberFormat
 import java.util.*
+import kotlin.math.ceil
+import kotlin.math.floor
 
 object HealthFormatter {
     fun format(input: Int) = format(input.toDouble())
@@ -10,9 +12,9 @@ object HealthFormatter {
     @JvmStatic
     fun format(input: Double) =
             if (input < 1 && input > 0) {
-                Math.ceil(input * 10) / 10
+                ceil(input * 10) / 10
             } else {
-                Math.floor(input)
+                floor(input)
             }
 
     fun formatToString(input: Int, locale: Locale = getDefaultLocale()) = formatToString(input.toDouble(), locale)

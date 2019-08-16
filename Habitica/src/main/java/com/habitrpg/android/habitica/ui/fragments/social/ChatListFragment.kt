@@ -159,7 +159,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                isScrolledToTop = layoutManager?.findFirstVisibleItemPosition() == 0
+                isScrolledToTop = layoutManager.findFirstVisibleItemPosition() == 0
             }
         })
 

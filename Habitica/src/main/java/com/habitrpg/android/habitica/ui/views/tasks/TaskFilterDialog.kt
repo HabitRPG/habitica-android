@@ -134,12 +134,12 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
             CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
             tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    if (!activeTags.contains(tag.getId())) {
-                        activeTags.add(tag.getId())
+                    if (!activeTags.contains(tag.id)) {
+                        activeTags.add(tag.id)
                     }
                 } else {
-                    if (activeTags.contains(tag.getId())) {
-                        activeTags.remove(tag.getId())
+                    if (activeTags.contains(tag.id)) {
+                        activeTags.remove(tag.id)
                     }
                 }
                 filtersChanged()
@@ -163,7 +163,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         val tag = Tag()
         tag.id = UUID.randomUUID().toString()
         tags.add(tag)
-        createdTags[tag.getId()] = tag
+        createdTags[tag.id] = tag
         startEditing()
     }
 
@@ -182,7 +182,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
         tagsEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> editedTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
-        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> createdTags.remove(tag.getId()) }, RxErrorHandler.handleEmptyError())
+        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe(Consumer { tag -> createdTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
         repository.deleteTags(deletedTags).subscribe(Consumer { deletedTags.clear() }, RxErrorHandler.handleEmptyError())
     }
 
@@ -205,21 +205,21 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : AlertDialo
                 }
                 val changedTag = tags[index]
                 changedTag.name = s.toString()
-                if (createdTags.containsKey(changedTag.getId())) {
-                    createdTags[changedTag.getId()] = changedTag
+                if (createdTags.containsKey(changedTag.id)) {
+                    createdTags[changedTag.id] = changedTag
                 } else {
-                    editedTags[changedTag.getId()] = changedTag
+                    editedTags[changedTag.id] = changedTag
                 }
                 tags[index] = changedTag
         })
         val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as? Button
         deleteButton?.setOnClickListener {
-            deletedTags.add(tag.getId())
-            if (createdTags.containsKey(tag.getId())) {
-                createdTags.remove(tag.getId())
+            deletedTags.add(tag.id)
+            if (createdTags.containsKey(tag.id)) {
+                createdTags.remove(tag.id)
             }
-            if (editedTags.containsKey(tag.getId())) {
-                editedTags.remove(tag.getId())
+            if (editedTags.containsKey(tag.id)) {
+                editedTags.remove(tag.id)
             }
             tags.remove(tag)
             tagsList.removeView(wrapper)

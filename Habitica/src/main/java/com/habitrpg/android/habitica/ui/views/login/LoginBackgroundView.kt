@@ -106,7 +106,7 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
         val starView = StarView(context)
         starView.setStarSize(size)
         if (random.nextInt(10) > 2) {
-            starView.setBlinkDurations(Arrays.asList(blinkDuration, blinkDuration, blinkDuration))
+            starView.setBlinkDurations(listOf(blinkDuration, blinkDuration, blinkDuration))
         }
         starViews?.add(starView)
         if (viewWidth > 0 && viewHeight > 0) {

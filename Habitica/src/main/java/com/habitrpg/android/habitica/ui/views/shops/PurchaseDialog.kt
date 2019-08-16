@@ -175,7 +175,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             }
         }
 
-        buyButton.elevation = 0f;
+        buyButton.elevation = 0f
         if (shopItem.canAfford(user)) {
             buyButton.background = context.getDrawable(R.drawable.button_background_primary)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))

@@ -17,7 +17,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.29.0'
+        classpath 'io.fabric.tools:gradle:1.31.0'
         classpath('com.noveogroup.android:check:1.2.5') {
             exclude module: 'checkstyle'
             exclude module: 'pmd-java'
@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     //Crash Logging
-    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.10.0@aar') {
+    releaseImplementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true
     }
     //Dependency Injection
@@ -149,7 +149,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         multiDexEnabled true
 
-        versionCode 2201
+        versionCode 2203
         versionName "2.1"
     }
 

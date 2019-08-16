@@ -122,8 +122,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
             if (context != null) {
                 fragment.tutorialStepIdentifier = "rewards"
-                fragment.tutorialTexts = ArrayList(Arrays.asList(context.getString(R.string.tutorial_rewards_1),
-                        context.getString(R.string.tutorial_rewards_2)))
+                fragment.tutorialTexts = ArrayList(listOf(context.getString(R.string.tutorial_rewards_1), context.getString(R.string.tutorial_rewards_2)))
             }
             fragment.tutorialCanBeDeferred = false
 

@@ -3,20 +3,20 @@ package com.habitrpg.android.habitica.interactors
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import androidx.core.content.ContextCompat
-import androidx.core.util.Pair
-import androidx.appcompat.app.AppCompatActivity
 import android.text.SpannableStringBuilder
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.executors.ThreadExecutor
-import com.habitrpg.android.habitica.helpers.MathHelper.round
+import com.habitrpg.android.habitica.extensions.round
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import io.reactivex.Flowable
 import javax.inject.Inject
+import kotlin.math.abs
 
 class NotifyUserUseCase @Inject
 constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread,
@@ -96,9 +97,9 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             val iconDrawable = BitmapDrawable(context.resources, icon)
             textView.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null)
             val text: String = if (value > 0) {
-                " + " + Math.abs(round(value, 2)).toString()
+                " + " + abs(value.round(2)).toString()
             } else {
-                " - " + Math.abs(round(value, 2)).toString()
+                " - " + abs(value.round(2)).toString()
             }
             textView.text = text
             textView.gravity = Gravity.CENTER_VERTICAL
@@ -111,23 +112,23 @@ constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionTh
             var displayType = SnackbarDisplayType.NORMAL
 
             if (xp > 0) {
-                builder.append(" + ").append(round(xp, 2).toString()).append(" Exp")
+                builder.append(" + ").append(xp.round(2).toString()).append(" Exp")
             }
             if (hp != 0.0) {
                 displayType = SnackbarDisplayType.FAILURE
-                builder.append(" - ").append(Math.abs(round(hp, 2)).toString()).append(" Health")
+                builder.append(" - ").append(abs(hp.round(2)).toString()).append(" Health")
             }
             if (gold != 0.0) {
                 if (gold > 0) {
-                    builder.append(" + ").append(round(gold, 2).toString())
+                    builder.append(" + ").append(gold.round(2).toString())
                 } else if (gold < 0) {
                     displayType = SnackbarDisplayType.FAILURE
-                    builder.append(" - ").append(Math.abs(round(gold, 2)).toString())
+                    builder.append(" - ").append(abs(gold.round(2)).toString())
                 }
                 builder.append(" Gold")
             }
             if (mp > 0) {
-                builder.append(" + ").append(round(mp, 2).toString()).append(" Mana")
+                builder.append(" + ").append(mp.round(2).toString()).append(" Mana")
             }
 
             return Pair(builder, displayType)

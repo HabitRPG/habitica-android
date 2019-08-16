@@ -286,7 +286,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
                         }
                         startActivity(intent)
                     }
-            alert.addCancelButton() { dialog, _ ->
+            alert.addCancelButton { _, _ ->
                         thisActivity.dismissKeyboard()
                     }
             alert.setAdditionalContentView(chooseRecipientDialogView)

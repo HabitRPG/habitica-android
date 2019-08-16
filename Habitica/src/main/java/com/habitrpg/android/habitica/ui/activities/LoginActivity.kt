@@ -129,7 +129,6 @@ class LoginActivity : BaseActivity(), Consumer<UserAuthResponse> {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        FacebookSdk.sdkInitialize(this.applicationContext)
         super.onCreate(savedInstanceState)
             supportActionBar?.hide()
         //Set default values to avoid null-responses when requesting unedited settings

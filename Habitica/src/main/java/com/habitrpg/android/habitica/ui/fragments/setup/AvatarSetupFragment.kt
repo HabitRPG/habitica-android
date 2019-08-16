@@ -157,7 +157,7 @@ class AvatarSetupFragment : BaseFragment() {
         activateButton(bodyButton)
         this.activeCategory = "body"
         this.subCategoryTabs?.removeAllTabs()
-        this.subcategories = Arrays.asList("size", "shirt")
+        this.subcategories = listOf("size", "shirt")
         subCategoryTabs?.newTab()?.setText(R.string.avatar_size)?.let { this.subCategoryTabs?.addTab(it) }
         subCategoryTabs?.newTab()?.setText(R.string.avatar_shirt)?.let { this.subCategoryTabs?.addTab(it) }
         loadCustomizations()

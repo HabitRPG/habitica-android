@@ -60,7 +60,7 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
             this.taskGroup = taskGroup
             this.isChecked = isChecked
 
-            taskGroup?.let {
+            taskGroup.let {
                 textView.text = it[0]
             }
             if (this.isChecked == true) {

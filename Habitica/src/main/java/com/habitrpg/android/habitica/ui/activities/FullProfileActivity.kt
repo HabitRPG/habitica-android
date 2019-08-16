@@ -42,6 +42,8 @@ import net.pherth.android.emoji_library.EmojiEditText
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.floor
+import kotlin.math.min
 
 class FullProfileActivity : BaseActivity() {
     @Inject
@@ -254,7 +256,7 @@ class FullProfileActivity : BaseActivity() {
     private fun fillAchievements(labelID: Int, achievements: List<Achievement>, targetList: MutableList<Any>) {
         // Order by ID first
         val achievementList = ArrayList(achievements)
-        achievementList.sortWith(Comparator { achievement, t1 -> java.lang.Double.compare(achievement.index.toDouble(), t1.index.toDouble()) })
+        achievementList.sortWith(Comparator { achievement, t1 -> achievement.index.toDouble().compareTo(t1.index.toDouble()) })
 
         targetList.add(getString(labelID))
         targetList.addAll(achievementList)
@@ -267,7 +269,7 @@ class FullProfileActivity : BaseActivity() {
 
     private fun getFloorValueString(`val`: Float, roundDown: Boolean): String {
         return if (roundDown) {
-            Math.floor(`val`.toDouble()).toString()
+            floor(`val`.toDouble()).toString()
         } else {
             if (`val`.toDouble() == 0.0) {
                 "0"
@@ -279,13 +281,13 @@ class FullProfileActivity : BaseActivity() {
 
     private fun getFloorValue(value: Float, roundDown: Boolean): Float {
         return if (roundDown) {
-            Math.floor(value.toDouble()).toFloat()
+            floor(value.toDouble()).toFloat()
         } else {
             value
         }
     }
 
-    private fun addEquipmentRow(table: TableLayout, gearKey: String?, text: String, stats: String) {
+    private fun addEquipmentRow(table: TableLayout, gearKey: String?, text: String?, stats: String?) {
         val gearRow = layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as? TableRow
 
         val draweeView = gearRow?.findViewById<SimpleDraweeView>(R.id.gear_drawee)
@@ -304,7 +306,7 @@ class FullProfileActivity : BaseActivity() {
 
         val valueTextView = gearRow?.findViewById<TextView>(R.id.tableRowTextView2)
 
-        if (!stats.isEmpty()) {
+        if (stats?.isNotEmpty() == true) {
             valueTextView?.text = stats
         } else {
             valueTextView?.visibility = View.GONE
@@ -315,7 +317,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun addLevelAttributes(user: Member) {
-        val byLevelStat = Math.min((user.stats?.lvl ?: 0) / 2.0f, 50f)
+        val byLevelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f)
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false)
     }

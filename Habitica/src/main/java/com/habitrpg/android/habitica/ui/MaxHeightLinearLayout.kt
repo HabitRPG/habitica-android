@@ -9,6 +9,7 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
+import kotlin.math.min
 
 class MaxHeightLinearLayout : LinearLayout {
 
@@ -53,7 +54,7 @@ class MaxHeightLinearLayout : LinearLayout {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
         windowManager?.defaultDisplay?.getMetrics(displaymetrics)
         val height = (displaymetrics.heightPixels * maxHeight).toInt()
-        heightMeasurement = Math.min(heightMeasurement, MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST))
+        heightMeasurement = min(heightMeasurement, MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST))
 
         super.onMeasure(widthMeasureSpec, heightMeasurement)
 

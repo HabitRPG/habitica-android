@@ -157,7 +157,7 @@ open class Task : RealmObject, Parcelable {
     @Retention(AnnotationRetention.SOURCE)
     annotation class TaskTypes
 
-    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.getId() }?.containsAll(tagIdList) ?: false
+    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
 
     fun checkIfDue(): Boolean? = isDue == true
 

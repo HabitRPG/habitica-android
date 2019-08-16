@@ -25,7 +25,7 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
     val taskList: MutableList<Task>
         get() = content?.map { t -> t }?.toMutableList() ?: mutableListOf()
 
-    protected var taskOpenEventsSubject = PublishSubject.create<Task>()
+    private var taskOpenEventsSubject = PublishSubject.create<Task>()
     val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
 
     override fun injectThis(component: UserComponent) {
@@ -116,9 +116,9 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
             addBtn.setOnClickListener { newTask?.let { callback.onNext(it) } }
         }
 
-        override fun bind(newTask: Task, position: Int) {
-            this.newTask = newTask
-            addBtn.text = newTask.text
+        override fun bind(data: Task, position: Int) {
+            this.newTask = data
+            addBtn.text = data.text
         }
     }
 
@@ -126,8 +126,8 @@ class ChallengeTasksRecyclerViewAdapter(taskFilterHelper: TaskFilterHelper?, lay
 
         private val dividerName: TextView = itemView.findViewById(R.id.divider_name)
 
-        override fun bind(newTask: Task, position: Int) {
-            dividerName.text = newTask.text
+        override fun bind(data: Task, position: Int) {
+            dividerName.text = data.text
         }
     }
 

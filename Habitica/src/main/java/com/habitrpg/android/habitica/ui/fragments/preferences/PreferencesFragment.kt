@@ -182,7 +182,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 }
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
-                userRepository.updateLanguage(user, languageHelper.languageCode)
+                userRepository.updateLanguage(user, languageHelper.languageCode ?: "en")
                         .flatMap<ContentResult> { contentRepository.retrieveContent(context,true) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 

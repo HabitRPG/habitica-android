@@ -122,7 +122,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private fun nextClicked() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.edit {
-            putString("FirstDayOfTheWeek", Integer.toString(Calendar.getInstance().firstDayOfWeek))
+            putString("FirstDayOfTheWeek", Calendar.getInstance().firstDayOfWeek.toString())
         }
         if (isLastPage) {
             if (this.taskSetupFragment == null) {

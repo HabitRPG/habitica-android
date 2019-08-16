@@ -9,13 +9,14 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
+import kotlin.math.roundToInt
 
 class NPCBannerView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
@@ -51,7 +52,7 @@ class NPCBannerView(context: Context?, attrs: AttributeSet?) : FrameLayout(conte
         DataBindingUtils.loadImage(identifier + "_background" + shopSpriteSuffix) {
             val aspectRatio = it.width / it.height.toFloat()
             val height = context.resources.getDimension(R.dimen.shop_height).toInt()
-            val width = Math.round(height * aspectRatio)
+            val width = (height * aspectRatio).roundToInt()
             val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it, width, height, false))
             drawable.tileModeX = Shader.TileMode.REPEAT
             Observable.just(drawable)
