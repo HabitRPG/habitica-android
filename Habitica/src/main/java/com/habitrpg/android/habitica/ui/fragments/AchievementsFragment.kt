@@ -29,7 +29,6 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
 
     private var menuID: Int = 0
     private lateinit var adapter: AchievementsAdapter
-    private val layoutManager = GridLayoutManager(activity, 2)
     private var useGridLayout = false
     set(value) {
         field = value
@@ -69,6 +68,7 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
 
         resetViews()
 
+        val layoutManager = GridLayoutManager(activity, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
         adapter.useGridLayout = useGridLayout

@@ -255,7 +255,7 @@ class PartyFragment : BaseMainFragment() {
             }
 
             override fun getCount(): Int {
-                return if (user?.hasParty() != true) {
+                return if (user?.isValid != true || user?.hasParty() != true) {
                     1
                 } else {
                     2

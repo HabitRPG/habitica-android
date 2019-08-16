@@ -48,6 +48,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded }
 
     override fun getUser(userID: String): Flowable<User> {
+        if (realm.isClosed) return Flowable.empty()
         return realm.where(User::class.java)
                 .equalTo("id", userID)
                 .findAll()

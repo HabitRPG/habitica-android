@@ -394,6 +394,8 @@ class TaskFormActivity : BaseActivity() {
             thisTask = Task()
             thisTask.type = taskType
             thisTask.dateCreated = Date()
+        } else {
+            if (!thisTask.isValid) return
         }
         thisTask.text = textEditText.text.toString()
         thisTask.notes = notesEditText.text.toString()
@@ -405,8 +407,8 @@ class TaskFormActivity : BaseActivity() {
             thisTask.up = habitScoringButtons.isPositive
             thisTask.down = habitScoringButtons.isNegative
             thisTask.frequency = habitResetStreakButtons.selectedResetOption.value
-            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.counterUp = habitAdjustPositiveStreakView.text.toString().toInt()
-            if (habitAdjustNegativeStreakView.text.isNotEmpty()) thisTask.counterDown = habitAdjustNegativeStreakView.text.toString().toInt()
+            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.counterUp = habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            if (habitAdjustNegativeStreakView.text.isNotEmpty()) thisTask.counterDown = habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
         } else if (taskType == Task.TYPE_DAILY) {
             thisTask.startDate = taskSchedulingControls.startDate
             thisTask.everyX = taskSchedulingControls.everyX
@@ -414,7 +416,7 @@ class TaskFormActivity : BaseActivity() {
             thisTask.repeat = taskSchedulingControls.weeklyRepeat
             thisTask.setDaysOfMonth(taskSchedulingControls.daysOfMonth)
             thisTask.setWeeksOfMonth(taskSchedulingControls.weeksOfMonth)
-            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.streak = habitAdjustPositiveStreakView.text.toString().toInt()
+            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.streak = habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
         } else if (taskType == Task.TYPE_TODO) {
             thisTask.dueDate = taskSchedulingControls.dueDate
         } else if (taskType == Task.TYPE_REWARD) {
@@ -490,5 +492,13 @@ class TaskFormActivity : BaseActivity() {
 
         // in order to disable the event handler in MainActivity
         const val SET_IGNORE_FLAG = "ignoreFlag"
+    }
+}
+
+private fun String.toIntCatchOverflow(): Int? {
+    return try {
+        toInt()
+    } catch (e: NumberFormatException) {
+        0
     }
 }

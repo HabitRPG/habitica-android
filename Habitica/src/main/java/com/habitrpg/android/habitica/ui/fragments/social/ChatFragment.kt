@@ -44,7 +44,6 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     @Inject
     lateinit var configManager: AppConfigManager
 
-    internal var layoutManager: LinearLayoutManager? = null
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var isScrolledToTop = true
@@ -64,12 +63,8 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
         refreshLayout.setOnRefreshListener(this)
 
-        layoutManager = recyclerView.layoutManager as? LinearLayoutManager
-
-        if (layoutManager == null) {
-            layoutManager = LinearLayoutManager(context)
-            recyclerView.layoutManager = layoutManager
-        }
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
         chatAdapter?.let {adapter ->

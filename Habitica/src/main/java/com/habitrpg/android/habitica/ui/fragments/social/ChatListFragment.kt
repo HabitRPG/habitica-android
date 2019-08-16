@@ -55,7 +55,6 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             chatBarView.autocompleteContext = value
         }
     }
-    internal var layoutManager: LinearLayoutManager? = null
     internal var groupId: String? = null
     private var user: User? = null
     private var userId: String? = null
@@ -111,12 +110,8 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
         refreshLayout.setOnRefreshListener(this)
 
-        layoutManager = recyclerView.layoutManager as? LinearLayoutManager
-
-        if (layoutManager == null) {
-            layoutManager = LinearLayoutManager(context)
-            recyclerView.layoutManager = layoutManager
-        }
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, user, true)
         chatAdapter?.let {adapter ->

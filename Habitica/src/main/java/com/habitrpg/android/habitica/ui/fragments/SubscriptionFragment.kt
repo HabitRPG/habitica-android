@@ -61,7 +61,7 @@ class SubscriptionFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
     private val subscribeListItem3Description: TextView? by bindView(R.id.subscribe_listitem3_description)
     private val subscribeListItem4Description: TextView? by bindView(R.id.subscribe_listitem4_description)
 
-    private val loadingIndicator: ProgressBar? by bindView(R.id.loadingIndicator)
+    private val loadingIndicator: ProgressBar? by bindOptionalView(R.id.loadingIndicator)
     private val subscriptionOptions: View? by bindView(R.id.subscriptionOptions)
 
     private val subscription1MonthView: SubscriptionOptionView? by bindView(R.id.subscription1month)

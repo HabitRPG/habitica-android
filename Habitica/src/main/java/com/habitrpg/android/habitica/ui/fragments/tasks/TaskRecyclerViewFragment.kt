@@ -204,7 +204,9 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         return inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false)
     }
 
-    protected open fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+    protected open fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager {
+        return androidx.recyclerview.widget.LinearLayoutManager(context)
+    }
 
     override fun onDestroy() {
         userRepository.close()
@@ -222,13 +224,9 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         recyclerView.adapter = recyclerAdapter as? androidx.recyclerview.widget.RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
 
-        layoutManager = recyclerView.layoutManager
+        layoutManager = getLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
 
-        if (layoutManager == null) {
-            layoutManager = getLayoutManager(context)
-
-            recyclerView.layoutManager = layoutManager
-        }
         if (recyclerView.adapter == null) {
             this.setInnerAdapter()
         }

@@ -1,29 +1,26 @@
 package com.habitrpg.android.habitica.ui.fragments.skills
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-
-import javax.inject.Inject
-import javax.inject.Named
-
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
+import javax.inject.Inject
+import javax.inject.Named
 
 class SkillTasksRecyclerViewFragment : BaseFragment() {
     @Inject
@@ -55,13 +52,8 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
         compositeSubscription.add(taskRepository.getTasks(taskType ?: "", userId).firstElement().subscribe(Consumer { tasks -> adapter.updateData(tasks) }, RxErrorHandler.handleEmptyError()))
         recyclerView?.adapter = adapter
 
-        layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
-
-        if (layoutManager == null) {
-            layoutManager = LinearLayoutManager(context)
-
-            recyclerView?.layoutManager = layoutManager
-        }
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView?.layoutManager = layoutManager
         recyclerView?.itemAnimator = SafeDefaultItemAnimator()
     }
 }

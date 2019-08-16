@@ -35,7 +35,7 @@ class ChallengesListViewAdapter(data: OrderedRealmCollection<Challenge>?, autoUp
         data?.get(position)?.let { challenge ->
             holder.bind(challenge, challengeMemberships?.first { challenge.id == it.challengeID } != null)
             holder.itemView.setOnClickListener {
-                if (challenge.isManaged) {
+                if (challenge.isManaged && challenge.isValid) {
                     challenge.id?.let {
                         openChallengeFragmentEvents.onNext(it)
                     }

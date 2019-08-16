@@ -63,8 +63,9 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
     }
 
-    override fun getLayoutManager(context: Context?): LinearLayoutManager =
-            GridLayoutManager(context, 4)
+    override fun getLayoutManager(context: Context?): LinearLayoutManager {
+        return GridLayoutManager(context, 4)
+    }
 
     override fun onRefresh() {
         refreshLayout.isRefreshing = true

@@ -54,7 +54,7 @@ class PartyDetailFragment : BaseFragment() {
     private val questDetailButton: ViewGroup? by bindView(R.id.quest_detail_button)
     private val questScrollImageView: SimpleDraweeView? by bindView(R.id.quest_scroll_image_view)
     private val questTitleView: TextView? by bindOptionalView(R.id.quest_title_view)
-    private val questParticipationView: TextView? by bindView(R.id.quest_participation_view)
+    private val questParticipationView: TextView? by bindOptionalView(R.id.quest_participation_view)
     private val questImageWrapper: ViewGroup? by bindView(R.id.quest_image_wrapper)
     private val questImageView: SimpleDraweeView? by bindView(R.id.quest_image_view)
     private val questParticipantResponseWrapper: ViewGroup? by bindView(R.id.quest_participant_response_wrapper)

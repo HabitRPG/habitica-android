@@ -56,7 +56,6 @@ class AvatarSetupFragment : BaseFragment() {
     private val randomizeButton: Button? by bindOptionalView(R.id.randomize_button)
 
     internal var adapter: CustomizationSetupAdapter? = null
-    internal var layoutManager: LinearLayoutManager = LinearLayoutManager(activity)
 
     private var user: User? = null
     private var subcategories: List<String> = emptyList()
@@ -81,9 +80,9 @@ class AvatarSetupFragment : BaseFragment() {
         adapter?.equipGearEvents?.flatMap { inventoryRepository.equip(user, "equipped", it) }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
 
         this.adapter?.user = this.user
-        this.layoutManager = LinearLayoutManager(activity)
-        this.layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        this.customizationList?.layoutManager = this.layoutManager
+        val layoutManager = LinearLayoutManager(activity)
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        this.customizationList?.layoutManager = layoutManager
 
         this.customizationList?.adapter = this.adapter
 

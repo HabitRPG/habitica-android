@@ -81,19 +81,17 @@ class AvatarCustomizationFragment : BaseMainFragment() {
         }
 
         setGridSpanCount(view.width)
-        if (recyclerView.layoutManager == null) {
-            layoutManager = GridLayoutManager(activity, 2)
-            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (adapter.getItemViewType(position) == 0) {
-                        layoutManager.spanCount
-                    } else {
-                        1
-                    }
+        val layoutManager = GridLayoutManager(activity, 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (adapter.getItemViewType(position) == 0) {
+                    layoutManager.spanCount
+                } else {
+                    1
                 }
             }
-            recyclerView.layoutManager = layoutManager
         }
+        recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(MarginDecoration(context))
 
         recyclerView.adapter = adapter

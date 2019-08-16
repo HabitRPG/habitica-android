@@ -212,7 +212,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.label.isNullOrEmpty()) {
+            if (destination.label.isNullOrEmpty() && user?.isValid == true) {
                 toolbarTitleTextView.text = user?.profile?.name
             } else if (user?.profile != null) {
                 toolbarTitleTextView.text = destination.label

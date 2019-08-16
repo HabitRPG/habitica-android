@@ -74,13 +74,9 @@ class ItemRecyclerFragment : BaseFragment() {
 
         val context = activity
 
-        layoutManager = recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
 
-        if (layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-
-            recyclerView?.layoutManager = layoutManager
-        }
+        recyclerView?.layoutManager = layoutManager
 
         adapter = recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {

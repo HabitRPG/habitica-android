@@ -46,12 +46,12 @@ class SkillMemberActivity : BaseActivity() {
             resultIntent.putExtra("member_id", userId)
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
-        }, RxErrorHandler.handleEmptyError())
+        }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
         recyclerView.adapter = viewAdapter
 
-        userRepository.getUser()
+        compositeSubscription.add(userRepository.getUser()
                 .firstElement()
                 .flatMap { user -> socialRepository.getGroupMembers(user.party?.id ?: "").firstElement() }
-                .subscribe(Consumer { viewAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError())
+                .subscribe(Consumer { viewAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
     }
 }
