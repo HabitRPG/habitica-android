@@ -13,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -22,15 +23,18 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.helpers.*
 import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder.GroupMemberViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
+import net.pherth.android.emoji_library.EmojiEditText
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -39,6 +43,8 @@ class PartyDetailFragment : BaseFragment() {
 
     var viewModel: PartyViewModel? = null
 
+    @Inject
+    lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
@@ -189,13 +195,81 @@ class PartyDetailFragment : BaseFragment() {
             for (member in members) {
                 val memberView = membersWrapper?.inflate(R.layout.party_member, false) ?: continue
                 val viewHolder = GroupMemberViewHolder(memberView)
-                viewHolder.bind(member, leaderID ?: "")
+                viewHolder.bind(member, leaderID ?: "", viewModel?.getUserData()?.value?.id)
                 viewHolder.onClickEvent = {
                     FullProfileActivity.open(member.id ?: "")
+                }
+                viewHolder.sendMessageEvent = {
+                    member.id?.let { showSendMessageToUserDialog(it, member.displayName) }
+                }
+                viewHolder.transferOwnershipEvent = {
+                    member.id?.let { showTransferOwnerShipDialog(it, member.displayName) }
+                }
+                viewHolder.removeMemberEvent = {
+                    member.id?.let { showRemoveMemberDialog(it, member.displayName) }
                 }
                 membersWrapper?.addView(memberView)
             }
         }
+    }
+
+    private fun showSendMessageToUserDialog(userID: String, username: String) {
+        val factory = LayoutInflater.from(context)
+        val newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null)
+
+        val emojiEditText = newMessageView.findViewById<EmojiEditText>(R.id.edit_new_message_text)
+
+        val newMessageTitle = newMessageView.findViewById<TextView>(R.id.new_message_title)
+        newMessageTitle.text = String.format(getString(R.string.profile_send_message_to), username)
+
+        val addMessageDialog = context?.let { HabiticaAlertDialog(it) }
+        addMessageDialog?.addButton(android.R.string.ok, true) { _, _ ->
+            socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
+                    .subscribe(Consumer {
+                        (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
+                            HabiticaSnackbar.showSnackbar(it1,
+                                    String.format(getString(R.string.profile_message_sent_to), username), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                        }
+                    }, RxErrorHandler.handleEmptyError())
+            activity?.dismissKeyboard()
+        }
+        addMessageDialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
+        addMessageDialog?.setAdditionalContentView(newMessageView)
+        addMessageDialog?.show()
+    }
+
+    private fun showTransferOwnerShipDialog(userID: String, displayName: String) {
+        val dialog = context?.let { HabiticaAlertDialog(it) }
+        dialog?.addButton(R.string.transfer, true) { _, _ ->
+            socialRepository.transferGroupOwnership(viewModel?.groupID ?: "", userID)
+                    .subscribe(Consumer {
+                        (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
+                            HabiticaSnackbar.showSnackbar(it1,
+                                    String.format(getString(R.string.transferred_ownership), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                        }
+                    }, RxErrorHandler.handleEmptyError())
+            activity?.dismissKeyboard()
+        }
+        dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
+        dialog?.setTitle(context?.getString(R.string.transfer_ownership_confirm, displayName))
+        dialog?.show()
+    }
+
+    private fun showRemoveMemberDialog(userID: String, displayName: String) {
+        val dialog = context?.let { HabiticaAlertDialog(it) }
+        dialog?.addButton(R.string.remove, true) { _, _ ->
+            socialRepository.removeMemberFromGroup(viewModel?.groupID ?: "", userID)
+                    .subscribe(Consumer {
+                        (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
+                            HabiticaSnackbar.showSnackbar(it1,
+                                    String.format(getString(R.string.removed_member), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                        }
+                    }, RxErrorHandler.handleEmptyError())
+            activity?.dismissKeyboard()
+        }
+        dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
+        dialog?.setTitle(context?.getString(R.string.remove_member_confirm, displayName))
+        dialog?.show()
     }
 
     private fun inviteNewQuest() {

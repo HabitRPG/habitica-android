@@ -40,7 +40,7 @@ interface SocialRepository : BaseRepository {
     fun joinGroup(id: String?): Flowable<Group>
 
     fun createGroup(name: String?, description: String?, leader: String?, type: String?, privacy: String?, leaderCreateChallenge: Boolean?): Flowable<Group>
-    fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Void>
+    fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Group>
 
     fun retrieveGroups(type: String): Flowable<List<Group>>
     fun getGroups(type: String): Flowable<RealmResults<Group>>
@@ -64,6 +64,10 @@ interface SocialRepository : BaseRepository {
     fun findUsernames(username: String, context: String? = null, id: String? = null): Flowable<List<FindUsernameResult>>
 
     fun markPrivateMessagesRead(user: User?): Flowable<Void>
+
+
+    fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group>
+    fun removeMemberFromGroup(groupID: String, userID: String): Flowable<List<Member>>
 
     fun acceptQuest(user: User?, partyId: String = "party"): Flowable<Void>
     fun rejectQuest(user: User?, partyId: String = "party"): Flowable<Void>

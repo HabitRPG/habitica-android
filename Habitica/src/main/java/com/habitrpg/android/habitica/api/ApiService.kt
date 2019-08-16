@@ -175,7 +175,10 @@ interface ApiService {
     fun createGroup(@Body item: Group): Flowable<HabitResponse<Group>>
 
     @PUT("groups/{id}")
-    fun updateGroup(@Path("id") id: String, @Body item: Group): Flowable<HabitResponse<Void>>
+    fun updateGroup(@Path("id") id: String, @Body item: Group): Flowable<HabitResponse<Group>>
+
+    @POST("groups/{groupID}/removeMember/{userID}")
+    fun removeMemberFromGroup(@Path("groupID") groupID: String, @Path("userID") userID: String): Flowable<HabitResponse<Void>>
 
     @GET("groups/{gid}/chat")
     fun listGroupChat(@Path("gid") groupId: String): Flowable<HabitResponse<List<ChatMessage>>>

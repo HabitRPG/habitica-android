@@ -20,6 +20,25 @@ import io.reactivex.functions.Consumer
 import io.realm.RealmResults
 
 class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
+    override fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group> {
+        return localRepository.getGroup(groupID)
+                .map {
+                    val group = localRepository.getUnmanagedCopy(it)
+                    group.leaderID = userID
+                    group
+                }
+                .flatMap {
+                    apiClient.updateGroup(it.id, it)
+                }
+    }
+
+    override fun removeMemberFromGroup(groupID: String, userID: String): Flowable<List<Member>> {
+        return apiClient.removeMemberFromGroup(groupID, userID)
+                .flatMap {
+                    retrieveGroupMembers(groupID, true)
+                }
+    }
+
     override fun getChatmessage(messageID: String): Flowable<ChatMessage> {
         return localRepository.getChatMessage(messageID)
     }
@@ -152,7 +171,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         }
     }
 
-    override fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Void> {
+    override fun updateGroup(group: Group?, name: String?, description: String?, leader: String?, leaderCreateChallenge: Boolean?): Flowable<Group> {
         if (group == null) {
             return Flowable.empty()
         }

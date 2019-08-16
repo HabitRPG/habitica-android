@@ -947,4 +947,13 @@
     <string name="sent_card">You sent a %s</string>
     <string name="group_activity_summary_notif">New messages in %s</string>
     <string name="inbox_messages_title">You received %d messages from %s</string>
+    <string name="remove">Remove</string>
+    <string name="transfer_ownership">Transfer Ownership</string>
+    <string name="remove_member">Remove Member</string>
+    <string name="send_message">Send Message</string>
+    <string name="transferred_ownership">Ownership transferred to %s</string>
+    <string name="transfer_ownership_confirm">Are you sure you want to transfer ownership to %s</string>
+    <string name="remove_member_confirm">Are you sure you want to remove %s from the group?</string>
+    <string name="transfer">Transfer</string>
+    <string name="removed_member">%s was removed from the group</string>
 </resources>

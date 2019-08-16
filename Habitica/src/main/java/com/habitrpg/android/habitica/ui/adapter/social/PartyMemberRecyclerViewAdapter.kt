@@ -23,7 +23,7 @@ class PartyMemberRecyclerViewAdapter(data: OrderedRealmCollection<Member>?, auto
 
     override fun onBindViewHolder(holder: GroupMemberViewHolder, position: Int) {
         data?.let {
-            holder.bind(it[position], leaderID)
+            holder.bind(it[position], leaderID, null)
             holder.onClickEvent = {
                 userClickedEvents.onNext(it[position].id ?: "")
             }

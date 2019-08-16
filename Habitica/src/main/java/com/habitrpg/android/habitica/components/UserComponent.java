@@ -89,7 +89,6 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOv
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
@@ -178,8 +177,6 @@ public interface UserComponent {
     void inject(PartyFragment partyFragment);
 
     void inject(PartyInviteFragment partyInviteFragment);
-
-    void inject(PartyMemberListFragment partyMemberListFragment);
 
     void inject(ChatListFragment chatListFragment);
 

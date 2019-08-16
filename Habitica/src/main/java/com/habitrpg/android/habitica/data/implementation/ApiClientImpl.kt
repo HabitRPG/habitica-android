@@ -476,8 +476,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.createGroup(group).compose(configureApiCallObserver())
     }
 
-    override fun updateGroup(id: String, item: Group): Flowable<Void> {
+    override fun updateGroup(id: String, item: Group): Flowable<Group> {
         return apiService.updateGroup(id, item).compose(configureApiCallObserver())
+    }
+
+    override fun removeMemberFromGroup(groupID: String, userID: String): Flowable<Void> {
+        return apiService.removeMemberFromGroup(groupID, userID).compose(configureApiCallObserver())
     }
 
     override fun listGroupChat(groupId: String): Flowable<List<ChatMessage>> {
