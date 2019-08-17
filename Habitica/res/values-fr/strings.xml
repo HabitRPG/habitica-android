@@ -8,11 +8,11 @@
   <!--Prefs-->
   <string name="PS_settings_title">Paramètres</string>
   <string name="SP_address_hint">Votre serveur personnalisé</string>
-  <string name="SP_userID_title">ID d\'utilisateur</string>
-  <string name="SP_userID_summary">Votre ID d\'utilisateur</string>
+  <string name="SP_userID_title">Identifiant utilisateur</string>
+  <string name="SP_userID_summary">Votre identifiant utilisateur</string>
   <string name="SP_APIToken_title">Jeton d\'API</string>
   <string name="SP_APIToken_summary">Votre jeton d\'API</string>
-  <string name="Language_title">Langage</string>
+  <string name="Language_title">Langue</string>
   <string name="Language_summary">Changer la langue d\'Habitica</string>
   <string name="SP_user_qr_code">Votre QR code</string>
   <string name="PS_contact_title">Contactez-moi</string>
@@ -23,7 +23,7 @@
   <string name="pref_reminder_header">Rappel quotidien</string>
   <string name="pref_reminder_checkbox">Activer le rappel</string>
   <string name="pref_reminder_picker">Changer l\'heure du rappel</string>
-  <string name="pref_cds_header">Heure personnalisée de début de journée</string>
+  <string name="pref_cds_header">Personnalisation de début de journée</string>
   <string name="pref_cds_picker">Définir l\'heure personnalisée de début de journée</string>
   <string name="pref_push_notifications_checkbox">Notifications push de l\'utilisateur</string>
   <string name="push_notifications">Notifications push</string>
@@ -59,7 +59,7 @@
   <string name="string_revive">Résurrection</string>
   <string name="please_connect">Veuillez vous connecter à l\'application avant d\'utiliser un widget</string>
   <string name="about.title">À propos</string>
-  <string name="about.libraries">Bibliothèques</string>
+  <string name="about.libraries">Librairies</string>
   <string name="about.versionhistory">Historique des versions</string>
   <string name="about.habitica_open_source">Habitica est disponible sur Github en open source </string>
   <string name="about.rate_our_app">Notez notre application</string>
