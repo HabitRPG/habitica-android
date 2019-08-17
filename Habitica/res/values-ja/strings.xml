@@ -894,4 +894,28 @@
     <string name="special_achievements">特別な実績</string>
     <string name="new_task">新しいタスク</string>
     <string name="details">詳細</string>
+    <string name="add_local_authentication">ローカル認証を追加する</string>
+    <string name="task_title">タスクのタイトル</string>
+
+    <string name="repeats">くり返し</string>
+    <string name="every">くり返しの間隔</string>
+    <string name="scheduling">予定</string>
+    <string name="checklist_text">チェックリストのテキスト</string>
+    <string name="update_available">アップデートが利用可能です：%1$s (%2$d)</string>
+    <string name="need_help_header_description">%sにメッセージを投稿して、疑問について仲間のプレイヤーに答えてもらいましょう。</string>
+    <string name="need_more_help">さらに助けが必要ですか？</string>
+    <string name="become_x">%sになる</string>
+    <string name="report_message_title">違反として%sを報告する：</string>
+    <string name="i_agree_to_follow_the_guidelines">ガイドラインに従うことに同意します</string>
+    <string name="report_violation">違反を報告する</string>
+    <string name="setup_task_habit_1_notes">習慣、日課、To-Doのどれでも</string>
+    <string name="setup_task_habit_2">ここをタップして、やめたい悪い習慣を入力しましょう</string>
+    <string name="setup_task_habit_2_notes">または編集画面から削除しましょう</string>
+    <string name="are_you_sure">本当によろしいですか？</string>
+    <string name="levelup_title_10">クラス・システムがアンロックされました！</string>
+    <string name="pin">ピン留めする</string>
+    <string name="unpin">ピン留めを外す</string>
+    <string name="switch_to_list_view">リスト表示に切り替える</string>
+    <string name="switch_to_grid_view">グリッド表示に切り替える</string>
+    <string name="create_task">%sを作成する</string>
     </resources>
