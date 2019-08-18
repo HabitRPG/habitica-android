@@ -918,4 +918,15 @@
     <string name="switch_to_list_view">リスト表示に切り替える</string>
     <string name="switch_to_grid_view">グリッド表示に切り替える</string>
     <string name="create_task">%sを作成する</string>
-    </resources>
+    <string name="join_party_description_guild">友達に下のユーザー名を教えるか、%sに行って未来の仲間たちに出会いましょう！</string>
+    <string name="assigned_stat">割り当てられた能力値</string>
+    <string name="x_class">%sクラス</string>
+    <string name="report_explanation">[コミュニティガイドライン](https://habitica.com/static/community-guidelines)もしくは[利用規約](https://habitica.com/static/terms)に違反した投稿**だけ**を報告してください。不適切な報告をした場合は、あなた自身が違反となる可能性があります。</string>
+    <string name="reason_for_report">報告の理由（任意）</string>
+    <string name="trillion_abbrev">兆</string>
+    <string name="not_now">今は結構です</string>
+    <string name="levelup_detail_10">あなたのプレイスタイルに合ったクラスを選んで、冒険に役立つ特別なスキルや装備をアンロックしましょう</string>
+    <string name="take_me_back">戻る</string>
+    <string name="confirm_deletion">削除を承認する</string>
+    <string name="share_challenge_with">チャレンジを共有する</string>
+</resources>
