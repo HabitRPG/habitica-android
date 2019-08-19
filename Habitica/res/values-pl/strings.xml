@@ -777,4 +777,25 @@
     <string name="delete_account_description">Jesteś pewna/y\? Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Aby ponownie korzystać z Habitica trzeba będzie zarejestrować nowe konto. Bankowe lub wydane klejnoty nie będą zwrócone. Jeśli masz całkowitą pewność, wpisz poniżej swoje hasło.</string>
     <string name="delete_oauth_account_description">Jesteś pewna/y\? Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Aby ponownie korzystać z Habitica trzeba będzie zarejestrować nowe konto. Bankowe lub wydane klejnoty nie będą zwrócone. Jeśli masz całkowitą pewność, wpisz DELETE do poniższego pola tekstowego.</string>
     <string name="seasonal_closed_description">Wielkie Gale mają miejsce w pobliżu przesilenia i równonocy, więc zajrzyj tu później aby znaleźć zabawny asortyment specjalnych przedmiotów sezonowych!</string>
-    </resources>
+    <string name="subscribe_for_hourglasses">Subskrybuj w celu uzyskania Klepsydr</string>
+    <string name="character_build">Rozwój postaci</string>
+    <string name="character_build_description">Każdy zdobyty poziom daje Ci jeden punkt, który możesz przydzielić do wybranego przez siebie atrybutu. Możesz zrobić to ręcznie lub pozwolić, by gra zdecydowała za Ciebie, używając jednej z opcji automatycznego przydzielania.</string>
+    <string name="strength_description">Zwiększa premię za trafienia krytyczne i podwyższa ich prawdopodobieństwo przy zaliczaniu zadania. Również podwyższa obrażenia zadawane bossom.</string>
+    <string name="intelligence_description">Zwiększa PD otrzymane za wykonanie zadania. Zwiększa również maksymalną ilość many i szybkość regeneracji many w czasie.</string>
+    <string name="constitution_description">Zmniejsza ilość obrażeń otrzymanych z zadań. Nie zmniejsza jednak obrażeń zadanych przez bossów.</string>
+    <string name="perception_description">Zwiększa prawdopodobieństwo znajdowania przedmiotów przy kończeniu zadań, limit przedmiotów do zdobycia w ciągu dnia, premii za ciągłość wykonania zadań i ilość złota zdobywanego za zadania.</string>
+    <string name="distribute_task_help">Przydziela punkty w oparciu o kategorie Siły, Inteligencji, Kondycji oraz Percepcji przydzielone zadaniom, które wykonujesz.</string>
+    <string name="equipment_empty">Masz już całe wyposażenie! Spodziewaj się kolejnych przedmiotów, które będą dodawane podczas Wielkich Gali zaczynających się w okolicach równonocy i przesileń.</string>
+    <string name="join_party_description">Przekaż członkowi grupy poniższą nazwę użytkownika, aby mógł Ci wysłać zaproszenie</string>
+    <string name="sidebar_achievements">Osiągnięcia</string>
+    <string name="basic_achievements">Podstawowe Osiągnięcia</string>
+    <string name="seasonal_achievements">Sezonowe Osiągnięcia</string>
+    <string name="special_achievements">Specjalne Osiągnięcia</string>
+    <string name="switch_to_list_view">Przełącz na widok listy</string>
+    <string name="switch_to_grid_view">Przełącz na widok tabeli</string>
+    <string name="confirm_deletion">Potwierdź usunięcie</string>
+    <string name="new_task">Nowe zadanie</string>
+    <string name="create_task">Utwórz %s</string>
+    <string name="details">Szczegóły</string>
+    <string name="share_challenge_with">Udostępnij wyzwanie</string>
+</resources>
