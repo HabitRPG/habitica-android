@@ -45,6 +45,7 @@ import javax.inject.Named
 
 open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
+    var itemAnimator = SafeDefaultItemAnimator()
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userID: String
     @Inject
@@ -187,11 +188,15 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 val movingTaskID = movingTaskID
                 if (fromPosition != null && movingTaskID != null) {
                     recyclerAdapter?.ignoreUpdates = true
+                    itemAnimator.skipAnimations = true
                     compositeSubscription.add(taskRepository.updateTaskPosition(classType ?: "", movingTaskID, viewHolder.adapterPosition)
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer { recyclerAdapter?.ignoreUpdates = false
-                            recyclerAdapter?.notifyDataSetChanged()}, RxErrorHandler.handleEmptyError()))
+                            .subscribe(Consumer {
+                                recyclerAdapter?.ignoreUpdates = false
+                                recyclerAdapter?.notifyDataSetChanged()
+                                itemAnimator.skipAnimations = false
+                            }, RxErrorHandler.handleEmptyError()))
                 }
                 this.fromPosition = null
                 this.movingTaskID = null
@@ -249,7 +254,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
         val bottomPadding = (recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
         recyclerView.setPadding(0, 0, 0, bottomPadding)
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        recyclerView.itemAnimator = itemAnimator
 
         refreshLayout.setOnRefreshListener(this)
 
