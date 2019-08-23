@@ -16,6 +16,7 @@ import java.util.*
 interface TaskRepository : BaseRepository {
     fun getTasks(taskType: String, userID: String): Flowable<RealmResults<Task>>
     fun getTasks(userId: String): Flowable<RealmResults<Task>>
+    fun getCurrentUserTasks(taskType: String): Flowable<RealmResults<Task>>
     fun getTasksOfType(taskType: String): Flowable<RealmResults<Task>>
     fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList)
 

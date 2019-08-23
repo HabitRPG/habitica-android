@@ -188,10 +188,8 @@ open class User : RealmObject(), Avatar, VersionedObject {
         return (this.balance * 4).toInt()
     }
 
-    override fun getHourglassCount(): Int? {
-        return if (purchased != null) {
-            purchased?.plan?.consecutive?.trinkets
-        } else 0
+    override fun getHourglassCount(): Int {
+        return purchased?.plan?.consecutive?.trinkets ?: 0
     }
 
     override fun getCostume(): Outfit? {

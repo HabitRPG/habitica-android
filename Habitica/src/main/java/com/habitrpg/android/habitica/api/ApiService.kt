@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import retrofit2.http.*
 
+@JvmSuppressWildcards
 interface ApiService {
     @get:GET("status")
     val status: Flowable<HabitResponse<Status>>

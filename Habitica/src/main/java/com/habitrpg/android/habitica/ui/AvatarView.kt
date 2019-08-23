@@ -18,6 +18,7 @@ import com.facebook.imagepipeline.image.ImageInfo
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
+import io.reactivex.functions.Consumer
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -516,10 +517,6 @@ class AvatarView : View {
         MOUNT_HEAD,
         ZZZ,
         PET
-    }
-
-    interface Consumer<in T> {
-        fun accept(t: T)
     }
 
     companion object {

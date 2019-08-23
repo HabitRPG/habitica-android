@@ -32,6 +32,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     override fun getTasks(userId: String): Flowable<RealmResults<Task>> =
             this.localRepository.getTasks(userId)
 
+    override fun getCurrentUserTasks(taskType: String): Flowable<RealmResults<Task>> =
+            this.localRepository.getTasks(taskType, userID)
+
     override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
         localRepository.saveTasks(userId, order, tasks)
     }
