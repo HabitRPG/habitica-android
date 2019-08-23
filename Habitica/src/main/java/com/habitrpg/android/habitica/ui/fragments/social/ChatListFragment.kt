@@ -241,7 +241,7 @@ class ChatListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {
         val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
-        clipMan?.primaryClip = messageText
+        clipMan?.setPrimaryClip(messageText)
         val activity = activity as? MainActivity
         if (activity != null) {
             showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL)

@@ -18,8 +18,8 @@ class HabiticaClassArrayAdapter(context: Context, resource: Int, objects: List<C
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View =
             createView(position, convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item, false))
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View =
-            createView(position, convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item_selected, false))
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View =
+            createView(position, convertView ?: parent.inflate(R.layout.class_spinner_dropdown_item_selected, false))
 
     private fun createView(position: Int, row: View?): View {
         val textView: TextView? = row?.findViewById(R.id.textView)

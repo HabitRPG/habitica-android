@@ -59,7 +59,7 @@ class AvatarView : View {
             val canvasRect = Rect()
             avatarRectF?.round(canvasRect)
             avatarBitmap = Bitmap.createBitmap(canvasRect.width(), canvasRect.height(), Bitmap.Config.ARGB_8888)
-            avatarCanvas = Canvas(avatarBitmap)
+            avatarBitmap?.let { avatarCanvas = Canvas(it) }
             draw(avatarCanvas)
 
             return avatarBitmap

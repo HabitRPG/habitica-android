@@ -99,7 +99,7 @@ class GroupInformationFragment : BaseFragment() {
         username_textview.setOnClickListener {
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = ClipData.newPlainText(context?.getString(R.string.username), user?.username)
-            clipboard?.primaryClip = clip
+            clipboard?.setPrimaryClip(clip)
             val activity = activity as? MainActivity
             if (activity != null) {
                 HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.username_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)

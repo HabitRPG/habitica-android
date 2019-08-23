@@ -11,10 +11,10 @@ import android.widget.RatingBar
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class PurchaseDialogQuestContent : PurchaseDialogContent {
@@ -51,7 +51,7 @@ class PurchaseDialogQuestContent : PurchaseDialogContent {
         } else {
             questTypeTextView.setText(R.string.collection_quest)
             val collectionList = questContent.collect?.map { it.count.toString() + " " + it.text }
-            questCollectTextView.text = TextUtils.join(", ", collectionList)
+            questCollectTextView.text = TextUtils.join(", ", collectionList ?: listOf<String>())
 
             bossHealthView.visibility = View.GONE
 

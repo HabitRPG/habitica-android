@@ -202,7 +202,7 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
                 putString(PUBLIC_IV, publicIV)
             }
         }
-        return publicIV
+        return publicIV ?: ""
     }
 
     companion object {

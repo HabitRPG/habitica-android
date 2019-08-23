@@ -87,7 +87,7 @@ class AuthenticationPreferenceFragment: BasePreferencesFragment() {
             "add_local_auth" -> showAddLocalAuthDialog()
             else -> {
                 val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-                clipMan?.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
+                clipMan?.setPrimaryClip(ClipData.newPlainText(preference.key, preference.summary))
                 Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
             }
         }

@@ -26,11 +26,11 @@ class APIPreferenceFragment: BasePreferencesFragment() {
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-        if (preference.key == getString(R.string.SP_APIToken)) {
-            clipMan?.primaryClip = ClipData.newPlainText(preference.key, hostConfig.apiKey)
+        clipMan?.setPrimaryClip(if (preference.key == getString(R.string.SP_APIToken)) {
+            ClipData.newPlainText(preference.key, hostConfig.apiKey)
         } else {
-            clipMan?.primaryClip = ClipData.newPlainText(preference.key, preference.summary)
-        }
+            ClipData.newPlainText(preference.key, preference.summary)
+        })
         Toast.makeText(activity, "Copied " + preference.key + " to clipboard.", Toast.LENGTH_SHORT).show()
         return super.onPreferenceTreeClick(preference)
     }

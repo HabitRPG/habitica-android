@@ -193,7 +193,7 @@ class FullProfileActivity : BaseActivity() {
             val clipboard = view.context
                     .getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
             val clip = android.content.ClipData.newPlainText(user.username, user.username)
-            clipboard?.primaryClip = clip
+            clipboard?.setPrimaryClip(clip)
         }
 
         avatarView.setAvatar(user)
@@ -371,10 +371,10 @@ class FullProfileActivity : BaseActivity() {
         val buffs = stats.buffs
 
         addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
-        addAttributeRow(getString(R.string.buffs), buffs?.getStr() ?: 0f, buffs?.get_int() ?: 0f, buffs?.getCon() ?: 0f, buffs?.getPer() ?: 0f, true, false)
+        addAttributeRow(getString(R.string.buffs), buffs?.getStr() ?: 0f, buffs?.get_int() ?: 0f, buffs?.getCon() ?: 0f, buffs?.getPer() ?: 0f, roundDown = true, isSummary = false)
 
         // Summary row
-        addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, false, true)
+        addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, roundDown = false, isSummary = true)
     }
 
     private fun addAttributeRow(label: String, strVal: Float, intVal: Float, conVal: Float, perVal: Float, roundDown: Boolean, isSummary: Boolean) {

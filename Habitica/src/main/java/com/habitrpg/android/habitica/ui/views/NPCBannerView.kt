@@ -18,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlin.math.roundToInt
 
-class NPCBannerView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     private val backgroundView: ImageView by bindView(R.id.backgroundView)
     private val sceneView: SimpleDraweeView by bindView(R.id.sceneView)
