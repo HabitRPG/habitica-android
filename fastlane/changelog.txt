@@ -1,5 +1,11 @@
-Things that 2.0.3 fixes:
+New:
+- manage party members from the member list
+- Better inbox notifications
 
-- Adding local authentication to an account with social authentication
-- Users could end up with pets they didn't own showing in the stable
-- The pin/unpin button wasn't showing correctly.
+Fixed:
+- Widgets caused crashes when tapped on
+- Issues with task scheduling in the task form
+- Quest detail showed from participant number
+
+Known issues:
+- When opening mystery items, the equipment title is missing. This will be fixed with the next server deploy
