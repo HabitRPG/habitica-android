@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +21,9 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
-import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.helpers.resetViews
+import com.habitrpg.android.habitica.ui.helpers.*
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
@@ -35,17 +35,17 @@ class ItemRecyclerFragment : BaseFragment() {
     lateinit var userRepository: UserRepository
     val recyclerView: RecyclerViewEmptySupport? by bindView(R.id.recyclerView)
     val emptyView: View? by bindView(R.id.emptyView)
-    val emptyTextView: TextView? by bindView(R.id.empty_text_view)
+    private val emptyTextView: TextView? by bindView(R.id.empty_text_view)
     val titleView: TextView? by bindView(R.id.titleTextView)
-    val footerView: TextView? by bindView(R.id.footerTextView)
-    val openMarketButton: Button? by bindView(R.id.openMarketButton)
-    val openEmptyMarketButton: Button? by bindView(R.id.openEmptyMarketButton)
+    private val footerView: TextView? by bindView(R.id.footerTextView)
+    private val openMarketButton: Button? by bindView(R.id.openMarketButton)
+    private val openEmptyMarketButton: Button? by bindView(R.id.openEmptyMarketButton)
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
     var itemTypeText: String? = null
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
-    var hatchingItem: Item? = null
+    private var hatchingItem: Item? = null
     var feedingPet: Pet? = null
     var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
@@ -103,6 +103,14 @@ class ItemRecyclerFragment : BaseFragment() {
                         .subscribe(Consumer { MainNavigationController.navigate(R.id.partyFragment) }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
                         .flatMap { inventoryRepository.openMysteryItem(user) }
+                        .doOnNext {
+                            val activity = activity as? MainActivity
+                            if (activity != null) {
+                                DataBindingUtils.loadImage("shop_${it.key}") {image ->
+                                    showSnackbar(activity.snackbarContainer, BitmapDrawable(context?.resources, image), null, getString(R.string.mystery_item_received, it.text), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                                }
+                            }
+                        }
                         .flatMap { userRepository.retrieveUser(false) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler(Consumer { showHatchingDialog(it) }))

@@ -53,11 +53,9 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
     }
 
     fun setLeftIcon(image: Drawable?): HabiticaSnackbar {
-        if (image == null) {
-            return this
-        }
         val imageView = view.findViewById<ImageView>(R.id.leftImageView)
         imageView.setImageDrawable(image)
+        imageView.visibility = if (image != null) View.VISIBLE else View.GONE
         return this
     }
 
@@ -122,7 +120,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             showSnackbar(container, null, null, content, null, null, 0, null, displayType)
         }
 
-        fun showSnackbar(container: ViewGroup, leftImage: Drawable, title: CharSequence, content: CharSequence, displayType: SnackbarDisplayType) {
+        fun showSnackbar(container: ViewGroup, leftImage: Drawable, title: CharSequence?, content: CharSequence?, displayType: SnackbarDisplayType) {
             showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType)
         }
 
@@ -136,7 +134,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         }
 
         fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int, rightText: String?, displayType: SnackbarDisplayType) {
-            val snackbar = HabiticaSnackbar.make(container, Snackbar.LENGTH_LONG)
+            val snackbar = make(container, Snackbar.LENGTH_LONG)
                     .setTitle(title)
                     .setText(content)
                     .setSpecialView(specialView)

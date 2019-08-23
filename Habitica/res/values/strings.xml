@@ -956,4 +956,5 @@
     <string name="remove_member_confirm">Are you sure you want to remove %s from the group?</string>
     <string name="transfer">Transfer</string>
     <string name="removed_member">%s was removed from the group</string>
+    <string name="mystery_item_received">You open the box and receive a %s</string>
 </resources>
