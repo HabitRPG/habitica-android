@@ -187,7 +187,7 @@ open class NotificationsViewModel : BaseViewModel() {
      * instead of one of the ones coming from server.
      */
     private fun isCustomNotification(notification: Notification): Boolean {
-        return notification.id.startsWith("custom-")
+        return notification.id.startsWith("custom-") || notification.id == "new-stuff-notification"
     }
 
     fun dismissNotification(notification: Notification) {

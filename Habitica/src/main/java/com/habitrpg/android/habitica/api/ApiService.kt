@@ -326,13 +326,13 @@ interface ApiService {
 
     // Notifications
     @POST("notifications/{notificationId}/read")
-    fun readNotification(@Path("notificationId") notificationId: String): Flowable<HabitResponse<List<*>>>
+    fun readNotification(@Path("notificationId") notificationId: String): Flowable<HabitResponse<List<Any>>>
 
     @POST("notifications/read")
-    fun readNotifications(@Body notificationIds: Map<String, List<String>>): Flowable<HabitResponse<List<*>>>
+    fun readNotifications(@Body notificationIds: Map<String, List<String>>): Flowable<HabitResponse<List<Any>>>
 
     @POST("notifications/see")
-    fun seeNotifications(@Body notificationIds: Map<String, List<String>>): Flowable<HabitResponse<List<*>>>
+    fun seeNotifications(@Body notificationIds: Map<String, List<String>>): Flowable<HabitResponse<List<Any>>>
 
     @POST("user/open-mystery-item")
     fun openMysteryItem(): Flowable<HabitResponse<Equipment>>
