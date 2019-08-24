@@ -2,10 +2,10 @@ package com.habitrpg.android.habitica.ui.views.stats
 
 import android.content.Context
 import android.graphics.PorterDuff
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import kotlinx.android.synthetic.main.stats_view.view.*
@@ -75,12 +75,7 @@ class StatsView(context: Context?, attrs: AttributeSet?) : LinearLayout(context,
                 backgroundDrawable?.setColorFilter(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
                 titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
             }
-            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                @Suppress("DEPRECATION")
-                titleWrapper.setBackgroundDrawable(backgroundDrawable)
-            } else {
-                titleWrapper.background = backgroundDrawable
-            }
+            titleWrapper.background = backgroundDrawable
         }
 
         allocateButton.setOnClickListener {

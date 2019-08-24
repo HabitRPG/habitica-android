@@ -1,10 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_equipment">Tavo perkami įrankiai atsiras čia. Tavo Kovinė Apranga keičia tavo statistiką, ir tavo Kostiumas (jei įjungtas) keičia tavo veikėjo išvaizdą.</string>
-  <string name="tutorial_items">Rask lobius atliekant užduotis ir keliant veikėjo lygį. Paspausk ant lobio, kad jį panaudoti!</string>
-  <string name="tutorial_pets">Darant savo gyvenimo užduotis, turi šansą rasti kiaušinius ir eliksyrus. Maišant juos gali išauginti gyvūnėlius.</string>
-  <string name="tutorial_skills">Sugebėjimai turi stiprius efektus! Paspausk ant sugebėjimo ir tavo veikėjas jį panaudos. Tai kainos Magijos taškų (mėlyna juosta), kuriuos užsidirbi prisijungęs kiekvieną dieną ir atliekant savo užduotis. DUK meniu gali rasti daugiau informacijos!</string>
+    <string name="tutorial_skills">Sugebėjimai turi stiprius efektus! Paspausk ant sugebėjimo ir tavo veikėjas jį panaudos. Tai kainos Magijos taškų (mėlyna juosta), kuriuos užsidirbi prisijungęs kiekvieną dieną ir atliekant savo užduotis. DUK meniu gali rasti daugiau informacijos!</string>
   <string name="tutorial_party">Tai yra vieta, kur tu ir tavo draugai galite vienas kitą palaikyti ir taip atsakingai siekti savo tikslų kovodami su pabaisomis ir savo užduotimis!</string>
   <string name="tutorial_tavern">Sveiki atvykę į Smuklę, viešą, visiem amžiams tinkantį pokalbių kambarį! Čia galite šnekėti apie produktyvumą ir užduoti klausimus vieni kitiems. Sėkmės!</string>
-  <string name="tutorial_classes">Pasirink ar nori tapti Kariu, Magu, Gydytoju ar Sukčiumi! Kiekviena klasė turi savo aprangą ir sugebėjimus. Paspausk (?), kad sužinoti daugiau!</string>
 </resources>

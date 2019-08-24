@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/spacing_large">
+    android:padding="@dimen/spacing_large"
+    android:baselineAligned="false">
     <com.habitrpg.android.habitica.ui.RoundedFrameLayout
         android:layout_width="@dimen/avatar_chat_size"
         android:layout_height="@dimen/avatar_chat_size"

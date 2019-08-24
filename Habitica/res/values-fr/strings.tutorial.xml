@@ -12,12 +12,8 @@
   <string name="tutorial_rewards_1">Achetez de l\'équipement pour votre avatar avec l\'or que vous gagnez !</string>
   <string name="tutorial_rewards_2">Vous pouvez aussi créer des récompenses personnalisées en fonction de ce qui vous motive.</string>
   <string name="tutorial_tasks_complete">C\'est tout pour l\'instant. Si vous avez besoin d\'un rappel, consultez la section FAQ.</string>
-  <string name="tutorial_equipment">Quand vous achetez de l\'équipement, il apparaît ici. Votre Equipement de Combat affecte vos caractéristiques, et votre Costume (si utilisé) change l\'apparence de votre avatar.</string>
-  <string name="tutorial_items">Gagnez des objets en accomplissant des tâches et en changeant de niveau. Tapez sur un objet pour l\'utiliser !</string>
-  <string name="tutorial_pets">En accomplissant des tâches dans le monde réel, vous avez désormais une chance de trouver des œufs et des potions. Combinez-les pour faire éclore des familiers</string>
-  <string name="tutorial_skills">Les compétences sont des capacités spéciales qui ont des effets puissants ! Tapez sur une compétence pour l\'utiliser. Cela vous coûtera de la Mana (la barre bleue), que vous gagnez en faisant le point tous les jours et en accomplissant des tâches dans la vie réelle. Allez voir les FAQ dans le menu pour plus d\'infos !</string>
+    <string name="tutorial_skills">Les compétences sont des capacités spéciales qui ont des effets puissants ! Tapez sur une compétence pour l\'utiliser. Cela vous coûtera de la Mana (la barre bleue), que vous gagnez en faisant le point tous les jours et en accomplissant des tâches dans la vie réelle. Allez voir les FAQ dans le menu pour plus d\'infos !</string>
   <string name="tutorial_party">Voici l\'endroit où vos amis et vous pouvez vous tenir mutuellement responsables de vos buts et combattre des monstres grâce à vos tâches !</string>
   <string name="tutorial_tavern">Bienvenue à la Taverne, un salon de discussion public pour tous les âges ! Ici, vous pouvez discuter de productivité et poser des questions. Amusez-vous bien !</string>
-  <string name="tutorial_classes">Devenez, au choix, Guerrier, Mage, Guérisseur ou Voleur ! Chaque classe possède des équipements et des compétences uniques. Tapez sur (?) pour en savoir plus !</string>
-  <string name="tutorial_stats">Utilisez le bouton gris pour allouer plusieurs points à la fois, ou utilisez les flèches pour en ajouter un à la fois.</string>
+    <string name="tutorial_stats">Utilisez le bouton gris pour allouer plusieurs points à la fois, ou utilisez les flèches pour en ajouter un à la fois.</string>
 </resources>

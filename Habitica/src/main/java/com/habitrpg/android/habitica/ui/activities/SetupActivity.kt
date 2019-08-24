@@ -32,8 +32,6 @@ import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.FadingViewPager
-import com.habitrpg.shared.habitica.LogLevel
-import com.habitrpg.shared.habitica.Logger
 import com.viewpagerindicator.IconPageIndicator
 import com.viewpagerindicator.IconPagerAdapter
 import io.reactivex.BackpressureStrategy
@@ -74,7 +72,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeSubscription.add(userRepository.getUser().subscribe({ this.onUserReceived(it) }, { Logger.log(LogLevel.DEBUG, "USERERROR", it.localizedMessage) }))
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler(Consumer { this.onUserReceived(it) }))
         compositeSubscription.add(userRepository.retrieveUser().subscribeWithErrorHandler(Consumer {}))
         val additionalData = HashMap<String, Any>()
         additionalData["status"] = "displayed"
@@ -174,9 +172,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         nextButton.setCompoundDrawablesWithIntrinsicBounds(null, null, rightDrawable, null)
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-    }
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
 
     override fun onPageSelected(position: Int) {
         when {
@@ -195,9 +191,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         }
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
-
-    }
+    override fun onPageScrollStateChanged(state: Int) = Unit
 
     private fun onUserReceived(user: User?) {
         if (completedSetup) {

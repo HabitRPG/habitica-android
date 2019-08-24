@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="@dimen/spacing_large">
+    android:padding="@dimen/spacing_large"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -15,7 +16,6 @@
         android:paddingRight="@dimen/spacing_medium">
 
         <ImageView
-            android:id="@+id/noNotifications"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/transparent"

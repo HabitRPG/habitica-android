@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sidebar.tasks">Zadania</string>
-  <string name="sidebar.skills">Umiejętności</string>
-  <string name="sidebar.section.social">Społeczność</string>
-  <string name="sidebar.inbox">Wiadomości</string>
-  <string name="sidebar.tavern">Karczma</string>
-  <string name="sidebar.party">Drużyna</string>
-  <string name="sidebar.purchaseGems">Kup Klejnoty</string>
-  <string name="sidebar.guilds">Gildie</string>
-  <string name="sidebar.challenges">Wyzwania</string>
-  <string name="sidebar.section.inventory">Ekwipunek</string>
-  <string name="sidebar.avatar">Awatar</string>
-  <string name="sidebar.equipment">Ekwipunek</string>
-  <string name="sidebar.stable">Stajnia</string>
-  <string name="sidebar.news">Aktualności</string>
-  <string name="sidebar.settings">Ustawienia</string>
-  <string name="sidebar.about">O programie</string>
+  <string name="sidebar_tasks">Zadania</string>
+  <string name="sidebar_skills">Umiejętności</string>
+  <string name="sidebar.section_social">Społeczność</string>
+  <string name="sidebar_inbox">Wiadomości</string>
+  <string name="sidebar_tavern">Karczma</string>
+  <string name="sidebar_party">Drużyna</string>
+  <string name="sidebar_purchaseGems">Kup Klejnoty</string>
+  <string name="sidebar_guilds">Gildie</string>
+  <string name="sidebar_challenges">Wyzwania</string>
+  <string name="sidebar.section_inventory">Ekwipunek</string>
+  <string name="sidebar_avatar">Awatar</string>
+  <string name="sidebar_equipment">Ekwipunek</string>
+  <string name="sidebar_stable">Stajnia</string>
+  <string name="sidebar_news">Aktualności</string>
+    <string name="sidebar_about">O programie</string>
   <string name="sidebar_shops">Sklepy</string>
   <string name="sidebar_stats">Statystyki</string>
 </resources>

@@ -48,14 +48,14 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_close_grey_800_24dp"
                         android:background="@color/transparent"
-                        android:paddingLeft="@dimen/spacing_small"/>
+                        android:paddingEnd="@dimen/spacing_small"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/report_violation"
                         android:textSize="20sp"
                         android:textColor="@color/gray_50"
-                        android:layout_marginLeft="36dp"
+                        android:layout_marginEnd="36dp"
                         android:id="@+id/toolbar_title" />
                     <Button
                         android:id="@+id/report_button"

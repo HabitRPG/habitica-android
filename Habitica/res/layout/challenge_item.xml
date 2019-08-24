@@ -10,7 +10,6 @@
     android:background="#fff"
     android:orientation="horizontal"
     android:baselineAligned="false"
-    android:paddingRight="16dp"
     android:paddingEnd="16dp">
 
     <LinearLayout
@@ -69,7 +68,6 @@
             android:layout_marginBottom="@dimen/spacing_small"/>
 
         <LinearLayout
-            android:id="@+id/leaderParticipantLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

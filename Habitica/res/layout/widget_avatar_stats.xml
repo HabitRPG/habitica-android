@@ -26,13 +26,11 @@
             android:adjustViewBounds="true"
             tools:ignore="ContentDescription" />
         <LinearLayout
-            android:id="@+id/LL_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_vertical">
             <RelativeLayout
-                android:id="@+id/hp_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/bar_padding"
@@ -72,7 +70,6 @@
                         android:textColor="@color/brand_500"
                         android:textSize="12sp"/>
                     <TextView
-                        android:id="@+id/TV_hp_label"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center|end"
@@ -84,7 +81,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/exp_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -123,7 +119,6 @@
                         android:textColor="@color/brand_500"
                         android:textSize="12sp"/>
                     <TextView
-                        android:id="@+id/exp_TV_label"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center|end"
@@ -175,7 +170,6 @@
                         android:textColor="@color/brand_500"
                         android:textSize="12sp"/>
                     <TextView
-                        android:id="@+id/mp_TV_label"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center|end"

@@ -12,12 +12,8 @@
   <string name="tutorial_rewards_1">Koop een uitrusting voor je avatar met het goud dat je verdient!</string>
   <string name="tutorial_rewards_2">Je kan ook zelf beloningen maken voor in de echte wereld, gebaseerd op wat je motiveert.</string>
   <string name="tutorial_tasks_complete">Dat was het voorlopig. Als je iets vergeet, kijk dan in de FAQ sectie.</string>
-  <string name="tutorial_equipment">Als je uitrustingsstukken koopt verschijnen die hier. Jouw gevechtsuitrusting beïnvloedt je statistieken en je kostuum (als het aan staat) beïnvloedt wat je avatar aan heeft.</string>
-  <string name="tutorial_items">Verdien voorwerpen door taken te voltooien en niveaus omhoog te gaan. Tik op een voorwerp om het te gebruiken!</string>
-  <string name="tutorial_pets">Terwijl je taken uit de echte wereld voltooit, heb je een kans om eieren en drankjes te vinden. Combineer ze om je huisdier te laten uitkomen.</string>
-  <string name="tutorial_skills">Vaardigheiden zijn speciale talenten die krachtige effecten hebben! Tik op een vaardigheid om ze te gebruiken. Het kost je Mana (de blauwe balk), dat je kan verdienen door elke dag in te checken en je taken in de echte wereld te voltooien. Kijk in de FAQ in het menu voor meer informatie!</string>
+    <string name="tutorial_skills">Vaardigheiden zijn speciale talenten die krachtige effecten hebben! Tik op een vaardigheid om ze te gebruiken. Het kost je Mana (de blauwe balk), dat je kan verdienen door elke dag in te checken en je taken in de echte wereld te voltooien. Kijk in de FAQ in het menu voor meer informatie!</string>
   <string name="tutorial_party">Dit is waar jij en je vrienden elkaar verantwoordelijk kunnen houden voor het bereiken van je doelen en je samen monsters kan bevechten met je taken!</string>
   <string name="tutorial_tavern">Welkom in de Herberg, een openbare chatroom voor alle leeftijden! Hier kan je praten over productiviteit en vragen stellen. Veel plezier!</string>
-  <string name="tutorial_classes">Kies hier of je Krijger, Magiër, Heler of Dief wilt worden! Elke klasse heeft unieke uitrustingen en vaardigheden. Tik op de (?) om meer te weten te komen!</string>
-  <string name="tutorial_stats">Tik de grijze knop aan om meerdere punten ineens aan te wijzen, of tik op de pijlen om ze één punt per keer toe  te voegen.</string>
+    <string name="tutorial_stats">Tik de grijze knop aan om meerdere punten ineens aan te wijzen, of tik op de pijlen om ze één punt per keer toe  te voegen.</string>
 </resources>

@@ -174,9 +174,7 @@ class TaskAlarmManager(private var context: Context, private var taskRepository:
                 return
             }
 
-            if (SDK_INT < Build.VERSION_CODES.KITKAT) {
-                alarmManager?.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
-            } else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M) {
+            if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M) {
                 alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, time + 60000, pendingIntent)
             } else if (SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)

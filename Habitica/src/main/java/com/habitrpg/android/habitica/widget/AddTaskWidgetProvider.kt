@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.widget
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
-import android.preference.PreferenceManager
 import android.widget.RemoteViews
+import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.tasks.Task
 

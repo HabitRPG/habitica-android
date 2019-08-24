@@ -46,26 +46,26 @@
                 android:text="@string/str_abbrv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"/>
+                android:layout_marginEnd="12dp"/>
             <TextView
                 android:id="@+id/str_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="+6"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:textColor="@color/green_50"/>
             <TextView
                 android:id="@+id/per_label"
                 android:text="@string/per_abbrv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"/>
+                android:layout_marginEnd="12dp"/>
             <TextView
                 android:id="@+id/per_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="+6"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:textColor="@color/green_50"/>
         </TableRow>
         <TableRow
@@ -77,26 +77,26 @@
                 android:text="@string/con_abbrv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"/>
+                android:layout_marginEnd="12dp"/>
             <TextView
                 android:id="@+id/con_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="+6"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:textColor="@color/green_50"/>
             <TextView
                 android:id="@+id/int_label"
                 android:text="@string/int_abbrv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"/>
+                android:layout_marginEnd="12dp"/>
             <TextView
                 android:id="@+id/int_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="+6"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:textColor="@color/green_50"/>
         </TableRow>
     </TableLayout>

@@ -81,12 +81,12 @@
                     style="@style/Body1_Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="End"
                     android:text="@string/edit_tag_btn_edit"
                     android:textColor="#6133b4"
                     android:textSize="16sp"
-                    android:gravity="right|center_vertical"
-                    android:paddingRight="0dp"/>
+                    android:gravity="End|center_vertical"
+                    android:paddingEnd="0dp"/>
         </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"

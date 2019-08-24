@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sidebar.tasks">Tareas</string>
-  <string name="sidebar.skills">Habilidades</string>
-  <string name="sidebar.section.social">Social</string>
-  <string name="sidebar.inbox">Mensajes</string>
-  <string name="sidebar.tavern">Taberna</string>
-  <string name="sidebar.party">Equipo</string>
-  <string name="sidebar.purchaseGems">Gemas y Suscripción</string>
-  <string name="sidebar.guilds">Gremios</string>
-  <string name="sidebar.challenges">Desafíos</string>
-  <string name="sidebar.section.inventory">Inventario</string>
-  <string name="sidebar.avatar">Personaje</string>
-  <string name="sidebar.equipment">Equipamiento</string>
-  <string name="sidebar.stable">Establo</string>
-  <string name="sidebar.news">Noticias</string>
-  <string name="sidebar.settings">Ajustes</string>
-  <string name="sidebar.about">Información</string>
+  <string name="sidebar_tasks">Tareas</string>
+  <string name="sidebar_skills">Habilidades</string>
+  <string name="sidebar.section_social">Social</string>
+  <string name="sidebar_inbox">Mensajes</string>
+  <string name="sidebar_tavern">Taberna</string>
+  <string name="sidebar_party">Equipo</string>
+  <string name="sidebar_purchaseGems">Gemas y Suscripción</string>
+  <string name="sidebar_guilds">Gremios</string>
+  <string name="sidebar_challenges">Desafíos</string>
+  <string name="sidebar.section_inventory">Inventario</string>
+  <string name="sidebar_avatar">Personaje</string>
+  <string name="sidebar_equipment">Equipamiento</string>
+  <string name="sidebar_stable">Establo</string>
+  <string name="sidebar_news">Noticias</string>
+    <string name="sidebar_about">Información</string>
   <string name="sidebar_shops">Tiendas</string>
   <string name="sidebar_stats">Atributos</string>
 </resources>

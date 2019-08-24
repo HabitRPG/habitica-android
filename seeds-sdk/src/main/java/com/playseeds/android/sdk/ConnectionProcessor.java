@@ -21,7 +21,6 @@ THE SOFTWARE.
 */
 package com.playseeds.android.sdk;
 
-import android.os.Build;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -65,9 +64,7 @@ public class ConnectionProcessor implements Runnable {
         sslContext_ = sslContext;
 
         // HTTP connection reuse which was buggy pre-froyo
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
-            System.setProperty("http.keepAlive", "false");
-        }
+        System.setProperty("http.keepAlive", "false");
     }
 
     public URLConnection urlConnectionForEventData(final String eventData) throws IOException {

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- All possible font familys -->
-    <string name="font_family_light">sans-serif-light</string>
     <string name="font_family_medium">sans-serif-medium</string>
     <string name="font_family_regular">sans-serif</string>
     <string name="font_family_condensed">sans-serif-condensed</string>
-    <string name="font_family_black">sans-serif-black</string>
-    <string name="font_family_thin">sans-serif-thin</string>
 
     <!-- Titles -->
     <style name="Title1">
@@ -14,10 +11,6 @@
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">0.07</item>
         <item name="android:textColor">?textColorPrimary</item>
-    </style>
-
-    <style name="Title1_WideLetterSpacing"  parent="@style/Title1">
-        <item name="android:letterSpacing">0.133</item>
     </style>
 
     <style name="Title2"  parent="@style/Title1">

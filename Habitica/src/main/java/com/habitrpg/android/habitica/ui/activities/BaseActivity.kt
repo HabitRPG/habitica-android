@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar

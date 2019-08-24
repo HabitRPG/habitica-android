@@ -84,7 +84,6 @@
             android:layout_marginTop="@dimen/spacing_large"/>
     </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
     <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
-        android:id="@+id/moderatorsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/staff_moderators"

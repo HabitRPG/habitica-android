@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sidebar.tasks">Aufgaben</string>
-  <string name="sidebar.skills">Fähigkeiten</string>
-  <string name="sidebar.section.social">Soziales</string>
-  <string name="sidebar.inbox">Nachrichten</string>
-  <string name="sidebar.tavern">Gasthaus</string>
-  <string name="sidebar.party">Gruppe</string>
-  <string name="sidebar.purchaseGems">Edelsteine &amp; Abonnement</string>
-  <string name="sidebar.guilds">Gilden</string>
-  <string name="sidebar.challenges">Wettbewerbe</string>
-  <string name="sidebar.section.inventory">Inventar</string>
-  <string name="sidebar.avatar">Avatar</string>
-  <string name="sidebar.equipment">Ausrüstung</string>
-  <string name="sidebar.stable">Stall</string>
-  <string name="sidebar.news">Neuigkeiten</string>
-  <string name="sidebar.settings">Einstellungen</string>
-  <string name="sidebar.about">Über</string>
+  <string name="sidebar_tasks">Aufgaben</string>
+  <string name="sidebar_skills">Fähigkeiten</string>
+  <string name="sidebar.section_social">Soziales</string>
+  <string name="sidebar_inbox">Nachrichten</string>
+  <string name="sidebar_tavern">Gasthaus</string>
+  <string name="sidebar_party">Gruppe</string>
+  <string name="sidebar_purchaseGems">Edelsteine &amp; Abonnement</string>
+  <string name="sidebar_guilds">Gilden</string>
+  <string name="sidebar_challenges">Wettbewerbe</string>
+  <string name="sidebar.section_inventory">Inventar</string>
+  <string name="sidebar_avatar">Avatar</string>
+  <string name="sidebar_equipment">Ausrüstung</string>
+  <string name="sidebar_stable">Stall</string>
+  <string name="sidebar_news">Neuigkeiten</string>
+    <string name="sidebar_about">Über</string>
   <string name="sidebar_shops">Märkte</string>
   <string name="sidebar_stats">Statuswerte</string>
 </resources>

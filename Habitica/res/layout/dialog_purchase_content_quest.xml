@@ -101,7 +101,6 @@
                 />
         </TableRow>
         <TableRow
-            android:id="@+id/difficulty_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/quest_difficulty_bg"

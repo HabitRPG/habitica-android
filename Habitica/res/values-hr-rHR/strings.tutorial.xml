@@ -12,12 +12,8 @@
   <string name="tutorial_rewards_1">Kupuj opremu za svoj avatar zlatnicima koje zaradiš!</string>
   <string name="tutorial_rewards_2">Također možeš stvarati stvarne Prilagođene Nagrade na osnovu onog što te motivira.</string>
   <string name="tutorial_tasks_complete">To je to za sada. Ako ti treba podsjetnik, pogledaj odjeljak Često postavljenih pitanja.</string>
-  <string name="tutorial_equipment">Kada kupiš opremu, pojavi se ovdje. Tvoja Ratna oprema utječe na tvoje statistike, a tvoj kostim (ako je omogućen) utječe na ono što tvoj avatar nosi.</string>
-  <string name="tutorial_items">Zaradi predmete izvršavanjem zadataka i podizanjem levela. Klikni na predmet da ga iskoristiš!</string>
-  <string name="tutorial_pets">Kako izvršavaš zadatke u stvarnom svijetu, tako imaš nasumičnu šansu za pronalazak jaja i napitaka. Kombiniraj ih kako bi izlegao/la ljubimce.</string>
-  <string name="tutorial_skills">Vještine su posebne sposobnosti koje imaju jake učinke! Klikni na sposobnost kako bi ju iskoristio/la. Koštat će te mane (plava traka), koju zaradiš prijavljujući se svaki dan i izvršavajući svoje zadatke u stvarnom životu. Provjeri Često Postavljena Pitanja u meniju za više informacija!</string>
+    <string name="tutorial_skills">Vještine su posebne sposobnosti koje imaju jake učinke! Klikni na sposobnost kako bi ju iskoristio/la. Koštat će te mane (plava traka), koju zaradiš prijavljujući se svaki dan i izvršavajući svoje zadatke u stvarnom životu. Provjeri Često Postavljena Pitanja u meniju za više informacija!</string>
   <string name="tutorial_party">Ovo je mjesto gdje se ti i tvoji prijatelji možete držati svojih ciljeva i boriti protiv čudovišta pomoću svojih zadataka!</string>
   <string name="tutorial_tavern">Dobrodošao/la u Krčmu, javni chat za ljude svih dobi! Ovdje možeš razgovarati o produktivnosti i postavljati pitanja. Zabavi se!</string>
-  <string name="tutorial_classes">OdmetnikOdmetnikIzaberi hoćeš li postati Ratnik, Čarobnjak, Iscjelitelj ili Lupež! Svaka klasa ima jedinstvenu opremu i vještine. Klikni na (?) da bi saznao/la više!</string>
-  <string name="tutorial_stats">Klikni na sivi gumb kako bi raspodijelio/la mnoštvo svojih statističkih bodova odjednom, ili klikni na strelice kako bi ih dodavao/la jednog po jednog.</string>
+    <string name="tutorial_stats">Klikni na sivi gumb kako bi raspodijelio/la mnoštvo svojih statističkih bodova odjednom, ili klikni na strelice kako bi ih dodavao/la jednog po jednog.</string>
 </resources>

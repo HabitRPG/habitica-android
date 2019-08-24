@@ -31,7 +31,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_gravity="right">
+                        android:layout_gravity="end">
 
                         <Button
                             android:id="@+id/party_invite_accept_button"
@@ -100,7 +100,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingLeft="@dimen/spacing_medium">
+                            android:paddingStart="@dimen/spacing_medium">
                             <TextView
                                 android:id="@+id/quest_title_view"
                                 android:layout_width="match_parent"
@@ -154,7 +154,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/quest.accept"
                             style="@style/HabiticaButton.Green"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginEnd="16dp" />
 
                         <Button
                             android:id="@+id/quest_reject_button"
@@ -177,7 +177,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/quest.begin"
                             style="@style/HabiticaButton.Yellow"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginEnd="16dp" />
 
                         <Button
                             android:id="@+id/quest_cancel_button"

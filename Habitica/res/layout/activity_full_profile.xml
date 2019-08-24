@@ -65,13 +65,11 @@
                                 android:layout_height="@dimen/avatar_header_height"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginEnd="16dp"
-                                android:layout_marginRight="16dp"
                                 app:showBackground="true"
                                 app:showMount="true"
                                 app:showPet="true" />
 
                             <LinearLayout
-                                android:id="@+id/LL_header"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -226,7 +224,7 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:id="@+id/username"
-                            android:layout_gravity="right"/>
+                            android:layout_gravity="end"/>
                     </LinearLayout>
 
                     <Button
@@ -404,7 +402,7 @@
                                 android:id="@+id/current_pet_drawee"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                fresco:actualImageScaleType="centerCrop"/>>
+                                fresco:actualImageScaleType="centerCrop"/>
                         </TableRow>
 
                         <TableRow android:layout_height="wrap_content"

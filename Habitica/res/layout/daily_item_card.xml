@@ -213,7 +213,6 @@
     </FrameLayout>
 
     <View
-        android:id="@+id/checklistSeparator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hairline_height"
         android:background="@color/cell_separator" />

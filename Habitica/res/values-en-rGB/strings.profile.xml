@@ -9,10 +9,7 @@
     <string name="profile_level">Level:</string>
     <string name="profile_class_bonus">Class-Bonus:</string>
     <string name="profile_allocated">Allocated:</string>
-    <string name="profile_boosts">Boosts:</string>
     <string name="profile_private_message">Private Message</string>
     <string name="profile_achievements">Achievements</string>
-    <string name="profile_achievement_ok">OK</string>
-    <string name="profile_qrcode_close">Close</string>
 
 </resources>

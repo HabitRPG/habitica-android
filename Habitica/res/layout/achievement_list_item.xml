@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginRight="@dimen/spacing_large">
+        android:layout_marginEnd="@dimen/spacing_large">
         <TextView
             android:id="@+id/achievement_title"
             android:layout_width="match_parent"
@@ -50,5 +50,5 @@
             android:layout_height="wrap_content"
             style="@style/Caption3"
             android:textColor="@color/gray_100"/>
-    </LinearLayout>r
+    </LinearLayout>
 </LinearLayout>

@@ -8,7 +8,8 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/spacing_medium"
-            android:paddingRight="@dimen/spacing_medium">
+            android:paddingRight="@dimen/spacing_medium"
+            android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"

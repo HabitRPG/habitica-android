@@ -32,7 +32,6 @@
             tools:text="Title"/>
 
         <TextView
-            android:id="@+id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@android:id/title"
@@ -41,7 +40,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/red_10" />
     </RelativeLayout>
-    <LinearLayout android:id="@+id/widget_frame"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"

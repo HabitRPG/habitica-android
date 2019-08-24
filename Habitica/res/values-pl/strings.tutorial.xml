@@ -12,12 +12,8 @@
   <string name="tutorial_rewards_1">Kup wyposażenie dla swojego awatara za złoto, które zarobiłeś!</string>
   <string name="tutorial_rewards_2">Możesz również robić realne nagrody, na podstawie tego, co Cię motywuje.</string>
   <string name="tutorial_tasks_complete">To wszystko na razie. Jeżeli potrzebujesz przypomnienia, sprawdź sekcję FAQ.</string>
-  <string name="tutorial_equipment">Tu pojawia się zakupiony ekwipunek. Wyposażenie Bojowe wpływa na Twoje statystyki, a Kostium (o ile włączony) na wygląd Twojego awatara.</string>
-  <string name="tutorial_items">Zbieraj przedmioty kończąc zadania i zdobywając poziomy. Stuknij przedmiot, żeby go użyć!</string>
-  <string name="tutorial_pets">Kończąc zadania w prawdziwym świecie, masz szansę znalezienia losowych jaj i eliksirów. Połącz je, aby wykluć chowańce</string>
-  <string name="tutorial_skills">Umiejętności to specjalne zdolności, które mają potężne efekty! Stuknij umiejętność, aby jej użyć. To kosztuje Mana (niebieski pasek), którą zyskujesz zaglądając tu codziennie i kończąc zadania w prawdziwym świecie. Aby dowiedzieć się więcej, zaglądnij do FAQ w menu!</string>
+    <string name="tutorial_skills">Umiejętności to specjalne zdolności, które mają potężne efekty! Stuknij umiejętność, aby jej użyć. To kosztuje Mana (niebieski pasek), którą zyskujesz zaglądając tu codziennie i kończąc zadania w prawdziwym świecie. Aby dowiedzieć się więcej, zaglądnij do FAQ w menu!</string>
   <string name="tutorial_party">Tutaj Ty i Twoi przyjaciele pilnujecie wzajemnie swoich celów i walczycie z potworami poprzez swoje zadania!</string>
   <string name="tutorial_tavern">Witaj w Karczmie - publicznym czacie dla wszystkich grup wiekowych! Możecie tu rozmawiać o produktywności i zadawać pytania. Miłej zabawy!</string>
-  <string name="tutorial_classes">Wybierz, czy zostać Wojownikiem, Magiem, Uzdrowicielem, czy Łotrzykiem! Każda klasa ma unikalny zestaw wyposażenia i umiejętności. By dowiedzieć się więcej, stuknij (?) !</string>
-  <string name="tutorial_stats">Naciśnij szary przycisk by przydzielić dużo punktów statystyk na raz albo naciskaj strzałki by przydzielać je pojedynczo. </string>
+    <string name="tutorial_stats">Naciśnij szary przycisk by przydzielić dużo punktów statystyk na raz albo naciskaj strzałki by przydzielać je pojedynczo. </string>
 </resources>

@@ -134,11 +134,7 @@ class NotificationPublisher : BroadcastReceiver() {
             builder.color = ContextCompat.getColor(thisContext, R.color.brand_300)
         }
 
-        notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            builder.build()
-        } else {
-            builder.notification
-        }
+        notification = builder.build()
         notification.defaults = notification.defaults or Notification.DEFAULT_LIGHTS
 
         notification.flags = notification.flags or (Notification.FLAG_AUTO_CANCEL or Notification.FLAG_SHOW_LIGHTS)
