@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -31,6 +32,8 @@ import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.views.FadingViewPager
+import com.habitrpg.shared.habitica.LogLevel
+import com.habitrpg.shared.habitica.Logger
 import com.viewpagerindicator.IconPageIndicator
 import com.viewpagerindicator.IconPagerAdapter
 import io.reactivex.BackpressureStrategy
@@ -71,9 +74,8 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeSubscription.add(userRepository.getUser(hostConfig.userID)
-                .subscribe(Consumer { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
-
+        compositeSubscription.add(userRepository.getUser().subscribe({ this.onUserReceived(it) }, { Logger.log(LogLevel.DEBUG, "USERERROR", it.localizedMessage) }))
+        compositeSubscription.add(userRepository.retrieveUser().subscribeWithErrorHandler(Consumer {}))
         val additionalData = HashMap<String, Any>()
         additionalData["status"] = "displayed"
         AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
@@ -202,6 +204,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             if (!compositeSubscription.isDisposed) {
                 compositeSubscription.dispose()
             }
+            val additionalData = HashMap<String, Any>()
+            additionalData["status"] = "completed"
+            AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+
             this.startMainActivity()
             return
         }
@@ -212,10 +218,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             this.avatarSetupFragment?.setUser(user)
             this.taskSetupFragment?.setUser(user)
         }
-
-        val additionalData = HashMap<String, Any>()
-        additionalData["status"] = "completed"
-        AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
     }
 
     private fun startMainActivity() {

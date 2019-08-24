@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.setup
 
-import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -95,13 +94,9 @@ class AvatarSetupFragment : BaseFragment() {
                 loadCustomizations()
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
 
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
         bodyButton?.setOnClickListener { selectedBodyCategory() }
@@ -151,7 +146,6 @@ class AvatarSetupFragment : BaseFragment() {
             avatarView?.setAvatar(it)
         }
     }
-
 
     private fun selectedBodyCategory() {
         activateButton(bodyButton)
@@ -230,14 +224,9 @@ class AvatarSetupFragment : BaseFragment() {
         val location = IntArray(2)
         val params = this.caretView?.layoutParams as? RelativeLayout.LayoutParams
         this.activeButton?.getLocationOnScreen(location)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            val r = resources
-            val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40f, r.displayMetrics).toInt()
-            params?.marginStart = location[0] + px
-            this.caretView?.layoutParams = params
-        } else {
-            caretView?.visibility = View.GONE
-        }
-
+        val r = resources
+        val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40f, r.displayMetrics).toInt()
+        params?.marginStart = location[0] + px
+        this.caretView?.layoutParams = params
     }
 }

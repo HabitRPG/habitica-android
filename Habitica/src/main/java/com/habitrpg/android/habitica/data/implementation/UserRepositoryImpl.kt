@@ -352,8 +352,9 @@ class UserRepositoryImpl(localRepository: UserLocalRepository, apiClient: ApiCli
         if (newUser.profile != null) {
             copiedUser.profile = newUser.profile
         }
+        copiedUser.versionNumber = newUser.versionNumber
 
         localRepository.saveUser(copiedUser)
-        return oldUser
+        return copiedUser
     }
 }
