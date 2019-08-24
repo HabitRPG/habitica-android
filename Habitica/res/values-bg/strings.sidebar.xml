@@ -2,14 +2,14 @@
 <resources>
   <string name="sidebar_tasks">Задачи</string>
   <string name="sidebar_skills">Умения</string>
-  <string name="sidebar.section_social">Общност</string>
+  <string name="sidebar_section_social">Общност</string>
   <string name="sidebar_inbox">Съобщения</string>
   <string name="sidebar_tavern">Кръчма</string>
   <string name="sidebar_party">Група</string>
   <string name="sidebar_purchaseGems">Купуване на диаманти</string>
   <string name="sidebar_guilds">Гилдии</string>
   <string name="sidebar_challenges">Предизвикателства</string>
-  <string name="sidebar.section_inventory">Инвентар</string>
+  <string name="sidebar_section_inventory">Инвентар</string>
   <string name="sidebar_avatar">Герой</string>
   <string name="sidebar_equipment">Екипировка</string>
   <string name="sidebar_stable">Конюшня</string>

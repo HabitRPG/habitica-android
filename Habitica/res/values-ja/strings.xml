@@ -97,10 +97,10 @@
     <string name="reminder_title">忘れずにタスクをチェックしましょう</string>
     <string name="unlock_lvl_11">レベル11 でアンロック</string>
     <string name="forgot_pw_btn">パスワードがわからない</string>
-  <string name="tavern.inn_checkOut">日課を再開する</string>
-  <string name="tavern.inn_rest">日課を中断する</string>
-  <string name="reward.dialog_buy">買う</string>
-  <string name="reward.dialog_dismiss">中止</string>
+  <string name="tavern_inn_checkOut">日課を再開する</string>
+  <string name="tavern_inn_rest">日課を中断する</string>
+  <string name="reward_dialog_buy">買う</string>
+  <string name="reward_dialog_dismiss">中止</string>
   <string name="party">パーティー</string>
   <string name="chat">チャット</string>
   <string name="members">メンバー</string>
@@ -311,13 +311,13 @@
   <string name="widget_dailies">Habitica の日課</string>
   <string name="widget_todo_list">Habitica のTo-Do リスト</string>
     <string name="google_services_missing">Google Play サービスが見つかりません。</string>
-  <string name="gem.purchase_toolbartitle">購入</string>
-  <string name="gem.purchase_title">ジェムを購入することで、開発者を支援し、Habitica の運営を維持する手助けができます</string>
-  <string name="gem.purchase_subtitle">ジェムで、楽しいおまけを買うことができます : </string>
-  <string name="gem.purchase_listitem1">アバター用のクールなファッション</string>
-  <string name="gem.purchase_listitem2">すんごい背景</string>
-  <string name="gem.purchase_listitem3">ペットのたまごを獲得できるクエスト</string>
-  <string name="gem.purchase_listitem4">レベル 100 以前でのクラス変更</string>
+  <string name="gem_purchase_toolbartitle">購入</string>
+  <string name="gem_purchase_title">ジェムを購入することで、開発者を支援し、Habitica の運営を維持する手助けができます</string>
+  <string name="gem_purchase_subtitle">ジェムで、楽しいおまけを買うことができます : </string>
+  <string name="gem_purchase_listitem1">アバター用のクールなファッション</string>
+  <string name="gem_purchase_listitem2">すんごい背景</string>
+  <string name="gem_purchase_listitem3">ペットのたまごを獲得できるクエスト</string>
+  <string name="gem_purchase_listitem4">レベル 100 以前でのクラス変更</string>
   <string name="support_habitica">Habitica の支援</string>
   <string name="skill_transformation_use">唱える</string>
   <string name="hatching_market_info">ほしい落とし物が見つからない?　市場をチェックしてみよう!</string>
@@ -340,16 +340,16 @@
   <string name="subscriptions">寄付</string>
   <string name="subscription_duration">%sごとに繰り返す</string>
   <string name="subscribe">寄付する</string>
-  <string name="subscribe.listitem1_description">商人・アレクサンダーが、ジェム1個を20ゴールドで売ってくれます！
+  <string name="subscribe_listitem1_description">商人・アレクサンダーが、ジェム1個を20ゴールドで売ってくれます！
 \n
 \nアレクサンダーと1ヵ月の間に取り引きできるジェムの数は、最初は25個に限定されていますが、寄付期間によって増えます。
 \n
 \n寄付の継続3カ月ごとにその数が5個ずつ増えていき、最大で月に50個を買うことができます！</string>
-  <string name="subscribe.listitem2_description">毎月、アバターを個性的に装飾するアイテムが手に入ります！
+  <string name="subscribe_listitem2_description">毎月、アバターを個性的に装飾するアイテムが手に入ります！
 \n
 \nさらに寄付の継続3カ月ごとに、謎のタイムトラベラーによって、歴史的（そして未来的！）な装飾アイテムが入手可能になります。</string>
-  <string name="subscribe.listitem3_description">完了した To-Do やタスクの履歴を、より長期間閲覧可能になります。</string>
-  <string name="subscribe.listitem4_description">落とし物の上限が2倍になり、毎日の完了したタスクから、より多くのアイテムを獲得することができます。動物小屋のコンプリートも早くなります！</string>
+  <string name="subscribe_listitem3_description">完了した To-Do やタスクの履歴を、より長期間閲覧可能になります。</string>
+  <string name="subscribe_listitem4_description">落とし物の上限が2倍になり、毎日の完了したタスクから、より多くのアイテムを獲得することができます。動物小屋のコンプリートも早くなります！</string>
   <string name="subscribe1month_gemcap">上限 25 ジェム</string>
   <string name="subscribe3month_gemcap">上限 30 ジェム</string>
   <string name="subscribe6month_gemcap">上限 35 ジェム</string>

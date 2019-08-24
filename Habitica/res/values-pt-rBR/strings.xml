@@ -97,10 +97,10 @@
     <string name="reminder_title">Lembre-se de marcar suas Diárias</string>
     <string name="unlock_lvl_11">Desbloqueie no nível 11</string>
     <string name="forgot_pw_btn">Esqueci a senha</string>
-  <string name="tavern.inn_checkOut">Reativar Diárias</string>
-  <string name="tavern.inn_rest">Pausar Diárias</string>
-  <string name="reward.dialog_buy">Comprar</string>
-  <string name="reward.dialog_dismiss">Desfazer</string>
+  <string name="tavern_inn_checkOut">Reativar Diárias</string>
+  <string name="tavern_inn_rest">Pausar Diárias</string>
+  <string name="reward_dialog_buy">Comprar</string>
+  <string name="reward_dialog_dismiss">Desfazer</string>
   <string name="party">Grupo</string>
   <string name="chat">Bate-papo</string>
   <string name="members">Membros</string>
@@ -311,13 +311,13 @@
   <string name="widget_dailies">Habitica Diárias</string>
   <string name="widget_todo_list">Lista de Afazeres do Habitica</string>
     <string name="google_services_missing">Servidores da Google Play não foram encontrados.</string>
-  <string name="gem.purchase_toolbartitle">Comprar</string>
-  <string name="gem.purchase_title">Comprar gemas irá contribuir com os desenvolvedores e ajudará a manter o Habitica funcionando</string>
-  <string name="gem.purchase_subtitle">Gemas permitem que você compre acessórios diferenciados para a sua conta, incluindo:</string>
-  <string name="gem.purchase_listitem1">Fantasias super legais para o seu avatar</string>
-  <string name="gem.purchase_listitem2">Cenários Super Legais</string>
-  <string name="gem.purchase_listitem3">Missões que recompensam você com ovos de mascotes</string>
-  <string name="gem.purchase_listitem4">Habilidade de trocar a sua classe antes do nível 100</string>
+  <string name="gem_purchase_toolbartitle">Comprar</string>
+  <string name="gem_purchase_title">Comprar gemas irá contribuir com os desenvolvedores e ajudará a manter o Habitica funcionando</string>
+  <string name="gem_purchase_subtitle">Gemas permitem que você compre acessórios diferenciados para a sua conta, incluindo:</string>
+  <string name="gem_purchase_listitem1">Fantasias super legais para o seu avatar</string>
+  <string name="gem_purchase_listitem2">Cenários Super Legais</string>
+  <string name="gem_purchase_listitem3">Missões que recompensam você com ovos de mascotes</string>
+  <string name="gem_purchase_listitem4">Habilidade de trocar a sua classe antes do nível 100</string>
   <string name="support_habitica">Contribua com o Habitica</string>
   <string name="skill_transformation_use">usar</string>
   <string name="hatching_market_info">Não conseguindo o drop certo? Dê uma olhada no Mercado!</string>
@@ -341,12 +341,12 @@
   <string name="subscription_duration">Acontece a cada %s</string>
   <string name="subscription_duration_norenew">Por%s</string>
   <string name="subscribe">Assinar</string>
-  <string name="subscribe.listitem1_description">Alexandre, o Mercador irá agora vender a você Gemas por 20 ouros cada uma!\n\nSuas remessas mensais são inicialmente restritas a 25 Gemas por mês, aumentam baseado no seu tempo de assinatura. A capacidade aumenta em 5 Gemas para cada três meses de assinatura, limitando-se a um máximo de 50 Gemas por mês!</string>
-  <string name="subscribe.listitem2_description">Cada mês você irá receber um item cosmético único para o seu personagem!
+  <string name="subscribe_listitem1_description">Alexandre, o Mercador irá agora vender a você Gemas por 20 ouros cada uma!\n\nSuas remessas mensais são inicialmente restritas a 25 Gemas por mês, aumentam baseado no seu tempo de assinatura. A capacidade aumenta em 5 Gemas para cada três meses de assinatura, limitando-se a um máximo de 50 Gemas por mês!</string>
+  <string name="subscribe_listitem2_description">Cada mês você irá receber um item cosmético único para o seu personagem!
 \n
 \nAlém disso, para cada três meses de inscrição, os Viajantes Misteriosos do Tempo irão te dar acesso a itens cosméticos históricos (e futuristas).</string>
-  <string name="subscribe.listitem3_description">Torna Afazeres completos e histórico de tarefas disponíveis por mais tempo.</string>
-  <string name="subscribe.listitem4_description">A capacidade de drop dobrada fará com que você receba mais itens de atividades completas todos os dias ajudando você a completar o seu estábulo mais rápido!</string>
+  <string name="subscribe_listitem3_description">Torna Afazeres completos e histórico de tarefas disponíveis por mais tempo.</string>
+  <string name="subscribe_listitem4_description">A capacidade de drop dobrada fará com que você receba mais itens de atividades completas todos os dias ajudando você a completar o seu estábulo mais rápido!</string>
   <string name="subscribe1month_gemcap">Limite de 25 Gemas</string>
   <string name="subscribe3month_gemcap">Limite de 30 Gemas</string>
   <string name="subscribe6month_gemcap">Limite de 35 Gemas</string>

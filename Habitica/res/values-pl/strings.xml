@@ -95,10 +95,10 @@
   <string name="new_checklist_item">nowa część zadania</string>
   <string name="unlock_lvl_11">Odblokuj na poziomie 11</string>
   <string name="forgot_pw_btn">Zapomniane hasło</string>
-  <string name="tavern.inn_checkOut">Reaktywuj swoje codzienne</string>
-  <string name="tavern.inn_rest">Zapauzuj swoje codzienne</string>
-  <string name="reward.dialog_buy">Kup</string>
-  <string name="reward.dialog_dismiss">Anuluj</string>
+  <string name="tavern_inn_checkOut">Reaktywuj swoje codzienne</string>
+  <string name="tavern_inn_rest">Zapauzuj swoje codzienne</string>
+  <string name="reward_dialog_buy">Kup</string>
+  <string name="reward_dialog_dismiss">Anuluj</string>
   <string name="party">Drużyna</string>
   <string name="chat">Czat</string>
   <string name="members">Członkowie</string>
@@ -300,13 +300,13 @@
   <string name="widget_dailies">Codzienne Habitiki</string>
   <string name="widget_todo_list">Lista Do-Zrobienia Habitiki</string>
   <string name="google_services_missing">Nie znaleziono usługi Google Play.</string>
-  <string name="gem.purchase_toolbartitle">Zamów</string>
-  <string name="gem.purchase_title">Kupując klejnoty, wspierasz deweloperów Habitiki i pozwalasz projektowi istnieć</string>
-  <string name="gem.purchase_subtitle">Klejnoty pozwalają dokupić ekstra dodatki do konta, na przykład:</string>
-  <string name="gem.purchase_listitem1">Świetne kostiumy dla awatara</string>
-  <string name="gem.purchase_listitem2">Genialne tła</string>
-  <string name="gem.purchase_listitem3">Zadania, w których nagrodą są jaja</string>
-  <string name="gem.purchase_listitem4">Możliwość zmiany klasy przed osiągnięciem 100. poziomu</string>
+  <string name="gem_purchase_toolbartitle">Zamów</string>
+  <string name="gem_purchase_title">Kupując klejnoty, wspierasz deweloperów Habitiki i pozwalasz projektowi istnieć</string>
+  <string name="gem_purchase_subtitle">Klejnoty pozwalają dokupić ekstra dodatki do konta, na przykład:</string>
+  <string name="gem_purchase_listitem1">Świetne kostiumy dla awatara</string>
+  <string name="gem_purchase_listitem2">Genialne tła</string>
+  <string name="gem_purchase_listitem3">Zadania, w których nagrodą są jaja</string>
+  <string name="gem_purchase_listitem4">Możliwość zmiany klasy przed osiągnięciem 100. poziomu</string>
   <string name="support_habitica">Wesprzyj Habitikę</string>
   <string name="skill_transformation_use">użyj</string>
   <string name="hatching_market_info">Nie znajdujesz poszukiwanych prezentów? Sprawdź na Targu!</string>
@@ -329,8 +329,8 @@
   <string name="subscriptions">Subskrypcje</string>
   <string name="subscription_duration">Powtarzaj co %s</string>
   <string name="subscribe">Subskrybuj</string>
-  <string name="subscribe.listitem1_description">Kupiec Alexander będzie ci teraz sprzedawać Klejnoty po 20 złota każdy!\n\nJego miesięczne wysyłki są początkowo ograniczone do 25 Klejnotów na miesiąc, ale mogą się zwiększyć na podstawie długości twojego abonamentu.\n\nLimit zwiększa się o 5 Klejnotów co każde trzy miesiące ciągłego abonamentu, aż do maksymalnie 50 Klejnotów na miesiąc!</string>
-  <string name="subscribe.listitem3_description">Historia ukończonych Do-Zrobienia i zadań jest dostępna dłużej.</string>
+  <string name="subscribe_listitem1_description">Kupiec Alexander będzie ci teraz sprzedawać Klejnoty po 20 złota każdy!\n\nJego miesięczne wysyłki są początkowo ograniczone do 25 Klejnotów na miesiąc, ale mogą się zwiększyć na podstawie długości twojego abonamentu.\n\nLimit zwiększa się o 5 Klejnotów co każde trzy miesiące ciągłego abonamentu, aż do maksymalnie 50 Klejnotów na miesiąc!</string>
+  <string name="subscribe_listitem3_description">Historia ukończonych Do-Zrobienia i zadań jest dostępna dłużej.</string>
   <string name="subscription_hourglasses">+%d Mistycznej Klepsydry</string>
   <string name="payment_method">Metoda płatności</string>
   <string name="subscription">Subskrypcja</string>
@@ -581,10 +581,10 @@
     <string name="evolved_pet_title">Oswoiłeś %s, idź na przejażdżkę!</string>
     <string name="opting_out_progress">Wycofywanie się</string>
     <string name="subscription_duration_norenew">Na %s</string>
-    <string name="subscribe.listitem2_description">Co miesiąc dostaniesz wyjątkowy kosmetyczny przedmiot który możesz założyć na swój awatar!
+    <string name="subscribe_listitem2_description">Co miesiąc dostaniesz wyjątkowy kosmetyczny przedmiot który możesz założyć na swój awatar!
 \n
 \nDodatkowo, za każde trzy miesiące ciągłej subskrypcji, Tajemniczy Podróżnicy w Czasie zapewnią ci dostęp do historycznych (i futurystycznych!) przedmiotów kosmetycznych.</string>
-    <string name="subscribe.listitem4_description">Podwojone limity łupów pozwolą ci otrzymać więcej przedmiotów każdego dnia, za ukończone zadania, co sprawi że twoja stajnia wypełni się szybciej!</string>
+    <string name="subscribe_listitem4_description">Podwojone limity łupów pozwolą ci otrzymać więcej przedmiotów każdego dnia, za ukończone zadania, co sprawi że twoja stajnia wypełni się szybciej!</string>
     <string name="subscribe1month_gemcap">Limit 25 klejnotów</string>
     <string name="subscribe3month_gemcap">Limit 3 klejnotów</string>
     <string name="subscribe6month_gemcap">Limit 35 klejnotów</string>

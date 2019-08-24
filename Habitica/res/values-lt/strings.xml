@@ -87,10 +87,10 @@
   <string name="new_checklist_item">naujas sąrašo punktas</string>
     <string name="unlock_lvl_11">Atsidengia pasiekus 11 lygį</string>
     <string name="forgot_pw_btn">Pamiršau Slaptažodį</string>
-  <string name="tavern.inn_checkOut">Atnaujinti Kasdienes Užduotis</string>
-  <string name="tavern.inn_rest">Sustabdyti Kasdienes Užduotis</string>
-  <string name="reward.dialog_buy">Pirkti</string>
-  <string name="reward.dialog_dismiss">Atšaukti</string>
+  <string name="tavern_inn_checkOut">Atnaujinti Kasdienes Užduotis</string>
+  <string name="tavern_inn_rest">Sustabdyti Kasdienes Užduotis</string>
+  <string name="reward_dialog_buy">Pirkti</string>
+  <string name="reward_dialog_dismiss">Atšaukti</string>
   <string name="party">Grupė</string>
   <string name="chat">Pokalbiai</string>
   <string name="members">Nariai</string>
@@ -260,13 +260,13 @@
   <string name="widget_habit_button">Habitica Pažymėti Įprotį</string>
   <string name="widget_dailies">Habitica Kasdienės Užduotys</string>
     <string name="google_services_missing">Nepavyko rasti Google play paslaugos.</string>
-  <string name="gem.purchase_toolbartitle">Pirkti</string>
-  <string name="gem.purchase_title">Brangakmenių pirkimas remia kūrėjus ir padeda išlaikiti Habitica</string>
-  <string name="gem.purchase_subtitle">Brangakmeniai tau leidžia pirkti įdomus paskyros priedus, įskaitant:</string>
-  <string name="gem.purchase_listitem1">Gražūs veikėjo kostiumai</string>
-  <string name="gem.purchase_listitem2">Nuostabūs fonai</string>
-  <string name="gem.purchase_listitem3">Misijos kuriose gali rasti augintinių kiaušinių</string>
-  <string name="gem.purchase_listitem4">Galimybė pakeisti savo klasę nepasiekus 100 lygio</string>
+  <string name="gem_purchase_toolbartitle">Pirkti</string>
+  <string name="gem_purchase_title">Brangakmenių pirkimas remia kūrėjus ir padeda išlaikiti Habitica</string>
+  <string name="gem_purchase_subtitle">Brangakmeniai tau leidžia pirkti įdomus paskyros priedus, įskaitant:</string>
+  <string name="gem_purchase_listitem1">Gražūs veikėjo kostiumai</string>
+  <string name="gem_purchase_listitem2">Nuostabūs fonai</string>
+  <string name="gem_purchase_listitem3">Misijos kuriose gali rasti augintinių kiaušinių</string>
+  <string name="gem_purchase_listitem4">Galimybė pakeisti savo klasę nepasiekus 100 lygio</string>
   <string name="support_habitica">Paremti Habitica</string>
   <string name="skill_transformation_use">naudoti</string>
   <string name="hatching_market_info">Negaunate reikiamų lašiukų? Patikrinkite turguje!</string>
@@ -347,16 +347,16 @@
     <string name="subscription_duration">Pasikartojantis kiekvienas %s</string>
     <string name="subscription_duration_norenew">Dėl %s</string>
     <string name="subscribe">Prenumeruoti</string>
-    <string name="subscribe.listitem1_description">Aleksandras Prekybininkas dabar parduos jums brangakmenius po 20 aukso!
+    <string name="subscribe_listitem1_description">Aleksandras Prekybininkas dabar parduos jums brangakmenius po 20 aukso!
 \n
 \nJo mėnesinės siuntos iš pradžių yra ribojamos per 25 brangakmenius per mėnesį, tačiau jos gali padidėti pagal jūsų prenumeratos ilgį.
 \n
 \nViršutinė prenumerata kas tris mėnesius iš eilės padidėja 5 brangakmeniais, ne daugiau kaip 50 brangakmenių per mėnesį!</string>
-    <string name="subscribe.listitem2_description">Kiekvieną mėnesį gausite unikalų kosmetikos elementą savo avatarui!
+    <string name="subscribe_listitem2_description">Kiekvieną mėnesį gausite unikalų kosmetikos elementą savo avatarui!
 \n
 \nBe to, kas tris mėnesius iš eilės prenumeratos, paslaptingas laikas keliautojai suteiks jums prieigą prie istorinių (ir futuristinių!) Kosmetikos gaminių.</string>
-    <string name="subscribe.listitem3_description">Padaro užbaigtą darbų atlikimą ir užduočių istoriją ilgiau.</string>
-    <string name="subscribe.listitem4_description">Dukart lašų dangteliai leis jums kiekvieną dieną gauti daugiau elementų iš jūsų atliktų užduočių, o tai padės greičiau atlikti savo stabilumą!</string>
+    <string name="subscribe_listitem3_description">Padaro užbaigtą darbų atlikimą ir užduočių istoriją ilgiau.</string>
+    <string name="subscribe_listitem4_description">Dukart lašų dangteliai leis jums kiekvieną dieną gauti daugiau elementų iš jūsų atliktų užduočių, o tai padės greičiau atlikti savo stabilumą!</string>
     <string name="subscribe1month_gemcap">25 perlas riba</string>
     <string name="subscribe3month_gemcap">30 perlas riba</string>
     <string name="subscribe6month_gemcap">35 perlas riba</string>

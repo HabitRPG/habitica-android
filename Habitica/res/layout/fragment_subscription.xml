@@ -94,7 +94,7 @@
                 style="@style/subscriptionBox">
 
                 <TextView
-                    android:text="@string/subscribe.listitem1"
+                    android:text="@string/subscribe_listitem1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/SubscriptionListTitle"
@@ -111,7 +111,7 @@
 
             <TextView
                 android:id="@+id/subscribe.listitem1.description"
-                android:text="@string/subscribe.listitem1.description"
+                android:text="@string/subscribe_listitem1_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/SubscriptionListDescription"
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 style="@style/subscriptionBox">
                 <TextView
-                    android:text="@string/subscribe.listitem2"
+                    android:text="@string/subscribe_listitem2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/SubscriptionListTitle"
@@ -139,7 +139,7 @@
 
             <TextView
                 android:id="@+id/subscribe.listitem2.description"
-                android:text="@string/subscribe.listitem2.description"
+                android:text="@string/subscribe_listitem2_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/SubscriptionListDescription"
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 style="@style/subscriptionBox">
                 <TextView
-                    android:text="@string/subscribe.listitem3"
+                    android:text="@string/subscribe_listitem3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/SubscriptionListTitle"
@@ -167,7 +167,7 @@
 
             <TextView
                 android:id="@+id/subscribe.listitem3.description"
-                android:text="@string/subscribe.listitem3.description"
+                android:text="@string/subscribe_listitem3_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/SubscriptionListDescription"
@@ -180,7 +180,7 @@
                 style="@style/subscriptionBox"
                 android:layout_marginBottom="8dp">
                 <TextView
-                    android:text="@string/subscribe.listitem4"
+                    android:text="@string/subscribe_listitem4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/SubscriptionListTitle"
@@ -195,7 +195,7 @@
 
             <TextView
                 android:id="@+id/subscribe.listitem4.description"
-                android:text="@string/subscribe.listitem4.description"
+                android:text="@string/subscribe_listitem4_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/SubscriptionListDescription"
@@ -237,28 +237,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:recurringText="@string/month"
-                    app:gemCapText="@string/subscribe1month.gemcap"/>
+                    app:gemCapText="@string/subscribe1month_gemcap"/>
 
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                     android:id="@+id/subscription3month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:recurringText="@string/three_months"
-                    app:gemCapText="@string/subscribe3month.gemcap"
+                    app:gemCapText="@string/subscribe3month_gemcap"
                     app:hourGlassCount="1" />
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                     android:id="@+id/subscription6month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:recurringText="@string/six_months"
-                    app:gemCapText="@string/subscribe6month.gemcap"
+                    app:gemCapText="@string/subscribe6month_gemcap"
                     app:hourGlassCount="2" />
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                     android:id="@+id/subscription12month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:recurringText="@string/twelve_months"
-                    app:gemCapText="@string/subscribe12month.gemcap"
+                    app:gemCapText="@string/subscribe12month_gemcap"
                     app:hourGlassCount="4" >
 
                 </com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView>
@@ -309,7 +309,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="20dp"
-                android:text="@string/subscribe.title"
+                android:text="@string/subscribe_title"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:textColor="@color/gray_300"

@@ -2,14 +2,14 @@
 <resources>
   <string name="sidebar_tasks">Attività</string>
   <string name="sidebar_skills">Abilità</string>
-  <string name="sidebar.section_social">Social</string>
+  <string name="sidebar_section_social">Social</string>
   <string name="sidebar_inbox">Messaggi</string>
   <string name="sidebar_tavern">Taverna</string>
   <string name="sidebar_party">Squadra</string>
   <string name="sidebar_purchaseGems">Gemme e abbonamento</string>
   <string name="sidebar_guilds">Gilde</string>
   <string name="sidebar_challenges">Sfide</string>
-  <string name="sidebar.section_inventory">Inventario</string>
+  <string name="sidebar_section_inventory">Inventario</string>
   <string name="sidebar_avatar">Avatar</string>
   <string name="sidebar_equipment">Equipaggiamento</string>
   <string name="sidebar_stable">Scuderia</string>

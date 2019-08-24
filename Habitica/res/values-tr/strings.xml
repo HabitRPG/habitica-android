@@ -97,10 +97,10 @@
     <string name="reminder_title">İşlerini işaretlemeyi unutma</string>
     <string name="unlock_lvl_11">Seviye 11\'de açılır</string>
     <string name="forgot_pw_btn">Şifremi Unuttum</string>
-  <string name="tavern.inn_checkOut">Günlük İşlerini tekrar etkinleştir</string>
-  <string name="tavern.inn_rest">Günlük İşleri durdur</string>
-  <string name="reward.dialog_buy">Satın al</string>
-  <string name="reward.dialog_dismiss">Yoksay</string>
+  <string name="tavern_inn_checkOut">Günlük İşlerini tekrar etkinleştir</string>
+  <string name="tavern_inn_rest">Günlük İşleri durdur</string>
+  <string name="reward_dialog_buy">Satın al</string>
+  <string name="reward_dialog_dismiss">Yoksay</string>
   <string name="party">Takım</string>
   <string name="chat">Sohbet</string>
   <string name="members">Üyeler</string>
@@ -307,13 +307,13 @@
   <string name="widget_dailies">Habitica Günlük İşler</string>
   <string name="widget_todo_list">Habitica Yapılacak İşler Listesi</string>
     <string name="google_services_missing">Google play services bulunamadı.</string>
-  <string name="gem.purchase_toolbartitle">Satın al</string>
-  <string name="gem.purchase_title">Elmas satın almak geliştiricilere destek verir ve Habitica\'nın çalışmaya devam etmesine yardım eder</string>
-  <string name="gem.purchase_subtitle">Elmaslar hesabın için eğlenceli ekstralar satın almanı sağlar, dahil olmak üzere:</string>
-  <string name="gem.purchase_listitem1">Avatarın için havalı kostümler</string>
-  <string name="gem.purchase_listitem2">Muhteşem arka planlar</string>
-  <string name="gem.purchase_listitem3">Sizi evcil hayvan yumurtası ile ödüllendiren görevler</string>
-  <string name="gem.purchase_listitem4">100. seviyeden önce sınıf değiştirme imkânı</string>
+  <string name="gem_purchase_toolbartitle">Satın al</string>
+  <string name="gem_purchase_title">Elmas satın almak geliştiricilere destek verir ve Habitica\'nın çalışmaya devam etmesine yardım eder</string>
+  <string name="gem_purchase_subtitle">Elmaslar hesabın için eğlenceli ekstralar satın almanı sağlar, dahil olmak üzere:</string>
+  <string name="gem_purchase_listitem1">Avatarın için havalı kostümler</string>
+  <string name="gem_purchase_listitem2">Muhteşem arka planlar</string>
+  <string name="gem_purchase_listitem3">Sizi evcil hayvan yumurtası ile ödüllendiren görevler</string>
+  <string name="gem_purchase_listitem4">100. seviyeden önce sınıf değiştirme imkânı</string>
   <string name="support_habitica">Habitica\'ya Destek Ol</string>
   <string name="skill_transformation_use">kullan</string>
   <string name="hatching_market_info">İş tamamlarken doğru eşyalar düşmedi mi? Pazara bir göz at!</string>
@@ -336,16 +336,16 @@
   <string name="subscriptions">Abonelikler</string>
   <string name="subscription_duration">Her %s tekrar eder</string>
   <string name="subscribe">Abone Ol</string>
-  <string name="subscribe.listitem1_description">Tüccar İskender artık sana tanesi 20 altına elmas satacak!
+  <string name="subscribe_listitem1_description">Tüccar İskender artık sana tanesi 20 altına elmas satacak!
 \n
 \nAylık sevkiyatı başlangıçta aylık 25 Elmas ile sınırlıdır, ama ardışık abonelik süresine göre artabilir.
 \n
 \nElmas limiti her üç aylık ardışık abonelik için 5 artar, toplam üst limit olan aylık 50 Elmasa kadar artabilir!</string>
-  <string name="subscribe.listitem2_description">Her ay avatarın için özel görsel bir eşya alırsın!
+  <string name="subscribe_listitem2_description">Her ay avatarın için özel görsel bir eşya alırsın!
 \n
 \nAyrıca, her üç aylık ardışık abonelik için, Gizemli Zaman Yolcuları sana tarihi (ve fütüristik!) görsel eşyalara erişim sağlar.</string>
-  <string name="subscribe.listitem3_description">Tamamlanmış Yapılacak İş ve İş geçmişlerine daha uzun süre erişim sağlar.</string>
-  <string name="subscribe.listitem4_description">İki katı ganimet limiti tamamladığın işlerinden her gün daha fazla eşya almana ve ahırını daha hızlı tamamlamana yardımcı olur!</string>
+  <string name="subscribe_listitem3_description">Tamamlanmış Yapılacak İş ve İş geçmişlerine daha uzun süre erişim sağlar.</string>
+  <string name="subscribe_listitem4_description">İki katı ganimet limiti tamamladığın işlerinden her gün daha fazla eşya almana ve ahırını daha hızlı tamamlamana yardımcı olur!</string>
   <string name="subscribe1month_gemcap">25 Elmas limiti</string>
   <string name="subscribe3month_gemcap">30 Elmas limiti</string>
   <string name="subscribe6month_gemcap">35 Elmas limiti</string>

@@ -98,7 +98,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="35sp"
             android:background="@drawable/rounded_purple_square"
-            android:text="@string/about.rate_our_app"
+            android:text="@string/about_rate_our_app"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/card_medium_text" />
@@ -110,7 +110,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20sp"
             android:background="@drawable/rounded_purple_square"
-            android:text="@string/about.bugreport"
+            android:text="@string/about_bugreport"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/card_medium_text" />
@@ -122,7 +122,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20sp"
             android:background="@drawable/rounded_purple_square"
-            android:text="@string/about.give_us_feedback"
+            android:text="@string/about_give_us_feedback"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/card_medium_text" />
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="20sp"
-            android:text="@string/about.habitica_open_source"
+            android:text="@string/about_habitica_open_source"
             android:textSize="@dimen/card_small_text" />
 
         <Button
@@ -143,7 +143,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10sp"
             android:background="@drawable/rounded_purple_square"
-            android:text="@string/about.source_code"
+            android:text="@string/about_source_code"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/card_medium_text" />

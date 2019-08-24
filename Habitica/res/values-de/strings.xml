@@ -341,10 +341,10 @@
   <string name="subscription_duration">Alle %s wiederholen</string>
   <string name="subscription_duration_norenew">Für %s</string>
   <string name="subscribe">Abonnieren</string>
-  <string name="subscribe.listitem1_description">Alexander der Händler wird Dir nun Edelsteine für jeweils 20 Goldmünzen pro Stück verkaufen.\n\nSeine monatlichen Lieferungen sind zunächst auf 25 Edelsteine pro Monat beschränkt, welche jedoch durch die Dauer Deines Abonnements erhöht werden.\n\nDas Limit steigt um 5 Edelsteine für jeweils drei durchgehend abonnierte Monate, bis zu einem Maximum von 50 Edelsteinen pro Monat!</string>
-  <string name="subscribe.listitem2_description">Jeden Monat wirst Du einen einzigartigen optischen Gegenstand für Deinen Avatar erhalten.\n\nAußerdem gewährt Dir der Mysteriöse Zeitreisende für jeweils drei durchgehend abonnierte Monate Zugang zu historischen (und futuristischen!) optischen Gegenständen.</string>
-  <string name="subscribe.listitem3_description">Verlängert die Historie erledigter To-Dos und Aufgaben.</string>
-  <string name="subscribe.listitem4_description">Verdoppelte Beute-Limits ermöglichen es Dir, täglich von erledigten Aufgaben mehr Gegenstände zu finden und deinen Stall schneller zu vervollständigen!</string>
+  <string name="subscribe_listitem1_description">Alexander der Händler wird Dir nun Edelsteine für jeweils 20 Goldmünzen pro Stück verkaufen.\n\nSeine monatlichen Lieferungen sind zunächst auf 25 Edelsteine pro Monat beschränkt, welche jedoch durch die Dauer Deines Abonnements erhöht werden.\n\nDas Limit steigt um 5 Edelsteine für jeweils drei durchgehend abonnierte Monate, bis zu einem Maximum von 50 Edelsteinen pro Monat!</string>
+  <string name="subscribe_listitem2_description">Jeden Monat wirst Du einen einzigartigen optischen Gegenstand für Deinen Avatar erhalten.\n\nAußerdem gewährt Dir der Mysteriöse Zeitreisende für jeweils drei durchgehend abonnierte Monate Zugang zu historischen (und futuristischen!) optischen Gegenständen.</string>
+  <string name="subscribe_listitem3_description">Verlängert die Historie erledigter To-Dos und Aufgaben.</string>
+  <string name="subscribe_listitem4_description">Verdoppelte Beute-Limits ermöglichen es Dir, täglich von erledigten Aufgaben mehr Gegenstände zu finden und deinen Stall schneller zu vervollständigen!</string>
   <string name="subscription_hourglasses">+%d Mystische Sanduhr</string>
   <string name="payment_method">Zahlungsmethode</string>
   <string name="subscription">Abonnement</string>

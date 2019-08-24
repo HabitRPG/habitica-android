@@ -41,7 +41,7 @@
                             android:id="@+id/buttonPartyInviteAccept"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.accept"
+                            android:text="@string/quest_accept"
                             android:textColor="@color/btn_success"
                             style="?android:buttonBarButtonStyle" />
 
@@ -49,7 +49,7 @@
                             android:id="@+id/buttonPartyInviteReject"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.reject"
+                            android:text="@string/quest_reject"
                             android:textColor="@color/btn_danger"
                             style="?android:buttonBarButtonStyle" />
                     </LinearLayout>

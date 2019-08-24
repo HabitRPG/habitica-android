@@ -97,10 +97,10 @@
     <string name="reminder_title">记得完成你的任务</string>
     <string name="unlock_lvl_11">11级时解锁</string>
     <string name="forgot_pw_btn">忘记密码</string>
-  <string name="tavern.inn_checkOut">重启每日任务</string>
-  <string name="tavern.inn_rest">暂停每日任务</string>
-  <string name="reward.dialog_buy">购买</string>
-  <string name="reward.dialog_dismiss">解散</string>
+  <string name="tavern_inn_checkOut">重启每日任务</string>
+  <string name="tavern_inn_rest">暂停每日任务</string>
+  <string name="reward_dialog_buy">购买</string>
+  <string name="reward_dialog_dismiss">解散</string>
   <string name="party">队伍</string>
   <string name="chat">聊天</string>
   <string name="members">成员</string>
@@ -313,13 +313,13 @@
   <string name="widget_dailies">Habitica每日任务</string>
   <string name="widget_todo_list">Habitica 待办事项</string>
     <string name="google_services_missing">没有找到Google play服务。</string>
-  <string name="gem.purchase_toolbartitle">购买</string>
-  <string name="gem.purchase_title">购买宝石来支持开发者们和帮助保证Habitica的日常运营</string>
-  <string name="gem.purchase_subtitle">你可以通过宝石给你的账户购买更多有趣的额外物品，包括：</string>
-  <string name="gem.purchase_listitem1">角色形象的炫酷装扮</string>
-  <string name="gem.purchase_listitem2">超棒的背景</string>
-  <string name="gem.purchase_listitem3">任务会奖励你宠物蛋</string>
-  <string name="gem.purchase_listitem4">100级前改变你职业的能力</string>
+  <string name="gem_purchase_toolbartitle">购买</string>
+  <string name="gem_purchase_title">购买宝石来支持开发者们和帮助保证Habitica的日常运营</string>
+  <string name="gem_purchase_subtitle">你可以通过宝石给你的账户购买更多有趣的额外物品，包括：</string>
+  <string name="gem_purchase_listitem1">角色形象的炫酷装扮</string>
+  <string name="gem_purchase_listitem2">超棒的背景</string>
+  <string name="gem_purchase_listitem3">任务会奖励你宠物蛋</string>
+  <string name="gem_purchase_listitem4">100级前改变你职业的能力</string>
   <string name="support_habitica">支持Habitica</string>
   <string name="skill_transformation_use">使用</string>
   <string name="hatching_market_info">没有得到想要的掉落物品？来市场瞧瞧！</string>
@@ -342,14 +342,14 @@
   <string name="subscriptions">捐助</string>
   <string name="subscription_duration">每 %s 重复出现</string>
   <string name="subscribe">捐助</string>
-  <string name="subscribe.listitem1_description">商人Alexander可以按每个宝石20金币的价格向你出售宝石！
+  <string name="subscribe_listitem1_description">商人Alexander可以按每个宝石20金币的价格向你出售宝石！
 \n
 \n他每个月的初始进货量是25个宝石，进货量会随着您的捐助时长而增加！
 \n
 \n 每三个月宝石上限就会增加5，最大直到1个月50颗宝石！</string>
-  <string name="subscribe.listitem2_description">每个月你将会收到一件独特的角色饰品！另外，每连续捐助三个月，神秘的时间旅行者将授予你得到过去(和将来)的饰品的资格。</string>
-  <string name="subscribe.listitem3_description">使完成的待办事项和任务的历史记录保留更长时间。</string>
-  <string name="subscribe.listitem4_description">双倍掉落让你每天能够从完成的任务中得到更多的物品，帮助你更快地驯服坐骑！</string>
+  <string name="subscribe_listitem2_description">每个月你将会收到一件独特的角色饰品！另外，每连续捐助三个月，神秘的时间旅行者将授予你得到过去(和将来)的饰品的资格。</string>
+  <string name="subscribe_listitem3_description">使完成的待办事项和任务的历史记录保留更长时间。</string>
+  <string name="subscribe_listitem4_description">双倍掉落让你每天能够从完成的任务中得到更多的物品，帮助你更快地驯服坐骑！</string>
   <string name="subscribe1month_gemcap">25 宝石</string>
   <string name="subscribe3month_gemcap">30 宝石</string>
   <string name="subscribe6month_gemcap">35 宝石</string>

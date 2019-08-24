@@ -81,10 +81,10 @@
     <string name="new_checklist_item">שורה חדשה לרשימה</string>
     <string name="unlock_lvl_11">משתחרר בדרגה 11</string>
     <string name="forgot_pw_btn">שכחתי סיסמה</string>
-  <string name="tavern.inn_checkOut">הפעילו מחדש את המטלות היומיות שלכם</string>
-  <string name="tavern.inn_rest">עצרו את המטלות היומיות שלכם</string>
-  <string name="reward.dialog_buy">קנייה</string>
-  <string name="reward.dialog_dismiss">בטל</string>
+  <string name="tavern_inn_checkOut">הפעילו מחדש את המטלות היומיות שלכם</string>
+  <string name="tavern_inn_rest">עצרו את המטלות היומיות שלכם</string>
+  <string name="reward_dialog_buy">קנייה</string>
+  <string name="reward_dialog_dismiss">בטל</string>
   <string name="party">חבורה</string>
   <string name="chat">צ׳אט</string>
   <string name="members">חברים</string>

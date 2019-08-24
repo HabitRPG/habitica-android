@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/tavern.inn.rest"
+            android:text="@string/tavern_inn_rest"
             style="@style/HabiticaButton.Yellow"/>
         <TextView
             android:layout_width="match_parent"

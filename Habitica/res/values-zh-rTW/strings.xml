@@ -93,10 +93,10 @@
   <string name="new_checklist_item">新增清單內容</string>
     <string name="unlock_lvl_11">11 級時解鎖</string>
     <string name="forgot_pw_btn">忘記密碼</string>
-  <string name="tavern.inn_checkOut">重啟每日任務</string>
-  <string name="tavern.inn_rest">暫停每日任務</string>
-  <string name="reward.dialog_buy">購買</string>
-  <string name="reward.dialog_dismiss">取消</string>
+  <string name="tavern_inn_checkOut">重啟每日任務</string>
+  <string name="tavern_inn_rest">暫停每日任務</string>
+  <string name="reward_dialog_buy">購買</string>
+  <string name="reward_dialog_dismiss">取消</string>
   <string name="party">隊伍</string>
   <string name="chat">聊天</string>
   <string name="members">成員</string>
@@ -308,13 +308,13 @@
   <string name="widget_dailies">Habitica 每日任務</string>
   <string name="widget_todo_list">Habitica 待辦事項列表</string>
     <string name="google_services_missing">找不到 Google play 服務。</string>
-  <string name="gem.purchase_toolbartitle">購買</string>
-  <string name="gem.purchase_title">購買鑽石可以支持開發人員並幫助 Habitica 繼續營運</string>
-  <string name="gem.purchase_subtitle">鑽石可讓您購買額外有趣的物品，包含了:</string>
-  <string name="gem.purchase_listitem1">為您的角色穿上酷炫的服飾</string>
-  <string name="gem.purchase_listitem2">超讚的背景</string>
-  <string name="gem.purchase_listitem3">有寵物蛋獎勵的副本</string>
-  <string name="gem.purchase_listitem4">100 級以前更換職業的能力</string>
+  <string name="gem_purchase_toolbartitle">購買</string>
+  <string name="gem_purchase_title">購買鑽石可以支持開發人員並幫助 Habitica 繼續營運</string>
+  <string name="gem_purchase_subtitle">鑽石可讓您購買額外有趣的物品，包含了:</string>
+  <string name="gem_purchase_listitem1">為您的角色穿上酷炫的服飾</string>
+  <string name="gem_purchase_listitem2">超讚的背景</string>
+  <string name="gem_purchase_listitem3">有寵物蛋獎勵的副本</string>
+  <string name="gem_purchase_listitem4">100 級以前更換職業的能力</string>
   <string name="support_habitica">贊助 Habitica</string>
   <string name="skill_transformation_use">使用</string>
   <string name="hatching_market_info">沒有得到想要的掉落物品？來市場看看！</string>
@@ -337,16 +337,16 @@
   <string name="subscriptions">訂閱</string>
   <string name="subscription_duration">每%s重複出現</string>
   <string name="subscribe">加入會員</string>
-  <string name="subscribe.listitem1_description">商人 Alexander 可以按每個寶石 20 金幣的價格向你出售寶石！
+  <string name="subscribe_listitem1_description">商人 Alexander 可以按每個寶石 20 金幣的價格向你出售寶石！
 \n
 \n他每個月的初始進貨量是 25 個寶石，進貨量會隨著您的捐助額度增長！
 \n
 \n 每三個月寶石上限就會增加 5，直到最多 1 個月 50 顆寶石！</string>
-  <string name="subscribe.listitem2_description">每個月你將會收到一件獨特的角色飾品！
+  <string name="subscribe_listitem2_description">每個月你將會收到一件獨特的角色飾品！
 \n
 \n另外每連續訂閱三個月，神秘的時間旅行者將授予你得到過去(和未來)飾品的資格。</string>
-  <string name="subscribe.listitem3_description">使完成的待辦事項和任務的歷史記錄保留更長時間。</string>
-  <string name="subscribe.listitem4.description">雙倍掉落讓你每天能夠從完成的任務中得到更多的物品，幫助你更快地馴服坐騎！</string>
+  <string name="subscribe_listitem3_description">使完成的待辦事項和任務的歷史記錄保留更長時間。</string>
+  <string name="subscribe_listitem4.description">雙倍掉落讓你每天能夠從完成的任務中得到更多的物品，幫助你更快地馴服坐騎！</string>
   <string name="subscription_hourglasses">%d 個神秘沙漏</string>
   <string name="payment_method">付款方式</string>
   <string name="subscription">訂閱</string>
@@ -615,10 +615,10 @@
     <string name="opting_out_progress">退出</string>
     <string name="invite_username_description">如果你已有朋友在使用 Habitica，透過這裡的用戶名邀請他們。</string>
     <string name="subscription_duration_norenew">為了 %s</string>
-    <string name="subscribe1month.gemcap">25 寶石</string>
-    <string name="subscribe3month.gemcap">30 寶石</string>
-    <string name="subscribe6month.gemcap">35 寶石</string>
-    <string name="subscribe12month.gemcap">45 寶石</string>
+    <string name="subscribe1month_gemcap">25 寶石</string>
+    <string name="subscribe3month_gemcap">30 寶石</string>
+    <string name="subscribe6month_gemcap">35 寶石</string>
+    <string name="subscribe12month_gemcap">45 寶石</string>
     <string name="due">期限</string>
     <string name="welcome_text">哦，你一定是新來的。我是 Justin，你在 Habitica 的嚮導。
 \n

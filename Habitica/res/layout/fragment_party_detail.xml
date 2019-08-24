@@ -37,7 +37,7 @@
                             android:id="@+id/party_invite_accept_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.accept"
+                            android:text="@string/quest_accept"
                             android:textColor="@color/btn_success"
                             style="?android:buttonBarButtonStyle" />
 
@@ -45,7 +45,7 @@
                             android:id="@+id/party_invite_reject_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.reject"
+                            android:text="@string/quest_reject"
                             android:textColor="@color/btn_danger"
                             style="?android:buttonBarButtonStyle" />
                     </LinearLayout>
@@ -152,7 +152,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.accept"
+                            android:text="@string/quest_accept"
                             style="@style/HabiticaButton.Green"
                             android:layout_marginEnd="16dp" />
 
@@ -161,7 +161,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.reject"
+                            android:text="@string/quest_reject"
                             style="@style/HabiticaButton.Red"/>
                     </LinearLayout>
                     <LinearLayout
@@ -175,7 +175,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.begin"
+                            android:text="@string/quest_begin"
                             style="@style/HabiticaButton.Yellow"
                             android:layout_marginEnd="16dp" />
 
@@ -184,7 +184,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.cancel"
+                            android:text="@string/quest_cancel"
                             style="@style/HabiticaButton.Red" />
                     </LinearLayout>
                     <LinearLayout

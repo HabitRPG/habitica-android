@@ -93,10 +93,10 @@
   <string name="new_checklist_item">새로운 체크리스트 항목</string>
     <string name="unlock_lvl_11">레벨 11에 열림</string>
     <string name="forgot_pw_btn">암호 찾기</string>
-  <string name="tavern.inn_checkOut">일일과제 활성화</string>
-  <string name="tavern.inn_rest">일일과제 일시중지</string>
-  <string name="reward.dialog_buy">구매</string>
-  <string name="reward.dialog_dismiss">닫기</string>
+  <string name="tavern_inn_checkOut">일일과제 활성화</string>
+  <string name="tavern_inn_rest">일일과제 일시중지</string>
+  <string name="reward_dialog_buy">구매</string>
+  <string name="reward_dialog_dismiss">닫기</string>
   <string name="party">파티</string>
   <string name="chat">채팅</string>
   <string name="members">멤버</string>
@@ -299,13 +299,13 @@
   <string name="widget_dailies">Habitica 일일과제</string>
   <string name="widget_todo_list">Habitica 할일 목록</string>
     <string name="google_services_missing">구글 플레이 서비스를 찾을 수 없습니다.</string>
-  <string name="gem.purchase_toolbartitle">구매</string>
-  <string name="gem.purchase_title">보석을 구매하시면 개발자를 지원하고 Habitica가 계속될 수 있도록 도울 수 있습니다</string>
-  <string name="gem.purchase_subtitle">보석들은 당신의 계정에 다양한 요소를 추가해줍니다. 예를들어:</string>
-  <string name="gem.purchase_listitem1">아바타를 위한 멋진 의상</string>
-  <string name="gem.purchase_listitem2">환상적인 배경들</string>
-  <string name="gem.purchase_listitem3">펫알을 얻을 수 있는 재미있는 퀘스트들</string>
-  <string name="gem.purchase_listitem4">레벨 100 이전에도 직업 변경 가능</string>
+  <string name="gem_purchase_toolbartitle">구매</string>
+  <string name="gem_purchase_title">보석을 구매하시면 개발자를 지원하고 Habitica가 계속될 수 있도록 도울 수 있습니다</string>
+  <string name="gem_purchase_subtitle">보석들은 당신의 계정에 다양한 요소를 추가해줍니다. 예를들어:</string>
+  <string name="gem_purchase_listitem1">아바타를 위한 멋진 의상</string>
+  <string name="gem_purchase_listitem2">환상적인 배경들</string>
+  <string name="gem_purchase_listitem3">펫알을 얻을 수 있는 재미있는 퀘스트들</string>
+  <string name="gem_purchase_listitem4">레벨 100 이전에도 직업 변경 가능</string>
   <string name="support_habitica">Habitica 지원하기</string>
   <string name="skill_transformation_use">사용</string>
   <string name="hatching_market_info">필요한 아이템이 드롭되지 않나요? 시장으로 가보세요!</string>
@@ -328,16 +328,16 @@
   <string name="subscriptions">구독</string>
   <string name="subscription_duration">자동이체: 매 %s</string>
   <string name="subscribe">구독하기</string>
-  <string name="subscribe.listitem1_description">이제부터 상인 알렉산더가 보석을 개당 20골드에 판매합니다!
+  <string name="subscribe_listitem1_description">이제부터 상인 알렉산더가 보석을 개당 20골드에 판매합니다!
 \n
 \n처음에는 매달 구비량이 한 달에 25개로 제한되어 있지만, 후원 기간에 따라 올라갈 수 있습니다.
 \n
 \n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다!</string>
-  <string name="subscribe.listitem2_description">매달 당신의 아바타를 위한 독특한 의상 아이템을 드립니다!
+  <string name="subscribe_listitem2_description">매달 당신의 아바타를 위한 독특한 의상 아이템을 드립니다!
 \n
 \n더불어, 정기 후원을 해주시는 매 3달마다, 미스터리 시간 여행자가 전통적인 (그리고 미래지향적인!) 꾸미기 아이템을 소개해 줄 겁니다.</string>
-  <string name="subscribe.listitem3_description">완료한 할 일과 과제 기록이 더 오래 남습니다.</string>
-  <string name="subscribe.listitem4_description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다!</string>
+  <string name="subscribe_listitem3_description">완료한 할 일과 과제 기록이 더 오래 남습니다.</string>
+  <string name="subscribe_listitem4_description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다!</string>
   <string name="subscription_hourglasses">신비한 모래시계 +%d개</string>
   <string name="payment_method">결제수단</string>
   <string name="subscription">정기구독</string>
