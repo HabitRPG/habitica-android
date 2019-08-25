@@ -9,10 +9,7 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.*
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.social.FindUsernameResult
-import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
@@ -223,7 +220,8 @@ interface ApiClient {
     fun hasAuthenticationKeys(): Boolean
 
     fun retrieveUser(withTasks: Boolean): Flowable<User>
-    fun retrieveInboxMessages(): Flowable<List<ChatMessage>>
+    fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>>
+    fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
 
     fun <T> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
 

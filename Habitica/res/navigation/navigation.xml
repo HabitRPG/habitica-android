@@ -154,7 +154,7 @@
         android:label="@string/sidebar_about" />
     <fragment
         android:id="@+id/inboxFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.InboxFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.InboxOverviewFragment"
         android:label="@string/sidebar_inbox" >
         <action
             android:id="@+id/openInboxDetail"

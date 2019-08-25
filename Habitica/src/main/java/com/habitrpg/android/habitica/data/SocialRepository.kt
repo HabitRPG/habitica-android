@@ -4,10 +4,7 @@ import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
-import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.social.FindUsernameResult
-import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -47,9 +44,10 @@ interface SocialRepository : BaseRepository {
 
 
     fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
-    fun retrieveInboxMessages(): Flowable<List<ChatMessage>>
-    fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>>
-    fun postPrivateMessage(messageObject: HashMap<String, String>): Flowable<List<ChatMessage>>
+    fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>>
+    fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
+    fun getInboxConversations(): Flowable<RealmResults<InboxConversation>>
+    fun postPrivateMessage(recipientId: String, messageObject: HashMap<String, String>): Flowable<List<ChatMessage>>
     fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>>
 
 

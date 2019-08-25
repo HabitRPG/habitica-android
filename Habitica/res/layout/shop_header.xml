@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:parentTag="FrameLayout">
+    android:layout_height="wrap_content">
 
     <com.habitrpg.android.habitica.ui.views.NPCBannerView
         android:id="@+id/npcBannerView"
@@ -39,4 +38,4 @@
         android:layout_marginBottom="4dp"
         style="@style/Body1"
         tools:text="Welcome to the Market! Stock up on new gear or buy rare eggs and potions. Check in periodically for new stock." />
-</merge>
+</FrameLayout>

@@ -8,10 +8,7 @@ import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
-import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.social.FindUsernameResult
-import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -201,28 +198,34 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
 
     override fun getPublicGuilds(): Flowable<RealmResults<Group>> = localRepository.getPublicGuilds()
 
-    override fun getInboxOverviewList(): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxOverviewList(userID)
+    override fun getInboxConversations(): Flowable<RealmResults<InboxConversation>> = localRepository.getInboxConversation(userID)
 
     override fun getInboxMessages(replyToUserID: String?): Flowable<RealmResults<ChatMessage>> = localRepository.getInboxMessages(userID, replyToUserID)
 
-    override fun retrieveInboxMessages(): Flowable<List<ChatMessage>> {
-        return apiClient.retrieveInboxMessages().doOnNext { messages ->
+    override fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>> {
+        return apiClient.retrieveInboxMessages(uuid, page).doOnNext { messages ->
             messages.forEach {
                 it.isInboxMessage = true
             }
-            localRepository.saveInboxMessages(userID, messages)
+            localRepository.saveInboxMessages(userID, uuid, messages, page)
         }
     }
 
-    override fun postPrivateMessage(messageObject: HashMap<String, String>): Flowable<List<ChatMessage>> {
-        return apiClient.postPrivateMessage(messageObject).flatMap { retrieveInboxMessages() }
+    override fun retrieveInboxConversations(): Flowable<List<InboxConversation>> {
+        return apiClient.retrieveInboxConversations().doOnNext { conversations ->
+            localRepository.saveInboxConversations(userID, conversations)
+        }
+    }
+
+    override fun postPrivateMessage(recipientId: String, messageObject: HashMap<String, String>): Flowable<List<ChatMessage>> {
+        return apiClient.postPrivateMessage(messageObject).flatMap { retrieveInboxMessages(recipientId, 0) }
     }
 
     override fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>> {
         val messageObject = HashMap<String, String>()
         messageObject["message"] = message
         messageObject["toUserId"] = recipientId
-        return postPrivateMessage(messageObject)
+        return postPrivateMessage(recipientId, messageObject)
     }
 
     override fun getGroupMembers(id: String): Flowable<RealmResults<Member>> = localRepository.getGroupMembers(id)

@@ -49,9 +49,11 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun saveInboxMessages(userID: String, messages: List<ChatMessage>) {
+    override fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int) {
+        messages.forEach { it.userID = userID }
         realm.executeTransaction { realm.insertOrUpdate(messages) }
-        val existingMessages = realm.where(ChatMessage::class.java).equalTo("isInboxMessage", true).findAll()
+        if (page != 0) return
+        val existingMessages = realm.where(ChatMessage::class.java).equalTo("isInboxMessage", true).equalTo("uuid", recipientID).findAll()
         val messagesToRemove = ArrayList<ChatMessage>()
         for (existingMessage in existingMessages) {
             val isStillMember = messages.any { existingMessage.id == it.id }
@@ -61,6 +63,22 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
         realm.executeTransaction {
             messagesToRemove.forEach { it.deleteFromRealm() }
+        }
+    }
+
+    override fun saveInboxConversations(userID: String, conversations: List<InboxConversation>) {
+        conversations.forEach { it.userID = userID }
+        realm.executeTransaction { realm.insertOrUpdate(conversations) }
+        val existingConversations = realm.where(InboxConversation::class.java).findAll()
+        val conversationsToRemove = ArrayList<InboxConversation>()
+        for (existingMessage in existingConversations) {
+            val isStillMember = conversations.any { existingMessage.uuid == it.uuid }
+            if (!isStillMember) {
+                conversationsToRemove.add(existingMessage)
+            }
+        }
+        realm.executeTransaction {
+            conversationsToRemove.forEach { it.deleteFromRealm() }
         }
     }
 
@@ -238,21 +256,21 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         return party != null && party.isValid
     }
 
-    override fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
+    override fun getInboxMessages(userID: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
                 .equalTo("isInboxMessage", true)
                 .equalTo("uuid", replyToUserID)
+                .equalTo("userID", userID)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
 
-    override fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>> {
-        return realm.where(ChatMessage::class.java)
-                .equalTo("isInboxMessage", true)
+    override fun getInboxConversation(userID: String): Flowable<RealmResults<InboxConversation>> {
+        return realm.where(InboxConversation::class.java)
+                .equalTo("userID", userID)
                 .sort("timestamp", Sort.DESCENDING)
-                .distinct("uuid")
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }

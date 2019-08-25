@@ -10,10 +10,7 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.*
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.social.FindUsernameResult
-import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
@@ -33,8 +30,10 @@ interface ApiService {
     val user: Flowable<HabitResponse<User>>
 
 
-    @get:GET("inbox/messages")
-    val inboxMessages: Flowable<HabitResponse<List<ChatMessage>>>
+    @GET("inbox/messages")
+    fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): Flowable<HabitResponse<List<ChatMessage>>>
+    @GET("inbox/conversations")
+    fun getInboxConversations(): Flowable<HabitResponse<List<InboxConversation>>>
 
 
     @get:GET("tasks/user")

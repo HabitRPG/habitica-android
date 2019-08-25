@@ -11,10 +11,11 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_inbox.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+class InboxOverviewFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -54,10 +55,11 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
         inbox_refresh_layout?.setOnRefreshListener(this)
 
         loadMessages()
+        retrieveMessages()
     }
 
     private fun loadMessages() {
-        compositeSubscription.add(socialRepository.getInboxOverviewList().subscribe(Consumer<RealmResults<ChatMessage>> {
+        compositeSubscription.add(socialRepository.getInboxConversations().subscribe(Consumer<RealmResults<InboxConversation>> {
             setInboxMessages(it)
         }, RxErrorHandler.handleEmptyError()))
     }
@@ -68,9 +70,7 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        when (id) {
+        when (item.itemId) {
             R.id.send_message -> {
                 openNewMessageDialog()
                 return true
@@ -103,15 +103,20 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
         component.inject(this)
     }
 
-    override fun onRefresh() {
-        inbox_refresh_layout.isRefreshing = true
-        compositeSubscription.add(this.socialRepository.retrieveInboxMessages()
-                .subscribe(Consumer<List<ChatMessage>> {
+
+    private fun retrieveMessages() {
+        compositeSubscription.add(this.socialRepository.retrieveInboxConversations()
+                .subscribe(Consumer<List<InboxConversation>> {
                     inbox_refresh_layout.isRefreshing = false
                 }, RxErrorHandler.handleEmptyError()))
     }
 
-    private fun setInboxMessages(messages: RealmResults<ChatMessage>) {
+    override fun onRefresh() {
+        inbox_refresh_layout.isRefreshing = true
+        retrieveMessages()
+    }
+
+    private fun setInboxMessages(messages: RealmResults<InboxConversation>) {
         if (inbox_messages == null) {
             return
         }
@@ -123,15 +128,15 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
             for (message in messages) {
                 val entry = inflater?.inflate(R.layout.item_inbox_overview, inbox_messages, false)
                 val avatarView = entry?.findViewById(R.id.avatar_view) as? AvatarView
-                //message.userStyles?.let { avatarView?.setAvatar(it) }
+                message.userStyles?.let { avatarView?.setAvatar(it) }
                 avatarView?.visibility = View.GONE
                 val displayNameTextView = entry?.findViewById(R.id.display_name_textview) as? UsernameLabel
                 displayNameTextView?.username = message.user
                 displayNameTextView?.tier = message.contributor?.level ?: 0
                 val timestampTextView = entry?.findViewById(R.id.timestamp_textview) as? TextView
-                timestampTextView?.text = message.getAgoString(resources)
+                timestampTextView?.text = message.timestamp?.getAgoString(resources)
                 val usernameTextView = entry?.findViewById(R.id.username_textview) as? TextView
-                if (message.username != null) {
+                if (message.username?.isNotEmpty() == true) {
                     usernameTextView?.text = message.formattedUsername
                     usernameTextView?.visibility = View.VISIBLE
                 } else {
@@ -156,7 +161,7 @@ class InboxFragment : BaseMainFragment(), androidx.swiperefreshlayout.widget.Swi
     }
 
     private fun openInboxMessages(userID: String, username: String) {
-        MainNavigationController.navigate(InboxFragmentDirections.openInboxDetail(userID, username))
+        MainNavigationController.navigate(InboxOverviewFragmentDirections.openInboxDetail(userID, username))
     }
 
 }
