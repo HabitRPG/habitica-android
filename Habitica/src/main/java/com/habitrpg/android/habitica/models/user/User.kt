@@ -213,7 +213,7 @@ open class User : RealmObject(), Avatar, VersionedObject {
     }
 
     override fun getSleep(): Boolean {
-        return getPreferences() != null && getPreferences()!!.sleep
+        return preferences?.sleep ?: false
     }
 
     fun hasParty(): Boolean {
