@@ -815,4 +815,22 @@
     <string name="removed_member">%s was removed from the group</string>
     <string name="mystery_item_received">You open the box and receive a %s</string>
     <string name="see_what_s_new">See what\'s new</string>
+    <string name="view_achievements">View Achievements</string>
+    <string name="achievement_title">You got an Achievement!</string>
+    <string name="partyUpTitle">Party Up</string>
+    <string name="partyUpDescription">You teamed up with a party member!</string>
+    <string name="partyOnTitle">Party On</string>
+    <string name="partyOnDescription">Your party grew to 4 members!</string>
+    <string name="beastMasterTitle">Beast Master</string>
+    <string name="beastMasterDescription">You have earned the \\\"Beast Master\\\" Achievement for collecting all the pets!</string>
+    <string name="mountMasterTitle">Mount Master</string>
+    <string name="mountMasterDescription">You have earned the \\\"Mount Master\\\" achievement for taming all the mounts!</string>
+    <string name="triadBingoTitle">Triad Bingo</string>
+    <string name="triadBingoDescription">You have earned the \\\"Triad Bingo\\\" achievement for finding all the pets, taming all the mounts, and finding all the pets again!</string>
+    <string name="joinedGuildTitle">Joined a Guild</string>
+    <string name="joinedGuildDescription">Ventured into the social side of Habitica by joining a Guild!</string>
+    <string name="joinedChallengeTitle">Joined a Challenge</string>
+    <string name="joinedChallengeDescription">You put themselves to the test by joining a Challenge!</string>
+    <string name="inviteFriendTitle">Invited a Friend</string>
+    <string name="inviteFriendDescription">invitedinvited a friend (or friends) who joined you on your adventure!</string>
 </resources>

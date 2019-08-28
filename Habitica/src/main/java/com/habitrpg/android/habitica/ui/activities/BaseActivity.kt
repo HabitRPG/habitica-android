@@ -3,10 +3,10 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -139,7 +139,7 @@ abstract class BaseActivity : AppCompatActivity() {
         alert.setTitle(event.title)
         alert.setMessage(event.message)
         alert.addButton(android.R.string.ok, isPrimary = true, isDestructive = false, function = null)
-        alert.show()
+        alert.enqueue()
     }
 
     fun reload() {

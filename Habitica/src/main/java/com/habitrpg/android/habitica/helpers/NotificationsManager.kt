@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.content.Context
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.events.ShowAchievementDialog
 import com.habitrpg.android.habitica.events.ShowCheckinDialog
 import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.models.Notification
@@ -10,18 +11,13 @@ import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.functions.Consumer
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-/**
- * Created by krh12 on 12/9/2016.
- */
-
 class NotificationsManager (private val context: Context) {
-    // @TODO: A queue for displaying alert dialogues
-
+    private var compositeSubscription = CompositeDisposable()
     private val seenNotifications: MutableMap<String, Boolean>
     private var apiClient: ApiClient? = null
 
@@ -58,12 +54,25 @@ class NotificationsManager (private val context: Context) {
                 .map {
                     val notificationDisplayed = when (it.type) {
                         Notification.Type.LOGIN_INCENTIVE.type -> displayLoginIncentiveNotification(it)
+                        Notification.Type.ACHIEVEMENT_PARTY_UP.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_PARTY_ON.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_BEAST_MASTER.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_MOUNT_MASTER.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_TRIAD_BINGO.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> displayAchievementNotification(it)
+                        Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> displayAchievementNotification(it)
                         else -> false
                     }
 
                     if (notificationDisplayed == true) {
                         this.seenNotifications[it.id] = true
+                        /*if (apiClient != null) {
+                            apiClient?.readNotification(it.id)
+                                    ?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                        }*/
                     }
+
                 }
 
         return true
@@ -83,12 +92,13 @@ class NotificationsManager (private val context: Context) {
             event.text = nextUnlockText
             event.type = HabiticaSnackbar.SnackbarDisplayType.BLUE
             EventBus.getDefault().post(event)
-            if (apiClient != null) {
-                // @TODO: This should be handled somewhere else? MAybe we notifiy via event
-                apiClient?.readNotification(notification.id)
-                        ?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-            }
+
         }
+        return true
+    }
+
+    private fun displayAchievementNotification(notification: Notification): Boolean {
+        EventBus.getDefault().post(ShowAchievementDialog(notification.type ?: ""))
         return true
     }
 }

@@ -50,7 +50,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 alert.addButton(R.string.not_now, false)
 
                 if (!requestValues.activity.isFinishing) {
-                    alert.show()
+                    alert.enqueue()
                 }
             } else {
                 val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup, null)
@@ -76,7 +76,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 }
 
                 if (!requestValues.activity.isFinishing) {
-                    alert.show()
+                    alert.enqueue()
                 }
             }
 

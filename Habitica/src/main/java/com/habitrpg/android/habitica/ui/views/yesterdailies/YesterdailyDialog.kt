@@ -191,7 +191,7 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
             dialog.setCancelable(false)
             dialog.setCanceledOnTouchOutside(false)
             if (!activity.isFinishing) {
-                dialog.show()
+                dialog.enqueue()
             }
         }
     }

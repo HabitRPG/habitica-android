@@ -11,7 +11,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
 import android.os.Handler
-import androidx.preference.PreferenceManager
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
@@ -35,10 +34,7 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
-import com.habitrpg.android.habitica.events.ShareEvent
-import com.habitrpg.android.habitica.events.ShowCheckinDialog
-import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
+import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -67,6 +63,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.ValueBar
+import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationView
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
@@ -423,7 +420,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                     EventBus.getDefault().post(event1)
                                     hatchingDialog.dismiss()
                                 }
-                        dialog.show()
+                        dialog.enqueue()
                     }
                 }, RxErrorHandler.handleEmptyError()))
     }
@@ -470,7 +467,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         }
                     }
             soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
-            this.faintDialog?.show()
+            this.faintDialog?.enqueue()
         }
     }
 
@@ -655,6 +652,18 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 }, RxErrorHandler.handleEmptyError()))
     }
 
+    @Subscribe
+    fun showAchievementDialog(event: ShowAchievementDialog) {
+        compositeSubscription.add(Completable.complete()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Action {
+                    val dialog = AchievementDialog(this)
+                    dialog.setType(event.type)
+                    dialog.enqueue()
+                }, RxErrorHandler.handleEmptyError()))
+
+    }
+
     override fun onEvent(event: ShowConnectionProblemEvent) {
         if (event.title != null) {
             super.onEvent(event)
@@ -694,7 +703,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 EventBus.getDefault().post(event1)
                 hatchingDialog.dismiss()
             }
-            dialog.show()
+            dialog.enqueue()
         }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 

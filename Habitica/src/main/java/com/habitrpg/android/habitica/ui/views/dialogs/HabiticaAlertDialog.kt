@@ -152,17 +152,17 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     fun addButton(string: String, isPrimary: Boolean, isDestructive: Boolean = false, function: ((HabiticaAlertDialog, Int) -> Unit)? = null): Button {
         val button: Button = if (isPrimary) {
             if (isDestructive) {
-                buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as Button
+                buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as? Button
             } else {
-                buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as Button
+                buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as? Button
             }
         } else {
-            val button = buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as Button
+            val button = buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as? Button
             if (isDestructive) {
-                button.setTextColor(ContextCompat.getColor(context, R.color.red_100))
+                button?.setTextColor(ContextCompat.getColor(context, R.color.red_100))
             }
             button
-        }
+        } ?: Button(context)
         button.text = string
         button.minWidth = 147.dpToPx(context)
         button.setScaledPadding(context, 20, 0, 20, 0)
@@ -196,5 +196,34 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         }
         buttonView.layoutParams = layoutParams
         buttonView.elevation = 10f
+    }
+
+    fun enqueue() {
+        addToQueue(this)
+    }
+
+    override fun dismiss() {
+        showNextInQueue(this)
+        super.dismiss()
+    }
+
+    companion object {
+        private var dialogQueue = mutableListOf<HabiticaAlertDialog>()
+
+        private fun showNextInQueue(currentDialog: HabiticaAlertDialog) {
+            if (dialogQueue.first() == currentDialog) {
+                dialogQueue.removeAt(0)
+            }
+            if (dialogQueue.size > 0) {
+                dialogQueue[0].show()
+            }
+        }
+
+        private fun addToQueue(dialog: HabiticaAlertDialog) {
+            if (dialogQueue.isEmpty()) {
+                dialog.show()
+            }
+            dialogQueue.add(dialog)
+        }
     }
 }

@@ -273,7 +273,7 @@ class GiftIAPActivity: BaseActivity() {
                     dialog.dismiss()
                     finish()
                 }
-        alert.show()
+        alert.enqueue()
     }
 
     private fun consumePurchase(purchase: Purchase) {

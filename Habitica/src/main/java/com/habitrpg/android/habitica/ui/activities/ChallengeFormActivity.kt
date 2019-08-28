@@ -197,7 +197,7 @@ class ChallengeFormActivity : BaseActivity() {
         if (errorMessages.count() > 0) {
             val alert = HabiticaAlertDialog(this)
             alert.setMessage(errorMessages.joinToString("\n"))
-            alert.show()
+            alert.enqueue()
         }
         return errorMessages.size == 0
     }
