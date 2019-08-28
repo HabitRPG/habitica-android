@@ -660,6 +660,8 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     val dialog = AchievementDialog(this)
                     dialog.setType(event.type)
                     dialog.enqueue()
+                    apiClient.readNotification(event.id)
+                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                 }, RxErrorHandler.handleEmptyError()))
 
     }

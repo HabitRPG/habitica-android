@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import org.greenrobot.eventbus.EventBus
 import java.util.*
@@ -74,10 +75,6 @@ class NotificationsManager (private val context: Context) {
 
                     if (notificationDisplayed == true) {
                         this.seenNotifications[it.id] = true
-                        /*if (apiClient != null) {
-                            apiClient?.readNotification(it.id)
-                                    ?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
-                        }*/
                     }
 
                 }
@@ -99,13 +96,16 @@ class NotificationsManager (private val context: Context) {
             event.text = nextUnlockText
             event.type = HabiticaSnackbar.SnackbarDisplayType.BLUE
             EventBus.getDefault().post(event)
-
+            if (apiClient != null) {
+                apiClient?.readNotification(notification.id)
+                        ?.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+            }
         }
         return true
     }
 
     private fun displayAchievementNotification(notification: Notification): Boolean {
-        EventBus.getDefault().post(ShowAchievementDialog(notification.type ?: ""))
+        EventBus.getDefault().post(ShowAchievementDialog(notification.type ?: "", notification.id))
         return true
     }
 }
