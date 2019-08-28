@@ -23,6 +23,8 @@ class NotificationsManager (private val context: Context) {
 
     private val notifications: BehaviorSubject<List<Notification>>
 
+    private var lastNotificationHandling: Date? = null
+
     init {
         this.seenNotifications = HashMap()
         this.notifications = BehaviorSubject.create()
@@ -49,6 +51,11 @@ class NotificationsManager (private val context: Context) {
     }
 
     fun handlePopupNotifications(notifications: List<Notification>): Boolean? {
+        val now = Date()
+        if (now.time - (lastNotificationHandling?.time ?: 0) < 500) {
+            return true
+        }
+        lastNotificationHandling = now
         notifications
                 .filter { !this.seenNotifications.containsKey(it.id) }
                 .map {

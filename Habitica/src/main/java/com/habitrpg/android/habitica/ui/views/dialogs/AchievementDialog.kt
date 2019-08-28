@@ -1,11 +1,30 @@
 package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
+import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.Notification
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 
 class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
+
+    private var iconView: SimpleDraweeView?
+    private var titleView: TextView?
+    private var descriptionView: TextView?
+
+    init {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
+        val view = inflater?.inflate(R.layout.dialog_achievement_detail, null)
+        iconView = view?.findViewById(R.id.icon_view)
+        titleView = view?.findViewById(R.id.title_view)
+        titleView?.visibility = View.VISIBLE
+        descriptionView = view?.findViewById(R.id.description_view)
+        setAdditionalContentView(view)
+    }
 
     fun setType(type: String) {
         when (type) {
@@ -21,13 +40,13 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
     }
 
     private fun configure(titleID: Int, descriptionID: Int, iconName: String) {
+        titleView?.text = context.getString(titleID)
+        descriptionView?.text = context.getString(descriptionID)
+        DataBindingUtils.loadImage(iconView, "achievement-${iconName}2x")
         setTitle(R.string.achievement_title)
-
-
         addButton(R.string.onwards, true)
         addButton(R.string.view_achievements, isPrimary = false, isDestructive = false) { _, _ ->
             MainNavigationController.navigate(R.id.achievementsFragment)
         }
     }
-
 }

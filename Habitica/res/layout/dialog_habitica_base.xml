@@ -31,6 +31,7 @@
             tools:visibility="visible"
             android:layout_marginStart="@dimen/alert_side_padding"
             android:layout_marginEnd="@dimen/alert_side_padding"
+            style="@style/Headline6"
             />
 
         <TextView
@@ -44,6 +45,8 @@
             android:paddingBottom="@dimen/spacing_medium"
             android:paddingStart="@dimen/alert_side_padding"
             android:paddingEnd="@dimen/alert_side_padding"
+            android:textColor="?textColorSecondary"
+            style="@style/Body2"
             />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -101,5 +104,7 @@
         android:visibility="gone"
         tools:visibility="visible"
         android:textSize="16sp"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="?colorAccent"
+        />
 </LinearLayout>
