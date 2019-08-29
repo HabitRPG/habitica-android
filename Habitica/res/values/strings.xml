@@ -837,4 +837,8 @@
     <string name="keep_challenges">Keep Challenges</string>
     <string name="leave_challenges">Leave Challenges</string>
     <string name="equip_automatically">Auto-equip new gear</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="complete">Complete</string>
+    <string name="repeat_daily">Daily</string>
 </resources>

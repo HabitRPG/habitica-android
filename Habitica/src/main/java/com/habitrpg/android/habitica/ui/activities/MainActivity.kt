@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
@@ -9,6 +11,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -217,6 +220,20 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             drawerFragment?.setSelection(destination.id, false)
         }
         MainNavigationController.setup(navigationController)
+
+        setupNotifications()
+    }
+
+    private fun setupNotifications() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "default"
+            val channel = NotificationChannel(
+                    channelId,
+                    "Habitica Notifications",
+                    NotificationManager.IMPORTANCE_DEFAULT)
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(channel)
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

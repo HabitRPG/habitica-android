@@ -14,6 +14,7 @@
     <string name="reject_quest_invite" translatable="false">REJECT_QUEST_INVITE</string>
     <string name="group_message_reply" translatable="false">GROUP_MESSAGE_REPLY</string>
     <string name="inbox_message_reply" translatable="false">INBOX_MESSAGE_REPLY</string>
+    <string name="complete_task_action" translatable="false">COMPLETE_TASK</string>
 
     <string name="habitica_user_count" translatable="false">2,000,000</string>
     <string name="brand_name" translatable="false">Habitica</string>

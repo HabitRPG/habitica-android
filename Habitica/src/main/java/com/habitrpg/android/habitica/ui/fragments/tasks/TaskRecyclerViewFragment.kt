@@ -244,9 +244,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             })?.let { compositeSubscription.add(it) }
             recyclerAdapter?.taskScoreEvents
                     ?.doOnNext { playSound(it.second) }
-                    ?.flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { result ->
-                        handleTaskResult(result, it.first.value.toInt())
-                    }}?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
+                    ?.subscribeWithErrorHandler(Consumer { scoreTask(it.first, it.second) })?.let { compositeSubscription.add(it) }
             recyclerAdapter?.checklistItemScoreEvents
                     ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
                     }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
@@ -291,6 +289,12 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             compositeSubscription.add(taskRepository.getTasks(this.className, userID)
                     .subscribe(Consumer { recyclerAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
         }
+    }
+
+    private fun scoreTask(task: Task, direction: TaskDirection) {
+        compositeSubscription.add(taskRepository.taskChecked(user, task, direction == TaskDirection.UP, false) { result ->
+            handleTaskResult(result, task.value.toInt())
+        }.subscribeWithErrorHandler(Consumer {}))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

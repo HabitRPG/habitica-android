@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -21,6 +22,8 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var taskRepository: TaskRepository
     @Inject
     lateinit var apiClient: ApiClient
 
@@ -83,6 +86,12 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     getMessageText(context?.getString(R.string.inbox_message_reply))?.let { message ->
                         socialRepository.postPrivateMessage(it, message).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
                     }
+                }
+            }
+            context?.getString(R.string.complete_task_action) -> {
+                intent?.extras?.getString("taskID")?.let {
+                    taskRepository.taskChecked(null, it, up = true, force = false) { _ ->
+                    }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
                 }
             }
         }

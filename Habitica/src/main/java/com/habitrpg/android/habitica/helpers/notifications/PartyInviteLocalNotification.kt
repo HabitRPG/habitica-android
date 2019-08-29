@@ -25,7 +25,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String) : Habit
                 acceptInviteIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
-        notificationBuilder.addAction(0, "Accept", pendingIntentAccept)
+        notificationBuilder.addAction(0, context.getString(R.string.accept), pendingIntentAccept)
 
         val rejectInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         rejectInviteIntent.action = res.getString(R.string.reject_party_invite)
@@ -36,6 +36,6 @@ class PartyInviteLocalNotification(context: Context, identifier: String) : Habit
                 rejectInviteIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
-        notificationBuilder.addAction(0, "Reject", pendingIntentReject)
+        notificationBuilder.addAction(0, context.getString(R.string.reject), pendingIntentReject)
     }
 }
