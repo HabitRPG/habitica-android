@@ -30,6 +30,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
+
+
 class GroupInviteActivity : BaseActivity() {
 
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
@@ -75,21 +77,25 @@ class GroupInviteActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
-        if (id == R.id.action_send_invites) {
-            setResult(Activity.RESULT_OK, createResultIntent())
-            dismissKeyboard()
-            if (!fragments[viewPager.currentItem].values.isEmpty()) {
-                showSnackbar(snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
-                runDelayed(1, TimeUnit.SECONDS, this::finish)
-            } else {
-                finish()
+        return when (item.itemId) {
+            R.id.action_send_invites -> {
+                setResult(Activity.RESULT_OK, createResultIntent())
+                dismissKeyboard()
+                if (!fragments[viewPager.currentItem].values.isEmpty()) {
+                    showSnackbar(snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
+                    runDelayed(1, TimeUnit.SECONDS, this::finish)
+                } else {
+                    finish()
+                }
+                true
             }
-            return true
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     private fun createResultIntent(): Intent {
