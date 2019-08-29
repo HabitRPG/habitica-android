@@ -211,7 +211,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         private var dialogQueue = mutableListOf<HabiticaAlertDialog>()
 
         private fun showNextInQueue(currentDialog: HabiticaAlertDialog) {
-            if (dialogQueue.first() == currentDialog) {
+            if (dialogQueue.firstOrNull() == currentDialog) {
                 dialogQueue.removeAt(0)
             }
             if (dialogQueue.size > 0) {
