@@ -10,8 +10,8 @@
   <string name="tutorial_todos_1">待辦事項是只需要執行一次的任務。</string>
   <string name="tutorial_todos_2">如果您的待辦事項必須在特定時間內完成，請設置截止日期！</string>
   <string name="tutorial_rewards_1">用金幣為你的角色添購裝備吧！</string>
-  <string name="tutorial_rewards_2">你也可以自定義獎勵。</string>
-  <string name="tutorial_tasks_complete">目前為止就這樣了。如果您想了解更多，請查看FAQ部分。</string>
+  <string name="tutorial_rewards_2">你也可以自訂獎勵。</string>
+  <string name="tutorial_tasks_complete">目前為止就這樣了。如果您想了解更多，請查看 FAQ 部分。</string>
   <string name="tutorial_equipment">在你購買裝備後會在這裡顯示。你的戰鬥裝備會影響你的屬性，你的服裝(如果有裝備的話)會在你的角色上顯示。</string>
   <string name="tutorial_items">通過升級和完成任務獲得物品。點擊一個物品來使用！</string>
   <string name="tutorial_pets">完成現實任務後，隨機掉落寵物蛋和藥水。將藥水灑在寵物蛋上孵化寵物</string>
