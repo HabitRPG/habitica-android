@@ -3,39 +3,39 @@
   <string name="action_refresh">更新</string>
   <string name="XP_default">經驗值</string>
   <string name="HP_default">生命值</string>
-  <string name="MP_default">魔法值</string>
+  <string name="MP_default">魔力值</string>
   <string name="ERR_pb_barcode">無法從條碼上讀取數據</string>
   <!--Prefs-->
   <string name="PS_settings_title">設定</string>
   <string name="SP_address_hint">你的自訂伺服器</string>
   <string name="SP_userID_title">使用者 ID (UUID)</string>
   <string name="SP_userID_summary">你的使用者 ID (UUID)</string>
-  <string name="SP_APIToken_title">API Token</string>
-  <string name="SP_APIToken_summary">你的 API Token</string>
+  <string name="SP_APIToken_title">API token</string>
+  <string name="SP_APIToken_summary">你的 API token</string>
   <string name="Language_title">語言</string>
   <string name="Language_summary">更改 Habitica 的語言</string>
   <string name="SP_user_qr_code">你的 QR 碼</string>
   <string name="PS_contact_title">聯絡我</string>
-  <string name="unknown_error">發生錯誤……</string>
+  <string name="unknown_error">發生錯誤...</string>
   <string name="pref_account_header">帳號</string>
-  <string name="pref_first_day_of_the_week_title">每周的第一天</string>
-  <string name="pref_first_day_of_the_week_summary">毎周的第一天</string>
+  <string name="pref_first_day_of_the_week_title">每週的第一天</string>
+  <string name="pref_first_day_of_the_week_summary">毎週的第一天</string>
   <string name="pref_reminder_header">每日任務提醒</string>
   <string name="pref_reminder_checkbox">啟用提醒</string>
   <string name="pref_reminder_picker">設置提醒時間</string>
-  <string name="pref_cds_header">自定開始時間</string>
-  <string name="pref_cds_picker">設置自定開始時間</string>
-  <string name="pref_push_notifications_checkbox">開啟推送通知</string>
+  <string name="pref_cds_header">自訂開始時間</string>
+  <string name="pref_cds_picker">設置自訂開始時間</string>
+  <string name="pref_push_notifications_checkbox">使用者推送通知</string>
   <string name="push_notifications">推送通知</string>
-  <string name="push_notifications_sum">設定你的推送通知設置</string>
-  <string name="preference_push_you_won_challenge">你贏得了一個挑戰！</string>
-  <string name="preference_push_received_a_private_message">你收到一則私人訊息</string>
+  <string name="push_notifications_sum">設定你的推送通知</string>
+  <string name="preference_push_you_won_challenge">你完成了一項挑戰！</string>
+  <string name="preference_push_received_a_private_message">你收到一則私訊</string>
   <string name="preference_push_gifted_gems">贈送的鑽石</string>
   <string name="preference_push_gifted_subscription">贈送的訂閱</string>
   <string name="preference_push_invited_to_party">你受邀加入隊伍</string>
-  <string name="preference_push_invited_to_guild">你受邀請到公會</string>
+  <string name="preference_push_invited_to_guild">你受邀加入公會</string>
   <string name="preference_push_your_quest_has_begun">你的副本開始了</string>
-  <string name="preference_push_invited_to_quest">邀請參加副本</string>
+  <string name="preference_push_invited_to_quest">你受邀參加副本</string>
   <!--Adding tasks-->
   <string name="task_value">數值</string>
   <string name="new_todo">新待辦事項</string>
@@ -47,8 +47,8 @@
   <string name="action_cancel">取消</string>
   <string name="login_btn">登入</string>
   <string name="register_btn">註冊</string>
-  <string name="username">用戶名</string>
-  <string name="email_username">電子郵件或用戶名</string>
+  <string name="username">使用者名稱</string>
+  <string name="email_username">電子郵件或使用者名稱</string>
   <string name="password">密碼</string>
   <string name="emailAddress">電子郵件地址</string>
   <string name="confirmpassword">確認密碼</string>
@@ -57,16 +57,16 @@
   <string name="account_details">帳號訊息</string>
   <string name="LoginActivityName">歡迎</string>
   <string name="string_revive">重生</string>
-  <string name="please_connect">請在使用 widget 之前連接應用程式</string>
+  <string name="please_connect">請在使用桌面組件之前，以應用程式登入</string>
   <string name="about.title">關於</string>
   <string name="about.libraries">資源庫</string>
   <string name="about.versionhistory">版本歷史</string>
-  <string name="about.habitica_open_source">Habitica 是一個發佈在 Github 上的開源軟體</string>
+  <string name="about.habitica_open_source">Habitica 是一個發佈在 GitHub 上的開放原始碼軟體</string>
   <string name="about.rate_our_app">評價我們的應用程式</string>
-  <string name="about.give_us_feedback">請給我們提交建議！</string>
+  <string name="about.give_us_feedback">請提交給我們建議！</string>
   <string name="about.bugreport">回報問題與漏洞</string>
   <string name="about.source_code">原始程式碼</string>
-  <string name="repeatEvery">每... 重複</string>
+  <string name="repeatEvery">每...重複</string>
   <!--Network Errors-->
   <string name="network_error_title">連線錯誤</string>
   <string name="network_error_no_network_body">您沒有連線到網路。</string>
@@ -77,7 +77,7 @@
   <string name="login_validation_error_fieldsmissing">請填寫所有內容。</string>
   <string name="save_changes">儲存</string>
   <string name="copy">複製</string>
-  <string name="notes">注釋</string>
+  <string name="notes">筆記</string>
   <string name="text">文字</string>
   <string name="difficulty">難度</string>
   <string name="tags">標籤</string>
@@ -86,9 +86,9 @@
   <string name="medium">中等</string>
   <string name="hard">困難</string>
   <string name="start_date">開始日期</string>
-  <string name="positive_habit_form">正面的</string>
-  <string name="negative_habit_form">負面的</string>
-  <string name="checklist">檢核表</string>
+  <string name="positive_habit_form">好習慣</string>
+  <string name="negative_habit_form">壞習慣</string>
+  <string name="checklist">清單</string>
   <string name="reminders">提醒</string>
   <string name="actions">動作</string>
   <string name="attributes">屬性</string>
@@ -97,15 +97,15 @@
   <string name="social">體質</string>
   <string name="other">感知</string>
   <string name="frequency">頻率</string>
-  <string name="frequency_weekly">每周中的特定日期</string>
-  <string name="frequency_daily">每x日</string>
+  <string name="frequency_weekly">每週中的特定日期</string>
+  <string name="frequency_daily">每 X 日</string>
   <string name="repeatables_summary_title">概要</string>
   <string name="repeatables_title">設定週期</string>
   <string name="repeatables_on_title">開啟重複</string>
-  <string name="repeatables_frequency_daily">每日任務</string>
-  <string name="repeatables_frequency_weekly">每週任務</string>
-  <string name="repeatables_frequency_monthly">每月任務</string>
-  <string name="repeatables_frequency_yearly">每年任務</string>
+  <string name="repeatables_frequency_daily">每日</string>
+  <string name="repeatables_frequency_weekly">每週</string>
+  <string name="repeatables_frequency_monthly">每月</string>
+  <string name="repeatables_frequency_yearly">每年</string>
   <string name="repeatables_frequency_day_of_month">一個月中的一天</string>
   <string name="repeatables_frequency_day_of_week">一週中的一天</string>
   <string name="monday">一</string>
@@ -115,14 +115,14 @@
   <string name="friday">五</string>
   <string name="saturday">六</string>
   <string name="sunday">日</string>
-  <string name="onwards">吼啊~！</string>
+  <string name="onwards">向前邁進！</string>
   <string name="faint_subtitle">別失望！</string>
   <string name="faint_header">你的生命值已經見底！</string>
   <string name="faint_button">補滿生命值並再重試</string>
   <string name="filter">篩選</string>
   <string name="profile_image">頭像</string>
-  <string name="mana_price_button">%d MP</string>
-  <string name="used_skill">你在 %1$s 用了 %2$d 魔法值。</string>
+  <string name="mana_price_button">%d 魔力值</string>
+  <string name="used_skill">你在 %1$s 用了 %2$d 魔力值。</string>
   <string name="used_skill_without_mana">你使用了 %1$s。</string>
   <string name="new_checklist_item">新增清單項目</string>
   <string name="add_checklist_item">添加</string>
@@ -158,7 +158,7 @@
   <string name="avatar_color">顏色</string>
   <string name="avatar_beard">鬍子</string>
   <string name="avatar_mustache">八字鬍</string>
-  <string name="avatar_flower">花</string>
+  <string name="avatar_flower">花飾</string>
   <string name="avatar_bangs">瀏海</string>
   <string name="avatar_nothing">沒有設置</string>
   <string name="avatar_size">尺寸</string>
@@ -168,7 +168,7 @@
   <string name="purchase_customization">用戶購買</string>
   <string name="purchase_set_button">用 %d 鑽石解鎖</string>
   <string name="purchase_button">購買</string>
-  <string name="purchase_set_title">購買禮包 %s</string>
+  <string name="purchase_set_title">購買套組 %s</string>
   <string name="due_date">截止日期</string>
   <string name="quest.accept">接受</string>
   <string name="quest.reject">拒絕</string>
@@ -186,7 +186,7 @@
   <string name="dismiss_tutorial">再次提醒我</string>
   <string name="intro_1_subtitle">歡迎來到</string>
   <string name="intro_1_title">Habitica</string>
-  <string name="intro_1_description">和 %s 玩家一起用遊戲戰勝拖延症！你可以創建一個帳戶，用它來追蹤你生活中的點滴瑣事。</string>
+  <string name="intro_1_description">和 %s 玩家一起用遊戲戰勝拖延症！你可以創建一個帳號，用它來追蹤你生活中的點滴瑣事。</string>
   <string name="intro_2_subtitle">遊戲進度</string>
   <string name="intro_2_title">生活進度</string>
   <string name="intro_2_description">通過完成現實生活中的任務來解鎖遊戲內容。得到裝備、寵物和更多的獎勵來促使你完成目標。</string>
@@ -197,12 +197,10 @@
   <string name="previous_button">上一頁</string>
   <string name="next_button">下一頁</string>
   <string name="skip_button">跳過</string>
-  <string name="setup_welcome_description">歡迎來到 Habitica，在遊戲中打怪升級的同時改善自己的現實生活。完成現實生活中的目標，解鎖大量裝備、寵物、副本，更多特色等你探索。</string>
+  <string name="setup_welcome_description">歡迎來到 Habitica，在遊戲中打怪升級的同時改善自己的現實生活。完成現實中的生活目標，解鎖大量裝備、寵物、副本，更多特色等你探索。</string>
   <string name="setup_welcome_title">歡迎</string>
   <string name="avatar_setup_description">那麼，你想擁有如何的外觀？不用太過顧慮，之後仍然能夠更改。</string>
-  <string name="task_setup_description">太棒了！現在開始設定你的任務，開始賺取經驗和金幣吧。
-
-首先，你想改善生活中的哪一部分呢？</string>
+  <string name="task_setup_description">太棒了！現在開始設定你的任務，開始賺取經驗和金幣吧。首先，你想改善生活中的哪一部分呢？</string>
   <string name="setup_group_work">工作</string>
   <string name="setup_group_exercise">運動</string>
   <string name="setup_group_health">健康</string>
@@ -214,21 +212,21 @@
   <string name="setup_task_work_2">最重要的任務</string>
   <string name="setup_task_work_3">工作項目</string>
   <string name="setup_task_exercise_1">10 分鐘有氧運動</string>
-  <string name="setup_task_exercise_2">拉伸</string>
+  <string name="setup_task_exercise_2">伸展運動</string>
   <string name="setup_task_exercise_3">制定健身計劃</string>
   <string name="setup_task_healthWellness_1">吃健康/垃圾食品</string>
   <string name="setup_task_healthWellness_2">使用牙線</string>
   <string name="setup_task_healthWellness_3">擇期體檢</string>
   <string name="setup_task_school_1">學習/拖延</string>
   <string name="setup_task_school_2">做家庭作業</string>
-  <string name="setup_task_school_3">完成班級委托</string>
+  <string name="setup_task_school_3">完成班級任務</string>
   <string name="setup_task_teams_1">和團隊確認進度</string>
   <string name="setup_task_teams_2">為團隊更新現狀</string>
   <string name="setup_task_teams_3">完成團隊專案</string>
   <string name="setup_task_chores_1">清潔 10 分鐘</string>
   <string name="setup_task_chores_2">洗碗筷</string>
   <string name="setup_task_chores_3">整理衣櫥</string>
-  <string name="setup_task_creativity_1">學習以成為藝術能手</string>
+  <string name="setup_task_creativity_1">學習鑽研工藝</string>
   <string name="setup_task_creativity_2">進行創新項目</string>
   <string name="setup_task_creativity_3">完成創新項目</string>
   <string name="gem.purchase.support">想要幫助我們維持 Habitica？透過購買鑽石來支持開發團隊吧！
@@ -303,11 +301,11 @@
   <string name="feed_to_pet">餵食寵物</string>
   <string name="hatch_egg">孵化寵物蛋</string>
   <string name="invite_party">隊伍邀請</string>
-  <string name="dialog_feeding">餵養%s用：</string>
+  <string name="dialog_feeding">餵給%s：</string>
   <string name="use_animal">用</string>
   <string name="feed">餵</string>
   <string name="hatch_with">用%s孵化寵物</string>
-  <string name="hatched_pet_title">你孵化了一隻%1$s %2$s！</string>
+  <string name="hatched_pet_title">你孵化了一隻%1$s%2$s！</string>
   <string name="evolved_pet_title">你馴服了%s，讓我們騎上牠吧！</string>
   <string name="close">關閉</string>
   <string name="share">分享</string>
@@ -336,7 +334,7 @@
   <string name="rogue">盜賊</string>
   <string name="mage">法師</string>
   <string name="healer">補師</string>
-  <string name="mage_description">法師鑽研能夠立即傷害 Boss 和提昇經驗值和魔法值的法術。如果您渴望於快速升級，那就成為法師吧！法師得利於其智力屬性。</string>
+  <string name="mage_description">法師鑽研能夠立即傷害 Boss 和提昇經驗值和魔力值的法術。如果您渴望於快速升級，那就成為法師吧！法師得利於其智力屬性。</string>
   <string name="rogue_description">盜賊鑽研能使他們自身以及隊伍獲得更多金幣及隨機掉落物品的技巧。如果你熱衷於蒐集物品並積累財富，那就成為盜賊吧！盜賊得利於其感知屬性。</string>
   <string name="healer_description">補師鑽研能夠治癒並保護自身以及隊伍的技術。如果你喜愛幫助隊友或免除傷害，那就成為補師吧！補師得利於其體質屬性。</string>
   <string name="select_class">選擇職業</string>
@@ -383,7 +381,7 @@
   <string name="no_potion">你不需要購買治療藥水</string>
   <string name="successful_purchase">成功購入%1$s</string>
   <string name="purchase_confirmation_title">確認購買</string>
-  <string name="confirm_purchase_text">用了%2$s %3$s購買%1$s</string>
+  <string name="confirm_purchase_text">用 %2$s %3$s購買%1$s</string>
   <string name="gem">鑽石</string>
   <string name="hourglass">沙漏</string>
   <string name="hourglasses">沙漏</string>
@@ -429,7 +427,7 @@
   <string name="gem.purchase.listitem2">超讚的背景</string>
   <string name="gem.purchase.listitem3">有寵物蛋獎勵的副本</string>
   <string name="gem.purchase.listitem4">100 級以前更換職業的能力</string>
-  <string name="support_habitica">贊助 Habitica</string>
+  <string name="support_habitica">訂閱 Habitica</string>
   <string name="skill_transformation_use">使用</string>
   <string name="hatching_market_info">沒有得到想要的掉落物品？來市場看看！</string>
   <string name="feeding_market_info">需要不同的食物嗎？到市場中購買更多食物！</string>
@@ -449,13 +447,13 @@
   <string name="subscribe.listitem3">保留外加歷史條目</string>
   <string name="subscribe.listitem4">每日掉落上限翻倍</string>
   <string name="subscriptions">訂閱</string>
-  <string name="subscription_duration">每%s重複出現</string>
+  <string name="subscription_duration">每 %s重複出現</string>
   <string name="subscribe">加入會員</string>
-  <string name="subscribe.listitem1.description">商人 Alexander 可以按每個鑽石 20 金幣的價格向你出售鑽石！ 
+  <string name="subscribe.listitem1.description">商人 Alexander 將會按每顆鑽石 20 金幣的價格向你出售鑽石！ 
 \n 
-\n他每個月的初始進貨量是 25 個鑽石，進貨量會隨著您的捐助額度增長！ 
+\n他每個月的初始進貨量是 25 個鑽石，進貨量會隨著您的訂閱額度增長！ 
 \n 
-\n 每三個月鑽石上限就會增加 5，直到最多 1 個月 50 顆鑽石！</string>
+\n每三個月鑽石上限就會增加 5 顆，直到最多 1 個月 50 顆鑽石！</string>
   <string name="subscribe.listitem2.description">每個月你將會收到一件獨特的角色飾品！ 
 \n 
 \n另外每連續訂閱三個月，神秘的時間旅行者將授予你得到過去 (和未來) 飾品的資格。</string>
@@ -464,16 +462,16 @@
   <string name="subscription_hourglasses">%d 個神秘沙漏</string>
   <string name="payment_method">付款方式</string>
   <string name="subscription">訂閱</string>
-  <string name="active">活躍的</string>
+  <string name="active">有效</string>
   <string name="cancel_subscription">取消訂閱</string>
   <string name="cancel_subscription_google.description">想要取消訂閱嗎？你可以在 Google Play 裡的「我的應用程式」取消訂閱。</string>
   <string name="cancel_subscription_notgoogle.description">想要取消訂閱嗎？由於你的支付方式，你只能在網站上取消訂閱，點擊下方的按鈕以打開網頁！</string>
   <string name="visit_habitica_website">查訪 Habitica 官方網站</string>
   <string name="current_bonuses">現在的加成獎勵</string>
-  <string name="months_subscribed">月訂閱</string>
+  <string name="months_subscribed">個月訂閱</string>
   <string name="current_hourclasses">現有的神秘沙漏</string>
   <string name="monthly_gem_cap">每月鑽石上限</string>
-  <string name="inactive">不活躍的</string>
+  <string name="inactive">失效</string>
   <string name="one_month">1 個月</string>
   <string name="months">月</string>
   <string name="month">月</string>
@@ -482,7 +480,7 @@
   <string name="twelve_months">12 個月</string>
   <string name="subscribe_prompt_thanks">只要訂閱的話，你就可以享有這些禮遇：</string>
   <string name="subscription_status">訂閱狀態</string>
-  <string name="byLeader">按照%s</string>
+  <string name="byLeader">由 %s</string>
   <string name="challenge_details">挑戰細節</string>
   <string name="challenge_leave_title">離開挑戰</string>
   <string name="challenge_leave_text">你確認你要離開「%s」挑戰嗎？</string>
@@ -497,7 +495,7 @@
   <string name="habit">習慣</string>
   <string name="reward">獎勵</string>
   <string name="todo">待辦事項</string>
-  <string name="official">官方的</string>
+  <string name="official">官方發起</string>
   <string name="participating">參與中</string>
   <string name="challenge">挑戰</string>
   <string name="go_to_challenge">查看挑戰</string>
@@ -543,7 +541,7 @@
   <string name="avatar_glasses">眼鏡</string>
   <string name="avatar_wheelchair">輪椅</string>
   <string name="weak">虛弱</string>
-  <string name="strong">強的</string>
+  <string name="strong">強壯</string>
   <string name="gray">灰色</string>
   <string name="dated">已排程</string>
   <string name="completed">已完成</string>
@@ -571,7 +569,7 @@
   <string name="tasks">任務</string>
   <string name="create_challenge">建立挑戰</string>
   <string name="edit_challenge">編輯</string>
-  <string name="challenge_create_error_tavern_one_gem">你最少需要 1 個鑽石來建立公眾挑戰。</string>
+  <string name="challenge_create_error_tavern_one_gem">你最少需要 1 顆鑽石來建立公眾挑戰。</string>
   <string name="challenge_create_error_enough_gems">你沒有足夠的鑽石來發出此挑戰。</string>
   <string name="identify_your_challenge_with_a_tag">給你的挑戰一個簡短的名稱</string>
   <string name="challenge_create_error_tag">你需要給你的挑戰一個簡短的名字。</string>
@@ -606,8 +604,8 @@
   <string name="billion_abbrev">十億</string>
   <string name="your_balance">你的餘額：</string>
   <string name="available_until" formatted="false">%s 前可購入</string>
-  <string name="gems_left_max" formatted="false">每月鑽石：剩下 %1$d/%2$d</string>
-  <string name="gems_left_nomax" formatted="false">每月鑽石：剩下 %d</string>
+  <string name="gems_left_max" formatted="false">當月鑽石：剩下 %1$d/%2$d</string>
+  <string name="gems_left_nomax" formatted="false">當月鑽石：剩下 %d</string>
   <string name="health">生命值</string>
   <string name="collect">蒐集</string>
   <string name="rage_meter">狂暴值</string>
@@ -674,7 +672,7 @@
   <string name="strength">力量</string>
   <string name="strength_description">這個屬性增加玩家完成任務時觸發暴擊的機率，並且增加通過暴擊獲得的額外獎勵的數量和對 boss 造成的傷害。</string>
   <string name="intelligence">智力</string>
-  <string name="intelligence_description">這個屬性允許玩家從任務中獲得更多經驗值，等級提升更快。魔法值的最大值和再生速度也會上升。</string>
+  <string name="intelligence_description">這個屬性允許玩家從任務中獲得更多經驗值，等級提升更快。魔力值的最大值和再生速度也會上升。</string>
   <string name="constitution">體質</string>
   <string name="constitution_description">這個屬性減少玩家從自己的任務中受到的傷害，例如負面習慣或者未完成的每日任務，但不能減少 boss 造成的傷害。</string>
   <string name="perception">感知</string>
@@ -683,7 +681,7 @@
   <string name="allocated">分配</string>
   <string name="distribute_evenly">平均分配</string>
   <string name="distribute_class">根據職業分配</string>
-  <string name="distribute_task">根據任務活動分配</string>
+  <string name="distribute_task">根據任務分配</string>
   <string name="no_points_to_allocate">沒有屬性點可以分配</string>
   <string name="points_to_allocate" formatted="false">%d 屬性點可以分配</string>
   <string name="distribute_evenly_help">平均分配屬性點至所有屬性。</string>
@@ -697,7 +695,7 @@
   <string name="class_gear_disclaimer">你只能購買當前職業的裝備</string>
   <string name="available_stats" formatted="false">%d 點</string>
   <string name="toogle_emojis">切換 Emoji</string>
-  <string name="tavern_description">歡迎來到酒館小棧！拉張椅子坐下聊天，或者暫停任務休息一下。</string>
+  <string name="tavern_description">歡迎來到酒館客棧！拉張椅子坐下聊天，或者暫停任務休息一下。</string>
   <string name="check_into_inn">入住客棧</string>
   <string name="community_guidelines">社群規範</string>
   <string name="view_community_guidelines">查看社群規範</string>
@@ -740,10 +738,10 @@
   <string name="insufficientSubscriberGemsTitle">已達到每月鑽石上限</string>
   <string name="chat_message">聊天訊息</string>
   <string name="world_boss_description_title">什麼是世界 boss？</string>
-  <string name="world_boss_description_description">世界 Boss 是一個全體玩家一同參與的特殊活動，大家每天同心協力完成任務來打敗強力的怪物！ 
-\n完成任務即可對 Boss 造成傷害 
-\n你沒完成任務時，Boss 不會攻擊你，但是暴走值會提升，當暴走值達到上限時，將會隨機攻擊一個店主！ 
-\n你可以同時挑戰一般的副本 Boss，傷害會同時灌注在兩者身上 
+  <string name="world_boss_description_description">世界 Boss 是一個全體玩家一同參與的特殊活動，大家每天同心協力完成任務來打敗強力的怪物！
+\n完成任務即可對 Boss 造成傷害
+\n你沒完成任務時，Boss 不會攻擊你，但是暴走值會提升，當暴走值達到上限時，將會隨機攻擊一個店主！
+\n你可以同時挑戰一般的副本 Boss，傷害會同時灌注在兩者身上
 \n點擊酒館來確認世界 Boss 的攻略進度和暴走攻擊</string>
   <string name="world_boss_description_intro">世界 Boss 是一個全體玩家一同參與的特殊活動，大家每天同心協力完成任務來打敗強力的怪物！</string>
   <string name="world_boss_description_1">完成任務來攻擊世界 Boss</string>
@@ -767,26 +765,26 @@
   <string name="unlock_attribute_points">分配屬性點在 10 等時解鎖</string>
   <string name="moderator">管理員</string>
 <string name="levelup_header">你升到第 %1$d 級！</string>
-    <string name="levelup_detail">透過完成你在現實生活中的目標，你現在已經升級並完全治癒了！</string>
-    <string name="loading">讀取中…</string>
+    <string name="levelup_detail">藉由完成現實中的生活目標，你已經升級並完全回血了！</string>
+    <string name="loading">讀取中...</string>
     <string name="faint_penalty_body">你降了一級，丟失了所有的金幣和一件裝備。不過繼續努力，你就可以把他們都拿回來！加油，你會更棒的。</string>
     <string name="reminder_title">記得完成你的任務</string>
     <string name="warrior_description">戰士會有更高的暴擊率，能對 Boss 造成更強的傷害。如果你想輕鬆擊退怪物，那就當個戰士吧！戰士得利於其力量屬性。</string>
     <string name="opting_out_progress">退出</string>
-    <string name="invite_username_description">如果你已有朋友在使用 Habitica，透過這裡的用戶名邀請他們。</string>
+    <string name="invite_username_description">如果你已有朋友在使用 Habitica，透過這裡的使用者名稱邀請他們。</string>
     <string name="subscription_duration_norenew">為了 %s</string>
-    <string name="subscribe1month.gemcap">25 鑽石</string>
-    <string name="subscribe3month.gemcap">30 鑽石</string>
-    <string name="subscribe6month.gemcap">35 鑽石</string>
-    <string name="subscribe12month.gemcap">45 鑽石</string>
+    <string name="subscribe1month.gemcap">25 鑽石上限</string>
+    <string name="subscribe3month.gemcap">30 鑽石上限</string>
+    <string name="subscribe6month.gemcap">35 鑽石上限</string>
+    <string name="subscribe12month.gemcap">45 鑽石上限</string>
     <string name="due">期限</string>
     <string name="welcome_text">哦，你一定是新來的。我是 Justin，你在 Habitica 的嚮導。
 \n 
 \n開始之前，我們該怎麽稱呼您？你可隨意修改預設值，等你都填好後，我們就可以開始創建你的個人形象！</string>
     <string name="delete_oauth_account_description">您確定嗎？這將會永久刪除您的帳號，並且再也無法恢復！如果您希望再次使用 Habitica，就需要再註冊一個全新的帳號。舊帳號內儲存的和已花費的鑽石也將無法被退還。如果您非常確定要刪除帳號，請在下面的文字欄中輸入您的密碼。</string>
     <string name="change_username">修改使用者名稱</string>
-    <string name="join_party_description">把下方的用戶名給一個隊伍成員，這樣他們就能邀請你加入了</string>
-    <string name="join_party_description_id">把你的 UserID 給他們，或者讓他們掃你的 QR 碼來邀請你</string>
+    <string name="join_party_description">把下方的使用者名稱給一個隊伍成員，這樣他們就能邀請你加入了</string>
+    <string name="join_party_description_id">把你的使用者 ID 給他們，或者讓他們掃你的 QR 碼來邀請你</string>
     <string name="tavern_description_world_boss">噢我親愛的老夥計，不用擔心下面的怪物，這裏仍然是一個安全的避風港，來聊聊天吧。</string>
     <string name="same_day_reminder_title">你添加任務了嗎？</string>
     <string name="same_day_reminder_text">你增加得越多，獎勵就會越多。溪流終將匯聚成大海。</string>
@@ -811,20 +809,20 @@
     <string name="last_login">最新簽到時間</string>
     <string name="total_checkins">總簽到數</string>
     <string name="two_handed">雙手握持</string>
-    <string name="usernamePromptTitle">是時候設置用戶名了！</string>
-    <string name="usernamePromptBody">現在用戶名就是登入帳號，同時用戶名還用於邀請、聊天版上@你，還有私訊。</string>
+    <string name="usernamePromptTitle">是時候設置使用者名稱了！</string>
+    <string name="usernamePromptBody">現在使用者名稱就是登入帳號，同時使用者名稱還用於邀請、聊天版上@你，還有私訊。</string>
     <string name="usernamePromptWiki">如果你想了解更多關於變動的信息，可以<a href="https://habitica.wikia.com/wiki/Player_Names">訪問我們的 wiki。</a></string>
-    <string name="confirmUsername">確認用戶名</string>
+    <string name="confirmUsername">確認使用者名稱</string>
     <string name="usernamePromptDisclaimer">使用者名稱必須遵守我們的<a href="https://habitica.com/static/terms">服務條款</a>和<a href="https://habitica.com/static/community-guidelines">社群守則</a>。如果您之前尚未設立登入名稱，您的使用者名稱將會被自動產生。</string>
     <string name="confirm_username_title">你確定要用這個名字嗎？</string>
-    <string name="confirm_username_description">用戶名一經確認就會顯示在邀請，@提到你和私信中。你隨時都可以在設定裏修改用戶名。</string>
+    <string name="confirm_username_description">使用者名稱一經確認就會顯示在邀請，@提到你和私信中。你隨時都可以在設定裏修改使用者名稱。</string>
     <string name="cancel">取消</string>
-    <string name="confirm_username">確認用戶名</string>
-    <string name="username_not_confirmed">用戶名未確認</string>
-    <string name="username_confirmed">用戶名已確認</string>
-    <string name="username_level">\@%s ・等級 %d</string>
-    <string name="enter_recipient_username">輸入收件人的@用戶名</string>
-    <string name="username_copied">用戶名已複製到剪貼板</string>
+    <string name="confirm_username">確認使用者名稱</string>
+    <string name="username_not_confirmed">使用者名稱未確認</string>
+    <string name="username_confirmed">使用者名稱已確認</string>
+    <string name="username_level">\@%s・等級 %d</string>
+    <string name="enter_recipient_username">輸入收件人的@使用者名稱</string>
+    <string name="username_copied">使用者名稱已複製到剪貼板</string>
     <string name="verification_pet">確認後，其中一隻將領寵物在等待著你！</string>
     <string name="welcomeNameTitle">我們應該怎麽稱呼你呢？</string>
     <string name="display_name_length_error">暱稱長度必須介於 1 至 30 個字符之間</string>
@@ -859,19 +857,19 @@
   <string name="no_notifications_title">已查看所有新訊息！</string>
   <string name="no_notifications_text">通知仙女給您一陣熱烈的掌聲！做得好！</string>
   <string name="dismiss_all">清除全部</string>
-  <string name="new_bailey_update">Bailey的新訊息！</string>
-  <string name="new_msg_guild"><![CDATA[<b>%1$s</b>有新的貼文]]></string>
-  <string name="new_msg_party"><![CDATA[您的隊伍<b>%1$s</b>有新的貼文]]></string>
-  <string name="unallocated_stats_points">你有 <b>%1$s 點未分配屬性點</b></string>
+  <string name="new_bailey_update">Bailey 的新訊息！</string>
+  <string name="new_msg_guild"><b>%1$s</b> 有新的貼文</string>
+  <string name="new_msg_party">您的隊伍 <b>%1$s</b> 有新的貼文</string>
+  <string name="unallocated_stats_points">你有 <b>%1$s 點屬性點未分配</b></string>
   <string name="new_subscriber_item"><![CDATA[您有新的<b>神秘裝備</b>]]></string>
-  <string name="invited_to_party_notification"><![CDATA[您受邀加入<b>%1$s</b>隊伍]]></string>
-  <string name="invited_to_private_guild"><![CDATA[您受邀加入<b>%1$s</b>私人公會]]></string>
-  <string name="invited_to_public_guild"><![CDATA[您受邀加入<b>%1$s</b>您受邀加入]]></string>
-  <string name="invited_to_quest"><![CDATA[您受邀加入<b>%1$s</b>副本]]></string>
+  <string name="invited_to_party_notification">您受邀加入 <b>%1$s</b> 隊伍</string>
+  <string name="invited_to_private_guild">您受邀加入 <b>%1$s</b> 私人公會</string>
+  <string name="invited_to_public_guild">您受邀加入 <b>%1$s</b> 公會</string>
+  <string name="invited_to_quest">您受邀加入 <b>%1$s</b> 副本</string>
 <string name="sectionwacky">古怪寵物</string>
     <string name="x_months">%d 個月</string>
     <string name="insufficientGoldTitle">金幣不足</string>
-    <string name="join_party_description_guild">將下方的用戶名發給好友，或是前往%s找尋隊友</string>
+    <string name="join_party_description_guild">將下方的使用者名稱發給好友，或是前往%s找尋隊友</string>
     <string name="defeat">擊退</string>
     <string name="add_local_authentication">新增地區性驗證</string>
     <string name="task_title">任務標題</string>
@@ -938,4 +936,5 @@
     <string name="create_task">建立%s</string>
     <string name="details">詳細內容</string>
     <string name="share_challenge_with">分享挑戰</string>
-</resources>
+<string name="trillion_abbrev">兆</string>
+    </resources>
