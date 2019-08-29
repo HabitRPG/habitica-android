@@ -16,7 +16,7 @@
   <string name="Language_summary">更改 Habitica 的語言</string>
   <string name="SP_user_qr_code">你的 QR 碼</string>
   <string name="PS_contact_title">聯絡我</string>
-  <string name="unknown_error">發生錯誤...</string>
+  <string name="unknown_error">發生錯誤…</string>
   <string name="pref_account_header">帳號</string>
   <string name="pref_first_day_of_the_week_title">每週的第一天</string>
   <string name="pref_first_day_of_the_week_summary">毎週的第一天</string>
@@ -766,7 +766,7 @@
   <string name="moderator">管理員</string>
 <string name="levelup_header">你升到第 %1$d 級！</string>
     <string name="levelup_detail">藉由完成現實中的生活目標，你已經升級並完全回血了！</string>
-    <string name="loading">讀取中...</string>
+    <string name="loading">讀取中…</string>
     <string name="faint_penalty_body">你降了一級，丟失了所有的金幣和一件裝備。不過繼續努力，你就可以把他們都拿回來！加油，你會更棒的。</string>
     <string name="reminder_title">記得完成你的任務</string>
     <string name="warrior_description">戰士會有更高的暴擊率，能對 Boss 造成更強的傷害。如果你想輕鬆擊退怪物，那就當個戰士吧！戰士得利於其力量屬性。</string>
@@ -937,4 +937,5 @@
     <string name="details">詳細內容</string>
     <string name="share_challenge_with">分享挑戰</string>
 <string name="trillion_abbrev">兆</string>
+    <string name="cost">價格</string>
     </resources>
