@@ -4,12 +4,12 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import androidx.preference.PreferenceDialogFragmentCompat
-import androidx.preference.PreferenceFragmentCompat
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TimePicker
+import androidx.preference.PreferenceDialogFragmentCompat
+import androidx.preference.PreferenceFragmentCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.prefs.TimePreference
 import java.text.DateFormat
@@ -55,7 +55,7 @@ class DayStartPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
     private fun updateDescriptionText(hour: Int) {
         val date = GregorianCalendar()
-        if (date.get(Calendar.HOUR) < hour) {
+        if (date.get(Calendar.HOUR) >= hour) {
             date.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH) + 1)
         }
         date.set(Calendar.HOUR_OF_DAY, hour)
