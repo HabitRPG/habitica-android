@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import ShowCheckinDialog
 import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
@@ -34,7 +35,10 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
-import com.habitrpg.android.habitica.events.*
+import com.habitrpg.android.habitica.events.ShareEvent
+import com.habitrpg.android.habitica.events.ShowAchievementDialog
+import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
+import com.habitrpg.android.habitica.events.ShowSnackbarEvent
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -636,7 +640,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         youEarnedTexView?.text = youEarnedMessage
 
         val nextUnlockTextView = view.findViewById(R.id.next_unlock_message) as? TextView
-        nextUnlockTextView?.text = event.nextUnlockText
+        if (event.nextUnlockCount > 0) {
+            nextUnlockTextView?.text = event.nextUnlockText
+        } else {
+            nextUnlockTextView?.visibility = View.GONE
+        }
 
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())

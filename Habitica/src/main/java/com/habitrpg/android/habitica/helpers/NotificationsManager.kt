@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
+import ShowCheckinDialog
 import android.content.Context
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
@@ -86,9 +87,7 @@ class NotificationsManager (private val context: Context) {
         val notificationData = notification.data as? LoginIncentiveData
         val nextUnlockText = context.getString(R.string.nextPrizeUnlocks, notificationData?.nextRewardAt)
         if (notificationData?.rewardKey != null) {
-            val event = ShowCheckinDialog()
-            event.notification = notification
-            event.nextUnlockText = nextUnlockText
+            val event = ShowCheckinDialog(notification, nextUnlockText, notificationData.nextRewardAt ?: 0)
             EventBus.getDefault().post(event)
         } else {
             val event = ShowSnackbarEvent()
