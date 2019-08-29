@@ -836,4 +836,5 @@
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="keep_challenges">Keep Challenges</string>
     <string name="leave_challenges">Leave Challenges</string>
+    <string name="equip_automatically">Auto-equip new gear</string>
 </resources>
