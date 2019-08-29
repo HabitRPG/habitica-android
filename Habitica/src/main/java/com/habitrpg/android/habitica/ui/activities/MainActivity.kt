@@ -318,8 +318,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         super.startActivity(intent, options)
     }
 
-
-
     private fun updateWidgets() {
         updateWidget(AvatarStatsWidgetProvider::class.java)
         updateWidget(TodoListWidgetProvider::class.java)

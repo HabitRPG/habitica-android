@@ -55,6 +55,9 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         onTabSelectedListener?.invoke(value)
     }
 
+    val barHeight: Int
+        get() = itemWrapper.measuredHeight
+
     private val cutoutBackgroundView: ImageView by bindView(R.id.cutout_background)
     private val habitsTab: BottomNavigationItem by bindView(R.id.tab_habits)
     private val dailiesTab: BottomNavigationItem by bindView(R.id.tab_dailies)
@@ -63,6 +66,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
     private val addButton: ImageButton by bindView(R.id.add)
     private val addButtonBackground: ViewGroup by bindView(R.id.add_wrapper)
     private val submenuWrapper: LinearLayout by bindView(R.id.submenu_wrapper)
+    private val itemWrapper: ViewGroup by bindView(R.id.item_wrapper)
 
     init {
         inflate(R.layout.main_navigation_view, true)

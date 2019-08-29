@@ -28,6 +28,7 @@
             android:paddingEnd="@dimen/spacing_small"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/icon_view"
+            android:gravity="center"
             />
         <TextView
             android:id="@+id/selected_title_view"
@@ -43,6 +44,7 @@
             android:paddingEnd="@dimen/spacing_small"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/icon_view"
+            android:gravity="center"
             />
     <TextView
         android:id="@+id/badge"
