@@ -160,9 +160,9 @@ open class GroupViewModel : BaseViewModel() {
         }
     }
 
-    fun leaveGroup(function: (() -> Unit)? = null) {
-        disposable.add(socialRepository.leaveGroup(this.group.value?.id ?: "")
-                .flatMap { userRepository.retrieveUser(false, true) }
+    fun leaveGroup(keepChallenges: Boolean = true, function: (() -> Unit)? = null) {
+        disposable.add(socialRepository.leaveGroup(this.group.value?.id ?: "", keepChallenges)
+                .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
                 .subscribe(Consumer {
                     function?.invoke()
                 }, RxErrorHandler.handleEmptyError()))

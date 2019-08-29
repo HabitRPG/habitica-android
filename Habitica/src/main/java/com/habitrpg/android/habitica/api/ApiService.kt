@@ -187,7 +187,7 @@ interface ApiService {
     fun joinGroup(@Path("gid") groupId: String): Flowable<HabitResponse<Group>>
 
     @POST("groups/{gid}/leave")
-    fun leaveGroup(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
+    fun leaveGroup(@Path("gid") groupId: String, @Query("keepChallenges") keepChallenges: String): Flowable<HabitResponse<Void>>
 
     @POST("groups/{gid}/chat")
     fun postGroupChat(@Path("gid") groupId: String, @Body message: Map<String, String>): Flowable<HabitResponse<PostChatMessageResult>>

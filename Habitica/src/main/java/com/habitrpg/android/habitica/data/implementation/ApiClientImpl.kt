@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import android.util.Log
 import com.amplitude.api.Amplitude
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
@@ -124,7 +123,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     val request = builder.method(original.method(), original.body())
                             .build()
                     lastAPICallURL = original.url().toString()
-                    Log.d("NETWORK", lastAPICallURL)
                     chain.proceed(request)
                 }
                 .readTimeout(2400, TimeUnit.SECONDS)
@@ -493,8 +491,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.joinGroup(groupId).compose(configureApiCallObserver())
     }
 
-    override fun leaveGroup(groupId: String): Flowable<Void> {
-        return apiService.leaveGroup(groupId).compose(configureApiCallObserver())
+    override fun leaveGroup(groupId: String, keepChallenges: String): Flowable<Void> {
+        return apiService.leaveGroup(groupId, keepChallenges).compose(configureApiCallObserver())
     }
 
     override fun postGroupChat(groupId: String, message: Map<String, String>): Flowable<PostChatMessageResult> {

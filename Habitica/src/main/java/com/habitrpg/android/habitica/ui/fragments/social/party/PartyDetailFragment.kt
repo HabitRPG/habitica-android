@@ -279,13 +279,16 @@ class PartyDetailFragment : BaseFragment() {
         fragmentManager?.let { fragment.show(it, "questDialog") }
     }
 
-    private fun leaveParty() {
+    internal fun leaveParty() {
         val context = context
         if (context != null) {
             val alert = HabiticaAlertDialog(context)
             alert.setMessage(R.string.leave_party_confirmation)
-            alert.addButton(R.string.yes, true) { _, _ ->
-                viewModel?.leaveGroup { }
+            alert.addButton(R.string.keep_challenges, true) { _, _ ->
+                viewModel?.leaveGroup(true) { }
+            }
+            alert.addButton(R.string.leave_challenges, true) { _, _ ->
+                viewModel?.leaveGroup(false) { }
             }
             alert.addButton(R.string.no, false)
             alert.show()

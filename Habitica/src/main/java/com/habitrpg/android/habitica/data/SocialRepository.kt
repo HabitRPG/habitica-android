@@ -32,7 +32,7 @@ interface SocialRepository : BaseRepository {
     fun retrieveGroup(id: String): Flowable<Group>
     fun getGroup(id: String?): Flowable<Group>
 
-    fun leaveGroup(id: String?): Flowable<Group>
+    fun leaveGroup(id: String?, keepChallenges: Boolean): Flowable<Group>
 
     fun joinGroup(id: String?): Flowable<Group>
 

@@ -133,7 +133,7 @@ interface ApiClient {
 
     fun joinGroup(groupId: String): Flowable<Group>
 
-    fun leaveGroup(groupId: String): Flowable<Void>
+    fun leaveGroup(groupId: String, keepChallenges: String): Flowable<Void>
 
     fun postGroupChat(groupId: String, message: Map<String, String>): Flowable<PostChatMessageResult>
 

@@ -108,11 +108,15 @@ class GuildFragment : BaseMainFragment() {
                 return true
             }
             R.id.menu_guild_leave -> {
-                viewModel.leaveGroup { fragmentManager?.popBackStack() }
+                guildInformationFragment?.leaveGuild()
                 return true
             }
             R.id.menu_guild_edit -> {
                 this.displayEditForm()
+                return true
+            }
+            R.id.action_reload -> {
+                viewModel.retrieveGroup { }
                 return true
             }
         }
@@ -130,7 +134,7 @@ class GuildFragment : BaseMainFragment() {
 
                 when (position) {
                     0 -> {
-                        guildInformationFragment = GuildDetailFragment.newInstance(viewModel, user)
+                        guildInformationFragment = GuildDetailFragment.newInstance(viewModel)
                         fragment = guildInformationFragment
                     }
                     1 -> {

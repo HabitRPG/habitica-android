@@ -139,11 +139,11 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
         return localRepository.getGroup(id)
     }
 
-    override fun leaveGroup(id: String?): Flowable<Group> {
+    override fun leaveGroup(id: String?, keepChallenges: Boolean): Flowable<Group> {
         if (id == null) {
             return Flowable.empty()
         }
-        return apiClient.leaveGroup(id)
+        return apiClient.leaveGroup(id, if (keepChallenges) "remain-in-challenges" else "leave-challenges")
                 .doOnNext { localRepository.updateMembership(userID, id, false) }
                 .flatMapMaybe { localRepository.getGroup(id).firstElement() }
     }

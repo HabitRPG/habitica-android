@@ -19,11 +19,10 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
-import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
@@ -32,6 +31,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import java.util.*
 import javax.inject.Inject
@@ -77,12 +77,7 @@ class GuildDetailFragment : BaseFragment() {
         guildDescriptionView.movementMethod = LinkMovementMethod.getInstance()
         guildBankIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())
         leaveGuildButton.setOnClickListener {
-            viewModel?.leaveGroup {
-                val activity = activity as? MainActivity
-                if (activity != null) {
-                    HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.left_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
-                }
-            }
+            leaveGuild()
         }
         joinGuildButton.setOnClickListener {
             viewModel?.joinGroup {
@@ -159,6 +154,29 @@ class GuildDetailFragment : BaseFragment() {
         }
     }
 
+    internal fun leaveGuild() {
+        val context = context
+        if (context != null) {
+            val alert = HabiticaAlertDialog(context)
+            alert.setMessage(R.string.leave_guild_confirmation)
+            alert.addButton(R.string.keep_challenges, true) { _, _ ->
+                viewModel?.leaveGroup(true) { showLeaveSnackbar() }
+            }
+            alert.addButton(R.string.leave_challenges, true) { _, _ ->
+                viewModel?.leaveGroup(false) { showLeaveSnackbar() }
+            }
+            alert.addButton(R.string.no, false)
+            alert.show()
+        }
+    }
+
+    private fun showLeaveSnackbar() {
+        val activity = activity as? MainActivity
+        if (activity != null) {
+            HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.left_guild), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+        }
+    }
+
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
@@ -173,7 +191,7 @@ class GuildDetailFragment : BaseFragment() {
     }
 
     companion object {
-        fun newInstance(viewModel: GroupViewModel?, user: User?): GuildDetailFragment {
+        fun newInstance(viewModel: GroupViewModel?): GuildDetailFragment {
             val args = Bundle()
 
             val fragment = GuildDetailFragment()
