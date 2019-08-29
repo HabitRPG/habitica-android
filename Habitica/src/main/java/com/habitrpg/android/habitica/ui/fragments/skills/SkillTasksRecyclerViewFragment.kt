@@ -49,7 +49,11 @@ class SkillTasksRecyclerViewFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        compositeSubscription.add(taskRepository.getTasks(taskType ?: "", userId).firstElement().subscribe(Consumer { tasks -> adapter.updateData(tasks) }, RxErrorHandler.handleEmptyError()))
+        var tasks = taskRepository.getTasks(taskType ?: "", userId)
+        if (taskType == Task.TYPE_TODO) {
+            tasks = tasks.map { it.where().equalTo("completed", false).findAll() }
+        }
+        compositeSubscription.add(tasks.firstElement().subscribe(Consumer { adapter.updateData(it) }, RxErrorHandler.handleEmptyError()))
         recyclerView?.adapter = adapter
 
         val layoutManager = LinearLayoutManager(context)
