@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.helpers
 
-import ShowCheckinDialog
 import android.content.Context
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
@@ -12,14 +11,12 @@ import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class NotificationsManager (private val context: Context) {
-    private var compositeSubscription = CompositeDisposable()
     private val seenNotifications: MutableMap<String, Boolean>
     private var apiClient: ApiClient? = null
 

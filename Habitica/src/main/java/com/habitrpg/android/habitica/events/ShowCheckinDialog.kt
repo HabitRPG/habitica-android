@@ -1,5 +1,5 @@
-import com.habitrpg.android.habitica.models.Notification
+package com.habitrpg.android.habitica.events
 
-var nextUnlockCount: Intndroid.habitica.models.Notification
+import com.habitrpg.android.habitica.models.Notification
 
 class ShowCheckinDialog(var notification: Notification, var nextUnlockText: String, var nextUnlockCount: Int)
