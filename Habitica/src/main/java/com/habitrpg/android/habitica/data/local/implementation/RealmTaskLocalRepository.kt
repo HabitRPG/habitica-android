@@ -73,6 +73,11 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 taskMap.remove(taskId)
             }
         }
+        for (task in taskMap.values) {
+            task.position = position
+            taskList.add(task)
+            position++
+        }
         return taskList
     }
 
