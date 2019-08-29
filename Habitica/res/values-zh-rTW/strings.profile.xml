@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="profile_pets_and_mounts">寵物＆座騎</string>
+    <string name="profile_pets_and_mounts">寵物 &amp; 座騎</string>
     <string name="profile_pets_found">已找到寵物</string>
     <string name="profile_mounts_tamed">已馴養的坐騎</string>
     <string name="profile_loading_data">讀取數據資料中。</string>
