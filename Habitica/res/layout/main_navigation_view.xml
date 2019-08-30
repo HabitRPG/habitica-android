@@ -86,7 +86,7 @@
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_alignTop="@id/bottom_navigation_background"
-        android:layout_marginTop="-41dp"
+        android:layout_marginTop="-39dp"
         android:background="@drawable/fab_background">
         <ImageButton
             android:id="@+id/add"

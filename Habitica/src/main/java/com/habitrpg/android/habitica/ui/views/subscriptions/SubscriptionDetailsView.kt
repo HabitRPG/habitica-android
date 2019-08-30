@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
@@ -98,7 +97,7 @@ class SubscriptionDetailsView : LinearLayout {
             val url = if (plan?.paymentMethod == "Google") {
                 "https://play.google.com/store/account/subscriptions"
             } else {
-                BuildConfig.BASE_URL + "/"
+                context.getString(R.string.base_url) + "/"
             }
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }

@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -168,7 +167,7 @@ class ChallengeDetailFragment: BaseMainFragment() {
         else if (item.itemId == R.id.action_share) {
             val shareGuildIntent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "${BuildConfig.BASE_URL}/challenges/$challengeID")
+                putExtra(Intent.EXTRA_TEXT, "${context?.getString(R.string.base_url)}/challenges/$challengeID")
                 type = "text/plain"
             }
             startActivity(Intent.createChooser(shareGuildIntent, context?.getString(R.string.share_challenge_with)))
