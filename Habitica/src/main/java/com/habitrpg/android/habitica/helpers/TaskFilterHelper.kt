@@ -1,11 +1,13 @@
 package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.android.habitica.models.tasks.Task
+import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import java.util.*
 
 class TaskFilterHelper {
+    var searchQuery: String? = null
     private var tagsId: MutableList<String> = ArrayList()
     private val activeFilters = HashMap<String, String>()
 
@@ -95,6 +97,9 @@ class TaskFilterHelper {
 
             if (tagsId.size > 0) {
                 query = query.`in`("tags.id", tagsId.toTypedArray())
+            }
+            if (searchQuery?.isNotEmpty() == true) {
+                query = query.beginsWith("text", searchQuery ?: "", Case.INSENSITIVE)
             }
             if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
                 when (activeFilter) {

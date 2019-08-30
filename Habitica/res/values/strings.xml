@@ -841,4 +841,6 @@
     <string name="reject">Reject</string>
     <string name="complete">Complete</string>
     <string name="repeat_daily">Daily</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search tasks</string>
 </resources>

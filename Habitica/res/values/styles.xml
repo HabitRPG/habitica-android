@@ -46,6 +46,8 @@
 
         <item name="android:statusBarColor">@color/brand_50</item>
         <item name="android:navigationBarColor">@color/brand_50</item>
+
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
 
 
@@ -644,6 +646,11 @@
 
     <style name="ReportMessageToolbar">
         <item name="android:actionMenuTextColor">@color/red_50</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">@color/white_50_alpha</item>
+        <item name="searchHintIcon">@null</item>
     </style>
 
     <color name="taskform_gray">#99edecee</color>

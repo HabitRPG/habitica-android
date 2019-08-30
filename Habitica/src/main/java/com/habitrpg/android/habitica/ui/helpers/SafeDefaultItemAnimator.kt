@@ -8,7 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.habitrpg.shared.habitica.LogLevel
-import com.habitrpg.shared.habitica.Logger
+import com.habitrpg.shared.habitica.HLogger
 import java.util.*
 
 /**
@@ -226,8 +226,8 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         if (deltaY != 0) {
             view.translationY = (-deltaY).toFloat()
         }
-        Logger.log(LogLevel.INFO, "Moving1", "$toX, $fromX, $deltaX")
-        Logger.log(LogLevel.INFO, "Moving1", "$toX, $fromX, $deltaX")
+        HLogger.log(LogLevel.INFO, "Moving1", "$toX, $fromX, $deltaX")
+        HLogger.log(LogLevel.INFO, "Moving1", "$toX, $fromX, $deltaX")
         pendingMoves.add(MoveInfo(holder, newFromX, newFromY, toX, toY))
         return true
     }
@@ -242,8 +242,8 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         if (deltaY != 0) {
             view.animate().translationY(0f)
         }
-        Logger.log(LogLevel.INFO, "Moving", "$toX, $fromX, $deltaX")
-        Logger.log(LogLevel.INFO, "Moving", "$toX, $fromX, $deltaX")
+        HLogger.log(LogLevel.INFO, "Moving", "$toX, $fromX, $deltaX")
+        HLogger.log(LogLevel.INFO, "Moving", "$toX, $fromX, $deltaX")
         // vpas are canceled (and can't end them. why?)
         // need listener functionality in VPACompat for this. Ick.
         val animation = view.animate()
@@ -295,8 +295,8 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
             newHolder.itemView.translationY = (-deltaY).toFloat()
             newHolder.itemView.alpha = 0f
         }
-        Logger.log(LogLevel.INFO, "Changing", "$toX, $fromX, $deltaX")
-        Logger.log(LogLevel.INFO, "Changing", "$toX, $fromX, $deltaX")
+        HLogger.log(LogLevel.INFO, "Changing", "$toX, $fromX, $deltaX")
+        HLogger.log(LogLevel.INFO, "Changing", "$toX, $fromX, $deltaX")
         newHolder?.let { pendingChanges.add(ChangeInfo(oldHolder, it, fromX, fromY, toX, toY)) }
         return true
     }

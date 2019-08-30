@@ -13,7 +13,7 @@ enum class LogLevel {
   ERROR, INFO, DEBUG
 }
 
-class Logger {
+class HLogger {
 
   companion object {
     private val platformLogger = PlatformLogger()

@@ -236,7 +236,10 @@ open class Task : RealmObject, Parcelable {
         }
         return if (Task::class.java.isAssignableFrom(other.javaClass)) {
             val otherTask = other as? Task
-            this.id == otherTask?.id
+            if (!this.isValid || otherTask?.isValid != true) {
+                return false
+            }
+            this.id == otherTask.id
         } else {
             super.equals(other)
         }

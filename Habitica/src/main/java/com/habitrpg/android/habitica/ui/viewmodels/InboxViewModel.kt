@@ -63,9 +63,11 @@ private class MessagesDataSource(val socialRepository: SocialRepository, val rec
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<ChatMessage>) {
         lastFetchWasEnd = false
         GlobalScope.launch(Dispatchers.Main.immediate) {
-            socialRepository.getInboxMessages(recipientID).firstElement()
+            socialRepository.getInboxMessages(recipientID)
+                    .map { socialRepository.getUnmanagedCopy(it) }
+                    .firstElement()
                     .flatMapPublisher {
-                        if (it.size == 0) {
+                        if (it.isEmpty()) {
                             socialRepository.retrieveInboxMessages(recipientID, 0)
                                     .doOnNext {
                                         messages -> if (messages.size != 10) lastFetchWasEnd = true
