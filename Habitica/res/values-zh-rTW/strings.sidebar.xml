@@ -9,8 +9,8 @@
   <string name="sidebar.purchaseGems">購買鑽石</string>
   <string name="sidebar.guilds">公會</string>
   <string name="sidebar.challenges">挑戰</string>
-  <string name="sidebar.section.inventory">物品</string>
-  <string name="sidebar.avatar">頭像</string>
+  <string name="sidebar.section.inventory">背包</string>
+  <string name="sidebar.avatar">角色</string>
   <string name="sidebar.equipment">裝備</string>
   <string name="sidebar.stable">馬廄</string>
   <string name="sidebar.news">消息</string>
