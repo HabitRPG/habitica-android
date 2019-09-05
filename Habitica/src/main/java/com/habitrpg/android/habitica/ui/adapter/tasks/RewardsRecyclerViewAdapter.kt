@@ -33,10 +33,16 @@ class RewardsRecyclerViewAdapter(private var customRewards: OrderedRealmCollecti
     val purchaseCardEvents: Flowable<ShopItem> = purchaseCardSubject.toFlowable(BackpressureStrategy.LATEST)
 
     private val inAppRewardCount: Int
-        get() = inAppRewards?.size ?: 0
+        get() {
+            if (inAppRewards?.isValid != true) return 0
+            return inAppRewards?.size ?: 0
+        }
 
     private val customRewardCount: Int
-        get() = customRewards?.size ?: 0
+        get() {
+            if (customRewards?.isValid != true) return 0
+            return customRewards?.size ?: 0
+        }
 
     override var ignoreUpdates: Boolean
         get() = false

@@ -137,7 +137,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         super.onCreateView(inflater, container, savedInstanceState)
 
         if (Task.TYPE_DAILY == classType) {
-            if (user != null && user?.preferences?.dailyDueDefaultView == true) {
+            if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
                 taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
             }
         } else if (Task.TYPE_TODO == classType) {
