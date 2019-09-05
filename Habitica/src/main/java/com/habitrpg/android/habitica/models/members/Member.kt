@@ -20,6 +20,9 @@ open class Member : RealmObject(), Avatar {
             if (stats != null && stats?.isManaged != true) {
                 stats?.userId = subID
             }
+            if (items != null && items?.isManaged != true) {
+                items?.userId = subID
+            }
             if (this.inbox != null && this.inbox?.isManaged != true) {
                 this.inbox?.userId = subID
             }
