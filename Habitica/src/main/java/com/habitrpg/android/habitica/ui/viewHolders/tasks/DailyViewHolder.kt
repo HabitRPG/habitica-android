@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.responses.TaskDirection
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import java.text.DateFormat

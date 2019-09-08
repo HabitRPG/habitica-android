@@ -1,3 +1,3 @@
 package com.habitrpg.shared.habitica.models
 
-expect open class Task {}
+actual open class Tag {}

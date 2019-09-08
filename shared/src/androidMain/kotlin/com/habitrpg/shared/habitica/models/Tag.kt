@@ -1,13 +1,12 @@
 package com.habitrpg.shared.habitica.models
 
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.Task
 
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Tag : RealmObject() {
+actual open class Tag : RealmObject() {
 
     @PrimaryKey
     var id: String = ""

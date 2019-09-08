@@ -5,6 +5,8 @@ import com.google.gson.*
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.*
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import io.realm.Realm
 import io.realm.RealmList
 

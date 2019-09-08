@@ -9,7 +9,7 @@ import android.os.Build.VERSION.SDK_INT
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver

@@ -11,6 +11,8 @@ import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.*
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single

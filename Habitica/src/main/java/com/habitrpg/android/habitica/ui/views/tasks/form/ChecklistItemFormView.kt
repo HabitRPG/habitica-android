@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
 

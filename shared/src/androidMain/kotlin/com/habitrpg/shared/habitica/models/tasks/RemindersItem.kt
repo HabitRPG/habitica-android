@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.tasks
+package com.habitrpg.shared.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -8,7 +8,7 @@ import java.util.Date
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class RemindersItem : RealmObject, Parcelable {
+actual open class RemindersItem : RealmObject, Parcelable {
     @PrimaryKey
     var id: String? = null
     var startDate: Date? = null

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 
 import java.util.Date
 
