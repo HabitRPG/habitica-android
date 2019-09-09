@@ -14,13 +14,10 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.events.ConsumablePurchasedEvent
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.ABTest
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.*
 import java.util.*
@@ -70,20 +67,6 @@ class GemPurchaseActivity : BaseActivity() {
         viewPager.currentItem = 0
 
         setViewPagerAdapter()
-
-        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { user ->
-            for (test in user.abTests ?: emptyList<ABTest>()) {
-                if (test.name == "subscriptionPageOrder") {
-                    if (test.group == "subscriptionFirst") {
-                        showSubscriptionPageFirst = true
-                        viewPager.adapter?.notifyDataSetChanged()
-                        return@Consumer
-                    }
-                }
-            }
-            showSubscriptionPageFirst = false
-            viewPager.adapter?.notifyDataSetChanged()
-        }, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onStart() {

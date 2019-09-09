@@ -269,6 +269,9 @@ interface ApiService {
     @GET("members/find/{username}")
     fun findUsernames(@Path("username") username: String, @Query("context") context: String?, @Query("id") id: String?): Flowable<HabitResponse<List<FindUsernameResult>>>
 
+    @POST("members/flag-private-message/{mid}")
+    fun flagInboxMessage(@Path("mid") mid: String, @Body data: Map<String, String>): Flowable<HabitResponse<Void>>
+
     @GET("shops/{identifier}")
     fun retrieveShopInventory(@Path("identifier") identifier: String): Flowable<HabitResponse<Shop>>
 

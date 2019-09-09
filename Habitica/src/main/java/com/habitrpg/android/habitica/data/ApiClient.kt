@@ -148,6 +148,7 @@ interface ApiClient {
     fun likeMessage(groupId: String, mid: String): Flowable<ChatMessage>
 
     fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Flowable<Void>
+    fun flagInboxMessage(mid: String, data: MutableMap<String, String>): Flowable<Void>
 
     fun seenMessages(groupId: String): Flowable<Void>
 

@@ -75,7 +75,11 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
             else -> {
                 val data = mutableMapOf<String, String>()
                 data["comment"] = additionalInfo
-                apiClient.flagMessage(chatMessage.groupId ?: "", chatMessage.id, data)
+                if (chatMessage.isInboxMessage) {
+                    apiClient.flagInboxMessage(chatMessage.id, data)
+                } else {
+                    apiClient.flagMessage(chatMessage.groupId ?: "", chatMessage.id, data)
+                }
             }
         }
     }
