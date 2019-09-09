@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Transaction;
 import com.habitrpg.android.habitica.models.responses.ErrorResponse;
-import com.playseeds.android.sdk.Seeds;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
@@ -82,17 +81,6 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
                         requestListener.onSuccess(verifiedPurchases);
                         EventBus.getDefault().post(new ConsumablePurchasedEvent(purchase));
-
-                        //TODO: find way to get $ price automatically.
-                        if (purchase.sku.equals(PurchaseTypes.Purchase4Gems)) {
-                            Seeds.sharedInstance().recordIAPEvent(purchase.sku, 0.99);
-                        } else if (purchase.sku.equals(PurchaseTypes.Purchase21Gems)) {
-                            Seeds.sharedInstance().recordIAPEvent(purchase.sku, 4.99);
-                        } else if (purchase.sku.equals(PurchaseTypes.Purchase42Gems)) {
-                            Seeds.sharedInstance().recordIAPEvent(purchase.sku, 9.99);
-                        } else if (purchase.sku.equals(PurchaseTypes.Purchase84Gems)) {
-                            Seeds.sharedInstance().recordSeedsIAPEvent(purchase.sku, 19.99);
-                        }
                     }, throwable -> {
                         if (throwable.getClass().equals(retrofit2.adapter.rxjava2.HttpException.class)) {
                             HttpException error = (HttpException) throwable;

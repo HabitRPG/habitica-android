@@ -31,7 +31,6 @@
         <attr name="gemAmount" format="integer" />
         <attr name="priceText" format="string" />
         <attr name="gemDrawable" format="integer" />
-        <attr name="showSeedsPromo" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="MaxHeightLinearLayout">

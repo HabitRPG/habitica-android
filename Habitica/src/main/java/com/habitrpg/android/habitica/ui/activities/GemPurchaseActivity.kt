@@ -20,15 +20,13 @@ import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.playseeds.android.sdk.Seeds
-import com.playseeds.android.sdk.inappmessaging.InAppMessageListener
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.*
 import java.util.*
 import javax.inject.Inject
 
-class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
+class GemPurchaseActivity : BaseActivity() {
 
     @Inject
     lateinit var crashlyticsProxy: CrashlyticsProxy
@@ -61,11 +59,6 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Seeds.sharedInstance()
-                .simpleInit(this, this, "https://dash.playseeds.com", getString(R.string.seeds_app_key)).isLoggingEnabled = true
-        Seeds.sharedInstance().requestInAppMessage(getString(R.string.seeds_interstitial_gems))
-        Seeds.sharedInstance().requestInAppMessage(getString(R.string.seeds_interstitial_sharing))
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -156,50 +149,6 @@ class GemPurchaseActivity : BaseActivity(), InAppMessageListener {
         HabiticaBaseApplication.getInstance(this)?.billing?.let {
             activityCheckout = Checkout.forActivity(this, it)
             activityCheckout?.start()
-        }
-
-    }
-
-    override fun inAppMessageClicked(messageId: String) {
-        for (fragment in fragments) {
-            if (fragment.javaClass.isAssignableFrom(GemsPurchaseFragment::class.java)) {
-                (fragment as? GemsPurchaseFragment)?.purchaseGems(PurchaseTypes.Purchase84Gems)
-            }
-        }
-    }
-
-    override fun inAppMessageDismissed(messageId: String) {
-
-    }
-
-    override fun inAppMessageLoadSucceeded(messageId: String) {
-
-    }
-
-    override fun inAppMessageShown(messageId: String, succeeded: Boolean) {
-
-    }
-
-    override fun noInAppMessageFound(messageId: String) {
-
-    }
-
-    override fun inAppMessageClickedWithDynamicPrice(messageId: String, price: Double?) {
-
-    }
-
-    fun showSeedsPromo(messageId: String, context: String) {
-        try {
-            runOnUiThread {
-                if (Seeds.sharedInstance().isInAppMessageLoaded(messageId)) {
-                    Seeds.sharedInstance().showInAppMessage(messageId, context)
-                } else {
-                    // Skip the interstitial showing this time and try to reload the interstitial
-                    Seeds.sharedInstance().requestInAppMessage(messageId)
-                }
-            }
-        } catch (e: Exception) {
-            println("Exception: $e")
         }
 
     }

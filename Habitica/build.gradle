@@ -119,10 +119,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'io.realm:android-adapters:3.1.0'
-    implementation(project(':seeds-sdk')) {
-        exclude group: 'com.google.android.gms'
-        exclude group: 'com.android.support', module: 'multidex'
-    }
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.nex3z:flow-layout:1.2.2'

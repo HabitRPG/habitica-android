@@ -56,8 +56,6 @@ class GemsPurchaseFragment : BaseFragment(), GemPurchaseActivity.CheckoutFragmen
 
         val heartDrawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLarge())
         supportTextView?.setCompoundDrawables(null, heartDrawable, null, null)
-
-        gems84View?.seedsImageButton?.setOnClickListener { (this.activity as? GemPurchaseActivity)?.showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store") }
     }
 
     override fun setupCheckout() {

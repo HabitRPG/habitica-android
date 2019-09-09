@@ -87,8 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:gemAmount="84"
-                    app:gemDrawable="@drawable/gems_84"
-                    app:showSeedsPromo="true" />
+                    app:gemDrawable="@drawable/gems_84" />
             </LinearLayout>
         </LinearLayout>
         <TextView
