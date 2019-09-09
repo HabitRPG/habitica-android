@@ -13,9 +13,6 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 import net.pherth.android.emoji_library.EmojiParser
 
 
-/**
- * Created by keithholliday on 7/1/16.
- */
 class ReceivedPrivateMessageLocalNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier) {
     override fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
@@ -33,8 +30,13 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         var notification = super.configureNotificationBuilder(data)
                 .setExtras(bundleOf(Pair("messages", oldMessages)))
         if (oldMessages.size > 1) {
+            val notificationTitle = if (data["senderName"] != null) {
+                context.getString(R.string.inbox_messages_title, oldMessages.size, data["senderName"])
+            } else {
+                context.getString(R.string.inbox_messages_title_nosender, oldMessages.size)
+            }
             notification = notification
-                    .setContentTitle(context.getString(R.string.inbox_messages_title, oldMessages.size, data["senderName"]))
+                    .setContentTitle(notificationTitle)
                     .setStyle(style)
             title = null
         }
