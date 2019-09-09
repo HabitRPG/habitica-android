@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.dialogs
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -215,7 +216,9 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                 dialogQueue.removeAt(0)
             }
             if (dialogQueue.size > 0) {
-                dialogQueue[0].show()
+                if ((dialogQueue[0].context as? Activity)?.isFinishing == false) {
+                    dialogQueue[0].show()
+                }
             }
         }
 
