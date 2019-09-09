@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.data.*
 import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -222,6 +223,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         MainNavigationController.setup(navigationController)
 
         setupNotifications()
+        setupBottomnavigationLayoutListener()
     }
 
     private fun setupNotifications() {
@@ -232,7 +234,17 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                     "Habitica Notifications",
                     NotificationManager.IMPORTANCE_DEFAULT)
             val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(channel)
+            manager?.createNotificationChannel(channel)
+        }
+    }
+
+    private fun setupBottomnavigationLayoutListener() {
+        bottomNavigation.viewTreeObserver.addOnGlobalLayoutListener {
+            if (bottomNavigation.visibility == View.VISIBLE) {
+                snackbarContainer.setPadding(0, 0, 0, bottomNavigation.barHeight + 12.dpToPx(this))
+            } else {
+                snackbarContainer.setPadding(0, 0, 0, 0)
+            }
         }
     }
 

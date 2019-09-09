@@ -9,7 +9,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.User
@@ -68,15 +67,6 @@ abstract class BaseMainFragment : BaseFragment() {
         }
 
         return null
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (this.usesBottomNavigation) {
-            activity?.snackbarContainer?.setPadding(0, 0, 0, (bottomNavigation?.barHeight ?: 0) + 12.dpToPx(context))
-        } else {
-            activity?.snackbarContainer?.setPadding(0, 0, 0, 0)
-        }
     }
 
     private fun updateTabLayoutVisibility() {
