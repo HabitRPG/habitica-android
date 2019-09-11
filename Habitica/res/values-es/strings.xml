@@ -316,11 +316,12 @@
     <string name="sectionquestMounts">Misión</string>
     <string name="sectionspecialMounts">Raro</string>
     <string name="world_quest">Misión mundial</string>
-    <string name="inn_description">¿Necesitar un descanso? Visita la Posada de Daniel para pausar algunos de los mecánicos de juego más difíciles de Habitica:\n\n
-• Las Tareas Diarias perdidas no te harán daño\n
-• Las Tareas Pendientes no reiniciarán las rachas ni se degradarán en color\n
-• Los jefes no harán daño por tus Tareas Diarias perdidas\n
-• El daño que inflija el jefe o los objetos de una misión de recolección permanecerán pendientes hasta que salgas.</string>
+    <string name="inn_description">¿Necesitas un descanso\? Visita la Posada de Daniel para pausar algunas de las mecánicas de juego más difíciles de Habitica:
+\n
+\n • Las Tareas Diarias que no completes no te harán daño
+\n • Las Tareas Pendientes no reiniciarán las rachas ni se degradarán de color
+\n • Los jefes no te harán daño por tus Tareas Diarias incompletas
+\n • El daño que inflija el jefe o los objetos de una misión de recolección permanecerán en el mismo estado hasta que salgas</string>
     <string name="empty_items">No tienes %s</string>
     <string name="user_level">Nivel %d</string>
     <string name="user_level_with_class">Nivel %1$d %2$s</string>
@@ -351,7 +352,7 @@
     <string name="invite">Invitar a amigos</string>
     <string name="invite_id_description">Si tienes amigos que ya usan Habitica, invítalos desde aquí indicando su ID de usuario.</string>
     <string name="invite_username_description">Si tienes amigos que ya usan Habitica, invítalos indicando su nombre de usuario aquí.</string>
-    <string name="invite_email_description">Si un amigo se apunta a Habitica a través del correo electrónico que le has enviado, se le invitará automáticamente a tu equipo.</string>
+    <string name="invite_email_description">Si un amigo se apunta a Habitica a través del correo electrónico que le has enviado, ¡se le invitará automáticamente a tu equipo!</string>
     <string name="add_invites">Añadir invitaciones</string>
     <string name="user_id">ID de usuario</string>
     <string name="email">Correo electrónico</string>
@@ -362,7 +363,7 @@
     <string name="share_raised">¡He conseguido una montura de %1$s en Habitica realizando tareas en mi vida real!</string>
     <string name="open_in_store">Abrir en Play Store</string>
     <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase? Te costará 3 gemas.</string>
-    <string name="change_class_equipment_warning">Aviso: Ya no podrás comprar equipamiento para la clase %s</string>
+    <string name="change_class_equipment_warning">Aviso: Ya no podrás comprar equipamiento para la clase %s.</string>
     <string name="leaderMessage">Mensaje de %1$s</string>
     <string name="leaderName">Líder: %1$s</string>
     <string name="confirm">Confirmar</string>
@@ -583,7 +584,7 @@
     <string name="abort_confirmation">¿Estás seguro de que quieres abortar esta misión\? Se abortará para todos en el equipo y todo progreso se perderá. El Pergamino de Misión se devolverá al propietario de la misión.</string>
     <string name="leave_quest_confirmation">¿Estás seguro de que quieres dejar la Misión activa\? Todo tu progreso de misión se perderá.</string>
     <string name="number_participants">%1$dParticipantes</string>
-    <string name="welcome_back">¡Bienvenido/a de vuelta!</string>
+    <string name="welcome_back">Bienvenido/a de vuelta</string>
     <string name="yesterdaililes_prompt">Marca las Tareas Diarias que hiciste ayer:</string>
     <string name="start_day">Empezar mi día</string>
     <string name="leave_party_confirmation">¿Seguro que quieres salir del Equipo\?</string>
@@ -779,7 +780,7 @@
     <string name="collapse_notes">Mostrar menos</string>
     <string name="reset_streak">Reiniciar Racha</string>
     <string name="week_reminder_title">¿Cómo te va con tus tareas?</string>
-    <string name="week_reminder_text">Hacer pausas es bueno, pero aun así puedes ganar puntos por actividades sencillas para subir de nivel y para conseguir equipo guay.</string>
+    <string name="week_reminder_text">Hacer pausas es bueno, ¡pero aun así puedes ganar puntos por actividades sencillas para subir de nivel y conseguir equipo guay!</string>
     <string name="last_login">Última Entrada</string>
     <string name="total_checkins">Total de Entradas</string>
     <string name="two_handed">A dos manos</string>
@@ -820,7 +821,7 @@
     <string name="send_gift">Enviar Regalo</string>
     <string name="server">Servidor</string>
     <string name="gift_confirmation_title">¡Tu regalo se envió!</string>
-    <string name="gift_confirmation_text_g1g1">Tu suscripción regalo ha sido enviada y tu suscripción ha sido aplicada a tu cuenta.</string>
+    <string name="gift_confirmation_text_g1g1">¡Has enviado a %s una suscripción de regalo (%s-meses) y también se ha aplicado a tu cuenta con nuestra promoción Regala Una Consigue Una!</string>
     <string name="gift_confirmation_text">Tu suscripción regalo ha sido enviada y tu suscripción ha sido aplicada a tu cuenta.</string>
     <string name="discover">Descubre</string>
     <string name="damage_paused">Daño pausado</string>
