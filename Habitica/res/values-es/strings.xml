@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="action_refresh">Refrescar</string>
+    <string name="action_refresh">Actualizar</string>
     <string name="XP_default">Experiencia</string>
     <string name="HP_default">Salud</string>
     <string name="MP_default">Maná</string>
