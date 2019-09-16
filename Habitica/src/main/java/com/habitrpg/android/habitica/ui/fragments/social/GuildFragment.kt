@@ -190,7 +190,7 @@ class GuildFragment : BaseMainFragment() {
         bundle.putString("description", guild?.description)
         bundle.putString("privacy", guild?.privacy)
         bundle.putString("leader", guild?.leaderID)
-        bundle.putBoolean("leaderCreateChallenge", guild?.leaderOnlyChallenges ?: true)
+        bundle.putBoolean("leaderOnlyChallenges", guild?.leaderOnlyChallenges ?: true)
 
 
         val intent = Intent(activity, GroupFormActivity::class.java)

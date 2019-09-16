@@ -220,7 +220,7 @@ open class GroupViewModel : BaseViewModel() {
                 bundle?.getString("name"),
                 bundle?.getString("description"),
                 bundle?.getString("leader"),
-                bundle?.getBoolean("leaderCreateChallenge"))
+                bundle?.getBoolean("leaderOnlyChallenges"))
                 .subscribe(Consumer {}, RxErrorHandler.handleEmptyError()))
     }
 }
