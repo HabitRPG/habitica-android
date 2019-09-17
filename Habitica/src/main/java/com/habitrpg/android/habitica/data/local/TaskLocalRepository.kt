@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.shared.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.tasks.TaskList
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.user.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.realm.RealmResults

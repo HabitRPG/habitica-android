@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.executors.ThreadExecutor
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 
 import javax.inject.Inject
 

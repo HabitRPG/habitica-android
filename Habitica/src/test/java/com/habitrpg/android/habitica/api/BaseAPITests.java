@@ -6,7 +6,7 @@
 //import com.habitrpg.android.habitica.proxy.implementation.EmptyCrashlyticsProxy;
 //import com.habitrpg.android.habitica.data.ApiClient;
 //import com.habitrpg.android.habitica.BuildConfig;
-//import com.habitrpg.android.habitica.models.user.User;
+//import com.habitrpg.shared.habitica.models.user.User;
 //import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 //
 //import org.junit.After;

@@ -11,7 +11,7 @@ import io.realm.annotations.PrimaryKey
 /**
  * Created by viirus on 06/07/15.
  */
-open class ChecklistItem : RealmObject, Parcelable {
+actual open class ChecklistItem : RealmObject, Parcelable {
 
     @PrimaryKey
     var id: String? = null

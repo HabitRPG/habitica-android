@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models.invitations
 
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.user.User
 
 import io.realm.RealmList
 import io.realm.RealmObject

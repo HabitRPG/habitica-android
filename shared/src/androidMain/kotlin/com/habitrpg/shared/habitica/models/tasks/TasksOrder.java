@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.tasks;
+package com.habitrpg.shared.habitica.models.tasks;
 
 import java.util.List;
 

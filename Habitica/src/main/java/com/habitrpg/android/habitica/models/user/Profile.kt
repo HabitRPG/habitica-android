@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.user
 
+import com.habitrpg.shared.habitica.models.user.User
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 

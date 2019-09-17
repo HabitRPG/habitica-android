@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.*
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
 import com.habitrpg.shared.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.TaskList
 import io.realm.Realm
 import io.realm.RealmList
 

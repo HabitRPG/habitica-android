@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.models.responses
 
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionDataDrop
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionDataQuest
+
 class TaskDirectionDataTemp {
 
     var drop: TaskDirectionDataDrop? = null

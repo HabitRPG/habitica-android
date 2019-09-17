@@ -14,8 +14,9 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.shared.habitica.models.user.User
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type

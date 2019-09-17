@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.models.user;
 
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 
 import com.habitrpg.android.habitica.R;
-
-import java.util.HashMap;
+import com.habitrpg.shared.habitica.models.user.User;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
