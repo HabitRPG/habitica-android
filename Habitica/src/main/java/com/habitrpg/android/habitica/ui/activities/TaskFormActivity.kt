@@ -353,7 +353,7 @@ class TaskFormActivity : BaseActivity() {
             remindersContainer.taskType = taskType
             task.reminders?.let { remindersContainer.reminders = it }
         }
-        task.attribute?.let { setSelectedAttribute(it) }
+        task.attribute?.let { selectedStat = it }
         setAllTagSelections()
     }
 
