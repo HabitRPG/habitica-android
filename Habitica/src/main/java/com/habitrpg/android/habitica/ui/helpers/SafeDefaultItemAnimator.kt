@@ -7,8 +7,8 @@ import android.animation.ValueAnimator
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.HLogger
+import com.habitrpg.shared.habitica.LogLevel
 import java.util.*
 
 /**
@@ -70,12 +70,12 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
             // nothing to animate
             return
         }
+        if (skipAnimations) {
+            return
+        }
         // First, remove stuff
         for (holder in pendingRemovals) {
             animateRemoveImpl(holder)
-        }
-        if (skipAnimations) {
-            return
         }
         pendingRemovals.clear()
         // Next, move stuff

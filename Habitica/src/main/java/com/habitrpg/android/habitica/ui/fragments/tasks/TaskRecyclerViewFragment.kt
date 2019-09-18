@@ -230,6 +230,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         recyclerAdapter?.filter()
 
         layoutManager = getLayoutManager(context)
+        layoutManager?.isItemPrefetchEnabled = false
         recyclerView.layoutManager = layoutManager
 
         if (recyclerView.adapter == null) {
