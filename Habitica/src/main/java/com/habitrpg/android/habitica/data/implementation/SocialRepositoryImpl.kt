@@ -242,7 +242,7 @@ class SocialRepositoryImpl(localRepository: SocialLocalRepository, apiClient: Ap
                 .doOnNext { members -> localRepository.saveGroupMembers(id, members) }
     }
 
-    override fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<String>> = apiClient.inviteToGroup(id, inviteData)
+    override fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<Void> = apiClient.inviteToGroup(id, inviteData)
 
     override fun getMember(userId: String?): Flowable<Member> {
         return if (userId == null) {
