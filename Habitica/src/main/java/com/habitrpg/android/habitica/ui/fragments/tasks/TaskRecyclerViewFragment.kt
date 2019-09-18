@@ -324,7 +324,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     }
 
     private fun openTaskForm(task: Task) {
-        if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000) {
+        if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000 || !task.isValid) {
             return
         }
 

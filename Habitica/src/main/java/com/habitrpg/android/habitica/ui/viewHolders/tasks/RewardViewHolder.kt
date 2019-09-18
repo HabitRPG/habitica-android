@@ -36,7 +36,7 @@ class RewardViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> 
     }
 
     private fun buyReward() {
-        task?.let { scoreTaskFunc(it, TaskDirection.UP) }
+        task?.let { scoreTaskFunc(it, TaskDirection.DOWN) }
     }
 
     override fun onClick(v: View) {

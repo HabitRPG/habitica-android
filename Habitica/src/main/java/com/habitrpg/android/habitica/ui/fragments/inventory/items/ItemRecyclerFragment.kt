@@ -171,7 +171,7 @@ class ItemRecyclerFragment : BaseFragment() {
         }
         fragment.isHatching = true
         fragment.isFeeding = false
-        fragment.show(fragmentManager, "hatchingDialog")
+        fragmentManager?.let { fragment.show(it, "hatchingDialog") }
     }
 
     override fun onResume() {
