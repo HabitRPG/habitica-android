@@ -81,13 +81,11 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
 
     override fun setParticipating(userID: String, challengeID: String, isParticipating: Boolean) {
         if (isParticipating) {
-            realm.executeTransaction {
-                realm.insertOrUpdate(ChallengeMembership(userID, challengeID))
-            }
+            save(ChallengeMembership(userID, challengeID))
         } else {
             val membership = realm.where(ChallengeMembership::class.java).equalTo("userID", userID).equalTo("challengeID", challengeID).findFirst()
             if (membership != null) {
-                realm.executeTransaction {
+                executeTransaction {
                     membership.deleteFromRealm()
                 }
             }
@@ -103,12 +101,12 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
                     challengesToDelete.add(localTask)
                 }
             }
-            realm.executeTransaction {
+            executeTransaction {
                 for (localTask in challengesToDelete) {
                     localTask.deleteFromRealm()
                 }
             }
         }
-        realm.executeTransaction { realm1 -> realm1.insertOrUpdate(challenges) }
+        executeTransaction { realm1 -> realm1.insertOrUpdate(challenges) }
     }
 }

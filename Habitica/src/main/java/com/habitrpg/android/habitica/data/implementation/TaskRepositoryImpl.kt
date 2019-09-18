@@ -117,34 +117,35 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     }
 
     private fun handleTaskResponse(user: User, res: TaskDirectionData, task: Task, up: Boolean, localDelta: Float) {
-        val stats = user.stats
-        this.localRepository.executeTransaction {
-            if (!task.isValid) {
-                return@executeTransaction
-            }
-            if (task.type != "reward" && (task.value - localDelta) + res.delta != task.value) {
-                task.value = (task.value - localDelta) + res.delta
-                if (Task.TYPE_DAILY == task.type || Task.TYPE_TODO == task.type) {
-                    task.completed = up
-                    if (Task.TYPE_DAILY == task.type && up) {
-                        task.streak = (task.streak ?: 0) + 1
+        val userID = user.id
+        val taskID = task.id
+        this.localRepository.executeTransactionAsync {
+            val bgTask = it.where(Task::class.java).equalTo("id", taskID).findFirst() ?: return@executeTransactionAsync
+            val bgUser = it.where(User::class.java).equalTo("id", userID).findFirst() ?: return@executeTransactionAsync
+            if (bgTask.type != "reward" && (bgTask.value - localDelta) + res.delta != bgTask.value) {
+                bgTask.value = (bgTask.value - localDelta) + res.delta
+                if (Task.TYPE_DAILY == bgTask.type || Task.TYPE_TODO == bgTask.type) {
+                    bgTask.completed = up
+                    if (Task.TYPE_DAILY == bgTask.type && up) {
+                        bgTask.streak = (bgTask.streak ?: 0) + 1
                     }
-                } else if (Task.TYPE_HABIT == task.type) {
+                } else if (Task.TYPE_HABIT == bgTask.type) {
                     if (up) {
-                        task.counterUp = (task.counterUp ?: 0) + 1
+                        bgTask.counterUp = (bgTask.counterUp ?: 0) + 1
                     } else {
-                        task.counterDown = (task.counterDown ?: 0) + 1
+                        bgTask.counterDown = (bgTask.counterDown ?: 0) + 1
                     }
                 }
             }
+            val stats = bgUser.stats
             stats?.hp = res.hp
             stats?.exp = res.exp
             stats?.mp = res.mp
             stats?.gp = res.gp
-            stats?.lvl = res.lvl
-            user.party?.quest?.progress?.up = (user.party?.quest?.progress?.up
+            stats?.lvl = res.lvl.toInt()
+            bgUser.party?.quest?.progress?.up = (bgUser.party?.quest?.progress?.up
                     ?: 0F) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
-            user.stats = stats
+            bgUser.stats = stats
         }
     }
 
@@ -271,10 +272,9 @@ class TaskRepositoryImpl(localRepository: TaskLocalRepository, apiClient: ApiCli
     override fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>> =
             Flowable.just(localRepository.getUnmanagedCopy(tasks))
 
-    override fun updateDailiesIsDue(date: Date): Flowable<TaskList> {
+    override fun retrieveDailiesFromDate(date: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         return apiClient.getTasks("dailys", formatter.format(date))
-                .flatMapMaybe { localRepository.updateIsdue(it) }
     }
 
     override fun syncErroredTasks(): Single<List<Task>> {

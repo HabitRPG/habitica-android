@@ -175,7 +175,7 @@ open class NotificationsViewModel : BaseViewModel() {
     }
 
     fun isPartyMessage(data: NewChatMessageData?): Boolean {
-        if (party == null || data?.group?.id == null) {
+        if (party?.isValid != true || data?.group?.id == null) {
             return false
         }
 

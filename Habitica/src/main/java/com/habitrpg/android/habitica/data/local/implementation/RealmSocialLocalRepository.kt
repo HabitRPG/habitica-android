@@ -36,13 +36,11 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
 
     override fun updateMembership(userId: String, id: String, isMember: Boolean) {
         if (isMember) {
-            realm.executeTransaction {
-                realm.insertOrUpdate(GroupMembership(userId, id))
-            }
+            save(GroupMembership(userId, id))
         } else {
             val membership = realm.where(GroupMembership::class.java).equalTo("userID", userId).equalTo("groupID", id).findFirst()
             if (membership != null) {
-                realm.executeTransaction {
+                executeTransaction {
                     membership.deleteFromRealm()
                 }
             }
@@ -51,7 +49,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
 
     override fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int) {
         messages.forEach { it.userID = userID }
-        realm.executeTransaction { realm.insertOrUpdate(messages) }
+        save(messages)
         if (page != 0) return
         val existingMessages = realm.where(ChatMessage::class.java).equalTo("isInboxMessage", true).equalTo("uuid", recipientID).findAll()
         val messagesToRemove = ArrayList<ChatMessage>()
@@ -61,14 +59,14 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 messagesToRemove.add(existingMessage)
             }
         }
-        realm.executeTransaction {
+        executeTransaction {
             messagesToRemove.forEach { it.deleteFromRealm() }
         }
     }
 
     override fun saveInboxConversations(userID: String, conversations: List<InboxConversation>) {
         conversations.forEach { it.userID = userID }
-        realm.executeTransaction { realm.insertOrUpdate(conversations) }
+        save(conversations)
         val existingConversations = realm.where(InboxConversation::class.java).findAll()
         val conversationsToRemove = ArrayList<InboxConversation>()
         for (existingMessage in existingConversations) {
@@ -77,13 +75,13 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 conversationsToRemove.add(existingMessage)
             }
         }
-        realm.executeTransaction {
+        executeTransaction {
             conversationsToRemove.forEach { it.deleteFromRealm() }
         }
     }
 
     override fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>) {
-        realm.executeTransaction { realm.insertOrUpdate(memberships) }
+        save(memberships)
         if (userID != null) {
             val existingMemberships = realm.where(GroupMembership::class.java).equalTo("userID", userID).findAll()
             val membersToRemove = ArrayList<GroupMembership>()
@@ -93,7 +91,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                     membersToRemove.add(existingMembership)
                 }
             }
-            realm.executeTransaction {
+            executeTransaction {
                 membersToRemove.forEach { it.deleteFromRealm() }
             }
         }
@@ -131,7 +129,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     override fun getGroups(type: String): Flowable<RealmResults<Group>> {
         return realm.where(Group::class.java)
                 .equalTo("type", type)
-                .findAllAsync()
+                .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
@@ -155,19 +153,19 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun deleteMessage(id: String) {
-        getMessage(id).firstElement().subscribe { chatMessage -> realm.executeTransaction { chatMessage.deleteFromRealm() } }
+        getMessage(id).firstElement().subscribe { chatMessage -> executeTransaction { chatMessage.deleteFromRealm() } }
     }
 
     override fun getGroupMembers(partyId: String): Flowable<RealmResults<Member>> {
         return realm.where(Member::class.java)
                 .equalTo("party.id", partyId)
-                .findAllAsync()
+                .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
 
     override fun updateRSVPNeeded(user: User?, newValue: Boolean) {
-        realm.executeTransaction { user?.party?.quest?.RSVPNeeded = newValue }
+        executeTransaction { user?.party?.quest?.RSVPNeeded = newValue }
     }
 
     override fun likeMessage(chatMessage: ChatMessage, userId: String, liked: Boolean) {
@@ -175,14 +173,14 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             return
         }
         if (liked) {
-            realm.executeTransaction { chatMessage.likes?.add(ChatMessageLike(userId, chatMessage.id)) }
+            executeTransaction { chatMessage.likes?.add(ChatMessageLike(userId, chatMessage.id)) }
         } else {
-            chatMessage.likes?.filter { userId == it.id }?.forEach { like -> realm.executeTransaction { like.deleteFromRealm() } }
+            chatMessage.likes?.filter { userId == it.id }?.forEach { like -> executeTransaction { like.deleteFromRealm() } }
         }
     }
 
     override fun saveGroupMembers(groupId: String?, members: List<Member>) {
-        realm.executeTransaction { realm.insertOrUpdate(members) }
+        save(members)
         if (groupId != null) {
             val existingMembers = realm.where(Member::class.java).equalTo("party.id", groupId).findAll()
             val membersToRemove = ArrayList<Member>()
@@ -192,7 +190,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                     membersToRemove.add(existingMember)
                 }
             }
-            realm.executeTransaction {
+            executeTransaction {
                 membersToRemove.forEach { it.deleteFromRealm() }
             }
         }
@@ -200,7 +198,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
 
     override fun rejectGroupInvitation(userID: String, groupID: String) {
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst()
-        realm.executeTransaction {
+        executeTransaction {
             user?.invitations?.removeInvitation(groupID)
         }
     }
@@ -208,18 +206,18 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     override fun removeQuest(partyId: String) {
         val party = realm.where(Group::class.java).equalTo("id", partyId).findFirst()
         if (party != null) {
-            realm.executeTransaction { party.quest = null }
+            executeTransaction { party.quest = null }
         }
     }
 
     override fun setQuestActivity(party: Group?, active: Boolean) {
-        realm.executeTransaction {
+        executeTransaction {
             party?.quest?.active = active
         }
     }
 
     override fun saveChatMessages(groupId: String?, chatMessages: List<ChatMessage>) {
-        realm.executeTransaction { realm.insertOrUpdate(chatMessages) }
+        save(chatMessages)
         if (groupId != null) {
             val existingMessages = realm.where(ChatMessage::class.java).equalTo("groupId", groupId).findAll()
             val messagesToRemove = ArrayList<ChatMessage>()
@@ -232,7 +230,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             val idsToRemove = messagesToRemove.map { it.id }
             val userStylestoRemove = realm.where(UserStyles::class.java).`in`("id", idsToRemove.toTypedArray()).findAll()
             val contributorToRemove = realm.where(ContributorInfo::class.java).`in`("userId", idsToRemove.toTypedArray()).findAll()
-            realm.executeTransaction {
+            executeTransaction {
                 for (member in messagesToRemove) {
                     member.deleteFromRealm()
                 }
@@ -245,7 +243,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
 
     private fun getMessage(id: String): Flowable<ChatMessage> {
         return realm.where(ChatMessage::class.java).equalTo("id", id)
-                .findAllAsync()
+                .findAll()
                 .asFlowable()
                 .filter { messages -> messages.isLoaded && messages.isValid && !messages.isEmpty() }
                 .map { messages -> messages.first() }

@@ -75,10 +75,10 @@ class ScoreTaskLocallyInteractor {
                 }
                 if (result.exp >= stats.toNextLevel?.toDouble() ?: 0.0) {
                     result.exp = result.exp - (stats.toNextLevel?.toDouble() ?: 0.0)
-                    result.lvl = user.stats?.lvl ?: 0 + 1
+                    result.lvl = (user.stats?.lvl ?: 0 + 1).toLong()
                     result.hp = 50.0
                 } else {
-                    result.lvl = user.stats?.lvl ?: 0
+                    result.lvl = (user.stats?.lvl ?: 0).toLong()
                 }
 
                 result

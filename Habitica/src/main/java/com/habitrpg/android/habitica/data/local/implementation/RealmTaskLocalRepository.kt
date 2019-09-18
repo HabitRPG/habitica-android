@@ -82,6 +82,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     private fun removeOldTasks(userID: String, onlineTaskList: List<Task>) {
+        if (realm.isClosed) return
         val localTasks = realm.where(Task::class.java)
                 .equalTo("userId", userID)
                 .beginGroup()
@@ -95,7 +96,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .findAll()
                 .createSnapshot()
         val tasksToDelete = localTasks.filterNot { onlineTaskList.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             for (localTask in tasksToDelete) {
                 localTask.checklist?.deleteAllFromRealm()
                 localTask.reminders?.deleteAllFromRealm()
@@ -112,7 +113,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .findAll()
                 .createSnapshot()
         val tasksToDelete = localTasks.filterNot { onlineTaskList.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             for (localTask in tasksToDelete) {
                 localTask.checklist?.deleteAllFromRealm()
                 localTask.reminders?.deleteAllFromRealm()
@@ -124,7 +125,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldChecklists(onlineItems: List<ChecklistItem>) {
         val localItems = realm.where(ChecklistItem::class.java).findAll().createSnapshot()
         val itemsToDelete = localItems.filterNot { onlineItems.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             for (item in itemsToDelete) {
                 item.deleteFromRealm()
             }
@@ -134,7 +135,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldReminders(onlineReminders: List<RemindersItem>) {
         val localReminders = realm.where(RemindersItem::class.java).findAll().createSnapshot()
         val itemsToDelete = localReminders.filterNot { onlineReminders.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             for (item in itemsToDelete) {
                 item.deleteFromRealm()
             }
@@ -143,7 +144,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun deleteTask(taskID: String) {
         val task = realm.where(Task::class.java).equalTo("id", taskID).findFirstAsync()
-        realm.executeTransaction {
+        executeTransaction {
             if (task.isManaged) {
                 task.deleteFromRealm()
             }
@@ -172,18 +173,18 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun markTaskCompleted(taskId: String, isCompleted: Boolean) {
         val task = realm.where(Task::class.java).equalTo("id", taskId).findFirstAsync()
-        realm.executeTransaction { task.completed = true }
+        executeTransaction { task.completed = true }
     }
 
     override fun saveReminder(remindersItem: RemindersItem) {
-        realm.executeTransaction { it.insertOrUpdate(remindersItem) }
+        executeTransaction { it.insertOrUpdate(remindersItem) }
     }
 
     override fun swapTaskPosition(firstPosition: Int, secondPosition: Int) {
         val firstTask = realm.where(Task::class.java).equalTo("position", firstPosition).findFirst()
         val secondTask = realm.where(Task::class.java).equalTo("position", secondPosition).findFirst()
         if (firstTask != null && secondTask != null && firstTask.isValid && secondTask.isValid) {
-            realm.executeTransaction {
+            executeTransaction {
                 firstTask.position = secondPosition
                 secondTask.position = firstPosition
             }
@@ -210,7 +211,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun updateTaskPositions(taskOrder: List<String>) {
         if (taskOrder.isNotEmpty()) {
             val tasks = realm.where(Task::class.java).`in`("id", taskOrder.toTypedArray()).findAll()
-            realm.executeTransaction { _ ->
+            executeTransaction { _ ->
                 tasks.filter { taskOrder.contains(it.id) }.forEach { it.position = taskOrder.indexOf(it.id) }
             }
         }

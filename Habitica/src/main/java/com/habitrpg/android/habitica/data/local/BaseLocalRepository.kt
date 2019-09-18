@@ -11,6 +11,8 @@ interface BaseLocalRepository {
 
     fun executeTransaction(transaction: (Realm) -> Unit)
     fun executeTransaction(transaction: Realm.Transaction)
+    fun executeTransactionAsync(transaction: (Realm) -> Unit)
+    fun executeTransactionAsync(transaction: Realm.Transaction)
 
     fun <T : RealmObject> getUnmanagedCopy(managedObject: T): T
     fun <T : RealmObject> getUnmanagedCopy(list: List<T>): List<T>

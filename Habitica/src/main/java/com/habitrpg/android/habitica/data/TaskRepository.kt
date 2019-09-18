@@ -56,7 +56,7 @@ interface TaskRepository : BaseRepository {
 
     fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>>
 
-    fun updateDailiesIsDue(date: Date): Flowable<TaskList>
+    fun retrieveDailiesFromDate(date: Date): Flowable<TaskList>
     fun retrieveCompletedTodos(userId: String): Flowable<TaskList>
     fun syncErroredTasks(): Single<List<Task>>
 }

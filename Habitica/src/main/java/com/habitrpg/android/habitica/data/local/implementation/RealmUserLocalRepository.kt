@@ -58,6 +58,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun saveUser(user: User) {
+        if (realm.isClosed) return
         val oldUser = realm.where(User::class.java)
                 .equalTo("id", user.id)
                 .findFirst()
@@ -72,7 +73,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 }
             }
         }
-        realm.executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
+        executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
         removeOldTags(user.id ?: "", user.tags)
         if (user.challenges != null) {
             removeOldChallenges(user.id ?: "", user.challenges ?: emptyList())
@@ -82,7 +83,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun saveMessages(messages: List<ChatMessage>) {
-        realm.executeTransaction {
+        executeTransaction {
             it.insertOrUpdate(messages)
         }
     }
@@ -90,7 +91,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldTags(userId: String, onlineTags: List<Tag>) {
         val tags = realm.where(Tag::class.java).equalTo("userId", userId).findAll().createSnapshot()
         val tagsToDelete = tags.filterNot { onlineTags.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             for (tag in tagsToDelete) {
                 tag.deleteFromRealm()
             }
@@ -100,7 +101,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldChallenges(userID: String, onlineChallenges: List<ChallengeMembership>) {
         val memberships = realm.where(ChallengeMembership::class.java).equalTo("userID", userID).findAll().createSnapshot()
         val membershipsToDelete = memberships.filterNot { onlineChallenges.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             membershipsToDelete.forEach {
                 it.deleteFromRealm()
             }
@@ -110,7 +111,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldPets(userID: String, onlinePets: List<OwnedPet>) {
         val pets = realm.where(OwnedPet::class.java).equalTo("userID", userID).findAll().createSnapshot()
         val petsToDelete = pets.filterNot { onlinePets.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             petsToDelete.forEach {
                 it.deleteFromRealm()
             }
@@ -120,7 +121,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldMounts(userID: String, onlineMounts: List<OwnedMount>) {
         val mount = realm.where(OwnedMount::class.java).equalTo("userID", userID).findAll().createSnapshot()
         val mountsToDelete = mount.filterNot { onlineMounts.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             mountsToDelete.forEach {
                 it.deleteFromRealm()
             }

@@ -156,11 +156,13 @@ class YesterdailyDialog private constructor(context: Context, private val userRe
                         .flatMapMaybe {
                             val cal = Calendar.getInstance()
                             cal.add(Calendar.DATE, -1)
-                            taskRepository.updateDailiesIsDue(cal.time).firstElement()
+                            taskRepository.retrieveDailiesFromDate(cal.time).firstElement()
                         }
-                        .flatMapMaybe { taskRepository.getTasks(Task.TYPE_DAILY, userId).firstElement() }
-                        .map { tasks -> tasks.where().equalTo("isDue", true).notEqualTo("completed", true).notEqualTo("yesterDaily", false).findAll() }
-                        .flatMapMaybe<List<Task>> { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
+                        .map {
+                            it.tasks.values.filter { task ->
+                                return@filter task.type == Task.TYPE_DAILY && task.isDue == true && !task.completed && task.yesterDaily
+                            }
+                        }
                         .retry(1)
                         .throttleFirst(2, TimeUnit.SECONDS)
                         .subscribe(Consumer { tasks ->

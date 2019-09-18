@@ -82,7 +82,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
     }
 
     override fun getItems(itemClass: Class<out Item>, keys: Array<String>, user: User?): Flowable<out RealmResults<out Item>> {
-        return realm.where(itemClass).`in`("key", keys).findAllAsync().asFlowable()
+        return realm.where(itemClass).`in`("key", keys).findAll().asFlowable()
                 .filter { it.isLoaded }
     }
 
@@ -175,7 +175,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {
         amountToAdd?.let { amount ->
-            realm.executeTransaction { item.numberOwned = item.numberOwned + amount }
+            executeTransaction { item.numberOwned = item.numberOwned + amount }
         }
     }
 
@@ -208,7 +208,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
             return
         }
         val item = realm.where(OwnedItem::class.java).equalTo("combinedKey", "${user.id}specialinventory_present").findFirst()
-        realm.executeTransaction {
+        executeTransaction {
             if (item != null && item.isValid) {
                 item.numberOwned = item.numberOwned - 1
             }
@@ -220,14 +220,14 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun getInAppRewards(): Flowable<RealmResults<ShopItem>> {
         return realm.where(ShopItem::class.java)
-                .findAllAsync()
+                .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
     }
 
     override fun saveInAppRewards(onlineItems: List<ShopItem>) {
         val localItems = realm.where(ShopItem::class.java).findAll().createSnapshot()
-        realm.executeTransaction {
+        executeTransactionAsync {
             for (localItem in localItems) {
                 if (!onlineItems.contains(localItem)) {
                     localItem.deleteFromRealm()

@@ -26,6 +26,18 @@ abstract class RealmBaseLocalRepository internal constructor(protected var realm
         realm.executeTransaction(transaction)
     }
 
+    override fun executeTransactionAsync(transaction: (Realm) -> Unit) {
+        if (isClosed) { return }
+        realm.executeTransactionAsync {
+            transaction(it)
+        }
+    }
+
+    override fun executeTransactionAsync(transaction: Realm.Transaction) {
+        if (isClosed) { return }
+        realm.executeTransactionAsync(transaction)
+    }
+
     override fun <T : RealmObject> getUnmanagedCopy(managedObject: T): T {
         return if (managedObject.isManaged && managedObject.isValid) {
             realm.copyFromRealm(managedObject)

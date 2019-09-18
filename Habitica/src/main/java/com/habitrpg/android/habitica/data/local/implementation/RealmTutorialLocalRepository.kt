@@ -12,7 +12,7 @@ class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(real
     override fun getTutorialStep(key: String): Flowable<TutorialStep> {
         if (realm.isClosed) return Flowable.empty()
         return realm.where(TutorialStep::class.java).equalTo("identifier", key)
-                .findAllAsync()
+                .findAll()
                 .asFlowable()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
                 .map { steps ->
