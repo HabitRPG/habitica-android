@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.ui.helpers.MarkdownParser
-import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
@@ -17,74 +16,78 @@ import org.json.JSONException
 import space.thelen.shared.cluetective.R
 import java.util.*
 
+actual typealias NativeList<T> = RealmList<T>
+actual typealias NativeDate = Date
+actual typealias StringDef = StringDef
+
 actual open class Task : RealmObject, Parcelable {
     @PrimaryKey
     @SerializedName("_id")
-    var id: String? = null
-    set(value) {
-        field = value
-        repeat?.taskId = value
-    }
-    var userId: String = ""
-    var priority: Float = 0.0f
-    var text: String = ""
-    var notes: String? = null
+    actual var id: String? = null
+        set(value) {
+            field = value
+            repeat.taskId = value
+        }
+    actual var userId: String = ""
+    actual var priority: Float = 0.0f
+    actual var text: String = ""
+    actual var notes: String? = null
     @TaskTypes
-    var type: String = ""
-    var attribute: String? = Stats.STRENGTH
-    var value: Double = 0.0
-    var tags: RealmList<Tag>? = RealmList()
-    var dateCreated: Date? = null
-    var position: Int = 0
-    var group: TaskGroupPlan? = null
+    actual var type: String = ""
+    actual var attribute: String? = Stats.STRENGTH
+    actual var value: Double = 0.0
+    actual var tags: RealmList<Tag>? = RealmList()
+    actual var dateCreated: Date? = null
+    actual var position: Int = 0
+    actual var group: TaskGroupPlan? = null
     //Habits
-    var up: Boolean? = false
-    var down: Boolean? = false
-    var counterUp: Int? = 0
-    var counterDown: Int? = 0
+    actual var up: Boolean? = false
+    actual var down: Boolean? = false
+    actual var counterUp: Int? = 0
+    actual var counterDown: Int? = 0
     //todos/dailies
-    var completed: Boolean = false
-    var checklist: RealmList<ChecklistItem>? = RealmList()
-    var reminders: RealmList<RemindersItem>? = RealmList()
+    actual var completed: Boolean = false
+    actual var checklist: RealmList<ChecklistItem>? = RealmList()
+    actual var reminders: RealmList<RemindersItem>? = RealmList()
     //dailies
-    var frequency: String? = null
-    var everyX: Int? = 0
-    var streak: Int? = 0
-    var startDate: Date? = null
-    var repeat: Days? = null
-    set(value) {
-        field = value
-        field?.taskId = id
-    }
+    actual var frequency: String? = null
+    actual var everyX: Int? = 0
+    actual var streak: Int? = 0
+    actual var startDate: Date? = null
+    actual var repeat: Days? = null
+        set(value) {
+            field = value
+            field.taskId = id
+        }
     //todos
     @SerializedName("date")
-    var dueDate: Date? = null
+    actual var dueDate: Date? = null
     //TODO: private String lastCompleted;
     // used for buyable items
-    var specialTag: String? = ""
+    actual var specialTag: String? = ""
     @Ignore
-    var parsedText: CharSequence? = null
+    actual var parsedText: CharSequence? = null
     @Ignore
-    var parsedNotes: CharSequence? = null
+    actual var parsedNotes: CharSequence? = null
 
-    var isDue: Boolean? = null
+    actual var isDue: Boolean? = null
 
-    var nextDue: RealmList<Date>? = null
+    actual var nextDue: RealmList<Date>? = null
 
     //Needed for offline creating/updating
-    var isSaving: Boolean = false
-    var hasErrored: Boolean = false
-    var isCreating: Boolean = false
-    var yesterDaily: Boolean = true
+    actual var isSaving: Boolean = false
+    actual var hasErrored: Boolean = false
+    actual var isCreating: Boolean = false
+    actual var yesterDaily: Boolean = true
 
-    private var daysOfMonthString: String? = null
-    private var weeksOfMonthString: String? = null
-
-    @Ignore
-    private var daysOfMonth: List<Int>? = null
+    actual var daysOfMonthString: String? = null
+    actual var weeksOfMonthString: String? = null
 
     @Ignore
-    private var weeksOfMonth: List<Int>? = null
+    actual var daysOfMonth: List<Int>? = null
+
+    @Ignore
+    actual var weeksOfMonth: List<Int>? = null
 
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
@@ -148,20 +151,21 @@ actual open class Task : RealmObject, Parcelable {
         get() = this.isDisplayedActive && this.checklist?.size != this.completedChecklistCount
 
     val isGroupTask: Boolean
-        get() = group?.approvalApproved == true
+        get() = group.approvalApproved == true
 
     val isPendingApproval: Boolean
-        get() = (group?.approvalRequired == true && group?.approvalRequested == true && group?.approvalApproved == false)
+        get() = (group.approvalRequired == true && group.approvalRequested == true && group.approvalApproved == false)
 
     @StringDef(TYPE_HABIT, TYPE_DAILY, TYPE_TODO, TYPE_REWARD)
     @Retention(AnnotationRetention.SOURCE)
-    annotation class TaskTypes
+    actual annotation class TaskTypes
 
-    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
+    actual fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList)
+            ?: false
 
-    fun checkIfDue(): Boolean? = isDue == true
+    actual fun checkIfDue(): Boolean? = isDue == true
 
-    fun getNextReminderOccurence(oldTime: Date?): Date? {
+    actual fun getNextReminderOccurence(oldTime: Date?): Date? {
         if (oldTime == null) {
             return null
         }
@@ -185,7 +189,7 @@ actual open class Task : RealmObject, Parcelable {
         return if (isDisplayedActive) newTime.time else null
     }
 
-    fun parseMarkdown() {
+    actual fun parseMarkdown() {
         try {
             this.parsedText = MarkdownParser.parseMarkdown(this.text)
         } catch (e: NullPointerException) {
@@ -200,7 +204,7 @@ actual open class Task : RealmObject, Parcelable {
 
     }
 
-    fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
+    actual fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
         if (this.parsedText != null) {
             return this.parsedText ?: ""
         }
@@ -213,7 +217,7 @@ actual open class Task : RealmObject, Parcelable {
         return this.text
     }
 
-    fun markdownNotes(callback: (CharSequence) -> Unit): CharSequence? {
+    actual fun markdownNotes(callback: (CharSequence) -> Unit): CharSequence? {
         if (this.parsedNotes != null) {
             return this.parsedNotes as CharSequence
         }
@@ -230,7 +234,7 @@ actual open class Task : RealmObject, Parcelable {
         return this.notes
     }
 
-    override fun equals(other: Any?): Boolean {
+    actual override fun equals(other: Any?): Boolean {
         if (other == null) {
             return false
         }
@@ -242,13 +246,13 @@ actual open class Task : RealmObject, Parcelable {
         }
     }
 
-    override fun hashCode(): Int {
+    actual override fun hashCode(): Int {
         return id?.hashCode() ?: 0
     }
 
-    override fun describeContents(): Int = 0
+    actual override fun describeContents(): Int = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    actual override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(this.userId)
         dest.writeValue(this.priority)
         dest.writeString(this.text)
@@ -312,19 +316,18 @@ actual open class Task : RealmObject, Parcelable {
         this.counterDown = `in`.readInt()
     }
 
-
-    fun setWeeksOfMonth(weeksOfMonth: List<Int>?) {
+    actual fun setWeeksOfMonth(weeksOfMonth: List<Int>?) {
         this.weeksOfMonth = weeksOfMonth
         this.weeksOfMonthString = this.weeksOfMonth?.toString()
     }
 
-    fun getWeeksOfMonth(): List<Int>? {
+    actual fun getWeeksOfMonth(): List<Int>? {
         if (weeksOfMonth == null) {
             val weeksOfMonth = mutableListOf<Int>()
             if (weeksOfMonthString != null) {
                 try {
                     val obj = JSONArray(weeksOfMonthString)
-                    var i = 0
+                    actual var i = 0
                     while (i < obj.length()) {
                         weeksOfMonth.add(obj.getInt(i))
                         i += 1
@@ -350,7 +353,7 @@ actual open class Task : RealmObject, Parcelable {
             if (daysOfMonthString != null) {
                 try {
                     val obj = JSONArray(daysOfMonthString)
-                    var i = 0
+                    actual var i = 0
                     while (i < obj.length()) {
                         daysOfMonth.add(obj.getInt(i))
                         i += 1
@@ -366,10 +369,10 @@ actual open class Task : RealmObject, Parcelable {
         return daysOfMonth
     }
 
-    companion object CREATOR: Parcelable.Creator<Task> {
-        override fun createFromParcel(source: Parcel): Task = Task(source)
+    companion object CREATOR : Parcelable.Creator<Task> {
+        actual override fun createFromParcel(source: Parcel): Task = Task(source)
 
-        override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
+        actual override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
 
         const val TYPE_HABIT = "habit"
         const val TYPE_TODO = "todo"
@@ -390,9 +393,9 @@ actual open class Task : RealmObject, Parcelable {
 
         @JvmField
         val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {
-            override fun createFromParcel(source: Parcel): Task = Task(source)
+            actual override fun createFromParcel(source: Parcel): Task = Task(source)
 
-            override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
+            actual override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
         }
     }
 }

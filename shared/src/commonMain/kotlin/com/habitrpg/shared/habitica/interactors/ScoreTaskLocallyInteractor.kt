@@ -7,7 +7,6 @@ import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import kotlin.math.min
 import kotlin.math.pow
-import kotlin.math.roundToLong
 
 class ScoreTaskLocallyInteractor {
     companion object {

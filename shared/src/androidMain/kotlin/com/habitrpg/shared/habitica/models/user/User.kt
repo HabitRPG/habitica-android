@@ -1,10 +1,10 @@
 package com.habitrpg.shared.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.android.habitica.models.invitations.Invitations
-import com.habitrpg.android.habitica.models.social.ChallengeMembership
-import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.invitations.Invitations
+import com.habitrpg.shared.habitica.models.social.ChallengeMembership
+import com.habitrpg.shared.habitica.models.social.UserParty
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.shared.habitica.models.tasks.TaskList
 import io.realm.RealmList
 import io.realm.RealmObject

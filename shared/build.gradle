@@ -17,7 +17,7 @@ android {
         release {
         }
     }
-    sourceSets{
+    sourceSets {
         main.java.srcDirs += 'src/androidMain/kotlin'
     }
     compileOptions {
@@ -27,11 +27,11 @@ android {
 
 kotlin {
     targets {
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
-                              ? presets.iosArm64 : presets.iosX64
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")  \
+                               ? presets.iosArm64 : presets.iosX64
 
         fromPreset(iOSTarget, 'ios') {
-             binaries {
+            binaries {
                 framework('shared')
             }
         }
@@ -42,12 +42,14 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib-common'
+            compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
         }
 
         commonMain.kotlin.srcDirs += 'src/commonMain/kotlin'
 
         androidMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib'
+
 
             api 'com.android.tools.build:gradle:3.5.0'
 
