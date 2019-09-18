@@ -1,11 +1,4 @@
-New:
-- manage party members from the member list
-- Better inbox notifications
+In this update we added managing party members to the party screen and in-app notifications for certain notifications.
+We also fixed some issues with notifications and improved the feedback when opening a mystery item
 
-Fixed:
-- Widgets caused crashes when tapped on
-- Issues with task scheduling in the task form
-- Quest detail showed from participant number
-
-Known issues:
-- When opening mystery items, the equipment title is missing. This will be fixed with the next server deploy
+Be sure to download this update now for a better Habitica experience!
