@@ -2,9 +2,9 @@ package com.habitrpg.shared.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 import com.habitrpg.shared.habitica.nativeLibraries.NativeParcel
 
-expect class NativeList<T>
 expect annotation class EnumDef(vararg val types: String)
 
 expect open class Task {

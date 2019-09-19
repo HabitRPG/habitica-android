@@ -16,8 +16,6 @@ import org.json.JSONException
 import space.thelen.shared.cluetective.R
 import java.util.*
 
-actual typealias NativeList<T> = RealmList<T>
-
 actual open class Task : RealmObject, Parcelable {
     @PrimaryKey
     @SerializedName("_id")
