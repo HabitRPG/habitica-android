@@ -227,7 +227,7 @@ class RealmInventoryLocalRepository(realm: Realm, private val context: Context) 
 
     override fun saveInAppRewards(onlineItems: List<ShopItem>) {
         val localItems = realm.where(ShopItem::class.java).findAll().createSnapshot()
-        executeTransactionAsync {
+        executeTransaction {
             for (localItem in localItems) {
                 if (!onlineItems.contains(localItem)) {
                     localItem.deleteFromRealm()
