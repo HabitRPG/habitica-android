@@ -10,45 +10,45 @@ import io.realm.annotations.PrimaryKey
 
 actual open class RemindersItem : RealmObject, Parcelable {
     @PrimaryKey
-    var id: String? = null
-    var startDate: Date? = null
-    var time: Date? = null
+    actual var id: String? = null
+    actual var startDate: Date? = null
+    actual var time: Date? = null
 
     //Use to store task type before a task is created
-    var type: String? = null
+    actual var type: String? = null
 
-    override fun equals(other: Any?): Boolean {
+    actual override fun equals(other: Any?): Boolean {
         return if (other?.javaClass == RemindersItem::class.java) {
             this.id == (other as? RemindersItem)?.id
         } else super.equals(other)
     }
 
-    override fun hashCode(): Int {
+    actual override fun hashCode(): Int {
         return id?.hashCode() ?: 0
     }
 
-    override fun describeContents(): Int {
+    actual override fun describeContents(): Int {
         return 0
     }
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    actual override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(id)
         dest.writeLong(this.startDate?.time ?: -1)
         dest.writeLong(this.time?.time ?: -1)
 
     }
 
-    companion object CREATOR: Parcelable.Creator<RemindersItem> {
+    actual companion object CREATOR: Parcelable.Creator<RemindersItem> {
         override fun createFromParcel(source: Parcel): RemindersItem = RemindersItem(source)
 
         override fun newArray(size: Int): Array<RemindersItem?> = arrayOfNulls(size)
     }
 
-    constructor(source: Parcel) {
+    actual constructor(source: Parcel) {
         id = source.readString()
         startDate = Date(source.readLong())
         time = Date(source.readLong())
     }
 
-    constructor()
+    actual constructor()
 }

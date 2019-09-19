@@ -9,7 +9,9 @@ import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.shared.habitica.models.tasks.ChecklistItem
+import com.habitrpg.shared.habitica.models.tasks.Days
 import com.habitrpg.shared.habitica.models.tasks.RemindersItem
+import com.habitrpg.shared.habitica.models.tasks.TaskGroupPlan
 import io.reactivex.functions.Consumer
 import io.realm.RealmList
 import io.realm.RealmObject

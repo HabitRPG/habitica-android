@@ -2,7 +2,7 @@ package com.habitrpg.shared.habitica.models.user
 
 import android.content.Context
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.
 import com.habitrpg.shared.habitica.models.HabitRpgClass
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

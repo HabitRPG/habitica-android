@@ -50,8 +50,8 @@ actual open class Task {
     actual var completed: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
-    actual var checklist: [ERROR : RealmList]<com.habitrpg.shared.habitica.models.tasks.ChecklistItem>?
-    actual var reminders: [ERROR : RealmList]<com.habitrpg.shared.habitica.models.tasks.RemindersItem>?
+    actual var checklist: RealmList<ChecklistItem>?
+    actual var reminders: RealmList<RemindersItem>?
     actual var frequency: String?
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
@@ -181,3 +181,6 @@ actual class TYPE_HABIT
 actual class TYPE_TODO
 actual class TYPE_DAILY
 actual class TYPE_REWARD
+actual annotation class EnumDef actual constructor(actual val vararg types: String)
+
+actual class NativeParcel

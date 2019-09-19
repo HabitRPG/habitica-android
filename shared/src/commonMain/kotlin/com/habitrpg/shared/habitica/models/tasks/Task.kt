@@ -1,15 +1,11 @@
 package com.habitrpg.shared.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.models.Tag
+import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
+import com.habitrpg.shared.habitica.nativeLibraries.NativeParcel
 
 expect class NativeList<T>
-expect class NativeDate
-expect annotation class StringDef(vararg val types: String)
-expect class TYPE_HABIT
-expect class TYPE_TODO
-expect class TYPE_DAILY
-expect class TYPE_REWARD
-
+expect annotation class EnumDef(vararg val types: String)
 
 expect open class Task {
     var id: String?
@@ -33,6 +29,7 @@ expect open class Task {
     var completed: Boolean
     var checklist: NativeList<ChecklistItem>?
     var reminders: NativeList<RemindersItem>?
+
     //dailies
     var frequency: String?
     var everyX: Int?
@@ -77,7 +74,7 @@ expect open class Task {
 
     val isPendingApproval: Boolean
 
-    @StringDef(TYPE_HABIT, TYPE_DAILY, TYPE_TODO, TYPE_REWARD)
+    @EnumDef(TYPE_HABIT, TYPE_DAILY, TYPE_TODO, TYPE_REWARD)
     @Retention(AnnotationRetention.SOURCE)
     annotation class TaskTypes
 
@@ -99,7 +96,7 @@ expect open class Task {
 
     fun describeContents(): Int
 
-    fun writeToParcel(dest: Parcel, flags: Int)
+    fun writeToParcel(dest: NativeParcel, flags: Int)
 
     fun setWeeksOfMonth(weeksOfMonth: List<Int>?)
 
@@ -109,4 +106,5 @@ expect open class Task {
 
     fun getDaysOfMonth(): List<Int>?
 
+    companion object CREATOR
 }

@@ -17,8 +17,6 @@ import space.thelen.shared.cluetective.R
 import java.util.*
 
 actual typealias NativeList<T> = RealmList<T>
-actual typealias NativeDate = Date
-actual typealias StringDef = StringDef
 
 actual open class Task : RealmObject, Parcelable {
     @PrimaryKey
@@ -369,7 +367,7 @@ actual open class Task : RealmObject, Parcelable {
         return daysOfMonth
     }
 
-    companion object CREATOR : Parcelable.Creator<Task> {
+    actual companion object CREATOR : Parcelable.Creator<Task> {
         actual override fun createFromParcel(source: Parcel): Task = Task(source)
 
         actual override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
@@ -377,25 +375,25 @@ actual open class Task : RealmObject, Parcelable {
         const val TYPE_HABIT = "habit"
         const val TYPE_TODO = "todo"
         const val TYPE_DAILY = "daily"
-        const val TYPE_REWARD = "reward"
+        actual val TYPE_REWARD = "reward"
 
-        const val FILTER_ALL = "all"
-        const val FILTER_WEAK = "weak"
-        const val FILTER_STRONG = "strong"
-        const val FILTER_ACTIVE = "active"
-        const val FILTER_GRAY = "gray"
-        const val FILTER_DATED = "dated"
-        const val FILTER_COMPLETED = "completed"
-        const val FREQUENCY_WEEKLY = "weekly"
-        const val FREQUENCY_DAILY = "daily"
-        const val FREQUENCY_MONTHLY = "monthly"
-        const val FREQUENCY_YEARLY = "yearly"
+        actual val FILTER_ALL = "all"
+        actual val FILTER_WEAK = "weak"
+        actual val FILTER_STRONG = "strong"
+        actual val FILTER_ACTIVE = "active"
+        actual val FILTER_GRAY = "gray"
+        actual val FILTER_DATED = "dated"
+        actual val FILTER_COMPLETED = "completed"
+        actual val FREQUENCY_WEEKLY = "weekly"
+        actual val FREQUENCY_DAILY = "daily"
+        actual val FREQUENCY_MONTHLY = "monthly"
+        actual val FREQUENCY_YEARLY = "yearly"
 
         @JvmField
         val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {
-            actual override fun createFromParcel(source: Parcel): Task = Task(source)
+            override fun createFromParcel(source: Parcel): Task = Task(source)
 
-            actual override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
+            override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
         }
     }
 }
