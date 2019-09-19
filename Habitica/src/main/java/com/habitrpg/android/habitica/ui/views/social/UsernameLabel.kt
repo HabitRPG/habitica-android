@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -10,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.widget.TextViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.members.PlayerTier
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -48,11 +48,7 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
         val padding = context?.resources?.getDimension(R.dimen.spacing_small)?.toInt() ?: 0
         textView.setPadding(0, 0, padding, 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            textView.setTextAppearance(R.style.Body1)
-        } else {
-            textView.setTextAppearance(context, R.style.Body1)
-        }
+        TextViewCompat.setTextAppearance(textView, R.style.Body1)
         val iconViewParams = LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT)

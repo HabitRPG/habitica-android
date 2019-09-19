@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:textSize="@dimen/abc_text_size_small_material"
+            android:textSize="@dimen/card_small_text"
             tools:text="Version 1.0 (1)"/>
 
         <LinearLayout
@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="See what's new"
+                android:text="@string/see_what_s_new"
                 android:gravity="center"
                 android:textColor="@color/brand_300"
                 />
@@ -71,40 +71,37 @@
             android:layout_marginTop="20sp"
             android:autoLink="web"
             android:text="\@habitica"
-            android:textSize="@dimen/abc_text_size_medium_material" />
+            android:textSize="@dimen/card_medium_text" />
 
         <TextView
-            android:id="@+id/webSite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10sp"
             android:autoLink="web"
             android:text="www.habitica.com"
-            android:textSize="@dimen/abc_text_size_medium_material" />
+            android:textSize="@dimen/card_medium_text" />
 
         <TextView
-            android:id="@+id/wiki"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10sp"
             android:autoLink="web"
             android:text="http://habitica.wikia.com/"
-            android:textSize="@dimen/abc_text_size_medium_material" />
+            android:textSize="@dimen/card_medium_text" />
 
         <Button
             android:id="@+id/googlePlayStoreButton"
             android:layout_width="250dp"
             android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
-
             android:layout_marginTop="35sp"
             android:background="@drawable/rounded_purple_square"
-            android:text="@string/about.rate_our_app"
+            android:text="@string/about_rate_our_app"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/abc_text_size_medium_material" />
+            android:textSize="@dimen/card_medium_text" />
 
         <Button
             android:id="@+id/reportBug"
@@ -112,12 +109,11 @@
             android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20sp"
-
             android:background="@drawable/rounded_purple_square"
-            android:text="@string/about.bugreport"
+            android:text="@string/about_bugreport"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/abc_text_size_medium_material" />
+            android:textSize="@dimen/card_medium_text" />
 
         <Button
             android:id="@+id/sendFeedback"
@@ -126,10 +122,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20sp"
             android:background="@drawable/rounded_purple_square"
-            android:text="@string/about.give_us_feedback"
+            android:text="@string/about_give_us_feedback"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/abc_text_size_medium_material" />
+            android:textSize="@dimen/card_medium_text" />
 
         <TextView
             android:id="@+id/sourceCodeLink"
@@ -137,8 +133,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="20sp"
-            android:text="@string/about.habitica_open_source"
-            android:textSize="@dimen/abc_text_size_small_material" />
+            android:text="@string/about_habitica_open_source"
+            android:textSize="@dimen/card_small_text" />
 
         <Button
             android:id="@+id/sourceCodeButton"
@@ -147,12 +143,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10sp"
             android:background="@drawable/rounded_purple_square"
-
-            android:text="@string/about.source_code"
+            android:text="@string/about_source_code"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/abc_text_size_medium_material" />
-
-
+            android:textSize="@dimen/card_medium_text" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

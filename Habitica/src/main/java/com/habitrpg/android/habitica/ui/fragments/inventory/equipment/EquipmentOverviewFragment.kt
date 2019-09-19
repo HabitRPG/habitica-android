@@ -48,8 +48,10 @@ class EquipmentOverviewFragment : BaseMainFragment() {
         costumeWeaponView.setOnClickListener { displayEquipmentDetailList("weapon", user?.items?.gear?.costume?.weapon, true) }
         costumeShieldView.setOnClickListener { displayEquipmentDetailList("shield", user?.items?.gear?.costume?.shield, true) }
 
+        autoEquipSwitch.isChecked = user?.preferences?.autoEquip ?: false
         costumeSwitch.isChecked = user?.preferences?.costume ?: false
 
+        autoEquipSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.autoEquip", isChecked).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
         costumeSwitch.setOnCheckedChangeListener { _, isChecked -> userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(Consumer { }, RxErrorHandler.handleEmptyError()) }
 
         setImageNames()

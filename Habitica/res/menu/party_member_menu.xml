@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/send_message"
+        android:icon="@drawable/menu_messages"
+        android:title="@string/send_message" />
+    <item android:id="@+id/transfer_ownership"
+        android:icon="@drawable/ic_arrow_drop_down_gray_48dp"
+        android:title="@string/transfer_ownership" />
+    <item android:id="@+id/remove"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:title="@string/remove_member" />
+</menu>

@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.ui.views.ValueBar
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
+import kotlin.math.floor
 
 class AvatarWithBarsViewModel(private val context: Context, view: View, userRepository: UserRepository? = null) {
     private val hpBar: ValueBar by bindView(view, R.id.hpBar)
@@ -91,7 +92,7 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
 
         currencyView.gold = stats.gp ?: 0.0
         if (user is User) {
-            currencyView.hourglasses = user.hourglassCount?.toDouble() ?: 0.0
+            currencyView.hourglasses = user.getHourglassCount()?.toDouble() ?: 0.0
             currencyView.gems = user.gemCount.toDouble()
         }
 
@@ -114,14 +115,14 @@ class AvatarWithBarsViewModel(private val context: Context, view: View, userRepo
         if (valueMax != 0)  {
             cachedMaxExp = valueMax
         }
-        xpBar.set(Math.floor(value.toDouble()), cachedMaxExp.toDouble())
+        xpBar.set(floor(value.toDouble()), cachedMaxExp.toDouble())
     }
 
     private fun setMpBarData(value: Float, valueMax: Int) {
         if (valueMax != 0) {
             cachedMaxMana = valueMax
         }
-        mpBar.set(Math.floor(value.toDouble()), cachedMaxMana.toDouble())
+        mpBar.set(floor(value.toDouble()), cachedMaxMana.toDouble())
     }
 
     @Subscribe

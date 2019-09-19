@@ -16,29 +16,33 @@ open class Member : RealmObject(), Avatar {
     var id: String? = null
         set(id) {
             field = id
+            val subID = "m$id" // Do this to prevent the member object from overwriting the user ones
             if (stats != null && stats?.isManaged != true) {
-                stats?.userId = id
+                stats?.userId = subID
+            }
+            if (items != null && items?.isManaged != true) {
+                items?.userId = subID
             }
             if (this.inbox != null && this.inbox?.isManaged != true) {
-                this.inbox?.userId = id
+                this.inbox?.userId = subID
             }
             if (preferences != null && preferences?.isManaged != true) {
-                preferences?.setUserId(id ?: "")
+                preferences?.setUserId(subID)
             }
             if (this.profile != null && this.profile?.isManaged != true) {
-                this.profile?.userId = id
+                this.profile?.userId = subID
             }
             if (this.contributor != null && this.contributor?.isManaged != true) {
-                this.contributor?.userId = id
+                this.contributor?.userId = subID
             }
             if (costume != null && costume?.isManaged != true) {
-                costume?.userId = id + "costume"
+                costume?.userId = subID + "costume"
             }
             if (equipped != null && equipped?.isManaged != true) {
-                equipped?.userId = id + "equipped"
+                equipped?.userId = subID + "equipped"
             }
             if (this.authentication != null && this.authentication?.isManaged != true) {
-                this.authentication?.userId = id
+                this.authentication?.userId = subID
             }
         }
     private var stats: Stats? = null
@@ -101,9 +105,9 @@ open class Member : RealmObject(), Avatar {
 
     val petsFoundCount: Int
         get() = this.items?.pets?.size ?: 0
-
     val mountsTamedCount: Int
         get() = this.items?.mounts?.size ?: 0
+
     val username: String?
     get() = authentication?.localAuthentication?.username
     val formattedUsername: String?
@@ -146,7 +150,7 @@ open class Member : RealmObject(), Avatar {
     fun setCostume(costume: Outfit?) {
         this.costume = costume
         if (costume != null && this.id != null) {
-            costume.userId = this.id!! + "costume"
+            costume.userId = this.id + "costume"
         }
     }
 
@@ -161,7 +165,7 @@ open class Member : RealmObject(), Avatar {
     fun setEquipped(equipped: Outfit?) {
         this.equipped = equipped
         if (equipped != null && this.id != null) {
-            equipped.userId = this.id!! + "equipped"
+            equipped.userId = this.id + "equipped"
         }
     }
 
@@ -182,6 +186,6 @@ open class Member : RealmObject(), Avatar {
     }
 
     override fun getSleep(): Boolean {
-        return getPreferences() != null && getPreferences()!!.sleep
+        return getPreferences()?.sleep ?: false
     }
 }

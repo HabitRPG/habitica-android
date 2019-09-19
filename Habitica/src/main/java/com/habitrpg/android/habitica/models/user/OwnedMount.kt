@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models.user
 
-import io.realm.RealmMigration
-import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -21,4 +19,17 @@ open class OwnedMount : RealmObject(), OwnedObject {
         }
 
     var owned = false
+
+    override fun equals(other: Any?): Boolean {
+        return if (other?.javaClass == OwnedMount::class.java) {
+            this.combinedKey == (other as OwnedMount).combinedKey
+        } else super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        var result = combinedKey.hashCode()
+        result = 31 * result + userID.hashCode()
+        result = 31 * result + key.hashCode()
+        return result
+    }
 }

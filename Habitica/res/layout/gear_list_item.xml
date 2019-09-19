@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/two_handed"
-            android:textColor="@color/brand_400"
+            android:textColor="?colorAccent"
             android:drawablePadding="@dimen/spacing_small"
             android:layout_marginBottom="@dimen/spacing_small"/>
         <com.nex3z.flowlayout.FlowLayout

@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -18,10 +20,12 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.social.InboxAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModelFactory
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,9 +43,11 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     @Inject
     lateinit var configManager: AppConfigManager
 
-    private var chatAdapter: ChatRecyclerViewAdapter? = null
+    private var chatAdapter: InboxAdapter? = null
     private var chatRoomUser: String? = null
     private var replyToUserUUID: String? = null
+
+    private var viewModel: InboxViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -59,11 +65,13 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
             val args = InboxMessageListFragmentArgs.fromBundle(it)
             setReceivingUser(args.username, args.userID)
         }
+        viewModel = ViewModelProviders.of(this, InboxViewModelFactory(replyToUserUUID ?: "")).get(InboxViewModel::class.java)
 
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         recyclerView.layoutManager = layoutManager
 
-        chatAdapter = ChatRecyclerViewAdapter(null, true, user, false)
+        chatAdapter = InboxAdapter(user)
+        viewModel?.messages?.observe(this, Observer { chatAdapter?.submitList(it) })
         recyclerView.adapter = chatAdapter
         recyclerView.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter?.let { adapter ->
@@ -78,8 +86,6 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         chatBarView.sendAction = { sendMessage(it) }
         chatBarView.maxChatLength = configManager.maxChatLength()
 
-        loadMessages()
-
         communityGuidelinesView.visibility = View.GONE
     }
 
@@ -88,14 +94,6 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         view?.forceLayout()
 
         super.onAttach(context)
-    }
-
-    private fun loadMessages() {
-        if (user?.isManaged == true) {
-            compositeSubscription.add(socialRepository.getInboxMessages(replyToUserUUID)
-                    .firstElement()
-                    .subscribe(Consumer { this.chatAdapter?.updateData(it) }, RxErrorHandler.handleEmptyError()))
-        }
     }
 
     override fun onDestroy() {
@@ -107,16 +105,17 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
         component.inject(this)
     }
 
-    private fun refreshUserInbox() {
-        this.swipeRefreshLayout?.isRefreshing = true
-        compositeSubscription.add(this.socialRepository.retrieveInboxMessages()
+    private fun refreshConversation() {
+        compositeSubscription.add(this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
                 .subscribe(Consumer {}, RxErrorHandler.handleEmptyError(), Action {
                     swipeRefreshLayout?.isRefreshing = false
+                    viewModel?.invalidateDataSource()
                 }))
     }
 
     override fun onRefresh() {
-        this.refreshUserInbox()
+        this.swipeRefreshLayout?.isRefreshing = true
+        this.refreshConversation()
     }
 
     private fun sendMessage(chatText: String) {
@@ -139,7 +138,7 @@ class InboxMessageListFragment : BaseMainFragment(), androidx.swiperefreshlayout
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {
         val clipMan = getActivity()?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
-        clipMan?.primaryClip = messageText
+        clipMan?.setPrimaryClip(messageText)
         val activity = getActivity() as? MainActivity
         if (activity != null) {
             showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)

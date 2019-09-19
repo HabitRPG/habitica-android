@@ -20,4 +20,17 @@ open class OwnedPet : RealmObject(), OwnedObject {
         }
 
     var trained = 0
+
+    override fun equals(other: Any?): Boolean {
+        return if (other?.javaClass == OwnedPet::class.java) {
+            this.combinedKey == (other as OwnedPet).combinedKey
+        } else super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        var result = combinedKey.hashCode()
+        result = 31 * result + userID.hashCode()
+        result = 31 * result + key.hashCode()
+        return result
+    }
 }

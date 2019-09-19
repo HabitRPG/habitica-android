@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/create"
                 style="@style/HabiticaButton.Borderless"
-                android:textColor="@color/brand_400"
+                android:textColor="?colorAccent"
                 android:paddingEnd="@dimen/spacing_large"
                 android:paddingStart="@dimen/spacing_large"
                 android:minWidth="20dp"/>

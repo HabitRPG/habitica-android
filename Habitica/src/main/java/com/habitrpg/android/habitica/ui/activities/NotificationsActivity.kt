@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -150,7 +149,11 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     private fun createNewStuffNotification(notification: Notification): View? {
         val data = notification.data as? NewStuffData
-        val text = fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data?.title)
+        val text = if (data?.title != null) {
+            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
+        } else {
+            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b>")
+        }
 
         return createDismissableNotificationItem(
                 notification,
@@ -318,7 +321,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         } else {
             questObjectiveLabelView?.text = getString(R.string.collect)
             val collectionList = questContent.collect?.map { it.count.toString() + " " + it.text }
-            questObjectiveTextView?.text = TextUtils.join(", ", collectionList)
+            questObjectiveTextView?.text = collectionList?.joinToString(", ")
 
             questDifficultyView?.rating = 1f
         }

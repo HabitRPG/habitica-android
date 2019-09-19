@@ -12,12 +12,8 @@
   <string name="tutorial_rewards_1">用你获得的金币给你的人物购买装备！</string>
   <string name="tutorial_rewards_2">你也可以根据你的动力源创造现实中的自定义奖励。</string>
   <string name="tutorial_tasks_complete">暂时就是这么多了。如果你需要再次提醒，去看看FAQ部分。</string>
-  <string name="tutorial_equipment">在你购买装备后，在这里显示。你的战斗装备会影响你的属性，你的服装(如果装备)会在你的角色上显示。</string>
-  <string name="tutorial_items">通过升级和完成任务获得物品。点击一个物品来使用！</string>
-  <string name="tutorial_pets">完成现实任务后就会随机掉落宠物蛋和药水。将药水洒在宠物蛋上孵化宠物</string>
-  <string name="tutorial_skills">技能是有强大作用的特殊能力！点击技能来释放它。使用技能需要消耗魔法值(蓝色条)，魔力可由每日签到和完成现实任务来获得。更多信息请查询FAQ！</string>
+    <string name="tutorial_skills">技能是有强大作用的特殊能力！点击技能来释放它。使用技能需要消耗魔法值(蓝色条)，魔力可由每日签到和完成现实任务来获得。更多信息请查询FAQ！</string>
   <string name="tutorial_party">在这里，你和你的朋友可以互相督促完成目标并通过完成任务组团打小怪兽！</string>
   <string name="tutorial_tavern">欢迎来到酒馆，这里是一个公开的不分年龄的聊天室！这里，可以聊聊心得，问问问题。祝您玩的愉快！</string>
-  <string name="tutorial_classes">选择成为战士、法师、医者或者盗贼！每个职业有独特的装备和技能。点击(?)查看更多！</string>
-  <string name="tutorial_stats">按灰色按钮来一次分配你的属性，或者按箭头一次加一点。</string>
+    <string name="tutorial_stats">按灰色按钮来一次分配你的属性，或者按箭头一次加一点。</string>
 </resources>

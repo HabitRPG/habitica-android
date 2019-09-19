@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.interactors
 
-import android.graphics.Bitmap
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.habitrpg.android.habitica.R
@@ -12,8 +11,8 @@ import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.AvatarView
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
@@ -51,7 +50,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 alert.addButton(R.string.not_now, false)
 
                 if (!requestValues.activity.isFinishing) {
-                    alert.show()
+                    alert.enqueue()
                 }
             } else {
                 val customView = requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup, null)
@@ -62,13 +61,9 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
 
                 val event = ShareEvent()
                 event.sharedMessage = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel) + " https://habitica.com/social/level-UP"
-                val avatarView = AvatarView(requestValues.activity, true, true, true)
+                val avatarView = AvatarView(requestValues.activity, showBackground = true, showMount = true, showPet = true)
                 avatarView.setAvatar(requestValues.user)
-                avatarView.onAvatarImageReady(object : AvatarView.Consumer<Bitmap?> {
-                    override fun accept(t: Bitmap?) {
-                        event.shareImage = t
-                    }
-                })
+                avatarView.onAvatarImageReady(Consumer { t -> event.shareImage = t })
 
                 val alert = HabiticaAlertDialog(requestValues.activity)
                 alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
@@ -81,7 +76,7 @@ constructor(private val soundManager: SoundManager, threadExecutor: ThreadExecut
                 }
 
                 if (!requestValues.activity.isFinishing) {
-                    alert.show()
+                    alert.enqueue()
                 }
             }
 

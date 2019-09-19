@@ -20,8 +20,8 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.*
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.bindView
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
@@ -264,7 +264,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         alert.setTitle(getString(R.string.class_changed, className))
         alert.setMessage(getString(R.string.class_changed_description))
         alert.addButton(getString(R.string.complete_tutorial), true)
-        alert.show()
+        alert.enqueue()
     }
 
     private fun optOutOfClasses() {

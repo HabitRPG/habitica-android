@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.resetViews
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.functions.Consumer
 import java.util.*
 
@@ -153,18 +152,7 @@ class PartyFragment : BaseMainFragment() {
                 return true
             }
             R.id.menu_guild_leave -> {
-                context?.let {
-                    val alert = HabiticaAlertDialog(it)
-                    alert.setTitle(context?.getString(R.string.leave_party))
-                    alert.setMessage(context?.getString(R.string.leave_party_confirmation))
-                    alert.addButton(R.string.yes, true) { _, _ ->
-                        viewModel.leaveGroup {
-                            fragmentManager?.popBackStack()
-                        }
-                    }
-                    alert.addButton(R.string.no, false)
-                    alert.show()
-                }
+                (firstFragment as? PartyDetailFragment)?.leaveParty()
                 return true
             }
         }
@@ -255,7 +243,7 @@ class PartyFragment : BaseMainFragment() {
             }
 
             override fun getCount(): Int {
-                return if (user?.hasParty() != true) {
+                return if (user?.isValid != true || user?.hasParty() != true) {
                     1
                 } else {
                     2

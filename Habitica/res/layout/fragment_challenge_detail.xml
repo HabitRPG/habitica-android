@@ -164,7 +164,6 @@
                     android:textSize="12sp"/>
             </LinearLayout>
             <ImageButton
-                android:id="@+id/creator_message_button"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"/>

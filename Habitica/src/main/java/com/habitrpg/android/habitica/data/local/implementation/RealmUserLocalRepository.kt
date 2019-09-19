@@ -5,6 +5,8 @@ import com.habitrpg.android.habitica.models.*
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.Realm
@@ -46,6 +48,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { it.isLoaded }
 
     override fun getUser(userID: String): Flowable<User> {
+        if (realm.isClosed) return Flowable.empty()
         return realm.where(User::class.java)
                 .equalTo("id", userID)
                 .findAll()
@@ -55,6 +58,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun saveUser(user: User) {
+        if (realm.isClosed) return
         val oldUser = realm.where(User::class.java)
                 .equalTo("id", user.id)
                 .findFirst()
@@ -63,17 +67,23 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 if (user.lastCron?.before(oldUser.lastCron) == true) {
                     user.needsCron = false
                 }
+            } else {
+                if (oldUser.versionNumber >= user.versionNumber) {
+                    return
+                }
             }
         }
-        realm.executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
+        executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
         removeOldTags(user.id ?: "", user.tags)
         if (user.challenges != null) {
             removeOldChallenges(user.id ?: "", user.challenges ?: emptyList())
         }
+        removeOldPets(user.id ?: "", user.items?.pets ?: emptyList())
+        removeOldMounts(user.id ?: "", user.items?.mounts ?: emptyList())
     }
 
     override fun saveMessages(messages: List<ChatMessage>) {
-        realm.executeTransaction {
+        executeTransaction {
             it.insertOrUpdate(messages)
         }
     }
@@ -81,7 +91,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldTags(userId: String, onlineTags: List<Tag>) {
         val tags = realm.where(Tag::class.java).equalTo("userId", userId).findAll().createSnapshot()
         val tagsToDelete = tags.filterNot { onlineTags.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             for (tag in tagsToDelete) {
                 tag.deleteFromRealm()
             }
@@ -91,8 +101,28 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldChallenges(userID: String, onlineChallenges: List<ChallengeMembership>) {
         val memberships = realm.where(ChallengeMembership::class.java).equalTo("userID", userID).findAll().createSnapshot()
         val membershipsToDelete = memberships.filterNot { onlineChallenges.contains(it) }
-        realm.executeTransaction {
+        executeTransaction {
             membershipsToDelete.forEach {
+                it.deleteFromRealm()
+            }
+        }
+    }
+
+    private fun removeOldPets(userID: String, onlinePets: List<OwnedPet>) {
+        val pets = realm.where(OwnedPet::class.java).equalTo("userID", userID).findAll().createSnapshot()
+        val petsToDelete = pets.filterNot { onlinePets.contains(it) }
+        executeTransaction {
+            petsToDelete.forEach {
+                it.deleteFromRealm()
+            }
+        }
+    }
+
+    private fun removeOldMounts(userID: String, onlineMounts: List<OwnedMount>) {
+        val mount = realm.where(OwnedMount::class.java).equalTo("userID", userID).findAll().createSnapshot()
+        val mountsToDelete = mount.filterNot { onlineMounts.contains(it) }
+        executeTransaction {
+            mountsToDelete.forEach {
                 it.deleteFromRealm()
             }
         }

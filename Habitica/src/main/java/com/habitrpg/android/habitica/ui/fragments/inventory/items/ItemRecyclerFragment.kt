@@ -1,34 +1,30 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.facebook.drawee.view.SimpleDraweeView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.events.ShareEvent
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.*
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.*
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.functions.Consumer
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment() {
@@ -39,17 +35,17 @@ class ItemRecyclerFragment : BaseFragment() {
     lateinit var userRepository: UserRepository
     val recyclerView: RecyclerViewEmptySupport? by bindView(R.id.recyclerView)
     val emptyView: View? by bindView(R.id.emptyView)
-    val emptyTextView: TextView? by bindView(R.id.empty_text_view)
+    private val emptyTextView: TextView? by bindView(R.id.empty_text_view)
     val titleView: TextView? by bindView(R.id.titleTextView)
-    val footerView: TextView? by bindView(R.id.footerTextView)
-    val openMarketButton: Button? by bindView(R.id.openMarketButton)
-    val openEmptyMarketButton: Button? by bindView(R.id.openEmptyMarketButton)
+    private val footerView: TextView? by bindView(R.id.footerTextView)
+    private val openMarketButton: Button? by bindView(R.id.openMarketButton)
+    private val openEmptyMarketButton: Button? by bindView(R.id.openEmptyMarketButton)
     var adapter: ItemRecyclerAdapter? = null
     var itemType: String? = null
     var itemTypeText: String? = null
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
-    var hatchingItem: Item? = null
+    private var hatchingItem: Item? = null
     var feedingPet: Pet? = null
     var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
@@ -78,13 +74,9 @@ class ItemRecyclerFragment : BaseFragment() {
 
         val context = activity
 
-        layoutManager = recyclerView?.layoutManager as? androidx.recyclerview.widget.LinearLayoutManager
+        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
 
-        if (layoutManager == null) {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-
-            recyclerView?.layoutManager = layoutManager
-        }
+        recyclerView?.layoutManager = layoutManager
 
         adapter = recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
@@ -111,6 +103,14 @@ class ItemRecyclerFragment : BaseFragment() {
                         .subscribe(Consumer { MainNavigationController.navigate(R.id.partyFragment) }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.getOpenMysteryItemFlowable()
                         .flatMap { inventoryRepository.openMysteryItem(user) }
+                        .doOnNext {
+                            val activity = activity as? MainActivity
+                            if (activity != null) {
+                                DataBindingUtils.loadImage("shop_${it.key}") {image ->
+                                    showSnackbar(activity.snackbarContainer, BitmapDrawable(context?.resources, image), null, getString(R.string.mystery_item_received, it.text), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+                                }
+                            }
+                        }
                         .flatMap { userRepository.retrieveUser(false) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
                 compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler(Consumer { showHatchingDialog(it) }))
@@ -171,7 +171,7 @@ class ItemRecyclerFragment : BaseFragment() {
         }
         fragment.isHatching = true
         fragment.isFeeding = false
-        fragment.show(fragmentManager, "hatchingDialog")
+        fragmentManager?.let { fragment.show(it, "hatchingDialog") }
     }
 
     override fun onResume() {
@@ -191,33 +191,8 @@ class ItemRecyclerFragment : BaseFragment() {
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
-        compositeSubscription.add(this.inventoryRepository.hatchPet(egg, potion) {
-            dismiss()
-            val petWrapper = View.inflate(context, R.layout.pet_imageview, null) as? FrameLayout
-            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
-
-            DataBindingUtils.loadImage(petImageView, "Pet-" + egg.key + "-" + potion.key)
-            val potionName = potion.text
-            val eggName = egg.text
-            val dialog = context?.let { HabiticaAlertDialog(it) }
-            dialog?.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
-            dialog?.setAdditionalContentView(petWrapper)
-            dialog?.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
-            dialog?.addButton(R.string.share, false) { hatchingDialog, _ ->
-                val event1 = ShareEvent()
-                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
-                val petImageSideLength = 140
-                val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(sharedImage)
-                context?.let { canvas.drawColor(ContextCompat.getColor(it, R.color.brand_300)) }
-                petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
-                petImageView?.drawable?.draw(canvas)
-                event1.shareImage = sharedImage
-                EventBus.getDefault().post(event1)
-                hatchingDialog.dismiss()
-            }
-            dialog?.show()
-        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
+        dismiss()
+        (activity as? MainActivity)?.hatchPet(potion, egg)
     }
 
     private fun loadItems() {

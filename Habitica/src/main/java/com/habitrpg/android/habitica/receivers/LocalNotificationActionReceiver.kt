@@ -4,11 +4,13 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.RemoteInput
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -21,61 +23,81 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     @Inject
     lateinit var socialRepository: SocialRepository
     @Inject
+    lateinit var taskRepository: TaskRepository
+    @Inject
     lateinit var apiClient: ApiClient
 
     private var user: User? = null
-    private var action: String? = null
-    private var resources: Resources? = null
-    private var intent: Intent? = null
+    private var groupID: String? = null
+    private var senderID: String? = null
     private var context: Context? = null
+    private var intent: Intent? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         HabiticaBaseApplication.userComponent?.inject(this)
-        this.resources = context.resources
-
-        this.action = intent.action
         this.intent = intent
+        groupID = intent.extras?.getString("groupID")
+        senderID = intent.extras?.getString("senderID")
         this.context = context
-
-        this.userRepository.getUser().firstElement().subscribe(Consumer { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError())
-    }
-
-    fun onUserReceived(user: User) {
-        this.user = user
-        this.handleLocalNotificationAction(action)
-        userRepository.close()
+        handleLocalNotificationAction(intent.action)
     }
 
     private fun handleLocalNotificationAction(action: String?) {
         val notificationManager = this.context?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
         notificationManager?.cancelAll()
-
-        //@TODO: This is a good place for a factory and event emitter pattern
         when (action) {
-            this.resources?.getString(R.string.accept_party_invite) -> {
-                val partyID = this.user?.invitations?.party?.id ?: return
-                socialRepository.joinGroup(partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            context?.getString(R.string.accept_party_invite) -> {
+                groupID?.let {
+                    socialRepository.joinGroup(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }
             }
-            this.resources?.getString(R.string.reject_party_invite) -> {
-                val partyID = this.user?.invitations?.party?.id ?: return
-                socialRepository.rejectGroupInvite(partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            context?.getString(R.string.reject_party_invite) -> {
+                groupID?.let {
+                    socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }
             }
-            this.resources?.getString(R.string.accept_quest_invite) -> {
-                val partyID = this.user?.party?.id ?: return
-                socialRepository.acceptQuest(user, partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            context?.getString(R.string.accept_quest_invite) -> {
+                socialRepository.acceptQuest(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
             }
-            this.resources?.getString(R.string.reject_quest_invite) -> {
-                val partyID = this.user?.party?.id ?: return
-                socialRepository.rejectQuest(user, partyID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            context?.getString(R.string.reject_quest_invite) -> {
+                socialRepository.rejectQuest(user).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
             }
-            this.resources?.getString(R.string.accept_guild_invite) -> {
-                val guildID = intent?.extras?.getString("groupID") ?: return
-                socialRepository.joinGroup(guildID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            context?.getString(R.string.accept_guild_invite) -> {
+                groupID?.let {
+                    socialRepository.joinGroup(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }
             }
-            this.resources?.getString(R.string.reject_guild_invite) -> {
-                val guildID = intent?.extras?.getString("groupID") ?: return
-                socialRepository.rejectGroupInvite(guildID).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+            context?.getString(R.string.reject_guild_invite) -> {
+                groupID?.let {
+                    socialRepository.rejectGroupInvite(it).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }
+            }
+            context?.getString(R.string.group_message_reply) -> {
+                groupID?.let {
+                    getMessageText(context?.getString(R.string.group_message_reply))?.let { message ->
+                        socialRepository.postGroupChat(it, message).subscribe(Consumer {
+                            context?.let { c -> NotificationManagerCompat.from(c).cancel(it.hashCode()) }
+                        }, RxErrorHandler.handleEmptyError())
+                    }
+                }
+            }
+            context?.getString(R.string.inbox_message_reply) -> {
+                senderID?.let {
+                    getMessageText(context?.getString(R.string.inbox_message_reply))?.let { message ->
+                        socialRepository.postPrivateMessage(it, message).subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                    }
+                }
+            }
+            context?.getString(R.string.complete_task_action) -> {
+                intent?.extras?.getString("taskID")?.let {
+                    taskRepository.taskChecked(null, it, up = true, force = false) { _ ->
+                    }.subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
+                }
             }
         }
+    }
+
+    private fun getMessageText(key: String?): String? {
+        return RemoteInput.getResultsFromIntent(intent)?.getCharSequence(key)?.toString()
     }
 }

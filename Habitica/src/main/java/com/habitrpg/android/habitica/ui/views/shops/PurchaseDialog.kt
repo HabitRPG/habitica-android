@@ -59,6 +59,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
     private val buyLabel: TextView
     private val pinButton: Button by bindView(customHeader, R.id.pin_button)
 
+    var purchaseCardAction: ((ShopItem) -> Unit)? = null
+
     private var shopItem: ShopItem = item
         set(value) {
             field = value
@@ -122,9 +124,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             field = value
             if (isPinned) {
                 pinButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfUnpinItem()), null, null, null)
+                pinButton.setTextColor(ContextCompat.getColor(context, R.color.red_10))
                 pinButton.text = context.getText(R.string.unpin)
             } else {
                 pinButton.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfPinItem()), null, null, null)
+                pinButton.setTextColor(ContextCompat.getColor(context, R.color.brand_300))
                 pinButton.text = context.getText(R.string.pin)
             }
         }
@@ -143,7 +147,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         priceLabel = buyButton.findViewById(R.id.priceLabel)
         buyLabel = buyButton.findViewById(R.id.buy_label)
         pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe(Consumer { isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
-        pinButton.visibility = View.GONE
 
         shopItem = item
 
@@ -172,6 +175,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             }
         }
 
+        buyButton.elevation = 0f
         if (shopItem.canAfford(user)) {
             buyButton.background = context.getDrawable(R.drawable.button_background_primary)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -213,6 +217,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     }
                 } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
                     observable = inventoryRepository.purchaseQuest(shopItem.key)
+                } else if (shopItem.purchaseType == "card") {
+                    purchaseCardAction?.invoke(shopItem)
+                    dismiss()
+                    return
                 } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
                     observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble()).map { buyResponse ->
                         if (shopItem.key == "armoire") {

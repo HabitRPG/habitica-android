@@ -2,7 +2,10 @@ package com.habitrpg.android.habitica.models.social
 
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.AvatarPreferences
-import com.habitrpg.android.habitica.models.user.*
+import com.habitrpg.android.habitica.models.user.Items
+import com.habitrpg.android.habitica.models.user.Outfit
+import com.habitrpg.android.habitica.models.user.Preferences
+import com.habitrpg.android.habitica.models.user.Stats
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 

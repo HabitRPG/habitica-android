@@ -8,11 +8,11 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
-import android.preference.PreferenceManager
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.multidex.MultiDexApplication
+import androidx.preference.PreferenceManager
 import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -191,10 +191,9 @@ abstract class HabiticaBaseApplication : MultiDexApplication() {
     private fun setupRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
                 .build()
-        remoteConfig.setConfigSettings(configSettings)
+        remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
         remoteConfig.fetchAndActivate()
     }

@@ -55,7 +55,6 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/difficulty_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
@@ -103,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:layout_weight="1"
-            android:text="@string/quest.reject" />
+            android:text="@string/quest_reject" />
 
         <Button
             android:id="@+id/accept_button"
@@ -111,7 +110,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/quest.accept" />
+            android:text="@string/quest_accept" />
     </LinearLayout>
 
 </LinearLayout>

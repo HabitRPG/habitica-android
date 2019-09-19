@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  Prefs -->
-    <string name="SP_address" translatable="false">ServerAddress</string>
     <string name="SP_userID" translatable="false">UserID</string>
     <string name="SP_APIToken" translatable="false">APIToken</string>
-    <string name="SP_username" translatable="false">Username</string>
-    <string name="SP_email" translatable="false">E-mail</string>
     <string name="base_url" translatable="false">https://habitica.com</string>
 
     <!-- Local notification actions -->
@@ -15,9 +12,10 @@
     <string name="reject_guild_invite" translatable="false">REJECT_GUILD_INVITE</string>
     <string name="accept_quest_invite" translatable="false">ACCEPT_QUEST_INVITE</string>
     <string name="reject_quest_invite" translatable="false">REJECT_QUEST_INVITE</string>
+    <string name="group_message_reply" translatable="false">GROUP_MESSAGE_REPLY</string>
+    <string name="inbox_message_reply" translatable="false">INBOX_MESSAGE_REPLY</string>
+    <string name="complete_task_action" translatable="false">COMPLETE_TASK</string>
 
-    <string name="qr_album_name" translatable="false">habitica</string>
-    <string name="qr_file_name" translatable="false"> habitrpg-qr-code.jpg</string>
     <string name="habitica_user_count" translatable="false">2,000,000</string>
     <string name="brand_name" translatable="false">Habitica</string>
 

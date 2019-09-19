@@ -18,7 +18,7 @@
         android:layout_marginStart="24dp"
         android:textAllCaps="false"
         style="@style/Subheader2"
-        android:textColor="@color/brand_400"
+        android:textColor="?colorAccent"
         android:background="#f9f9f9"
         android:id="@+id/btn_add_task"
         tools:text="Add habit">

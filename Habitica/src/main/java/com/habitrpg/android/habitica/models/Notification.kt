@@ -14,10 +14,20 @@ class Notification {
         GROUP_TASK_REQUIRES_APPROVAL("GROUP_TASK_REQUIRES_APPROVAL"),
         UNALLOCATED_STATS_POINTS("UNALLOCATED_STATS_POINTS"),
 
+        //Achievements
+        ACHIEVEMENT_PARTY_UP("ACHIEVEMENT_PARTY_UP"),
+        ACHIEVEMENT_PARTY_ON("ACHIEVEMENT_PARTY_ON"),
+        ACHIEVEMENT_BEAST_MASTER("ACHIEVEMENT_BEAST_MASTER"),
+        ACHIEVEMENT_MOUNT_MASTER("ACHIEVEMENT_MOUNT_MASTER"),
+        ACHIEVEMENT_TRIAD_BINGO("ACHIEVEMENT_TRIAD_BINGO"),
+        ACHIEVEMENT_GUILD_JOINED("GUILD_JOINED_ACHIEVEMENT"),
+        ACHIEVEMENT_CHALLENGE_JOINED("CHALLENGE_JOINED_ACHIEVEMENT"),
+        ACHIEVEMENT_INVITED_FRIEND("INVITED_FRIEND_ACHIEVEMENT"),
+
         // Custom notification types (created by this app)
         GUILD_INVITATION("GUILD_INVITATION"),
         PARTY_INVITATION("PARTY_INVITATION"),
-        QUEST_INVITATION("QUEST_INVITATION");
+        QUEST_INVITATION("QUEST_INVITATION"),
     }
 
     var id: String = ""
@@ -40,6 +50,19 @@ class Notification {
             Type.PARTY_INVITATION.type -> PartyInvitationData::class.java
             Type.QUEST_INVITATION.type -> QuestInvitationData::class.java
             else -> null
+        }
+    }
+
+    val priority: Int
+    get() {
+        return when (type) {
+            Type.NEW_STUFF.type -> 1
+            Type.GUILD_INVITATION.type -> 2
+            Type.PARTY_INVITATION.type -> 3
+            Type.UNALLOCATED_STATS_POINTS.type -> 4
+            Type.NEW_MYSTERY_ITEMS.type -> 5
+            Type.NEW_CHAT_MESSAGE.type -> 6
+            else -> 100
         }
     }
 }

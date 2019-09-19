@@ -13,7 +13,6 @@ import androidx.core.view.ViewCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.NavbarUtils
 
 class HabiticaSnackbar
 /**
@@ -54,11 +53,9 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
     }
 
     fun setLeftIcon(image: Drawable?): HabiticaSnackbar {
-        if (image == null) {
-            return this
-        }
         val imageView = view.findViewById<ImageView>(R.id.leftImageView)
         imageView.setImageDrawable(image)
+        imageView.visibility = if (image != null) View.VISIBLE else View.GONE
         return this
     }
 
@@ -112,13 +109,6 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         private fun make(parent: ViewGroup, duration: Int): HabiticaSnackbar {
             val inflater = LayoutInflater.from(parent.context)
             val content = inflater.inflate(R.layout.snackbar_view, parent, false)
-            if (NavbarUtils.hasSoftKeys(parent.context)) {
-                val parentLocation = IntArray(2)
-                parent.getLocationInWindow(parentLocation)
-                if (NavbarUtils.isBehindNavbar(parentLocation, parent.context)) {
-                    content.setPadding(0, 0, 0, NavbarUtils.getNavbarHeight(parent.context))
-                }
-            }
             val viewCallback = ContentViewCallback(content)
             val customSnackbar = HabiticaSnackbar(parent, content, viewCallback)
             customSnackbar.duration = duration
@@ -130,7 +120,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             showSnackbar(container, null, null, content, null, null, 0, null, displayType)
         }
 
-        fun showSnackbar(container: ViewGroup, leftImage: Drawable, title: CharSequence, content: CharSequence, displayType: SnackbarDisplayType) {
+        fun showSnackbar(container: ViewGroup, leftImage: Drawable, title: CharSequence?, content: CharSequence?, displayType: SnackbarDisplayType) {
             showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType)
         }
 
@@ -144,7 +134,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         }
 
         fun showSnackbar(container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int, rightText: String?, displayType: SnackbarDisplayType) {
-            val snackbar = HabiticaSnackbar.make(container, Snackbar.LENGTH_LONG)
+            val snackbar = make(container, Snackbar.LENGTH_LONG)
                     .setTitle(title)
                     .setText(content)
                     .setSpecialView(specialView)

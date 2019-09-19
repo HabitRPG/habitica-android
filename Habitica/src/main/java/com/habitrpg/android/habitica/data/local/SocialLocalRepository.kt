@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
+import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.Flowable
 import io.realm.RealmResults
@@ -42,8 +43,9 @@ interface SocialLocalRepository : BaseLocalRepository {
 
     fun getInboxMessages(userId: String, replyToUserID: String?): Flowable<RealmResults<ChatMessage>>
 
-    fun getInboxOverviewList(userId: String): Flowable<RealmResults<ChatMessage>>
+    fun getInboxConversation(userId: String): Flowable<RealmResults<InboxConversation>>
     fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>)
-    fun saveInboxMessages(userID: String, messages: List<ChatMessage>)
+    fun saveInboxMessages(userID: String, recipientID: String, messages: List<ChatMessage>, page: Int)
+    fun saveInboxConversations(userID: String, conversations: List<InboxConversation>)
     fun getChatMessage(messageID: String): Flowable<ChatMessage>
 }

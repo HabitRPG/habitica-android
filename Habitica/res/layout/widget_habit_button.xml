@@ -21,11 +21,12 @@
                 android:src="@drawable/plus"
                 android:scaleType="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@drawable/selection_highlight_brand" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/selection_highlight"
+                android:background="@drawable/selection_highlight_brand"
                 />
         </FrameLayout>
         <FrameLayout
@@ -39,11 +40,11 @@
                 android:scaleType="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/selection_highlight" />
+                android:background="@drawable/selection_highlight_brand" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/selection_highlight"
+                android:background="@drawable/selection_highlight_brand"
                 />
         </FrameLayout>
     </LinearLayout>

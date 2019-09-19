@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.*
 import io.realm.RealmList
 import java.lang.reflect.Type
-import java.util.*
 
 class ContentDeserializer : JsonDeserializer<ContentResult> {
 
@@ -29,25 +28,20 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         result.armoire = context.deserialize(obj.get("armoire"), Equipment::class.java)
         result.gear = context.deserialize(obj.get("gear"), ContentGear::class.java)
 
-        result.quests = RealmList()
         for (entry in obj.get("quests").asJsonObject.entrySet()) {
             result.quests.add(context.deserialize(entry.value, QuestContent::class.java))
             result.quests.forEach { it.key = it.key }
         }
-        result.eggs = RealmList()
         for (entry in obj.get("eggs").asJsonObject.entrySet()) {
             result.eggs.add(context.deserialize(entry.value, Egg::class.java))
         }
-        result.food = RealmList()
         for (entry in obj.get("food").asJsonObject.entrySet()) {
             result.food.add(context.deserialize(entry.value, Food::class.java))
         }
-        result.hatchingPotions = RealmList()
         for (entry in obj.get("hatchingPotions").asJsonObject.entrySet()) {
             result.hatchingPotions.add(context.deserialize(entry.value, HatchingPotion::class.java))
         }
 
-        result.pets = RealmList()
         val pets = obj.getAsJsonObject("petInfo")
         for (key in pets.keySet()) {
             val pet = Pet()
@@ -67,7 +61,6 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             result.pets.add(pet)
         }
 
-        result.mounts = RealmList()
         val mounts = obj.getAsJsonObject("mountInfo")
         for (key in mounts.keySet()) {
             val mount = Mount()
@@ -85,7 +78,6 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             }
             result.mounts.add(mount)
         }
-        result.spells = ArrayList<Skill>()
         for ((classname, value) in obj.getAsJsonObject("spells").entrySet()) {
             val classObject = value.asJsonObject
 

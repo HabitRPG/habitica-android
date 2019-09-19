@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
@@ -31,7 +32,7 @@ class BottomNavigationItem @JvmOverloads constructor(
         } else {
             selectedTitleView.visibility = View.GONE
             titleView.visibility = View.VISIBLE
-            iconView.drawable.setColorFilter(ContextCompat.getColor(context, R.color.brand_500), PorterDuff.Mode.MULTIPLY )
+            iconView.drawable.setColorFilter(context.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY )
         }
     }
 

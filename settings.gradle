@@ -1,2 +1,2 @@
 include ':shared'
-include 'Habitica', ':Habitica', ':seeds-sdk'
+include 'Habitica', ':Habitica'

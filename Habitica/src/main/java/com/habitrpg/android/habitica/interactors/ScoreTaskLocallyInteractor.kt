@@ -6,6 +6,9 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import java.util.*
+import kotlin.math.min
+import kotlin.math.pow
+import kotlin.math.roundToLong
 
 class ScoreTaskLocallyInteractor {
     companion object {
@@ -20,7 +23,7 @@ class ScoreTaskLocallyInteractor {
                 else -> task.value
             }
 
-            var nextDelta = Math.pow(0.9747, currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
+            var nextDelta = 0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
 
             if (task.checklist?.size ?: 0 > 0) {
                 if (task.type == Task.TYPE_TODO) {
@@ -72,10 +75,10 @@ class ScoreTaskLocallyInteractor {
                 }
                 if (result.exp >= stats.toNextLevel?.toDouble() ?: 0.0) {
                     result.exp = result.exp - (stats.toNextLevel?.toDouble() ?: 0.0)
-                    result.lvl = user.stats?.lvl ?: 0 + 1
+                    result.lvl = (user.stats?.lvl ?: 0 + 1).toLong()
                     result.hp = 50.0
                 } else {
-                    result.lvl = user.stats?.lvl ?: 0
+                    result.lvl = (user.stats?.lvl ?: 0).toLong()
                 }
 
                 result
@@ -90,13 +93,13 @@ class ScoreTaskLocallyInteractor {
                 conBonus = 0.1f
             }
             val hpMod = delta * conBonus * task.priority * 2
-            result.hp = (stats.hp ?: 0.0) + Math.round(hpMod * 10) / 10.0
+            result.hp = (stats.hp ?: 0.0) + (hpMod * 10).roundToLong() / 10.0
         }
 
         private fun addPoints(result: TaskDirectionData, delta: Double, stats: Stats, computedStats: Stats, task: Task, direction: TaskDirection) {
             val intBonus = 1f + ((computedStats.intelligence?.toFloat() ?: 0f) * 0.025f)
             result.exp = (stats.exp
-                    ?: 0.0) + Math.round(delta * intBonus * task.priority * 6).toDouble()
+                    ?: 0.0) + (delta * intBonus * task.priority * 6).roundToLong().toDouble()
 
             val perBonus = 1f + ((computedStats.per?.toFloat() ?: 0f) * 0.02f)
             val goldMod = delta * task.priority * perBonus
@@ -113,7 +116,7 @@ class ScoreTaskLocallyInteractor {
         }
 
         private fun computeStats(user: User): Stats {
-            val levelStat = Math.min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
+            val levelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
             var totalStrength = levelStat
             var totalIntelligence = levelStat

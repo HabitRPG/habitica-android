@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -19,17 +18,19 @@ import com.habitrpg.android.habitica.extensions.runDelayed
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.activity_prefs.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
+
+
 
 class GroupInviteActivity : BaseActivity() {
 
@@ -53,6 +54,7 @@ class GroupInviteActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupToolbar(toolbar)
         viewPager.currentItem = 0
 
         if (intent.getStringExtra("groupType") == "party") {
@@ -75,25 +77,30 @@ class GroupInviteActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
 
-        if (id == R.id.action_send_invites) {
-            setResult(Activity.RESULT_OK, createResultIntent())
-            dismissKeyboard()
-            if (!fragments[viewPager.currentItem].values.isEmpty()) {
-                showSnackbar(snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
-                runDelayed(1, TimeUnit.SECONDS, this::finish)
-            } else {
-                finish()
+        return when (item.itemId) {
+            R.id.action_send_invites -> {
+                setResult(Activity.RESULT_OK, createResultIntent())
+                dismissKeyboard()
+                if (!fragments[viewPager.currentItem].values.isEmpty()) {
+                    showSnackbar(snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
+                    runDelayed(1, TimeUnit.SECONDS, this::finish)
+                } else {
+                    finish()
+                }
+                true
             }
-            return true
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     private fun createResultIntent(): Intent {
         val intent = Intent()
+        if (fragments.size == 0) return intent
         val fragment = fragments[viewPager.currentItem]
         if (viewPager.currentItem == 1) {
             intent.putExtra(IS_EMAIL_KEY, true)
@@ -137,23 +144,6 @@ class GroupInviteActivity : BaseActivity() {
         }
 
         tabLayout.setupWithViewPager(viewPager)
-    }
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        val scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
-        if (scanningResult != null && scanningResult.contents != null) {
-            val qrCodeUrl = scanningResult.contents
-            val uri = qrCodeUrl.toUri()
-            if (uri.pathSegments.size < 3) {
-                return
-            }
-            userIdToInvite = uri.pathSegments[2]
-
-            compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer<User> { this.handleUserReceived(it) }, RxErrorHandler.handleEmptyError()))
-        }
     }
 
     private fun handleUserReceived(user: User) {

@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
@@ -125,7 +126,7 @@ class ReportMessageActivity : BaseActivity() {
     private fun setStatusBarDim(dim: Boolean) {
         if (dim) {
             appBar.elevation = 0f
-            window.statusBarColor = ContextCompat.getColor(this, R.color.brand_50)
+            window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
             closeButton.visibility = View.GONE
             toolbarTextView.setTypeface(null, Typeface.BOLD)
         } else {

@@ -6,8 +6,7 @@
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
     android:scrollbars="vertical">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp">
@@ -18,14 +17,13 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="20dp"
-            android:text="@string/gem.purchase.title"
+            android:text="@string/gem_purchase_title"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:textColor="@color/blue_10"
             android:textSize="14sp"
             android:lineSpacingExtra="4dp" />
         <TextView
-            android:id="@+id/notAvailableTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/no_billing_gems"
@@ -33,7 +31,6 @@
             android:paddingBottom="10dp"
             android:visibility="gone" />
         <Button
-            android:id="@+id/notAvailableButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -42,7 +39,6 @@
             style="@style/HabiticaButton.Purple"
             android:visibility="gone" />
         <LinearLayout
-            android:id="@+id/gemPurchaseOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -91,42 +87,41 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:gemAmount="84"
-                    app:gemDrawable="@drawable/gems_84"
-                    app:showSeedsPromo="true" />
+                    app:gemDrawable="@drawable/gems_84" />
             </LinearLayout>
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/gem.purchase.subtitle"
+            android:text="@string/gem_purchase_subtitle"
             android:gravity="center"
             android:textStyle="normal|bold"
-            android:textColor="@color/brand_100"
+            android:textColor="?colorPrimary"
             android:textSize="16sp"
             android:lineSpacingExtra="4dp"
             android:layout_marginTop="23dp"
             android:layout_marginBottom="12dp"/>
 
         <TextView
-            android:text="@string/gem.purchase.listitem1"
+            android:text="@string/gem_purchase_listitem1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/GemPurchaseListItem"
             />
         <TextView
-            android:text="@string/gem.purchase.listitem2"
+            android:text="@string/gem_purchase_listitem2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/GemPurchaseListItem"
             />
         <TextView
-            android:text="@string/gem.purchase.listitem3"
+            android:text="@string/gem_purchase_listitem3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/GemPurchaseListItem"
             />
         <TextView
-            android:text="@string/gem.purchase.listitem4"
+            android:text="@string/gem_purchase_listitem4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/GemPurchaseListItem"

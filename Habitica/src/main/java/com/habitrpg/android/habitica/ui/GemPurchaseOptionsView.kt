@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
-    val seedsImageButton: ImageButton by bindView(R.id.seedsImageButton)
     private val gemImageView: ImageView by bindView(R.id.gem_image)
     private val gemAmountTextView: TextView by bindView(R.id.gem_amount)
     private val purchaseButton: Button by bindView(R.id.purchase_button)
@@ -30,10 +29,6 @@ class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayou
         val iconRes = a.getDrawable(R.styleable.GemPurchaseOptionsView_gemDrawable)
         if (iconRes != null) {
             gemImageView.setImageDrawable(iconRes)
-        }
-
-        if (a.getBoolean(R.styleable.GemPurchaseOptionsView_showSeedsPromo, false)) {
-            seedsImageButton.visibility = View.VISIBLE
         }
     }
 

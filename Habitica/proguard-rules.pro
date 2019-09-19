@@ -153,9 +153,6 @@
 #checkout
 -keep class com.android.vending.billing.**
 
-#seeds sdk
--keep class com.playseeds.** { *; }
-
 -assumenosideeffects class org.solovyev.android.checkout.Billing {
     public static void debug(...);
     public static void warning(...);

@@ -44,7 +44,6 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     @Inject
     lateinit var configManager: AppConfigManager
 
-    internal var layoutManager: LinearLayoutManager? = null
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var isScrolledToTop = true
@@ -64,12 +63,8 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
         refreshLayout.setOnRefreshListener(this)
 
-        layoutManager = recyclerView.layoutManager as? LinearLayoutManager
-
-        if (layoutManager == null) {
-            layoutManager = LinearLayoutManager(context)
-            recyclerView.layoutManager = layoutManager
-        }
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
 
         chatAdapter = ChatRecyclerViewAdapter(null, true, null, true)
         chatAdapter?.let {adapter ->
@@ -94,7 +89,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                isScrolledToTop = layoutManager?.findFirstVisibleItemPosition() == 0
+                isScrolledToTop = layoutManager.findFirstVisibleItemPosition() == 0
             }
         })
 
@@ -191,7 +186,7 @@ class ChatFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {
         val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
-        clipMan?.primaryClip = messageText
+        clipMan?.setPrimaryClip(messageText)
         val activity = activity as? MainActivity
         if (activity != null) {
             showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), SnackbarDisplayType.NORMAL)

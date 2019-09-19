@@ -1,35 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="task_difficulties">
-        <item>@string/trivial</item>
-        <item>@string/easy</item>
-        <item>@string/medium</item>
-        <item>@string/hard</item>
-    </string-array>
-
-    <string-array name="task_attributes">
-        <item>@string/physical</item>
-        <item>@string/mental</item>
-        <item>@string/social</item>
-        <item>@string/other</item>
-    </string-array>
-
-    <string-array name="task_reset_frequencies">
-        <item>@string/repeatables_frequency_daily</item>
-        <item>@string/repeatables_frequency_weekly</item>
-        <item>@string/repeatables_frequency_monthly</item>
-    </string-array>
 
     <string-array name="repeatables_frequencies">
         <item>@string/repeatables_frequency_daily</item>
         <item>@string/repeatables_frequency_weekly</item>
         <item>@string/repeatables_frequency_monthly</item>
         <item>@string/repeatables_frequency_yearly</item>
-    </string-array>
-
-    <string-array name="repeatables_on">
-        <item>@string/repeatables_frequency_day_of_month</item>
-        <item>@string/repeatables_frequency_day_of_week</item>
     </string-array>
 
     <string-array name="weekdays">
@@ -126,6 +102,27 @@
         <item>airuTheme</item>
     </string-array>
 
+
+    <string-array name="AppThemes">
+        <item>Default</item>
+        <item>Maroon</item>
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Green</item>
+        <item>Teal</item>
+        <item>Blue</item>
+    </string-array>
+
+    <string-array name="AppThemeValues">
+        <item>purple</item>
+        <item>maroon</item>
+        <item>red</item>
+        <item>orange</item>
+        <item>green</item>
+        <item>teal</item>
+        <item>blue</item>
+    </string-array>
+
     <string-array name="server_urls">
         <item>https://habitica.com</item>
         <item>https://habitrpg-staging.herokuapp.com</item>
@@ -134,5 +131,4 @@
         <item>https://habitrpg-delta.herokuapp.com</item>
     </string-array>
 
-    <string name="frequency_monthly">Monthly</string>
 </resources>

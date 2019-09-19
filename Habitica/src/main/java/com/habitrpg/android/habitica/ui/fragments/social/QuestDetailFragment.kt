@@ -196,7 +196,7 @@ class QuestDetailFragment : BaseMainFragment() {
                     questParticipantList?.addView(participantView)
                 }
             }
-            if (quest?.active == true || participant.participatesInQuest == true) {
+            if (participant.participatesInQuest == true) {
                 participantCount += 1
             }
         }

@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import kotlinx.android.synthetic.main.item_image_row.view.*
 
@@ -14,7 +13,7 @@ class EquipmentItemRow(context: Context?, attrs: AttributeSet?) : LinearLayout(c
     var equipmentIdentifier: String? = null
     set(value) {
         field = value
-        val imageName = if (equipmentIdentifier?.isNotEmpty() == true && equipmentIdentifier?.endsWith("base_0") == false) "shop_"+equipmentIdentifier else "head_0"
+        val imageName = if (equipmentIdentifier?.isNotEmpty() == true && equipmentIdentifier?.endsWith("base_0") == false) "shop_$equipmentIdentifier" else "head_0"
         DataBindingUtils.loadImage(imageView, imageName)
     }
 

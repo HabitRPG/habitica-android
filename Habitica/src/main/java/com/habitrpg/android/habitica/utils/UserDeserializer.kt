@@ -6,6 +6,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
+import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Tag
@@ -29,7 +30,10 @@ class UserDeserializer : JsonDeserializer<User> {
         val obj = json.asJsonObject
 
         if (obj.has("_id")) {
-            user.id = obj.get("_id").asString
+            user.id = obj.getAsString("_id")
+        }
+        if (obj.has("_v")) {
+            user.versionNumber = obj.get("_v").asInt
         }
 
         if (obj.has("balance")) {

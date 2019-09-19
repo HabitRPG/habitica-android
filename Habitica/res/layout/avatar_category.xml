@@ -10,5 +10,5 @@
     android:layout_width="70dp"
     android:layout_height="70dp"
     android:gravity="center"
-    tools:background="@color/brand_200"
+    tools:background="?colorPrimaryOffset"
     tools:drawableTop="@drawable/icon_body" />

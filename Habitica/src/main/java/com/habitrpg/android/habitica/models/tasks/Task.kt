@@ -157,7 +157,7 @@ open class Task : RealmObject, Parcelable {
     @Retention(AnnotationRetention.SOURCE)
     annotation class TaskTypes
 
-    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.getId() }?.containsAll(tagIdList) ?: false
+    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
 
     fun checkIfDue(): Boolean? = isDue == true
 
@@ -236,7 +236,10 @@ open class Task : RealmObject, Parcelable {
         }
         return if (Task::class.java.isAssignableFrom(other.javaClass)) {
             val otherTask = other as? Task
-            this.id == otherTask?.id
+            if (!this.isValid || otherTask?.isValid != true) {
+                return false
+            }
+            this.id == otherTask.id
         } else {
             super.equals(other)
         }
@@ -256,14 +259,14 @@ open class Task : RealmObject, Parcelable {
         dest.writeString(this.attribute)
         dest.writeString(this.type)
         dest.writeDouble(this.value)
-        dest.writeList(this.tags)
+        dest.writeList(this.tags as List<*>?)
         dest.writeLong(this.dateCreated?.time ?: -1)
         dest.writeInt(this.position)
         dest.writeValue(this.up)
         dest.writeValue(this.down)
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())
-        dest.writeList(this.checklist)
-        dest.writeList(this.reminders)
+        dest.writeList(this.checklist as List<*>?)
+        dest.writeList(this.reminders as List<*>?)
         dest.writeString(this.frequency)
         dest.writeValue(this.everyX)
         dest.writeValue(this.streak)
@@ -287,7 +290,7 @@ open class Task : RealmObject, Parcelable {
         this.type = `in`.readString() ?: ""
         this.value = `in`.readDouble()
         this.tags = RealmList()
-        `in`.readList(this.tags, TaskTag::class.java.classLoader)
+        `in`.readList(this.tags as List<*>, TaskTag::class.java.classLoader)
         val tmpDateCreated = `in`.readLong()
         this.dateCreated = if (tmpDateCreated == -1L) null else Date(tmpDateCreated)
         this.position = `in`.readInt()
@@ -295,9 +298,9 @@ open class Task : RealmObject, Parcelable {
         this.down = `in`.readValue(Boolean::class.java.classLoader) as? Boolean ?: false
         this.completed = `in`.readByte().toInt() != 0
         this.checklist = RealmList()
-        `in`.readList(this.checklist, ChecklistItem::class.java.classLoader)
+        `in`.readList(this.checklist as List<*>, ChecklistItem::class.java.classLoader)
         this.reminders = RealmList()
-        `in`.readList(this.reminders, RemindersItem::class.java.classLoader)
+        `in`.readList(this.reminders as List<*>, RemindersItem::class.java.classLoader)
         this.frequency = `in`.readString()
         this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1
         this.streak = `in`.readValue(Int::class.java.classLoader) as? Int ?: 0

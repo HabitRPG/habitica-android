@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sidebar.tasks">Tugas</string>
-  <string name="sidebar.skills">Kemampuan</string>
-  <string name="sidebar.section.social">Sosial</string>
-  <string name="sidebar.inbox">Pesan</string>
-  <string name="sidebar.tavern">Kedai Minuman</string>
-  <string name="sidebar.party">Party</string>
-  <string name="sidebar.purchaseGems">Permata &amp; Berlangganan</string>
-  <string name="sidebar.guilds">Guild</string>
-  <string name="sidebar.challenges">Tantangan</string>
-  <string name="sidebar.section.inventory">Inventori</string>
-  <string name="sidebar.avatar">Avatar</string>
-  <string name="sidebar.equipment">Perlengkapan</string>
-  <string name="sidebar.stable">Istal</string>
-  <string name="sidebar.news">Berita</string>
-  <string name="sidebar.settings">Pengaturan</string>
-  <string name="sidebar.about">Tentang Kami</string>
+  <string name="sidebar_tasks">Tugas</string>
+  <string name="sidebar_skills">Kemampuan</string>
+  <string name="sidebar_section_social">Sosial</string>
+  <string name="sidebar_inbox">Pesan</string>
+  <string name="sidebar_tavern">Kedai Minuman</string>
+  <string name="sidebar_party">Party</string>
+  <string name="sidebar_purchaseGems">Permata &amp; Berlangganan</string>
+  <string name="sidebar_guilds">Guild</string>
+  <string name="sidebar_challenges">Tantangan</string>
+  <string name="sidebar_section_inventory">Inventori</string>
+  <string name="sidebar_avatar">Avatar</string>
+  <string name="sidebar_equipment">Perlengkapan</string>
+  <string name="sidebar_stable">Istal</string>
+  <string name="sidebar_news">Berita</string>
+    <string name="sidebar_about">Tentang Kami</string>
   <string name="sidebar_shops">Toko</string>
   <string name="sidebar_stats">Status</string>
 </resources>

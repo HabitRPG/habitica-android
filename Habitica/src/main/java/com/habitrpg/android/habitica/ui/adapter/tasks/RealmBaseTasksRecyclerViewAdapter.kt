@@ -98,7 +98,9 @@ abstract class RealmBaseTasksRecyclerViewAdapter<VH : BaseTaskViewHolder>(privat
 
         if (taskFilterHelper != null) {
             val query = taskFilterHelper.createQuery(unfilteredData)
-            updateData(query.sort("position").findAll())
+            if (query != null) {
+                updateData(query.sort("position").findAll())
+            }
         }
     }
 

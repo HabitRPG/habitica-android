@@ -1,4 +1,4 @@
-This beta update stores the apps authentication credentials more securely. The app should automatically update to the new storage method without you having to log in again. If you experience any issues with this, please report them through the in-app-reporting option or to admin@habitica.com
-We updated the app with a new modal design
+In this update we added managing party members to the party screen and in-app notifications for certain notifications.
+We also fixed some issues with notifications and improved the feedback when opening a mystery item
 
 Be sure to download this update now for a better Habitica experience!

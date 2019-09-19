@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sidebar.tasks">Attività</string>
-  <string name="sidebar.skills">Abilità</string>
-  <string name="sidebar.section.social">Social</string>
-  <string name="sidebar.inbox">Messaggi</string>
-  <string name="sidebar.tavern">Taverna</string>
-  <string name="sidebar.party">Squadra</string>
-  <string name="sidebar.purchaseGems">Gemme e abbonamento</string>
-  <string name="sidebar.guilds">Gilde</string>
-  <string name="sidebar.challenges">Sfide</string>
-  <string name="sidebar.section.inventory">Inventario</string>
-  <string name="sidebar.avatar">Avatar</string>
-  <string name="sidebar.equipment">Equipaggiamento</string>
-  <string name="sidebar.stable">Scuderia</string>
-  <string name="sidebar.news">Novità</string>
-  <string name="sidebar.settings">Impostazioni</string>
-  <string name="sidebar.about">Su Habitica</string>
+  <string name="sidebar_tasks">Attività</string>
+  <string name="sidebar_skills">Abilità</string>
+  <string name="sidebar_section_social">Social</string>
+  <string name="sidebar_inbox">Messaggi</string>
+  <string name="sidebar_tavern">Taverna</string>
+  <string name="sidebar_party">Squadra</string>
+  <string name="sidebar_purchaseGems">Gemme e abbonamento</string>
+  <string name="sidebar_guilds">Gilde</string>
+  <string name="sidebar_challenges">Sfide</string>
+  <string name="sidebar_section_inventory">Inventario</string>
+  <string name="sidebar_avatar">Avatar</string>
+  <string name="sidebar_equipment">Equipaggiamento</string>
+  <string name="sidebar_stable">Scuderia</string>
+  <string name="sidebar_news">Novità</string>
+    <string name="sidebar_about">Su Habitica</string>
   <string name="sidebar_shops">Negozi</string>
   <string name="sidebar_stats">Statistiche</string>
 </resources>

@@ -4,7 +4,7 @@
                 android:layout_height="48dp"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_gravity="right|end"
-        tools:background="@color/brand_100"
+        tools:background="?colorPrimary"
                 android:clickable="true">
 
     <ImageView

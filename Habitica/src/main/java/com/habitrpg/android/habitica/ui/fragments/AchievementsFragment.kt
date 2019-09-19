@@ -29,7 +29,6 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
 
     private var menuID: Int = 0
     private lateinit var adapter: AchievementsAdapter
-    private val layoutManager = GridLayoutManager(activity, 2)
     private var useGridLayout = false
     set(value) {
         field = value
@@ -69,6 +68,7 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
 
         resetViews()
 
+        val layoutManager = GridLayoutManager(activity, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
         adapter.useGridLayout = useGridLayout
@@ -118,15 +118,15 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
                 }))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (useGridLayout) {
-            val menuItem = menu?.add(R.string.switch_to_list_view)
+            val menuItem = menu.add(R.string.switch_to_list_view)
             menuID = menuItem?.itemId ?: 0
             menuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             menuItem?.setIcon(R.drawable.ic_round_view_list_24px)
 
         } else {
-            val menuItem = menu?.add(R.string.switch_to_grid_view)
+            val menuItem = menu.add(R.string.switch_to_grid_view)
             menuID = menuItem?.itemId ?: 0
             menuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             menuItem?.setIcon(R.drawable.ic_round_view_module_24px)
@@ -134,8 +134,8 @@ class AchievementsFragment: BaseMainFragment(), SwipeRefreshLayout.OnRefreshList
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == menuID) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == menuID) {
             useGridLayout = !useGridLayout
             activity?.invalidateOptionsMenu()
         }

@@ -37,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_group_info.*
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 
 class GroupInformationFragment : BaseFragment() {
@@ -98,7 +99,7 @@ class GroupInformationFragment : BaseFragment() {
         username_textview.setOnClickListener {
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = ClipData.newPlainText(context?.getString(R.string.username), user?.username)
-            clipboard?.primaryClip = clip
+            clipboard?.setPrimaryClip(clip)
             val activity = activity as? MainActivity
             if (activity != null) {
                 HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.username_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
@@ -119,18 +120,16 @@ class GroupInformationFragment : BaseFragment() {
             DataBindingUtils.loadImage("timeTravelersShop_background_fall") {bitmap ->
                 val aspectRatio = bitmap.width / bitmap.height.toFloat()
                 val height = context.resources.getDimension(R.dimen.shop_height).toInt()
-                val width = Math.round(height * aspectRatio)
+                val width = (height * aspectRatio).roundToInt()
                 val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
                 drawable.tileModeX = Shader.TileMode.REPEAT
-                if (drawable != null) {
-                    Observable.just(drawable)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer {
-                                if (no_party_background != null) {
-                                    no_party_background.background = it
-                                }
-                            }, RxErrorHandler.handleEmptyError())
-                }
+                Observable.just(drawable)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(Consumer {
+                            if (no_party_background != null) {
+                                no_party_background.background = it
+                            }
+                        }, RxErrorHandler.handleEmptyError())
             }
         }
 

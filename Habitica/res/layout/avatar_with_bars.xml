@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/avatar_with_bars_layout"
-              android:layout_width="match_parent"
+    android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_centerHorizontal="true"
               android:adjustViewBounds="true"
@@ -32,8 +31,7 @@
                 app:showPet="true"/>
 
         <LinearLayout
-                android:id="@+id/LL_header"
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 

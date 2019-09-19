@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -45,7 +46,7 @@ class ReminderItemFormView @JvmOverloads constructor(
             textView.text = formatter.format(item.time)
         }
 
-    var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
+    var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
     var valueChangedListener: ((Date) -> Unit)? = null
     var animDuration = 0L
     var isAddButton: Boolean = true

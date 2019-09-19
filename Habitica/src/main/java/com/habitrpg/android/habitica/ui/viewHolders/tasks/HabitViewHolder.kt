@@ -34,11 +34,11 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         btnMinus.setOnClickListener { onMinusButtonClicked() }
     }
 
-    override fun bind(newTask: Task, position: Int) {
-        this.task = newTask
-        if (newTask.up == true) {
-            this.btnPlusWrapper.setBackgroundResource(newTask.lightTaskColor)
-            if (newTask.lightTaskColor == R.color.yellow_100) {
+    override fun bind(data: Task, position: Int) {
+        this.task = data
+        if (data.up == true) {
+            this.btnPlusWrapper.setBackgroundResource(data.lightTaskColor)
+            if (data.lightTaskColor == R.color.yellow_100) {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus_yellow)
             } else {
                 this.btnPlusIconView.setImageResource(R.drawable.habit_plus)
@@ -52,9 +52,9 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
             this.btnPlus.isClickable = false
         }
 
-        if (newTask.down == true) {
-            this.btnMinusWrapper.setBackgroundResource(newTask.lightTaskColor)
-            if (newTask.lightTaskColor == R.color.yellow_100) {
+        if (data.down == true) {
+            this.btnMinusWrapper.setBackgroundResource(data.lightTaskColor)
+            if (data.lightTaskColor == R.color.yellow_100) {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus_yellow)
             } else {
                 this.btnMinusIconView.setImageResource(R.drawable.habit_minus)
@@ -69,12 +69,12 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         }
 
         var streakString = ""
-        if (newTask.counterUp != null && newTask.counterUp ?: 0 > 0 && newTask.counterDown != null && newTask.counterDown ?: 0 > 0) {
-            streakString = streakString + "+" + newTask.counterUp.toString() + " | -" + newTask.counterDown?.toString()
-        } else if (newTask.counterUp != null && newTask.counterUp ?: 0 > 0) {
-            streakString = streakString + "+" + newTask.counterUp.toString()
-        } else if (newTask.counterDown != null && newTask.counterDown ?: 0 > 0) {
-            streakString = streakString + "-" + newTask.counterDown.toString()
+        if (data.counterUp != null && data.counterUp ?: 0 > 0 && data.counterDown != null && data.counterDown ?: 0 > 0) {
+            streakString = streakString + "+" + data.counterUp.toString() + " | -" + data.counterDown?.toString()
+        } else if (data.counterUp != null && data.counterUp ?: 0 > 0) {
+            streakString = streakString + "+" + data.counterUp.toString()
+        } else if (data.counterDown != null && data.counterDown ?: 0 > 0) {
+            streakString = streakString + "-" + data.counterDown.toString()
         }
         if (streakString.isNotEmpty()) {
             streakTextView.text = streakString
@@ -82,7 +82,7 @@ class HabitViewHolder(itemView: View, scoreTaskFunc: ((Task, TaskDirection) -> U
         } else {
             streakTextView.visibility = View.GONE
         }
-        super.bind(newTask, position)
+        super.bind(data, position)
     }
 
     private fun onPlusButtonClicked() {

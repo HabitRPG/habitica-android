@@ -1,27 +1,27 @@
 package com.habitrpg.android.habitica.ui.views;
 
 import android.content.Context;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Matrix;
-import android.graphics.PointF;
-import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Path;
 import android.graphics.DashPathEffect;
-import android.graphics.Typeface;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import java.util.Stack;
+
 import java.lang.ref.WeakReference;
+import java.util.Stack;
 
 
 
@@ -10324,7 +10324,6 @@ public class HabiticaIcons {
         labelTextPaint.reset();
         labelTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         labelTextPaint.setColor(crestColor5);
-        labelTextPaint.setTypeface(Typeface.createFromAsset(context.getAssets(), "HelveticaNeue.ttc"));
         labelTextPaint.setTextSize(12f);
         StaticLayout labelStaticLayout = CacheForGuildCrest.labelStaticLayout.get((int) labelRect.width(), Layout.Alignment.ALIGN_CENTER, memberCountLabel, labelTextPaint);
         canvas.save();

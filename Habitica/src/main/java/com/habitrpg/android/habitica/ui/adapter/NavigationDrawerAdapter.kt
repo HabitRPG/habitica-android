@@ -98,6 +98,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
 
         private val titleTextView: TextView? by bindOptionalView(itemView, R.id.titleTextView)
         private val pillView: TextView? by bindOptionalView(itemView, R.id.pillView)
+        private val bubbleView: View? by bindOptionalView(itemView, R.id.bubble_view)
         private val additionalInfoView: TextView? by bindOptionalView(itemView, R.id.additionalInfoView)
 
         fun bind(drawerItem: HabiticaDrawerItem, isSelected: Boolean) {
@@ -141,6 +142,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int): Recycle
                     }
                 }
             }
+            bubbleView?.visibility = if (drawerItem.showBubble) View.VISIBLE else View.GONE
         }
     }
 

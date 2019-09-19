@@ -12,12 +12,8 @@
   <string name="tutorial_rewards_1">¡Compra equipamiento para tu personaje con el oro que ganas!</string>
   <string name="tutorial_rewards_2">También puedes hacer Recompensas Personalizadas del mundo real basándote en lo que te motiva.</string>
   <string name="tutorial_tasks_complete">Eso es todo por ahora. Si necesitas un recordatorio, consulta la sección de Preguntas Frecuentes.</string>
-  <string name="tutorial_equipment">Cuando compres artículos de equipamiento, aparecerán aquí. El equipo de batalla que elijas afectará a tus atributos, y el disfraz (si lo habilitas) será lo que lleve tu personaje.</string>
-  <string name="tutorial_items">Consigue artículos completando tareas y subiendo de nivel. ¡Pulsa en un artículo para usarlo!</string>
-  <string name="tutorial_pets">A medida que completes tareas del mundo real, podrás encontrar huevos y pociones al azar. Combínalos para que nazca una mascota</string>
-  <string name="tutorial_skills">Las habilidades son competencias especiales con efectos muy poderosos. Para usar una habilidad, solo tienes que pulsar en ella. Te costará maná (la barra azul), que puedes recuperar entrando todos los días y realizando tareas en la vida real. Para obtener más información, puedes consultar la sección de preguntas frecuentes en el menú!</string>
+    <string name="tutorial_skills">Las habilidades son competencias especiales con efectos muy poderosos. Para usar una habilidad, solo tienes que pulsar en ella. Te costará maná (la barra azul), que puedes recuperar entrando todos los días y realizando tareas en la vida real. Para obtener más información, puedes consultar la sección de preguntas frecuentes en el menú!</string>
   <string name="tutorial_party">Aquí es donde tú y tus amigos podéis estar pendientes unos de otros para cumplir vuestros objetivos y combatir monstruos con vuestras tareas!</string>
   <string name="tutorial_tavern">Te damos la bienvenida a la Taberna, una sala de chat pública para todas las edades. Aquí, puedes hablar de productividad y preguntar lo que quieras. ¡Que te diviertas!</string>
-  <string name="tutorial_classes">¡Decide si quieres ser guerrero, mago, sanador o pícaro! Cada clase tiene sus propias habilidades y equipamiento. Pulsa en (\?) si necesitas más información!</string>
-  <string name="tutorial_stats">Toca el botón gris para asignar los puntos de tus atributos de una sola vez, o toca las flechas para agregarlos punto por punto.</string>
+    <string name="tutorial_stats">Toca el botón gris para asignar los puntos de tus atributos de una sola vez, o toca las flechas para agregarlos punto por punto.</string>
 </resources>

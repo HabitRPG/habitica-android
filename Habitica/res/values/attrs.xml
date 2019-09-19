@@ -8,6 +8,8 @@
     <attr name="textColorPrimary" format="color" />
     <attr name="textColorSecondary" format="color" />
     <attr name="textColorPrimaryDark" format="color" />
+    <attr name="barColor" format="color" />
+    <attr name="taskFormTint" format="color" />
     <attr name="textColorSecondaryDark" format="color" />
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />
@@ -29,7 +31,6 @@
         <attr name="gemAmount" format="integer" />
         <attr name="priceText" format="string" />
         <attr name="gemDrawable" format="integer" />
-        <attr name="showSeedsPromo" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="MaxHeightLinearLayout">

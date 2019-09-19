@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sidebar.tasks">과제</string>
-  <string name="sidebar.skills">스킬</string>
-  <string name="sidebar.section.social">소셜</string>
-  <string name="sidebar.tavern">주막</string>
-  <string name="sidebar.party">파티</string>
-  <string name="sidebar.purchaseGems">보석 &amp; 구독</string>
-  <string name="sidebar.guilds">길드</string>
-  <string name="sidebar.challenges">도전</string>
-  <string name="sidebar.section.inventory">인벤토리</string>
-  <string name="sidebar.avatar">아바타</string>
-  <string name="sidebar.equipment">장비</string>
-  <string name="sidebar.stable">마구간</string>
-  <string name="sidebar.news">뉴스</string>
-  <string name="sidebar.settings">설정</string>
-  <string name="sidebar.about">소개</string>
+  <string name="sidebar_tasks">과제</string>
+  <string name="sidebar_skills">스킬</string>
+  <string name="sidebar_section_social">소셜</string>
+  <string name="sidebar_tavern">주막</string>
+  <string name="sidebar_party">파티</string>
+  <string name="sidebar_purchaseGems">보석 &amp; 구독</string>
+  <string name="sidebar_guilds">길드</string>
+  <string name="sidebar_challenges">도전</string>
+  <string name="sidebar_section_inventory">인벤토리</string>
+  <string name="sidebar_avatar">아바타</string>
+  <string name="sidebar_equipment">장비</string>
+  <string name="sidebar_stable">마구간</string>
+  <string name="sidebar_news">뉴스</string>
+    <string name="sidebar_about">소개</string>
   <string name="sidebar_shops">상점</string>
-<string name="sidebar.inbox">메세지</string>
+<string name="sidebar_inbox">메세지</string>
     <string name="sidebar_stats">스탯</string>
 </resources>

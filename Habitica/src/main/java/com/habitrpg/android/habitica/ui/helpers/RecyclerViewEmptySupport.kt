@@ -36,7 +36,7 @@ class RecyclerViewEmptySupport : RecyclerView {
         }
     }
 
-    override fun setAdapter(adapter: RecyclerView.Adapter<*>?) {
+    override fun setAdapter(adapter: Adapter<*>?) {
         val oldAdapter = getAdapter()
         oldAdapter?.unregisterAdapterDataObserver(observer)
         super.setAdapter(adapter)

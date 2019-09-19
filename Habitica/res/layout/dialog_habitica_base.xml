@@ -26,12 +26,12 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:paddingBottom="@dimen/spacing_large"
-            style="@style/Headline6"
             tools:text="This is the title"
             android:visibility="gone"
             tools:visibility="visible"
             android:layout_marginStart="@dimen/alert_side_padding"
             android:layout_marginEnd="@dimen/alert_side_padding"
+            style="@style/Headline6"
             />
 
         <TextView
@@ -41,12 +41,12 @@
             android:gravity="center_horizontal"
             android:visibility="gone"
             tools:visibility="visible"
-            android:textColor="?textColorSecondary"
-            style="@style/Body2"
             tools:text="This is the message"
             android:paddingBottom="@dimen/spacing_medium"
             android:paddingStart="@dimen/alert_side_padding"
             android:paddingEnd="@dimen/alert_side_padding"
+            android:textColor="?textColorSecondary"
+            style="@style/Body2"
             />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -99,11 +99,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/close"
-        android:textColor="@color/brand_400"
         android:background="@drawable/alert_dialog_background"
         android:layout_marginTop="@dimen/spacing_large"
         android:visibility="gone"
         tools:visibility="visible"
         android:textSize="16sp"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="?colorAccent"
+        />
 </LinearLayout>

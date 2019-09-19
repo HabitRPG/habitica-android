@@ -21,12 +21,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
             android:id="@+id/display_name_textview"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_marginBottom="@dimen/spacing_small" />
-
+            <androidx.legacy.widget.Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:id="@+id/more_button"
+                android:src="@drawable/ic_more_horiz_black_18dp"
+                android:background="@color/transparent"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right"/>
+        </LinearLayout>
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -115,5 +129,4 @@
         </TableLayout>
 
     </LinearLayout>
-
 </LinearLayout>

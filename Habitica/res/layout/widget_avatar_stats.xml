@@ -1,230 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/widget_main_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="@drawable/rounded_purple_square"
-        android:padding="8dp"
-        android:elevation="2dp"
-        android:orientation="vertical">
-<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_main_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/rounded_purple_square"
+    android:padding="8dp"
+    android:elevation="2dp"
+    android:orientation="vertical">
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
-    <ImageView
+        <ImageView
             android:id="@+id/avatar_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="centerInside"
-            android:adjustViewBounds="true"/>
-    <LinearLayout
-            android:id="@+id/LL_header"
+            android:adjustViewBounds="true"
+            tools:ignore="ContentDescription" />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_vertical">
             <RelativeLayout
-                    android:id="@+id/hp_wrapper"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/bar_padding"
-                            android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/bar_padding"
+                android:orientation="horizontal">
                 <ImageView
-                        android:id="@+id/ic_hp_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/bar_icon_padding"
-                        android:layout_marginEnd="@dimen/bar_icon_padding"
-                        android:layout_alignTop="@+id/hp_bar"
-                        android:layout_alignBottom="@id/hp_bar"
-                        android:scaleType="center"
-                        android:contentDescription="@string/HP_default"/>
-                <ProgressBar
-                        android:id="@+id/hp_bar"
-                        android:layout_toRightOf="@id/ic_hp_header"
-                        android:layout_toEndOf="@id/ic_hp_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/bar_size_slim"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:progressDrawable="@drawable/hp_progress"
-                        android:paddingTop="1dp"
-                        android:paddingBottom="1dp"/>
-
-                <LinearLayout
-                        android:layout_below="@id/hp_bar"
-                        android:layout_toRightOf="@id/ic_hp_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    <TextView
-                            android:id="@+id/TV_hp_value"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/brand_500"
-                            android:textSize="11sp"/>
-                    <TextView
-                            android:id="@+id/TV_hp_label"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|right"
-                            android:layout_weight="1"
-                            android:text="@string/HP_default"
-                            android:textColor="@color/brand_500"
-                            android:textSize="11sp"/>
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:id="@+id/exp_wrapper"
-                    android:layout_width="match_parent"
+                    android:id="@+id/ic_hp_header"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <ImageView
-                        android:id="@+id/ic_exp_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/bar_icon_padding"
-                        android:layout_marginEnd="@dimen/bar_icon_padding"
-                        android:layout_alignTop="@+id/exp_bar"
-                        android:layout_alignBottom="@+id/exp_bar"
-                        android:scaleType="center"
-                        android:contentDescription="Bar Icon"/>
+                    android:layout_marginEnd="@dimen/bar_icon_padding"
+                    android:layout_alignTop="@+id/hp_bar"
+                    android:layout_alignBottom="@id/hp_bar"
+                    android:scaleType="center"
+                    android:contentDescription="@string/HP_default"/>
                 <ProgressBar
-                        android:id="@+id/exp_bar"
-                        android:layout_toRightOf="@id/ic_exp_header"
-                        android:layout_toEndOf="@id/ic_exp_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/bar_size_slim"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:progressDrawable="@drawable/exp_progress"
-                        android:paddingTop="1dp"
-                        android:paddingBottom="1dp"/>
+                    android:id="@+id/hp_bar"
+                    android:layout_toEndOf="@id/ic_hp_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/bar_size_slim"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_alignParentEnd="true"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/hp_progress"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"/>
 
                 <LinearLayout
-                        android:layout_below="@id/exp_bar"
-                        android:layout_toRightOf="@id/ic_exp_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    android:layout_below="@id/hp_bar"
+                    android:layout_toEndOf="@id/ic_hp_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <TextView
-                            android:id="@+id/exp_TV_value"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/brand_500"
-                            android:textSize="11sp"/>
+                        android:id="@+id/TV_hp_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/brand_500"
+                        android:textSize="12sp"/>
                     <TextView
-                            android:id="@+id/exp_TV_label"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|right"
-                            android:layout_weight="1"
-                            android:text="@string/XP_default"
-                            android:textColor="@color/brand_500"
-                            android:textSize="11sp"/>
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|end"
+                        android:layout_weight="1"
+                        android:text="@string/HP_default"
+                        android:textColor="@color/brand_500"
+                        android:textSize="12sp"/>
                 </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
-                    android:id="@+id/mp_wrapper"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/bar_padding"
-                            android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <ImageView
-                        android:id="@+id/ic_mp_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/bar_icon_padding"
-                        android:layout_marginEnd="@dimen/bar_icon_padding"
-                        android:layout_alignTop="@+id/mp_bar"
-                        android:layout_alignBottom="@+id/mp_bar"
-                        android:scaleType="center"
-                        android:contentDescription="Bar Icon" />
+                    android:id="@+id/ic_exp_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/bar_icon_padding"
+                    android:layout_alignTop="@+id/exp_bar"
+                    android:layout_alignBottom="@+id/exp_bar"
+                    android:scaleType="center"
+                    tools:ignore="ContentDescription"/>
                 <ProgressBar
-                        android:id="@+id/mp_bar"
-                        android:layout_toRightOf="@id/ic_mp_header"
-                        android:layout_toEndOf="@id/ic_mp_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/bar_size_slim"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:progressDrawable="@drawable/mp_progress"
-                        android:paddingTop="1dp"
-                        android:paddingBottom="1dp"/>
+                    android:id="@+id/exp_bar"
+                    android:layout_toEndOf="@id/ic_exp_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/bar_size_slim"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_alignParentEnd="true"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/exp_progress"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"/>
 
                 <LinearLayout
-                        android:layout_below="@id/mp_bar"
-                        android:layout_toRightOf="@id/ic_mp_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    android:layout_below="@id/exp_bar"
+                    android:layout_toEndOf="@id/ic_exp_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <TextView
-                            android:id="@+id/mp_TV_value"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/brand_500"
-                            android:textSize="11sp"/>
+                        android:id="@+id/exp_TV_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/brand_500"
+                        android:textSize="12sp"/>
                     <TextView
-                            android:id="@+id/mp_TV_label"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|right"
-                            android:layout_weight="1"
-                            android:text="@string/MP_default"
-                            android:textColor="@color/brand_500"
-                            android:textSize="11sp"/>
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|end"
+                        android:layout_weight="1"
+                        android:text="@string/XP_default"
+                        android:textColor="@color/brand_500"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/mp_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bar_padding"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/ic_mp_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/bar_icon_padding"
+                    android:layout_alignTop="@+id/mp_bar"
+                    android:layout_alignBottom="@+id/mp_bar"
+                    android:scaleType="center"
+                    tools:ignore="ContentDescription" />
+                <ProgressBar
+                    android:id="@+id/mp_bar"
+                    android:layout_toEndOf="@id/ic_mp_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/bar_size_slim"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_alignParentEnd="true"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/mp_progress"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"/>
+
+                <LinearLayout
+                    android:layout_below="@id/mp_bar"
+                    android:layout_toEndOf="@id/ic_mp_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/mp_TV_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/brand_500"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|end"
+                        android:layout_weight="1"
+                        android:text="@string/MP_default"
+                        android:textColor="@color/brand_500"
+                        android:textSize="12sp"/>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-            android:id="@+id/detail_info_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/bar_padding_small"
+        android:id="@+id/detail_info_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/bar_padding_small"
         android:gravity="center_vertical">
         <TextView
-                android:id="@+id/lvl_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:textColor="@color/textColorSecondaryDark" />
+            android:id="@+id/lvl_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="@color/textColorSecondaryDark" />
         <TextView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
         <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
             <ImageView
                 android:id="@+id/hourglass_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription" />
             <TextView
                 android:id="@+id/hourglasses_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@color/textColorSecondaryDark"
                 style="@style/CurrencyTextView"
                 />
@@ -232,27 +219,29 @@
             <ImageView
                 android:id="@+id/gem_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription" />
             <TextView
-                    android:id="@+id/gems_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:textColor="@color/textColorSecondaryDark"
+                android:id="@+id/gems_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/textColorSecondaryDark"
                 style="@style/CurrencyTextView"
-                    />
+                />
 
             <ImageView
                 android:id="@+id/gold_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription" />
             <TextView
-                    android:id="@+id/gold_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/textColorSecondaryDark"
+                android:id="@+id/gold_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorSecondaryDark"
                 style="@style/CurrencyTextView"
-                    />
+                />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

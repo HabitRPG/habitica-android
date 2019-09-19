@@ -1,12 +1,6 @@
 package com.habitrpg.android.habitica.models.social
 
-import android.content.res.Resources
-
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.user.ContributorInfo
-
-import java.util.Date
-
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
@@ -35,6 +29,7 @@ open class ChatMessage : RealmObject() {
     var flagCount: Int = 0
 
     var uuid: String? = null
+    var userID: String? = null
 
     var contributor: ContributorInfo? = null
 
@@ -59,25 +54,6 @@ open class ChatMessage : RealmObject() {
     var username: String? = null
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
-
-    fun getAgoString(res: Resources): String {
-        val diff = Date().time - (timestamp ?: 0)
-
-        val diffMinutes = diff / (60 * 1000) % 60
-        val diffHours = diff / (60 * 60 * 1000) % 24
-        val diffDays = diff / (24 * 60 * 60 * 1000)
-
-        return when {
-            diffDays != 0L -> if (diffDays == 1L) {
-                res.getString(R.string.ago_1day)
-            } else res.getString(R.string.ago_days, diffDays)
-            diffHours != 0L -> if (diffHours == 1L) {
-                res.getString(R.string.ago_1hour)
-            } else res.getString(R.string.ago_hours, diffHours)
-            diffMinutes == 1L -> res.getString(R.string.ago_1Minute)
-            else -> res.getString(R.string.ago_minutes, diffMinutes)
-        }
-    }
 
     fun userLikesMessage(userId: String?): Boolean {
         return likes?.any { userId == it.id } ?: false

@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.helpers
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import java.lang.IllegalArgumentException
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.math.abs
 
 object MainNavigationController {
     var lastNavigation: Date? = null
@@ -17,7 +17,7 @@ object MainNavigationController {
     }
 
     fun navigate(transactionId: Int, args: Bundle? = null) {
-        if (Math.abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
+        if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()
             try {
                 navController?.get()?.navigate(transactionId, args)
@@ -26,7 +26,7 @@ object MainNavigationController {
     }
 
     fun navigate(directions: NavDirections) {
-        if (Math.abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
+        if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()
             try {
             navController?.get()?.navigate(directions)

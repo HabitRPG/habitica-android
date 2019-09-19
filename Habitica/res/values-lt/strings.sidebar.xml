@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sidebar.tasks">Užduotys</string>
-  <string name="sidebar.skills">Sugebėjimai</string>
-  <string name="sidebar.section.social">Bendruomenė</string>
-  <string name="sidebar.tavern">Smuklė</string>
-  <string name="sidebar.party">Grupė</string>
-  <string name="sidebar.purchaseGems">Pirkti Brangakmenius</string>
-  <string name="sidebar.guilds">Gildijos</string>
-  <string name="sidebar.challenges">Iššūkiai</string>
-  <string name="sidebar.section.inventory">Inventorius</string>
-  <string name="sidebar.avatar">Veikėjas</string>
-  <string name="sidebar.equipment">Apranga</string>
-  <string name="sidebar.stable">Augintiniai</string>
-  <string name="sidebar.news">Naujienos</string>
-  <string name="sidebar.settings">Nustatymai</string>
-  <string name="sidebar.about">Apie</string>
+  <string name="sidebar_tasks">Užduotys</string>
+  <string name="sidebar_skills">Sugebėjimai</string>
+  <string name="sidebar_section_social">Bendruomenė</string>
+  <string name="sidebar_tavern">Smuklė</string>
+  <string name="sidebar_party">Grupė</string>
+  <string name="sidebar_purchaseGems">Pirkti Brangakmenius</string>
+  <string name="sidebar_guilds">Gildijos</string>
+  <string name="sidebar_challenges">Iššūkiai</string>
+  <string name="sidebar_section_inventory">Inventorius</string>
+  <string name="sidebar_avatar">Veikėjas</string>
+  <string name="sidebar_equipment">Apranga</string>
+  <string name="sidebar_stable">Augintiniai</string>
+  <string name="sidebar_news">Naujienos</string>
+    <string name="sidebar_about">Apie</string>
   <string name="sidebar_shops">Parduotuvės</string>
-<string name="sidebar.inbox">Žinutės</string>
+<string name="sidebar_inbox">Žinutės</string>
     <string name="sidebar_stats">Statistika</string>
 </resources>

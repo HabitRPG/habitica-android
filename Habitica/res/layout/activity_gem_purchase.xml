@@ -12,8 +12,7 @@
                         android:gravity="center">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:id="@+id/main_content"
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elevation="0dp"
                 tools:context=".ui.activities.MainActivity">
@@ -43,8 +42,7 @@
                         app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <ImageView
-                            android:id="@+id/headerImage"
-                            android:layout_width="match_parent"
+                        android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="?attr/actionBarSize"
                             app:layout_collapseMode="parallax"
@@ -67,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="54dp"
                         android:layout_gravity="bottom"
-                        android:background="@color/brand_200"
+                        android:background="?colorPrimaryOffset"
                         android:elevation="0dp"
                         android:fillViewport="false"
 

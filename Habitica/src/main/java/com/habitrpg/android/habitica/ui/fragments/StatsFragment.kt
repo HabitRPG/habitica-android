@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_stats.*
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.math.min
 
 
 class StatsFragment: BaseMainFragment() {
@@ -77,7 +79,7 @@ class StatsFragment: BaseMainFragment() {
         leftSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
         rightSparklesView.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesRight())
         context?.let {
-            val color = ContextCompat.getColor(it, R.color.brand_200)
+            val color = it.getThemeColor(R.attr.colorPrimaryOffset)
             distributeEvenlyHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
             distributeClassHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
             distributeTaskHelpButton.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(color))
@@ -198,7 +200,7 @@ class StatsFragment: BaseMainFragment() {
     }
 
     private fun updateStats(currentUser: User) {
-        val levelStat = Math.min((currentUser.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
+        val levelStat = min((currentUser.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
         totalStrength = levelStat
         totalIntelligence = levelStat
@@ -245,7 +247,7 @@ class StatsFragment: BaseMainFragment() {
                 .retry(1)
                 .subscribe(Consumer {
             val userStatComputer = UserStatComputer()
-            val statsRows = userStatComputer.computeClassBonus(it, user)
+            val statsRows = user?.let { it1 -> userStatComputer.computeClassBonus(it, it1) } ?: return@Consumer
 
             var strength = 0
             var intelligence = 0

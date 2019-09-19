@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
@@ -27,13 +28,13 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.Flowable
 import io.reactivex.functions.Consumer
 import io.realm.RealmResults
@@ -41,6 +42,8 @@ import net.pherth.android.emoji_library.EmojiEditText
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.floor
+import kotlin.math.min
 
 class FullProfileActivity : BaseActivity() {
     @Inject
@@ -50,6 +53,7 @@ class FullProfileActivity : BaseActivity() {
     @Inject
     lateinit var socialRepository: SocialRepository
 
+    private val toolbar: Toolbar by bindView(R.id.toolbar)
     private val profileImage: SimpleDraweeView by bindView(R.id.profile_image)
     private val blurbTextView: TextView by bindView(R.id.profile_blurb)
     private val avatarView: AvatarView by bindView(R.id.avatarView)
@@ -87,6 +91,7 @@ class FullProfileActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupToolbar(toolbar)
 
         userID = intent?.extras?.getString("userID", "") ?: ""
         if (userID.isEmpty()) {
@@ -113,9 +118,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        return when (id) {
+        return when (item.itemId) {
             R.id.private_message -> {
                 showSendMessageToUserDialog()
                 true
@@ -190,7 +193,7 @@ class FullProfileActivity : BaseActivity() {
             val clipboard = view.context
                     .getSystemService(Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
             val clip = android.content.ClipData.newPlainText(user.username, user.username)
-            clipboard?.primaryClip = clip
+            clipboard?.setPrimaryClip(clip)
         }
 
         avatarView.setAvatar(user)
@@ -213,8 +216,8 @@ class FullProfileActivity : BaseActivity() {
         petsFoundCount.text = user.petsFoundCount.toString()
         mountsTamedCount.text = user.mountsTamedCount.toString()
 
-        DataBindingUtils.loadImage(this.currentPetDrawee, "Pet-" + user.currentPet)
-        DataBindingUtils.loadImage(this.currentMountDrawee, "Mount_Icon_" + user.currentMount)
+        currentPetDrawee.loadImage("Pet-" + user.currentPet)
+        currentMountDrawee.loadImage("Mount_Icon_" + user.currentMount)
     }
 
     // endregion
@@ -253,7 +256,7 @@ class FullProfileActivity : BaseActivity() {
     private fun fillAchievements(labelID: Int, achievements: List<Achievement>, targetList: MutableList<Any>) {
         // Order by ID first
         val achievementList = ArrayList(achievements)
-        achievementList.sortWith(Comparator { achievement, t1 -> java.lang.Double.compare(achievement.index.toDouble(), t1.index.toDouble()) })
+        achievementList.sortWith(Comparator { achievement, t1 -> achievement.index.toDouble().compareTo(t1.index.toDouble()) })
 
         targetList.add(getString(labelID))
         targetList.addAll(achievementList)
@@ -266,7 +269,7 @@ class FullProfileActivity : BaseActivity() {
 
     private fun getFloorValueString(`val`: Float, roundDown: Boolean): String {
         return if (roundDown) {
-            Math.floor(`val`.toDouble()).toString()
+            floor(`val`.toDouble()).toString()
         } else {
             if (`val`.toDouble() == 0.0) {
                 "0"
@@ -278,13 +281,13 @@ class FullProfileActivity : BaseActivity() {
 
     private fun getFloorValue(value: Float, roundDown: Boolean): Float {
         return if (roundDown) {
-            Math.floor(value.toDouble()).toFloat()
+            floor(value.toDouble()).toFloat()
         } else {
             value
         }
     }
 
-    private fun addEquipmentRow(table: TableLayout, gearKey: String?, text: String, stats: String) {
+    private fun addEquipmentRow(table: TableLayout, gearKey: String?, text: String?, stats: String?) {
         val gearRow = layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as? TableRow
 
         val draweeView = gearRow?.findViewById<SimpleDraweeView>(R.id.gear_drawee)
@@ -303,7 +306,7 @@ class FullProfileActivity : BaseActivity() {
 
         val valueTextView = gearRow?.findViewById<TextView>(R.id.tableRowTextView2)
 
-        if (!stats.isEmpty()) {
+        if (stats?.isNotEmpty() == true) {
             valueTextView?.text = stats
         } else {
             valueTextView?.visibility = View.GONE
@@ -314,7 +317,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun addLevelAttributes(user: Member) {
-        val byLevelStat = Math.min((user.stats?.lvl ?: 0) / 2.0f, 50f)
+        val byLevelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f)
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false)
     }
@@ -368,10 +371,10 @@ class FullProfileActivity : BaseActivity() {
         val buffs = stats.buffs
 
         addAttributeRow(getString(R.string.profile_allocated), stats.strength?.toFloat() ?: 0f, stats.intelligence?.toFloat() ?: 0f, stats.constitution?.toFloat() ?: 0f, stats.per?.toFloat() ?: 0f, true, false)
-        addAttributeRow(getString(R.string.buffs), buffs?.getStr() ?: 0f, buffs?.get_int() ?: 0f, buffs?.getCon() ?: 0f, buffs?.getPer() ?: 0f, true, false)
+        addAttributeRow(getString(R.string.buffs), buffs?.getStr() ?: 0f, buffs?.get_int() ?: 0f, buffs?.getCon() ?: 0f, buffs?.getPer() ?: 0f, roundDown = true, isSummary = false)
 
         // Summary row
-        addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, false, true)
+        addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, roundDown = false, isSummary = true)
     }
 
     private fun addAttributeRow(label: String, strVal: Float, intVal: Float, conVal: Float, perVal: Float, roundDown: Boolean, isSummary: Boolean) {

@@ -1,21 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sidebar.tasks">Задачи</string>
-  <string name="sidebar.skills">Навыки</string>
-  <string name="sidebar.section.social">Общение</string>
-  <string name="sidebar.inbox">Сообщения</string>
-  <string name="sidebar.tavern">Таверна</string>
-  <string name="sidebar.party">Команда</string>
-  <string name="sidebar.purchaseGems">Покупка самоцветов</string>
-  <string name="sidebar.guilds">Гильдии</string>
-  <string name="sidebar.challenges">Испытания</string>
-  <string name="sidebar.section.inventory">Инвентарь</string>
-  <string name="sidebar.avatar">Аватар</string>
-  <string name="sidebar.equipment">Снаряжение</string>
-  <string name="sidebar.stable">Стойла</string>
-  <string name="sidebar.news">Новости</string>
-  <string name="sidebar.settings">Настройки</string>
-  <string name="sidebar.about">О приложении</string>
+  <string name="sidebar_tasks">Задачи</string>
+  <string name="sidebar_skills">Навыки</string>
+  <string name="sidebar_section_social">Общение</string>
+  <string name="sidebar_inbox">Сообщения</string>
+  <string name="sidebar_tavern">Таверна</string>
+  <string name="sidebar_party">Команда</string>
+  <string name="sidebar_purchaseGems">Покупка самоцветов</string>
+  <string name="sidebar_guilds">Гильдии</string>
+  <string name="sidebar_challenges">Испытания</string>
+  <string name="sidebar_section_inventory">Инвентарь</string>
+  <string name="sidebar_avatar">Аватар</string>
+  <string name="sidebar_equipment">Снаряжение</string>
+  <string name="sidebar_stable">Стойла</string>
+  <string name="sidebar_news">Новости</string>
+    <string name="sidebar_about">О приложении</string>
   <string name="sidebar_shops">Магазины</string>
   <string name="sidebar_stats">Статистика</string>
 </resources>

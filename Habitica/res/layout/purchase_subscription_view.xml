@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/priceLabel"
-            android:textColor="@color/brand_100"
+            android:textColor="?colorPrimary"
             android:textSize="24sp"
             android:fontFamily="@string/font_family_medium"
             tools:text="$ 21" />
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/descriptionTextView"
-            android:textColor="@color/brand_100"
+            android:textColor="?colorPrimary"
             tools:text="recurring every month"
             />
         <LinearLayout

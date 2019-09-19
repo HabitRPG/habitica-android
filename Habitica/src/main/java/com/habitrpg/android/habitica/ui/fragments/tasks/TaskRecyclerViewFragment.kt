@@ -45,6 +45,7 @@ import javax.inject.Named
 
 open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
+    var itemAnimator = SafeDefaultItemAnimator()
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userID: String
     @Inject
@@ -136,7 +137,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         super.onCreateView(inflater, container, savedInstanceState)
 
         if (Task.TYPE_DAILY == classType) {
-            if (user != null && user?.preferences?.dailyDueDefaultView == true) {
+            if (user?.isValid == true && user?.preferences?.dailyDueDefaultView == true) {
                 taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE)
             }
         } else if (Task.TYPE_TODO == classType) {
@@ -187,11 +188,15 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 val movingTaskID = movingTaskID
                 if (fromPosition != null && movingTaskID != null) {
                     recyclerAdapter?.ignoreUpdates = true
+                    itemAnimator.skipAnimations = true
                     compositeSubscription.add(taskRepository.updateTaskPosition(classType ?: "", movingTaskID, viewHolder.adapterPosition)
                             .delay(1, TimeUnit.SECONDS)
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(Consumer { recyclerAdapter?.ignoreUpdates = false
-                            recyclerAdapter?.notifyDataSetChanged()}, RxErrorHandler.handleEmptyError()))
+                            .subscribe(Consumer {
+                                recyclerAdapter?.ignoreUpdates = false
+                                recyclerAdapter?.notifyDataSetChanged()
+                                itemAnimator.skipAnimations = false
+                            }, RxErrorHandler.handleEmptyError()))
                 }
                 this.fromPosition = null
                 this.movingTaskID = null
@@ -204,7 +209,9 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         return inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false)
     }
 
-    protected open fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+    protected open fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager {
+        return androidx.recyclerview.widget.LinearLayoutManager(context)
+    }
 
     override fun onDestroy() {
         userRepository.close()
@@ -222,18 +229,14 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         recyclerView.adapter = recyclerAdapter as? androidx.recyclerview.widget.RecyclerView.Adapter<*>
         recyclerAdapter?.filter()
 
-        layoutManager = recyclerView.layoutManager
+        layoutManager = getLayoutManager(context)
+        layoutManager?.isItemPrefetchEnabled = false
+        recyclerView.layoutManager = layoutManager
 
-        if (layoutManager == null) {
-            layoutManager = getLayoutManager(context)
-
-            recyclerView.layoutManager = layoutManager
-        }
         if (recyclerView.adapter == null) {
             this.setInnerAdapter()
         }
         if (this.classType != null) {
-            recyclerAdapter?.errorButtonEvents
             recyclerAdapter?.errorButtonEvents?.subscribe(Consumer {
                 taskRepository.syncErroredTasks().subscribe(Consumer {}, RxErrorHandler.handleEmptyError())
             }, RxErrorHandler.handleEmptyError())?.let { compositeSubscription.add(it) }
@@ -242,9 +245,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
             })?.let { compositeSubscription.add(it) }
             recyclerAdapter?.taskScoreEvents
                     ?.doOnNext { playSound(it.second) }
-                    ?.flatMap { taskRepository.taskChecked(user, it.first, it.second == TaskDirection.UP, false) { result ->
-                        handleTaskResult(result, it.first.value.toInt())
-                    }}?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
+                    ?.subscribeWithErrorHandler(Consumer { scoreTask(it.first, it.second) })?.let { compositeSubscription.add(it) }
             recyclerAdapter?.checklistItemScoreEvents
                     ?.flatMap { taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
                     }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
@@ -252,7 +253,7 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
 
         val bottomPadding = (recyclerView.paddingBottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60f, resources.displayMetrics)).toInt()
         recyclerView.setPadding(0, 0, 0, bottomPadding)
-        recyclerView.itemAnimator = SafeDefaultItemAnimator()
+        recyclerView.itemAnimator = itemAnimator
 
         refreshLayout.setOnRefreshListener(this)
 
@@ -291,6 +292,12 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
         }
     }
 
+    private fun scoreTask(task: Task, direction: TaskDirection) {
+        compositeSubscription.add(taskRepository.taskChecked(user, task, direction == TaskDirection.UP, false) { result ->
+            handleTaskResult(result, task.value.toInt())
+        }.subscribeWithErrorHandler(Consumer {}))
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(CLASS_TYPE_KEY, this.classType)
@@ -317,13 +324,14 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
     }
 
     private fun openTaskForm(task: Task) {
-        if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000) {
+        if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000 || !task.isValid) {
             return
         }
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type)
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
+        bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
 
         val intent = Intent(activity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
@@ -346,21 +354,15 @@ open class TaskRecyclerViewFragment : BaseFragment(), androidx.swiperefreshlayou
                 when (fragment.classType) {
                     Task.TYPE_HABIT -> {
                         fragment.tutorialStepIdentifier = "habits"
-                        tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_overview),
-                                context.getString(R.string.tutorial_habits_1),
-                                context.getString(R.string.tutorial_habits_2),
-                                context.getString(R.string.tutorial_habits_3),
-                                context.getString(R.string.tutorial_habits_4))
+                        tutorialTexts = listOf(context.getString(R.string.tutorial_overview), context.getString(R.string.tutorial_habits_1), context.getString(R.string.tutorial_habits_2), context.getString(R.string.tutorial_habits_3), context.getString(R.string.tutorial_habits_4))
                     }
                     Task.FREQUENCY_DAILY -> {
                         fragment.tutorialStepIdentifier = "dailies"
-                        tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_dailies_1),
-                                context.getString(R.string.tutorial_dailies_2))
+                        tutorialTexts = listOf(context.getString(R.string.tutorial_dailies_1), context.getString(R.string.tutorial_dailies_2))
                     }
                     Task.TYPE_TODO -> {
                         fragment.tutorialStepIdentifier = "todos"
-                        tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_todos_1),
-                                context.getString(R.string.tutorial_todos_2))
+                        tutorialTexts = listOf(context.getString(R.string.tutorial_todos_1), context.getString(R.string.tutorial_todos_2))
                     }
                 }
             }

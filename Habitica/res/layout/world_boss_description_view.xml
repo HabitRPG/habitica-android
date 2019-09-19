@@ -19,7 +19,7 @@
         <View
             android:layout_width="@dimen/bullet_size"
             android:layout_height="@dimen/bullet_size"
-            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="8dp"/>
         <TextView
@@ -35,7 +35,7 @@
         <View
             android:layout_width="@dimen/bullet_size"
             android:layout_height="@dimen/bullet_size"
-            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="8dp"/>
         <TextView
@@ -51,7 +51,7 @@
         <View
             android:layout_width="@dimen/bullet_size"
             android:layout_height="@dimen/bullet_size"
-            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="8dp"/>
         <TextView
@@ -67,7 +67,7 @@
         <View
             android:layout_width="@dimen/bullet_size"
             android:layout_height="@dimen/bullet_size"
-            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="8dp"/>
         <TextView

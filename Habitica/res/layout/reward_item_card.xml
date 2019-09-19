@@ -6,14 +6,12 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/gearElementsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/rewardImageView"
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
@@ -22,7 +20,6 @@
             android:src="@drawable/icon_custom_reward" />
 
         <LinearLayout
-            android:id="@+id/textReward"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -55,7 +52,7 @@
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:text="@string/expand_notes"
                 android:padding="0dp"
-                android:textColor="@color/brand_400"/>
+                android:textColor="?colorAccent"/>
             <TextView
                     android:id="@+id/approvalRequiredTextField"
                     android:layout_width="match_parent"

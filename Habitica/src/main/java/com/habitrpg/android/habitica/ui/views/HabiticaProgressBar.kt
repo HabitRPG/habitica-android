@@ -6,11 +6,12 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.bindView
+import kotlin.math.min
 
 
-class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     private val barView: View by bindView(R.id.bar)
     private val pendingBarView: View by bindView(R.id.pendingBar)
@@ -60,9 +61,9 @@ class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : FrameLayout
         val remainingPercent = if (remainingValue < 0) {
             0.0
         } else {
-            Math.min(1.0, remainingValue / maxValue)
+            min(1.0, remainingValue / maxValue)
         }
-        val pendingPercent = Math.min(1.0, currentValue / maxValue)
+        val pendingPercent = min(1.0, currentValue / maxValue)
         this.setBarWeight(remainingPercent)
         this.setPendingBarWeight(pendingPercent)
     }
@@ -70,7 +71,7 @@ class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : FrameLayout
     init {
         View.inflate(context, R.layout.progress_bar, this)
 
-        val attributes = context?.theme?.obtainStyledAttributes(
+        val attributes = context.theme?.obtainStyledAttributes(
                 attrs,
                 R.styleable.HabiticaProgressBar,
                 0, 0)
@@ -98,11 +99,11 @@ class HabiticaProgressBar(context: Context?, attrs: AttributeSet?) : FrameLayout
 
     private fun setLayoutWeight(view: View, weight: Double) {
         view.clearAnimation()
-        val layout = view.layoutParams as LinearLayout.LayoutParams
+        val layout = view.layoutParams as? LinearLayout.LayoutParams
         if (weight == 0.0 || weight == 1.0) {
-            layout.weight = weight.toFloat()
+            layout?.weight = weight.toFloat()
             view.layoutParams = layout
-        } else if (layout.weight.toDouble() != weight) {
+        } else if (layout?.weight?.toDouble() != weight) {
             val anim = DataBindingUtils.LayoutWeightAnimation(view, weight.toFloat())
             anim.duration = 300
             view.startAnimation(anim)

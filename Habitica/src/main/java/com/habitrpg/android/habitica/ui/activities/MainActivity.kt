@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
@@ -9,9 +11,9 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
@@ -35,10 +37,7 @@ import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.*
-import com.habitrpg.android.habitica.events.ShareEvent
-import com.habitrpg.android.habitica.events.ShowCheckinDialog
-import com.habitrpg.android.habitica.events.ShowConnectionProblemEvent
-import com.habitrpg.android.habitica.events.ShowSnackbarEvent
+import com.habitrpg.android.habitica.events.*
 import com.habitrpg.android.habitica.events.commands.FeedCommand
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.dpToPx
@@ -49,6 +48,8 @@ import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.android.habitica.models.inventory.Egg
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
@@ -59,7 +60,6 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.bindOptionalView
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
@@ -67,6 +67,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.ValueBar
+import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationView
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
@@ -165,10 +166,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         launchTrace?.start()
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        sharedPreferences.edit {
-            this.putInt("theme", R.style.AppTheme_NoActionBar)
-        }
         super.onCreate(savedInstanceState)
 
         if (!HabiticaBaseApplication.checkUserAuthentication(this, hostConfig)) {
@@ -178,7 +175,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         setupToolbar(toolbar)
 
         avatarInHeader = AvatarWithBarsViewModel(this, avatarWithBars, userRepository)
-        sideAvatarView = AvatarView(this, true, false, false)
+        sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         compositeSubscription.add(userRepository.getUser()
                 .subscribe(Consumer { newUser ->
@@ -216,7 +213,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
         val navigationController = findNavController(R.id.nav_host_fragment)
         navigationController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.label.isNullOrEmpty()) {
+            if (destination.label.isNullOrEmpty() && user?.isValid == true) {
                 toolbarTitleTextView.text = user?.profile?.name
             } else if (user?.profile != null) {
                 toolbarTitleTextView.text = destination.label
@@ -224,6 +221,31 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
             drawerFragment?.setSelection(destination.id, false)
         }
         MainNavigationController.setup(navigationController)
+
+        setupNotifications()
+        setupBottomnavigationLayoutListener()
+    }
+
+    private fun setupNotifications() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "default"
+            val channel = NotificationChannel(
+                    channelId,
+                    "Habitica Notifications",
+                    NotificationManager.IMPORTANCE_DEFAULT)
+            val manager = getSystemService(NotificationManager::class.java)
+            manager?.createNotificationChannel(channel)
+        }
+    }
+
+    private fun setupBottomnavigationLayoutListener() {
+        bottomNavigation.viewTreeObserver.addOnGlobalLayoutListener {
+            if (bottomNavigation.visibility == View.VISIBLE) {
+                snackbarContainer.setPadding(0, 0, 0, bottomNavigation.barHeight + 12.dpToPx(this))
+            } else {
+                snackbarContainer.setPadding(0, 0, 0, 0)
+            }
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -277,7 +299,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         }
 
         if (intent.hasExtra("notificationIdentifier")) {
-            val identifier = intent.getStringExtra("notificationIdentifier")
+            val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
             val additionalData = HashMap<String, Any>()
             additionalData["identifier"] = identifier
             AmplitudeManager.sendEvent("open notification", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
@@ -307,8 +329,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         resumeFromActivity = true
         super.startActivity(intent, options)
     }
-
-
 
     private fun updateWidgets() {
         updateWidget(AvatarStatsWidgetProvider::class.java)
@@ -427,7 +447,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                                     EventBus.getDefault().post(event1)
                                     hatchingDialog.dismiss()
                                 }
-                        dialog.show()
+                        dialog.enqueue()
                     }
                 }, RxErrorHandler.handleEmptyError()))
     }
@@ -447,7 +467,6 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
 
 
     private fun displayDeathDialogIfNeeded() {
-
         if (user?.stats?.hp ?: 1.0 > 0) {
             return
         }
@@ -475,7 +494,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                         }
                     }
             soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
-            this.faintDialog?.show()
+            this.faintDialog?.enqueue()
         }
     }
 
@@ -569,7 +588,7 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage)
         val f = BitmapUtils.saveToShareableFile("$filesDir/shared_images", "share.png", event.shareImage)
-        val fileUri = FileProvider.getUriForFile(this, getString(R.string.content_provider), f)
+        val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
         sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
         val resInfoList = this.packageManager.queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY)
         for (resolveInfo in resInfoList) {
@@ -644,7 +663,11 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
         youEarnedTexView?.text = youEarnedMessage
 
         val nextUnlockTextView = view.findViewById(R.id.next_unlock_message) as? TextView
-        nextUnlockTextView?.text = event.nextUnlockText
+        if (event.nextUnlockCount > 0) {
+            nextUnlockTextView?.text = event.nextUnlockText
+        } else {
+            nextUnlockTextView?.visibility = View.GONE
+        }
 
         compositeSubscription.add(Completable.complete()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -660,6 +683,20 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 }, RxErrorHandler.handleEmptyError()))
     }
 
+    @Subscribe
+    fun showAchievementDialog(event: ShowAchievementDialog) {
+        compositeSubscription.add(Completable.complete()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Action {
+                    val dialog = AchievementDialog(this)
+                    dialog.setType(event.type)
+                    dialog.enqueue()
+                    apiClient.readNotification(event.id)
+                            .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
+                }, RxErrorHandler.handleEmptyError()))
+
+    }
+
     override fun onEvent(event: ShowConnectionProblemEvent) {
         if (event.title != null) {
             super.onEvent(event)
@@ -672,6 +709,35 @@ open class MainActivity : BaseActivity(), TutorialView.OnTutorialReaction {
                 connectionIssueTextView.visibility = View.GONE
             }, 5000)
         }
+    }
+
+    fun hatchPet(potion: HatchingPotion, egg: Egg) {
+        compositeSubscription.add(this.inventoryRepository.hatchPet(egg, potion) {
+            val petWrapper = View.inflate(this, R.layout.pet_imageview, null) as? FrameLayout
+            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? SimpleDraweeView
+
+            DataBindingUtils.loadImage(petImageView, "Pet-" + egg.key + "-" + potion.key)
+            val potionName = potion.text
+            val eggName = egg.text
+            val dialog = HabiticaAlertDialog(this)
+            dialog.setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
+            dialog.setAdditionalContentView(petWrapper)
+            dialog.addButton(R.string.onwards, true) { hatchingDialog, _ -> hatchingDialog.dismiss() }
+            dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
+                val event1 = ShareEvent()
+                event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet"
+                val petImageSideLength = 140
+                val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(sharedImage)
+                canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300))
+                petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
+                petImageView?.drawable?.draw(canvas)
+                event1.shareImage = sharedImage
+                EventBus.getDefault().post(event1)
+                hatchingDialog.dismiss()
+            }
+            dialog.enqueue()
+        }.subscribe(Consumer { }, RxErrorHandler.handleEmptyError()))
     }
 
     companion object {

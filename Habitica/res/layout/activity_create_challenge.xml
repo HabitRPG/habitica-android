@@ -2,7 +2,6 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_create_challenge"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -18,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/brand_200"
+            android:background="?colorPrimaryOffset"
             android:orientation="vertical"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
@@ -28,7 +27,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/brand_500"
+                android:textColorHint="?textColorPrimaryDark"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat"
                 android:id="@+id/create_challenge_title_input_layout">
 
@@ -39,8 +38,8 @@
                     android:hint="@string/new_challenge_title"
                     android:id="@+id/create_challenge_title"
                     android:textColor="@color/white"
-                    android:textColorHighlight="@color/brand_500"
-                    android:textColorHint="@color/brand_500"
+                    android:textColorHighlight="?textColorPrimaryDark"
+                    android:textColorHint="?textColorPrimaryDark"
 
                     tools:text="Get in shape"
                     android:inputType="text" />
@@ -49,9 +48,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/brand_500"
+                android:textColorHint="?textColorPrimaryDark"
 
-                android:id="@+id/create_challenge_description_input_layout"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
                 <EditText
@@ -64,16 +62,11 @@
                     android:maxLines="5"
                     android:minLines="3"
                     android:textColor="@color/white"
-                    android:textColorHighlight="@color/brand_500"
-                    android:textColorHint="@color/brand_500" />
+                    android:textColorHighlight="?textColorPrimaryDark"
+                    android:textColorHint="?textColorPrimaryDark" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/brand_700" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:drawableLeft="@drawable/challenge_gem_add_button"/>
+                    android:drawableStart="@drawable/challenge_gem_add_button"/>
 
                 <ImageView
                     android:id="@+id/gem_icon"
@@ -143,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:drawableRight="@drawable/challenge_gem_remove_button"/>
+                    android:drawableEnd="@drawable/challenge_gem_remove_button"/>
 
             </LinearLayout>
 
@@ -169,8 +162,7 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="39dp"
                 android:drawablePadding="12dp"
-                android:drawableRight="@drawable/ic_info_outline_black_24dp"
-                android:drawableTint="@color/brand_300"
+                android:drawableEnd="@drawable/ic_info_outline_black_24dp"
                 android:gravity="center"
                 android:text="@string/short_name"
                 android:textColor="#cc000000" />

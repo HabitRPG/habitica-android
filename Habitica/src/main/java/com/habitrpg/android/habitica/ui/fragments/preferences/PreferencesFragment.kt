@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
@@ -23,6 +24,7 @@ import com.habitrpg.android.habitica.prefs.TimePreference
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import io.reactivex.functions.Consumer
 import java.util.*
 import javax.inject.Inject
@@ -68,6 +70,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
         serverUrlPreference?.summary = preferenceManager.sharedPreferences.getString("server_url", "")
+        val themePreference = findPreference("theme_name") as? ListPreference
+        themePreference?.isVisible = configManager.testingLevel() == AppTestingLevel.ALPHA || BuildConfig.DEBUG
+        themePreference?.summary = themePreference?.entry
     }
 
     override fun onResume() {
@@ -177,7 +182,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 }
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
-                userRepository.updateLanguage(user, languageHelper.languageCode)
+                userRepository.updateLanguage(user, languageHelper.languageCode ?: "en")
                         .flatMap<ContentResult> { contentRepository.retrieveContent(context,true) }
                         .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())
 
@@ -199,6 +204,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     soundManager.soundTheme = newAudioTheme
                     soundManager.preloadAllFiles()
                 }
+            }
+            "theme_name" -> {
+                val activity = activity as? PrefsActivity ?: return
+                activity.reload()
             }
             "dailyDueDefaultView" -> userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
                     .subscribe(Consumer { }, RxErrorHandler.handleEmptyError())

@@ -14,3 +14,4 @@ PORT=80
 BASE_URL=https://habitica.com
 
 STAGING_KEY=
+ANDROID_TESTING_UUID=

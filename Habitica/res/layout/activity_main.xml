@@ -12,7 +12,6 @@
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
         <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.activities.MainActivity">

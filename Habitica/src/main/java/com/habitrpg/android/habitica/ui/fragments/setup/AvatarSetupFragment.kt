@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.setup
 
-import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -56,7 +55,6 @@ class AvatarSetupFragment : BaseFragment() {
     private val randomizeButton: Button? by bindOptionalView(R.id.randomize_button)
 
     internal var adapter: CustomizationSetupAdapter? = null
-    internal var layoutManager: LinearLayoutManager = LinearLayoutManager(activity)
 
     private var user: User? = null
     private var subcategories: List<String> = emptyList()
@@ -81,9 +79,9 @@ class AvatarSetupFragment : BaseFragment() {
         adapter?.equipGearEvents?.flatMap { inventoryRepository.equip(user, "equipped", it) }?.subscribeWithErrorHandler(Consumer {})?.let { compositeSubscription.add(it) }
 
         this.adapter?.user = this.user
-        this.layoutManager = LinearLayoutManager(activity)
-        this.layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        this.customizationList?.layoutManager = this.layoutManager
+        val layoutManager = LinearLayoutManager(activity)
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        this.customizationList?.layoutManager = layoutManager
 
         this.customizationList?.adapter = this.adapter
 
@@ -96,13 +94,9 @@ class AvatarSetupFragment : BaseFragment() {
                 loadCustomizations()
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
 
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
         bodyButton?.setOnClickListener { selectedBodyCategory() }
@@ -153,12 +147,11 @@ class AvatarSetupFragment : BaseFragment() {
         }
     }
 
-
     private fun selectedBodyCategory() {
         activateButton(bodyButton)
         this.activeCategory = "body"
         this.subCategoryTabs?.removeAllTabs()
-        this.subcategories = Arrays.asList("size", "shirt")
+        this.subcategories = listOf("size", "shirt")
         subCategoryTabs?.newTab()?.setText(R.string.avatar_size)?.let { this.subCategoryTabs?.addTab(it) }
         subCategoryTabs?.newTab()?.setText(R.string.avatar_shirt)?.let { this.subCategoryTabs?.addTab(it) }
         loadCustomizations()
@@ -231,14 +224,9 @@ class AvatarSetupFragment : BaseFragment() {
         val location = IntArray(2)
         val params = this.caretView?.layoutParams as? RelativeLayout.LayoutParams
         this.activeButton?.getLocationOnScreen(location)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            val r = resources
-            val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40f, r.displayMetrics).toInt()
-            params?.marginStart = location[0] + px
-            this.caretView?.layoutParams = params
-        } else {
-            caretView?.visibility = View.GONE
-        }
-
+        val r = resources
+        val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40f, r.displayMetrics).toInt()
+        params?.marginStart = location[0] + px
+        this.caretView?.layoutParams = params
     }
 }

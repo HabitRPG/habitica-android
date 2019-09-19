@@ -10,8 +10,9 @@ import io.realm.RealmResults
 class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TutorialLocalRepository {
 
     override fun getTutorialStep(key: String): Flowable<TutorialStep> {
+        if (realm.isClosed) return Flowable.empty()
         return realm.where(TutorialStep::class.java).equalTo("identifier", key)
-                .findAllAsync()
+                .findAll()
                 .asFlowable()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
                 .map { steps ->
@@ -30,6 +31,7 @@ class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(real
     }
 
     override fun getTutorialSteps(keys: List<String>): Flowable<RealmResults<TutorialStep>> {
+        if (realm.isClosed) return Flowable.empty()
         return realm.where(TutorialStep::class.java)
                 .`in`("identifier", keys.toTypedArray())
                 .findAll()

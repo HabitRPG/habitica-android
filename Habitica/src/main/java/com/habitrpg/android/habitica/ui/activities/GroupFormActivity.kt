@@ -110,7 +110,7 @@ class GroupFormActivity : BaseActivity() {
         bundle.putString("name", name)
         bundle.putString("groupType", groupType)
         bundle.putString("description", MarkdownParser.parseCompiled(this.groupDescriptionEditText.text))
-        bundle.putBoolean("leaderCreateChallenge", leaderCreateChallengeSwitch.isActivated)
+        bundle.putBoolean("leaderOnlyChallenges", leaderCreateChallengeSwitch.isChecked)
         bundle.putString("leader", this.groupLeader)
         resultIntent.putExtras(bundle)
         setResult(Activity.RESULT_OK, resultIntent)

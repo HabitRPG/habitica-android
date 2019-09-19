@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingLeft="24dip"
     android:paddingTop="24dip"
@@ -23,14 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:paddingLeft="15dip"
-            android:text="example title" />
+            android:paddingStart="15dip"
+            tools:text="example title" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/achievement_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="example text"
+        tools:text="example text"
         android:paddingTop="15dip" />
 </LinearLayout>

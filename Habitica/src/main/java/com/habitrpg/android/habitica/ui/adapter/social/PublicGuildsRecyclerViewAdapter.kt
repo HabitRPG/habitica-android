@@ -42,7 +42,7 @@ class PublicGuildsRecyclerViewAdapter(data: OrderedRealmCollection<Group>?, auto
             val guild = v.tag as? Group ?: return@setOnClickListener
             val isMember = this.memberGuildIDs.contains(guild.id)
             if (isMember) {
-                this@PublicGuildsRecyclerViewAdapter.socialRepository?.leaveGroup(guild.id)
+                this@PublicGuildsRecyclerViewAdapter.socialRepository?.leaveGroup(guild.id, true)
                         ?.subscribe(Consumer {
                             if (data != null) {
                                 val indexOfGroup = data?.indexOf(guild)

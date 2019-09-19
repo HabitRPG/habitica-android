@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
@@ -112,6 +113,7 @@ class TaskFormActivity : BaseActivity() {
         taskDifficultyButtons.tintColor = value
         habitScoringButtons.tintColor = value
         habitResetStreakButtons.tintColor = value
+        taskSchedulingControls.tintColor = value
         supportActionBar?.setBackgroundDrawable(ColorDrawable(value))
         updateTagViewsColors()
     }
@@ -125,18 +127,33 @@ class TaskFormActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val bundle = intent.extras ?: return
+
+        val taskId = bundle.getString(TASK_ID_KEY)
+        forcedTheme = if (taskId != null) {
+            val taskValue = bundle.getDouble(TASK_VALUE_KEY)
+            when {
+                taskValue < -20 -> "maroon"
+                taskValue < -10 -> "red"
+                taskValue < -1 -> "orange"
+                taskValue < 1 -> "yellow"
+                taskValue < 5 -> "green"
+                taskValue < 10 -> "teal"
+                else -> "blue"
+            }
+        } else {
+            "purple"
+        }
+
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        tintColor = ContextCompat.getColor(this, R.color.brand_300)
-
-        val bundle = intent.extras ?: return
+        tintColor = getThemeColor(R.attr.taskFormTint)
 
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
         taskType = bundle.getString(TASK_TYPE_KEY) ?: Task.TYPE_HABIT
-        val taskId = bundle.getString(TASK_ID_KEY)
         preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
 
         compositeSubscription.add(tagRepository.getTags()
@@ -321,12 +338,12 @@ class TaskFormActivity : BaseActivity() {
             }
             Task.TYPE_DAILY -> {
                 taskSchedulingControls.startDate = task.startDate ?: Date()
-                taskSchedulingControls.frequency = task.frequency ?: Task.FREQUENCY_DAILY
                 taskSchedulingControls.everyX = task.everyX ?: 1
                 task.repeat?.let { taskSchedulingControls.weeklyRepeat = it }
                 taskSchedulingControls.daysOfMonth = task.getDaysOfMonth()
                 taskSchedulingControls.weeksOfMonth = task.getWeeksOfMonth()
                 habitAdjustPositiveStreakView.setText((task.streak ?: 0).toString())
+                taskSchedulingControls.frequency = task.frequency ?: Task.FREQUENCY_DAILY
             }
             Task.TYPE_TODO -> taskSchedulingControls.dueDate = task.dueDate
             Task.TYPE_REWARD -> rewardValueFormView.value = task.value
@@ -336,7 +353,7 @@ class TaskFormActivity : BaseActivity() {
             remindersContainer.taskType = taskType
             task.reminders?.let { remindersContainer.reminders = it }
         }
-        task.attribute?.let { setSelectedAttribute(it) }
+        task.attribute?.let { selectedStat = it }
         setAllTagSelections()
     }
 
@@ -377,6 +394,8 @@ class TaskFormActivity : BaseActivity() {
             thisTask = Task()
             thisTask.type = taskType
             thisTask.dateCreated = Date()
+        } else {
+            if (!thisTask.isValid) return
         }
         thisTask.text = textEditText.text.toString()
         thisTask.notes = notesEditText.text.toString()
@@ -388,8 +407,8 @@ class TaskFormActivity : BaseActivity() {
             thisTask.up = habitScoringButtons.isPositive
             thisTask.down = habitScoringButtons.isNegative
             thisTask.frequency = habitResetStreakButtons.selectedResetOption.value
-            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.counterUp = habitAdjustPositiveStreakView.text.toString().toInt()
-            if (habitAdjustNegativeStreakView.text.isNotEmpty()) thisTask.counterDown = habitAdjustNegativeStreakView.text.toString().toInt()
+            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.counterUp = habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            if (habitAdjustNegativeStreakView.text.isNotEmpty()) thisTask.counterDown = habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
         } else if (taskType == Task.TYPE_DAILY) {
             thisTask.startDate = taskSchedulingControls.startDate
             thisTask.everyX = taskSchedulingControls.everyX
@@ -397,7 +416,7 @@ class TaskFormActivity : BaseActivity() {
             thisTask.repeat = taskSchedulingControls.weeklyRepeat
             thisTask.setDaysOfMonth(taskSchedulingControls.daysOfMonth)
             thisTask.setWeeksOfMonth(taskSchedulingControls.weeksOfMonth)
-            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.streak = habitAdjustPositiveStreakView.text.toString().toInt()
+            if (habitAdjustPositiveStreakView.text.isNotEmpty()) thisTask.streak = habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
         } else if (taskType == Task.TYPE_TODO) {
             thisTask.dueDate = taskSchedulingControls.dueDate
         } else if (taskType == Task.TYPE_REWARD) {
@@ -464,6 +483,7 @@ class TaskFormActivity : BaseActivity() {
     companion object {
         val SELECTED_TAGS_KEY = "selectedTags"
         const val TASK_ID_KEY = "taskId"
+        const val TASK_VALUE_KEY = "taskValue"
         const val USER_ID_KEY = "userId"
         const val TASK_TYPE_KEY = "type"
         const val IS_CHALLENGE_TASK = "isChallengeTask"
@@ -472,5 +492,13 @@ class TaskFormActivity : BaseActivity() {
 
         // in order to disable the event handler in MainActivity
         const val SET_IGNORE_FLAG = "ignoreFlag"
+    }
+}
+
+private fun String.toIntCatchOverflow(): Int? {
+    return try {
+        toInt()
+    } catch (e: NumberFormatException) {
+        0
     }
 }

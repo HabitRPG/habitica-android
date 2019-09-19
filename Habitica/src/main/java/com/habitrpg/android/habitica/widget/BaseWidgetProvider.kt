@@ -19,6 +19,8 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
     @Inject
     lateinit var userRepository: UserRepository
 
+    var hasInjected = false
+
     protected var context: Context? = null
 
     /**
@@ -62,7 +64,7 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         return configureRemoteViews(remoteViews, widgetId, columns, rows)
     }
 
-    protected fun showToastForTaskDirection(context: Context, data: TaskScoringResult?, userID: String) {
+    protected fun showToastForTaskDirection(context: Context, data: TaskScoringResult?) {
         if (data != null) {
             val pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(context, data.experienceDelta!!, data.healthDelta!!, data.goldDelta!!, data.manaDelta!!)
             val toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG)

@@ -155,14 +155,14 @@ class ShopFragment : BaseFragment() {
         compositeSubscription.add(this.inventoryRepository.getOwnedItems()
                 .subscribe(Consumer { adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(this.inventoryRepository.getInAppRewards()
-                .map<List<String>> { rewards -> rewards.map { it.key } }
+                .map { rewards -> rewards.map { it.key } }
                 .subscribe(Consumer { adapter?.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun formatTimeTravelersShop(shop: Shop): Shop {
         val newCategories = mutableListOf<ShopCategory>()
         for (category in shop.categories) {
-             if (category.identifier == "pets" || category.identifier == "mounts") {
+             if (category.pinType != "mystery_set") {
                  newCategories.add(category)
              } else {
                  val newCategory = newCategories.find { it.identifier == "mystery_sets" } ?: ShopCategory()

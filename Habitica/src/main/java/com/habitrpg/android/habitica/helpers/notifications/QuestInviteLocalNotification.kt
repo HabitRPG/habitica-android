@@ -11,10 +11,12 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
  */
 class QuestInviteLocalNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier) {
 
-    override fun getNotificationID(): Int = 1000
+    override fun getNotificationID(data: MutableMap<String, String>): Int {
+        return 1000
+    }
 
-    override fun setNotificationActions() {
-        super.setNotificationActions()
+    override fun setNotificationActions(data: Map<String, String>) {
+        super.setNotificationActions(data)
         val res = context.resources
 
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)

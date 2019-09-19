@@ -5,6 +5,4 @@ import android.content.Context
 /**
  * Created by keithholliday on 7/1/16.
  */
-class QuestBegunLocalNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier) {
-    override fun getNotificationID(): Int = 1000
-}
+class QuestBegunLocalNotification(context: Context, identifier: String) : HabiticaLocalNotification(context, identifier)

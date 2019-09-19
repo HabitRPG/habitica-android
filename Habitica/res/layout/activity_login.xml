@@ -19,7 +19,7 @@
             android:background="@drawable/login_gradient"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:layout_marginRight="-2dp"
+            android:layout_marginEnd="-2dp"
             >
             <ImageView
                 android:id="@+id/city_view"
@@ -74,7 +74,6 @@
             android:paddingTop="@dimen/spacing_large"
             android:paddingLeft="@dimen/spacing_large"
             android:paddingRight="@dimen/spacing_large"
-            android:id="@+id/login_intro_view"
             android:orientation="vertical"
             android:background="@color/transparent"
                         >
@@ -235,9 +234,9 @@
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_arrow_back_white_36dp"
+            android:drawableStart="@drawable/ic_arrow_back_white_36dp"
             android:background="@color/transparent"
-            android:paddingLeft="12dp"
+            android:paddingStart="12dp"
             android:alpha="0" />
     </FrameLayout>
 

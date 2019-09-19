@@ -41,7 +41,7 @@
                             android:id="@+id/buttonPartyInviteAccept"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.accept"
+                            android:text="@string/quest_accept"
                             android:textColor="@color/btn_success"
                             style="?android:buttonBarButtonStyle" />
 
@@ -49,7 +49,7 @@
                             android:id="@+id/buttonPartyInviteReject"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/quest.reject"
+                            android:text="@string/quest_reject"
                             android:textColor="@color/btn_danger"
                             style="?android:buttonBarButtonStyle" />
                     </LinearLayout>
@@ -141,7 +141,7 @@
                         android:id="@+id/username_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/brand_400"
+                        android:textColor="?colorAccent"
                         style="@style/HabiticaButton.Gray.600"
                         android:background="@drawable/layout_rounded_bg_gray_700"
                         android:layout_marginTop="@dimen/spacing_large"

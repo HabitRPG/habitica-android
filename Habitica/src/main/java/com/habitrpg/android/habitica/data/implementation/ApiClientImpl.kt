@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import com.amplitude.api.Amplitude
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
@@ -26,10 +24,7 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.*
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.android.habitica.models.social.FindUsernameResult
-import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.*
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
@@ -82,7 +77,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(this)
     }
-    private val displayedAlert: AlertDialog? = null
     private var languageCode: String? = null
     private var lastAPICallURL: String? = null
 
@@ -96,7 +90,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         buildRetrofit()
     }
 
-    fun buildRetrofit() {
+    private fun buildRetrofit() {
         val logging = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
             logging.level = HttpLoggingInterceptor.Level.BODY
@@ -123,13 +117,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent)
                     }
-                    if (!BuildConfig.STAGING_KEY.isEmpty()) {
+                    if (BuildConfig.STAGING_KEY.isNotEmpty()) {
                         builder = builder.header("Authorization", "Basic " + BuildConfig.STAGING_KEY)
                     }
                     val request = builder.method(original.method(), original.body())
                             .build()
                     lastAPICallURL = original.url().toString()
-                    Log.d("NETWORK", lastAPICallURL)
                     chain.proceed(request)
                 }
                 .readTimeout(2400, TimeUnit.SECONDS)
@@ -196,12 +189,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
             val res = getErrorResponse(error)
             val status = error.code()
 
-            if (error.response().raw().request().url().toString().endsWith("/user/push-devices")) {
+            if (status == 404 || error.response().raw().request().url().toString().endsWith("/user/push-devices")) {
                 //workaround for an error that sometimes displays that the user already has this push device
-                return
-            }
-
-            if (status == 404) {
                 return
             }
 
@@ -251,8 +240,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return userObservable
     }
 
-    override fun retrieveInboxMessages(): Flowable<List<ChatMessage>> {
-        return apiService.inboxMessages.compose(configureApiCallObserver())
+    override fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>> {
+        return apiService.getInboxMessages(uuid, page).compose(configureApiCallObserver())
+    }
+
+    override fun retrieveInboxConversations(): Flowable<List<InboxConversation>> {
+        return apiService.getInboxConversations().compose(configureApiCallObserver())
     }
 
     override fun hasAuthenticationKeys(): Boolean {
@@ -482,8 +475,12 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.createGroup(group).compose(configureApiCallObserver())
     }
 
-    override fun updateGroup(id: String, item: Group): Flowable<Void> {
+    override fun updateGroup(id: String, item: Group): Flowable<Group> {
         return apiService.updateGroup(id, item).compose(configureApiCallObserver())
+    }
+
+    override fun removeMemberFromGroup(groupID: String, userID: String): Flowable<Void> {
+        return apiService.removeMemberFromGroup(groupID, userID).compose(configureApiCallObserver())
     }
 
     override fun listGroupChat(groupId: String): Flowable<List<ChatMessage>> {
@@ -494,8 +491,8 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.joinGroup(groupId).compose(configureApiCallObserver())
     }
 
-    override fun leaveGroup(groupId: String): Flowable<Void> {
-        return apiService.leaveGroup(groupId).compose(configureApiCallObserver())
+    override fun leaveGroup(groupId: String, keepChallenges: String): Flowable<Void> {
+        return apiService.leaveGroup(groupId, keepChallenges).compose(configureApiCallObserver())
     }
 
     override fun postGroupChat(groupId: String, message: Map<String, String>): Flowable<PostChatMessageResult> {
@@ -525,11 +522,15 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         return apiService.flagMessage(groupId, mid, data).compose(configureApiCallObserver())
     }
 
+    override fun flagInboxMessage(mid: String, data: MutableMap<String, String>): Flowable<Void> {
+        return apiService.flagInboxMessage(mid, data).compose(configureApiCallObserver())
+    }
+
     override fun seenMessages(groupId: String): Flowable<Void> {
         return apiService.seenMessages(groupId).compose(configureApiCallObserver())
     }
 
-    override fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<List<String>> {
+    override fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<Void> {
         return apiService.inviteToGroup(groupId, inviteData).compose(configureApiCallObserver())
     }
 
@@ -648,7 +649,7 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
     }
 
     override fun updateChallenge(challenge: Challenge): Flowable<Challenge> {
-        return apiService.updateChallenge(challenge.id, challenge).compose(configureApiCallObserver())
+        return apiService.updateChallenge(challenge.id ?: "", challenge).compose(configureApiCallObserver())
     }
 
     override fun deleteChallenge(challengeId: String): Flowable<Void> {
@@ -759,8 +760,6 @@ class ApiClientImpl//private OnHabitsAPIResult mResultListener;
         get() = apiService.worldState.compose(configureApiCallObserver())
 
     companion object {
-        private const val TAG = "ApiClientImpl"
-
         fun createGsonFactory(): GsonConverterFactory {
             return GSonFactoryCreator.create()
         }

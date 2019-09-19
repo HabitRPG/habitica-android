@@ -39,15 +39,4 @@
         android:background="@drawable/purchase_button_background"
         android:textColor="@color/white"
         tools:text="$ 4.99"/>
-
-    <ImageButton
-            android:id="@+id/seedsImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:src="@drawable/seeds_badge_store"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="4dp"
-            android:visibility="gone"
-            />
 </LinearLayout>

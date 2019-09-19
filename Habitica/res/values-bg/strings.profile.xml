@@ -9,10 +9,7 @@
     <string name="profile_level">Ниво:</string>
     <string name="profile_class_bonus">Класов бонус:</string>
     <string name="profile_allocated">Разпределени:</string>
-    <string name="profile_boosts">Подсилки:</string>
     <string name="profile_private_message">Лично съобщение</string>
     <string name="profile_achievements">Постижения</string>
-    <string name="profile_achievement_ok">Добре</string>
-    <string name="profile_qrcode_close">Затваряне</string>
 
 </resources>

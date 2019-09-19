@@ -10,13 +10,13 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
@@ -197,7 +197,7 @@ class ChallengeFormActivity : BaseActivity() {
         if (errorMessages.count() > 0) {
             val alert = HabiticaAlertDialog(this)
             alert.setMessage(errorMessages.joinToString("\n"))
-            alert.show()
+            alert.enqueue()
         }
         return errorMessages.size == 0
     }
@@ -209,7 +209,11 @@ class ChallengeFormActivity : BaseActivity() {
         val bundle = intent.extras
 
         challengeTasks = ChallengeTasksRecyclerViewAdapter(null, 0, this, "", null, false, true)
-        compositeSubscription.add(challengeTasks.taskOpenEvents.subscribe { openNewTaskActivity(it.type, it) })
+        compositeSubscription.add(challengeTasks.taskOpenEvents.subscribe {
+            if (it.isValid) {
+                openNewTaskActivity(it.type, it)
+            }
+        })
         locationAdapter = GroupArrayAdapter(this)
 
         if (bundle != null) {
@@ -306,7 +310,7 @@ class ChallengeFormActivity : BaseActivity() {
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
 
             supportActionBar.title = ""
-            supportActionBar.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.brand_200)))
+            supportActionBar.setBackgroundDrawable(ColorDrawable(getThemeColor(R.attr.colorPrimaryOffset)))
             supportActionBar.elevation = 0f
         }
 

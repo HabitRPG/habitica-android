@@ -3,11 +3,11 @@ package com.habitrpg.android.habitica.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
+import android.util.SparseArray
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import android.util.SparseArray
+import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment
 import com.habitrpg.android.habitica.ui.helpers.bindView
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.activity_prefs.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -38,6 +39,7 @@ class SkillTasksActivity : BaseActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupToolbar(toolbar)
         loadTaskLists()
     }
 

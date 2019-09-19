@@ -16,8 +16,8 @@ class SimpleSpinnerAdapter(context: Context, resource: Int) : ArrayAdapter<CharS
         return view
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = parent?.inflate(android.R.layout.simple_spinner_item, false) ?: View(context)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view = convertView ?: parent.inflate(android.R.layout.simple_spinner_item, false)
         (view as? TextView)?.text = getItem(position)
         return view
     }

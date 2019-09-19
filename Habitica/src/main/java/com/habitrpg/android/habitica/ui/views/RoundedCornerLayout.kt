@@ -48,7 +48,7 @@ class RoundedCornerLayout : FrameLayout {
             maskBitmap = createMask(width, height)
         }
 
-        offscreenCanvas.drawBitmap(maskBitmap, 0f, 0f, maskPaint)
+        maskBitmap?.let { offscreenCanvas.drawBitmap(it, 0f, 0f, maskPaint) }
         canvas.drawBitmap(offscreenBitmap, 0f, 0f, paint)
     }
 

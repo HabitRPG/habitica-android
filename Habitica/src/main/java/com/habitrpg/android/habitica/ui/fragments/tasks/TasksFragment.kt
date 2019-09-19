@@ -2,13 +2,16 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentPagerAdapter
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -23,7 +26,8 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class TasksFragment : BaseMainFragment() {
+
+class TasksFragment : BaseMainFragment(), SearchView.OnQueryTextListener {
 
     var viewPager: androidx.viewpager.widget.ViewPager? = null
     @Inject
@@ -46,7 +50,15 @@ class TasksFragment : BaseMainFragment() {
         }
 
     private val activeFragment: TaskRecyclerViewFragment?
-        get() = viewFragmentsDictionary?.get(viewPager?.currentItem)
+        get() {
+            var fragment = viewFragmentsDictionary?.get(viewPager?.currentItem)
+            if (fragment == null) {
+                if (isAdded) {
+                    fragment = (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager?.currentItem) as? TaskRecyclerViewFragment)
+                }
+            }
+            return fragment
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -98,13 +110,40 @@ class TasksFragment : BaseMainFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main_activity, menu)
 
-        filterMenuItem = menu.findItem(R.id.action_search)
+        filterMenuItem = menu.findItem(R.id.action_filter)
         updateFilterIcon()
+
+        val item = menu.findItem(R.id.action_search)
+        val sv = item.actionView as? SearchView
+        sv?.setOnQueryTextListener(this)
+        sv?.setIconifiedByDefault(false)
+        item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+                return true
+            }
+
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                // Do something when expanded
+                filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+                return true
+            }
+        })
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        taskFilterHelper.searchQuery = newText
+        viewFragmentsDictionary?.values?.forEach { values -> values.recyclerAdapter?.filter() }
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_search -> {
+            R.id.action_filter -> {
                 showFilterDialog()
                 true
             }
@@ -135,14 +174,11 @@ class TasksFragment : BaseMainFragment() {
                     if (viewFragmentsDictionary == null) {
                         return
                     }
-                    val activePos = viewPager?.currentItem ?: 0
-                    viewFragmentsDictionary?.get(activePos - 1)?.recyclerAdapter?.filter()
-                    viewFragmentsDictionary?.get(activePos + 1)?.recyclerAdapter?.filter()
                     taskFilterHelper.tags = activeTags
                     if (activeTaskFilter != null) {
                         activeFragment?.setActiveFilter(activeTaskFilter)
                     }
-                    viewFragmentsDictionary?.values?.forEach { it.recyclerAdapter?.filter() }
+                    viewFragmentsDictionary?.values?.forEach { values -> values.recyclerAdapter?.filter() }
                     updateFilterIcon()
                 }
             })
@@ -210,7 +246,11 @@ class TasksFragment : BaseMainFragment() {
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
         } else {
-            filterMenuItem?.setIcon(R.drawable.ic_filters_active)
+            context?.let {
+                val filterIcon = it.getDrawable(R.drawable.ic_filters_active)
+                filterIcon?.setColorFilter(it.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY)
+                filterMenuItem?.setIcon(filterIcon)
+            }
         }
     }
 
@@ -218,7 +258,7 @@ class TasksFragment : BaseMainFragment() {
         if (bottomNavigation == null) {
             return
         }
-        compositeSubscription.add(tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
+        compositeSubscription.add(tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(Consumer { tutorialSteps ->
             val activeTutorialFragments = ArrayList<String>()
             for (step in tutorialSteps) {
                 var id = -1

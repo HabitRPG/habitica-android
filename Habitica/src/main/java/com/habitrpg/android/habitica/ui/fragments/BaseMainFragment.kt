@@ -9,7 +9,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.User
@@ -31,7 +30,6 @@ abstract class BaseMainFragment : BaseFragment() {
     val collapsingToolbar get() = activity?.toolbar
     val toolbarAccessoryContainer get() = activity?.toolbarAccessoryContainer
     val bottomNavigation get() = activity?.bottomNavigation
-    val floatingMenuWrapper get() = activity?.snackbarContainer
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
@@ -45,26 +43,16 @@ abstract class BaseMainFragment : BaseFragment() {
         }
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        if (savedInstanceState != null && savedInstanceState.containsKey("userId")) {
-            val userId = savedInstanceState.getString("userId")
-            if (userId != null) {
-                compositeSubscription.add(userRepository.getUser(userId).subscribe(Consumer { habitRPGUser -> user = habitRPGUser }, RxErrorHandler.handleEmptyError()))
-            }
-        }
+        compositeSubscription.add(userRepository.getUser().subscribe(Consumer { user = it }, RxErrorHandler.handleEmptyError()))
 
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE
-            activity?.snackbarContainer?.setScaledPadding(context, 0, 0, 0, 68)
         } else {
             bottomNavigation?.visibility = View.GONE
-            activity?.snackbarContainer?.setScaledPadding(context, 0, 0, 0, 0)
         }
-
-        floatingMenuWrapper?.removeAllViews()
 
         setHasOptionsMenu(true)
 
@@ -94,14 +82,6 @@ abstract class BaseMainFragment : BaseFragment() {
     override fun onDestroy() {
         userRepository.close()
         super.onDestroy()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        if (user?.isValid == true) {
-            outState.putString("userId", user?.id)
-        }
-
-        super.onSaveInstanceState(outState)
     }
 
     private fun hideToolbar() {

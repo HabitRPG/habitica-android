@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 
-open class HabiticaEmojiTextView : TextView {
+open class HabiticaEmojiTextView : AppCompatTextView {
 
     constructor(context: Context) : super(context)
 

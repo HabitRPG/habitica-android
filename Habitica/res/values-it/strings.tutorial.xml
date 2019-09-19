@@ -12,12 +12,8 @@
   <string name="tutorial_rewards_1">Compra oggetti per il tuo avatar con l\'oro che ottieni!</string>
   <string name="tutorial_rewards_2">Puoi anche creare delle ricompense reali, basate su ciò che ti motiva.</string>
   <string name="tutorial_tasks_complete">Per ora è tutto. Se hai bisogno di un ripasso, consulta la sezione FAQ.</string>
-  <string name="tutorial_equipment">Quando compri dell\'equipaggiamento, apparirà qui. Il tuo equipaggiamento di battaglia influisce sulle tue statistiche, e il tuo Costume (se attivato) cambia ciò che indossa il tuo avatar.</string>
-  <string name="tutorial_items">Guadagnati degli oggetti completando attività e salendo di livello. Tocca un oggetto per usarlo!</string>
-  <string name="tutorial_pets">Man mano che porti a termine attività nella vita reale, ora potrai trovare casualmente uova e pozioni. Combinali per far nascere degli animali!</string>
-  <string name="tutorial_skills">Le Abilità sono dei poteri con straordinari effetti! Tocca un\'abilità per utilizzarla. Costerà del Mana (la barra blu), che puoi ottenere usando Habitica ogni giorno e completando attività. Dai un\'occhiata alle FAQ nel menù per avere maggiori informazioni!</string>
+    <string name="tutorial_skills">Le Abilità sono dei poteri con straordinari effetti! Tocca un\'abilità per utilizzarla. Costerà del Mana (la barra blu), che puoi ottenere usando Habitica ogni giorno e completando attività. Dai un\'occhiata alle FAQ nel menù per avere maggiori informazioni!</string>
   <string name="tutorial_party">Qui è dove tu e i tuoi amici potete motivarvi a vicenda e combattere i mostri con le vostre attività!</string>
   <string name="tutorial_tavern">Benvenuto nella Taverna, una chat pubblica per tutte le età! Qui puoi chiacchierare e fare delle domande. Divertiti!</string>
-  <string name="tutorial_classes">Scegli di diventare un Guerriero, un Mago, un Guaritore o un Assassino! Ogni classe ha equipaggiamento ed abilità uniche. Tocca (?) per saperne di più!</string>
-  <string name="tutorial_stats">Premi sul bottone grigio per assegnare un sacco di punti stat in una volta, oppure usa le frecce per aggiungere un punto alla volta.</string>
+    <string name="tutorial_stats">Premi sul bottone grigio per assegnare un sacco di punti stat in una volta, oppure usa le frecce per aggiungere un punto alla volta.</string>
 </resources>

@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.ui.helpers.bindView
 
 class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
@@ -145,7 +146,7 @@ class CollapsibleSectionView(context: Context?, attrs: AttributeSet?) : LinearLa
         }
 
         if (attributes?.getBoolean(R.styleable.CollapsibleSectionView_hasAdditionalInfo, false) == true) {
-            infoIconView.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(ContextCompat.getColor(context, R.color.brand_200)))
+            infoIconView.setImageBitmap(HabiticaIconsHelper.imageOfInfoIcon(context.getThemeColor(R.attr.colorPrimaryOffset)))
         } else {
             infoIconView.visibility = View.GONE
         }

@@ -145,7 +145,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                 try {
                     val tagId = tagElement.asString
                     for (tag in databaseTags) {
-                        if (tag.getId() == tagId) {
+                        if (tag.id == tagId) {
                             if (!alreadyContainsTag(tags, tagId)) {
                                 tags.add(tag)
                             }
@@ -164,7 +164,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
 
     private fun alreadyContainsTag(list: List<Tag>, idToCheck: String): Boolean {
         for (t in list) {
-            if (t.getId() == idToCheck) {
+            if (t.id == idToCheck) {
                 return true
             }
         }

@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
@@ -71,9 +72,8 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeSubscription.add(userRepository.getUser(hostConfig.userID)
-                .subscribe(Consumer { this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
-
+        compositeSubscription.add(userRepository.getUser().subscribeWithErrorHandler(Consumer { this.onUserReceived(it) }))
+        compositeSubscription.add(userRepository.retrieveUser().subscribeWithErrorHandler(Consumer {}))
         val additionalData = HashMap<String, Any>()
         additionalData["status"] = "displayed"
         AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
@@ -122,7 +122,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private fun nextClicked() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.edit {
-            putString("FirstDayOfTheWeek", Integer.toString(Calendar.getInstance().firstDayOfWeek))
+            putString("FirstDayOfTheWeek", Calendar.getInstance().firstDayOfWeek.toString())
         }
         if (isLastPage) {
             if (this.taskSetupFragment == null) {
@@ -172,9 +172,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         nextButton.setCompoundDrawablesWithIntrinsicBounds(null, null, rightDrawable, null)
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-    }
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
 
     override fun onPageSelected(position: Int) {
         when {
@@ -193,15 +191,17 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         }
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
-
-    }
+    override fun onPageScrollStateChanged(state: Int) = Unit
 
     private fun onUserReceived(user: User?) {
         if (completedSetup) {
             if (!compositeSubscription.isDisposed) {
                 compositeSubscription.dispose()
             }
+            val additionalData = HashMap<String, Any>()
+            additionalData["status"] = "completed"
+            AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+
             this.startMainActivity()
             return
         }
@@ -212,10 +212,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             this.avatarSetupFragment?.setUser(user)
             this.taskSetupFragment?.setUser(user)
         }
-
-        val additionalData = HashMap<String, Any>()
-        additionalData["status"] = "completed"
-        AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
     }
 
     private fun startMainActivity() {
