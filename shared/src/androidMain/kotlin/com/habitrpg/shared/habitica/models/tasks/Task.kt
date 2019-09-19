@@ -12,6 +12,7 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
+import io.reactivex.functions.Consumer
 import org.json.JSONException
 import space.thelen.shared.cluetective.R
 import java.util.*
@@ -22,7 +23,7 @@ actual open class Task : RealmObject, Parcelable {
     actual var id: String? = null
         set(value) {
             field = value
-            repeat.taskId = value
+            repeat?.taskId = value
         }
     actual var userId: String = ""
     actual var priority: Float = 0.0f
@@ -53,7 +54,7 @@ actual open class Task : RealmObject, Parcelable {
     actual var repeat: Days? = null
         set(value) {
             field = value
-            field.taskId = id
+            field?.taskId = id
         }
     //todos
     @SerializedName("date")
@@ -79,16 +80,11 @@ actual open class Task : RealmObject, Parcelable {
     actual var daysOfMonthString: String? = null
     actual var weeksOfMonthString: String? = null
 
-    @Ignore
-    actual var daysOfMonth: List<Int>? = null
 
-    @Ignore
-    actual var weeksOfMonth: List<Int>? = null
-
-    val completedChecklistCount: Int
+    actual val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
 
-    val extraLightTaskColor: Int
+    actual val extraLightTaskColor: Int
         get() {
             return when {
                 this.value < -20 -> return R.color.maroon_500
@@ -101,7 +97,7 @@ actual open class Task : RealmObject, Parcelable {
             }
         }
 
-    val lightTaskColor: Int
+    actual val lightTaskColor: Int
         get() {
             return when {
                 this.value < -20 -> return R.color.maroon_100
@@ -114,7 +110,7 @@ actual open class Task : RealmObject, Parcelable {
             }
         }
 
-    val mediumTaskColor: Int
+    actual val mediumTaskColor: Int
         get() {
             return when {
                 this.value < -20 -> return R.color.maroon_50
@@ -127,7 +123,7 @@ actual open class Task : RealmObject, Parcelable {
             }
         }
 
-    val darkTaskColor: Int
+    actual val darkTaskColor: Int
         get() {
             return when {
                 this.value < -20 -> return R.color.maroon_10
@@ -140,16 +136,16 @@ actual open class Task : RealmObject, Parcelable {
             }
         }
 
-    val isDisplayedActive: Boolean
+    actual val isDisplayedActive: Boolean
         get() = isDue == true && !completed
 
-    val isChecklistDisplayActive: Boolean
+    actual val isChecklistDisplayActive: Boolean
         get() = this.isDisplayedActive && this.checklist?.size != this.completedChecklistCount
 
-    val isGroupTask: Boolean
+    actual val isGroupTask: Boolean
         get() = group.approvalApproved == true
 
-    val isPendingApproval: Boolean
+    actual val isPendingApproval: Boolean
         get() = (group.approvalRequired == true && group.approvalRequested == true && group.approvalApproved == false)
 
     @StringDef(TYPE_HABIT, TYPE_DAILY, TYPE_TODO, TYPE_REWARD)
@@ -312,67 +308,68 @@ actual open class Task : RealmObject, Parcelable {
         this.counterDown = `in`.readInt()
     }
 
-    actual fun setWeeksOfMonth(weeksOfMonth: List<Int>?) {
-        this.weeksOfMonth = weeksOfMonth
-        this.weeksOfMonthString = this.weeksOfMonth?.toString()
-    }
 
-    actual fun getWeeksOfMonth(): List<Int>? {
-        if (weeksOfMonth == null) {
-            val weeksOfMonth = mutableListOf<Int>()
-            if (weeksOfMonthString != null) {
-                try {
-                    val obj = JSONArray(weeksOfMonthString)
-                    actual var i = 0
-                    while (i < obj.length()) {
-                        weeksOfMonth.add(obj.getInt(i))
-                        i += 1
-                    }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-            }
-            this.weeksOfMonth = weeksOfMonth.toList()
+    actual var weeksOfMonth: List<Int>?
+        set(weeksOfMonth: List<Int>?) {
+            this.weeksOfMonth = weeksOfMonth
+            this.weeksOfMonthString = this.weeksOfMonth?.toString()
         }
-        return weeksOfMonth
-    }
-
-    fun setDaysOfMonth(daysOfMonth: List<Int>?) {
-        this.daysOfMonth = daysOfMonth
-        this.daysOfMonthString = daysOfMonth.toString()
-    }
-
-    fun getDaysOfMonth(): List<Int>? {
-        if (daysOfMonth == null) {
-            val daysOfMonth = mutableListOf<Int>()
-            if (daysOfMonthString != null) {
-                try {
-                    val obj = JSONArray(daysOfMonthString)
-                    actual var i = 0
-                    while (i < obj.length()) {
-                        daysOfMonth.add(obj.getInt(i))
-                        i += 1
+        get(): List<Int>? {
+            if (weeksOfMonth == null) {
+                val weeksOfMonth = mutableListOf<Int>()
+                if (weeksOfMonthString != null) {
+                    try {
+                        val obj = JSONArray(weeksOfMonthString)
+                        var i = 0
+                        while (i < obj.length()) {
+                            weeksOfMonth.add(obj.getInt(i))
+                            i += 1
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
                     }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
 
+                }
+                this.weeksOfMonth = weeksOfMonth.toList()
             }
+            return weeksOfMonth
+        }
+
+    actual var daysOfMonth: List<Int>?
+        set(daysOfMonth: List<Int>?) {
             this.daysOfMonth = daysOfMonth
+            this.daysOfMonthString = daysOfMonth.toString()
         }
+        get(): List<Int>? {
+            if (daysOfMonth == null) {
+                val daysOfMonth = mutableListOf<Int>()
+                if (daysOfMonthString != null) {
+                    try {
+                        val obj = JSONArray(daysOfMonthString)
+                        var i = 0
+                        while (i < obj.length()) {
+                            daysOfMonth.add(obj.getInt(i))
+                            i += 1
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
 
-        return daysOfMonth
-    }
+                }
+                this.daysOfMonth = daysOfMonth
+            }
+
+            return daysOfMonth
+        }
 
     actual companion object CREATOR : Parcelable.Creator<Task> {
         actual override fun createFromParcel(source: Parcel): Task = Task(source)
 
         actual override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
 
-        const val TYPE_HABIT = "habit"
-        const val TYPE_TODO = "todo"
-        const val TYPE_DAILY = "daily"
+        actual val TYPE_HABIT = "habit"
+        actual val TYPE_TODO = "todo"
+        actual val TYPE_DAILY = "daily"
         actual val TYPE_REWARD = "reward"
 
         actual val FILTER_ALL = "all"

@@ -1,7 +1,7 @@
-package com.habitrpg.android.habitica.models.tasks;
+package com.habitrpg.shared.habitica.models.tasks;
 
 
-import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.shared.habitica.models.Tag;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
