@@ -2,16 +2,14 @@ package com.habitrpg.shared.habitica.models.user
 
 import android.content.Context
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.android.habitica.
 import com.habitrpg.shared.habitica.models.HabitRpgClass
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-
 actual open class Stats : RealmObject() {
 
     @PrimaryKey
-    var userId: String? = null
+    actual var userId: String? = null
         set(userId) {
             field = userId
             if (buffs?.isManaged == false) {
@@ -22,47 +20,47 @@ actual open class Stats : RealmObject() {
             }
         }
 
-    internal var user: User? = null
+    internal actual var user: User? = null
     @SerializedName("con")
-    var constitution: Int? = null
+    actual var constitution: Int? = null
     @SerializedName("str")
-    var strength: Int? = null
+    actual var strength: Int? = null
     @SerializedName("per")
-    var per: Int? = null
+    actual var per: Int? = null
     @SerializedName("int")
-    var intelligence: Int? = null
-    var training: Training? = null
-    var buffs: Buffs? = null
-    var points: Int? = null
-    var lvl: Int? = null
+    actual var intelligence: Int? = null
+    actual var training: Training? = null
+    actual var buffs: Buffs? = null
+    actual var points: Int? = null
+    actual var lvl: Int? = null
     @SerializedName("class")
-    var habitClass: String? = null
-    var gp: Double? = null
-    var exp: Double? = null
-    var mp: Double? = null
-    var hp: Double? = null
-    var toNextLevel: Int? = null
+    actual var habitClass: String? = null
+    actual var gp: Double? = null
+    actual var exp: Double? = null
+    actual var mp: Double? = null
+    actual var hp: Double? = null
+    actual var toNextLevel: Int? = null
         get() = if (field != null) field else 0
         set(value) {
             if (value != 0) {
                 field = value
             }
         }
-    var maxHealth: Int? = null
+    actual var maxHealth: Int? = null
         get() = if (field != null) field else 0
         set(value) {
             if (value != 0) {
                 field = value
             }
         }
-    var maxMP: Int? = null
+    actual var maxMP: Int? = null
         get() = if (field != null) field else 0
         set(value) {
             if (value != 0) {
                 field = value
             }
         }
-    val isBuffed: Boolean
+    actual val isBuffed: Boolean
         get() {
             return buffs?.str ?: 0f > 0 ||
                     buffs?.con ?: 0f > 0 ||
@@ -70,7 +68,7 @@ actual open class Stats : RealmObject() {
                     buffs?.per ?: 0f > 0
         }
 
-    fun getTranslatedClassName(context: Context): String {
+    actual fun getTranslatedClassName(context: Context): String {
         return when (habitClass) {
             HEALER -> context.getString(R.string.healer)
             ROGUE -> context.getString(R.string.rogue)
@@ -80,7 +78,7 @@ actual open class Stats : RealmObject() {
         }
     }
 
-    fun merge(stats: Stats?) {
+    actual fun merge(stats: Stats?) {
         if (stats == null) {
             return
         }
@@ -102,7 +100,7 @@ actual open class Stats : RealmObject() {
         this.maxMP = if (stats.maxMP != null) stats.maxMP else this.maxMP
     }
 
-    fun setHabitClass(habitRpgClass: HabitRpgClass) {
+    actual fun setHabitClass(habitRpgClass: HabitRpgClass) {
         habitClass = habitRpgClass.toString()
     }
 
@@ -123,3 +121,5 @@ actual open class Stats : RealmObject() {
         const val AUTO_ALLOCATE_TASKBASED = "taskbased"
     }
 }
+
+actual class NativeContext
