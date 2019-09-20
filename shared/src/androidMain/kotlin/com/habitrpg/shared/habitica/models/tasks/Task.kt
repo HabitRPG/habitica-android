@@ -143,10 +143,10 @@ actual open class Task : RealmObject, Parcelable {
         get() = this.isDisplayedActive && this.checklist?.size != this.completedChecklistCount
 
     actual val isGroupTask: Boolean
-        get() = group.approvalApproved == true
+        get() = group?.approvalApproved == true
 
     actual val isPendingApproval: Boolean
-        get() = (group.approvalRequired == true && group.approvalRequested == true && group.approvalApproved == false)
+        get() = (group?.approvalRequired == true && group?.approvalRequested == true && group?.approvalApproved == false)
 
     @StringDef(TYPE_HABIT, TYPE_DAILY, TYPE_TODO, TYPE_REWARD)
     @Retention(AnnotationRetention.SOURCE)

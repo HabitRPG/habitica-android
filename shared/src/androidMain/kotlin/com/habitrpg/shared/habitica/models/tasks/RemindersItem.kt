@@ -39,9 +39,9 @@ actual open class RemindersItem : RealmObject, Parcelable {
     }
 
     actual companion object CREATOR: Parcelable.Creator<RemindersItem> {
-        override fun createFromParcel(source: Parcel): RemindersItem = RemindersItem(source)
+        actual override fun createFromParcel(source: Parcel): RemindersItem = RemindersItem(source)
 
-        override fun newArray(size: Int): Array<RemindersItem?> = arrayOfNulls(size)
+        actual override fun newArray(size: Int): Array<RemindersItem?> = arrayOfNulls(size)
     }
 
     actual constructor(source: Parcel) {

@@ -7,6 +7,7 @@ import com.habitrpg.shared.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.user.User
 import kotlin.math.min
 import kotlin.math.pow
+import kotlin.math.roundToLong
 
 class ScoreTaskLocallyInteractor {
     companion object {
@@ -121,10 +122,10 @@ class ScoreTaskLocallyInteractor {
             var totalConstitution = levelStat
             var totalPerception = levelStat
 
-            totalStrength += user.stats?.buffs?.getStr()?.toInt() ?: 0
-            totalIntelligence += user.stats?.buffs?.get_int()?.toInt() ?: 0
-            totalConstitution += user.stats?.buffs?.getCon()?.toInt() ?: 0
-            totalPerception += user.stats?.buffs?.getPer()?.toInt() ?: 0
+            totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
+            totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
+            totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
+            totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
 
             totalStrength += user.stats?.strength ?: 0
             totalIntelligence += user.stats?.intelligence ?: 0

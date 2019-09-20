@@ -1,6 +1,5 @@
 package com.habitrpg.shared.habitica.models.user
 
-import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.shared.habitica.models.HabitRpgClass
 import io.realm.RealmObject
@@ -121,5 +120,3 @@ actual open class Stats : RealmObject() {
         const val AUTO_ALLOCATE_TASKBASED = "taskbased"
     }
 }
-
-actual class NativeContext

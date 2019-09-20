@@ -9,19 +9,19 @@ import io.realm.annotations.PrimaryKey
 actual open class Tag : RealmObject() {
 
     @PrimaryKey
-    var id: String = ""
+    actual var id: String = ""
 
-    var userId: String? = null
-    var tasks: RealmList<Task>? = null
-    var name: String = ""
-    internal var challenge: Boolean = false
+    actual var userId: String? = null
+    actual var tasks: RealmList<Task>? = null
+    actual var name: String = ""
+    internal actual var challenge: Boolean = false
 
-    fun getTasks(): List<Task>? {
+    actual fun getTasks(): List<Task>? {
         return tasks
     }
 
 
-    override fun equals(o: Any?): Boolean {
+    actual override fun equals(o: Any?): Boolean {
         if (Tag::class.java.isAssignableFrom(o!!.javaClass)) {
             val otherTag = o as Tag?
             return this.id == otherTag!!.id

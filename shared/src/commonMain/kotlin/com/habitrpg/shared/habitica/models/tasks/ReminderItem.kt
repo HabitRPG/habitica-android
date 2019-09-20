@@ -19,9 +19,13 @@ expect open class RemindersItem {
 
     fun writeToParcel(dest: NativeParcel, flags: Int)
 
-    companion object CREATOR {}
+    constructor()
 
     constructor(source: NativeParcel)
 
-    constructor()
+    companion object CREATOR {
+        fun createFromParcel(source: NativeParcel): RemindersItem
+
+        fun newArray(size: Int): Array<RemindersItem?>
+    }
 }

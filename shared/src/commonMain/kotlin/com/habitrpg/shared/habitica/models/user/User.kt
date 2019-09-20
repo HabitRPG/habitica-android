@@ -3,6 +3,7 @@ package com.habitrpg.shared.habitica.models.user
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.tasks.TaskList
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 expect open class User {
 
@@ -28,8 +29,8 @@ expect open class User {
     var pushDevices: List<PushDevice>?
     var purchased: Purchases?
     var tasksOrder: TasksOrder?
-    var challenges: RealmList<ChallengeMembership>?
-    var abTests: RealmList<ABTest>?
+    var challenges: NativeList<ChallengeMembership>?
+    var abTests: NativeList<ABTest>?
     var lastCron: Date?
     var needsCron: Boolean
     var loginIncentives: Int
