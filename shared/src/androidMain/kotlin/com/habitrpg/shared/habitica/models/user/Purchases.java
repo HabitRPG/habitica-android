@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.user;
+package com.habitrpg.shared.habitica.models.user;
 
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.shared.habitica.models.user.User;

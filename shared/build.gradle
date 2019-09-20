@@ -27,8 +27,8 @@ android {
 
 kotlin {
     targets {
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")  \
-                               ? presets.iosArm64 : presets.iosX64
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")   \
+                                ? presets.iosArm64 : presets.iosX64
 
         fromPreset(iOSTarget, 'ios') {
             binaries {
@@ -43,6 +43,7 @@ kotlin {
         commonMain.dependencies {
             api 'org.jetbrains.kotlin:kotlin-stdlib-common'
             compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
+            api "io.realm:realm-gradle-plugin:5.14.0"
         }
 
         commonMain.kotlin.srcDirs += 'src/commonMain/kotlin'
@@ -53,7 +54,6 @@ kotlin {
 
             api 'com.android.tools.build:gradle:3.5.0'
 
-            api "io.realm:realm-gradle-plugin:5.14.0"
             api 'io.realm:android-adapters:3.1.0'
 
             //RxJava

@@ -3,6 +3,7 @@ package com.habitrpg.shared.habitica.models.user
 import com.habitrpg.shared.habitica.models.Tag
 import com.habitrpg.shared.habitica.models.tasks.TaskList
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.nativeLibraries.NativeDate
 import com.habitrpg.shared.habitica.nativeLibraries.NativeList
 
 expect open class User {
@@ -31,7 +32,7 @@ expect open class User {
     var tasksOrder: TasksOrder?
     var challenges: NativeList<ChallengeMembership>?
     var abTests: NativeList<ABTest>?
-    var lastCron: Date?
+    var lastCron: NativeDate?
     var needsCron: Boolean
     var loginIncentives: Int
     var streakCount: Int

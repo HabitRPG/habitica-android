@@ -7,8 +7,8 @@
 //import com.habitrpg.android.habitica.models.tasks.TaskList;
 //import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 //import com.habitrpg.android.habitica.models.user.Flags;
-//import com.habitrpg.android.habitica.models.user.Items;
-//import com.habitrpg.android.habitica.models.user.Preferences;
+//import com.habitrpg.shared.habitica.models.user.Items;
+//import com.habitrpg.shared.habitica.models.user.Preferences;
 //import com.habitrpg.android.habitica.models.user.Stats;
 //import com.habitrpg.shared.habitica.models.user.User;
 //

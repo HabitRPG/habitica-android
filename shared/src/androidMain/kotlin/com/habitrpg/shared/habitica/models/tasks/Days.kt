@@ -46,7 +46,7 @@ actual open class Days : RealmObject, Parcelable {
         dest.writeByte(if (this.su) 1.toByte() else 0.toByte())
     }
 
-    actual protected constructor(`in`: Parcel) {
+    protected actual constructor(`in`: Parcel) {
         this.taskId = `in`.readString()
         this.m = `in`.readByte().toInt() != 0
         this.t = `in`.readByte().toInt() != 0

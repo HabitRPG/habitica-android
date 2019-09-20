@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models.user
+package com.habitrpg.shared.habitica.models.user
 
 import android.text.TextUtils
 

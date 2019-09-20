@@ -2,7 +2,7 @@ package com.habitrpg.shared.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.nativeLibraries.NativeParcel
 
-expect class Days {
+expect open class Days {
     var taskId: String?
     var m: Boolean
     var t: Boolean

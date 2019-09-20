@@ -15,18 +15,18 @@ public class LocalAuthentication extends RealmObject {
     String email;
 
     public String getEmail() {
-        return email;
+        return getEmail();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.setEmail(email);
     }
 
     public String getUsername() {
-        return username;
+        return getUsername();
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.setUsername(username);
     }
 }
