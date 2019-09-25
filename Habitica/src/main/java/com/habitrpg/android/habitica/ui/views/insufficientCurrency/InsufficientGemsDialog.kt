@@ -11,6 +11,8 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 
 class InsufficientGemsDialog(context: Context) : InsufficientCurrencyDialog(context) {
 
+    override var layoutID: Int = R.layout.dialog_insufficient_gems
+
     init {
         imageView.setImageResource(R.drawable.gems_84)
         textView.setText(R.string.insufficientGems)

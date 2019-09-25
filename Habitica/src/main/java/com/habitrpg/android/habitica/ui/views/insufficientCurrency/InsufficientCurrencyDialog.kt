@@ -16,10 +16,11 @@ abstract class InsufficientCurrencyDialog(context: Context) : HabiticaAlertDialo
     protected var imageView: ImageView
     protected var textView: TextView
 
-    init {
+    open var layoutID = R.layout.dialog_insufficient_currency
 
+    init {
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.dialog_insufficient_currency, contentView, false)
+        val view = inflater.inflate(layoutID, contentView, false)
         setAdditionalContentView(view)
 
         imageView = view.findViewById(R.id.imageView)
