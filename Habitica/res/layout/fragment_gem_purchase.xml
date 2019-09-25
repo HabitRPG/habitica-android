@@ -10,19 +10,42 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp">
-
-        <TextView android:id="@+id/supportTextView"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="20dp"
-            android:text="@string/gem_purchase_title"
-            android:layout_gravity="center_horizontal"
+            android:text="@string/gem_purchase_subtitle"
             android:gravity="center"
-            android:textColor="@color/blue_10"
-            android:textSize="14sp"
-            android:lineSpacingExtra="4dp" />
+            android:textStyle="normal|bold"
+            android:textColor="?colorPrimary"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:text="@string/gem_purchase_listitem1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GemPurchaseListItem"
+            />
+        <TextView
+            android:text="@string/gem_purchase_listitem2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GemPurchaseListItem"
+            />
+        <TextView
+            android:text="@string/gem_purchase_listitem3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GemPurchaseListItem"
+            />
+        <TextView
+            android:text="@string/gem_purchase_listitem4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GemPurchaseListItem"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,41 +113,18 @@
                     app:gemDrawable="@drawable/gems_84" />
             </LinearLayout>
         </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/gem_purchase_subtitle"
-            android:gravity="center"
-            android:textStyle="normal|bold"
-            android:textColor="?colorPrimary"
-            android:textSize="16sp"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginBottom="12dp"/>
 
-        <TextView
-            android:text="@string/gem_purchase_listitem1"
-            android:layout_width="wrap_content"
+        <TextView android:id="@+id/supportTextView"
             android:layout_height="wrap_content"
-            style="@style/GemPurchaseListItem"
-            />
-        <TextView
-            android:text="@string/gem_purchase_listitem2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/GemPurchaseListItem"
-            />
-        <TextView
-            android:text="@string/gem_purchase_listitem3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/GemPurchaseListItem"
-            />
-        <TextView
-            android:text="@string/gem_purchase_listitem4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/GemPurchaseListItem"
-            />
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="20dp"
+            android:text="@string/gem_purchase_title"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textColor="@color/blue_10"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
