@@ -44,6 +44,7 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
         updatePreference("preference_push_your_quest_has_begun", user?.preferences?.pushNotifications?.questStarted)
         updatePreference("preference_push_invited_to_quest", user?.preferences?.pushNotifications?.invitedQuest)
         updatePreference("preference_push_important_announcements", user?.preferences?.pushNotifications?.majorUpdates)
+        updatePreference("preference_push_party_activity", user?.preferences?.pushNotifications?.partyActivity)
         isSettingUser = false
         isInitialSet = false
     }
@@ -67,6 +68,7 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
             "preference_push_your_quest_has_begun" -> "questStarted"
             "preference_push_invited_to_quest" -> "invitedQuest"
             "preference_push_important_announcements" -> "majorUpdates"
+            "preference_push_party_activity" -> "partyActivity"
             else -> null
         }
         if (pathKey != null) {

@@ -844,4 +844,5 @@
     <string name="repeat_daily">Daily</string>
     <string name="search">Search</string>
     <string name="search_hint">Search tasks</string>
+    <string name="preference_push_party_activity">Party Activity</string>
 </resources>

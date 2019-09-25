@@ -245,6 +245,12 @@
                     android:title="@string/preference_push_important_announcements"
                     android:layout="@layout/preference_child_summary"/>
 
+                <CheckBoxPreference
+                    android:key="preference_push_party_activity"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_party_activity"
+                    android:layout="@layout/preference_child_summary"/>
+
             </PreferenceCategory>
 
         </PreferenceScreen>
