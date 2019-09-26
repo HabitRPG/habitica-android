@@ -17,8 +17,8 @@
                 android:elevation="0dp"
                 tools:context=".ui.activities.MainActivity">
 
-            <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/viewPager"
+            <FrameLayout
+                    android:id="@+id/fragment_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/white"
@@ -59,24 +59,6 @@
                             app:layout_collapseMode="pin"
                             app:popupTheme="@style/Theme.AppCompat.Light" />
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-                <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:layout_gravity="bottom"
-                        android:background="?colorPrimaryOffset"
-                        android:elevation="0dp"
-                        android:fillViewport="false"
-
-                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                        app:layout_anchor="@+id/collapsing_toolbar"
-                        app:layout_anchorGravity="bottom"
-
-                        app:layout_collapseMode="pin"
-                        app:tabGravity="fill"
-                        app:tabIndicatorColor="@android:color/white"
-                        app:tabMode="fixed" />
             </com.google.android.material.appbar.AppBarLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

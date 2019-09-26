@@ -132,9 +132,23 @@
             app:destination="@id/mountDetailRecyclerFragment" />
     </fragment>
     <activity
+        android:id="@+id/subscriptionPurchaseActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
+        android:label="@string/gem_purchase_toolbartitle" >
+        <argument
+            android:name="openSubscription"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </activity>
+    <activity
         android:id="@+id/gemPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
-        android:label="@string/gem_purchase_toolbartitle" />
+        android:label="@string/gem_purchase_toolbartitle">
+        <argument
+            android:name="openSubscription"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </activity>
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.NewsFragment"

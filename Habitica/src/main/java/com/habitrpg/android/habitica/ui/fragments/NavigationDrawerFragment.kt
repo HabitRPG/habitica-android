@@ -259,7 +259,8 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(HabiticaDrawerItem(R.id.equipmentOverviewFragment, SIDEBAR_EQUIPMENT, context.getString(R.string.sidebar_equipment)))
             items.add(HabiticaDrawerItem(R.id.itemsFragment, SIDEBAR_ITEMS, context.getString(R.string.sidebar_items)))
             items.add(HabiticaDrawerItem(R.id.stableFragment, SIDEBAR_STABLE, context.getString(R.string.sidebar_stable)))
-            items.add(HabiticaDrawerItem(R.id.gemPurchaseActivity, SIDEBAR_PURCHASE, context.getString(R.string.sidebar_purchaseGems)))
+            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION, context.getString(R.string.sidebar_subscription)))
+            items.add(HabiticaDrawerItem(R.id.gemPurchaseActivity, SIDEBAR_GEMS, context.getString(R.string.sidebar_gems)))
             items.add(HabiticaDrawerItem(0, SIDEBAR_ABOUT_HEADER, context.getString(R.string.sidebar_about), true))
             items.add(HabiticaDrawerItem(R.id.newsFragment, SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
             items.add(HabiticaDrawerItem(R.id.FAQOverviewFragment, SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
@@ -424,7 +425,8 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_EQUIPMENT = "equipment"
         const val SIDEBAR_ITEMS = "items"
         const val SIDEBAR_STABLE = "stable"
-        const val SIDEBAR_PURCHASE = "purchase"
+        const val SIDEBAR_GEMS = "gems"
+        const val SIDEBAR_SUBSCRIPTION = "subscription"
         const val SIDEBAR_ABOUT_HEADER = "about_header"
         const val SIDEBAR_NEWS = "news"
         const val SIDEBAR_HELP = "help"

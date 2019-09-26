@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.FragmentPagerAdapter
-import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -17,10 +16,8 @@ import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.proxy.CrashlyticsProxy
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment
-import com.habitrpg.android.habitica.ui.helpers.bindView
 import org.greenrobot.eventbus.Subscribe
 import org.solovyev.android.checkout.*
-import java.util.*
 import javax.inject.Inject
 
 class GemPurchaseActivity : BaseActivity() {
@@ -30,10 +27,7 @@ class GemPurchaseActivity : BaseActivity() {
     @Inject
     lateinit var userRepository: UserRepository
 
-    internal val tabLayout: TabLayout by bindView(R.id.tab_layout)
-    internal val viewPager: androidx.viewpager.widget.ViewPager by bindView(R.id.viewPager)
-
-    internal var fragments: MutableList<CheckoutFragment> = ArrayList()
+    internal var fragment: CheckoutFragment? = null
     var isActive = false
     var activityCheckout: ActivityCheckout? = null
         private set
@@ -52,8 +46,6 @@ class GemPurchaseActivity : BaseActivity() {
         activityCheckout?.onActivityResult(requestCode, resultCode, data)
     }
 
-    private var showSubscriptionPageFirst = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -63,16 +55,15 @@ class GemPurchaseActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setTitle(R.string.gem_purchase_toolbartitle)
-        
-        setViewPagerAdapter()
-        viewPager.currentItem = if (intent.extras?.containsKey("openSubscription") == true) {
+
+        if (intent.extras?.containsKey("openSubscription") == true) {
             if (intent.extras?.getBoolean("openSubscription") == false) {
-                1
+                createFragment(false)
             } else {
-                0
+                createFragment(true)
             }
         } else {
-            0
+            createFragment(true)
         }
     }
 
@@ -101,9 +92,7 @@ class GemPurchaseActivity : BaseActivity() {
             override fun onReady(billingRequests: BillingRequests) {
                 this@GemPurchaseActivity.billingRequests = billingRequests
 
-                for (fragment in fragments) {
-                    fragment.setBillingRequests(billingRequests)
-                }
+                fragment?.setBillingRequests(billingRequests)
 
                 checkIfPendingPurchases()
             }
@@ -143,45 +132,22 @@ class GemPurchaseActivity : BaseActivity() {
 
     }
 
-    private fun setViewPagerAdapter() {
-        val fragmentManager = supportFragmentManager
-
-        viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
-
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
-                val gemPurchasePosition = if (showSubscriptionPageFirst) 1 else 0
-                val fragment: CheckoutFragment = if (position == gemPurchasePosition) {
-                    GemsPurchaseFragment()
-                } else {
-                    SubscriptionFragment()
-                }
-                if (fragments.size > position) {
-                    fragments[position] = fragment
-                } else {
-                    fragments.add(fragment)
-                }
-                fragment.setListener(this@GemPurchaseActivity)
-                fragment.setupCheckout()
-                if (billingRequests != null) {
-                    fragment.setBillingRequests(billingRequests)
-                }
-                return fragment as androidx.fragment.app.Fragment
-            }
-
-            override fun getCount(): Int {
-                return 2
-            }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                val gemPurchasePosition = if (showSubscriptionPageFirst) 1 else 0
-                return when (position) {
-                    gemPurchasePosition -> getString(R.string.gems)
-                    else -> getString(R.string.subscriptions)
-                }
-            }
+    private fun createFragment(showSubscription: Boolean) {
+        val fragment: CheckoutFragment = if (showSubscription) {
+            SubscriptionFragment()
+        } else {
+            GemsPurchaseFragment()
         }
-
-        tabLayout.setupWithViewPager(viewPager)
+        fragment.setListener(this@GemPurchaseActivity)
+        fragment.setupCheckout()
+        if (billingRequests != null) {
+            fragment.setBillingRequests(billingRequests)
+        }
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment as Fragment)
+                .commit()
+        this.fragment = fragment
     }
 
     private fun checkIfPendingPurchases() {
